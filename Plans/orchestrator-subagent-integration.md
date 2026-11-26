@@ -1212,7 +1212,7 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 ### 10. Platform-specific subagent output parsers
 
 - **Gap:** Structured handoff validation (`validate_subagent_output`) needs transport-scoped parsers (OSI-004, OSI-093): JSON over CLI output for the CliBridge providers (Cursor, Claude Code) and JSON over the direct-provider response's final assistant content for the DirectApi providers (Codex, Copilot, Gemini). The original split "JSON for Cursor/Claude/Gemini, JSONL for Codex, text parsing for Copilot" describes CLI-era output and is historical context only. The plan did not specify parser implementation details or fallback behavior when parsing fails; the Clarify item and the resolved fallback below do.
-- **Clarify:** (1) **JSON parsers:** For Cursor and Claude Code (CliBridge), use `serde_json` to parse the CLI's structured output (`--output-format json` or stream-json, format from platform_specs) into `SubagentOutput`; for Codex, Copilot and Gemini (DirectApi), use `serde_json` on the final assistant content of the direct-provider response. Handle missing fields gracefully (e.g., `downstream_context: None` if field absent). (2) **JSONL parser (historical):** the CLI-era instruction "For Codex, parse `--json` or `--experimental-json` JSONL stream; aggregate events into single `SubagentOutput` (last event wins for fields, accumulate findings)" is not an implementation target: Codex is DirectApi and has no CLI stream. (3) **Text parser (historical):** the CLI-era instruction "For Copilot, use regex or pattern matching to extract \"Task Report:\", \"Downstream Context:\", \"Findings:\" sections from text output" is not an implementation target: Copilot is DirectApi and returns final assistant content parsed as JSON. Pattern extraction of those sections survives only as the generic fallback extraction every transport keeps (OSI-093); if required sections are still missing after it, treat the output as malformed and retry. (4) **Fallback (superseded):** the earlier rule "If parsing fails after retry, create partial `SubagentOutput { task_report: raw_output, downstream_context: None, findings: vec![] }` and mark tier as "complete with warnings" rather than failing the run" is superseded by the resolved fallback below and OSI-093: when the generic fallback and the one retry both fail, the error is surfaced with [Retry] [Skip] [View raw output] and settles as Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25) says.
+- **Clarify:** (1) **JSON parsers:** For Cursor and Claude Code (CliBridge), use `serde_json` to parse the CLI's structured output (`--output-format json` or stream-json, format from platform_specs) into `SubagentOutput`; for Codex, Copilot and Gemini (DirectApi), use `serde_json` on the final assistant content of the direct-provider response. Handle missing fields gracefully (e.g., `downstream_context: None` if field absent). (2) **JSONL parser (historical):** the CLI-era instruction "For Codex, parse `--json` or `--experimental-json` JSONL stream; aggregate events into single `SubagentOutput` (last event wins for fields, accumulate findings)" is not an implementation target: Codex is DirectApi and has no CLI stream. (3) **Text parser (historical):** the CLI-era instruction "For Copilot, use regex or pattern matching to extract \"Task Report:\", \"Downstream Context:\", \"Findings:\" sections from text output" is not an implementation target: Copilot is DirectApi and returns final assistant content parsed as JSON. Pattern extraction of those sections survives only as the generic fallback extraction every transport keeps (OSI-093); if required sections are still missing after it, apply Handoff Retry Ceiling to the malformed output. (4) **Fallback (superseded):** the earlier rule "If parsing fails after retry, create partial `SubagentOutput { task_report: raw_output, downstream_context: None, findings: vec![] }` and mark tier as "complete with warnings" rather than failing the run" is superseded by the resolved fallback below and OSI-093: when the handoff remains invalid after fallback and the Handoff Retry Ceiling budget is exhausted, the error is surfaced with [Retry] [Skip] [View raw output] and settles as Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25) says.
 
 **Subagent Output Parser Fallback (Resolved):**
 
@@ -1222,12 +1222,12 @@ Platform-specific parsers handle output from each Provider:
 - **OpenCode (ServerBridge):** parser over its server event stream
 - **Transport scope (2026-11-25, OSI-004 and OSI-093):** earlier versions of this list read "Cursor/Claude/Gemini: JSON parser (stream-json NDJSON events)", "Codex: JSONL parser (newline-delimited JSON events)" and "Copilot: Text parser (plain text output, regex-based signal extraction)". Those describe CLI-era output: the Codex JSONL parser, the Copilot text parser, a Gemini stream-json parser, the `--json` / `--experimental-json` flags in the Clarify item above and the CodexOutputParser and CopilotOutputParser snippets (OSI-158, OSI-161) are historical context only, not implementation targets. The GeminiOutputParser snippet (OSI-160) is the live DirectApi parser: it reads `candidates[0].content.parts[0].text` from the direct-provider response body, and only its `--output-format json` comment and `stdout` parameter name are CLI-era wording. Steps 1-5 below apply to every transport.
 
-When a platform-specific parser fails:
-1. **Log:** Record parse error in seglog (`parser.error` event) with the first 500 characters of raw output for diagnostics.
+When the transport parser fails to produce a valid handoff:
+1. **Log:** Record the parser failure in seglog (`parser.error`) under OSI-684. The event provides the first 500 characters of sanitized output for diagnostics and a reference to the full sanitized output.
 2. **Generic fallback:** Attempt generic text extraction — scan for completion signals (including legacy naming variants), error patterns (stack traces, "error:", "fatal:"), and file modification markers.
-3. **If generic succeeds:** Use extracted data; flag the turn as `parser_fallback_used` in seglog metadata.
-4. **If generic also fails:** Treat as a Provider error. Retry once with the same Provider. If retry also fails, surface error to user: "Could not parse output from [Provider]. [Retry] [Skip] [View raw output]."
-5. **Never silently drop output.** All raw output is preserved in the seglog event regardless of parse success.
+3. **If generic succeeds:** Use extracted data only after it passes the same handoff validation. Flag the turn as `parser_fallback_used` in seglog metadata.
+4. **If the output is still invalid:** Request the next format retry with the same Provider while the Handoff Retry Ceiling budget remains. On exhaustion, surface "Could not parse output from [Provider]. [Retry] [Skip] [View raw output]." using the actions of the live recovery point. The earlier "Retry once with the same Provider" wording describes the default budget.
+5. **Never silently drop output.** Preserve the permitted raw output for a recorded parser failure even when generic fallback succeeds.
 
 ### 11. Subagent Persona info: storage, overrides, and injection
 
@@ -1394,7 +1394,7 @@ Risks, edge cases, and failure modes to watch during implementation and testing.
 ### 13. Platform-specific hook integration and parser reliability
 
 - **Issue:** Lifecycle hooks and structured handoff validation require platform-specific implementations (native hooks vs orchestrator middleware, JSON vs JSONL vs text parsing). Parsers may fail on edge cases (malformed JSON, missing sections in text, JSONL aggregation errors).
-- **Mitigation:** (1) **Hooks:** For the CliBridge providers with native hooks (Cursor, Claude Code), register Puppet Master hooks that delegate to platform hooks where possible; for the DirectApi providers (Codex, Copilot, Gemini) and the ServerBridge provider (OpenCode), use orchestrator-level middleware (OSI-004, OSI-139). Document which platforms use which approach. (2) **Parsers:** Implement robust parsers with fallback behavior, scoped by transport as OSI-093 says: JSON parsers handle missing fields gracefully for CliBridge CLI output and for the DirectApi final assistant content; the JSONL parser (last event wins, accumulate findings) and the multi-pattern text parser describe CLI-era Codex and Copilot output and are historical context only, not implementation targets. (3) **Fail-safe:** If parsing fails after retry, build the partial `SubagentOutput` rather than crashing, keep it on the failed attempt for review only, and raise the `needs_review` recovery point (the Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25)); the earlier "mark tier as "complete with warnings"" is superseded source lineage. (4) **Testing:** Add integration tests for each platform's parser with malformed input, missing fields, and edge cases to ensure reliability.
+- **Mitigation:** (1) **Hooks:** For the CliBridge providers with native hooks (Cursor, Claude Code), register Puppet Master hooks that delegate to platform hooks where possible; for the DirectApi providers (Codex, Copilot, Gemini) and the ServerBridge provider (OpenCode), use orchestrator-level middleware (OSI-004, OSI-139). Document which platforms use which approach. (2) **Parsers:** Implement robust parsers with fallback behavior, scoped by transport as OSI-093 says: JSON parsers handle missing fields gracefully for CliBridge CLI output and for the DirectApi final assistant content; the JSONL parser (last event wins, accumulate findings) and the multi-pattern text parser describe CLI-era Codex and Copilot output and are historical context only, not implementation targets. (3) **Fail-safe:** If output remains invalid after fallback and the Handoff Retry Ceiling budget is exhausted, build the partial `SubagentOutput` rather than crashing, keep it on the failed attempt for review only, and raise the `needs_review` recovery point (the Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25)); the earlier "mark tier as "complete with warnings"" is superseded source lineage. (4) **Testing:** Add integration tests for each platform's parser with malformed input, missing fields, and edge cases to ensure reliability.
 
 ### 14. Subagent persona overrides (token budget and scope)
 
@@ -2451,7 +2451,7 @@ where F: FnOnce() -> Result<T>,
 **Integration:** In `src/core/orchestrator.rs`, call `hook_registry.execute_before_unit` before subagent execution and `hook_registry.execute_after_unit` after. Update `ExecutionUnitContext.active_subagent` from `BeforeUnitResult`. Always register built-in hooks even when platform-native hooks are also registered.
 ### 2. Structured Handoff Report Validation
 
-**Concept:** Enforce a standardized output format for subagent invocations. Every subagent must produce a structured handoff report with required fields. If output is malformed, block and request one retry (fail-safe after retry).
+**Concept:** Enforce a standardized output format for subagent invocations. Every subagent must produce a structured handoff report with required fields. Malformed output blocks completion. Handoff Retry Ceiling governs format retries and exhaustion.
 
 **BeforeHandoffValidation responsibilities:**
 
@@ -2466,13 +2466,13 @@ where F: FnOnce() -> Result<T>,
 - **Validate field types:** Validate that field types match schema (string, array, enum, etc.)
 - **Validate findings format:** Validate that findings array contains valid `Finding` objects with required fields
 - **Extract from text (fallback):** If JSON parsing fails, attempt to extract structured data from text output
-- **Request retry if malformed:** If output is malformed and retry not yet attempted, request one retry with format instruction
+- **Request retry if malformed:** If neither the parser nor generic fallback yields a valid handoff, follow Handoff Retry Ceiling. The earlier "request one retry with format instruction" wording describes the default budget.
 
 **AfterHandoffValidation responsibilities:**
 
 - **Persist validation results:** Append the handoff-validation result to the canonical runtime verification/receipt event family and project it into redb-backed handoff validation read models. The legacy `.puppet-master/state/handoff-validation-{node_id}.json` path is retired source-lineage. Amended 2026-10-31 (DL-270, SP-339): no file is written; results are read through `pm inspect` or `pm export`.
 - **Update tier context:** Update tier context with validated `SubagentOutput` (task_report, downstream_context, findings)
-- **Handle validation failures:** If validation fails after retry, the node does not advance: it takes the `needs_review` recovery point with [Retry] [Skip] [View raw output], and the extracted partial output is kept on the failed attempt for review only (the Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25)). The earlier rule "proceed with partial output but mark tier as "complete with warnings"" is superseded source lineage.
+- **Handle validation failures:** If output remains invalid after fallback and the Handoff Retry Ceiling budget is exhausted, the node takes the `needs_review` recovery point with [Retry] [Skip] [View raw output]. Keep extracted partial output on the failed attempt for review only (Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions). The earlier rule "proceed with partial output but mark tier as "complete with warnings"" is superseded source lineage.
 
 **Required output format:**
 
@@ -2623,6 +2623,8 @@ impl OutputParser for CursorOutputParser {
 
 **Validation workflow:**
 
+Validate the structured parse and, if it fails, try and validate generic extraction on the same output. Return the complete validated result or report the format failure to the execution loop. The validator example below is source lineage for this workflow. Its ordering of text extraction after retry exhaustion is retired.
+
 ```rust
 // src/core/handoff_validation.rs
 
@@ -2703,7 +2705,7 @@ impl HandoffValidator {
 
 **Integration with orchestrator:**
 
-In `src/core/orchestrator.rs`, extend subagent execution:
+In `src/core/orchestrator.rs`, run the initial handoff with retry count zero and apply the same parser and validation to each resulting output. When validation and fallback fail, check the count before scheduling another invocation. If budget remains, dispatch the next same-Provider retry with validation feedback and the `SubagentOutput::example()` format instruction, counting it only when dispatched. Otherwise settle using the Handoff Retry Ceiling and Handoff failure boundary below. The loop example is source lineage. Its pre-dispatch increment and handling of the retry instruction are retired.
 
 ```rust
 use crate::core::handoff_validation::HandoffValidator;
@@ -2776,10 +2778,10 @@ impl Orchestrator {
 
 **Error handling:**
 
-- **JSON parse failure:** If JSON parsing fails, attempt text extraction; if that fails and retry not attempted, request retry with format instruction
-- **Missing field failure:** If required field is missing, request retry with field requirement instruction
-- **Invalid severity failure:** If severity is invalid, request retry with valid severity values
-- **Max retries reached:** If max retries reached, the attempt settles with `failure_class = structured_output_invalid` and the node takes the `needs_review` recovery point; the partial output is kept for review only (the Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25)). The earlier "proceed with partial output but mark tier as "complete with warnings"" is superseded source lineage.
+- **JSON parse failure:** Try and validate generic text extraction. If output is still invalid and the Handoff Retry Ceiling budget remains, request a retry with format instruction.
+- **Missing field failure:** If output is still invalid after fallback and budget remains, include the missing field in the retry instruction.
+- **Invalid severity failure:** If output is still invalid after fallback and budget remains, include the valid severity values in the retry instruction.
+- **Max retries reached:** If output is still invalid after fallback and the handoff retry budget is exhausted, the attempt settles with `failure_class = structured_output_invalid` and the node takes the `needs_review` recovery point. Keep partial output for review only (Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions). The earlier "proceed with partial output but mark tier as "complete with warnings"" is superseded source lineage.
 
 ```rust
                     .filter_map(|v| serde_json::from_value(v.clone()).ok())
@@ -3011,8 +3013,8 @@ pub fn validate_subagent_output(
 
 **Validation logic in AfterUnit hook** (legacy alias AfterTier, Execution-Unit Hook Naming)**:** AfterUnit hook calls `validate_subagent_output(output: &str, stderr: &str, platform: Platform) -> Result<SubagentOutput, ValidationError>`. If validation fails:
 1. Log error with details (platform, error type, partial output snippet).
-2. Request one retry (re-run subagent with "format your output as structured JSON" instruction appended to prompt).
-3. If retry also fails, the node does not advance and `ExecutionUnitContext` is not updated from the output: the attempt settles with `failure_class = structured_output_invalid`, the raw output stays in `parser.error`, the extracted partial output is kept on the failed attempt for review only, and the node takes the `needs_review` recovery point with [Retry] [Skip] [View raw output] (the Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25)). The earlier step "proceed with partial output (fail-safe) but mark tier as "complete with warnings"" is superseded source lineage.
+2. Request the next retry while the Handoff Retry Ceiling budget remains, using "format your output as structured JSON" in the retry prompt.
+3. When output is still invalid after fallback and the handoff retry budget is exhausted, the node does not advance and `ExecutionUnitContext` is not updated from the output. The attempt settles with `failure_class = structured_output_invalid`, the raw output stays in `parser.error`, the extracted partial output is kept on the failed attempt for review only, and the node takes the `needs_review` recovery point with [Retry] [Skip] [View raw output] (Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions). The earlier step "proceed with partial output (fail-safe) but mark tier as "complete with warnings"" is superseded source lineage.
 
 **Integration with existing ParsedOutput:**
 
@@ -3295,7 +3297,7 @@ where
 
 - **BeforeUnit/AfterUnit hooks** (legacy alias BeforeTier/AfterTier)**:** Wrap hook execution in `safe_hook_main` so hooks never crash.
 - **Verification functions:** Return `Result<(), VerificationError>` with structured error types.
-- **Subagent output parsing:** On parse failure, build `SubagentOutput { task_report: raw_output, downstream_context: None, findings: vec![] }` (partial output) rather than crashing; after the automatic retries it is kept on the failed attempt for review only and is never forwarded as validated output (the Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25)).
+- **Subagent output parsing:** On parse failure, build `SubagentOutput { task_report: raw_output, downstream_context: None, findings: vec![] }` (partial output) rather than crashing; on exhaustion under Handoff Retry Ceiling it is kept on the failed attempt for review only and is never forwarded as validated output (the Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25)).
 
 **Platform-specific implementation:** Platform-agnostic -- safe error handling is Rust-level. All platforms benefit from the same wrappers.
 
@@ -3325,14 +3327,14 @@ where
 **Enforcement:**
 
 - **AfterUnit hook** (legacy alias AfterTier)**:** Calls `validate_subagent_output()` (see #2 above).
-- **On validation failure:** Block response, request one retry with format instruction.
-- **After retry:** If still malformed, the node takes the `needs_review` recovery point with [Retry] [Skip] [View raw output]; partial output is kept for review only (the Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25)). The earlier "proceed with partial output (fail-safe) but mark tier as "complete with warnings."" is superseded source lineage.
+- **On validation failure:** Block response and apply Handoff Retry Ceiling. Request a format retry only while budget remains.
+- **On exhaustion:** If still malformed after fallback, the node takes the `needs_review` recovery point with [Retry] [Skip] [View raw output]. Keep partial output for review only (Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions). The earlier "proceed with partial output (fail-safe) but mark tier as "complete with warnings."" is superseded source lineage.
 
 **Documentation:** Document the contract in AGENTS.md and in subagent prompt templates. State that subagents **must** produce structured output; runtime validation enforces it.
 
 **Platform-specific implementation:**
 
-- **Cursor/Codex/Claude/Gemini:** Parse JSON output; validate required fields (`task_report`, `downstream_context`, `findings`).
+- **Cursor/Codex/Claude/Gemini:** Parse JSON output and validate the required fields. `downstream_context` is optional (OSI-199).
 - **Copilot:** Copilot is DirectApi (OSI-004, OSI-093): parse its final assistant content as JSON like the providers above and validate the same required fields. The CLI-era Copilot instruction "Parse text output; extract structured sections via regex or pattern matching; validate presence." is historical context only; pattern extraction survives only as the generic fallback extraction OSI-093 keeps for every transport.
 
 Provider capability rule: provider-doc findings are capability evidence, not a blanket bypass for local validation. For schema-critical handoffs, provider-native schema enforcement is preferred where available: Anthropic provider-doc guidance directs schema-critical workflows to **Structured Outputs** for guaranteed JSON schema conformance, and Gemini provider-doc guidance supports schema-bound structured output and SDK schema helpers. Across providers and `/transports`, PM still runs local validation and records downgrade behavior because transport support and adherence vary; unsupported or weak transports fall back to locally validated structured output or partial-output warnings.
@@ -3405,7 +3407,7 @@ These lifecycle and quality features **complement** the existing start/end verif
 
 **Mitigation:**
 - **Multi-pass parsing:** Try JSON parse first, then JSONL (CliBridge stream-json NDJSON events only), then text extraction (the generic fallback every transport keeps, OSI-093). Use best-effort parsing with fallbacks.
-- **Partial output handling:** If parsing fails, extract what we can (e.g., `task_report` from text even if `findings` missing) and keep it on the attempt for review; if the output is still invalid after the automatic retries, the node takes the `needs_review` recovery point (the Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25)). The earlier "Mark tier as "complete with warnings."" is superseded source lineage.
+- **Partial output handling:** If parsing fails, extract what we can (e.g., `task_report` from text even if `findings` missing) and keep it on the attempt for review; if the output is still invalid after fallback when the Handoff Retry Ceiling budget is exhausted, the node takes the `needs_review` recovery point (the Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25)). The earlier "Mark tier as "complete with warnings."" is superseded source lineage.
 - **Parser testing:** Comprehensive test suite for each platform parser with edge cases (malformed JSON, unicode, large outputs, streaming).
 - **Parser versioning:** Track parser version and platform CLI version for the CliBridge providers (Cursor, Claude Code), and the provider API and model version for the DirectApi providers (Codex, Copilot, Gemini). Update parsers when either changes.
 
@@ -3471,8 +3473,8 @@ These lifecycle and quality features **complement** the existing start/end verif
   }
   ```
 - **Platform-specific instructions:** none by transport: every provider, Copilot included, gets the JSON schema example above, because Copilot is DirectApi and its final assistant content is parsed as JSON (OSI-004, OSI-093, OSI-194). The earlier instruction "For Copilot (text-only), provide markdown format example instead of JSON" is CLI-era history, not an implementation target.
-- **Validation feedback:** If retry fails, include validation error in retry prompt: "Your output was missing 'task_report' field. Please include it."
-- **Fail-safe:** After retry fails, extract partial output (best-effort) and keep it for review; the node takes the `needs_review` recovery point rather than proceeding with warnings (the Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25)).
+- **Validation feedback:** When invalid output qualifies for another format retry under Handoff Retry Ceiling, include the validation error in that prompt. For example, "Your output was missing 'task_report' field. Please include it."
+- **Fail-safe:** If output remains invalid after fallback and the handoff retry budget is exhausted, keep any best-effort partial output for review. The node takes the `needs_review` recovery point (Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions).
 
 **Gap #23: Cross-platform hook adapter complexity**
 
@@ -3634,7 +3636,7 @@ Short notes so implementers know where to put code and what the orchestrator alr
 ### Lifecycle hooks and quality features
 
 - **Where:** New module `src/core/hooks.rs` or `src/verification/hooks.rs` for hook system; canonical persistence and recovery projections in seglog/redb for continuity; extend `SubagentOutput` in `src/types/` for structured handoff format; remediation loop in orchestrator completion logic (`src/core/orchestrator.rs`).
-- **What:** (1) **BeforeUnit/AfterUnit hooks:** Implement hook traits, register hooks per unit type, call automatically at unit boundaries. For the CliBridge providers with native hooks (Cursor, Claude Code), register Puppet Master hooks that delegate where possible; for the DirectApi providers (Codex, Copilot, Gemini), use orchestrator-level middleware and canonical coordination projection (OSI-004, OSI-139). (2) **Structured handoff validation:** `validate_subagent_output()` with transport-scoped parsers per OSI-093 (JSON over CliBridge CLI output for Cursor/Claude Code; JSON over the final assistant content for Codex, Copilot and Gemini; the CLI-era JSONL for Codex and text parsing for Copilot are historical context only). (3) **Remediation loop:** Parse findings from reviewer subagent output; filter Critical/Major; block completion and re-run until resolved or max retries; escalate to parent-tier on max retries. (4) **Cross-run continuity:** Persist architectural decisions, patterns, and tech choices as canonical outputs and projections at Phase completion; reload them at run start through handoff/context assembly rather than child-memory files. (5) **Active agent tracking:** `active_subagent: Option<String>` in `ExecutionUnitContext`; update in BeforeUnit/AfterUnit hooks; persist through canonical runtime storage and projections. (6) **Safe error handling:** Wrap hooks and verification in `safe_hook_main()` that guarantees structured output even on failure. (7) **Lazy lifecycle:** Create verification state on first write; prune stale state (>2 hours) in BeforeUnit hook. (8) **Contract enforcement:** AfterUnit hook validates handoff format; retry on malformed output; fail-safe after retry.
+- **What:** (1) **BeforeUnit/AfterUnit hooks:** Implement hook traits, register hooks per unit type, call automatically at unit boundaries. For the CliBridge providers with native hooks (Cursor, Claude Code), register Puppet Master hooks that delegate where possible; for the DirectApi providers (Codex, Copilot, Gemini), use orchestrator-level middleware and canonical coordination projection (OSI-004, OSI-139). (2) **Structured handoff validation:** `validate_subagent_output()` with transport-scoped parsers per OSI-093 (JSON over CliBridge CLI output for Cursor/Claude Code; JSON over the final assistant content for Codex, Copilot and Gemini; the CLI-era JSONL for Codex and text parsing for Copilot are historical context only). (3) **Remediation loop:** Parse findings from reviewer subagent output; filter Critical/Major; block completion and re-run until resolved or max retries; escalate to parent-tier on max retries. (4) **Cross-run continuity:** Persist architectural decisions, patterns, and tech choices as canonical outputs and projections at Phase completion; reload them at run start through handoff/context assembly rather than child-memory files. (5) **Active agent tracking:** `active_subagent: Option<String>` in `ExecutionUnitContext`; update in BeforeUnit/AfterUnit hooks; persist through canonical runtime storage and projections. (6) **Safe error handling:** Wrap hooks and verification in `safe_hook_main()` that guarantees structured output even on failure. (7) **Lazy lifecycle:** Create verification state on first write; prune stale state (>2 hours) in BeforeUnit hook. (8) **Contract enforcement:** AfterUnit hook validates handoff format; use the retry or exhaustion path in Handoff Retry Ceiling for output still invalid after fallback.
 - **When called:** Hooks run automatically at unit boundaries (before `VerifyUnitStart`, after `VerifyUnitEnd`; legacy `verify_tier_start` / `verify_tier_end`). Cross-run continuity persists at Phase completion and loads through run-start context assembly. Remediation loop runs when Critical/Major findings detected. See **"Lifecycle and Quality Features"** for full details and platform-specific implementation notes.
 
 ### Considerations #6 (Subagent availability / files)
@@ -6507,7 +6509,7 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Decisio
 | classifier family | classifier | auto retry | backoff | safe-point rollback | remediation child | terminal / escalation |
 |---|---|---|---|---|---|---|
 | `failure_class` | `provider_transient` | yes | `1s, 2s, 4s` | no | no | fail after 3 retries: the initial attempt plus at most 3 retries (4 attempts in all), one backoff wait before each retry, matching Max retries 3 in `Plans/Executor_Protocol.md` §7.1 |
-| `failure_class` | `structured_output_invalid` | one format retry | none | no | optional after failed retry | escalate to remediation or `needs_review` |
+| `failure_class` | `structured_output_invalid` | format retries within Handoff Retry Ceiling (default one format retry) | none | no | no for exhausted handoffs | exhausted handoffs take the `needs_review` recovery point |
 | `failure_class` | `verification_failed` | no direct blind retry | none | yes | yes | pause after remediation ceiling |
 | `failure_class` | `reviewer_findings` | no direct blind retry | none | yes | yes | pause after remediation ceiling |
 | `blocked_reason_code` | `permission_denied` | no | none | no | no | blocked with exact recovery CTA |
@@ -11813,7 +11815,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Structured subagent handoff validation needs transport-scoped parser and hook reliability under the OSI-004 ProviderTransport taxonomy: CliBridge providers (Cursor, Claude Code) use JSON parsers over their CLI structured output (stream-json NDJSON events); DirectApi providers (Codex, Copilot, Gemini) build SubagentOutput with serde_json from the direct-provider response's final assistant content and have no CLI output to parse; the ServerBridge provider (OpenCode) parses its server event stream. JSONL/NDJSON aggregation for Codex and regex/text extraction for Copilot (the text parser) describe CLI-era output and are historical context only, not implementation targets. Every transport keeps parser.error seglog records with raw-output excerpts, generic fallback extraction, parser_fallback_used metadata, retry behavior, raw output preservation, and malformed/missing-field/edge-case integration tests.
+  Structured subagent handoff validation needs transport-scoped parser and hook reliability under the OSI-004 ProviderTransport taxonomy: CliBridge providers (Cursor, Claude Code) use JSON parsers over their CLI structured output (stream-json NDJSON events); DirectApi providers (Codex, Copilot, Gemini) build SubagentOutput with serde_json from the direct-provider response's final assistant content and have no CLI output to parse; the ServerBridge provider (OpenCode) parses its server event stream. JSONL/NDJSON aggregation for Codex and regex/text extraction for Copilot (the text parser) describe CLI-era output and are historical context only, not implementation targets. Every transport keeps parser.error seglog records with raw-output excerpts, generic fallback extraction, parser_fallback_used metadata, Handoff Retry Ceiling, raw output preservation, and malformed/missing-field/edge-case integration tests.
 gui_related: false
 gui_classification_reason: This unit covers parser and hook backend reliability, not GUI behavior.
 split_recommended: false
@@ -11873,7 +11875,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  If platform-specific and generic parser fallback both fail after retry, the provider error is surfaced to the user with retry, skip, and raw-output viewing options rather than silently dropping output.
+  When the handoff is still invalid after platform parsing and generic fallback and the Handoff Retry Ceiling budget
+  is exhausted, surface the provider error through the needs_review recovery point. Its Retry, Skip and View raw
+  output controls follow the Executor's live allowed_action_ids in Parser-Failure And Unrelated-Failure Recovery Actions.
 gui_related: true
 gui_classification_reason: This unit covers user-visible parser failure recovery affordances.
 split_recommended: false
@@ -15145,8 +15149,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Every subagent invocation must produce a structured handoff report with required fields; malformed output blocks completion
-  and requests one retry, with a fail-safe path after retry.
+  Every subagent invocation must produce a structured handoff report with required fields. Malformed output blocks
+  completion and takes the format retry or exhaustion path defined by Handoff Retry Ceiling.
 gui_related: false
 gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
   presentation.
@@ -15189,7 +15193,8 @@ preserved_exact_tokens:
 - block and request one retry
 - fail-safe after retry
 negative_constraints: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- The source wording about one retry describes the default budget.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -15207,11 +15212,11 @@ owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   BeforeHandoffValidation detects output format, loads the SubagentOutput schema, and prepares validation context;
   DuringHandoffValidation parses, validates required fields, types, and findings, extracts from text fallback, and
-  requests one malformed-output retry; AfterHandoffValidation persists validation results and updates the execution-unit
-  context with validated SubagentOutput only. A post-retry failure keeps the extracted partial output on the failed
-  attempt for review only and settles as a needs_review recovery point (Handoff failure boundary in Parser-Failure And
-  Unrelated-Failure Recovery Actions); the earlier partial output with complete with warnings source disposition is
-  retired source lineage.
+  requests a format retry only while the Handoff Retry Ceiling budget remains. AfterHandoffValidation persists validation
+  results and updates the execution-unit context with validated SubagentOutput only. At exhaustion, partial output from a
+  still-invalid handoff stays on the failed attempt for review only and the node takes the needs_review recovery point
+  (Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions). The complete with warnings
+  disposition is retired source lineage.
 gui_related: false
 gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
   presentation.
@@ -15540,8 +15545,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  HandoffValidator validates subagent output by using platform_specs-driven parser selection, trying structured parsing first,
-  requesting retry for malformed output before max retries, and falling back to text extraction after retry exhaustion.
+  HandoffValidator selects the parser through platform_specs, tries structured parsing and validation first, and validates
+  generic text extraction on the same attempt if needed. Output still invalid after fallback goes to the execution
+  loop for the retry or exhaustion decision under Handoff Retry Ceiling.
 gui_related: false
 gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
   presentation.
@@ -15593,7 +15599,7 @@ negative_constraints:
 - Never hardcode parser selection by platform.
 - Do not use match platform statements.
 compatibility_only_notes:
-- The Rust validator snippet is plan evidence only, not an executable node output.
+- The Rust validator snippet is source lineage. Its placement of text extraction after retry exhaustion is retired.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -15674,8 +15680,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   The orchestrator subagent execution loop obtains the platform runner, executes the subagent, validates stdout/stderr
-  through HandoffValidator, returns validated SubagentOutput on success, and requests retry with SubagentOutput::example
-  format instructions on malformed output. After max retries it warns, keeps the extracted partial output
+  through HandoffValidator and returns validated SubagentOutput on success. On output still invalid after fallback,
+  it checks the Handoff Retry Ceiling before scheduling and counts only dispatched automatic retries. If budget
+  remains it retries with SubagentOutput::example format instructions. At exhaustion it keeps the extracted partial output
   (extract_partial_output) on the failed attempt for review only, and returns an error: the attempt settles with
   failure_class = structured_output_invalid and the node takes the needs_review recovery point (Handoff failure boundary
   in Parser-Failure And Unrelated-Failure Recovery Actions). The earlier return of extracted partial output as the
@@ -15731,7 +15738,7 @@ preserved_exact_tokens:
 - tracing::warn!
 negative_constraints: []
 compatibility_only_notes:
-- The Rust orchestrator integration snippet is plan evidence only, not an executable node output.
+- The Rust orchestrator integration snippet is source lineage. Its pre-dispatch retry increment and prompt handling are retired.
 - >-
   Adjacent orphaned parser-tail lines 2573-2585 are preserved as non-standalone example coverage and not as a separate product
   requirement.
@@ -15750,9 +15757,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Handoff validation failure handling requests retry for JSON parse, missing field, and invalid severity failures. When
-  Max retries reached, the node does not proceed: the partial output is kept for review only and the node takes the
-  needs_review recovery point with Retry, Skip and View raw output (Handoff failure boundary in Parser-Failure And
+  Handoff validation failure handling requests another format retry for JSON parse, missing field, and invalid severity
+  failures only if output is still invalid after fallback and the Handoff Retry Ceiling budget remains. At exhaustion,
+  partial output stays on the failed attempt for review only and the node takes the needs_review recovery point with
+  the allowed Retry, Skip and View raw output controls (Handoff failure boundary in Parser-Failure And
   Unrelated-Failure Recovery Actions). The earlier proceed with partial output and complete with warnings wording is
   preserved only as retired source lineage.
 gui_related: false
@@ -16241,10 +16249,10 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   AfterUnit handoff validation (the AfterTier hook name is an import-only alias stored as hook_name_normalized =
-  AfterUnit per Execution-Unit Hook Naming) logs platform, error type, and partial output snippet details and requests
-  one retry with structured JSON output instruction. After retry failure it does not update ExecutionUnitContext from
-  the output: the partial output is kept on the failed attempt for review only and the node takes the needs_review
-  recovery point (Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions). The earlier
+  AfterUnit per Execution-Unit Hook Naming) logs platform, error type, and partial output snippet details. Output still
+  invalid after fallback qualifies for another structured JSON format retry only within Handoff Retry Ceiling. At
+  exhaustion ExecutionUnitContext stays unchanged, partial output stays on the failed attempt for review only and the
+  node takes the needs_review recovery point (Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions). The earlier
   partial output (fail-safe) with complete with warnings wording is retired source lineage.
 gui_related: false
 gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.
@@ -16297,8 +16305,8 @@ preserved_exact_tokens:
 negative_constraints: []
 compatibility_only_notes:
 - >-
-  The complete with warnings wording is preserved as source text and does not override OSI-093/OSI-157 resolved parser failure
-  behavior.
+  The source wording about one retry describes the default budget. The complete with warnings wording is retired by
+  OSI-093/OSI-157.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -17297,9 +17305,10 @@ owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Runtime handoff contract enforcement validates Task Report, Downstream Context, and Findings through AfterUnit
   validation (the AfterTier hook name is an import-only alias stored as hook_name_normalized = AfterUnit per
-  Execution-Unit Hook Naming), blocks malformed responses, and requests one retry with format instruction. If still
-  malformed, the node takes the needs_review recovery point and the partial output is kept for review only (Handoff
-  failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions); the earlier partial output with complete
+  Execution-Unit Hook Naming), blocks malformed responses, and requests a format retry if the output remains invalid
+  after fallback and the Handoff Retry Ceiling budget remains. At exhaustion the node takes the needs_review recovery
+  point and partial output stays on the failed attempt for review only (Handoff failure boundary in Parser-Failure And
+  Unrelated-Failure Recovery Actions); the earlier partial output with complete
   with warnings source disposition is retired source lineage.
 gui_related: false
 gui_classification_reason: >-
@@ -17350,7 +17359,8 @@ preserved_exact_tokens:
 negative_constraints: []
 compatibility_only_notes:
 - >-
-  complete with warnings is preserved source wording and must remain aligned with OSI-093/OSI-157 parser failure policy.
+  The source wording about one retry describes the default budget. The complete with warnings wording is retired by
+  OSI-093/OSI-157.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -17794,7 +17804,7 @@ canonical_text: >-
   (OSI-004, OSI-093): the JSONL pass reads the CliBridge stream-json NDJSON events (Cursor, Claude Code); DirectApi
   final assistant content (Codex, Copilot, Gemini) is parsed as JSON with generic text extraction as the fallback; a
   Codex JSONL stream or Copilot text output is CLI-era history, not an implementation target. It keeps best-effort
-  partial output on the attempt for review (never forwarded after the automatic retries fail, and never marked complete
+  partial output on the attempt for review (never forwarded on exhaustion under Handoff Retry Ceiling, and never marked complete
   with warnings; Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions), parser edge-case
   tests, parser version tracking, and platform CLI version tracking for the CliBridge providers, with the provider API
   and model version tracked in its place for the DirectApi providers.
@@ -18261,8 +18271,8 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Structured handoff prompt enforcement includes an explicit JSON schema example for every provider and validation-error
-  feedback in retry prompts. After retry failure the best-effort partial output is kept for review only and the node
-  takes the needs_review recovery point instead of proceeding with warnings (Handoff failure boundary in Parser-Failure
+  feedback in retry prompts while the Handoff Retry Ceiling budget remains. At exhaustion the best-effort partial
+  output is kept for review only and the node takes the needs_review recovery point (Handoff failure boundary in Parser-Failure
   And Unrelated-Failure Recovery Actions). Copilot is DirectApi (OSI-004, OSI-093) and gets the same JSON schema
   example; the Gap #22 instruction to give Copilot (text-only) a markdown example instead of JSON is CLI-era history,
   not an implementation target.
@@ -20478,8 +20488,9 @@ owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Structured handoff validation extends validate_subagent_output() with transport-scoped parsers (OSI-004, OSI-093):
   JSON over CLI output for the CliBridge providers (Cursor, Claude Code) and JSON over the direct-provider response's
-  final assistant content for the DirectApi providers (Codex, Copilot, Gemini); contract enforcement retries malformed
-  output before failing safe. The source's parser list (JSON for Cursor/Claude/Gemini, JSONL for Codex, and
+  final assistant content for the DirectApi providers (Codex, Copilot, Gemini). Contract enforcement applies the
+  retry or exhaustion path in Handoff Retry Ceiling to output still invalid after generic fallback. The source's parser
+  list (JSON for Cursor/Claude/Gemini, JSONL for Codex, and
   text parsing for Copilot) describes CLI-era output and is historical context only, not an implementation target.
 gui_related: false
 gui_classification_reason: >-
@@ -20496,7 +20507,10 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
-- Malformed handoff output retries once before fail-safe handling.
+- With a budget of 0, invalid output after fallback takes the recovery path on the initial attempt. With the default
+  budget of 1 it takes that path on the first invalid retry. With a budget of 2 it takes that path on the second
+  invalid retry. A valid handoff from the transport parser or generic fallback takes the validated-output path at
+  any count. A configured value of 3 still observes the Executor ceiling.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - >-
@@ -30780,7 +30794,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Retry/backoff classifier behavior preserves executor classifier families, auto-retry/backoff/safe-point/remediation
-  matrix entries, and the rule that blocked reasons must not be coerced into failure_class.
+  matrix entries, and the rule that blocked reasons must not be coerced into failure_class. The structured_output_invalid
+  row uses Handoff Retry Ceiling under the Executor's classified outcome ceiling. Exhaustion of a still-invalid handoff
+  takes the needs_review recovery point.
 gui_related: false
 gui_classification_reason: This unit covers backend retry/backoff classification, not GUI presentation.
 split_recommended: false
@@ -31887,8 +31903,9 @@ Repairs row `sfk-f0bb4b941956a19bb7f62357`.
 
 - The canonical config key is `subagent.handoff.max_retries`.
 - Default `subagent.handoff.max_retries = 1`; the initial handoff attempt is not counted as a retry.
-- Effective range is `0..=3`. Values above 3 are invalid in product spec and must be rejected before dispatch.
-- On exhaustion, the handoff records `handoff_retry_exhausted` with `attempt_count`, `max_retries`, `last_error_class`, and `next_allowed_actions[] = [retry, skip_with_operator_acceptance, view_raw_output]`.
+- Accepted config values are integers in `0..=3`. Reject out-of-range values before dispatch. The effective automatic budget is the lower of this value and the Executor §7.1 `structured_output_invalid` maximum (2). Both owners use the same retry count. A configured 3 is valid and allows at most two automatic retries.
+- On each attempt, validate the transport parser result and try and validate generic fallback if it fails. If the output remains invalid, compare the automatic same-Provider format retries already dispatched for that handoff with the effective budget. While the count is below the budget, use the existing classified retry admission for the next format retry and keep the parser recovery prompt closed. When the count reaches the budget and that attempt's output is still invalid after fallback, the budget is exhausted. With a budget of 0 this can happen on the initial attempt. Fallback, event append/replay and operator recovery actions do not increment this count.
+- Only on exhaustion, the handoff records `handoff_retry_exhausted` with `attempt_count`, `max_retries` (the effective budget), `last_error_class`, and `next_allowed_actions[] = [retry, skip_with_operator_acceptance, view_raw_output]`. `attempt_count` includes the initial attempt and its dispatched automatic format retries. The live action list comes from the blocked episode in Parser-Failure And Unrelated-Failure Recovery Actions.
 
 ### Execution-Unit Hook Naming
 
@@ -32964,7 +32981,7 @@ Current selected assignment (2026-11-19): crew.board_messages_archived@1.0.0 is 
 
 **Raw-output reconciliation (technical owner binding).** raw_output_preview is the first 500 Unicode characters of the sanitized output (or all if shorter); raw_output_ref addresses the entire sanitized original in SP-337 custody. Both retain DL-086’s one-year lifetime. The raw output is never duplicated into a giant inline body. Original secret handling applies before either representation; preserve all permitted output, not secret bytes.
 
-**Producer and ordering.** `Provider output parser / record parse failure` owns the occurrence. Predicate: parse attempt -> fallback pending; first log this failure, then generic extraction, then at most one same-Provider retry; recording or reading never retries. Allocate operation_id once at the actual operation boundary and occurrence once per distinct observation in that operation; retries retain both. The existing operation owner commits or settles its canonical result first under its permission/stop/scope fence; this event records that fact and never authorizes another effect. Admit scope/schema/retention/permission and validate payload, durably commit referenced body bytes using SP-337, then append through Case L-5. Explicitly adopt SP-286/CV-339 first-AppendReceipt custody and `storage.first_append_receipt.resolve.v2` with its full-value successor. Retain the prepared full EventRecord and first receipt in the original operation custody; publish this history fact only after the durable receipt. On uncertain append resolve that exact full value before retry or publication; fail closed while unresolved. A body/operation already committed is not repeated to repair a missing history event.
+**Producer and ordering.** `Provider output parser / record parse failure` owns the occurrence. The predicate applies to one parser-failure occurrence on one attempt: parse attempt -> fallback pending; first log this failure, then generic extraction, then at most one same-Provider retry; recording or reading never retries. A transport parser fails this check when it yields no valid handoff. The single next retry applies per failed attempt and only to output still invalid after fallback while the Handoff Retry Ceiling budget remains. Every dispatched retry checks its own output again against that same handoff budget. Raise the parser recovery point and record `handoff_retry_exhausted` only if the current attempt is still invalid after fallback and the effective budget is spent. Recording or reading this event consumes no retry and authorizes none. Allocate operation_id once at the actual operation boundary and occurrence once per distinct observation in that operation; retries retain both. The existing operation owner commits or settles its canonical result first under its permission/stop/scope fence; this event records that fact and never authorizes another effect. Admit scope/schema/retention/permission and validate payload, durably commit referenced body bytes using SP-337, then append through Case L-5. Explicitly adopt SP-286/CV-339 first-AppendReceipt custody and `storage.first_append_receipt.resolve.v2` with its full-value successor. Retain the prepared full EventRecord and first receipt in the original operation custody; publish this history fact only after the durable receipt. On uncertain append resolve that exact full value before retry or publication; fail closed while unresolved. A body/operation already committed is not repeated to repair a missing history event.
 
 **Identity and replay.** scope_partition is `app` or the exact EventRecord project~ encoding. Identity preimage is `JCS(["ea-do-v1",scope_partition,server_id,thread_id,run_id,"parser.error",operation_id,occurrence])`; UTF-8 RFC8785 JCS bytes hashed with SHA-256 give `idempotency_key = "do1:" + lowercase_hex(hash)` and `event_id = "evt_do_" + lowercase_hex(hash)`. The actual canonical operation allocates operation_id with fresh entropy, never recycles it after restore; occurrence is positive and monotonically allocated within it. The first prepared event fixes timestamps, all lineage and semantic digest. Same event/key and full producer-semantic digest returns the original receipt; any changed semantic field is idempotency_conflict. Unreadable dedupe is unavailable. Replay reads history only: no child spawn, provider/tool call, message delivery, phase completion, model switch, budget change, warning notification or usage charge. Numbers, history and timestamps follow the shared rules CV-1100 (current tokens and qualified semantic recipes), SP-1100 (physical and metadata profiles), SP-1101 (authenticated original selection) and CV-1101 (EventRecord date-time profiles), beside this family's existing owners CV-317, CV-339, CV-366, SP-236, SP-278, SP-286 and SP-337. Current raw input is parsed by the shared `loads_current_json`, which refuses `-0`, invalid JSON `01`, non-finite tokens, duplicate keys and lone surrogates. Every schema integer slot (occurrence, which stays a positive integer, and every count, length, duration, index and attempt number) is admitted by the shared `current_integer` with that slot's own bounds, so `1.0` and `1e0` refuse there; there is no lane-wide safe-integer cap, and fractional values keep the schema's `number` type. Before any effect the CV-317 producer projection, the identity preimage and the CV-366 observation component are qualified by the shared `qualified_jcs`; a value it cannot encode exactly refuses as `number_domain`, and semantic and typed-source digests use the same qualified serializer. EventRecord value bytes, inline payload sizes and SP-337 `application/msgpack` pack bytes use SP-1100's EVENT_VALUE profile, application wrapper bytes use APP_PHYSICAL, and Storage sequence, offset, count and generation metadata are exact uint64 (`storage_uint64`), refused at the record's schema boundary before any SP-278 binding digest; physical digests cover those exact bytes. Payload `occurred_at_utc`, and `read_at_utc` or `archived_before_utc` where the family has one, take the shared EventRecord date-time profile (`pm_event_datetime.date_time`: RFC 3339, including offsets, lowercase separators and real leap seconds); Storage-assigned `observed_at_utc` and `persisted_at_utc` take CV-253's `storage_utc_z`. No representation can allocate a second identity or turn an equal-semantic retry into a second effect. The current writing recipe is `ea-do-rfc8785-v2`; only new writes use it. Historical reads and uncertain-result recovery resolve the original through the SP-1101 `RetainedDispatcher`: Storage's sealed custody for the original's seglog ref authenticates its exact bytes and supplies the recipe tuple recorded when they were written, and that recipe's frozen verifier recomputes identity, payload join and source commitment: `ea-do-json-v1` uses the original UTF-8 `json.dumps` recipe with `separators=(",", ":")`, `ensure_ascii=False`, and its original numeric types for both identity and observation arrays; `ea-do-rfc8785-v2` uses RFC8785 for both. Neither changes the array members or domain labels above. Verify event/key against that one selected recipe, never try arbitrary fallbacks or remint a valid old identity. The closed historical witness's `original_identity_recipe` and verified `original_recipe_evidence` (exact event/key/family/schema/Storage/partition and original receipt-byte SHA-256) are disclosed copies joined against that custody; they select nothing. A custody refusal, or missing, unverified, contradictory, unsupported or foreign recipe evidence, refuses. Current token/value restrictions apply only to incoming current inputs, not retained EventRecords, first receipts or typed source/wrapper material. Decode a supported historical original under the recipe/codec valid when written, preserving exact bytes and number types, including originally valid `1.0`, `1e0` and `1e20` values. Frozen typed-source hash and physical codec domains remain exact. Recovery verifies the original and returns its exact complete receipt before any retry; an equal-semantic current retry keeps that original lifetime key/ID and returns its original receipt bytes. Forged identities and current reader withdrawal/publication/access/deletion/hold fences still refuse.
 
@@ -35212,19 +35229,20 @@ Repairs `sfk-52b55259003ddf5c68bd4d44` (registry lines 1501 and 1588).
 
 Repairs `sfk-15a9ffa7a7561411bb7625a4` (registry line 1518); binds OSI-094, Handoff Retry Ceiling and Unrelated-failure escalation to the existing `cmd.runtime.*` recovery commands in `Plans/UI_Command_Catalog.md`. No new command id is added.
 
-- Raise: when the platform parser, the generic fallback and the one automatic retry all fail (OSI-094), or `subagent.handoff.max_retries` is exhausted (Handoff Retry Ceiling), the attempt settles with `failure_class = structured_output_invalid`, the raw output stays in the `parser.error` seglog event, a `handoff_retry_exhausted` record is written, and the node takes the `needs_review` overlay (§7 Retry/backoff matrix) at a recovery point with a minted `blocked_sequence`.
-- Raise for the Unrelated-failure escalation CTA (OSI-136): when an attempt fails because of issues outside its intended scope and its one automatic retry with the same config also fails, the retried attempt keeps the classifier family and classifier the executor emitted for it (`failure_class` or `blocked_reason_code`, §7 Retry/backoff matrix: never coerced into `structured_output_invalid` or another `failure_class`). No `parser.error` event and no `handoff_retry_exhausted` record is written for it unless that attempt really was a structured-output parse failure. The node waits at a recovery point with a minted `blocked_sequence` and the chat CTA; a modal replaces the chat CTA only for P0 risk (OSI-136). The attempt's own classifier row still governs anything the matrix makes automatic (for example `provider_transient` retries run before this escalation is reached).
-- Local spellings map to canonical `allowed_action_id` values: `retry` -> `retry_now`, or `restore_safe_point_then_retry` where the retry slot below holds it; `skip_with_operator_acceptance` -> `skip_node`; `view_raw_output` -> `open_details`. The recovery point's `allowed_action_ids[]` is the list the Executor emits for the blocked episode under its current blocked/retry policy (`Plans/Executor_Protocol.md` Approved baseline-target retry and restore lifecycle), and each prompt shows exactly those controls in the emitted order (Runtime Enum and Counter Alignment Addendum). For these recovery points the Executor emits at most `[<retry slot>, skip_node, open_details]` for the parser prompt and `[open_details, skip_node, <retry slot>, abort_run]` for the Assistant chat CTA (review, skip, retry, abort). The retry slot is filled by that Executor policy, never by the prompt: (a) when the episode has `requires_safe_point_restore = true` (for example after a `verification_failed` or `reviewer_findings` attempt, whose §7 row takes safe-point rollback), the slot holds `restore_safe_point_then_retry` instead of `retry_now`, because it is then the only legal rerun verb; (b) otherwise the slot holds `retry_now` only when the policy admits `retry_now` for the episode and the failed attempt is bound to a repo and worktree, so the retry can carry the `worktree_head` target in the table; (c) otherwise the slot is empty and no retry control is shown, because a retry that carries no SCM target may follow only an owner-defined non-SCM retry path and no owner defines one. Wherever this document lists the parser prompt as [Retry] [Skip] [View raw output], or the Unrelated-failure CTA as review, skip, retry and abort, the retry control appears only when the slot is filled. The `handoff_retry_exhausted` record's `next_allowed_actions[] = [retry, skip_with_operator_acceptance, view_raw_output]` (Handoff Retry Ceiling) is that candidate list in local spellings, not the live list: its `retry` becomes whatever the slot holds, or nothing when the slot is empty.
+- Raise the parser recovery point only on Handoff Retry Ceiling exhaustion (OSI-094). The current handoff remains invalid after transport parsing and generic fallback, and the number of dispatched automatic format retries has reached the effective budget. The attempt settles with `failure_class = structured_output_invalid`, the raw output stays in `parser.error` under OSI-684, and the handoff records `handoff_retry_exhausted`. The node takes the `needs_review` overlay (§7 Retry/backoff matrix) at a recovery point with a minted `blocked_sequence`.
+- Raise for the Unrelated-failure escalation CTA (OSI-136): when an attempt fails because of issues outside its intended scope and its one automatic retry with the same config also fails, the retried attempt keeps the classifier family and classifier the executor emitted for it (`failure_class` or `blocked_reason_code`, §7 Retry/backoff matrix: never coerced into `structured_output_invalid` or another `failure_class`). An unrelated failure produces neither `parser.error` nor `handoff_retry_exhausted`. A structured-output failure uses the parser recovery rule above. The node waits at a recovery point with a minted `blocked_sequence` and the chat CTA; a modal replaces the chat CTA only for P0 risk (OSI-136). The attempt's own classifier row still governs anything the matrix makes automatic (for example `provider_transient` retries run before this escalation is reached).
+- Local spellings map to canonical `allowed_action_id` values: `retry` -> `retry_now`, or `restore_safe_point_then_retry` where the retry slot below holds it; `skip_with_operator_acceptance` -> `skip_node`; `view_raw_output` -> `open_details`. The recovery point's `allowed_action_ids[]` is the list the Executor emits for the blocked episode under its current blocked/retry policy (`Plans/Executor_Protocol.md` Approved baseline-target retry and restore lifecycle), and each prompt shows exactly those controls in the emitted order (Runtime Enum and Counter Alignment Addendum). For these recovery points the Executor emits at most `[<retry slot>, skip_node, open_details]` for the parser prompt and `[open_details, skip_node, <retry slot>, abort_run]` for the Assistant chat CTA (review, skip, retry, abort). The retry slot is filled by that Executor policy, never by the prompt: (a) when the episode has `requires_safe_point_restore = true` (for example after a `verification_failed` or `reviewer_findings` attempt, whose §7 row takes safe-point rollback), the slot holds `restore_safe_point_then_retry` only if the Executor permits it for the episode. This is the only legal rerun verb for a restore-required episode. (b) When restore is not required, the slot holds `retry_now` only when the policy admits `retry_now` for the episode and the failed attempt is bound to a repo and worktree, so the retry can carry the `worktree_head` target in the table; (c) otherwise the slot is empty and no retry control is shown, because a retry that carries no SCM target may follow only an owner-defined non-SCM retry path and no owner defines one. Wherever this document lists the parser prompt as [Retry] [Skip] [View raw output], or the Unrelated-failure CTA as review, skip, retry and abort, the retry control appears only when the slot is filled. The `handoff_retry_exhausted` record's `next_allowed_actions[] = [retry, skip_with_operator_acceptance, view_raw_output]` (Handoff Retry Ceiling) is that candidate list in local spellings, not the live list: its `retry` becomes whatever the slot holds, or nothing when the slot is empty.
 
 Payloads are the typed args of each command's definition in `Plans/Executor_Protocol.md` (the `cmd.runtime.*` command definitions, which UCC-230 names; the catalog's minimum-args column is history, DL-333). Every action carries the blocked-episode identity the definition requires: `run_id`, `node_id`, the recovery point's `blocked_sequence` (integer, at least 1) and `allowed_action_id` (the value in the Control row). The requester is the UICommand envelope `actor_ref` for all five; no action carries `requested_by` in its args.
 
-| Control | `allowed_action_id` | Command | Typed args (beyond `run_id`, `node_id`, `blocked_sequence`, `allowed_action_id`) | Result and state after success |
+| Control | `allowed_action_id` | Command | Typed args (beyond `run_id`, `node_id`, `blocked_sequence`, `allowed_action_id`) | Result and recovery state |
 |---|---|---|---|---|
-| [Retry] / chat retry, slot case (b) | `retry_now` | `cmd.runtime.retry_now` | `project_id`, `attempt_id` (required: the failed attempt the recovery point was raised for), `idempotency_key` (string, at most 256), `baseline_target = worktree_head` with `repo_id` and `worktree_id` (the failed attempt's repo and worktree), `expected_head_oid` and `expected_state_sha256` (that worktree's current full HEAD OID and FileSafe state digest, read from its SCM status when the operator acts), and `dirty_state_confirmed = true` when that worktree is dirty: [Retry] then asks the operator to confirm retrying on the uncommitted state and sends nothing without that confirmation. `safe_point_id` and `historical_commit_oid` are omitted. `worktree_head` performs no checkout, reset or file mutation, so this retry repeats the already resolved target. | Owner result `RuntimeRetryNowResult`. If the recomputed HEAD OID or state digest no longer matches, the command is refused without a successor attempt and the recovery point stays open (`Plans/UI_Command_Catalog.md` baseline-target table). Otherwise the recovery point closes; a new attempt with a new `attempt_id` is dispatched for the same node and handoff. This operator retry is outside the automatic `subagent.handoff.max_retries` count. If it fails the same way, a new recovery point with the next `blocked_sequence` is raised. |
-| [Restore and retry] / chat retry, slot case (a) | `restore_safe_point_then_retry` | `cmd.runtime.restore_safe_point_then_retry` | `project_id`, `attempt_id` (the failed attempt), `safe_point_id`, `repo_id` and `worktree_id` (the safe point and worktree the blocked episode names), `baseline_target = "safe_point"`, `idempotency_key` (string, at most 256). The control names the safe point it restores before the operator confirms, as the Restore verb requires (`Plans/UI_Command_Catalog.md` Recovery command definitions). | Owner result `RuntimeRestoreSafePointThenRetryResult`. FileSafe restores the named worktree; only `restored_clean`, or `restore_skipped` with equality proof, closes the recovery point and mints a new attempt with a new `attempt_id` for the same node and handoff. `restore_refused`, `restore_failed` and `restore_recovery_required` mint no attempt and leave the blocked episode, and so the recovery point, in place with the actions the Executor then exposes for that result (`Plans/Executor_Protocol.md` Result-to-lifecycle mapping); such a result has not settled the point. Like [Retry], it is outside the automatic `subagent.handoff.max_retries` count, and a same-way failure raises a new recovery point with the next `blocked_sequence`. |
-| [Skip] / chat skip | `skip_node` | `cmd.runtime.skip_node` | `attempt_id` (the failed attempt; always present here, since the point is raised after an attempt), `reason_code`, `operator_note?` (human-in-the-loop.md Skip And Cancel Commands); `reason_code = handoff_retry_exhausted` for the parser prompt, and for the Unrelated-failure CTA the failed retry's own classifier value (its `failure_class` or `blocked_reason_code`) | Owner result `RuntimeSkipNodeResult` and the node's skip receipt. The node settles as skipped by the operator; no Downstream Context or partial SubagentOutput is forwarded from it; the run continues with the remaining nodes. |
+| [Retry] / chat retry, slot case (b) | `retry_now` | `cmd.runtime.retry_now` | `project_id`, `attempt_id` (required: the failed attempt the recovery point was raised for), `idempotency_key` (string, at most 256), `baseline_target = worktree_head` with `repo_id` and `worktree_id` (the failed attempt's repo and worktree), `expected_head_oid` and `expected_state_sha256` (that worktree's current full HEAD OID and FileSafe state digest, read from its SCM status when the operator acts), and `dirty_state_confirmed = true` when that worktree is dirty: [Retry] then asks the operator to confirm retrying on the uncommitted state and sends nothing without that confirmation. `safe_point_id` and `historical_commit_oid` are omitted. `worktree_head` performs no checkout, reset or file mutation, so this retry repeats the already resolved target. | Owner result `RuntimeRetryNowResult`. A mismatched HEAD OID or state digest refuses the command without a successor. A matching baseline and its durable receipt allow Executor to check successor admission under its current gates. If a terminal owner result has no successor `attempt_id`, keep the same recovery point and show its current Executor-projected actions and any available owner reason. Only durable admission of a successor `attempt_id` settles the point and lets the UI show the new attempt. |
+| [Restore and retry] / chat retry, slot case (a) | `restore_safe_point_then_retry` | `cmd.runtime.restore_safe_point_then_retry` | `project_id`, `attempt_id` (the failed attempt), `safe_point_id`, `repo_id` and `worktree_id` (the safe point and worktree the blocked episode names), `baseline_target = "safe_point"`, `idempotency_key` (string, at most 256). The control names the safe point it restores before the operator confirms, as the Restore verb requires (`Plans/UI_Command_Catalog.md` Recovery command definitions). | Owner result `RuntimeRestoreSafePointThenRetryResult` with the FileSafe baseline result recorded through `safe_point.restored`. Only `restored_clean` or zero-mutation `restore_skipped` with equality proof and a durable baseline receipt can proceed to successor admission. Either may return without `attempt_id`. For any terminal result without a successor, keep the same recovery point and reflect the current owner outcome, reason and allowed actions. `restore_refused`, `restore_failed` and `restore_recovery_required` carry no successor and retain their Executor lifecycle rules and fences. An unexpected `restored_with_conflicts` keeps dispatch fenced and routes to recovery diagnostics. Only durable admission of a successor `attempt_id` settles the point and lets the UI show the new attempt. |
+| [Skip] / chat skip | `skip_node` | `cmd.runtime.skip_node` | `attempt_id` (the failed attempt; always present here, since the point is raised after an attempt), `reason_code`, `operator_note?` (human-in-the-loop.md Skip And Cancel Commands); `reason_code = handoff_retry_exhausted` for the parser prompt, and for the Unrelated-failure CTA the failed retry's own classifier value (its `failure_class` or `blocked_reason_code`) | Owner result `RuntimeSkipNodeResult` and the node's skip receipt. The node settles as skipped by the operator; no Downstream Context or partial SubagentOutput is forwarded from it. The scheduler re-evaluates remaining nodes under the existing skip and prerequisite policy. |
 | [View raw output] / chat review | `open_details` | `cmd.runtime.open_attempt_details` | `attempt_id` (the failed attempt) | Navigation only (`navigation_wrapper`, local projection, no owner result, no-persist receipt). For the parser prompt, attempt details open on the raw output kept in `parser.error`; for the Unrelated-failure CTA they open on the failed retry's classifier, error detail and logs. The recovery point stays open. |
 | chat abort (Unrelated-failure CTA only) | `abort_run` | `cmd.runtime.abort_run` | `reason_code` = the failed retry's own classifier value (its `failure_class` or `blocked_reason_code`), `created_at_utc` (timestamp) | Owner result `RuntimeAbortRunResult`; the run ends through the existing abort semantics and `goal_run.stopped` is emitted, which closes the recovery point. |
 
-- Stale and refused actions follow the command definitions' error codes; a refused action changes nothing. `stale_projection`: the command's `blocked_sequence`, `allowed_action_id` or `attempt_id` does not match the live recovery point for its `{ run_id, node_id }`. `blocked_state_required`: no live recovery point for that node exposes the command's `allowed_action_id` in `allowed_action_ids[]`, which covers a point already settled, a run already terminal, and `abort_run` sent against the parser prompt (whose `allowed_action_ids[]` has no `abort_run`). These checks apply to all five actions, `open_details` included. Only one of `retry_now`, `restore_safe_point_then_retry`, `skip_node` and `abort_run` settles a recovery point; the first one that settles it wins and every later action for the same `blocked_sequence` is refused. A delayed `abort_run` from a point that `retry_now`, `restore_safe_point_then_retry` or `skip_node` already settled is therefore refused like the others; ending the run after that goes through the run's Stop Run command (`cmd.run.stop`), not through this recovery point.
-- Handoff failure boundary (2026-11-26), which settles the earlier "proceed with partial output" / "complete with warnings" rule: a handoff that is still unparsable or invalid after the automatic retries never advances its node, never takes the "complete with warnings" status and never forwards partial output. `HandoffValidator::extract_partial_output` may still run: the best-effort partial `SubagentOutput` is kept on the failed attempt beside the raw output in `parser.error`, for [View raw output] only; it is not merged into the execution-unit context or Downstream Context, and [Skip] does not forward it. The node takes the `needs_review` recovery point above. Every earlier handoff-validation fallback in this document that says to proceed with partial output or to mark the tier "complete with warnings" is source lineage for this rule: §2 AfterHandoffValidation responsibilities, its error-handling list and retry-loop example; §10 Clarify (4); §13 Mitigation (3); the AfterUnit validation logic; §6 Safe Error Handling Application; §8 Structured Handoff Contract Enforcement; Gap #16 and Gap #22; and PlanUnits OSI-149, OSI-156, OSI-157, OSI-164, OSI-180, OSI-187 and OSI-194. "complete with warnings" stays a live status in one place only: the outcome of VerifyUnitEnd for a unit whose handoff validated, when end verification returns `VerificationStatus::Warning` for non-blocking quality findings (the DuringTierEnd and AfterTierEnd responsibilities, OSI-120, OSI-121, OSI-122). An output that lacks only optional fields such as `downstream_context` passes validation (Gap #27, OSI-199) and is not a handoff failure.
+- Both retry controls use Executor's restore-before-rerun sequence. A terminal `owner_operation` response, a durable baseline receipt and the `safe_point.restored` event can report baseline work without proving successor admission. The UI follows the current Executor projection for the blocked episode and successor state. A late result never reopens a settled episode. Executor dispatches work only under durable successor admission. Each operator retry is outside the automatic handoff retry count. If the successor reaches the applicable recovery predicate again, a new point uses the next `blocked_sequence`.
+- Stale and refused actions follow the command definitions' error codes; a command refused before admission leaves the point unchanged. `stale_projection`: the command's `blocked_sequence`, `allowed_action_id` or `attempt_id` does not match the live recovery point for its `{ run_id, node_id }`. `blocked_state_required`: no live recovery point for that node exposes the command's `allowed_action_id` in `allowed_action_ids[]`, which covers a point already settled, a run already terminal, and `abort_run` sent against the parser prompt (whose `allowed_action_ids[]` has no `abort_run`). These checks apply to all five actions, `open_details` included. Only one of `retry_now`, `restore_safe_point_then_retry`, `skip_node` and `abort_run` settles a recovery point; the first one that settles it wins and every later action for the same `blocked_sequence` is refused. A delayed `abort_run` from a point that `retry_now`, `restore_safe_point_then_retry` or `skip_node` already settled is therefore refused like the others; ending the run after that goes through the run's Stop Run command (`cmd.run.stop`), not through this recovery point.
+- Handoff failure boundary (2026-11-26), which settles the earlier "proceed with partial output" / "complete with warnings" rule: a handoff still invalid after transport parsing and generic fallback at Handoff Retry Ceiling exhaustion never advances its node, never takes the "complete with warnings" status and never forwards partial output. `HandoffValidator::extract_partial_output` may still run: the best-effort partial `SubagentOutput` is kept on the failed attempt beside the raw output in `parser.error`, for [View raw output] only; it is not merged into the execution-unit context or Downstream Context, and [Skip] does not forward it. The node takes the `needs_review` recovery point above. Every earlier handoff-validation fallback in this document that says to proceed with partial output or to mark the tier "complete with warnings" is source lineage for this rule: §2 AfterHandoffValidation responsibilities, its error-handling list and retry-loop example; §10 Clarify (4); §13 Mitigation (3); the AfterUnit validation logic; §6 Safe Error Handling Application; §8 Structured Handoff Contract Enforcement; Gap #16 and Gap #22; and PlanUnits OSI-149, OSI-156, OSI-157, OSI-164, OSI-180, OSI-187 and OSI-194. "complete with warnings" stays a live status in one place only: the outcome of VerifyUnitEnd for a unit whose handoff validated, when end verification returns `VerificationStatus::Warning` for non-blocking quality findings (the DuringTierEnd and AfterTierEnd responsibilities, OSI-120, OSI-121, OSI-122). An output that lacks only optional fields such as `downstream_context` passes validation (Gap #27, OSI-199) and is not a handoff failure.
