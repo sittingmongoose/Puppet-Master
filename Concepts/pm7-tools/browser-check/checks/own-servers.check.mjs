@@ -1,7 +1,6 @@
 // Jared 2026-11-01: source control keeps GitHub, GitHub Enterprise, GitLab, Azure DevOps, Bitbucket (Cloud and Data
 // Center), Forgejo and Gitea on servers of their own. Checked against that list, so nothing else is named here.
-import fs from 'node:fs';
-import { onboardingApp, pagePath } from '../helpers/onboarding-fields.mjs';
+import { onboardingApp, sourcePage } from '../helpers/onboarding-fields.mjs';
 const KEPT_ROWS = ['github', 'gitlab', 'azure_devops', 'bitbucket_cloud', 'bitbucket_data_center', 'forgejo', 'gitea'];
 const KEPT_OTHERS = ['gitlab', 'azure_devops', 'bitbucket_cloud', 'forgejo', 'gitea', 'github_enterprise'];
 const KEPT_SETTINGS = ['GitHub', 'GitHub Enterprise', 'GitLab.com', 'GitLab Self-Managed', 'Azure DevOps', 'Azure DevOps Server', 'Bitbucket Cloud', 'Bitbucket Data Center', 'Forgejo', 'Gitea', 'Git or SSH repository'];
@@ -54,7 +53,9 @@ export const tests = {
     await t.check('Browser › Depends on: Source Control and Named Plans only', /Source Control/.test(dep) && /Named Plans/.test(dep) && !/Origin/.test(dep), dep.slice(0, 300));
   },
   async 'R5: the shipped page offers no retired service anywhere (read from the built file)'(t) {
-    const html = fs.readFileSync(pagePath(t), 'utf8');
+    const { text: html, sha256, url } = await sourcePage(t);
+    t.log(`built source ${url} sha256 ${sha256}`);
+    if (t.args.sourceSha) await t.check('the built source is the requested build (sha256)', sha256 === String(t.args.sourceSha).toLowerCase(), `read ${sha256}, requested ${t.args.sourceSha}`);
     const PATS = { 'value=origin option': /<option value="?origin"?>/, 'Origin checks': /Origin checks/, 'Origin mirror': /Origin mirror/, 'Team codebase': /Team codebase/, gitea_cloud: /gitea_cloud/, forgejo_cloud: /forgejo_cloud/,
       'hosted Gitea/Forgejo wording': /hosted (Gitea|Forgejo)|(Gitea|Forgejo) Cloud/i, 'origin automation profile': /\borigin:\{name:/, 'origin contract service': /"service":"origin"/, 'origin provider id': /origin_connected_checks/, 'origin_-prefixed ids': /\borigin_(connected|unavailable|actions|checks|mirror|preview)\w*/, 'origin as a provider': /(provider|service)["']?\s*[:=]\s*["']origin["']/, cursor_origin: /cursor_origin|cursor-origin|Cursor Origin/ };
     const found = Object.entries(PATS).filter(([, rx]) => rx.test(html)).map(([k]) => k);

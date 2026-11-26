@@ -4,7 +4,7 @@ Source: `Plans/Permissions_System.md`
 
 Source lines: L1292-L7859
 
-Source SHA256: `d73f9975081045aaa294b4178ba4fa5fc51ad19bb532668c97e693b3831b9bb8`
+Source SHA256: `aceb396b96062eb065e4e43da942f91bb19e6a531f747c88d51873aa83658c39`
 
 ---
 
@@ -3122,7 +3122,7 @@ canonical_text: create_project_rule, create_computer_rule and create_global_rule
   explicit Project, tagged Computer or Everywhere owner with rule_id, tool_pattern, action, scope_key, created_at
   and created_by_thread_id plus issuer/origin/acceptance and revision metadata. Legacy global command spelling
   targets Everywhere after normalization. Current owner revision CAS and canonical revoke/update by rule_id
-  apply; projection files do not become writers and no path rule may target Everywhere. rule_id is a lowercase hyphenated RFC 9562 UUID, generated once at create (by the request or else by the owner), unique at its owner, never derived from tool_pattern and never reused.
+  apply; projection files do not become writers and no path rule may target Everywhere. rule_id is a lowercase hyphenated RFC 9562 UUID, generated once at create (by the request or else by the owner), unique at its owner, never derived from tool_pattern and never reused; a rule created before this form keeps its original rule_id, which update, reorder, delete and revoke still accept unchanged.
 gui_related: false
 gui_classification_reason: This unit defines backend/runtime, policy, security, storage, dispatch, compatibility,
   or governance behavior rather than visual presentation.

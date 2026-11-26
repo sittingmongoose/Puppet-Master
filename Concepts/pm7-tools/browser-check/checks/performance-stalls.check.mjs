@@ -1,6 +1,6 @@
 // SW-10/15/16/26: collect timing and a matching GPU film; timings do not prove painted frames.
 import { writeFileSync } from 'node:fs';
-import { pathToFileURL } from 'node:url';
+import { pageHref } from '../helpers/page-path.mjs';
 export default async function(t) {
  if(t.args.idleProbe) await t.page.addInitScript(()=>{
   window.__idleDuringDrag=[];
@@ -34,7 +34,7 @@ export default async function(t) {
  });
  let f = await t.app.open();
  if(t.args.page){
-  const target=new URL(t.args.page,'file://');
+  const target=new URL(pageHref(t.args.page));
   if(new URL(f.url()).pathname!==target.pathname){
    target.searchParams.set('o55','off');target.searchParams.set('cb',String(Date.now()));
    if(String(t.args.sandbox)==='1'){await t.openInSandbox(target.href);f=t.root;}
@@ -157,7 +157,7 @@ export default async function(t) {
     const label=order[i];
     if(i) {
      const file=label==='control'?t.args.base:t.args.fixed;
-     const url=pathToFileURL(file);url.searchParams.set('o55','off');url.searchParams.set('cb',String(Date.now()));
+     const url=new URL(pageHref(file));url.searchParams.set('o55','off');url.searchParams.set('cb',String(Date.now()));
      await t.page.goto(url.href);
      await f.waitForFunction(()=>window.PM56_PORT?.ready&&window.PMW?.chatCol&&document.querySelector('main.primary-content'),null,{timeout:60000});
     }
@@ -166,7 +166,7 @@ export default async function(t) {
     await t.page.waitForTimeout(1000);
     await t.app.resetLayout();
     if(t.args.task!=='look')await t.app.look('glass-dark');
-    const expected=pathToFileURL(label==='control'?t.args.base:t.args.fixed).pathname;
+    const expected=new URL(pageHref(label==='control'?t.args.base:t.args.fixed)).pathname;
     await t.equal('loaded '+label+' source',new URL(f.url()).pathname,expected);
     if(t.args.task==='look')await lookPicks(label+'-');
     else {

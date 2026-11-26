@@ -67,11 +67,21 @@ async function stationaryGeometry(t) {
 				if (!head) await marks.first().evaluate((el) => el.scrollIntoView({ block: 'center', inline: 'nearest' }));
 				await t.page.waitForTimeout(500);
 				// Ledger dots can overlap. Qualify a mark whose center actually takes hits.
+				/* (disclosed selftest=dotcover: a hit-testable span over each ledger dot's centre forces the qualification to
+				   miss, so the failure record must name what sits at every mark centre instead of only "condition was false") */
+				const cover = room === 'ledger' && String(t.args.selftest || '') === 'dotcover';
+				if (cover) await f.evaluate(() => { document.querySelectorAll('#pmuBoard .pmu-atdot').forEach((d) => { const r = d.getBoundingClientRect(), p = d.offsetParent || document.getElementById('pmuBoard'), pr = p.getBoundingClientRect(), c = document.createElement('span'); c.className = 'kit-atdot-cover'; c.style.cssText = 'position:absolute;z-index:3;width:8px;height:8px;transform:translate(-50%,-50%);left:' + (r.left + r.width / 2 - pr.left) + 'px;top:' + (r.top + r.height / 2 - pr.top) + 'px'; p.appendChild(c); }); });
 				const index = await marks.evaluateAll((els) => els.findIndex((el) => {
 					const r = el.getBoundingClientRect();
 					return el.contains(document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2));
 				}));
-				if (index < 0) { await t.check(S + 'could judge a hit-tested tooltip anchor', false); continue; }
+				if (index < 0) {
+					const at = await marks.evaluateAll((els) => els.map((el, i) => { const r = el.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2, h = document.elementFromPoint(cx, cy); return { i, centre: [Math.round(cx), Math.round(cy)], tag: h ? h.tagName.toLowerCase() : null, class: h ? h.getAttribute('class') : null, own: !!h && el.contains(h) }; }));
+					if (cover) await f.evaluate(() => document.querySelectorAll('.kit-atdot-cover').forEach((c) => c.remove()));
+					await t.check(S + 'could judge a hit-tested tooltip anchor', false, JSON.stringify({ marks: at.length, at }));
+					continue;
+				}
+				if (cover) await f.evaluate(() => document.querySelectorAll('.kit-atdot-cover').forEach((c) => c.remove()));
 				const mark = marks.nth(index), base = await mark.boundingBox();
 				await t.page.mouse.move(base.x + base.width / 2, base.y + base.height / 2);
 				await t.page.waitForTimeout(400);

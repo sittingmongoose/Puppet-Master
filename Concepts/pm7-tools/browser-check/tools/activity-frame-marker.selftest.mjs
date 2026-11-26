@@ -68,6 +68,13 @@ eq(keyFrames([rd(10, 0), rd(11, 0), rd(12, 0)], 10).pre, -1, 'a film with no key
 ax(/carries the key band: the frame the key arrived in was dropped/.test(keyFrames([rd(10, 0), rd(11, 0)], 10).why), 'a missing key frame says so');
 eq(keyFrames([rd(255, 0), rd(0, 1)], 255), { at: 1, pre: 0, count: 0, preCount: 255 }, 'the counter wraps 255 -> 0');
 eq(keyFrames([rd(0, 1), rd(1, 1)], 0), { at: 0, pre: -1, why: 'the capture starts at the key frame (counter 0), with no frame of counter 255 before it' }, 'a capture at a wrapped key frame has no K');
+// FO18-SHIFTTAB-PRIOR-PRESS: a previous press can leave keyed frames at the capture's start; the current press is the
+// first cleared-to-keyed handover whose counter the keydown recorded, not the stale lead.
+eq(keyFrames([rd(166, 1), rd(0, 0), rd(1, 1), rd(2, 1)], 0), { at: 2, pre: 1, count: 1, preCount: 0 }, 'a stale keyed lead before a valid cleared-to-keyed handover is skipped (FO18)');
+eq(keyFrames([rd(165, 1), rd(166, 1), rd(0, 0), rd(1, 1)], 0), { at: 3, pre: 2, count: 1, preCount: 0 }, 'a two-frame stale lead before the handover is skipped (FO18)');
+eq(keyFrames([rd(166, 1), rd(1, 1), rd(2, 1)], 0).pre, -1, 'a stale lead with the cleared pre-key frame genuinely missing is still could-not-judge');
+ax(/the pre-key frame was dropped/.test(keyFrames([rd(166, 1), rd(1, 1), rd(2, 1)], 0).why), 'the missing pre-key frame after a stale lead names the drop');
+eq(keyFrames([rd(10, 0), rd(11, 1), rd(12, 1)], 10), { at: 1, pre: 0, count: 11, preCount: 10 }, 'a normal handover with no stale lead is unchanged');
 
 // the two-frame handover rule, on the check's own 3:1 ring-side verdicts
 const held = sides(1), lost = sides(0), nearly = sides(0.89);
@@ -104,4 +111,4 @@ const ringIm = (rows) => { const width = 140, height = 60, data = Buffer.alloc(w
   return { width, height, data }; };
 eq(ringSides(ringIm([45, 46]), tileS, inkB, 0.5).top.share, 0, 'a ring 7 CSS px above the edge is not credited at half scale');
 eq(ringSides(ringIm([49, 50]), tileS, inkB, 0.5).top.share, 1, 'a ring on the edge is still credited at half scale');
-console.log(`PASS ${checks}: counter round-trips, key band, unreadable bands, judged K/K+1 pair, duplicated pre-key frame, dropped key frame, missing K, unreadable K, foreign key, wrap, same-frame handover, 1-frame and 2-frame late handovers, early paint, old ring kept, 0.89 side not whole, marker clear of the rail, scaled ring span, off-edge ring not credited at half scale`);
+console.log(`PASS ${checks}: counter round-trips, key band, unreadable bands, judged K/K+1 pair, duplicated pre-key frame, dropped key frame, missing K, unreadable K, foreign key, wrap, stale keyed lead skipped (FO18), missing pre-key after a stale lead still could-not-judge, same-frame handover, 1-frame and 2-frame late handovers, early paint, old ring kept, 0.89 side not whole, marker clear of the rail, scaled ring span, off-edge ring not credited at half scale`);

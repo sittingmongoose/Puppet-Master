@@ -72,7 +72,21 @@ export async function setLookBySetting(t, f, look, { toGeneral = true } = {}) {
 	const [family, mode] = look.split('-');
 	if (toGeneral) {
 		const general = f.locator('#pm-settings-root [data-action="navigate-domain"][data-domain="general"]').first();
-		if (await general.count()) { await general.click(); await f.waitForTimeout(700); }
+		if (await general.count()) {
+			/* At narrow widths a container query folds the domain rail off-canvas (below 720px): the General link is
+			   drawn but translated out of the viewport, so a press on it times out (FO222-R2-740-SETTINGS-HELPER). Open
+			   the rail through the visible mobile-menu toggle first, the way a person does; navigate() closes it again.
+			   At wider widths the toggle is hidden and the link is pressed directly, as before. */
+			const toggle = f.locator('#pm-settings-root .mobile-menu[data-action="toggle-rail"]').first();
+			if (await toggle.isVisible().catch(() => false)) {
+				const railOpen = () => { const s = document.querySelector('#pm-settings-root .pm-shell'); return !!(s && s.classList.contains('rail-open')); };
+				if (!(await f.evaluate(railOpen).catch(() => false))) {
+					await toggle.click();
+					await f.waitForFunction(railOpen, null, { timeout: 5000 }).catch(() => {});
+				}
+			}
+			await general.click(); await f.waitForTimeout(700);
+		}
 	}
 	for (const [setting, value] of [
 		['general.visual.theme', family === 'nier' ? 'NieR' : family[0].toUpperCase() + family.slice(1)],

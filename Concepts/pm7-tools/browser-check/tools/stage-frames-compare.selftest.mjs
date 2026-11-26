@@ -217,6 +217,28 @@ try {
 		ok('R135-H1: the DOM is still judged on a not-frozen capture', dm.code === 1 && /^DOM    basic-dark\/01-ready-base/m.test(dm.out), `exit ${dm.code}: ${dm.out.trim()}`);
 	}
 
+	// -- NM18-M3 / OM18-2: the same-build NOT FROZEN reporting. A not-frozen capture is counted once (in NOT FROZEN),
+	// never also in the equal / differ buckets; a capture both unfrozen and pixel-different across builds still prints
+	// its PIXELS line; and every NOT FROZEN cell is named, not only the first.
+	{
+		const RED = [200, 30, 30], BLUE = [30, 30, 200];
+		const block = (bx, by, c) => png(8, 6, (x, y) => (x >= bx && x < bx + 5 && y >= by && y < by + 4 ? c : [40, 40, 40]));
+		const one = { ...matrix, variants: ['base'], screens: ['ready'], expected: [E('basic-dark', '01-ready-base', 'ready', 'base')] };
+		const frozen = (c) => () => ({ a: block(1, 1, c), b: block(1, 1, c) });
+		const moving = (c) => () => ({ a: block(0, 0, c), b: block(3, 3, c) });
+		// unfrozen AND pixel-different across builds: the PIXELS line is not suppressed by the NOT FROZEN class
+		const both = compare(run({ matrix: one, pics: frozen(RED) }), run({ matrix: one, pics: moving(BLUE) }));
+		ok('NM18-M3: a not-frozen capture that also differs across builds prints both NOT FROZEN and PIXELS (no suppression)', both.code === 1 && /^NOT FROZEN basic-dark\/01-ready-base/m.test(both.out) && /^PIXELS basic-dark\/01-ready-base/m.test(both.out), `exit ${both.code}: ${both.out.trim()}`);
+		// unfrozen in both runs, but the first pictures equal: counted once in NOT FROZEN, not also in "equal"
+		const dbl = compare(run({ matrix: one, pics: moving(RED) }), run({ matrix: one, pics: moving(RED) }));
+		ok('NM18-M3: an unfrozen capture whose first pictures equal is counted once (NOT FROZEN in 1, equal in 0; no double count)', dbl.code === 1 && /equal to one base picture in 0/.test(dbl.out) && /NOT FROZEN \(could not judge: fails\) in 1/.test(dbl.out) && !/^PIXELS/m.test(dbl.out), `exit ${dbl.code}: ${dbl.out.trim()}`);
+		ok('NM18-M3: that double-count candidate still names its cell and fails', /^NOT FROZEN basic-dark\/01-ready-base: could not judge/m.test(dbl.out) && /^VERDICT: FAIL/m.test(dbl.out), dbl.out.trim());
+		// every NOT FROZEN cell is named (OM18-2: more than basic-dark/02-ready-base), each counted once
+		const two = { ...matrix, looks: ['basic-dark', 'nier-dark'], variants: ['base'], screens: ['ready'], expected: [E('basic-dark', '01-ready-base', 'ready', 'base'), E('nier-dark', '02-name-base', 'ready', 'base')] };
+		const many = compare(run({ matrix: two, pics: moving(RED) }), run({ matrix: two, pics: moving(RED) }));
+		ok('OM18-2: every NOT FROZEN cell is named (basic-dark and nier-dark), counted once each', many.code === 1 && /^NOT FROZEN basic-dark\/01-ready-base/m.test(many.out) && /^NOT FROZEN nier-dark\/02-name-base/m.test(many.out) && /NOT FROZEN \(could not judge: fails\) in 2/.test(many.out) && /equal to one base picture in 0/.test(many.out), `exit ${many.code}: ${many.out.trim()}`);
+	}
+
 	// -- R132-FOLLOWUPS 2: the freeze parks nextBlink/idleNext at 1e9 and THAW never restored them, so the
 	// "unfrozen" capture after the walk showed a stage that never blinks and has no idle life, not the stage as a
 	// person sees it. THAW must reschedule both as the product itself does (58-rig.js:1249 and :1106).

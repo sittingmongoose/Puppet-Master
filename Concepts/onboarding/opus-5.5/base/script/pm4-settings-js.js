@@ -3174,6 +3174,9 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
 
     const needsRemount = !sameDomainView || hadDetail || !!state.detailSetting;
     if (!needsRemount) {
+      /* FO-241: the no-remount path keeps the mounted shell, so close the chapter drawer here the way Escape
+         does (state.railOpen is already false above); otherwise .rail-open and its scrim stay over Settings. */
+      root.querySelector('.pm-shell')?.classList.remove('rail-open');
       updateHash();
       jumpToWorkspace(workspace.id, options.section ? 'auto' : undefined);
       if (options.section) scrollToSection(options.section, true);
