@@ -3955,6 +3955,30 @@ class TargetJobsNegotiation(unittest.TestCase):
         self.assertEqual(argv[argv.index("--jobs") + 1], "4")
         self.assertEqual(M.check_argv("run-gates", Path("/tmp/report.json"), 1800, 4, False).count("--jobs"), 0)
 
+    def test_snapshot_refs_keep_the_logical_path_and_case_errors(self):
+        root = self.make_root({})
+        live = root / M.READINESS_AUDIT_REL
+        live.mkdir(parents=True)
+        with tempfile.TemporaryDirectory() as scratch:
+            snapshot = Path(scratch) / "edition"
+            snapshot.mkdir()
+            (snapshot / "receipt.json").write_text("{}")
+            spec = importlib.util.spec_from_file_location("snapshot_path_test", ROOT / "scripts/pm-plans-verify.py")
+            verifier = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(verifier)
+            env = {M.SNAPSHOT_ENV: str(snapshot), M.SNAPSHOT_REPO_ENV: str(root)}
+            logical = f"{M.READINESS_AUDIT_REL}/receipt.json"
+            wrong_case = logical.replace(live.name, live.name.upper())
+            with patch.object(verifier, "ROOT", root), patch.dict(os.environ, env):
+                resolved, error = verifier.exact_path(logical)
+                self.assertIsNone(error)
+                self.assertEqual(resolved, snapshot / "receipt.json")
+                self.assertEqual(verifier.rel(resolved), logical)
+                resolved, error = verifier.exact_path(wrong_case)
+                self.assertIsNone(resolved)
+                self.assertEqual(error["error"], "case_mismatched_ref")
+                self.assertEqual(error["actual"], M.READINESS_AUDIT_REL)
+
     def test_slot_hold_diagnostics_reach_stderr_before_the_aggregate_finishes(self):
         import contextlib
         import io

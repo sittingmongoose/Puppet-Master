@@ -103,7 +103,7 @@ def exact_path(ref: str) -> tuple[Path | None, dict[str, Any] | None]:
             if snapshot.is_dir():
                 children[audit_dir.name] = snapshot
         if part not in children:
-            case_matches = [child.name for child in children.values() if child.name.lower() == part.lower()]
+            case_matches = [name for name in children if name.lower() == part.lower()]
             if case_matches:
                 actual_parts = resolved_parts + [case_matches[0]]
                 return None, {
