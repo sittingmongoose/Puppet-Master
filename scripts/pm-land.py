@@ -610,9 +610,24 @@ def push_targets(root: Path) -> list[tuple[list[str], str]]:
     return [(names, url) for url, names in by_url.items()]
 
 
+def require_literal_push_target(root: Path, name: str, url: str) -> None:
+    """Check how Git will interpret an already resolved URL when passed as a destination."""
+    if git(root, "remote", "get-url", "--", url, check=False).returncode == 0:
+        raise Refusal(f"push target {url!r} also names a Git remote; use an unambiguous URL")
+    fetch_url = git(root, "ls-remote", "--get-url", "--", url).stdout.splitlines()
+    # Use a known remote temporarily configured with only this URL to ask Git how a
+    # destination without an explicit pushurl is rewritten. This performs no I/O to the remote.
+    push_urls = git(root, "-c", f"remote.{name}.url=", "-c", f"remote.{name}.pushurl=",
+                    "-c", f"remote.{name}.url={url}", "remote", "get-url", "--push", "--all",
+                    name).stdout.splitlines()
+    if push_urls != [url] or fetch_url != [url]:
+        raise Refusal(f"Git would rewrite push target {url!r} when publishing by URL "
+                      f"(push: {push_urls!r}, readback: {fetch_url!r}); check the URL rewrite rules")
+
+
 def pushed_main(root: Path, url: str) -> Optional[str]:
     """The published main at one push target, read without updating any local ref; None when it has none."""
-    for line in git(root, "ls-remote", "--refs", url, MAIN_REF).stdout.splitlines():
+    for line in git(root, "ls-remote", "--refs", "--", url, MAIN_REF).stdout.splitlines():
         value, _, ref = line.partition("\t")
         if ref == MAIN_REF:
             return sha(value, f"main on {url}")
@@ -664,11 +679,13 @@ def publish_main(root: Path, lease: str, commit: str) -> int:
     targets = push_targets(root)
     if not targets:
         raise Refusal(f"no push targets are configured for {root}: add a remote before publishing")
+    for names, url in targets:
+        require_literal_push_target(root, names[0], url)
     destinations = [(f"remote {', '.join(names)} ({url})", url) for names, url in targets]
     say("Push targets:\n" + "\n".join(f"  {label}" for label, _ in destinations))
     push_errors: dict[str, str] = {}
     for label, url in destinations:
-        result = git(root, "push", f"--force-with-lease={MAIN_REF}:{lease}", url, f"{commit}:{MAIN_REF}",
+        result = git(root, "push", f"--force-with-lease={MAIN_REF}:{lease}", "--", url, f"{commit}:{MAIN_REF}",
                      check=False)
         if result.returncode:
             push_errors[url] = (f"{label}: push exited {result.returncode}"

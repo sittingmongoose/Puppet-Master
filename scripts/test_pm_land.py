@@ -3415,6 +3415,30 @@ class PublishAllTargetsTests(unittest.TestCase):
         self.assertEqual(self.tip(nas), self.head)
         self.assertEqual(self.tip(retired), self.base)
 
+    def test_publish_refuses_endpoint_rewrites_before_any_push(self):
+        nas = self.two_push_urls()
+        other = self.bare("other.git", self.base)
+        redirected = self.bare("redirected.git", self.base)
+        self.git(self.origin, "update-ref", land.MAIN_REF, self.head, self.base)
+        push_rewrite = f"url.{other}.pushInsteadOf"
+        fetch_rewrite = f"url.{other}.insteadOf"
+        second_rewrite = f"url.{redirected}.insteadOf"
+        for rules in (((push_rewrite, self.origin),),
+                      ((fetch_rewrite, self.origin), (second_rewrite, other))):
+            with self.subTest(rules=rules):
+                for key, alias in rules:
+                    self.git(self.shared, "config", key, str(alias))
+                try:
+                    with patch.object(land, "git", wraps=land.git) as git:
+                        with self.assertRaisesRegex(land.Refusal, "would rewrite push target"):
+                            land.publish_main(self.shared, self.base, self.head)
+                        self.assertFalse(any(call.args[1] == "push" for call in git.call_args_list))
+                    for bare in (nas, other, redirected):
+                        self.assertEqual(self.tip(bare), self.base)
+                finally:
+                    for key, _ in rules:
+                        self.git(self.shared, "config", "--unset", key)
+
     def test_publish_refuses_a_commit_other_than_the_checkout_main(self):
         nas = self.two_push_urls()
         self.git(self.shared, "commit", "--allow-empty", "-m", "next landing")
@@ -3550,7 +3574,7 @@ class PublishAllTargetsTests(unittest.TestCase):
         for args in pushes:
             self.assertIn(f"--force-with-lease={land.MAIN_REF}:{self.base}", args)
             self.assertIn(f"{self.head}:{land.MAIN_REF}", args)
-        self.assertEqual({args[2] for args in pushes}, {str(self.origin), str(nas)})
+        self.assertEqual({args[-2] for args in pushes}, {str(self.origin), str(nas)})
 
     def test_publish_lists_deduplicated_targets_before_the_first_push(self):
         nas = self.two_push_urls()
