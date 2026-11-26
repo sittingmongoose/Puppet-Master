@@ -972,6 +972,11 @@
   #panel-settings .pm-shell { grid-template-columns: 1fr; }
   #panel-settings .domain-rail { position: absolute; left: 0; top: 0; bottom: 0; width: min(280px,84%); transform: translateX(-105%); transition: transform 300ms var(--k3-ease-out); z-index: 80; }
   #panel-settings .pm-shell.rail-open .domain-rail { transform: none; }
+  /* Exclude the folded rail from focus immediately while its closing slide finishes. */
+  #panel-settings .pm-shell:not(.rail-open) .domain-rail { interactivity: inert; }
+  @supports not (interactivity: inert) {
+    #panel-settings .pm-shell:not(.rail-open) .domain-rail { visibility: hidden; }
+  }
   #panel-settings .pm-shell.rail-open::after { content:""; position: absolute; inset: 0; z-index: 70; background: rgba(3,5,11,.56);  }
   #panel-settings .rail-project, #panel-settings .rail-search input, #panel-settings .rail-search .kbd, #panel-settings .domain-copy, #panel-settings .rail-heading, #panel-settings .side-card { display: revert; }
   #panel-settings .rail-head { text-align: left; padding: 15px 12px 10px; }
