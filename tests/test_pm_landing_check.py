@@ -971,6 +971,7 @@ class EndToEnd(unittest.TestCase):
         self.addCleanup(self.scratch.cleanup)
         self.repo = Path(self.scratch.name)
         self.module = load_module()
+        self.module.SHARED_READINESS_AUDIT_ROOT = self.repo / "no-shared-audit"
         self.git("init", "-q", "-b", "main")
         self.git("config", "user.email", "t@example.invalid")
         self.git("config", "user.name", "t")
@@ -1027,17 +1028,22 @@ class EndToEnd(unittest.TestCase):
             "plan-migration-validate": {
                 "status": "fail" if migration_failures else "pass", "failures": list(migration_failures)},
         }
-        def run_check(name, root, run_dir, timeout):
+        def run_check(name, root, run_dir, timeout, jobs=1, env=None, supports_jobs=True):
             report = json.loads(json.dumps(reports[name]))
             if name == "run-gates" and report["failures"]:
                 report["failures"][0]["failures"] = build(root)
             return report
         self.module.run_check = run_check
         self.module.current_run_dir = lambda root: "Plans/.plan_migration/run-017"
+        self.module.target_readiness_snapshot_support = lambda root: True
 
     def run_main(self, *argv):
         import io, contextlib
         out, err = io.StringIO(), io.StringIO()
+        argv = list(argv)
+        if "--jobs" not in argv:
+            # The stubbed checks cost milliseconds; the serial path is the one the fixtures describe.
+            argv = ["--jobs", "1", *argv]
         sys.argv = ["pm-landing-check.py", "--root", str(self.repo), *argv]
         with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
             code = self.module.main()
@@ -1456,6 +1462,7 @@ class LandingRun(unittest.TestCase):
         self.addCleanup(self.scratch.cleanup)
         self.repo = Path(self.scratch.name)
         self.module = load_module()
+        self.module.SHARED_READINESS_AUDIT_ROOT = self.repo / "no-shared-audit"
         self.git("init", "-q", "-b", "main")
         self.git("config", "user.email", "t@example.invalid")
         self.git("config", "user.name", "t")
@@ -1496,15 +1503,20 @@ class LandingRun(unittest.TestCase):
             "audit-governance": aggregate("audit-governance", audit, 100),
             "plan-migration-validate": {"status": "fail" if migration else "pass", "failures": list(migration)},
         }
-        def run_check(name, root, run_dir, timeout):
+        def run_check(name, root, run_dir, timeout, jobs=1, env=None, supports_jobs=True):
             self.timeouts.append(timeout)
             return json.loads(json.dumps(reports[name]))
         self.module.run_check = run_check
         self.module.current_run_dir = lambda root: "Plans/.plan_migration/run-017"
+        self.module.target_readiness_snapshot_support = lambda root: True
 
     def run_main(self, *argv):
         import io, contextlib
         out, err = io.StringIO(), io.StringIO()
+        argv = list(argv)
+        if "--jobs" not in argv:
+            # The stubbed checks cost milliseconds; the serial path is the one the fixtures describe.
+            argv = ["--jobs", "1", *argv]
         sys.argv = ["pm-landing-check.py", "--root", str(self.repo), *argv]
         with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
             code = self.module.main()
@@ -2028,6 +2040,14 @@ def timeout_row(command_id="lint-contractrefs", seconds=180):
             "command_id": command_id}
 
 
+def killed_row(command_id="validate-plan-graph", signum=9):
+    """What pm-plans-verify.py reports for a validator killed from outside: no report at all."""
+    return {"error": "validator_killed_by_signal", "signal": signum,
+            "signal_name": "SIGKILL" if signum == 9 else f"SIG{signum}", "returncode": -signum,
+            "likely_cause": "external_oom_or_signal_kill", "stdout_excerpt": "", "stderr_excerpt": "",
+            "command_id": command_id}
+
+
 MISSING_REF = {"path": "Plans/00-plans-index.md", "error": "missing_ref",
                "bad_ref": "Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json"}
 
@@ -2063,11 +2083,12 @@ class RuleThreeTimeouts(LandingRun):
         self.assertIn("New since the baseline: 0", out)
         self.assertIn("Subchecks reporting more failures than the baseline: 0", out)
         self.assertIn("1 infrastructure result among them", out)
-        self.assertIn("2 subchecks did not finish within 180 s", out)
+        self.assertIn("2 subchecks did not finish within 180 s, the limit (", out)
         report = json.loads(self.compare("--json", "--subcheck-timeout-seconds", "180")[1])
         self.assertEqual([(r["check"], r["subcheck"], r["elapsed_seconds"], r["limit_seconds"])
                           for r in report["infrastructure"]],
                          [("run-gates", "lint_contractrefs", 180, 180), ("audit-governance", "support_refs", 180, 180)])
+        self.assertTrue(all("kind" not in row for row in report["infrastructure"]))
         self.assertEqual((report["new"], report["grown_subchecks"], report["blocking"]), ([], [], 0))
 
     def test_a_timeout_lifts_exit_zero_to_one_and_leaves_one_and_two_alone(self):
@@ -2113,6 +2134,70 @@ class RuleThreeTimeouts(LandingRun):
         infra, rest = M.split_infrastructure([M.normalize("run-gates", "verify_spec_lock", row, CHECKOUT)])
         self.assertEqual((len(infra), rest), (1, []))
         self.assertEqual(infra[0]["elapsed_seconds"], 600)
+
+    def test_a_validator_killed_by_a_signal_did_not_finish(self):
+        self.stub(gates={"verify_spec_lock": [STALE_HASH]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        self.stub(gates={"verify_spec_lock": [STALE_HASH], "lint_contractrefs": [killed_row()]},
+                  audit={"support_refs": [killed_row()]})
+        code, out = self.compare()
+        self.assertEqual(code, 1, out)  # nothing read, so never 0; nothing found, so never 2
+        self.assertIn("New since the baseline: 0", out)
+        self.assertIn("Infrastructure results, not failures of this tree (never new, growth or blocking): 2", out)
+        self.assertIn("[infrastructure] run-gates/lint_contractrefs  validator_killed_by_signal "
+                      "(validate-plan-graph)  killed by SIGKILL (an OOM kill or a watchdog); what it would "
+                      "report is unknown", out)
+        self.assertIn("2 subchecks did not finish (run-gates/lint_contractrefs killed by SIGKILL, "
+                      "audit-governance/support_refs killed by SIGKILL)", out)
+        self.assertIn("[total] run-gates/lint_contractrefs  killed by a signal", out)
+        self.assertIn("[total] audit-governance/support_refs  killed by a signal", out)
+        report = json.loads(self.compare("--json")[1])
+        self.assertEqual([(row["check"], row["subcheck"], row["kind"], row["signal_name"],
+                           row["elapsed_seconds"], row["limit_seconds"]) for row in report["infrastructure"]],
+                         [("run-gates", "lint_contractrefs", "killed", "SIGKILL", None, 1800),
+                          ("audit-governance", "support_refs", "killed", "SIGKILL", None, 1800)])
+        self.assertIn("Subchecks reporting more failures than the baseline: 0", out)
+        self.assertIn("Gone since the baseline (nothing to do): 0", out)
+
+    def test_a_killed_validator_cannot_lower_two_to_one(self):
+        self.stub(gates={"verify_spec_lock": [STALE_HASH]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        blocking = {"path": "Plans/Touched.md", "error": "brand_new_kind"}
+        self.stub(gates={"verify_spec_lock": [STALE_HASH, blocking]})
+        without, _ = self.compare()
+        self.stub(gates={"verify_spec_lock": [STALE_HASH, blocking], "lint_contractrefs": [killed_row()]},
+                  audit={"support_refs": [killed_row()]})
+        code, out = self.compare()
+        self.assertEqual((without, code), (2, 2), out)
+
+    def test_a_baseline_is_not_recorded_from_a_run_where_a_validator_was_killed(self):
+        self.stub(gates={"lint_contractrefs": [killed_row()]})
+        code, _ = self.run_main("--record-baseline", "--baseline", "baseline.json")
+        self.assertEqual(code, 3)
+        self.assertFalse((self.repo / "baseline.json").exists())
+        self.assertIn("not recording a baseline", self.stderr)
+        self.assertIn("killed by a signal", self.stderr)
+
+    def test_a_killed_validators_baseline_rows_are_not_reported_gone(self):
+        self.stub(gates={"lint_contractrefs": [MISSING_REF]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        self.stub(gates={"lint_contractrefs": [killed_row()]})
+        code, out = self.compare()
+        self.assertEqual(code, 1, out)
+        self.assertIn("Gone since the baseline (nothing to do): 0", out)
+
+    def test_split_infrastructure_takes_the_killed_row_and_keeps_a_crash_a_failure(self):
+        killed = M.normalize("run-gates", "lint_contractrefs", killed_row(), CHECKOUT)
+        infra, rest = M.split_infrastructure([killed])
+        self.assertEqual((len(infra), rest), (1, []))
+        self.assertEqual((infra[0]["kind"], infra[0]["signal_name"], infra[0]["elapsed_seconds"]),
+                         ("killed", "SIGKILL", None))
+        crash = M.normalize("run-gates", "lint_contractrefs",
+                            {"error": "subcheck_exception", "message": "boom"}, CHECKOUT)
+        self.assertEqual(M.split_infrastructure([crash]), ([], [crash]))
 
     def test_a_real_lint_contractrefs_failure_is_still_a_failure(self):
         """Only the timeout row is infrastructure: what the subcheck reports when it finishes counts,
@@ -2247,7 +2332,8 @@ class PairedValidatorCopies(LandingRun):
         self.storage_shape(audit=[timeout_row("validate-implementation-readiness", 600)])
         code, out = self.compare()
         self.assertEqual(code, 1, out)
-        self.assertIn("(33 of 33 printed, 50 of 79 in the baseline): the audit-governance copy timed out;", out)
+        self.assertIn("(33 of 33 printed, 50 of 79 in the baseline): the audit-governance copy timed out;",
+                      out)
         self.assertIn("[unknown-pre-existing] run-gates/validate_implementation_readiness", out)
 
     def test_a_run_gates_row_the_audit_governance_copy_lacks_falls_back(self):
@@ -2262,7 +2348,7 @@ class PairedValidatorCopies(LandingRun):
         self.storage_shape()
         inner = self.module.run_check
 
-        def run_check(name, root, run_dir, timeout):
+        def run_check(name, root, run_dir, timeout, jobs=1, env=None, supports_jobs=True):
             if name == "audit-governance":
                 (self.repo / "scripts" / "pm-plans-verify-helper.py").write_text("edited mid-run\n", encoding="utf-8")
             return inner(name, root, run_dir, timeout)
@@ -2332,8 +2418,8 @@ class TimeoutsLiftExitZero(LandingRun):
         # The timeout line names the subcheck, how long it ran and the limit.
         self.assertIn("[infrastructure] run-gates/lint_path_refs  subprocess_timeout (lint-path-refs)  "
                       "killed after 1800 s, at its limit of 1800 s", out)
-        self.assertIn("1 subcheck did not finish within 1800 s, the limit (run-gates/lint_path_refs killed after "
-                      "1800 s)", out)
+        self.assertIn("1 subcheck did not finish within 1800 s, the limit "
+                      "(run-gates/lint_path_refs killed after 1800 s)", out)
         self.assertIn("it cannot exit 0", out)
 
     def test_a_complete_run_with_nothing_to_report_still_exits_zero(self):
@@ -2546,7 +2632,7 @@ class ExportKeyedSubchecks(LandingRun):
         self.exports = {}
         self.export_calls = []
 
-        def run_export(root, argv, timeout_seconds):
+        def run_export(root, argv, timeout_seconds, env=None, slot_pool=None):
             self.export_calls.append(list(argv))
             rows = self.exports.get(argv[0], "unreadable")
             if rows == "timeout":
@@ -2819,6 +2905,17 @@ class ExportKeyedSubchecks(LandingRun):
         self.assertNotIn("[improved", out)
         self.assertIn("Checks whose failure count rose: 0", out)
 
+    def test_a_killed_export_falls_back_with_signal_wording(self):
+        self.record_contracts(contract_rows(120))
+        self.exports[self.PRD] = [killed_row()]
+        code, out = self.compare("--json")
+        self.assertEqual(code, 0, out)
+        rows = json.loads(out)["exports"]["subchecks"]
+        self.assertTrue(rows)
+        for row in rows:
+            self.assertEqual(row["case"], "export_killed")
+            self.assertIn("was killed by a signal", row["reason"])
+
     def test_a_readiness_copy_recorded_from_its_export_is_judged_on_its_own_rows(self):
         """Review L-07 judges a sampled run-gates copy by its complete audit-governance copy. The storage
         registry shape, recorded from its export, is complete at the baseline, so the run-gates copy needs
@@ -2876,11 +2973,13 @@ class ExportKeyedSubchecks(LandingRun):
         import ast
         tree = ast.parse((ROOT / "scripts" / "pm-plans-verify.py").read_text(encoding="utf-8"))
         names = {}
+        spec_functions = {"run_gates_check_specs": "run-gates",
+                          "audit_governance_check_specs": "audit-governance"}
         for node in tree.body:
-            if isinstance(node, ast.FunctionDef) and node.name in ("cmd_run_gates", "cmd_audit_governance"):
+            if isinstance(node, ast.FunctionDef) and node.name in spec_functions:
                 for sub in ast.walk(node):
-                    if isinstance(sub, ast.Assign) and any(getattr(t, "id", None) == "check_specs" for t in sub.targets):
-                        names["run-gates" if node.name == "cmd_run_gates" else "audit-governance"] = {
+                    if isinstance(sub, ast.Return) and isinstance(sub.value, ast.List):
+                        names[spec_functions[node.name]] = {
                             element.elts[0].value for element in sub.value.elts}
         path_before = list(sys.path)
         argv = M.aggregate_subcheck_argv(ROOT, names, 600)
@@ -2971,6 +3070,30 @@ class RunExport(unittest.TestCase):
         else:
             self.fail(f"the command's own child {pid} outlived the bound")
 
+    def test_the_export_holds_a_shared_slot_while_it_runs(self):
+        import contextlib
+
+        self.fake("""
+            import json, sys
+            args = sys.argv[1:]
+            open(args[args.index("--report") + 1], "w").write(
+                json.dumps({"check": args[0], "status": "pass", "failures": []}))
+        """)
+        events = []
+
+        class Pool:
+            @contextlib.contextmanager
+            def hold(self, label):
+                events.append(("start", label))
+                try:
+                    yield
+                finally:
+                    events.append(("end", label))
+
+        result = M.run_export(self.root, ["validate-evidence"], 30, slot_pool=Pool())
+        self.assertEqual((result["timed_out"], result["error"]), (False, None))
+        self.assertEqual(events, [("start", "validate-evidence"), ("end", "validate-evidence")])
+
 
 class Pm7InventoryStale(unittest.TestCase):
     """The settings inventory hook. The runner stands in for build.py, so the real page check never runs."""
@@ -2992,23 +3115,23 @@ class Pm7InventoryStale(unittest.TestCase):
         run = self.runner(1)
         self.assertIsNone(M.pm7_inventory_stale(["Plans/00-plans-index.md"], ROOT, runner=run))
         self.assertEqual(run.seen, {})
-        self.assertEqual(M.apply_pm7_inventory(0, ["scripts/pm-landing-check.py"], ROOT, False, runner=run), 0)
 
     def test_a_clean_page_check_leaves_the_landing_code_alone(self):
         run = self.runner(0)
-        self.assertIsNone(M.pm7_inventory_stale([M.PM7_INVENTORY], ROOT, runner=run))
+        message = M.pm7_inventory_stale([M.PM7_INVENTORY], ROOT, runner=run)
+        self.assertIsNone(message)
         self.assertEqual(run.seen["cmd"], [
             "python3", "Concepts/onboarding/opus-5.5/tools/build.py", "--publish-pm7", "--check"])
         self.assertEqual(run.seen["cwd"], ROOT)
-        self.assertEqual(M.apply_pm7_inventory(1, [M.PM7_INVENTORY], ROOT, False, runner=run), 1)
+        self.assertEqual(M.apply_pm7_inventory(1, message, False), 1)
 
     def test_a_failed_page_check_is_blocking_and_names_the_regeneration(self):
         run = self.runner(1)
-        self.assertEqual(M.pm7_inventory_stale([M.PM7_INVENTORY, "scripts/x.py"], ROOT, runner=run),
-                         "Plans inventory changed; regenerate the PM7 pages")
-        code, out, err = capture(lambda: M.apply_pm7_inventory(0, [M.PM7_INVENTORY], ROOT, False, runner=run))
+        message = M.pm7_inventory_stale([M.PM7_INVENTORY, "scripts/x.py"], ROOT, runner=run)
+        self.assertEqual(message, "Plans inventory changed; regenerate the PM7 pages")
+        code, out, err = capture(lambda: M.apply_pm7_inventory(0, message, False))
         self.assertEqual((code, out, err), (2, "Plans inventory changed; regenerate the PM7 pages\n", ""))
-        code, out, err = capture(lambda: M.apply_pm7_inventory(0, [M.PM7_INVENTORY], ROOT, True, runner=run))
+        code, out, err = capture(lambda: M.apply_pm7_inventory(0, message, True))
         self.assertEqual((code, out, err), (2, "", "Plans inventory changed; regenerate the PM7 pages\n"))
 
 
@@ -3332,6 +3455,19 @@ class WhatEachRunAlsoReports(LandingRun):
         self.assertIn("--root ROOT", run.stdout)
         self.assertIn("--row-report FILE", run.stdout)
 
+    def test_help_creates_no_files_with_bytecode_enabled(self):
+        scripts = self.repo / "scripts"
+        scripts.mkdir()
+        for name in ("pm-landing-check.py", "pm_evidence_paths.py", "pm_readiness_audit.py"):
+            shutil.copyfile(ROOT / "scripts" / name, scripts / name)
+        before = set(scripts.rglob("*"))
+        # Ignore a developer shell's PYTHONDONTWRITEBYTECODE and PYTHONPYCACHEPREFIX.
+        run = subprocess.run([sys.executable, "-E", str(scripts / "pm-landing-check.py"), "--help"],
+                             cwd=self.repo, capture_output=True, text=True)
+        self.assertEqual(run.returncode, 0, run.stderr)
+        self.assertIn("--readiness-audit-root", run.stdout)
+        self.assertEqual(set(scripts.rglob("*")), before)
+
     def test_the_row_report_must_be_outside_the_repository(self):
         self.stub(gates={"lint_path_refs": [self.row("#1")]})
         self.record()
@@ -3394,3 +3530,697 @@ TAIL_BEFORE_THE_COMPARISON_LINES = (
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class AggregateReportsTests(unittest.TestCase):
+    """The three aggregate checks overlap, and their reports come back in CHECKS order."""
+
+    def runner(self, delays, state, lock, fail=None):
+        def run(check):
+            with lock:
+                state["now"] += 1
+                state["peak"] = max(state["peak"], state["now"])
+            try:
+                time.sleep(delays.get(check, 0))
+                if fail and check in fail:
+                    raise RuntimeError(fail[check])
+                return {"status": "pass", "check": check}
+            finally:
+                with lock:
+                    state["now"] -= 1
+        return run
+
+    def test_jobs_one_is_the_serial_loop(self):
+        import threading
+        state = {"now": 0, "peak": 0}
+        reports = M.aggregate_reports(
+            self.runner({name: 0.01 for name in M.CHECKS}, state, threading.Lock()), 1)
+        self.assertEqual(list(reports), list(M.CHECKS))
+        self.assertEqual(state["peak"], 1)
+
+    def test_parallel_reports_keep_the_check_order(self):
+        import threading
+        state = {"now": 0, "peak": 0}
+        delays = {M.CHECKS[0]: 0.06, M.CHECKS[1]: 0.01, M.CHECKS[2]: 0.02}
+        reports = M.aggregate_reports(self.runner(delays, state, threading.Lock()), 3)
+        self.assertEqual(list(reports), list(M.CHECKS))
+        self.assertGreater(state["peak"], 1)
+
+    def test_an_unreadable_check_is_raised_in_check_order(self):
+        import threading
+        state = {"now": 0, "peak": 0}
+        with self.assertRaises(RuntimeError) as raised:
+            M.aggregate_reports(
+                self.runner({}, state, threading.Lock(),
+                            fail={M.CHECKS[1]: "audit fell over", M.CHECKS[2]: "migration fell over"}),
+                3)
+        self.assertEqual(str(raised.exception), "audit fell over")
+
+
+class AggregateReadinessInputs(LandingRun):
+    def test_readiness_source_link_changes_refuse_comparison_and_recording(self):
+        self.check_readiness_source_link_changes(supports_snapshot=True)
+
+    def test_historical_readiness_source_link_changes_refuse_comparison_and_recording(self):
+        self.check_readiness_source_link_changes(supports_snapshot=False)
+
+    def check_readiness_source_link_changes(self, *, supports_snapshot):
+        self.stub()
+        self.module.target_worker_support = lambda root: (True, True)
+        self.module.target_readiness_snapshot_support = lambda root: supports_snapshot
+        original_check = self.module.run_check
+        mkdtemp = tempfile.mkdtemp
+        edition_a, edition_b = (self.repo / name for name in ("edition-a", "edition-b"))
+        inventory = "CURRENT_EVENT_SOURCE_INVENTORY.json"
+        for edition, value in ((edition_a, "A"), (edition_b, "B")):
+            edition.mkdir()
+            (edition / inventory).write_text(json.dumps({"edition": value}))
+        selected = self.repo / "selected"
+        current = self.repo / "current"
+
+        def publish(link, target):
+            replacement = link.with_suffix(".new")
+            replacement.symlink_to(target, target_is_directory=True)
+            replacement.replace(link)
+
+        publish(selected, edition_a)
+        common = ("--readiness-audit-root", str(selected))
+        self.assertEqual(self.run_main(*common, "--record-baseline", "--baseline", "baseline.json")[0],
+                         0, self.stderr)
+        baseline = self.repo / "baseline.json"
+        original_bytes = baseline.read_bytes()
+        refused = self.repo / "refused.json"
+        row_report = Path(self.enterContext(tempfile.TemporaryDirectory())) / "rows.json"
+        for timing in ("startup", "dispatch", "rollback", "verdict"):
+            for jobs in (1, 4):
+                for record in (False, True):
+                    with self.subTest(timing=timing, jobs=jobs, record=record):
+                        publish(current, edition_a)
+                        publish(selected, edition_a if timing == "startup" else current)
+                        seen = []
+
+                        def make_scratch(*args, **kwargs):
+                            if timing == "startup" and kwargs.get("prefix") == "pm-landing-check-slots-":
+                                publish(selected, edition_b)
+                            return mkdtemp(*args, **kwargs)
+
+                        def run_check(check, root, run_dir, timeout, workers, env, supports_jobs):
+                            if check == "run-gates" and timing != "startup":
+                                edition = Path(env.get(M.SNAPSHOT_ENV, root / M.READINESS_AUDIT_REL))
+                                seen.append(json.loads((edition / inventory).read_bytes())["edition"])
+                                if timing in ("dispatch", "rollback"):
+                                    publish(current, edition_b)
+                                    if timing == "rollback":
+                                        publish(current, edition_a)
+                            return original_check(check, root, run_dir, timeout, workers, env, supports_jobs)
+
+                        finish_name = "build_baseline" if record else "pm7_inventory_stale"
+                        finish = getattr(self.module, finish_name)
+
+                        def finish_report(*args, **kwargs):
+                            result = finish(*args, **kwargs)
+                            if timing == "verdict":
+                                publish(current, edition_b)
+                            return result
+
+                        mode = (("--record-baseline", "--baseline", str(refused)) if record else
+                                ("--base", self.base, "--baseline", str(baseline),
+                                 "--row-report", str(row_report)))
+                        with patch.object(tempfile, "mkdtemp", make_scratch), \
+                                patch.object(self.module, "run_check", run_check), \
+                                patch.object(self.module, finish_name, finish_report):
+                            code, out = self.run_main(*common, "--jobs", str(jobs), *mode)
+                        self.assertEqual(code, 3, out + self.stderr)
+                        self.assertEqual(out, "")
+                        self.assertIn("readiness audit", self.stderr)
+                        self.assertEqual(seen, [] if timing == "startup" else ["A"])
+                        self.assertEqual(selected.resolve(), edition_a if timing == "rollback" else edition_b)
+                        self.assertEqual(baseline.read_bytes(), original_bytes)
+                        self.assertFalse(refused.exists())
+                        self.assertFalse(row_report.exists())
+
+    def test_the_supplied_path_must_still_open_before_comparison_or_recording(self):
+        self.stub()
+        self.module.target_worker_support = lambda root: (True, True)
+        edition = self.repo / "edition"
+        edition.mkdir()
+        (edition / "CURRENT_EVENT_SOURCE_INVENTORY.json").write_text("{}", encoding="utf-8")
+        intermediate = self.repo / "intermediate"
+        intermediate.mkdir()
+        moved = intermediate.with_name("moved")
+        selected = self.repo / "selected"
+        selected.symlink_to("intermediate/../edition", target_is_directory=True)
+        source = ("--readiness-audit-root", str(selected))
+        baseline = self.repo / "baseline.json"
+        recorded = self.repo / "recorded.json"
+        rows = Path(self.enterContext(tempfile.TemporaryDirectory())) / "rows.json"
+        code, out = self.run_main(*source, "--record-baseline", "--baseline", str(baseline))
+        self.assertEqual(code, 0, out + self.stderr)
+        original_bytes = baseline.read_bytes()
+        original_check = self.module.run_check
+
+        def disconnect(check, *args):
+            if check == "run-gates":
+                intermediate.rename(moved)
+                with self.assertRaises(FileNotFoundError):
+                    selected.stat()
+                self.assertTrue(edition.is_dir())
+            return original_check(check, *args)
+
+        for jobs in (1, 4):
+            for record in (False, True):
+                with self.subTest(jobs=jobs, record=record):
+                    mode = (("--record-baseline", "--baseline", str(recorded)) if record else
+                            ("--base", self.base, "--baseline", str(baseline), "--row-report", str(rows)))
+                    try:
+                        with patch.object(self.module, "run_check", disconnect):
+                            code, out = self.run_main(*source, "--jobs", str(jobs), *mode)
+                        self.assertEqual(code, 3, out + self.stderr)
+                        self.assertIn("readiness audit source is not a directory", self.stderr)
+                        self.assertIn(str(selected), self.stderr)
+                        self.assertEqual(out, "")
+                        self.assertEqual(baseline.read_bytes(), original_bytes)
+                        self.assertFalse(recorded.exists())
+                        self.assertFalse(rows.exists())
+                    finally:
+                        moved.rename(intermediate)
+
+    def test_readers_share_a_snapshot_when_the_live_edition_is_restored_before_aggregate_returns(self):
+        import threading
+
+        self.stub()
+        readiness = self.repo / M.READINESS_AUDIT_REL
+        readiness.mkdir(parents=True)
+        inventory = readiness / "CURRENT_EVENT_SOURCE_INVENTORY.json"
+        inventory.write_text('{"edition": 1}', encoding="utf-8")
+        common = ("--readiness-audit-root", str(readiness))
+        code, out = self.run_main(*common, "--record-baseline", "--baseline", "baseline.json")
+        self.assertEqual(code, 0, out + self.stderr)
+        compare_baseline = self.repo / "baseline.json"
+        new_baseline = self.repo / "mixed.json"
+        baseline_bytes = compare_baseline.read_bytes()
+        original_check = self.module.run_check
+
+        for jobs in (1, 4):
+            for record in (False, True):
+                with self.subTest(jobs=jobs, record=record):
+                    inventory.write_text('{"edition": 1}', encoding="utf-8")
+                    self.module.target_worker_support = lambda root: (True, True)
+                    self.module.target_readiness_snapshot_support = lambda root: True
+                    first_read, restored = threading.Event(), threading.Event()
+                    seen = {}
+
+                    def read_edition(check, root, run_dir, timeout, workers, env, supports_jobs):
+                        snapshot = Path(env.get(M.SNAPSHOT_ENV, readiness))
+                        if check == "run-gates":
+                            inventory.write_text('{"edition": 2}', encoding="utf-8")
+                            seen[check] = json.loads((snapshot / inventory.name).read_bytes())["edition"]
+                            first_read.set()
+                            if jobs > 1:
+                                self.assertTrue(restored.wait(timeout=5))
+                        if check == "audit-governance":
+                            self.assertTrue(first_read.wait(timeout=5))
+                            inventory.write_text('{"edition": 1}', encoding="utf-8")
+                            seen[check] = json.loads((snapshot / inventory.name).read_bytes())["edition"]
+                            restored.set()
+                        if check == "plan-migration-validate" and jobs > 1:
+                            self.assertTrue(restored.wait(timeout=5))
+                        return original_check(check, root, run_dir, timeout, workers, env, supports_jobs)
+
+                    mode = (("--record-baseline", "--baseline", str(new_baseline)) if record else
+                            ("--base", self.base, "--baseline", str(compare_baseline)))
+                    with patch.object(self.module, "run_check", read_edition):
+                        code, out = self.run_main(*common, "--jobs", str(jobs), *mode)
+                    self.assertEqual(code, 3, out + self.stderr)
+                    self.assertIn("readiness audit", self.stderr)
+                    if jobs > 1:
+                        self.assertEqual(seen, {"run-gates": 1, "audit-governance": 1})
+                        self.assertEqual(inventory.read_text(encoding="utf-8"), '{"edition": 1}')
+                    self.assertEqual(compare_baseline.read_bytes(), baseline_bytes)
+                    self.assertFalse(new_baseline.exists())
+
+    def test_exports_receive_the_aggregate_snapshot_and_its_tampering_refuses_the_baseline(self):
+        self.stub()
+        self.module.target_readiness_snapshot_support = lambda root: True
+        live = self.repo / M.READINESS_AUDIT_REL
+        live.mkdir(parents=True)
+        inventory = live / "CURRENT_EVENT_SOURCE_INVENTORY.json"
+        inventory.write_bytes(b'{"edition": 1}')
+        read_paths = []
+        original_check = self.module.run_check
+
+        def capture_snapshot(check, root, run_dir, timeout, jobs, env, supports_jobs):
+            snapshot = Path(env[M.SNAPSHOT_ENV])
+            read_paths.append(snapshot)
+            self.assertEqual((snapshot / inventory.name).read_bytes(), inventory.read_bytes())
+            self.assertEqual(snapshot.stat().st_mode & 0o222, 0)
+            self.assertEqual((snapshot / inventory.name).stat().st_mode & 0o222, 0)
+            return original_check(check, root, run_dir, timeout, jobs, env, supports_jobs)
+
+        def tamper_with_snapshot(*args, env, **kwargs):
+            snapshot = Path(env[M.SNAPSHOT_ENV])
+            self.assertEqual(read_paths, [snapshot] * len(M.CHECKS))
+            copy = snapshot / inventory.name
+            copy.chmod(0o600)
+            copy.write_bytes(b'{"edition": 2}')
+            return {}, []
+
+        with patch.object(self.module, "run_check", capture_snapshot), \
+                patch.object(self.module, "key_from_exports", tamper_with_snapshot):
+            code, out = self.run_main("--record-baseline", "--baseline", "baseline.json",
+                                      "--readiness-audit-root", str(live))
+        self.assertEqual(code, 3, out + self.stderr)
+        self.assertIn("readiness audit snapshot changed", self.stderr)
+        self.assertEqual(inventory.read_bytes(), b'{"edition": 1}')
+        self.assertFalse(read_paths[0].parent.exists())
+        self.assertFalse((self.repo / "baseline.json").exists())
+
+    def test_a_changed_edition_is_rejected_even_if_the_next_worker_restores_it(self):
+        import threading
+        from concurrent.futures import ThreadPoolExecutor
+
+        self.stub()
+        self.module.target_worker_support = lambda root: (True, True)
+        self.module.target_readiness_snapshot_support = lambda root: True
+        readiness = self.repo / M.READINESS_AUDIT_REL
+        readiness.mkdir(parents=True)
+        inventory = readiness / "CURRENT_EVENT_SOURCE_INVENTORY.json"
+        inventory.write_text('{"edition": 1}', encoding="utf-8")
+        original_check = self.module.run_check
+        compare_baseline = self.repo / "baseline.json"
+        new_baseline = self.repo / "mixed.json"
+        common_args = ("--readiness-audit-root", str(readiness))
+        code, out = self.run_main(*common_args, "--record-baseline", "--baseline", str(compare_baseline))
+        self.assertEqual(code, 0, out + self.stderr)
+        baseline_bytes = compare_baseline.read_bytes()
+
+        for jobs in (1, 4):
+            for record in (False, True):
+                with self.subTest(jobs=jobs, record=record):
+                    inventory.write_text('{"edition": 1}', encoding="utf-8")
+                    audit_finished = threading.Event()
+
+                    class SignalAuditCompletion(ThreadPoolExecutor):
+                        def submit(self, fn, check):
+                            future = super().submit(fn, check)
+                            if check == "audit-governance":
+                                future.add_done_callback(lambda _: audit_finished.set())
+                            return future
+
+                    def change_edition(check, *args):
+                        if check == "audit-governance":
+                            inventory.write_text('{"edition": 2}', encoding="utf-8")
+                        if check == "run-gates" and jobs > 1:
+                            self.assertTrue(audit_finished.wait(timeout=5))
+                            inventory.write_text('{"edition": 1}', encoding="utf-8")
+                        return original_check(check, *args)
+
+                    mode = (("--record-baseline", "--baseline", str(new_baseline)) if record else
+                            ("--base", self.base, "--baseline", str(compare_baseline)))
+                    with tempfile.TemporaryDirectory() as keep, \
+                            patch.object(self.module, "ThreadPoolExecutor", SignalAuditCompletion), \
+                            patch.object(self.module, "run_check", change_edition):
+                        code, out = self.run_main(*common_args, "--jobs", str(jobs), *mode,
+                                                  "--keep-check-reports", keep)
+                        kept = {path.stem for path in Path(keep).glob("*.json")}
+                        expected = set(M.CHECKS) if jobs > 1 else {"run-gates", "audit-governance"}
+                        self.assertEqual(kept, expected)
+                    if jobs > 1:
+                        self.assertEqual(inventory.read_text(encoding="utf-8"), '{"edition": 1}')
+                    self.assertEqual(code, 3, out + self.stderr)
+                    self.assertIn("readiness audit inputs changed during audit-governance", self.stderr)
+                    self.assertEqual(compare_baseline.read_bytes(), baseline_bytes)
+                    self.assertFalse(new_baseline.exists())
+
+
+class SharedWorkerBudget(LandingRun):
+    """Review N-F: --jobs is one budget for the whole check, capped, and gated on free memory."""
+
+    def capture(self):
+        self.module.target_worker_support = lambda root: (True, True)
+        self.module.target_readiness_snapshot_support = lambda root: True
+        seen = []
+
+        def run_check(name, root, run_dir, timeout, jobs=1, env=None, supports_jobs=True):
+            if env is None:
+                seen.append((name, jobs, None))
+            else:
+                slot_dir = Path(env[M.SLOTS_DIR_ENV]) if M.SLOTS_DIR_ENV in env else None
+                seen.append((name, jobs, {
+                    "count": env.get(M.SLOTS_COUNT_ENV),
+                    "floor": env.get(M.MEMORY_FLOOR_MB_ENV),
+                    "headroom": env.get(M.MEMORY_HEADROOM_MB_ENV),
+                    "settle": env.get(M.START_SETTLE_SECONDS_ENV),
+                    "files": sorted(path.name for path in slot_dir.glob("slot-*.lock")) if slot_dir else [],
+                }))
+            return {"check": name, "status": "pass", "failures": []}
+
+        self.module.run_check = run_check
+        self.module.current_run_dir = lambda root: "Plans/.plan_migration/run-017"
+        return seen
+
+    def test_the_children_get_one_budget_of_the_stated_size(self):
+        seen = self.capture()
+        code, out = self.run_main("--jobs", "4", "--record-baseline", "--baseline", "baseline.json")
+        self.assertEqual(code, 0, out + self.stderr)
+        self.assertEqual(sorted(name for name, _jobs, _env in seen), sorted(M.CHECKS))
+        for _name, jobs, environment in seen:
+            self.assertEqual(jobs, 4)
+            self.assertEqual(environment, {"count": "4", "floor": "6144", "headroom": "2048", "settle": "10",
+                                           "files": [f"slot-{index}.lock" for index in range(4)]})
+
+    def test_jobs_one_has_no_budget_and_no_floor(self):
+        seen = self.capture()
+        code, out = self.run_main("--record-baseline", "--baseline", "baseline.json")
+        self.assertEqual(code, 0, out + self.stderr)
+        for _name, jobs, environment in seen:
+            self.assertEqual(jobs, 1)
+            # Review A3: the environment is explicit even here, and carries no budget.
+            self.assertEqual(environment, {"count": None, "floor": None, "headroom": None, "settle": None,
+                                           "files": []})
+
+    def refused(self, *argv):
+        import contextlib
+        import io
+
+        self.capture()
+        errors = io.StringIO()
+        sys.argv = ["pm-landing-check.py", "--root", str(self.repo), *argv,
+                    "--record-baseline", "--baseline", "baseline.json"]
+        with contextlib.redirect_stderr(errors), self.assertRaises(SystemExit) as raised:
+            self.module.main()
+        self.assertEqual(raised.exception.code, 2)
+        return errors.getvalue()
+
+    def test_more_workers_than_the_cap_is_refused(self):
+        self.assertIn("--jobs must be between 1 and", self.refused("--jobs", str(M.MAX_JOBS + 1)))
+
+    def test_a_negative_memory_floor_is_refused(self):
+        self.assertIn("--memory-floor-gb must not be negative",
+                      self.refused("--memory-floor-gb", "-1"))
+
+    def test_a_negative_headroom_is_refused(self):
+        self.assertIn("--memory-headroom-gb must not be negative",
+                      self.refused("--memory-headroom-gb", "-1"))
+
+    def test_a_negative_settle_is_refused(self):
+        self.assertIn("--start-settle-seconds must not be negative",
+                      self.refused("--start-settle-seconds", "-1"))
+
+    def test_worker_limits_must_be_finite(self):
+        for option in ("--memory-floor-gb", "--memory-headroom-gb", "--start-settle-seconds"):
+            for value in ("nan", "inf", "-inf"):
+                with self.subTest(option=option, value=value):
+                    self.assertIn(f"{option} must be finite", self.refused("--jobs", "4", f"{option}={value}"))
+
+    def test_inherited_budget_and_child_flag_never_reach_children(self):
+        seen = self.capture()
+        inherited = {name: "inherited" for name in (
+            M.SLOTS_DIR_ENV, M.SLOTS_COUNT_ENV, M.MEMORY_FLOOR_MB_ENV, M.MEMORY_HEADROOM_MB_ENV,
+            M.START_SETTLE_SECONDS_ENV, M.AGGREGATE_CHILD_ENV,
+        )}
+        check = self.module.run_check
+
+        def capture_env(name, root, run_dir, timeout, jobs, env, supports_jobs):
+            self.assertTrue(inherited.keys().isdisjoint(env))
+            return check(name, root, run_dir, timeout, jobs, env, supports_jobs)
+
+        with patch.dict(os.environ, inherited), patch.object(self.module, "run_check", capture_env):
+            self.record()
+        self.assertEqual(len(seen), len(M.CHECKS))
+
+
+
+OLD_TARGET_VERIFIER = '''import json, sys
+if "--help" in sys.argv:
+    print("usage: pm-plans-verify.py run-gates [--subcheck-timeout-seconds N] [--report FILE]")
+    raise SystemExit(0)
+if "--jobs" in sys.argv:
+    print("pm-plans-verify.py: error: unrecognized arguments: --jobs", file=sys.stderr)
+    raise SystemExit(2)
+with open(sys.argv[sys.argv.index("--report") + 1], "w", encoding="utf-8") as handle:
+    json.dump({"schema_id": "pm.plans_verify.report.v1", "check": sys.argv[1], "status": "pass",
+               "failures": []}, handle)
+print(json.dumps({"status": "pass"}))
+'''
+
+NEW_TARGET_VERIFIER = '''import json, sys
+if "--help" in sys.argv:
+    print("usage: pm-plans-verify.py run-gates [--jobs N] [--subcheck-timeout-seconds N] [--report FILE]")
+    raise SystemExit(0)
+if "--jobs" not in sys.argv:
+    print("pm-plans-verify.py: error: --jobs is required by this test", file=sys.stderr)
+    raise SystemExit(2)
+with open(sys.argv[sys.argv.index("--report") + 1], "w", encoding="utf-8") as handle:
+    json.dump({"schema_id": "pm.plans_verify.report.v1", "check": sys.argv[1], "status": "pass",
+               "failures": []}, handle)
+print(json.dumps({"status": "pass"}))
+'''
+
+
+class HistoricalTargetEnvironment(LandingRun):
+    def test_a_stable_historical_target_runs_serially_even_with_a_worker_budget(self):
+        import threading
+
+        scripts = self.repo / "scripts"
+        scripts.mkdir()
+        verifier = NEW_TARGET_VERIFIER.replace("[--report FILE]",
+                                               f"[--report FILE] {M.LANDING_BUDGET_CAPABILITY}")
+        (scripts / "pm-plans-verify.py").write_text(verifier, encoding="utf-8")
+        (scripts / "pm-plan-migration.py").write_text(
+            """print('{"status": "pass", "failures": []}')""", encoding="utf-8")
+        self.module.current_run_dir = lambda root: "Plans/.plan_migration/run-017"
+        self.module.aggregate_subcheck_commands = lambda *args: {}
+        real_run_check = self.module.run_check
+        caller = threading.get_ident()
+        calls = []
+
+        def run_check(name, root, run_dir, timeout, workers, env, supports_jobs):
+            calls.append((name, threading.get_ident(), workers))
+            self.assertTrue(set(M.SNAPSHOT_ENV_NAMES).isdisjoint(env))
+            self.assertNotIn(M.SLOTS_DIR_ENV, env)
+            return real_run_check(name, root, run_dir, timeout, workers, env, supports_jobs)
+
+        source = self.repo / "edition"
+        source.mkdir()
+        (source / "CURRENT_EVENT_SOURCE_INVENTORY.json").write_text("{}", encoding="utf-8")
+        args = ("--readiness-audit-root", str(source))
+        expected_dispatch = [(name, caller, 1) for name in M.CHECKS]
+        results = []
+        with patch.object(self.module, "run_check", run_check):
+            for jobs in (1, 4):
+                with self.subTest(jobs=jobs):
+                    requested = (*args, "--jobs", str(jobs))
+                    calls.clear()
+                    code, out = self.run_main(*requested, "--record-baseline", "--baseline", "baseline.json")
+                    self.assertEqual(code, 0, out + self.stderr)
+                    code, out = self.run_main(*requested, "--base", self.base, "--baseline", "baseline.json")
+                    self.assertEqual(code, 0, out + self.stderr)
+                    results.append(out)
+                    self.assertEqual(calls, expected_dispatch * 2)
+                    self.assertEqual(self.stderr.count("historical target: serial with end-of-run check"), 1)
+                    self.assertFalse((self.repo / M.READINESS_AUDIT_REL).exists())
+        self.assertEqual(results, results[:1] * 2)
+
+    def test_retired_cache_environment_cannot_change_a_verifier_result(self):
+        scripts = self.repo / "scripts"
+        scripts.mkdir()
+        (scripts / "pm-plans-verify.py").write_text(textwrap.dedent("""
+            import json, os, sys
+            from pathlib import Path
+
+            args = sys.argv[1:]
+            check = "help" if "--help" in args else args[0]
+            legacy_env = sorted(name for name in os.environ if name.startswith("PM_PLANS_VERIFY_DEDUPE"))
+            Path(check + ".env.json").write_text(json.dumps(legacy_env))
+            if check == "help":
+                print("usage: pm-plans-verify.py run-gates [--jobs N] landing-readiness-snapshot-v1")
+                raise SystemExit()
+
+            # This version reuses a stale passing result when both cache inputs are present.
+            cached_pass = os.environ.get("PM_PLANS_VERIFY_DEDUPE_DIR") and os.environ.get(
+                "PM_PLANS_VERIFY_DEDUPE_STAMP")
+            rows = [] if cached_pass else [{"error": "real_failure", "line": n} for n in (1, 2)]
+            if check == "run-gates":
+                report = {
+                    "checks": {"lint_path_refs": {"status": "fail", "failures": len(rows)}},
+                    "failures": [{"check": "lint_path_refs", "failures": rows[:1]}] if rows else [],
+                }
+            else:
+                if check == "audit-governance":
+                    rows = []
+                report = {"failures": rows}
+            report.update(check=check, status="fail" if rows else "pass")
+            Path(args[args.index("--report") + 1]).write_text(json.dumps(report))
+        """), encoding="utf-8")
+        (scripts / "pm-plan-migration.py").write_text(textwrap.dedent("""
+            import json, os
+            from pathlib import Path
+            legacy_env = sorted(name for name in os.environ if name.startswith("PM_PLANS_VERIFY_DEDUPE"))
+            Path("migration.env.json").write_text(json.dumps(legacy_env))
+            print(json.dumps({"status": "pass", "failures": []}))
+        """), encoding="utf-8")
+        self.module.current_run_dir = lambda root: "Plans/.plan_migration/run-017"
+        self.module.aggregate_subcheck_argv = lambda *args: {("run-gates", "lint_path_refs"): ["lint-path-refs"]}
+        inherited = {
+            "PM_PLANS_VERIFY_DEDUPE_DIR": "old-cache",
+            "PM_PLANS_VERIFY_DEDUPE_STAMP": "old-inputs",
+            "PM_PLANS_VERIFY_DEDUPE_OWNER_TOKEN": "old-token",
+            "PM_PLANS_VERIFY_DEDUPE_FUTURE_SETTING": "also-retired",
+        }
+        with patch.dict(os.environ, inherited):
+            self.record()
+            self.assertEqual({key: os.environ[key] for key in inherited}, inherited)
+
+        baseline = json.loads((self.repo / "baseline.json").read_text(encoding="utf-8"))
+        self.assertEqual(baseline["checks"]["run-gates"]["failure_total"], 2)
+        self.assertEqual(sum(row["count"] for row in baseline["export_buckets"]), 2)
+        for check in ("help", "run-gates", "audit-governance", "migration", "lint-path-refs"):
+            with self.subTest(check=check):
+                received = json.loads((self.repo / f"{check}.env.json").read_text(encoding="utf-8"))
+                self.assertEqual(received, [])
+
+
+class TargetBudgetNegotiation(LandingRun):
+    def test_snapshot_capable_targets_without_the_budget_run_whole_aggregates_serially(self):
+        import threading
+
+        scripts = self.repo / "scripts"
+        scripts.mkdir()
+        (scripts / "pm-plan-migration.py").write_text(
+            """print('{"status": "pass", "failures": []}')""", encoding="utf-8")
+        caller = threading.get_ident()
+        real_run_check = self.module.run_check
+        for source, cli_jobs, reason in ((OLD_TARGET_VERIFIER, False, "--jobs"),
+                                         (NEW_TARGET_VERIFIER, True, "shared validator budget")):
+            with self.subTest(reason=reason):
+                # Probe each target once using the real subprocess path.
+                self.module = load_module()
+                self.module.SHARED_READINESS_AUDIT_ROOT = self.repo / "no-shared-audit"
+                self.module.current_run_dir = lambda root: "Plans/.plan_migration/run-017"
+                source = source.replace("[--report FILE]", f"[--report FILE] {M.SNAPSHOT_CAPABILITY}")
+                (scripts / "pm-plans-verify.py").write_text(source, encoding="utf-8")
+                calls = []
+
+                def run_check(name, root, run_dir, timeout, jobs, env, supports_jobs):
+                    calls.append((name, threading.get_ident(), jobs, supports_jobs, M.SLOTS_DIR_ENV in env))
+                    self.assertEqual(env[M.SNAPSHOT_REPO_ENV], str(root))
+                    self.assertNotEqual(env[M.SNAPSHOT_ENV], str(self.repo / "elsewhere"))
+                    return real_run_check(name, root, run_dir, timeout, jobs, env, supports_jobs)
+
+                inherited = {key: str(self.repo / "elsewhere") for key in M.SNAPSHOT_ENV_NAMES}
+                with patch.dict(os.environ, inherited), patch.object(self.module, "run_check", run_check):
+                    code, out = self.run_main("--jobs", "4", "--record-baseline", "--baseline", "baseline.json")
+                self.assertEqual(code, 0, out + self.stderr)
+                self.assertEqual(calls, [(name, caller, 1, cli_jobs, False) for name in M.CHECKS])
+                self.assertIn("running serially", self.stderr)
+                self.assertIn(reason, self.stderr)
+
+
+class TargetJobsNegotiation(unittest.TestCase):
+    """Review A2: the checker runs a target checkout's own verifier, which may predate --jobs."""
+
+    def make_root(self, files):
+        root = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, root, True)
+        (root / "scripts").mkdir(parents=True)
+        for name, body in files.items():
+            (root / "scripts" / name).write_text(body, encoding="utf-8")
+        return root
+
+    def test_capability_probe_leaves_a_cold_target_unchanged(self):
+        root = self.make_root({
+            "pm-plans-verify.py": "from probe_helper import capability\nprint(capability)\n",
+            "probe_helper.py": f"capability = {M.SNAPSHOT_CAPABILITY!r}\n",
+        })
+        before = sorted(root.rglob("*"))
+        with patch.dict(os.environ):
+            os.environ.pop("PYTHONDONTWRITEBYTECODE", None)
+            os.environ.pop("PYTHONPYCACHEPREFIX", None)
+            self.assertTrue(M.target_readiness_snapshot_support(root))
+        self.assertEqual(sorted(root.rglob("*")), before)
+
+    def test_an_older_target_is_run_without_the_option(self):
+        root = self.make_root({"pm-plans-verify.py": OLD_TARGET_VERIFIER})
+        self.assertFalse(M.target_accepts_jobs(root))
+        report = M.run_check("run-gates", root, "run", 1800, 4, dict(os.environ), None)
+        self.assertEqual(report["status"], "pass")
+
+    def test_a_newer_target_gets_the_option(self):
+        root = self.make_root({"pm-plans-verify.py": NEW_TARGET_VERIFIER})
+        self.assertTrue(M.target_accepts_jobs(root))
+        report = M.run_check("run-gates", root, "run", 1800, 4, dict(os.environ), None)
+        self.assertEqual(report["status"], "pass")
+        argv = M.check_argv("run-gates", Path("/tmp/report.json"), 1800, 4, True)
+        self.assertEqual(argv[argv.index("--jobs") + 1], "4")
+        self.assertEqual(M.check_argv("run-gates", Path("/tmp/report.json"), 1800, 4, False).count("--jobs"), 0)
+
+    def test_snapshot_refs_keep_the_logical_path_and_case_errors(self):
+        root = self.make_root({})
+        live = root / M.READINESS_AUDIT_REL
+        live.mkdir(parents=True)
+        with tempfile.TemporaryDirectory() as scratch:
+            snapshot = Path(scratch) / "edition"
+            snapshot.mkdir()
+            (snapshot / "receipt.json").write_text("{}")
+            spec = importlib.util.spec_from_file_location("snapshot_path_test", ROOT / "scripts/pm-plans-verify.py")
+            verifier = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(verifier)
+            env = {M.SNAPSHOT_ENV: str(snapshot), M.SNAPSHOT_REPO_ENV: str(root)}
+            logical = f"{M.READINESS_AUDIT_REL}/receipt.json"
+            wrong_case = logical.replace(live.name, live.name.upper())
+            with patch.object(verifier, "ROOT", root), patch.dict(os.environ, env):
+                resolved, error = verifier.exact_path(logical)
+                self.assertIsNone(error)
+                self.assertEqual(resolved, snapshot / "receipt.json")
+                self.assertEqual(verifier.rel(resolved), logical)
+                resolved, error = verifier.exact_path(wrong_case)
+                self.assertIsNone(resolved)
+                self.assertEqual(error["error"], "case_mismatched_ref")
+                self.assertEqual(error["actual"], M.READINESS_AUDIT_REL)
+
+    def test_slot_hold_diagnostics_reach_stderr_before_the_aggregate_finishes(self):
+        import contextlib
+        import io
+
+        root = self.make_root({"pm-plans-verify.py": textwrap.dedent("""
+            import json, sys, time
+            from pathlib import Path
+
+            print("other diagnostic", file=sys.stderr, flush=True)
+            print("[pm-plans-verify] holding back validate-evidence", file=sys.stderr, flush=True)
+            acknowledgement = Path("hold-forwarded")
+            deadline = time.monotonic() + 2
+            while not acknowledgement.exists() and time.monotonic() < deadline:
+                time.sleep(0.01)
+            print(json.dumps({"forwarded": acknowledgement.exists()}))
+        """)})
+
+        class AcknowledgeHold(io.StringIO):
+            def write(self, value):
+                if "holding back" in value:
+                    (root / "hold-forwarded").touch()
+                return super().write(value)
+
+        stderr = AcknowledgeHold()
+        with contextlib.redirect_stderr(stderr):
+            report = M.run_check("run-gates", root, "run", 1800, supports_jobs=True)
+
+        self.assertTrue(report["forwarded"])
+        self.assertEqual(stderr.getvalue(), "[pm-plans-verify] holding back validate-evidence\n")
+
+    def test_the_base_verifier_really_predates_the_option(self):
+        """Two real versions of the same path: the base commit's verifier and this tree's."""
+        def show(path):
+            return subprocess.run(["git", "-C", str(ROOT), "show", f"9ac9e84a27:{path}"],
+                                  capture_output=True, text=True)
+
+        script, wiring = show("scripts/pm-plans-verify.py"), show("scripts/pm_wiring_inventory.py")
+        if script.returncode or wiring.returncode:
+            self.skipTest("the branch's base commit is not in this clone")
+        self.assertNotIn("--jobs", script.stdout)
+        old = self.make_root({"pm-plans-verify.py": script.stdout,
+                              "pm_wiring_inventory.py": wiring.stdout})
+        self.assertFalse(M.target_accepts_jobs(old))
+        self.assertEqual(M.target_worker_support(ROOT), (True, True))
+        self.assertTrue(M.target_readiness_snapshot_support(ROOT))

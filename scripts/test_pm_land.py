@@ -8,6 +8,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shlex
 import shutil
 import signal
 import socket
@@ -205,11 +206,11 @@ class LandingFixture(unittest.TestCase):
         with patch.object(land, "command", side_effect=local_status):
             land.remote_cleanup(self.folder, "nas1")
 
-    def test_public_cli_only_accepts_check_verify_and_the_two_batch_readers(self):
+    def test_public_cli_accepts_only_the_documented_subcommands(self):
         script = Path(__file__).with_name("pm-land.py")
         result = subprocess.run(["python3", "-B", str(script), "--help"], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0)
-        self.assertIn("{check,verify,batch-status,batch-check}", result.stdout)
+        self.assertIn("{check,verify,batch-status,batch-check,publish}", result.stdout)
         for removed in ("run", "inventory", "preflight", "fetch-main", "push-main", "_remote"):
             with self.subTest(command=removed):
                 result = subprocess.run(["python3", "-B", str(script), removed], capture_output=True, text=True)
@@ -2103,6 +2104,20 @@ class BatchCheckTests(BatchFixture):
             argv += ["--check-source", self.source_file(marked=bool(source))]
         return self.batch_check(*argv)
 
+    def test_batch_advice_covers_validators_killed_by_a_signal(self):
+        self.set_main(self.base)
+        self.holder(start=self.base)
+        doc = json.loads(json_report(totals={"run-gates/lint-x": None}, counts={},
+                                     commit=self.head, base=self.base))
+        doc["infrastructure"] = [
+            {"check": "run-gates", "subcheck": "lint-x",
+             "error": "validator_killed_by_signal", "kind": "killed"},
+        ]
+        report = self.report_file("killed.json", json.dumps(doc))
+        code, out = self.check(report, code=1)
+        self.assertEqual(code, 1, out)
+        self.assertIn("judge first: 1 subcheck(s) did not finish (timed out or were killed)", out)
+
     def test_the_first_member_may_stay_and_says_why(self):
         self.set_main(self.base)
         self.holder(start=self.base)
@@ -3364,6 +3379,303 @@ class CheckBatchBaseTests(unittest.TestCase):
     def test_a_base_that_is_not_on_main_is_refused(self):
         with self.assertRaisesRegex(land.Refusal, "is not on the fetched origin/main"):
             land.check_topic(self.shared, self.branch, "nas1", self.head)
+
+
+class PublishAllTargetsTests(unittest.TestCase):
+    """publish pushes the landed SHA to every configured push target under one lease and verifies each."""
+
+    git = LandingFixture.git
+    put = LandingFixture.put
+    make_record = LandingFixture.make_record
+
+    def setUp(self):
+        LandingFixture.setUp(self)
+        self.git(self.shared, "merge", "--ff-only", self.head)
+
+    def bare(self, name, main):
+        path = self.root / name
+        self.git(self.shared, "clone", "--bare", str(self.shared), str(path))
+        self.git(path, "update-ref", land.MAIN_REF, main)
+        return path
+
+    def tip(self, bare):
+        return land.git(bare, "rev-parse", land.MAIN_REF).stdout.strip()
+
+    def two_push_urls(self):
+        nas = self.bare("nas.git", self.base)
+        self.git(self.shared, "config", "--add", "remote.origin.pushurl", str(self.origin))
+        self.git(self.shared, "config", "--add", "remote.origin.pushurl", str(nas))
+        return nas
+
+    def test_publish_reaches_every_push_url(self):
+        nas = self.two_push_urls()
+        self.git(self.shared, "remote", "add", "pm-land-push-probe", str(nas))
+        output = io.StringIO()
+        with redirect_stdout(output):
+            self.assertEqual(land.publish_main(self.shared, self.base, self.head), 0)
+        self.assertEqual(self.tip(self.origin), self.head)
+        self.assertEqual(self.tip(nas), self.head)
+        self.assertIn(str(self.origin), output.getvalue())
+        self.assertIn(str(nas), output.getvalue())
+
+    def test_publish_uses_commit_id_when_branch_has_the_same_name(self):
+        nas = self.two_push_urls()
+        self.git(self.shared, "update-ref", f"refs/heads/{self.head}", self.base)
+
+        self.assertEqual(land.publish_main(self.shared, self.base, self.head), 0)
+
+        self.assertEqual(self.tip(self.origin), self.head)
+        self.assertEqual(self.tip(nas), self.head)
+
+    def test_publish_uses_git_push_urls_after_a_list_reset(self):
+        retired = self.bare("retired.git", self.base)
+        self.git(self.shared, "config", "--add", "remote.origin.pushurl", str(retired))
+        self.git(self.shared, "config", "--add", "remote.origin.pushurl", "")
+        nas = self.two_push_urls()
+
+        self.assertEqual(land.publish_main(self.shared, self.base, self.head), 0)
+
+        self.assertEqual(self.tip(self.origin), self.head)
+        self.assertEqual(self.tip(nas), self.head)
+        self.assertEqual(self.tip(retired), self.base)
+
+    def test_publish_refuses_endpoint_rewrites_before_any_push(self):
+        nas = self.two_push_urls()
+        other = self.bare("other.git", self.base)
+        redirected = self.bare("redirected.git", self.base)
+        self.git(self.origin, "update-ref", land.MAIN_REF, self.head, self.base)
+        push_rewrite = f"url.{other}.pushInsteadOf"
+        fetch_rewrite = f"url.{other}.insteadOf"
+        second_rewrite = f"url.{redirected}.insteadOf"
+        for rules in (((push_rewrite, self.origin),),
+                      ((fetch_rewrite, self.origin), (second_rewrite, other))):
+            with self.subTest(rules=rules):
+                for key, alias in rules:
+                    self.git(self.shared, "config", key, str(alias))
+                try:
+                    with patch.object(land, "git", wraps=land.git) as git:
+                        with self.assertRaisesRegex(land.Refusal, "would rewrite push target"):
+                            land.publish_main(self.shared, self.base, self.head)
+                        self.assertFalse(any(call.args[1] == "push" for call in git.call_args_list))
+                    for bare in (nas, other, redirected):
+                        self.assertEqual(self.tip(bare), self.base)
+                finally:
+                    for key, _ in rules:
+                        self.git(self.shared, "config", "--unset", key)
+
+    def test_publish_refuses_a_commit_other_than_the_checkout_main(self):
+        nas = self.two_push_urls()
+        self.git(self.shared, "commit", "--allow-empty", "-m", "next landing")
+        current_main = land.revision(self.shared, land.MAIN_REF)
+
+        with self.assertRaises(land.Refusal) as refusal:
+            land.publish_main(self.shared, self.base, self.head)
+
+        self.assertIn(f"landed commit {self.head} differs from {land.MAIN_REF} at {current_main}",
+                      str(refusal.exception))
+        self.assertEqual(self.tip(self.origin), self.base)
+        self.assertEqual(self.tip(nas), self.base)
+
+    def test_publish_refuses_tag_object_ids_without_pushing(self):
+        nas = self.two_push_urls()
+        self.git(self.shared, "tag", "-a", "lease-tag", self.base, "-m", "tagged lease")
+        self.git(self.shared, "tag", "-a", "commit-tag", self.head, "-m", "tagged candidate")
+        lease_tag = land.revision(self.shared, "refs/tags/lease-tag")
+        commit_tag = land.revision(self.shared, "refs/tags/commit-tag")
+
+        for label, lease, commit in (("publication lease", lease_tag, self.head),
+                                     ("landed commit", self.base, commit_tag)):
+            with self.subTest(argument=label), patch.object(land, "git", wraps=land.git) as git:
+                with self.assertRaisesRegex(land.Refusal, f"{label} is not a commit"):
+                    land.publish_main(self.shared, lease, commit)
+                self.assertFalse(any(call.args[1] == "push" for call in git.call_args_list))
+                self.assertEqual(self.tip(self.origin), self.base)
+                self.assertEqual(self.tip(nas), self.base)
+
+    def test_verified_publish_updates_both_named_tracking_refs(self):
+        nas = self.two_push_urls()
+        self.git(self.shared, "remote", "add", "truenas-backup", str(nas))
+        self.git(self.shared, "fetch", "truenas-backup")
+        # Both targets are at the lease, with a stale local backup tracking ref.
+        self.git(self.origin, "update-ref", land.MAIN_REF, self.head, self.base)
+        self.git(nas, "update-ref", land.MAIN_REF, self.head, self.base)
+        self.git(self.shared, "fetch", "origin")
+        self.git(self.shared, "commit", "--allow-empty", "-m", "next landing")
+        landed = land.revision(self.shared, land.MAIN_REF)
+
+        self.assertEqual(land.publish_main(self.shared, self.head, landed), 0)
+
+        self.assertEqual(land.full_main(self.shared), landed)
+        self.assertEqual(land.revision(self.shared, "refs/remotes/truenas-backup/main"), landed)
+
+    def test_publish_only_updates_tracking_refs_for_verified_fetch_endpoints(self):
+        nas = self.two_push_urls()
+        fetch_only = self.bare("fetch-only.git", self.base)
+        self.git(self.shared, "remote", "set-url", "origin", str(fetch_only))
+        self.git(self.shared, "remote", "add", "backup", "backup-alias")
+        self.git(self.shared, "config", f"url.{nas}.insteadOf", "backup-alias")
+        output = io.StringIO()
+
+        with redirect_stdout(output):
+            self.assertEqual(land.publish_main(self.shared, self.base, self.head), 0)
+
+        self.assertEqual(self.tip(self.origin), self.head)
+        self.assertEqual(self.tip(nas), self.head)
+        self.assertEqual(self.tip(fetch_only), self.base)
+        self.assertEqual(land.revision(self.shared, "refs/remotes/origin/main"), self.base)
+        self.assertEqual(land.revision(self.shared, "refs/remotes/backup/main"), self.head)
+        self.assertIn("fetch origin before the next verify", output.getvalue())
+
+    def test_a_rejected_push_fails_loudly_naming_that_remote(self):
+        diverged = self.git(self.shared, "commit-tree", self.tree, "-p", self.base,
+                            "-m", "someone else's landing").stdout.strip()
+        nas = self.bare("nas.git", diverged)
+        self.git(self.shared, "remote", "add", "truenas-backup", str(nas))
+        with self.assertRaisesRegex(land.Refusal, "truenas-backup"):
+            land.publish_main(self.shared, self.base, self.head)
+        self.assertEqual(self.tip(self.origin), self.head)
+        self.assertEqual(self.tip(nas), diverged)
+
+    def test_failed_push_counts_as_landed_when_main_reads_back_at_commit(self):
+        nas = self.two_push_urls()
+        self.git(self.origin, "update-ref", land.MAIN_REF, self.head, self.base)
+        self.git(self.origin, "config", "receive.hideRefs", land.MAIN_REF)
+        self.git(self.shared, "remote", "add", "backup", str(nas))
+        output, errors = io.StringIO(), io.StringIO()
+
+        with redirect_stdout(output), redirect_stderr(errors):
+            self.assertEqual(land.publish_main(self.shared, self.base, self.head), 0)
+
+        self.assertIn(f"Published {self.head} to remote origin ({self.origin}): main verified",
+                      output.getvalue())
+        self.assertIn("failed to push some refs", errors.getvalue())
+        self.assertEqual(self.tip(nas), self.head)
+        for name in ("origin", "backup"):
+            self.assertEqual(land.revision(self.shared, f"refs/remotes/{name}/main"), self.head)
+
+    def test_partial_publish_refusal_lists_verified_and_failed_targets(self):
+        nas = self.two_push_urls()
+        rejected = self.bare("rejected.git", self.base)
+        self.git(self.shared, "remote", "add", "rejecting", str(rejected))
+        hook = self.put(rejected, "hooks/pre-receive", "#!/bin/sh\nexit 1\n")
+        hook.chmod(0o755)
+        self.git(rejected, "config", "core.hooksPath", str(hook.parent))
+        errors = io.StringIO()
+
+        with redirect_stderr(errors):
+            self.assertEqual(land.main(["publish", "--repo", str(self.shared),
+                                        "--lease", self.base, "--commit", self.head]), 3)
+
+        report = errors.getvalue()
+        for target in (self.origin, nas):
+            self.assertIn(f"Published {self.head} to remote origin ({target}): main verified", report)
+            self.assertEqual(self.tip(target), self.head)
+        self.assertIn(f"remote rejecting ({rejected}): push exited 1", report)
+        self.assertIn("the landed targets are published; fix the failing one and rerun publish "
+                      "with the same arguments (landed targets report up to date)", report)
+        self.assertEqual(self.tip(rejected), self.base)
+
+    def test_behind_target_refuses_with_a_leased_catch_up_command(self):
+        nas = self.bare("behind mirror.git", self.base)
+        self.git(self.shared, "remote", "add", "truenas-backup", str(nas))
+        self.git(self.origin, "update-ref", land.MAIN_REF, self.head, self.base)
+        self.git(self.shared, "update-ref", f"refs/heads/{self.head}", self.base)
+        self.git(self.shared, "commit", "--allow-empty", "-m", "next landing")
+        landed = land.revision(self.shared, land.MAIN_REF)
+
+        with self.assertRaises(land.Refusal) as refusal:
+            land.publish_main(self.shared, self.head, landed)
+
+        self.assertEqual(self.tip(self.origin), landed)
+        self.assertEqual(self.tip(nas), self.base)
+        self.assertIn(f"remote truenas-backup ({nas}): main at {self.base} is behind "
+                      f"publication lease {self.head}", str(refusal.exception))
+        repair = next(line for line in str(refusal.exception).splitlines() if line.startswith("git -C "))
+        args = shlex.split(repair)
+        self.assertEqual(args, ["git", "-C", str(self.shared), "push", "--no-follow-tags",
+                                f"--force-with-lease={land.MAIN_REF}:{self.base}",
+                                "--", str(nas), f"{self.head}^{{commit}}:{land.MAIN_REF}"])
+
+        land.command(args)
+        self.assertEqual(self.tip(nas), self.head)
+        self.assertEqual(land.publish_main(self.shared, self.head, landed), 0)
+        self.assertEqual(self.tip(nas), landed)
+
+    def test_publish_and_catch_up_do_not_follow_annotated_tags(self):
+        nas = self.two_push_urls()
+        self.git(self.origin, "update-ref", land.MAIN_REF, self.head, self.base)
+        self.git(self.shared, "tag", "-a", "local-tag", self.head, "-m", "do not publish")
+        self.git(self.shared, "config", "push.followTags", "true")
+        self.git(self.shared, "commit", "--allow-empty", "-m", "next landing")
+        landed = land.revision(self.shared, land.MAIN_REF)
+
+        with self.assertRaises(land.Refusal) as refusal:
+            land.publish_main(self.shared, self.head, landed)
+
+        repair = next(line for line in str(refusal.exception).splitlines() if line.startswith("git -C "))
+        land.command(shlex.split(repair))
+        self.assertEqual(self.tip(self.origin), landed)
+        self.assertEqual(self.tip(nas), self.head)
+        for target in (self.origin, nas):
+            with self.subTest(target=target):
+                result = self.git(target, "show-ref", "--verify", "--quiet", "refs/tags/local-tag", check=False)
+                self.assertEqual(result.returncode, 1)
+
+    def test_every_push_carries_the_same_safety_lease(self):
+        nas = self.two_push_urls()
+        real = land.git
+        pushes = []
+
+        def recording(root, *args, **kwargs):
+            if args and args[0] == "push":
+                pushes.append(args)
+            return real(root, *args, **kwargs)
+
+        with patch.object(land, "git", side_effect=recording):
+            self.assertEqual(land.publish_main(self.shared, self.base, self.head), 0)
+        self.assertEqual(len(pushes), 2)
+        for args in pushes:
+            self.assertIn(f"--force-with-lease={land.MAIN_REF}:{self.base}", args)
+            self.assertIn(f"{self.head}^{{commit}}:{land.MAIN_REF}", args)
+        self.assertEqual({args[-2] for args in pushes}, {str(self.origin), str(nas)})
+
+    def test_publish_lists_deduplicated_targets_before_the_first_push(self):
+        nas = self.two_push_urls()
+        self.git(self.shared, "config", "--add", "remote.origin.pushurl", str(nas))
+        self.git(self.shared, "remote", "add", "truenas-backup", str(nas))
+        real = land.git
+        output = io.StringIO()
+        previews = []
+
+        def recording(root, *args, **kwargs):
+            if args[0] == "push":
+                previews.append(output.getvalue())
+            return real(root, *args, **kwargs)
+
+        with redirect_stdout(output), patch.object(land, "git", side_effect=recording):
+            self.assertEqual(land.publish_main(self.shared, self.base, self.head), 0)
+
+        self.assertEqual(len(previews), 2)
+        self.assertEqual(previews[0].splitlines(), [
+            "Push targets:",
+            f"  remote origin ({self.origin})",
+            f"  remote origin, truenas-backup ({nas})",
+        ])
+
+    def test_a_target_whose_main_differs_after_the_push_is_named(self):
+        nas = self.two_push_urls()
+        real = land.pushed_main
+
+        def unmoved(root, url):
+            if url == str(nas):
+                return self.base
+            return real(root, url)
+
+        with patch.object(land, "pushed_main", side_effect=unmoved):
+            with self.assertRaisesRegex(land.Refusal, re.escape(str(nas))):
+                land.publish_main(self.shared, self.base, self.head)
+        self.assertEqual(self.tip(self.origin), self.head)
+        self.assertEqual(self.tip(nas), self.head)
 
 
 if __name__ == "__main__":
