@@ -9,6 +9,7 @@ export default async function (t) {
 	const onlyReceiptClose = t.args.only === 'receipt-close';
 	const onlyClickThrough = t.args.only === 'click-through';
 	const onlyExperts = t.args.only === 'experts';
+	const onlyHoverPause = t.args.only === 'hover-pause';
 
 	async function closeDetailsIfOpen(frame) {
 		await frame.evaluate(() => window.PM_TITLEBAR_NOTIFY?.clearAll?.());
@@ -170,6 +171,10 @@ export default async function (t) {
 	}
 	if (onlyExperts) {
 		await runExpertsCase();
+		return;
+	}
+	if (onlyHoverPause) {
+		await runHoverPause();
 		return;
 	}
 
@@ -1558,8 +1563,138 @@ export default async function (t) {
 		});
 	}
 
+	// FO-158 r6h (recheck7 L2): resting the real mouse on the saved receipt's click-through text pauses its 6 s
+	// lifetime past 7 s with Undo and Ctrl+Z still working, and moving the mouse away closes it within its lifetime.
+	async function runHoverPause() {
+		const matrix = [['basic-dark', 1920, 1080], ['glass-dark', 1280, 500]];
+		const id = 'ai.models.provider-fallback';
+		const swSel = `#pm-settings-root [id="setting-${id}"] [role="switch"]`;
+		const savedNoteSel = `${noteSelector}[data-kind="saved"]`;
+
+		async function readAwayPoint(frame) {
+			const rootBox = await frame.locator('#pm-settings-root').boundingBox();
+			const noteBox = await frame.locator(savedNoteSel).first().boundingBox().catch(() => null);
+			const cand = [
+				{ x: rootBox.x + 24, y: rootBox.y + 24 },
+				{ x: rootBox.x + 24, y: rootBox.y + Math.min(rootBox.height - 24, 200) },
+			];
+			for (const pt of cand) {
+				if (!noteBox || pt.x < noteBox.x - 8 || pt.x > noteBox.x + noteBox.width + 8 ||
+					pt.y < noteBox.y - 8 || pt.y > noteBox.y + noteBox.height + 8) {
+					return pt;
+				}
+			}
+			return cand[0];
+		}
+
+		async function saveAndHoverText(frame, sw) {
+			const awayBefore = await readAwayPoint(frame);
+			await t.page.mouse.move(awayBefore.x, awayBefore.y, { steps: 2 });
+			const beforeVal = await frame.evaluate((sid) => PSX.resolve(sid, PSX.S.ctx).value, id);
+			await clickRealCenter(sw);
+			await waitForAnySavedReceipt(frame);
+			const savedVal = await frame.evaluate((sid) => PSX.resolve(sid, PSX.S.ctx).value, id);
+			const textInfo = await frame.evaluate((sel) => {
+				const note = document.querySelector(sel);
+				const title = note?.querySelector('.psx-note-title');
+				if (!note || !title) return null;
+				const nR = note.getBoundingClientRect();
+				const tR = title.getBoundingClientRect();
+				const cx = tR.left + tR.width / 2, cy = tR.top + tR.height / 2;
+				const btns = [...note.querySelectorAll('button')].map((b) => b.getBoundingClientRect());
+				const onButton = btns.some((b) => cx >= b.left && cx <= b.right && cy >= b.top && cy <= b.bottom);
+				const top = document.elementFromPoint(cx, cy);
+				return {
+					noteRect: nR.toJSON(),
+					titleRect: tR.toJSON(),
+					cx, cy,
+					insideNote: cx >= nR.left && cx <= nR.right && cy >= nR.top && cy <= nR.bottom,
+					onButton,
+					notePointerEvents: getComputedStyle(note).pointerEvents,
+					hitInReceipt: !!top && !!top.closest?.('.psx-note'),
+				};
+			}, savedNoteSel);
+			const titleBox = await frame.locator(`${savedNoteSel} .psx-note-title`).first().boundingBox();
+			const hoverX = titleBox.x + titleBox.width / 2;
+			const hoverY = titleBox.y + titleBox.height / 2;
+			await t.page.mouse.move(hoverX, hoverY, { steps: 4 });
+			await t.page.waitForTimeout(7500);
+			const afterHold = await frame.evaluate((sel) => {
+				const note = document.querySelector(sel);
+				const active = document.activeElement;
+				return {
+					stillOpen: !!note && Number(getComputedStyle(note).opacity) > 0.9,
+					activeTag: active ? active.tagName : null,
+				};
+			}, savedNoteSel);
+			return { beforeVal, savedVal, changed: savedVal !== beforeVal, textInfo, hoverPt: { x: hoverX, y: hoverY }, ...afterHold };
+		}
+
+		for (const [look, width, height] of matrix) {
+			const who = `hover-pause ${look} ${width}x${height}`;
+			await t.step(who, async () => {
+				await t.viewport(width, height);
+				const frame = await t.app.open();
+				if (!await frame.evaluate(() => document.documentElement.hasAttribute('data-psx-layer'))) {
+					await t.check('settings-picker-feed: not a settings-scope build, skipped (build it with tools/build_standalone.py)', true);
+					return;
+				}
+				await frame.waitForFunction(() => !!window.PSX?.lastReport, null, { timeout: 60000 });
+				await resetLookState(frame, look);
+				await revealRow(frame, id);
+				const sw = frame.locator(swSel).first();
+
+				// 1. Rest on receipt text > 7 s -> still open, and clicking Undo restores the previous value.
+				const p1 = await saveAndHoverText(frame, sw);
+				let undoWorked = false;
+				if (p1.stillOpen) {
+					const undoBtn = frame.locator(savedNoteSel).getByRole('button', { name: 'Undo', exact: true }).first();
+					await clickRealCenter(undoBtn);
+					undoWorked = await frame.waitForFunction(({ sid, prev }) =>
+						PSX.resolve(sid, PSX.S.ctx).value === prev,
+					{ sid: id, prev: p1.beforeVal }, { timeout: 3000 }).then(() => true, () => false);
+				}
+				await frame.evaluate(() => window.PSX.hideNote && window.PSX.hideNote({ immediate: true }));
+				await t.page.waitForTimeout(150);
+
+				// 2. Rest on receipt text > 7 s -> still open, and Ctrl+Z still restores the previous value.
+				const p2 = await saveAndHoverText(frame, sw);
+				let ctrlZWorked = false;
+				if (p2.stillOpen) {
+					await t.page.keyboard.press('Control+z');
+					ctrlZWorked = await frame.waitForFunction(({ sid, prev }) =>
+						PSX.resolve(sid, PSX.S.ctx).value === prev,
+					{ sid: id, prev: p2.beforeVal }, { timeout: 3000 }).then(() => true, () => false);
+				}
+				await frame.evaluate(() => window.PSX.hideNote && window.PSX.hideNote({ immediate: true }));
+				await t.page.waitForTimeout(150);
+
+				// 3. Rest on receipt text > 7 s -> still open, then moving mouse away closes it within its normal lifetime.
+				const p3 = await saveAndHoverText(frame, sw);
+				let closedAfterLeave = false, closedAfterLeaveMs = null;
+				if (p3.stillOpen) {
+					const away = await readAwayPoint(frame);
+					const leaveAt = Date.now();
+					await t.page.mouse.move(away.x, away.y, { steps: 4 });
+					closedAfterLeave = await frame.waitForFunction(() =>
+						!document.querySelector('#pm-settings-portals > .psx-note'),
+					null, { timeout: 7500 }).then(() => true, () => false);
+					closedAfterLeaveMs = Date.now() - leaveAt;
+				}
+				const closedInLifetime = closedAfterLeave && closedAfterLeaveMs >= 1000 && closedAfterLeaveMs <= 7500;
+				const textOk = (p) => Boolean(p.changed && p.textInfo?.insideNote && !p.textInfo?.onButton &&
+					p.textInfo?.notePointerEvents === 'none' && !p.textInfo?.hitInReceipt && p.stillOpen);
+				const ok = textOk(p1) && undoWorked && textOk(p2) && ctrlZWorked && textOk(p3) && closedInLifetime;
+				const witness = JSON.stringify({ p1, undoWorked, p2, ctrlZWorked, p3, closedAfterLeave, closedAfterLeaveMs, closedInLifetime });
+				t.log(`HOVER_PAUSE ${who} ${witness}`);
+				await t.check(`${who}: hovering receipt text pauses past 7 s with Undo and Ctrl+Z working, and moving away closes it in its lifetime`, ok, witness);
+			});
+		}
+	}
+
 	await runOpenPosition();
 	await runReceiptClose();
 	await runClickThrough();
 	await runExpertsCase();
+	await runHoverPause();
 }

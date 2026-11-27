@@ -670,8 +670,41 @@
 
   /* ------------------------------------------------------------------ the note after a change (6.4)
      The layer's own div.psx-note[role=status] in #pm-settings-portals, in Settings' toast material; one at a time, six
-     seconds, paused while hovered or focused. Never a PM Notify toast (its actions are a closed set, F3-461). */
-  let noteEl = null, noteTimer = 0, notePaused = false, noteLeft = 0, noteStart = 0, noteActs = null, notePlacement = 0;
+     seconds, paused while hovered or focused. Never a PM Notify toast (its actions are a closed set, F3-461).
+     Because the receipt body is pointer-events: none for click-through, hover is tracked by a passive document-level
+     pointermove rect test attached only while a non-sticky receipt is open. */
+  let noteEl = null, noteTimer = 0, notePaused = false, noteHovered = false, noteFocused = false, noteSticky = false, noteLeft = 0, noteStart = 0, noteActs = null, notePlacement = 0, noteHoverBound = false;
+  const NOTE_MOVE_OPTS = { passive: true, capture: true };
+  const NOTE_LEAVE_OPTS = { passive: true };
+  function syncNotePause() {
+    if (!noteEl || noteSticky) return;
+    if (noteHovered || noteFocused) pauseNote();
+    else resumeNote();
+  }
+  function onNotePointerMove(e) {
+    if (e.pointerType === 'touch') return;
+    if (!noteEl || !noteEl.isConnected || noteEl.hasAttribute('data-leaving')) { unbindNoteHover(); return; }
+    const r = noteEl.getBoundingClientRect();
+    const inside = r.width > 0 && r.height > 0 && e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+    if (inside !== noteHovered) { noteHovered = inside; syncNotePause(); }
+  }
+  function onNotePointerLeave() {
+    if (!noteHovered) return;
+    noteHovered = false;
+    syncNotePause();
+  }
+  function bindNoteHover() {
+    if (noteHoverBound) return;
+    D.addEventListener('pointermove', onNotePointerMove, NOTE_MOVE_OPTS);
+    H.addEventListener('pointerleave', onNotePointerLeave, NOTE_LEAVE_OPTS);
+    noteHoverBound = true;
+  }
+  function unbindNoteHover() {
+    if (!noteHoverBound) return;
+    D.removeEventListener('pointermove', onNotePointerMove, NOTE_MOVE_OPTS);
+    H.removeEventListener('pointerleave', onNotePointerLeave, NOTE_LEAVE_OPTS);
+    noteHoverBound = false;
+  }
   function placeModelNote(el, host, id) {
     const gap = 8;
     const bounds = host.getBoundingClientRect();
@@ -725,15 +758,14 @@
     const host = portal(); if (!host) return null;
     if (!noteEl || !noteEl.isConnected) {
       const el = h('div', { class: 'psx-note', role: 'group', 'aria-label': 'What just changed', 'data-lg-surface': 'menu', 'data-lg-dense': '' });
-      el.addEventListener('mouseenter', pauseNote); el.addEventListener('mouseleave', resumeNote);
-      el.addEventListener('focusin', pauseNote);
+      el.addEventListener('focusin', () => { if (el === noteEl) { noteFocused = true; syncNotePause(); } });
       // the element the listener belongs to, never the shared variable (it is null once the note is going)
-      el.addEventListener('focusout', (e) => { if (el.isConnected && !el.contains(e.relatedTarget)) resumeNote(); });
+      el.addEventListener('focusout', (e) => { if (el === noteEl && el.isConnected && !el.contains(e.relatedTarget)) { noteFocused = false; syncNotePause(); } });
       el.addEventListener('keydown', (e) => { if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); hideNote(); } });
       noteEl = el;
       host.appendChild(el);
     }
-    clearTimeout(noteTimer);
+    clearTimeout(noteTimer); noteTimer = 0;
     const tip = o.tip ? `<div class="psx-note-tip">${mark('info')}<span>${esc(o.tip)}</span></div>` : '';
     noteEl.innerHTML = `${tip}<div class="psx-note-main">${o.mark ? mark(o.mark) : mark('complete')}<div class="psx-note-copy"><div class="psx-note-title">${esc(o.title)}</div>${o.body ? `<div class="psx-note-body">${esc(o.body)}</div>` : ''}</div></div>`
       + ((o.actions && o.actions.length) ? `<div class="psx-note-actions">${o.actions.map((a, i) => `<button type="button" class="psx-tb${a.primary ? ' is-primary' : ''}" data-i="${i}"${a.label === 'Undo' ? ' aria-keyshortcuts="Control+Z Meta+Z"' : ''}${a.hover ? ` data-pm-hover-label="${esc(a.label)}" data-pm-hover-detail="${esc(a.hover)}"` : ''}>${esc(a.label)}</button>`).join('')}<button type="button" class="psx-tb is-quiet" data-close>Dismiss</button></div>` : '');
@@ -744,15 +776,15 @@
     noteEl.removeAttribute('data-leaving'); noteEl.setAttribute('data-open', '');
     noteEl.dataset.kind = o.kind || '';
     trackModelNote(noteEl, host, o.modelSetting);
-    noteLeft = o.ms || 6000; notePaused = false; noteStart = Date.now();
-    if (!o.sticky) noteTimer = setTimeout(hideNote, noteLeft);
+    noteLeft = o.ms || 6000; notePaused = false; noteHovered = false; noteFocused = false; noteSticky = !!o.sticky; noteStart = Date.now();
+    if (!noteSticky) { noteTimer = setTimeout(hideNote, noteLeft); bindNoteHover(); } else unbindNoteHover();
     PSX.lastNote = { title: o.title, body: o.body || '', actions: (o.actions || []).map((a) => a.label), tip: o.tip || '' };
     PSX.noteCount = (PSX.noteCount || 0) + 1;
     emit('note', PSX.lastNote);
     return noteEl;
   }
-  function pauseNote() { if (notePaused || !noteEl) return; notePaused = true; clearTimeout(noteTimer); noteLeft = Math.max(1500, noteLeft - (Date.now() - noteStart)); }
-  function resumeNote() { if (!notePaused || !noteEl) return; notePaused = false; noteStart = Date.now(); noteTimer = setTimeout(hideNote, noteLeft); }
+  function pauseNote() { if (notePaused || !noteEl || noteSticky) return; notePaused = true; clearTimeout(noteTimer); noteTimer = 0; noteLeft = Math.max(1500, noteLeft - (Date.now() - noteStart)); }
+  function resumeNote() { if (!notePaused || !noteEl || noteSticky) return; notePaused = false; noteStart = Date.now(); noteTimer = setTimeout(hideNote, noteLeft); }
   function hideNote(o) {
     o = o || {};
     if (o.immediate) {
@@ -762,10 +794,12 @@
         host.querySelectorAll(sel).forEach((n) => n.remove());
       }
     }
-    if (!noteEl || !noteEl.isConnected) return;
+    if (!noteEl || !noteEl.isConnected) { clearTimeout(noteTimer); noteTimer = 0; W.cancelAnimationFrame(notePlacement); unbindNoteHover(); noteEl = null; noteActs = null; notePaused = noteHovered = noteFocused = noteSticky = false; return; }
     if (o.kind && noteEl.dataset.kind !== o.kind) return;
-    clearTimeout(noteTimer);
+    clearTimeout(noteTimer); noteTimer = 0;
     W.cancelAnimationFrame(notePlacement);
+    unbindNoteHover();
+    notePaused = noteHovered = noteFocused = noteSticky = false;
     const el = noteEl;
     const hadFocus = el.contains(D.activeElement);
     if (o.immediate || reduced()) el.remove(); else { el.setAttribute('data-leaving', ''); setTimeout(() => el.remove(), 180); }
