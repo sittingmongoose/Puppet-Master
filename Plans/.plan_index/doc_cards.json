@@ -7050,10 +7050,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 769,
+        "False": 770,
         "True": 239
       },
-      "heading_count": 1248,
+      "heading_count": 1249,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -7202,9 +7202,9 @@
         "scripts/pm_wiring_inventory.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 63678,
+      "line_count": 63762,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 1008,
+      "plan_unit_count": 1009,
       "plan_unit_ids": [
         "DL-400",
         "DL-401",
@@ -8213,7 +8213,8 @@
         "DL-2601",
         "DL-2602",
         "DL-2603",
-        "DL-2604"
+        "DL-2604",
+        "DL-696"
       ],
       "reasoning_tiers": [
         "high",
@@ -8298,6 +8299,7 @@
         "event_authority_documented_gap",
         "event_authority_evidence_maintenance",
         "event_authority_landing_granularity_drift",
+        "event_authority_named_open_at_certification",
         "event_authority_registration_checkpoint_drift",
         "event_authority_retention",
         "event_authority_revision",
@@ -8421,19 +8423,20 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "c99cdb3f669dd9c552cd07b6296f593b5713bafddc793ea09c63a7adee3c7e4f",
+      "sha256": "e6d22399262fb02cf6d4920dbe1363aa9b27ff323c9bb60a9e88c237388fc97d",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 1008
+        "accepted": 1009
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "decision": 892,
+        "decision": 893,
         "decision_record": 24,
         "requirement": 91
       },
       "validation_surfaces": [
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/NAMED-AT-CERT-r2-20261128/NAMED-AT-CERT.json",
         "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/gap-list-v1.1-20261122/GAP-LIST-v1.1.json",
         "60 fps GPU recordings at 860/1024/1280/~1390/1920 px, all ten looks and Reduced Motion; count exposed wrong-chip frames",
         "60 fps GPU recordings of rail, faces, world lifecycle and owner-phase Creating; no fabricated native evidence",
@@ -8551,7 +8554,8 @@
         "scripts/pm_goal_created_retained_closure_test.py",
         "scripts/pm_s3bo_ext_sl_deletion.py",
         "scripts/pm_s3bo_ext_sr2_capture.py",
-        "scripts/pm_w3b_event_oracles.py"
+        "scripts/pm_w3b_event_oracles.py",
+        "sh /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/NAMED-AT-CERT-r2-20261128/checks/run_checks.sh"
       ]
     },
     {
@@ -25296,7 +25300,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-27T06:32:06Z",
+  "generated_at_utc": "2026-11-27T22:26:56Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -25304,13 +25308,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 5686,
+      "False": 5687,
       "True": 3949
     },
-    "plan_unit_count": 9635,
+    "plan_unit_count": 9636,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 9355,
+      "accepted": 9356,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -25344,7 +25348,7 @@
       "contract": 203,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 915,
+      "decision": 916,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
