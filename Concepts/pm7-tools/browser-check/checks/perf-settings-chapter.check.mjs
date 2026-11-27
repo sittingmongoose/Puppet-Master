@@ -323,15 +323,24 @@ export function hoverVerdict(rows) {
    passed; on the published page the list was filled before the scroll frame, and post-paint reads (a task posted from
    each animation-frame callback after the scroll, checkVisibility with contentVisibilityAuto) found every row in view
    and none skipped while the screencast showed the blank frames: content-visibility had skipped the destination
-   sections in the frame that scrolled to them, and the page cannot read what the compositor drew. So the frames are the compositor's own, by
-   CDP screencast (Page.startScreencast, every frame, half size, acknowledged at once and decoded only after the run), the
-   frames a GPU film of the same run shows (FO-245 report). Each frame's view of the settings document, inset 24 px, is
-   cut into four bands; a band's ink is the share of its pixels at least ten grey levels from the band's commonest level
-   (text, rules and controls against the list's ground). The settled frame (the last one) names the bands that hold rows
-   (ink of 1 % or more); a frame after the wheel whose ink in any such band falls under a tenth of the settled ink shows
-   a blank or unfilled list there. The first displayed destination frame is the first frame after the wheel that is
-   blank or unfilled, or differs from the last frame before it in at least half as many pixels as the settled frame does. Shares of the frame's own pixels, no times: the same on every host. */
-export const FLING_FILM = { bands: 4, inset: 24, level: 10, floor: 0.01, keep: 0.1, width: 960, height: 540 };
+   sections in the frame that scrolled to them, and the page cannot read what the compositor drew. So the frames are the
+   compositor's own, by CDP screencast (Page.startScreencast, every frame, half size, acknowledged at once and decoded
+   only after the run), the frames a GPU film of the same run shows (FO-245 report). Each frame's view of the settings
+   document, inset 24 px, is cut into four bands.
+   FO-245 round 3 (Astra A245 high finding 2): a band's reading is its DETAIL, the share of its pixels whose luminance
+   steps by at least FLING_FILM.edge grey levels to the pixel on its right or below: the edges of text, rules and
+   controls. The round 1 reading, the share of pixels ten grey levels from the band's commonest level, counted a Glass
+   look's wallpaper gradient as ink (29.5, 16.7, 26.3 and 8.5 % in a Glass Dark frame with no row on screen), so a
+   wallpaper-only frame passed in both Glass looks. A smooth gradient has no such steps: Astra's retained Glass Dark and
+   Glass Light CDP frames read 0 to 3.6 per mille in every band while they showed only wallpaper, and 60 to 177 per mille
+   with rows; the batch-21 Basic Dark and NieR Light blanks read 0 too. The settled frame (the last one) names the bands
+   that hold rows (detail of 1 % or more; an end space or a page's empty foot is not judged); a frame after the wheel
+   whose detail in any such band falls under FLING_FILM.keep (three tenths) of the settled detail shows a blank or
+   unfilled list there (the real first destination frames Astra measured kept 70 % or more, entrance included). The
+   first displayed destination frame is the first frame after the wheel that is blank or unfilled, or differs from the
+   last frame before it in at least half as many pixels as the settled frame does. Shares of the frame's own pixels, no
+   times: the same on every host. */
+export const FLING_FILM = { bands: 4, inset: 24, edge: 24, floor: 0.01, keep: 0.3, width: 960, height: 540 };
 export async function filmFling(client) {
 	const frames = [];
 	const on = (ev) => {
@@ -342,18 +351,18 @@ export async function filmFling(client) {
 	await client.send('Page.startScreencast', { format: 'png', everyNthFrame: 1, maxWidth: FLING_FILM.width, maxHeight: FLING_FILM.height });
 	return { frames, async stop() { await client.send('Page.stopScreencast').catch(() => {}); client.off('Page.screencastFrame', on); return frames.slice().sort((a, b) => a.wall - b.wall); } };
 }
+/* each band's detail: the share of its pixels with a luminance step of FLING_FILM.edge or more to the right or below */
 export function filmBands(img, rect, bands = FLING_FILM.bands) {
-	const h = Math.floor((rect.y1 - rect.y0) / bands), out = [];
+	const h = Math.floor((rect.y1 - rect.y0) / bands), out = [], w = img.width, d = img.data, T = FLING_FILM.edge;
+	const lum = (x, y) => { const i = (y * w + x) * 4; return 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]; };
 	for (let k = 0; k < bands; k++) {
-		const hist = new Uint32Array(256), y0 = rect.y0 + k * h, y1 = y0 + h;
-		for (let y = y0; y < y1; y++) for (let x = rect.x0; x < rect.x1; x++) {
-			const i = (y * img.width + x) * 4;
-			hist[Math.round(0.299 * img.data[i] + 0.587 * img.data[i + 1] + 0.114 * img.data[i + 2])]++;
+		const y0 = rect.y0 + k * h, y1 = y0 + h;
+		let n = 0, edges = 0;
+		for (let y = y0; y < y1 - 1; y++) for (let x = rect.x0; x < rect.x1 - 1; x++) {
+			const l = lum(x, y);
+			n++; if (Math.abs(l - lum(x + 1, y)) >= T || Math.abs(l - lum(x, y + 1)) >= T) edges++;
 		}
-		let mode = 0, n = 0, far = 0;
-		for (let g = 0; g < 256; g++) { n += hist[g]; if (hist[g] > hist[mode]) mode = g; }
-		for (let g = 0; g < 256; g++) if (Math.abs(g - mode) >= FLING_FILM.level) far += hist[g];
-		out.push(n ? +(far / n).toFixed(4) : 0);
+		out.push(n ? +(edges / n).toFixed(4) : 0);
 	}
 	return out;
 }
@@ -388,19 +397,33 @@ export function flingFilm(frames, { box, view, wheel }) {
 /* R93 #4's fling rows (exported for tools/settings-chapter.selftest.mjs). R97 #3: Terminal look must still be pending
    when the wheel is delivered (the commit's sample is logged only), and the scroll frame's sample must have Terminal look
    in view, so the empty-list row has the pending target in front of it. FO-245: the frames on screen are judged by
-   flingFilm; a missing film, a settled view without two banded rows or no destination frame cannot pass. */
-export function flingVerdict(r, film) {
+   flingFilm; a missing film, a settled view without two banded rows or no destination frame cannot pass.
+   FO-245 round 3 (A245 high finding 1): two more routes land on the chapter's last page, Containers (code-reference),
+   while it is still an unmounted placeholder: a single long wheel to the bottom of a fresh Code & Tools, and End from
+   it. Their target is that page: unmounted when the input is delivered (r.wheelTargetPending; r.wheelPending counts the
+   chapter's unmounted pages), in view in the sampled scroll frame, and no visible list or unmounted page in that frame.
+   The input's delivery time and position keep the names wheel, wheelEpoch and wheelTop for the End key too. */
+export const FLING_ROUTES = {
+	terminal: { input: 'wheel', target: 'Terminal look', pending: 'the wheel was delivered with Terminal look pending',
+		travel: 'a real wheel crossed at least one viewport and brought Terminal look into view', empty: 'no visible list is empty at the scroll frame' },
+	'wheel-bottom': { input: 'wheel', target: 'the last page (Containers)', pending: 'a single long wheel to the bottom was delivered with the last page (Containers) unmounted',
+		travel: 'the long wheel crossed at least one viewport and brought the last page into view', empty: 'no visible list or unmounted page is empty at the scroll frame' },
+	end: { input: 'End', target: 'the last page (Containers)', pending: 'End was delivered with the last page (Containers) unmounted',
+		travel: 'End crossed at least one viewport and brought the last page into view', empty: 'no visible list or unmounted page is empty at the scroll frame' }
+};
+export function flingVerdict(r, film, route = 'terminal') {
+	const R = FLING_ROUTES[route] || FLING_ROUTES.terminal, input = R.input === 'wheel' ? 'wheel' : `${R.input} key`;
 	const f = film && film.settled ? film : { frames: film ? film.frames : 0, bad: [], unread: true };
 	const shown = (x) => x ? `frame ${x.i} at ${x.dt} ms [${x.bands.join(', ')}]` : 'none';
 	return [
-		{ name: 'the wheel was delivered with Terminal look pending', ok: !!r.wheel && r.wheelPending > 0 && r.wheelTargetPending === true,
-			detail: r.wheel ? `at wheel delivery ${r.wheelPending} lists pending, Terminal look pending ${r.wheelTargetPending} (at commit ${r.pending}, ${r.targetPending})` : 'no wheel event was seen after the commit' },
-		{ name: 'a real wheel crossed at least one viewport and brought Terminal look into view', ok: !!r.sampled && r.moved >= r.height && r.targetInView === true,
-			detail: r.sampled ? `moved ${r.moved} px of a ${r.height} px view; Terminal look in view ${!!r.targetInView}` : `no scroll-frame sample with Terminal look in view (${r.framesBefore || 0} scroll frames past one viewport without it)` },
-		{ name: 'no visible list is empty at the scroll frame', ok: !!r.sampled && r.empty.length === 0, detail: (r.empty || []).join(',') || 'no scroll-frame sample' },
-		{ name: 'the first displayed destination frame, and every frame after the wheel, shows the destination rows (screencast pixels)',
+		{ name: R.pending, ok: !!r.wheel && r.wheelPending > 0 && r.wheelTargetPending === true,
+			detail: r.wheel ? `at ${input} delivery ${r.wheelPending} ${route === 'terminal' ? 'lists' : 'pages'} pending, ${R.target} pending ${r.wheelTargetPending} (at commit ${r.pending}, ${r.targetPending})` : `no ${input} event was seen after the commit` },
+		{ name: R.travel, ok: !!r.sampled && r.moved >= r.height && r.targetInView === true,
+			detail: r.sampled ? `moved ${r.moved} px of a ${r.height} px view; ${R.target} in view ${!!r.targetInView}` : `no scroll-frame sample with ${R.target} in view (${r.framesBefore || 0} scroll frames past one viewport without it)` },
+		{ name: R.empty, ok: !!r.sampled && Array.isArray(r.empty) && r.empty.length === 0, detail: (r.empty || []).join(',') || 'no scroll-frame sample' },
+		{ name: `the first displayed destination frame, and every frame after the ${input}, shows the destination rows (screencast pixels)`,
 			ok: f.frames > 0 && f.judged >= 2 && f.moved > 0 && !!f.dest && f.resolved === true && !f.dest.bad && f.bad.length === 0,
-			detail: !f.frames ? 'no screencast frames' : f.unread ? `${f.frames} screencast frames, not read (no wheel time, view or document box)` : `${f.frames} frames (${f.after} after the wheel, largest gap ${f.maxGap} ms, median ${f.median} ms; largest gap from the last source frame to the frame after the first destination frame ${f.spanGap} ms${f.resolved ? '' : ', over three medians or unmeasured: a blank frame could be missing, not judged'}); settled view differs from the source in ${f.moved} of its pixels; settled ink [${(f.settled || []).join(', ')}], ${f.judged} bands judged; first destination ${shown(f.dest)}${f.dest && f.dest.bad ? ' BLANK' : ''}; ${f.bad.length} blank or unfilled frame(s) after the wheel${f.bad.length ? ': ' + f.bad.slice(0, 8).map(shown).join('; ') : ''}` }
+			detail: !f.frames ? 'no screencast frames' : f.unread ? `${f.frames} screencast frames, not read (no ${input} time, view or document box)` : `${f.frames} frames (${f.after} after the ${input}, largest gap ${f.maxGap} ms, median ${f.median} ms; largest gap from the last source frame to the frame after the first destination frame ${f.spanGap} ms${f.resolved ? '' : ', over three medians or unmeasured: a blank frame could be missing, not judged'}); settled view differs from the source in ${f.moved} of its pixels; settled detail [${(f.settled || []).join(', ')}], ${f.judged} bands judged; first destination ${shown(f.dest)}${f.dest && f.dest.bad ? ' BLANK' : ''}; ${f.bad.length} blank or unfilled frame(s) after the ${input}${f.bad.length ? ': ' + f.bad.slice(0, 8).map(shown).join('; ') : ''}` }
 	];
 }
 /* FO-245 round 2 (R141 finding 1, exported for tools/settings-chapter.selftest.mjs): a bounded retry for a fling whose
@@ -416,14 +439,19 @@ export function flingVerdict(r, film) {
      those rows cannot be shopped for: they must pass on every attempt made, and they are reported from the attempt that
      decides, with every attempt's state in the pixel row's detail;
    - five attempts without a resolved one fail ("not judged" never passes).
-   At R141's 23 % unresolved rate three attempts left about 1 % false failures, and R142 measured 0.6 % of 1,218 cells
-   (4 Alexis cells, every attempt a ~40 ms gap; an unresolved attempt makes the next one likelier to be unresolved), so
-   five attempts (R142 low finding 1); the gate stays at three medians, since the shortest real pre-fix blank was 2
-   frames; a real blank still fails on its first resolved attempt (all four R141 pre-fix cells resolved and failed on
-   the first try). */
+   At R141's 23 % unresolved rate three attempts left about 1 % false failures, and R142 measured 4 of 656 Alexis cells
+   (0.61 %; 4 of 1,218 cells on both hosts, 0.33 %) left unresolved after three, every attempt a ~40 ms gap (an
+   unresolved attempt makes the next one likelier to be unresolved), so five attempts (R142 low finding 1). The shortest
+   real blank is ONE frame (batch-21 RTX film frame 892, A245), and the gate stays at three medians: it only bounds the
+   span from the last source frame to the frame after the first destination frame, where every displayed frame must
+   also have been captured. With a frame made every vsync (the marker), a gap of up to three medians loses at most two
+   displayed frames, and a lost one-frame blank there is caught by no reading of the pixels, so the retry is no proof
+   against a one-frame blank hidden in a gap; it fails such a capture as unresolved instead of passing it, and a real
+   blank still fails on its first resolved attempt (all four R141 pre-fix cells and all 16 A245 red controls resolved
+   and failed on the first try). Replay cases for a dropped one-frame blank stay on the tool-issues list (A245 low 4). */
 export const FLING_RETRY = { attempts: 5 };
-export function flingAttempt(r, px) {
-	const rows = flingVerdict(r, px), bad = px && Array.isArray(px.bad) ? px.bad.length : 0;
+export function flingAttempt(r, px, kind = 'terminal') {
+	const rows = flingVerdict(r, px, kind), bad = px && Array.isArray(px.bad) ? px.bad.length : 0;
 	const resolved = !!px && px.resolved === true, route = rows.slice(0, 3).every((x) => x.ok);
 	return { rows, bad, resolved, route, retry: route && bad === 0 && !resolved,
 		gap: px && px.spanGap != null ? px.spanGap : null, median: px && px.median != null ? px.median : null, frames: px ? px.frames || 0 : 0 };
@@ -432,18 +460,18 @@ export function flingAttemptLine(a) {
 	return `${a.resolved ? 'resolved' : 'not resolved'}, span gap ${a.gap} ms / median ${a.median} ms (${a.frames} frames), ${a.bad} bad frame(s)${a.route ? '' : ', a wheel, travel or target row failed'}${a.retry ? ' -> retry' : ' -> decides'}`;
 }
 /* attempt(k) drives the route once and returns { r, px } (the page recorder's state and flingFilm's reading) */
-export async function retryFling(attempt, max = FLING_RETRY.attempts) {
+export async function retryFling(attempt, max = FLING_RETRY.attempts, route = 'terminal') {
 	const out = [];
 	for (let k = 1; k <= max; k++) {
 		const { r, px } = await attempt(k);
-		const a = { k, r, px, ...flingAttempt(r, px) };
+		const a = { k, r, px, ...flingAttempt(r, px, route) };
 		out.push(a);
 		if (!a.retry) break;
 	}
 	return out;
 }
-export function flingRetryVerdict(list) {
-	if (!list || !list.length) return flingVerdict({}, null).map((row) => ({ ...row, ok: false, detail: 'no fling attempt ran' }));
+export function flingRetryVerdict(list, route = 'terminal') {
+	if (!list || !list.length) return flingVerdict({}, null, route).map((row) => ({ ...row, ok: false, detail: 'no fling attempt ran' }));
 	const used = list.at(-1), log = list.map((a) => `attempt ${a.k}: ${flingAttemptLine(a)}`).join('; ');
 	const anyBad = list.some((a) => a.bad > 0);
 	return used.rows.map((row, i) => i < 3
@@ -887,100 +915,127 @@ for (const surface of ['normal','sandbox']) {
 		}
 	};
 }
-for (const surface of ['normal', 'sandbox']) {
-	tests[`R93 #4 a fast wheel into lower Code fills visible lists before the frame (${surface})`] = async (t) => {
-		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
-		await t.viewport(1920, 1080); await muteSound(t.page);
-		await t.emulate({reducedMotion:t.args.motion === 'reduce' ? 'reduce' : 'no-preference'});
-		const f = await t.app.open({sandbox:surface === 'sandbox'});
-		await t.app.resetLayout().catch(() => {}); await f.locator('#tab-settings').click(); await t.settle();
-		for (const look of ['basic-dark','nier-light']) {
-			await setLookBySetting(t,f,look);
-			if (!(await guardPaintedLook(t,f,look,`${look} ${surface}`))) return;
-			/* FO-245 round 2: one attempt drives the whole route (General, then Code, then the wheel) with a fresh page recorder
-			   and film; retryFling repeats it only while the capture is unresolved and clean (FLING_RETRY) */
-			const attempt=async(k)=>{
-				await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click(); await t.page.waitForTimeout(700);
-				const box = await f.locator('#settings-document').boundingBox();
-				await f.evaluate(() => {
-					const root=document.getElementById('pm-settings-root');
-					const R=window.__pscFling={committed:false,sampled:false,pending:0,empty:[]};
-					const mo=new MutationObserver(() => {
-						if(root.querySelector('.domain-link.active')?.dataset.domain!=='code')return;
-						mo.disconnect(); const sc=root.querySelector('#settings-document'),sec=root.querySelector('#section-editor-terminal-look');
-						R.pending=root.querySelectorAll('[data-o55-fill="pending"]').length;
-						R.targetPending=!!sec?.querySelector('[data-o55-fill="pending"]');
-						if(!sc||!sec){R.committed=true;return;}
-						const b=sec.getBoundingClientRect(),v=sc.getBoundingClientRect();
-						R.start=sc.scrollTop;R.delta=b.top-v.top+b.height*.55;R.height=sc.clientHeight;R.committed=true;
-					});
-					const scroll=e=>{
-						const sc=e.target;
-						/* R132-FOLLOWUPS 3: only a scroll after the delivered wheel arms (flingScrollGate mirrors this in node) */
-						if(sc.id!=='settings-document'||!R.committed||!R.wheel||R.sampled||R.armed||Math.abs(sc.scrollTop-R.start)<R.height)return;
-						R.armed=true;
-						requestAnimationFrame(()=>{
-							const v=sc.getBoundingClientRect();
-							/* R97 #3: the sample is the first scroll frame, past one viewport, with Terminal look in view (an
-							   animated wheel scroll may cross the first viewport before it gets there) */
-							const tb=root.querySelector('#section-editor-terminal-look')?.getBoundingClientRect();
-							R.targetInView=!!tb&&tb.height>0&&tb.bottom>v.top&&tb.top<v.bottom;
-							if(!R.targetInView){R.armed=false;R.framesBefore=(R.framesBefore||0)+1;return;}
-							R.top=sc.scrollTop;R.moved=R.wheelTop==null?null:R.top-R.wheelTop;
-							R.empty=[...sc.querySelectorAll('[data-o55-fill="pending"]')].filter(l=>{
-								if(l.closest('details:not([open])'))return false;
-								const b=l.closest('[data-section-id]').getBoundingClientRect();
-								if(!b.height||b.bottom<=v.top||b.top>=v.bottom)return false;
-								const r=l.getBoundingClientRect();return r.height>0&&r.bottom>v.top&&r.top<v.bottom;
-							}).map(l=>l.closest('[data-section-id]').dataset.sectionId);
-							R.sampled=true;
-						});
-					};
-					/* R97 #3: the precondition is judged when the wheel is delivered, not at the commit: three driver steps lie
-					   between them, and an idle fill that finishes in that gap leaves nothing for the wheel to test. Passive, so
-					   the scroll keeps its own path. */
-					const wheel=()=>{
-						if(!R.committed||R.wheel)return;
-						const sec=root.querySelector('#section-editor-terminal-look');
-						R.wheel=performance.now();R.wheelEpoch=performance.timeOrigin+R.wheel;R.wheelPending=root.querySelectorAll('[data-o55-fill="pending"]').length;
-						R.wheelTargetPending=!!sec?.querySelector('[data-o55-fill="pending"]');
-						R.wheelTop=root.querySelector('#settings-document')?.scrollTop??null;
-					};
-					mo.observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
-					window.addEventListener('scroll',scroll,true);
-					window.addEventListener('wheel',wheel,{capture:true,passive:true});
-					R.stop=()=>{mo.disconnect();window.removeEventListener('scroll',scroll,true);window.removeEventListener('wheel',wheel,{capture:true,passive:true});};
+/* FO-245 round 3: the looks every fling route runs in. Glass Dark and Glass Light are in by default (A245 high finding 2:
+   their wallpaper passed the round 1 reading with no row on screen); `--set flingLooks=all` runs all ten looks,
+   `--set flingLooks=a,b` any of them. */
+export const FLING_LOOKS = ['basic-dark', 'nier-light', 'glass-dark', 'glass-light'];
+export const flingLooks = (arg) => !arg ? FLING_LOOKS.slice() : String(arg) === 'all' ? ALL.slice() : String(arg).split(',').map((s) => s.trim()).filter((l) => ALL.includes(l));
+/* One fling route (FLING_ROUTES) on one surface, in every fling look (exported for the selftest's live pins). */
+export async function flingRoute(t, surface, route) {
+	if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+	await t.viewport(1920, 1080); await muteSound(t.page);
+	await t.emulate({reducedMotion:t.args.motion === 'reduce' ? 'reduce' : 'no-preference'});
+	const f = await t.app.open({sandbox:surface === 'sandbox'});
+	await t.app.resetLayout().catch(() => {}); await f.locator('#tab-settings').click(); await t.settle();
+	for (const look of flingLooks(t.args.flingLooks)) {
+		await setLookBySetting(t,f,look);
+		if (!(await guardPaintedLook(t,f,look,`${look} ${surface}`))) return;
+		/* FO-245 round 2: one attempt drives the whole route (General, then Code, then the wheel or End) with a fresh page
+		   recorder and film; retryFling repeats it only while the capture is unresolved and clean (FLING_RETRY) */
+		const attempt=async(k)=>{
+			await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click(); await t.page.waitForTimeout(700);
+			const box = await f.locator('#settings-document').boundingBox();
+			await f.evaluate((route) => {
+				const root=document.getElementById('pm-settings-root'),deep=route!=='terminal';
+				const R=window.__pscFling={route,committed:false,sampled:false,pending:0,empty:[]};
+				/* the route's target: Terminal look, or the chapter's last page (Containers) for the deep routes */
+				const lastBody=()=>{const b=root.querySelectorAll('#settings-document [data-continuous-workspace-body]');return b[b.length-1]||null;};
+				const target=()=>deep?lastBody()?.closest('[data-workspace-block]'):root.querySelector('#section-editor-terminal-look');
+				const pendingNow=()=>deep?root.querySelectorAll('#settings-document [data-continuous-workspace-body][data-workspace-mounted="false"]').length:root.querySelectorAll('[data-o55-fill="pending"]').length;
+				const targetPendingNow=()=>deep?lastBody()?.dataset.workspaceMounted==='false':!!root.querySelector('#section-editor-terminal-look')?.querySelector('[data-o55-fill="pending"]');
+				const mo=new MutationObserver(() => {
+					if(root.querySelector('.domain-link.active')?.dataset.domain!=='code')return;
+					mo.disconnect(); const sc=root.querySelector('#settings-document'),sec=target();
+					R.pending=pendingNow();
+					R.targetPending=targetPendingNow();
+					if(!sc||!sec){R.committed=true;return;}
+					const b=sec.getBoundingClientRect(),v=sc.getBoundingClientRect();
+					/* a deep wheel overshoots the bottom by a view, so it lands on the page's end whatever its estimate */
+					R.start=sc.scrollTop;R.delta=deep?sc.scrollHeight-sc.scrollTop+sc.clientHeight:b.top-v.top+b.height*.55;R.height=sc.clientHeight;R.committed=true;
 				});
-				/* FO-245: the compositor's frames from before the press to after the fling settles (flingFilm) */
-				const client=await t.page.context().newCDPSession(t.page);let film,frames=[];
-				try {
-					/* the capture-fidelity marker (flingFilm): top right of the top page, outside the settings document. A Web
-					   Animations opacity animation, which the page's reduced-motion rules (animation: none) cannot stop. */
-					await t.page.evaluate(()=>{const d=document.createElement('div');d.id='psc-vsync-marker';d.setAttribute('aria-hidden','true');Object.assign(d.style,{position:'fixed',right:'0',top:'0',width:'2px',height:'2px',background:'currentColor',willChange:'opacity',pointerEvents:'none',zIndex:'2147483647'});document.documentElement.appendChild(d);d.animate([{opacity:.5},{opacity:1}],{duration:1000,iterations:Infinity,direction:'alternate'});});
-					film=await filmFling(client);
-					await t.page.waitForFunction(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>r(true)))));
-					await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
-					await f.waitForFunction(()=>window.__pscFling.committed,null,{timeout:5000});
+				const scroll=e=>{
+					const sc=e.target;
+					/* R132-FOLLOWUPS 3: only a scroll after the delivered wheel arms (flingScrollGate mirrors this in node) */
+					if(sc.id!=='settings-document'||!R.committed||!R.wheel||R.sampled||R.armed||Math.abs(sc.scrollTop-R.start)<R.height)return;
+					R.armed=true;
+					requestAnimationFrame(()=>{
+						const v=sc.getBoundingClientRect();
+						/* R97 #3: the sample is the first scroll frame, past one viewport, with the target in view (an
+						   animated wheel scroll may cross the first viewport before it gets there) */
+						const tb=target()?.getBoundingClientRect();
+						R.targetInView=!!tb&&tb.height>0&&tb.bottom>v.top&&tb.top<v.bottom;
+						if(!R.targetInView){R.armed=false;R.framesBefore=(R.framesBefore||0)+1;return;}
+						R.top=sc.scrollTop;R.moved=R.wheelTop==null?null:R.top-R.wheelTop;
+						R.empty=[...sc.querySelectorAll('[data-o55-fill="pending"]')].filter(l=>{
+							if(l.closest('details:not([open])'))return false;
+							const b=l.closest('[data-section-id]').getBoundingClientRect();
+							if(!b.height||b.bottom<=v.top||b.top>=v.bottom)return false;
+							const r=l.getBoundingClientRect();return r.height>0&&r.bottom>v.top&&r.top<v.bottom;
+						}).map(l=>l.closest('[data-section-id]').dataset.sectionId);
+						/* FO-245 r3: a page still unmounted in the view is empty too */
+						for(const p of sc.querySelectorAll('[data-continuous-workspace-body][data-workspace-mounted="false"]')){const r=p.getBoundingClientRect();if(r.height>0&&r.bottom>v.top&&r.top<v.bottom)R.empty.push('page:'+p.dataset.continuousWorkspaceBody);}
+						R.sampled=true;
+					});
+				};
+				/* R97 #3: the precondition is judged when the input is delivered, not at the commit: three driver steps lie
+				   between them, and an idle fill that finishes in that gap leaves nothing for the input to test. Passive, so
+				   the scroll keeps its own path. The End route's key is its input (trusted, End only). */
+				const wheel=e=>{
+					if(e.type==='keydown'&&(e.key!=='End'||!e.isTrusted))return;
+					if(!R.committed||R.wheel)return;
+					R.wheel=performance.now();R.wheelEpoch=performance.timeOrigin+R.wheel;R.wheelPending=pendingNow();
+					R.wheelTargetPending=targetPendingNow();
+					R.wheelTop=root.querySelector('#settings-document')?.scrollTop??null;
+				};
+				const kind=route==='end'?'keydown':'wheel';
+				mo.observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
+				window.addEventListener('scroll',scroll,true);
+				window.addEventListener(kind,wheel,{capture:true,passive:true});
+				R.stop=()=>{mo.disconnect();window.removeEventListener('scroll',scroll,true);window.removeEventListener(kind,wheel,{capture:true,passive:true});};
+			}, route);
+			/* FO-245: the compositor's frames from before the press to after the fling settles (flingFilm) */
+			const client=await t.page.context().newCDPSession(t.page);let film,frames=[];
+			try {
+				/* the capture-fidelity marker (flingFilm): top right of the top page, outside the settings document. A Web
+				   Animations opacity animation, which the page's reduced-motion rules (animation: none) cannot stop. */
+				await t.page.evaluate(()=>{const d=document.createElement('div');d.id='psc-vsync-marker';d.setAttribute('aria-hidden','true');Object.assign(d.style,{position:'fixed',right:'0',top:'0',width:'2px',height:'2px',background:'currentColor',willChange:'opacity',pointerEvents:'none',zIndex:'2147483647'});document.documentElement.appendChild(d);d.animate([{opacity:.5},{opacity:1}],{duration:1000,iterations:Infinity,direction:'alternate'});});
+				film=await filmFling(client);
+				await t.page.waitForFunction(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>r(true)))));
+				await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
+				await f.waitForFunction(()=>window.__pscFling.committed,null,{timeout:5000});
+				if(route==='end'){
+					/* End scrolls the document from a control inside it: a visible button of the first view, focused without
+					   scrolling (A245's route); the key is a trusted press */
+					const focused=await f.evaluate(()=>{const d=document.querySelector('#pm-settings-root #settings-document'),v=d.getBoundingClientRect();const b=[...d.querySelectorAll('button')].find(x=>{const r=x.getBoundingClientRect();return r.height&&r.top>=v.top&&r.bottom<v.bottom&&getComputedStyle(x).visibility==='visible';});b?.focus({preventScroll:true});return !!b&&document.activeElement===b;});
+					if(!focused)t.log(`${look} ${surface} end attempt ${k}: no visible button in the document to focus`);
+					await t.page.keyboard.press('End');
+				}else{
 					const delta=await f.evaluate(()=>window.__pscFling.delta);
 					await t.page.mouse.move(box.x+box.width*.65,box.y+box.height*.55);
 					await t.page.mouse.wheel(0,Math.ceil(delta));
-					await f.waitForFunction(()=>window.__pscFling.sampled,null,{timeout:5000}).catch(()=>{});
-					/* the fling has settled when the scroller has held still for a second of animation frames */
-					await f.waitForFunction(()=>new Promise(res=>{const sc=document.querySelector('#pm-settings-root #settings-document');let top=sc&&sc.scrollTop,t0=performance.now();const step=()=>{if(!sc)return res(true);if(sc.scrollTop!==top){top=sc.scrollTop;t0=performance.now();}if(performance.now()-t0>=1000)return res(true);requestAnimationFrame(step);};requestAnimationFrame(step);}),null,{timeout:15000}).catch(()=>{});
-					frames=await film.stop();
-					const r=await f.evaluate(()=>{const {stop,...r}=window.__pscFling;return r;});
-					const view=t.page.viewportSize()||await t.page.evaluate(()=>({width:innerWidth,height:innerHeight}));
-					const px=flingFilm(frames,{box,view,wheel:r.wheelEpoch});
-					t.log(`${look} ${surface} fling attempt ${k}: ${r.pending} lists pending at commit, target pending ${r.targetPending}; at wheel delivery ${r.wheel?`${r.wheelPending} pending, target pending ${r.wheelTargetPending}`:'no wheel seen'}; moved ${r.moved} px (${r.height} px view), Terminal look in view ${!!r.targetInView}; empty visible lists at scroll-frame rAF: ${r.empty.join(',')||'none'}; screencast: ${px.frames} frames, first destination ${px.dest?`frame ${px.dest.i} at ${px.dest.dt} ms${px.dest.bad?' BLANK':''}`:'none'}, ${px.bad?px.bad.length:'?'} blank or unfilled after the wheel`);
-					t.log(`${look} ${surface} attempt ${k} screencast timeline (document box ${[box.x,box.y,box.width,box.height].map(Math.round).join(',')}; ms from the wheel: band ink per mille, ! blank or unfilled): ${px.timeline||'none'}`);
-					return {r,px};
-				} finally {await t.page.evaluate(()=>document.getElementById('psc-vsync-marker')?.remove()).catch(()=>{});if(film&&!frames.length)await film.stop().catch(()=>{});await client.detach().catch(()=>{});await f.evaluate(()=>window.__pscFling.stop());}
-			};
-			const attempts=await retryFling(attempt);
-			for (const a of attempts) t.log(`${look} ${surface} fling attempt ${a.k}/${FLING_RETRY.attempts}: ${flingAttemptLine(a)}`);
-			for (const row of flingRetryVerdict(attempts)) await t.check(`${look} ${surface}: ${row.name}`,row.ok,row.detail);
-		}
-	};
+				}
+				await f.waitForFunction(()=>window.__pscFling.sampled,null,{timeout:5000}).catch(()=>{});
+				/* the fling has settled when the scroller has held still for a second of animation frames */
+				await f.waitForFunction(()=>new Promise(res=>{const sc=document.querySelector('#pm-settings-root #settings-document');let top=sc&&sc.scrollTop,t0=performance.now();const step=()=>{if(!sc)return res(true);if(sc.scrollTop!==top){top=sc.scrollTop;t0=performance.now();}if(performance.now()-t0>=1000)return res(true);requestAnimationFrame(step);};requestAnimationFrame(step);}),null,{timeout:15000}).catch(()=>{});
+				frames=await film.stop();
+				const r=await f.evaluate(()=>{const {stop,...r}=window.__pscFling;return r;});
+				const view=t.page.viewportSize()||await t.page.evaluate(()=>({width:innerWidth,height:innerHeight}));
+				const px=flingFilm(frames,{box,view,wheel:r.wheelEpoch});
+				t.log(`${look} ${surface} ${route} fling attempt ${k}: ${r.pending} pending at commit, target pending ${r.targetPending}; at input delivery ${r.wheel?`${r.wheelPending} pending, target pending ${r.wheelTargetPending}`:'no input seen'}; moved ${r.moved} px (${r.height} px view), target in view ${!!r.targetInView}; empty at scroll-frame rAF: ${r.empty.join(',')||'none'}; screencast: ${px.frames} frames, first destination ${px.dest?`frame ${px.dest.i} at ${px.dest.dt} ms${px.dest.bad?' BLANK':''}`:'none'}, ${px.bad?px.bad.length:'?'} blank or unfilled after the input`);
+				t.log(`${look} ${surface} ${route} attempt ${k} screencast timeline (document box ${[box.x,box.y,box.width,box.height].map(Math.round).join(',')}; ms from the input: band detail per mille, ! blank or unfilled): ${px.timeline||'none'}`);
+				return {r,px};
+			} finally {await t.page.evaluate(()=>document.getElementById('psc-vsync-marker')?.remove()).catch(()=>{});if(film&&!frames.length)await film.stop().catch(()=>{});await client.detach().catch(()=>{});await f.evaluate(()=>window.__pscFling.stop());}
+		};
+		const attempts=await retryFling(attempt,FLING_RETRY.attempts,route);
+		for (const a of attempts) t.log(`${look} ${surface} ${route} fling attempt ${a.k}/${FLING_RETRY.attempts}: ${flingAttemptLine(a)}`);
+		for (const row of flingRetryVerdict(attempts,route)) await t.check(`${look} ${surface}: ${row.name}`,row.ok,row.detail);
+	}
+}
+for (const surface of ['normal', 'sandbox']) {
+	tests[`R93 #4 a fast wheel into lower Code fills visible lists before the frame (${surface})`] = (t) => flingRoute(t, surface, 'terminal');
+	/* FO-245 round 3 (A245 high finding 1): the deep routes onto the chapter's unmounted last page */
+	tests[`R93 #4 a single long wheel to the bottom of a fresh Code & Tools paints its last page (${surface})`] = (t) => flingRoute(t, surface, 'wheel-bottom');
+	tests[`R93 #4 End from a fresh Code & Tools paints its last page (${surface})`] = (t) => flingRoute(t, surface, 'end');
 }
 for (const surface of ['normal', 'sandbox']) {
 	tests[`R93 #3 cross-chapter search does not fill the chapter being discarded (${surface})`] = async (t) => {
