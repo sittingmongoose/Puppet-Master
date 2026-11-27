@@ -1221,7 +1221,8 @@ for (const surface of ['normal', 'sandbox']) {
 	   again, as on main. The two End fling routes ('end', 'end-text': FLING_ROUTES and flingRoute keep their code) are
 	   not registered until FO-248 lands a fix for those blanks; registered now they would be red, as they are on main. */
 	/* FO-245 round 4 (R143 medium 2) and round 5 (R144): guards that main's widget End/Home behaviour is back. Main is
-	   the reference; each is red on r4 (0f771f44a3, whose listener overrode the widget) and green on main. */
+	   the reference; the roster and picker guards are red on r4 (0f771f44a3), the tab guard on r3 (2df46917b3), whose
+	   listeners overrode the widget; all three are green on main. */
 	tests[`R93 #4 End on a focused tab keeps the tab's behaviour (${surface})`] = (t) => tabEndRoute(t, surface);
 	tests[`R93 #4 End on the AI & Providers roster scrolls the roster (${surface})`] = (t) => rosterEndRoute(t, surface);
 	tests[`R93 #4 Home on the General wallpaper picker keeps the document still (${surface})`] = (t) => wpkHomeRoute(t, surface);
