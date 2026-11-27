@@ -5,21 +5,21 @@
   "canonical_plan_docs_modified": false,
   "conversion_performed": false,
   "coverage_disposition_type_counts": {
-    "already_standardized_existing_planunits": 16464
+    "already_standardized_existing_planunits": 16496
   },
-  "coverage_rows": 16464,
+  "coverage_rows": 16496,
   "coverage_status_counts": {
-    "already_standardized_existing_planunits": 16464
+    "already_standardized_existing_planunits": 16496
   },
   "doc_count": 96,
   "docs_still_source_preserving_count": 0,
   "expected_doc_count": 96,
-  "generated_at_utc": "2026-11-25T16:57:48Z",
+  "generated_at_utc": "2026-11-26T22:29:28Z",
   "governance_seal_required": true,
   "historical_artifacts_modified": false,
   "implementation_files_created": false,
   "lineage_status": "current_complete_snapshot_supersedes_declared_historical_scope_without_rewriting_history",
-  "live_plan_unit_count": 9629,
+  "live_plan_unit_count": 9633,
   "next_batch_cursor": null,
   "next_cursor": null,
   "no_executable_build_tasks_created": true,
@@ -31,11 +31,11 @@
     "No new conversion, product implementation, runtime verification, readiness, or production certification is claimed."
   ],
   "pilot_status": "pass",
-  "plans_manifest_sha256": "87c1ab017afdbc356928cc04545d1d3bb2b0507de1c71a1044f9ac1e02429a7c",
+  "plans_manifest_sha256": "9612a5321712f7dd245c4dc90a8af582c4a10bd10e74e5117e94a1bda0111110",
   "pre_conversion_preserved_in_place_rows": 0,
   "production_build_tasks_created": false,
   "residual_source_preserving_plan_units": [],
-  "run_id": "pds-20261125-001-current-planunit-snapshot",
+  "run_id": "pds-20261126-002-current-planunit-snapshot",
   "schema_id": "pm.plan_migration.current_snapshot_final_summary.v1",
   "shard_check_status": "not_asserted_by_snapshot",
   "snapshot_mode": "current_planunit_state_snapshot",
@@ -47,8 +47,8 @@
   "status": "COMPLETE",
   "supersedes_run_ids": [
     "pds-20260611-002-atomize-planunits",
-    "pds-20261124-001-current-planunit-snapshot"
+    "pds-20261126-001-current-planunit-snapshot"
   ],
-  "unique_live_plan_unit_count": 9629,
+  "unique_live_plan_unit_count": 9633,
   "vague_pre_conversion_rows": 0
 }

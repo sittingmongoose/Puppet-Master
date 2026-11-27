@@ -2,13 +2,13 @@
 
 This generated index separates immutable historical report headers from current presentation status. Old `FINAL_REPORT.md` files are not rewritten; finding-level closure authority remains `Plans/.audits/_semantic_closure_registry.jsonl`.
 
-- Generated: `2026-11-26T19:05:47Z`
-- Reports indexed: 66
+- Generated: `2026-11-27T02:12:48Z`
+- Reports indexed: 71
 - Current blockers: 42
 - Current report blockers: 0
 - Open finding blockers: 42
 - Reopened finding blockers: 42
-- Historical BLOCKED/FAIL reports indexed: 24
+- Historical BLOCKED/FAIL reports indexed: 25
 - Closure registry rows: 1854
 
 ## Active open findings
@@ -130,3 +130,8 @@ Open as `scripts/pm-audit-closure.py validate` reports them: a finding stays ope
 | `audit-20260709-001-plan-assurance-blind-exhaustive` | `STATUS_UNSTATED` | `historical_report_status_unstated_or_nonstandard` | false | 0 |
 | `audit-20260709-002-plan-assurance-windowed-blind-exhaustive` | `not_available` | `historical_report_status_unstated_or_nonstandard` | false | 0 |
 | `audit-20260709-003-plan-assurance-fresh-agent-windowed-blind-exhaustive` | `in_progress` | `historical_report_status_unstated_or_nonstandard` | false | 0 |
+| `audit-20260827-001-pmconcept7-usage-recovery` | `FAIL_WITH_NAMED_RESIDUALS` | `historical_blocked_or_fail_report_indexed` | false | 0 |
+| `audit-20260828-001-pmconcept7-usage-successor` | `CLASSIFIED_WITH_FAILURES_AND_NAMED_RESIDUALS` | `historical_report_status_unstated_or_nonstandard` | false | 0 |
+| `audit-20260828-002-settings-tome-tabs-preport` | `STATUS_UNSTATED` | `historical_report_status_unstated_or_nonstandard` | false | 0 |
+| `audit-20260828-003-chat-56-fast-lane` | `STATUS_UNSTATED` | `historical_report_status_unstated_or_nonstandard` | false | 0 |
+| `audit-20260829-001-pmconcept7-widget-followup` | `CLASSIFIED_WITH_FAILURE_BLOCKERS_AND_NAMED_RESIDUALS` | `historical_report_status_unstated_or_nonstandard` | false | 0 |
