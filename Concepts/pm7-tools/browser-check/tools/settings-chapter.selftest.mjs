@@ -3,7 +3,7 @@
 // The page probe itself is tested in a browser on a constructed page: diagnostics/settings-chapter-probe.check.mjs.
 import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
-import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT, press, selectAllModifier, flingScrollGate, filmFling, flingFilm, FLING_FILM, tests } from '../checks/perf-settings-chapter.check.mjs';
+import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT, press, selectAllModifier, flingScrollGate, filmFling, flingFilm, FLING_FILM, FLING_RETRY, flingAttempt, retryFling, flingRetryVerdict, tests } from '../checks/perf-settings-chapter.check.mjs';
 import { encodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
 
 /* SETCHAPTER-ROWCOUNT-FIRST-RAF: the first-screen row over the Code & Tools arrivals */
@@ -150,15 +150,24 @@ import { encodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs
  * skipped the destination sections in that frame. Constructed screencast frames (PNG, the half-size the check asks for)
  * go through the live recorder (filmFling, fed by a stand-in CDP session) and the live judge (flingFilm, flingVerdict). */
 {
+	// a match in live code: not on a line holding a line comment before it, and not inside a block comment
+	const live = (src, re) => {
+		for (const m of src.matchAll(new RegExp(re.source, re.flags.replace('g', '') + 'g'))) {
+			const before = src.slice(0, m.index), line = before.slice(before.lastIndexOf('\n') + 1);
+			if (before.lastIndexOf('/*') > before.lastIndexOf('*/') || line.includes('//')) continue;
+			return true;
+		}
+		return false;
+	};
 	const fling = (o) => ({ committed: true, pending: 33, targetPending: true, wheel: 1200, wheelPending: 30, wheelTargetPending: true, sampled: true, start: 0, top: 2900, moved: 2900, height: 880, targetInView: true, empty: [], ...o });
 	const view = { width: 1920, height: 1080 }, box = { x: 627, y: 143, width: 685, height: 912 }, W = FLING_FILM.width, H = FLING_FILM.height;
 	// a frame: the list's ground with text-like rules every 12 px from `phase`, leaving `holes` bands (0-3) empty
-	const frame = (phase, { holes = [], blank = false } = {}) => {
+	const frame = (phase, { holes = [], blank = false, faint = [] } = {}) => {
 		const data = Buffer.alloc(W * H * 4);
 		for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
 			const i = (y * W + x) * 4, inDoc = x >= 313 && x < 656 && y >= 71 && y < 527;
 			const band = Math.floor((y - 83) / Math.floor((515 - 83) / 4));
-			const ink = inDoc && !blank && !holes.includes(band) && (y + phase) % 12 < 2 && (x + phase) % 9 < 6;
+			const ink = inDoc && !blank && !holes.includes(band) && (y + phase) % 12 < 2 && (x + phase) % 9 < 6 && (!faint.includes(band) || (x + phase) % 180 < 6);
 			const g = ink ? 200 : inDoc ? 45 : 20;
 			data[i] = data[i + 1] = data[i + 2] = g; data[i + 3] = 255;
 		}
@@ -190,6 +199,62 @@ import { encodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs
 	assert.match(v(lost).detail, /over three medians or unmeasured/);
 	assert.equal(v(at(-83.5, 25, SRC)).ok, false, 'a view that never moved has no destination frame');
 	assert.equal(v([...at(-83.5, 5, SRC)]).ok, false, 'no frame after the wheel');
+	// FO-245 r2 (R141 finding 2): a blank frame just after the recorded wheel time is judged, not taken for the source
+	const justAfter = [...at(-83.5, 5, SRC), [1, BLANK], ...at(16.7, 20, DST)];
+	assert.equal(run(justAfter).dest.dt, 1, 'the blank frame 1 ms after the wheel is the first destination frame');
+	assert.equal(v(justAfter).ok, false, 'a blank frame just after the recorded wheel time fails');
+	// a film that stopped before the fling settled: its last frame is the source, so nothing is judged as settled
+	const unsettled = [...at(-83.5, 5, SRC), ...at(16.7, 2, SRC)];
+	assert.equal(run(unsettled).moved, 0, 'the settled frame is the source view');
+	assert.equal(v(unsettled).ok, false, 'a film stopped before settle cannot pass');
+	// a band at a twentieth of its settled ink is unfilled (the keep share is a tenth, not a hundredth)
+	const FAINT = frame(5, { faint: [1] }), faint = [...at(-83.5, 5, SRC), ...at(16.7, 2, FAINT), ...at(50.1, 20, DST)];
+	assert.ok(run(faint).bad.length === 2 && run(faint).bad[0].bands[1] > 0, `a faint band is read as faint, not empty: ${JSON.stringify(run(faint).bad[0])}`);
+	assert.equal(v(faint).ok, false, 'a band far under a tenth of its settled ink fails');
+	// FO-245 r2 (R141 finding 1): the bounded retry. Each attempt is a reading of a constructed film through the live judge;
+	// retryFling drives them in order and flingRetryVerdict judges the list.
+	assert.equal(FLING_RETRY.attempts, 3, 'at most three attempts per look and surface');
+	const lostBlank = [...at(-83.5, 5, SRC), ...at(100.2, 2, BLANK), ...at(133.6, 20, DST)];
+	assert.equal(run(lostBlank).resolved, false, 'a lost arrival that also shows blank frames is unresolved');
+	const drive = async (seqs, r = () => fling({})) => {
+		const driven = [];
+		const list = await retryFling(async (k) => { driven.push(k); return { r: r(k), px: run(seqs[k - 1]) }; });
+		return { driven, list, rows: flingRetryVerdict(list) };
+	};
+	{
+		const d = await drive([lost, good, good]);
+		assert.deepEqual(d.driven, [1, 2], 'an unresolved clean attempt is retried; a resolved one decides');
+		assert.deepEqual(d.rows.map((x) => x.ok), [true, true, true, true], `unresolved, then resolved and clean, passes: ${d.rows[3].detail}`);
+		assert.match(d.rows[3].detail, /attempt 1: not resolved, span gap 116\.9 ms \/ median 16\.7 ms \(\d+ frames\), 0 bad frame\(s\) -> retry; attempt 2: resolved, span gap 33\.4 ms \/ median 16\.7 ms/, 'every attempt\'s gap and median is logged');
+	}
+	{
+		const d = await drive([lost, lost, good]);
+		assert.deepEqual(d.driven, [1, 2, 3]); assert.equal(d.rows[3].ok, true, 'a third attempt that resolves clean passes');
+	}
+	{
+		const d = await drive([lost, lost, lost]);
+		assert.deepEqual(d.driven, [1, 2, 3], 'three attempts at most');
+		assert.equal(d.rows[3].ok, false, 'three unresolved attempts fail: not judged never passes');
+		assert.match(d.rows[3].detail, /3 attempt\(s\), at most 3/);
+	}
+	for (const [seqs, driven, why] of [[[blank, good, good], [1], 'a resolved bad first attempt'], [[lost, blank, good], [1, 2], 'a resolved bad second attempt'], [[lostBlank, good, good], [1], 'an unresolved attempt with bad frames'], [[lost, lostBlank, good], [1, 2], 'a later unresolved attempt with bad frames'], [[late, good, good], [1], 'a later blank after a good first destination']]) {
+		const d = await drive(seqs);
+		assert.deepEqual(d.driven, driven, `${why} decides at once, no retry`);
+		assert.equal(d.rows[3].ok, false, `${why} fails`);
+	}
+	// the route rows cannot be shopped for: an attempt failing one stops the retry and fails, and every attempt is held to them
+	{
+		const d = await drive([lost, good, good], (k) => fling(k === 1 ? { targetInView: false } : {}));
+		assert.deepEqual(d.driven, [1], 'an attempt that fails a route row is not retried');
+		assert.equal(d.rows[1].ok, false, 'the travel and target row fails');
+		const shop = flingRetryVerdict([{ k: 1, ...flingAttempt(fling({ wheelTargetPending: false }), run(lost)) }, { k: 2, ...flingAttempt(fling({}), run(good)) }]);
+		assert.equal(shop[0].ok, false, 'a route row failed on any attempt fails, even when the deciding attempt passes it');
+		assert.equal(flingAttempt(fling({ moved: 100 }), run(lost)).retry, false, 'too little wheel travel is not a capture gap');
+		assert.equal(flingAttempt(fling({ wheel: 0 }), run(lost)).retry, false, 'no trusted wheel is not a capture gap');
+	}
+	assert.deepEqual(flingRetryVerdict([]).map((x) => x.ok), [false, false, false, false], 'no attempt cannot pass');
+	assert.equal(flingRetryVerdict([{ k: 1, ...flingAttempt(fling({}), run(lostBlank)) }, { k: 2, ...flingAttempt(fling({}), run(good)) }])[3].ok, false, 'a list holding a bad frame in any attempt fails, even when the last attempt is clean');
+	console.log('PASS fling retry: an unresolved clean capture is driven again up to three times; a resolved clean attempt passes, any bad frame or route failure fails at once, three unresolved fail');
 	// the live recorder: a stand-in CDP session that films the constructed sequence once screencasting starts
 	const recorded = await (async () => {
 		const client = new EventEmitter(), acks = [], calls = [];
@@ -213,15 +278,32 @@ import { encodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs
 	// fails here), keeps the capture-fidelity marker running by Web Animations, and keeps its wheel gate (ASTRA21-SETTINGS-LIVE-ARM)
 	for (const surface of ['normal', 'sandbox']) {
 		const src = String(tests[`R93 #4 a fast wheel into lower Code fills visible lists before the frame (${surface})`]);
-		assert.match(src, /film=await filmFling\(client\)/, 'the live test films the fling');
-		assert.match(src, /const px=flingFilm\(frames,\{box,view,wheel:r\.wheelEpoch\}\)/, 'the live test reads the frames with the shared judge');
-		assert.match(src, /for \(const row of flingVerdict\(r,px\)\)/, 'the live verdict includes the frames');
-		assert.match(src, /R\.wheelEpoch=performance\.timeOrigin\+R\.wheel/, 'the wheel time is on the frames\' clock');
-		assert.match(src, /psc-vsync-marker[\s\S]*d\.animate\(/, 'the capture-fidelity marker runs by Web Animations');
+		// FO-245 r2 (R141 finding 2): a pin holds only on live code, never on a commented-out copy of it
+		assert.equal(live('a();\n//b();\n/* c();\n*/ d();', /b\(\);/), false, 'live(): a line comment is not live code');
+		assert.equal(live('a();\n/* c();\n*/ d();', /c\(\);/), false, 'live(): a block comment is not live code');
+		assert.equal(live('a();\n/* c();\n*/ d();', /d\(\);/), true, 'live(): code after a block comment is live');
+		const pin = (re, msg) => assert.ok(live(src, re), msg);
+		pin(/film=await filmFling\(client\)/, 'the live test films the fling');
+		pin(/const px=flingFilm\(frames,\{box,view,wheel:r\.wheelEpoch\}\);/, 'the live test reads the frames with the shared judge');
+		pin(/R\.wheelEpoch=performance\.timeOrigin\+R\.wheel;/, 'the wheel time is on the frames\' clock, unshifted');
+		pin(/document\.documentElement\.appendChild\(d\);d\.animate\(\[\{opacity:\.5\},\{opacity:1\}\],\{duration:1000,iterations:Infinity,direction:'alternate'\}\);/, 'the capture-fidelity marker runs by Web Animations');
+		pin(/if\(performance\.now\(\)-t0>=1000\)return res\(true\);requestAnimationFrame\(step\);\};requestAnimationFrame\(step\);\}\),null,\{timeout:15000\}\)/, 'the film runs until the scroller has held still for a second (settle wait, 15 s cap)');
+		pin(/frames=await film\.stop\(\);/, 'the film is stopped after the settle wait');
+		assert.ok(src.indexOf('if(performance.now()-t0>=1000)return res(true)') < src.indexOf('frames=await film.stop();'), 'the film stops after the settle wait, not before');
+		// the bounded retry: the live test drives the whole route per attempt and judges through the shared retry and verdict
+		pin(/const attempts=await retryFling\(attempt\);/, 'the live test retries through the shared retryFling');
+		pin(/for \(const row of flingRetryVerdict\(attempts\)\) await t\.check\(/, 'the live verdict is the shared retry verdict');
+		assert.equal(/function\s+(retryFling|flingRetryVerdict|flingAttempt|flingVerdict)\b|\b(retryFling|flingRetryVerdict|flingAttempt|flingVerdict)\s*=/.test(src), false, 'the live test has no retry or judge of its own');
+		assert.equal(/flingVerdict\(/.test(src.replace(/flingRetryVerdict\(/g, '')), false, 'the live test does not judge one attempt by itself');
+		const a0 = src.indexOf('const attempt=async(k)=>{'), a1 = src.indexOf('const attempts=await retryFling(attempt);');
+		assert.ok(a0 >= 0 && a1 > a0, 'the attempt is defined before the retry');
+		const body = src.slice(a0, a1);
+		for (const [re, msg] of [[/\.domain-link\[data-domain="general"\]'\)\.first\(\)\.click\(\)/, 'General'], [/window\.__pscFling=\{committed:false/, 'a fresh page recorder'], [/film=await filmFling\(client\)/, 'a fresh film'], [/\.domain-link\[data-domain="code"\]'\)\.first\(\)\.click\(\)/, 'Code'], [/await t\.page\.mouse\.wheel\(0,Math\.ceil\(delta\)\);/, 'the wheel'], [/return \{r,px\};/, 'its reading']])
+			assert.ok(live(body, re), `each attempt drives the whole route: ${msg}`);
 		assert.match(src, /if\(sc\.id!=='settings-document'\|\|!R\.committed\|\|!R\.wheel\|\|R\.sampled\|\|R\.armed\|\|Math\.abs\(sc\.scrollTop-R\.start\)<R\.height\)return;/, 'the live scroll gate arms only after the delivered wheel (flingScrollGate)');
 		assert.match(src, /R\.moved=R\.wheelTop==null\?null:R\.top-R\.wheelTop/, 'the live travel is measured from the wheel delivery position (flingScrollGate)');
 	}
-	console.log('PASS fling frames: blank and unfilled frames on screen fail through the live recorder and judge, a lost arrival frame is not judged, and the live test uses both');
+	console.log('PASS fling frames: blank and unfilled frames on screen fail through the live recorder and judge, a lost arrival frame is not judged, and the live test uses both and the shared retry');
 }
 
 /* R97 #6: the wait ends on the fill's own completion, and an unfinished fill is told apart from a missing row */

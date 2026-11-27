@@ -403,6 +403,50 @@ export function flingVerdict(r, film) {
 			detail: !f.frames ? 'no screencast frames' : f.unread ? `${f.frames} screencast frames, not read (no wheel time, view or document box)` : `${f.frames} frames (${f.after} after the wheel, largest gap ${f.maxGap} ms, median ${f.median} ms; largest gap from the last source frame to the frame after the first destination frame ${f.spanGap} ms${f.resolved ? '' : ', over three medians or unmeasured: a blank frame could be missing, not judged'}); settled view differs from the source in ${f.moved} of its pixels; settled ink [${(f.settled || []).join(', ')}], ${f.judged} bands judged; first destination ${shown(f.dest)}${f.dest && f.dest.bad ? ' BLANK' : ''}; ${f.bad.length} blank or unfilled frame(s) after the wheel${f.bad.length ? ': ' + f.bad.slice(0, 8).map(shown).join('; ') : ''}` }
 	];
 }
+/* FO-245 round 2 (R141 finding 1, exported for tools/settings-chapter.selftest.mjs): a bounded retry for a fling whose
+   capture is not resolved. Screencast delivery near the wheel is jittery on real hosts (R141: 17 of 73 fixed-build cells
+   had a gap over three medians across the arrival, every one with zero blank frames), so one unresolved capture must not
+   fail the run, and it must not pass it either. Each attempt drives the whole route again (General, then Code, then the
+   wheel) and is judged by flingVerdict. Only an attempt whose capture is unresolved, that shows no bad frame and that
+   passes the wheel, travel and target rows is retried; every other attempt decides at once:
+   - a bad (blank or unfilled) frame in ANY attempt, resolved or not, fails at once: a frame that arrived blank is a blank;
+   - a resolved attempt decides: it passes the pixel row only with zero bad frames;
+   - an attempt that fails the trusted wheel, the travel from wheelTop, Terminal look pending at the wheel, Terminal look
+     in view or the empty-list row fails at once and is never retried. The retry is for lost screencast frames only, so
+     those rows cannot be shopped for: they must pass on every attempt made, and they are reported from the attempt that
+     decides, with every attempt's state in the pixel row's detail;
+   - three attempts without a resolved one fail ("not judged" never passes).
+   At R141's 23 % unresolved rate three attempts leave about 1 % false failures; a real blank still fails on its first
+   resolved attempt (all four R141 pre-fix cells resolved and failed on the first try). */
+export const FLING_RETRY = { attempts: 3 };
+export function flingAttempt(r, px) {
+	const rows = flingVerdict(r, px), bad = px && Array.isArray(px.bad) ? px.bad.length : 0;
+	const resolved = !!px && px.resolved === true, route = rows.slice(0, 3).every((x) => x.ok);
+	return { rows, bad, resolved, route, retry: route && bad === 0 && !resolved,
+		gap: px && px.spanGap != null ? px.spanGap : null, median: px && px.median != null ? px.median : null, frames: px ? px.frames || 0 : 0 };
+}
+export function flingAttemptLine(a) {
+	return `${a.resolved ? 'resolved' : 'not resolved'}, span gap ${a.gap} ms / median ${a.median} ms (${a.frames} frames), ${a.bad} bad frame(s)${a.route ? '' : ', a wheel, travel or target row failed'}${a.retry ? ' -> retry' : ' -> decides'}`;
+}
+/* attempt(k) drives the route once and returns { r, px } (the page recorder's state and flingFilm's reading) */
+export async function retryFling(attempt, max = FLING_RETRY.attempts) {
+	const out = [];
+	for (let k = 1; k <= max; k++) {
+		const { r, px } = await attempt(k);
+		const a = { k, r, px, ...flingAttempt(r, px) };
+		out.push(a);
+		if (!a.retry) break;
+	}
+	return out;
+}
+export function flingRetryVerdict(list) {
+	if (!list || !list.length) return flingVerdict({}, null).map((row) => ({ ...row, ok: false, detail: 'no fling attempt ran' }));
+	const used = list.at(-1), log = list.map((a) => `attempt ${a.k}: ${flingAttemptLine(a)}`).join('; ');
+	const anyBad = list.some((a) => a.bad > 0);
+	return used.rows.map((row, i) => i < 3
+		? { ...row, ok: list.every((a) => a.rows[i].ok), detail: `${row.detail} (attempt ${used.k} of ${list.length}${list.length > 1 ? '; every attempt is held to this row' : ''})` }
+		: { ...row, ok: row.ok && used.resolved && used.bad === 0 && !anyBad, detail: `${row.detail}; ${list.length} attempt(s), at most ${FLING_RETRY.attempts}: ${log}` });
+}
 /* R132-FOLLOWUPS 3 (exported for tools/settings-chapter.selftest.mjs): the fling scroll gate. Only a scroll after the
    delivered wheel arms the sample, and the travel credited to the wheel is measured from its delivery position
    (wheelTop), not from the commit's start: a programmatic pre-wheel scroll is not the wheel's travel. The R93 #4
@@ -850,81 +894,88 @@ for (const surface of ['normal', 'sandbox']) {
 		for (const look of ['basic-dark','nier-light']) {
 			await setLookBySetting(t,f,look);
 			if (!(await guardPaintedLook(t,f,look,`${look} ${surface}`))) return;
-			await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click(); await t.page.waitForTimeout(700);
-			const box = await f.locator('#settings-document').boundingBox();
-			await f.evaluate(() => {
-				const root=document.getElementById('pm-settings-root');
-				const R=window.__pscFling={committed:false,sampled:false,pending:0,empty:[]};
-				const mo=new MutationObserver(() => {
-					if(root.querySelector('.domain-link.active')?.dataset.domain!=='code')return;
-					mo.disconnect(); const sc=root.querySelector('#settings-document'),sec=root.querySelector('#section-editor-terminal-look');
-					R.pending=root.querySelectorAll('[data-o55-fill="pending"]').length;
-					R.targetPending=!!sec?.querySelector('[data-o55-fill="pending"]');
-					if(!sc||!sec){R.committed=true;return;}
-					const b=sec.getBoundingClientRect(),v=sc.getBoundingClientRect();
-					R.start=sc.scrollTop;R.delta=b.top-v.top+b.height*.55;R.height=sc.clientHeight;R.committed=true;
-				});
-				const scroll=e=>{
-					const sc=e.target;
-					/* R132-FOLLOWUPS 3: only a scroll after the delivered wheel arms (flingScrollGate mirrors this in node) */
-					if(sc.id!=='settings-document'||!R.committed||!R.wheel||R.sampled||R.armed||Math.abs(sc.scrollTop-R.start)<R.height)return;
-					R.armed=true;
-					requestAnimationFrame(()=>{
-						const v=sc.getBoundingClientRect();
-						/* R97 #3: the sample is the first scroll frame, past one viewport, with Terminal look in view (an
-						   animated wheel scroll may cross the first viewport before it gets there) */
-						const tb=root.querySelector('#section-editor-terminal-look')?.getBoundingClientRect();
-						R.targetInView=!!tb&&tb.height>0&&tb.bottom>v.top&&tb.top<v.bottom;
-						if(!R.targetInView){R.armed=false;R.framesBefore=(R.framesBefore||0)+1;return;}
-						R.top=sc.scrollTop;R.moved=R.wheelTop==null?null:R.top-R.wheelTop;
-						R.empty=[...sc.querySelectorAll('[data-o55-fill="pending"]')].filter(l=>{
-							if(l.closest('details:not([open])'))return false;
-							const b=l.closest('[data-section-id]').getBoundingClientRect();
-							if(!b.height||b.bottom<=v.top||b.top>=v.bottom)return false;
-							const r=l.getBoundingClientRect();return r.height>0&&r.bottom>v.top&&r.top<v.bottom;
-						}).map(l=>l.closest('[data-section-id]').dataset.sectionId);
-						R.sampled=true;
+			/* FO-245 round 2: one attempt drives the whole route (General, then Code, then the wheel) with a fresh page recorder
+			   and film; retryFling repeats it only while the capture is unresolved and clean (FLING_RETRY) */
+			const attempt=async(k)=>{
+				await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click(); await t.page.waitForTimeout(700);
+				const box = await f.locator('#settings-document').boundingBox();
+				await f.evaluate(() => {
+					const root=document.getElementById('pm-settings-root');
+					const R=window.__pscFling={committed:false,sampled:false,pending:0,empty:[]};
+					const mo=new MutationObserver(() => {
+						if(root.querySelector('.domain-link.active')?.dataset.domain!=='code')return;
+						mo.disconnect(); const sc=root.querySelector('#settings-document'),sec=root.querySelector('#section-editor-terminal-look');
+						R.pending=root.querySelectorAll('[data-o55-fill="pending"]').length;
+						R.targetPending=!!sec?.querySelector('[data-o55-fill="pending"]');
+						if(!sc||!sec){R.committed=true;return;}
+						const b=sec.getBoundingClientRect(),v=sc.getBoundingClientRect();
+						R.start=sc.scrollTop;R.delta=b.top-v.top+b.height*.55;R.height=sc.clientHeight;R.committed=true;
 					});
-				};
-				/* R97 #3: the precondition is judged when the wheel is delivered, not at the commit: three driver steps lie
-				   between them, and an idle fill that finishes in that gap leaves nothing for the wheel to test. Passive, so
-				   the scroll keeps its own path. */
-				const wheel=()=>{
-					if(!R.committed||R.wheel)return;
-					const sec=root.querySelector('#section-editor-terminal-look');
-					R.wheel=performance.now();R.wheelEpoch=performance.timeOrigin+R.wheel;R.wheelPending=root.querySelectorAll('[data-o55-fill="pending"]').length;
-					R.wheelTargetPending=!!sec?.querySelector('[data-o55-fill="pending"]');
-					R.wheelTop=root.querySelector('#settings-document')?.scrollTop??null;
-				};
-				mo.observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
-				window.addEventListener('scroll',scroll,true);
-				window.addEventListener('wheel',wheel,{capture:true,passive:true});
-				R.stop=()=>{mo.disconnect();window.removeEventListener('scroll',scroll,true);window.removeEventListener('wheel',wheel,{capture:true,passive:true});};
-			});
-			/* FO-245: the compositor's frames from before the press to after the fling settles (flingFilm) */
-			const client=await t.page.context().newCDPSession(t.page);let film,frames=[];
-			try {
-				/* the capture-fidelity marker (flingFilm): top right of the top page, outside the settings document. A Web
-				   Animations opacity animation, which the page's reduced-motion rules (animation: none) cannot stop. */
-				await t.page.evaluate(()=>{const d=document.createElement('div');d.id='psc-vsync-marker';d.setAttribute('aria-hidden','true');Object.assign(d.style,{position:'fixed',right:'0',top:'0',width:'2px',height:'2px',background:'currentColor',willChange:'opacity',pointerEvents:'none',zIndex:'2147483647'});document.documentElement.appendChild(d);d.animate([{opacity:.5},{opacity:1}],{duration:1000,iterations:Infinity,direction:'alternate'});});
-				film=await filmFling(client);
-				await t.page.waitForFunction(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>r(true)))));
-				await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
-				await f.waitForFunction(()=>window.__pscFling.committed,null,{timeout:5000});
-				const delta=await f.evaluate(()=>window.__pscFling.delta);
-				await t.page.mouse.move(box.x+box.width*.65,box.y+box.height*.55);
-				await t.page.mouse.wheel(0,Math.ceil(delta));
-				await f.waitForFunction(()=>window.__pscFling.sampled,null,{timeout:5000}).catch(()=>{});
-				/* the fling has settled when the scroller has held still for a second of animation frames */
-				await f.waitForFunction(()=>new Promise(res=>{const sc=document.querySelector('#pm-settings-root #settings-document');let top=sc&&sc.scrollTop,t0=performance.now();const step=()=>{if(!sc)return res(true);if(sc.scrollTop!==top){top=sc.scrollTop;t0=performance.now();}if(performance.now()-t0>=1000)return res(true);requestAnimationFrame(step);};requestAnimationFrame(step);}),null,{timeout:15000}).catch(()=>{});
-				frames=await film.stop();
-				const r=await f.evaluate(()=>{const {stop,...r}=window.__pscFling;return r;});
-				const view=t.page.viewportSize()||await t.page.evaluate(()=>({width:innerWidth,height:innerHeight}));
-				const px=flingFilm(frames,{box,view,wheel:r.wheelEpoch});
-				t.log(`${look} ${surface} fling: ${r.pending} lists pending at commit, target pending ${r.targetPending}; at wheel delivery ${r.wheel?`${r.wheelPending} pending, target pending ${r.wheelTargetPending}`:'no wheel seen'}; moved ${r.moved} px (${r.height} px view), Terminal look in view ${!!r.targetInView}; empty visible lists at scroll-frame rAF: ${r.empty.join(',')||'none'}; screencast: ${px.frames} frames, first destination ${px.dest?`frame ${px.dest.i} at ${px.dest.dt} ms${px.dest.bad?' BLANK':''}`:'none'}, ${px.bad?px.bad.length:'?'} blank or unfilled after the wheel`);
-				t.log(`${look} ${surface} screencast timeline (document box ${[box.x,box.y,box.width,box.height].map(Math.round).join(',')}; ms from the wheel: band ink per mille, ! blank or unfilled): ${px.timeline||'none'}`);
-				for (const row of flingVerdict(r,px)) await t.check(`${look} ${surface}: ${row.name}`,row.ok,row.detail);
-			} finally {await t.page.evaluate(()=>document.getElementById('psc-vsync-marker')?.remove()).catch(()=>{});if(film&&!frames.length)await film.stop().catch(()=>{});await client.detach().catch(()=>{});await f.evaluate(()=>window.__pscFling.stop());}
+					const scroll=e=>{
+						const sc=e.target;
+						/* R132-FOLLOWUPS 3: only a scroll after the delivered wheel arms (flingScrollGate mirrors this in node) */
+						if(sc.id!=='settings-document'||!R.committed||!R.wheel||R.sampled||R.armed||Math.abs(sc.scrollTop-R.start)<R.height)return;
+						R.armed=true;
+						requestAnimationFrame(()=>{
+							const v=sc.getBoundingClientRect();
+							/* R97 #3: the sample is the first scroll frame, past one viewport, with Terminal look in view (an
+							   animated wheel scroll may cross the first viewport before it gets there) */
+							const tb=root.querySelector('#section-editor-terminal-look')?.getBoundingClientRect();
+							R.targetInView=!!tb&&tb.height>0&&tb.bottom>v.top&&tb.top<v.bottom;
+							if(!R.targetInView){R.armed=false;R.framesBefore=(R.framesBefore||0)+1;return;}
+							R.top=sc.scrollTop;R.moved=R.wheelTop==null?null:R.top-R.wheelTop;
+							R.empty=[...sc.querySelectorAll('[data-o55-fill="pending"]')].filter(l=>{
+								if(l.closest('details:not([open])'))return false;
+								const b=l.closest('[data-section-id]').getBoundingClientRect();
+								if(!b.height||b.bottom<=v.top||b.top>=v.bottom)return false;
+								const r=l.getBoundingClientRect();return r.height>0&&r.bottom>v.top&&r.top<v.bottom;
+							}).map(l=>l.closest('[data-section-id]').dataset.sectionId);
+							R.sampled=true;
+						});
+					};
+					/* R97 #3: the precondition is judged when the wheel is delivered, not at the commit: three driver steps lie
+					   between them, and an idle fill that finishes in that gap leaves nothing for the wheel to test. Passive, so
+					   the scroll keeps its own path. */
+					const wheel=()=>{
+						if(!R.committed||R.wheel)return;
+						const sec=root.querySelector('#section-editor-terminal-look');
+						R.wheel=performance.now();R.wheelEpoch=performance.timeOrigin+R.wheel;R.wheelPending=root.querySelectorAll('[data-o55-fill="pending"]').length;
+						R.wheelTargetPending=!!sec?.querySelector('[data-o55-fill="pending"]');
+						R.wheelTop=root.querySelector('#settings-document')?.scrollTop??null;
+					};
+					mo.observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
+					window.addEventListener('scroll',scroll,true);
+					window.addEventListener('wheel',wheel,{capture:true,passive:true});
+					R.stop=()=>{mo.disconnect();window.removeEventListener('scroll',scroll,true);window.removeEventListener('wheel',wheel,{capture:true,passive:true});};
+				});
+				/* FO-245: the compositor's frames from before the press to after the fling settles (flingFilm) */
+				const client=await t.page.context().newCDPSession(t.page);let film,frames=[];
+				try {
+					/* the capture-fidelity marker (flingFilm): top right of the top page, outside the settings document. A Web
+					   Animations opacity animation, which the page's reduced-motion rules (animation: none) cannot stop. */
+					await t.page.evaluate(()=>{const d=document.createElement('div');d.id='psc-vsync-marker';d.setAttribute('aria-hidden','true');Object.assign(d.style,{position:'fixed',right:'0',top:'0',width:'2px',height:'2px',background:'currentColor',willChange:'opacity',pointerEvents:'none',zIndex:'2147483647'});document.documentElement.appendChild(d);d.animate([{opacity:.5},{opacity:1}],{duration:1000,iterations:Infinity,direction:'alternate'});});
+					film=await filmFling(client);
+					await t.page.waitForFunction(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>r(true)))));
+					await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
+					await f.waitForFunction(()=>window.__pscFling.committed,null,{timeout:5000});
+					const delta=await f.evaluate(()=>window.__pscFling.delta);
+					await t.page.mouse.move(box.x+box.width*.65,box.y+box.height*.55);
+					await t.page.mouse.wheel(0,Math.ceil(delta));
+					await f.waitForFunction(()=>window.__pscFling.sampled,null,{timeout:5000}).catch(()=>{});
+					/* the fling has settled when the scroller has held still for a second of animation frames */
+					await f.waitForFunction(()=>new Promise(res=>{const sc=document.querySelector('#pm-settings-root #settings-document');let top=sc&&sc.scrollTop,t0=performance.now();const step=()=>{if(!sc)return res(true);if(sc.scrollTop!==top){top=sc.scrollTop;t0=performance.now();}if(performance.now()-t0>=1000)return res(true);requestAnimationFrame(step);};requestAnimationFrame(step);}),null,{timeout:15000}).catch(()=>{});
+					frames=await film.stop();
+					const r=await f.evaluate(()=>{const {stop,...r}=window.__pscFling;return r;});
+					const view=t.page.viewportSize()||await t.page.evaluate(()=>({width:innerWidth,height:innerHeight}));
+					const px=flingFilm(frames,{box,view,wheel:r.wheelEpoch});
+					t.log(`${look} ${surface} fling attempt ${k}: ${r.pending} lists pending at commit, target pending ${r.targetPending}; at wheel delivery ${r.wheel?`${r.wheelPending} pending, target pending ${r.wheelTargetPending}`:'no wheel seen'}; moved ${r.moved} px (${r.height} px view), Terminal look in view ${!!r.targetInView}; empty visible lists at scroll-frame rAF: ${r.empty.join(',')||'none'}; screencast: ${px.frames} frames, first destination ${px.dest?`frame ${px.dest.i} at ${px.dest.dt} ms${px.dest.bad?' BLANK':''}`:'none'}, ${px.bad?px.bad.length:'?'} blank or unfilled after the wheel`);
+					t.log(`${look} ${surface} attempt ${k} screencast timeline (document box ${[box.x,box.y,box.width,box.height].map(Math.round).join(',')}; ms from the wheel: band ink per mille, ! blank or unfilled): ${px.timeline||'none'}`);
+					return {r,px};
+				} finally {await t.page.evaluate(()=>document.getElementById('psc-vsync-marker')?.remove()).catch(()=>{});if(film&&!frames.length)await film.stop().catch(()=>{});await client.detach().catch(()=>{});await f.evaluate(()=>window.__pscFling.stop());}
+			};
+			const attempts=await retryFling(attempt);
+			for (const a of attempts) t.log(`${look} ${surface} fling attempt ${a.k}/${FLING_RETRY.attempts}: ${flingAttemptLine(a)}`);
+			for (const row of flingRetryVerdict(attempts)) await t.check(`${look} ${surface}: ${row.name}`,row.ok,row.detail);
 		}
 	};
 }
