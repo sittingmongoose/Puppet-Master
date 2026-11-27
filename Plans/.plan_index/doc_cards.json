@@ -7050,10 +7050,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 767,
+        "False": 768,
         "True": 239
       },
-      "heading_count": 1246,
+      "heading_count": 1247,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -7200,9 +7200,9 @@
         "scripts/pm_wiring_inventory.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 63568,
+      "line_count": 63620,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 1006,
+      "plan_unit_count": 1007,
       "plan_unit_ids": [
         "DL-400",
         "DL-401",
@@ -8209,7 +8209,8 @@
         "DL-2601",
         "DL-2602",
         "DL-2603",
-        "DL-2604"
+        "DL-2604",
+        "DL-2606"
       ],
       "reasoning_tiers": [
         "high",
@@ -8415,15 +8416,15 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "4038d5ef62a69f60156c3c82b4a1096758e38c74222b9aff8ce3e194a080ad3d",
+      "sha256": "9916a2413d06514ba0da9f8399a86fa43f13f78ebad2364fd508c5b24141bbb3",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 1006
+        "accepted": 1007
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "decision": 890,
+        "decision": 891,
         "decision_record": 24,
         "requirement": 91
       },
@@ -13654,7 +13655,7 @@
         "future Teacher thread model chips",
         "future model route resolver"
       ],
-      "line_count": 10545,
+      "line_count": 10546,
       "path": "Plans/Models_System.md",
       "plan_unit_count": 140,
       "plan_unit_ids": [
@@ -13937,7 +13938,7 @@
         "webresearch_tiering_automation_session_boundary",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "c4e0c6fb1ec69e4f5db3fb393db554fab570c6b49f5153d770afe9f052e413d1",
+      "sha256": "1dcc305478a22fcff08c781fd36cac0a0b37177bba3df6a768406b4bb2d13bb9",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 140
@@ -25286,7 +25287,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-26T19:32:20Z",
+  "generated_at_utc": "2026-11-27T04:54:33Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -25294,13 +25295,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 5684,
+      "False": 5685,
       "True": 3949
     },
-    "plan_unit_count": 9633,
+    "plan_unit_count": 9634,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 9353,
+      "accepted": 9354,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -25334,7 +25335,7 @@
       "contract": 203,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 913,
+      "decision": 914,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,

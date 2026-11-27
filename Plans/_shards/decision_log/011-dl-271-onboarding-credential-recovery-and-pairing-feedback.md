@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L63568
+Source lines: L28747-L63620
 
-Source SHA256: `4038d5ef62a69f60156c3c82b4a1096758e38c74222b9aff8ce3e194a080ad3d`
+Source SHA256: `9916a2413d06514ba0da9f8399a86fa43f13f78ebad2364fd508c5b24141bbb3`
 
 ---
 
@@ -34830,3 +34830,55 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Commands_System.md#CS-030, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-100, ContractName:Plans/Models_System.md#MS-102, ContractName:Plans/Models_System.md#MS-135
+
+### DL-2606 - C-FIX79D: the requested model after an auto-pick finds no match
+
+```yaml
+plan_unit_id: DL-2606
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  On 2026-11-26 at about 1:12 PM EST, Jared answered card C-FIX79D with "A", the recommended option. This closes the owner choice for line 1281 of Plans/.audits/_semantic_closure_registry.jsonl.
+
+  MS-135: when a run uses an auto-pick rule (a routing policy such as /easiest), ModelSelectionRouter returns no_eligible_candidate and the fallback_chain[] walk succeeds, the resolver record's requested pair is the first fallback_chain[] entry in priority order, the effective pair is the entry dispatched, fallback_used = true, and selection_reason.fallback_reason = no_eligible_candidate records that the auto-pick found no match. requested_model stays a canonical model id, so no field type and no run.started join changes; the routing policy stays auditable through selection_reason.router_input_ref.
+
+  Because a requested pair now exists on that path, substitution_reason = model_substituted (the MS-103 evidence of a requested/effective model difference caused by model fallback) is recorded exactly when the dispatched entry is not that first entry, and each entry the walk skipped is listed in selection_reason.alternatives[] with the exclusion_reason of the gate it failed. The options of making the requested fields hold the routing policy, or making them nullable on that path, are not taken.
+gui_related: false
+gui_classification_reason: It decides which model a backend resolver record names as requested when an auto-pick finds no match; no screen changes.
+split_recommended: false
+depends_on: [MS-103, MS-128, MS-135]
+unblocks: []
+acceptance_criteria:
+- The MS-135 router rule, Step 4, and the substitution_reason? and clamp_reason? rows of the MS-135 resolver record state the no-winner requested and effective pairs, fallback_used true and selection_reason.fallback_reason no_eligible_candidate, and agree on when substitution_reason is recorded.
+- No earlier Decision_Log entry is rewritten.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+risk_class: owner_choice_drift
+reasoning_tier: medium
+context_scope: closure_reaudit_fix79_owner_answers
+implementation_surfaces:
+- Plans/Models_System.md
+node_compile_hint:
+  mode: owner_decision_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- "/mnt/Cursor/agent-reports/v1/answers/vm.pm-closure-lead--C-FIX79D.json, SHA-256 7c82422c08f1af3c0b90d9eba83f6675ad9690aba39a21dc0c9cb372101c7010"
+- "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/fix79/DEEP/moved-C/REG6-NOTES.md (section 1281 OWNER-CHOICE), SHA-256 d1451f33c28451dd61fcf210f9c54adeaef9da2cb5cb76054717d86aa1ab8928"
+preserved_exact_tokens:
+- DL-2606
+- C-FIX79D
+- no_eligible_candidate
+- fallback_chain[]
+- model_substituted
+negative_constraints:
+- Do not make requested_model_id or requested_provider_id nullable, and do not store a routing policy in them.
+- Do not rewrite DL-2604 or any earlier entry.
+- Do not reseal governance artifacts or claim native execution proof from these Plan edits.
+owner_hints:
+- Plans/Decision_Log.md
+- Plans/Models_System.md
+```
+
+ContractRef: ContractName:Plans/Models_System.md#MS-103, ContractName:Plans/Models_System.md#MS-128, ContractName:Plans/Models_System.md#MS-135
