@@ -130,12 +130,14 @@
         /* in the picked look's own voice (NieR's kit for NieR) */
         O55.sound.play('select', { family: f });
         O55.ui.charm(el, T('look.families.' + f + '.name'), 'spark');
-        O55.ui.applyLook(f, O55.theme().selectedMode, el);
+        /* (the mode asked for, also while a pick just before this one is still on its way: FO-243) */
+        O55.ui.applyLook(f, O55.ui.lookAsked().mode, el);
       },
-      pickMode(S, m, el) { ack(el, 'button'); O55.ui.applyLook(O55.theme().chosen, m, el); },
+      /* (for the look asked for: a Light picked while Glass's reveal had not yet painted it went to the old look, FO-243) */
+      pickMode(S, m, el) { ack(el, 'button'); O55.ui.applyLook(O55.ui.lookAsked().family, m, el); },
       next(S) { O55.ui.go('where'); },
       /* (an older key: NieR is a look now) */
-      pickNier(S, arg, el) { O55.ui.applyLook('nier', O55.theme().selectedMode, el); },
+      pickNier(S, arg, el) { O55.ui.applyLook('nier', O55.ui.lookAsked().mode, el); },
       adjustNier(S, arg, el) { O55.nierLook.adjust(el); }
     }
   });
