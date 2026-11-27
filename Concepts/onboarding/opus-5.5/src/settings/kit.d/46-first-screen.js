@@ -322,13 +322,14 @@ function o55fsMountNear(sc) {
    - never a widget that owns the key (a tab list moves to its last tab, a list box to its last option, a text field to
      its end): the listener runs in the bubble phase on document, after the widget's own handler, skips a key it
      already took (defaultPrevented) and skips a target inside such a widget. A capture listener had jumped the
-     document 2,023 px away from a focused tab (R143 medium 2). */
+     document 2,023 px away from a focused tab (R143 medium 2). A closed drop-down (a button with role combobox) and a
+     switch or checkbox do not own End/Home: the key scrolls the document from them, so they stay the document's. */
 let o55fsDownInDoc = false;
 document.addEventListener('pointerdown', e => {
   const sc = root.querySelector('#settings-document');
   o55fsDownInDoc = !!(sc && e.target && e.target.nodeType === 1 && (e.target === sc || sc.contains(e.target)));
 }, { capture: true, passive: true });
-const O55FS_OWN_KEYS = 'input, textarea, select, [contenteditable]:not([contenteditable="false"]), [role="textbox"], [role="searchbox"], [role="combobox"], [role="tablist"], [role="tab"], [role="listbox"], [role="option"], [role="menu"], [role="menubar"], [role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"], [role="tree"], [role="treeitem"], [role="grid"], [role="treegrid"], [role="slider"], [role="spinbutton"], .popover';
+const O55FS_OWN_KEYS = 'input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="color"]):not([type="file"]):not([type="image"]), textarea, select, [contenteditable]:not([contenteditable="false"]), [role="textbox"], [role="searchbox"], [role="combobox"]:not(button), [role="combobox"][aria-expanded="true"], [role="tablist"], [role="tab"], [role="listbox"], [role="option"], [role="menu"], [role="menubar"], [role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"], [role="tree"], [role="treeitem"], [role="grid"], [role="treegrid"], [role="slider"], [role="spinbutton"], .popover';
 function o55fsEdgeKeyOwner(t, sc) {
   if (t === document.body || t === document.documentElement) return o55fsDownInDoc && o55fsInteractive();
   if (!t || t.nodeType !== 1 || !(t === sc || sc.contains(t)) || t.isContentEditable) return false;

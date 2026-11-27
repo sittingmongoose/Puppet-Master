@@ -465,8 +465,16 @@ const modeSpread = (img, rect) => {
 	assert.match(code, /document\.addEventListener\('pointerdown', e => \{\s*const sc = root\.querySelector\('#settings-document'\);\s*o55fsDownInDoc = !!\(sc && e\.target && e\.target\.nodeType === 1 && \(e\.target === sc \|\| sc\.contains\(e\.target\)\)\);\s*\}, \{ capture: true, passive: true \}\);/, 'every pointer-down records whether it landed in the document');
 	const own = /const O55FS_OWN_KEYS = '([^']+)';/.exec(code);
 	assert.ok(own, 'the widgets that own End/Home are listed');
-	for (const w of ['input', 'textarea', 'select', '[role="tablist"]', '[role="tab"]', '[role="listbox"]', '[role="option"]', '[role="menu"]', '[role="slider"]', '[role="spinbutton"]', '[role="combobox"]', '[contenteditable]'])
-		assert.ok(own[1].includes(w), `${w} keeps its own End/Home`);
+	const owners = own[1].split(/,\s*/);
+	for (const w of ['textarea', 'select', '[role="tablist"]', '[role="tab"]', '[role="listbox"]', '[role="option"]', '[role="menu"]', '[role="slider"]', '[role="spinbutton"]', '[role="combobox"]:not(button)', '[role="combobox"][aria-expanded="true"]', '[contenteditable]:not([contenteditable="false"])'])
+		assert.ok(owners.includes(w), `${w} keeps its own End/Home`);
+	// r4b: the round's first build skipped every combobox and input, so End from Code & Tools' first button (a closed
+	// drop-down, button role=combobox) smooth-scrolled through the unbuilt pages again; a closed drop-down, a switch and a
+	// checkbox do not own End/Home
+	assert.equal(owners.includes('[role="combobox"]'), false, 'a closed drop-down button is the document\'s End');
+	assert.equal(owners.includes('input'), false, 'a checkbox or switch input is the document\'s End');
+	const textInput = owners.find((w) => w.startsWith('input'));
+	assert.ok(textInput && ['checkbox', 'radio', 'button'].every((ty) => textInput.includes(`:not([type="${ty}"])`)) && !textInput.includes('"range"') && !textInput.includes('"text"'), 'text fields and range keep their own End/Home; checkbox, radio and button inputs do not');
 	assert.match(code, /const own = t\.closest\(O55FS_OWN_KEYS\);\s*return !\(own && \(own === sc \|\| sc\.contains\(own\)\)\);/, 'a target inside such a widget is skipped');
 	console.log('PASS End/Home jump: bubble phase after the widgets, body focus after a click in the document, widget targets skipped');
 }
