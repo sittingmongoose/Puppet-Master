@@ -361,22 +361,157 @@ def require_same_inputs(expected, actual, label):
         raise Refusal(f"{label} ignored input mismatch: " + ", ".join(changed))
 
 
-def copy_inputs(shared, worktree):
+def copy_inputs(shared, worktree, *, keep_present=False):
+    """Copy every ignored input the checks read from the shared checkout into worktree.
+
+    A remote checkout is fresh, so any existing path is refused. With keep_present (the
+    copy-inputs command, for a local worktree that may already hold some of them), a path that
+    already holds the shared checkout's exact bytes, or the same raw-evidence link, is kept, and
+    one that differs is refused without changing anything.
+    """
     tracked = tracklist(worktree)
     expected = input_manifest(shared, worktree, tracked)
+    raw_target = (shared / RAW_LINK).resolve(strict=True)
+    pending, differing = [], []
     for name in expected:
         if name.startswith(RAW_LINK + "/"):
             continue
         destination = worktree / name
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        if destination.exists() or destination.is_symlink():
+        if not (destination.exists() or destination.is_symlink()):
+            pending.append(name)
+        elif not keep_present:
             raise Refusal(f"refusing to overwrite an existing checkout path: {destination}")
+        elif name == RAW_LINK:
+            if not destination.is_symlink() or destination.resolve() != raw_target:
+                differing.append(name)
+        elif destination.is_symlink() or not destination.is_file() or file_hash(destination) != expected[name]:
+            differing.append(name)
+    if differing:
+        raise Refusal("refusing to overwrite checkout paths that differ from the shared checkout's "
+                      f"(move them aside first; nothing was copied): {', '.join(differing)}")
+    for name in pending:
+        destination = worktree / name
+        destination.parent.mkdir(parents=True, exist_ok=True)
         if name == RAW_LINK:
-            destination.symlink_to((shared / name).resolve(strict=True), target_is_directory=True)
+            destination.symlink_to(raw_target, target_is_directory=True)
         else:
             shutil.copy2(shared / name, destination)
-    require_same_inputs(expected, input_manifest(worktree, worktree, tracked), "copied")
+    if keep_present:
+        # The worktree may hold other ignored files of its own; compare only what was expected.
+        copied = {name: (f"symlink:{(worktree / name).resolve()}" if name == RAW_LINK
+                         else regular_hash(worktree, name, through_raw_link=within(name, RAW_LINK)))
+                  for name in expected}
+        require_same_inputs(expected, copied, "copied")
+    else:
+        require_same_inputs(expected, input_manifest(worktree, worktree, tracked), "copied")
     return expected
+
+
+# The guard pm-plan-index.py generate and pm-landing-check.py --record-baseline run before they
+# write anything: the same selection copy_inputs copies, so the two can never disagree on the list.
+COPY_INPUTS_COMMAND = "python3 -B scripts/pm-land.py copy-inputs"
+COLLAPSE_DEPTH = 3  # name a whole directory such as Plans/.audits/<audit>/ when all of it is missing
+
+
+def missing_ignored_inputs(worktree, shared=None, *, prefixes=None, exclude=()):
+    """Return (selected, missing): the ignored inputs the shared checkout holds that copy_inputs
+    would copy, limited to prefixes and less exclude, and those of them absent from worktree.
+
+    The raw-evidence link counts as one input; the captures behind it live on the evidence share.
+    """
+    worktree, shared = Path(worktree).resolve(), Path(SHARED if shared is None else shared)
+    if not (shared / ".git").exists():
+        raise Refusal(f"cannot read the shared checkout {shared}, so the ignored inputs this tree "
+                      "needs are unknown")
+    if worktree == shared.resolve():
+        return [], []
+    tracked = tracklist(worktree)
+
+    def wanted(name):
+        return ((prefixes is None or any(within(name, prefix) for prefix in prefixes))
+                and not any(within(name, prefix) for prefix in exclude))
+
+    selected = sorted(name for name in copies(shared, worktree, tracked, None) if wanted(name))
+    missing = [name for name in selected if not (worktree / name).is_file()]
+    if wanted(RAW_LINK) and (shared / RAW_LINK).is_symlink():
+        selected.append(RAW_LINK)
+        if not (worktree / RAW_LINK).is_symlink():
+            missing.append(RAW_LINK)
+    return selected, missing
+
+
+def describe_missing(selected, missing):
+    """One line per missing input, naming a directory once when every input below it is missing."""
+    totals, absent = Counter(), Counter()
+    for counter, names in ((totals, selected), (absent, missing)):
+        for name in names:
+            parts = PurePosixPath(name).parts
+            for depth in range(COLLAPSE_DEPTH, len(parts)):
+                counter["/".join(parts[:depth])] += 1
+    lines = []
+    for name in missing:
+        parts = PurePosixPath(name).parts
+        directory = next(("/".join(parts[:depth]) for depth in range(COLLAPSE_DEPTH, len(parts))
+                          if absent["/".join(parts[:depth])] == totals["/".join(parts[:depth])]), None)
+        line = f"{directory}/ (all {totals[directory]} inputs in it)" if directory else name
+        if line not in lines:
+            lines.append(line)
+    return lines
+
+
+def ignored_input_guard(tool, action, worktree, *, allow_missing, prefixes=None, exclude=(),
+                        shared=None, stream=None, extra_hint=None):
+    """Refuse with exit 2 (return 2) when ignored inputs are missing, unless allow_missing.
+
+    Returns None when the tool may go on, after a loud warning if it goes on without inputs.
+    """
+    stream = stream or sys.stderr
+    shared = SHARED if shared is None else shared
+    try:
+        selected, missing = missing_ignored_inputs(worktree, shared, prefixes=prefixes, exclude=exclude)
+    except (Refusal, OSError, ValueError, KeyError) as exc:
+        if not allow_missing:
+            print(f"{tool}: refusing to {action}: {exc}.", file=stream)
+            print(f"{tool}: run it where the shared checkout is mounted, or pass --allow-missing-inputs "
+                  "to go on without knowing.", file=stream)
+            return 2
+        print(f"{tool}: WARNING: --allow-missing-inputs: {exc}; going on without checking the ignored "
+              "inputs. The output may not match one built in the shared checkout.", file=stream)
+        return None
+    if not missing:
+        return None
+    lines = describe_missing(selected, missing)
+    if not allow_missing:
+        print(f"{tool}: refusing to {action}: {len(missing)} gitignored input(s) that the shared checkout "
+              f"{shared} has are missing from {worktree}, so the result would differ from one built "
+              "with them:", file=stream)
+        for line in lines:
+            print(f"  {line}", file=stream)
+        print(f"{tool}: copy them in from this worktree with: {COPY_INPUTS_COMMAND}", file=stream)
+        if extra_hint:
+            print(f"{tool}: {extra_hint}", file=stream)
+        print(f"{tool}: or pass --allow-missing-inputs to {action} without them (never for a landing).",
+              file=stream)
+        return 2
+    banner = "!" * 78
+    print(banner, file=stream)
+    print(f"{tool}: WARNING: --allow-missing-inputs: going on to {action} WITHOUT {len(missing)} "
+          f"gitignored input(s) the shared checkout {shared} has. The result is NOT what the shared "
+          "checkout produces; never land it:", file=stream)
+    for line in lines:
+        print(f"  {line}", file=stream)
+    print(f"{tool}: to build with them instead: {COPY_INPUTS_COMMAND}", file=stream)
+    print(banner, file=stream)
+    return None
+
+
+def copy_inputs_command(worktree):
+    worktree = Path(worktree).resolve()
+    if worktree == SHARED.resolve():
+        raise Refusal("this is the shared checkout; it already holds its own inputs")
+    manifest = copy_inputs(SHARED, worktree, keep_present=True)
+    say(f"pm-land: {len(manifest)} ignored inputs match the shared checkout's in {worktree}")
+    return 0
 
 
 def require_clean_full(worktree, commit, tree):
@@ -2971,7 +3106,14 @@ def main(argv=None):
                                                             "target must still be at")
         publish.add_argument("--commit", required=True,
                              help="the landed full SHA, which must match refs/heads/main in --repo")
+        copy = commands.add_parser("copy-inputs",
+                                   help="copy the gitignored inputs the checks and the plan index read from the "
+                                        "shared checkout into a local worktree, keeping the ones already there")
+        copy.add_argument("--worktree", type=Path, default=None, help="the worktree to fill (default: this one)")
         args = parser.parse_args(argv)
+        if args.command == "copy-inputs":
+            return copy_inputs_command(args.worktree or Path(git(Path.cwd(), "rev-parse", "--show-toplevel")
+                                                             .stdout.strip()))
         if args.command == "check":
             root = Path(git(Path.cwd(), "rev-parse", "--show-toplevel").stdout.strip())
             if args.base is None:

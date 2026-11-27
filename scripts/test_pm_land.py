@@ -210,7 +210,7 @@ class LandingFixture(unittest.TestCase):
         script = Path(__file__).with_name("pm-land.py")
         result = subprocess.run(["python3", "-B", str(script), "--help"], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0)
-        self.assertIn("{check,verify,batch-status,batch-check,publish}", result.stdout)
+        self.assertIn("{check,verify,batch-status,batch-check,publish,copy-inputs}", result.stdout)
         for removed in ("run", "inventory", "preflight", "fetch-main", "push-main", "_remote"):
             with self.subTest(command=removed):
                 result = subprocess.run(["python3", "-B", str(script), removed], capture_output=True, text=True)
@@ -1392,6 +1392,100 @@ print(json.dumps({{"schema_id": "pm.landing_check.report.v1", "commit": {self.he
         manifest = land.copy_inputs(self.shared, fresh)
         for name in names:
             self.assertEqual(manifest[name], land.file_hash(fresh / name))
+
+    # The guard pm-plan-index.py generate and pm-landing-check.py --record-baseline run, and the
+    # copy-inputs command that answers it, read the one selection copy_inputs copies.
+    def fresh_worktree(self, name="fresh"):
+        fresh = self.root / name
+        self.git(self.shared, "worktree", "add", "--detach", str(fresh), self.head)
+        return fresh
+
+    def guard(self, worktree, **kwargs):
+        stream = io.StringIO()
+        code = land.ignored_input_guard("tool", "build", worktree, stream=stream, **kwargs)
+        return code, stream.getvalue()
+
+    def test_guard_refuses_missing_ignored_inputs_and_names_each(self):
+        fresh = self.fresh_worktree()
+        code, text = self.guard(fresh, allow_missing=False)
+        self.assertEqual(code, 2)
+        self.assertIn("tool: refusing to build: 3 gitignored input(s)", text)
+        lines = [line.strip() for line in text.splitlines() if line.startswith("  ")]
+        self.assertEqual(lines, ["Plans/.audits/ignored.txt", "Plans/.audits/whole/ (all 1 inputs in it)",
+                                 land.RAW_LINK])
+        self.assertIn(land.COPY_INPUTS_COMMAND, text)
+        self.assertIn("--allow-missing-inputs", text)
+
+    def test_guard_names_only_the_missing_file_of_a_partly_present_directory(self):
+        self.put(self.shared, "Plans/.audits/whole/second.json", "{}\n")
+        fresh = self.fresh_worktree()
+        land.copy_inputs(self.shared, fresh, keep_present=True)
+        (fresh / "Plans/.audits/whole/second.json").unlink()
+        code, text = self.guard(fresh, allow_missing=False)
+        self.assertEqual(code, 2)
+        self.assertEqual([line.strip() for line in text.splitlines() if line.startswith("  ")],
+                         ["Plans/.audits/whole/second.json"])
+
+    def test_guard_passes_silently_when_every_input_is_present(self):
+        fresh = self.fresh_worktree()
+        land.copy_inputs(self.shared, fresh, keep_present=True)
+        self.assertEqual(self.guard(fresh, allow_missing=False), (None, ""))
+        # The shared checkout holds its own inputs by definition.
+        self.assertEqual(self.guard(self.shared, allow_missing=False), (None, ""))
+
+    def test_guard_override_goes_on_with_a_loud_warning(self):
+        fresh = self.fresh_worktree()
+        code, text = self.guard(fresh, allow_missing=True)
+        self.assertIsNone(code)
+        self.assertIn("WARNING: --allow-missing-inputs", text)
+        self.assertIn("NOT what the shared checkout produces", text)
+        self.assertIn("Plans/.audits/ignored.txt", text)
+        self.assertIn(land.COPY_INPUTS_COMMAND, text)
+
+    def test_guard_prefixes_and_exclusions_narrow_the_same_list(self):
+        fresh = self.fresh_worktree()
+        selected, missing = land.missing_ignored_inputs(fresh, prefixes=("Plans",),
+                                                        exclude=("Plans/.audits/whole",))
+        self.assertEqual(selected, ["Plans/.audits/ignored.txt"])
+        self.assertEqual(missing, selected)
+        manifest = land.input_manifest(self.shared, fresh, land.tracklist(fresh))
+        everything, _ = land.missing_ignored_inputs(fresh)
+        self.assertEqual(set(everything), {name for name in manifest if not name.startswith(land.RAW_LINK + "/")})
+
+    def test_guard_refuses_when_the_shared_checkout_is_unreadable(self):
+        fresh = self.fresh_worktree()
+        code, text = self.guard(fresh, allow_missing=False, shared=self.root / "absent")
+        self.assertEqual(code, 2)
+        self.assertIn("cannot read the shared checkout", text)
+        code, text = self.guard(fresh, allow_missing=True, shared=self.root / "absent")
+        self.assertIsNone(code)
+        self.assertIn("WARNING: --allow-missing-inputs", text)
+
+    def test_copy_inputs_command_keeps_identical_inputs_and_refuses_different_ones(self):
+        fresh = self.fresh_worktree()
+        self.put(fresh, self.ignore_file, "audit notes\n")
+        with redirect_stdout(io.StringIO()):
+            self.assertEqual(land.main(["copy-inputs", "--worktree", str(fresh)]), 0)
+        self.assertEqual((fresh / "Plans/.audits/whole/included.json").read_text(), "{}\n")
+        self.assertEqual((fresh / land.RAW_LINK).resolve(), (self.evidence / "raw").resolve())
+        # Running it again changes nothing and still passes.
+        with redirect_stdout(io.StringIO()):
+            self.assertEqual(land.main(["copy-inputs", "--worktree", str(fresh)]), 0)
+        other = self.fresh_worktree("other")
+        self.put(other, self.ignore_file, "local edits\n")
+        stderr = io.StringIO()
+        with redirect_stderr(stderr):
+            self.assertEqual(land.main(["copy-inputs", "--worktree", str(other)]), 3)
+        self.assertIn("differ from the shared checkout's", stderr.getvalue())
+        self.assertIn(self.ignore_file, stderr.getvalue())
+        self.assertFalse((other / "Plans/.audits/whole/included.json").exists())
+        self.assertEqual((other / self.ignore_file).read_text(), "local edits\n")
+
+    def test_copy_inputs_command_refuses_the_shared_checkout(self):
+        stderr = io.StringIO()
+        with redirect_stderr(stderr):
+            self.assertEqual(land.main(["copy-inputs", "--worktree", str(self.shared)]), 3)
+        self.assertIn("this is the shared checkout", stderr.getvalue())
 
 
 READINESS = "run-gates/validate_implementation_readiness"

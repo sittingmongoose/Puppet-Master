@@ -20,6 +20,7 @@ import tempfile
 import textwrap
 import time
 import unittest
+import unittest.mock
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -1014,6 +1015,8 @@ class EndToEnd(unittest.TestCase):
         self.repo = Path(self.scratch.name)
         self.module = load_module()
         self.module.SHARED_READINESS_AUDIT_ROOT = self.repo / "no-shared-audit"
+        # The fixture repo is its own shared checkout, so the ignored-input guard has nothing to miss.
+        self.module.SHARED_CHECKOUT = self.repo
         self.git("init", "-q", "-b", "main")
         self.git("config", "user.email", "t@example.invalid")
         self.git("config", "user.name", "t")
@@ -1506,6 +1509,8 @@ class LandingRun(unittest.TestCase):
         self.repo = Path(self.scratch.name)
         self.module = load_module()
         self.module.SHARED_READINESS_AUDIT_ROOT = self.repo / "no-shared-audit"
+        # The fixture repo is its own shared checkout, so the ignored-input guard has nothing to miss.
+        self.module.SHARED_CHECKOUT = self.repo
         self.git("init", "-q", "-b", "main")
         self.git("config", "user.email", "t@example.invalid")
         self.git("config", "user.name", "t")
@@ -4086,6 +4091,49 @@ TAIL_BEFORE_THE_COMPARISON_LINES = (
 )
 
 
+class RecordBaselineIgnoredInputGuard(unittest.TestCase):
+    """--record-baseline refuses (exit 2) without the shared checkout's ignored inputs."""
+
+    def run_main(self, argv, guard_code):
+        land = unittest.mock.Mock()
+        land.ignored_input_guard.return_value = guard_code
+        with patch.object(sys, "argv", ["pm-landing-check.py", *argv]), \
+             patch.object(M, "_load_pm_land", return_value=land), \
+             patch.object(M, "readiness_source_identity", side_effect=RuntimeError("reached the checks")):
+            code = M.main()
+        return code, land
+
+    def test_missing_inputs_refuse_before_the_checks_run(self):
+        code, land = self.run_main(["--record-baseline", "--root", str(ROOT)], 2)
+        self.assertEqual(code, 2)
+        args, kwargs = land.ignored_input_guard.call_args
+        self.assertEqual(args, ("pm-landing-check", "record a baseline", ROOT.resolve()))
+        self.assertIs(kwargs["allow_missing"], False)
+        # The currentness edition has its own binding through --readiness-audit-root.
+        self.assertEqual(kwargs["exclude"], (M.READINESS_AUDIT_REL,))
+
+    def test_present_inputs_go_on_to_the_checks(self):
+        with patch("sys.stderr"):
+            code, land = self.run_main(["--record-baseline", "--root", str(ROOT)], None)
+        self.assertEqual(code, 3)  # the stub stops at the first step after the guard
+        land.ignored_input_guard.assert_called_once()
+
+    def test_override_reaches_the_guard(self):
+        with patch("sys.stderr"):
+            code, land = self.run_main(["--record-baseline", "--allow-missing-inputs", "--root", str(ROOT)], None)
+        self.assertEqual(code, 3)
+        self.assertIs(land.ignored_input_guard.call_args.kwargs["allow_missing"], True)
+
+    def test_a_comparison_run_takes_no_guard_and_no_override(self):
+        with patch("sys.stderr"):
+            code, land = self.run_main(["--root", str(ROOT)], None)
+        self.assertEqual(code, 3)
+        land.ignored_input_guard.assert_not_called()
+        with patch("sys.stderr"), self.assertRaises(SystemExit) as raised:
+            self.run_main(["--allow-missing-inputs"], None)
+        self.assertEqual(raised.exception.code, 2)
+
+
 if __name__ == "__main__":
     unittest.main()
 
@@ -4655,6 +4703,7 @@ class TargetBudgetNegotiation(LandingRun):
                 # Probe each target once using the real subprocess path.
                 self.module = load_module()
                 self.module.SHARED_READINESS_AUDIT_ROOT = self.repo / "no-shared-audit"
+                self.module.SHARED_CHECKOUT = self.repo
                 self.module.current_run_dir = lambda root: "Plans/.plan_migration/run-017"
                 source = source.replace("[--report FILE]", f"[--report FILE] {M.SNAPSHOT_CAPABILITY}")
                 (scripts / "pm-plans-verify.py").write_text(source, encoding="utf-8")

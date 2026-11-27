@@ -689,6 +689,29 @@ the set of paths and each SHA-256 before checking. Repeat both comparisons befor
 and before push. A file visible on only one side invalidates the receipt. A full audit-folder
 copy can include tens of gigabytes of unrelated capture data.
 
+`python3 -B scripts/pm-land.py copy-inputs` does this for a local worktree: run from it (or pass
+`--worktree DIR`), it copies every selected input the worktree lacks, links the raw-evidence
+symlink, keeps the ones that already hold the shared checkout's bytes, refuses without copying
+anything when one differs, and then re-hashes each against the shared checkout. It is the same
+selection `pm-land.py check` copies into its remote checkout (`copy_inputs`), so there is one list.
+On 2026-11-27 it was 3,428 entries, about 1.8 GB, and took 50 seconds on the VM.
+
+Two writers refuse with exit 2 when that list names files the tree lacks, and name each missing path
+(a directory once, when every input in it is missing) and the `copy-inputs` command:
+
+- `pm-plan-index.py generate`, for the inputs under `Plans/`. Without the audit `FINAL_REPORT.md`
+  files, or without the currentness edition, the index it writes differs from the one the shared
+  checkout writes: the edition's drift rows collapse into one `pnc019_source_hash_path_missing` row.
+- `pm-landing-check.py --record-baseline`, for the whole list less the currentness edition, which
+  `--readiness-audit-root` binds on its own. `copy-inputs` copies the edition too, so record with
+  `--readiness-audit-root Plans/.audits/event-authority-2026-08-13-currentness` afterwards, as
+  above.
+
+`--allow-missing-inputs` lets either go on anyway and prints a warning that names what is missing;
+what it writes is not what the shared checkout writes and is never landed or committed as a
+baseline. In the shared checkout itself nothing can be missing, and the guard passes at once. Where
+the shared checkout is not mounted, the list is unknown and both refuse unless overridden.
+
 Anyone who writes a checker input in the shared checkout, including readiness receipts, currentness editions and other ignored inputs the check reads, must hold the landing lock.
 
 ## Landing by hand

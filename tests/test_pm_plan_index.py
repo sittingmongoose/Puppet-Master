@@ -7,6 +7,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+import unittest.mock
 from pathlib import Path
 from unittest.mock import patch
 
@@ -345,6 +346,58 @@ class PmPlanUnitRetentionTests(unittest.TestCase):
                 report = self.regenerate_and_validate()
                 self.assertIn("plan_unit_retention_baseline_invalid", {row["error"] for row in report["failures"]})
                 self.assertEqual(report["status"], "fail")
+
+
+class PmPlanIndexIgnoredInputGuardTests(unittest.TestCase):
+    """generate refuses (exit 2) without the shared checkout's ignored Plans inputs."""
+
+    def run_main(self, argv: list[str], guard_code: int | None):
+        land = unittest.mock.Mock()
+        land.ignored_input_guard.return_value = guard_code
+        with patch.object(sys, "argv", ["pm-plan-index.py", *argv]), \
+             patch.object(pm_plan_index, "_load_pm_land", return_value=land), \
+             patch.object(pm_plan_index, "generate", return_value={"status": "pass"}) as generate, \
+             patch("builtins.print"):
+            code = pm_plan_index.main()
+        return code, land, generate
+
+    @unittest.skipIf(pm_plan_index is None, "PyYAML is unavailable to this Python interpreter")
+    def test_missing_inputs_refuse_before_anything_is_written(self) -> None:
+        code, land, generate = self.run_main(["generate"], 2)
+        self.assertEqual(code, 2)
+        generate.assert_not_called()
+        land.ignored_input_guard.assert_called_once_with(
+            "pm-plan-index", "generate the plan index", pm_plan_index.ROOT, allow_missing=False,
+            prefixes=("Plans",))
+
+    @unittest.skipIf(pm_plan_index is None, "PyYAML is unavailable to this Python interpreter")
+    def test_present_inputs_generate(self) -> None:
+        code, land, generate = self.run_main(["generate"], None)
+        self.assertEqual(code, 0)
+        generate.assert_called_once_with()
+
+    @unittest.skipIf(pm_plan_index is None, "PyYAML is unavailable to this Python interpreter")
+    def test_override_reaches_the_guard_and_generates(self) -> None:
+        code, land, generate = self.run_main(["generate", "--allow-missing-inputs"], None)
+        self.assertEqual(code, 0)
+        self.assertIs(land.ignored_input_guard.call_args.kwargs["allow_missing"], True)
+        generate.assert_called_once_with()
+
+    @unittest.skipIf(pm_plan_index is None, "PyYAML is unavailable to this Python interpreter")
+    def test_validate_reads_no_ignored_input_list(self) -> None:
+        land = unittest.mock.Mock()
+        with patch.object(sys, "argv", ["pm-plan-index.py", "validate"]), \
+             patch.object(pm_plan_index, "_load_pm_land", return_value=land), \
+             patch.object(pm_plan_index, "validate", return_value={"status": "pass"}), \
+             patch("builtins.print"):
+            self.assertEqual(pm_plan_index.main(), 0)
+        land.ignored_input_guard.assert_not_called()
+
+    @unittest.skipIf(pm_plan_index is None, "PyYAML is unavailable to this Python interpreter")
+    def test_guard_shares_pm_land_list(self) -> None:
+        land = pm_plan_index._load_pm_land()
+        self.assertTrue(callable(land.copy_inputs))
+        self.assertIn("pm-land.py copy-inputs", land.COPY_INPUTS_COMMAND)
 
 
 if __name__ == "__main__":
