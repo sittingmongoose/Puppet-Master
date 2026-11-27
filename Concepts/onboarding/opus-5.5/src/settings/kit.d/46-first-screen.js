@@ -16,7 +16,8 @@
    section each and are drawn as before; so is the first page after load and every page mounted later.
    A scroll that lands on sections content-visibility still skips shows them before its frame is drawn (FO-245), so a
    fast wheel never shows the page's ground where rows are; the arrival's first frame still skips every far section.
-   A scroll or End / Home that lands on a page of the chapter still unmounted mounts it before its frame (FO-245 r3);
+   A scroll that lands on a page of the chapter still unmounted mounts it before its frame, and End / Home mount the
+   page at that end and land on it in one step while any page is unmounted (FO-245 r3);
    every other page stays a placeholder until the observer reaches it. */
 
 const O55FS_ATTR = 'data-o55-fill';
@@ -307,10 +308,12 @@ function o55fsMountNear(sc) {
   }
   return n;
 }
-/* End / Ctrl+End and Home / Ctrl+Home land on the chapter's last or first page: its placeholders there are mounted in
-   the key's own task, before the scroll, so the key lands on the page's real end (a placeholder's estimated height
-   would otherwise move the end after the landing) and the landing frame has its rows. Only as many pages as fill two
-   views from that end are mounted; the rest stay placeholders. */
+/* End / Ctrl+End and Home / Ctrl+Home land on the chapter's last or first page. The document scrolls smoothly
+   (scroll-behavior: smooth), so the key's own scroll animated across every page between, and each still-unmounted page
+   it passed showed as an empty placeholder: 6 to 13 blank frames on the way to Containers even with the destination
+   mounted (FO-245 r3, Alexis). While the chapter still has unmounted pages, the key therefore mounts the pages at that
+   end (only as many as fill two views; the rest stay placeholders) in its own task and lands there in one step, so the
+   frame after the key is the real end with its rows. With every page mounted the key keeps its own smooth scroll. */
 function o55fsMountEnd(sc, last) {
   const bodies = [...sc.querySelectorAll('[data-continuous-workspace-body]')];
   if (last) bodies.reverse();
@@ -324,10 +327,14 @@ function o55fsMountEnd(sc, last) {
   }
 }
 root.addEventListener('keydown', e => {
-  if (e.key !== 'End' && e.key !== 'Home') return;
+  if ((e.key !== 'End' && e.key !== 'Home') || e.defaultPrevented || e.shiftKey || e.altKey || e.metaKey) return;
   const sc = root.querySelector('#settings-document');
   if (!sc || !(e.target === sc || sc.contains(e.target)) || (e.target.matches && e.target.matches('input, textarea, select, [contenteditable=""], [contenteditable="true"]'))) return;
-  if (sc.querySelector('[data-continuous-workspace-body][data-workspace-mounted="false"]')) o55fsMountEnd(sc, e.key === 'End');
+  if (!sc.querySelector('[data-continuous-workspace-body][data-workspace-mounted="false"]')) return;
+  const end = e.key === 'End';
+  o55fsMountEnd(sc, end);
+  e.preventDefault();
+  sc.scrollTo({ top: end ? sc.scrollHeight : 0, behavior: 'instant' });
 }, true);
 root.addEventListener('scroll', e => { if (e.target.id === 'settings-document') { o55fsMountNear(e.target); o55fsFillNear(e.target); o55fsShowNear(e.target); } }, true);
 /* These global keys belong to Settings only while its panel can receive input. Onboarding leaves the active class
