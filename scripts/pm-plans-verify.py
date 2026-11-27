@@ -1183,37 +1183,61 @@ def iter_repo_files(capture_paths: Iterable[str] | None = None) -> list[Path]:
     # share currently serves PuppetMaster-Evidence as a symlink into archive/), and
     # comparing a resolved referent against the unresolved constant then rejects
     # every manifest entry no matter where the checkout link points.
-    capture_link = ROOT / RAW_EVIDENCE_CAPTURE_ROOT
-    try:
-        evidence_root = RAW_EVIDENCE_DIRECTORY.resolve(strict=True)
-    except (OSError, RuntimeError):
-        evidence_root = RAW_EVIDENCE_DIRECTORY
-    try:
-        allowed = (
-            capture_link.is_symlink()
-            and capture_link.resolve(strict=True).is_relative_to(evidence_root)
-        )
-    except (OSError, RuntimeError):
-        allowed = False
-    if allowed:
+    if raw_capture_link_admitted(ROOT, RAW_EVIDENCE_DIRECTORY):
         if capture_paths is None:
             capture_paths, _ = load_raw_evidence_capture_modes()
-        for path_ref in capture_paths:
-            try:
-                parts = (ROOT / path_ref).relative_to(capture_link).parts
-                if ".." in parts:
-                    continue
-                path = capture_link
-                for part in parts:
-                    path = path / part
-                    if path.is_symlink():
-                        break
-                else:
-                    if path.is_file() and path.resolve(strict=True).is_relative_to(evidence_root):
-                        files.append(path)
-            except (OSError, RuntimeError, ValueError):
-                continue
+        files.extend(admitted_raw_captures(ROOT, capture_paths, RAW_EVIDENCE_DIRECTORY))
     return sorted(set(files))
+
+
+def _evidence_root(evidence_directory: Path) -> Path:
+    try:
+        return evidence_directory.resolve(strict=True)
+    except (OSError, RuntimeError):
+        return evidence_directory
+
+
+def raw_capture_link_admitted(root: Path, evidence_directory: Path) -> bool:
+    """The one ignored capture link is a symlink that resolves into the evidence share.
+
+    pm-land.py's ignored-input guard calls this and admitted_raw_captures, so the baseline
+    recorder and json_syntax can never disagree about which captures are readable.
+    """
+    capture_link = root / RAW_EVIDENCE_CAPTURE_ROOT
+    try:
+        return (
+            capture_link.is_symlink()
+            and capture_link.resolve(strict=True).is_relative_to(_evidence_root(evidence_directory))
+        )
+    except (OSError, RuntimeError):
+        return False
+
+
+def admitted_raw_captures(root: Path, capture_paths: Iterable[str], evidence_directory: Path) -> list[Path]:
+    """The manifest captures json_syntax reads: through the capture link only, never through a
+    nested link (any component below the link, the file included), and only files that resolve
+    into the evidence share. Empty when the link itself is not admitted."""
+    if not raw_capture_link_admitted(root, evidence_directory):
+        return []
+    capture_link = root / RAW_EVIDENCE_CAPTURE_ROOT
+    evidence_root = _evidence_root(evidence_directory)
+    files: list[Path] = []
+    for path_ref in capture_paths:
+        try:
+            parts = (root / path_ref).relative_to(capture_link).parts
+            if ".." in parts:
+                continue
+            path = capture_link
+            for part in parts:
+                path = path / part
+                if path.is_symlink():
+                    break
+            else:
+                if path.is_file() and path.resolve(strict=True).is_relative_to(evidence_root):
+                    files.append(path)
+        except (OSError, RuntimeError, ValueError):
+            continue
+    return files
 
 
 def parse_json_or_jsonl(path: Path) -> int:

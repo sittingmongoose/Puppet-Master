@@ -711,8 +711,10 @@ Two writers refuse with exit 2 when that list names files the tree lacks, and na
   `--readiness-audit-root Plans/.audits/event-authority-2026-08-13-currentness` afterwards, as
   above.
 
-The raw-evidence link counts as present only when it resolves from the tree to the evidence share
-and every capture the tracked raw-capture manifest names is a file behind it. A sparse tree still
+The raw-evidence link counts as present only when it resolves from the tree to the evidence share,
+and a capture only when `json_syntax` itself would read it: the guard calls the verifier's own
+`raw_capture_link_admitted` and `admitted_raw_captures` (`scripts/pm-plans-verify.py`), so a capture
+behind a nested link below the evidence link is named as missing, exactly as the verifier skips it. A sparse tree still
 gets the recorder's own exit-3 sparse refusal first.
 
 `--allow-missing-inputs` lets either go on anyway and prints a warning that names what is missing;

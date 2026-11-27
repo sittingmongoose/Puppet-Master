@@ -107,6 +107,10 @@ class LandingFixture(unittest.TestCase):
         )
         patches.start()
         self.addCleanup(patches.stop)
+        # The ignored-input guard applies json_syntax's own capture rule against this evidence root.
+        verifier = patch.object(land.raw_capture_verifier(), "RAW_EVIDENCE_DIRECTORY", self.evidence)
+        verifier.start()
+        self.addCleanup(verifier.stop)
         path_patcher = patch.object(land, "worktree_path", return_value=self.remote)
         path_patcher.start()
         self.addCleanup(path_patcher.stop)
@@ -1529,7 +1533,68 @@ print(json.dumps({{"schema_id": "pm.landing_check.report.v1", "commit": {self.he
         (fresh / land.RAW_LINK).symlink_to(self.evidence / "empty", target_is_directory=True)
         code, text = self.guard(fresh, allow_missing=False)
         self.assertEqual(code, 2)
-        self.assertEqual([line.strip() for line in text.splitlines() if line.startswith("  ")], [self.raw_capture])
+        self.assertEqual([line.strip() for line in text.splitlines() if line.startswith("  ")],
+                         [f"{self.raw_capture} (json_syntax cannot read it: absent, or behind a nested link)"])
+
+    def nested_link_layout(self):
+        """The Astra r1 deep review's layout: an in-share capture directory whose historical capture
+        is a regular copy and whose live captures sit behind a nested directory link. Every byte
+        matches the manifest; json_syntax still cannot read the two live ones."""
+        live = ("live/a.json", "live/b.json")
+        for name in live:
+            self.put(self.evidence / "raw", name, "{}\n")
+        entries = [{"path": self.raw_capture}, *({"path": f"{land.RAW_LINK}/{name}"} for name in live)]
+        self.put(self.shared, land.RAW_MANIFEST, json.dumps({"entries": entries}))
+        self.git(self.shared, "commit", "-qam", "three captures")
+        fresh = self.root / "nested"
+        self.git(self.shared, "worktree", "add", "--detach", str(fresh), "HEAD")
+        land.copy_inputs(self.shared, fresh, keep_present=True)
+        self.assertEqual(self.guard(fresh, allow_missing=False), (None, ""))  # control: the plain link passes
+        alternate = self.evidence / "alternate"
+        self.put(alternate, "capture.jsonl", (self.evidence / "raw/capture.jsonl").read_text())
+        (alternate / "live").symlink_to(self.evidence / "raw/live", target_is_directory=True)
+        (fresh / land.RAW_LINK).unlink()
+        (fresh / land.RAW_LINK).symlink_to(alternate, target_is_directory=True)
+        for name in live:
+            self.assertTrue((fresh / land.RAW_LINK / name).is_file())  # is_file() alone would pass them
+        return fresh, [f"{land.RAW_LINK}/{name}" for name in live]
+
+    def test_guard_refuses_captures_behind_a_nested_link_and_names_them(self):
+        fresh, unreadable = self.nested_link_layout()
+        code, text = self.guard(fresh, allow_missing=False)
+        self.assertEqual(code, 2)
+        self.assertIn("refusing to build: 2 gitignored input(s)", text)
+        self.assertEqual([line.strip() for line in text.splitlines() if line.startswith("  ")],
+                         [f"{name} (json_syntax cannot read it: absent, or behind a nested link)"
+                          for name in unreadable])
+        # The guard's verdict is the verifier's: it admits exactly the historical capture here.
+        verifier = land.raw_capture_verifier()
+        admitted = verifier.admitted_raw_captures(fresh, [self.raw_capture, *unreadable], self.evidence)
+        self.assertEqual([path.relative_to(fresh).as_posix() for path in admitted], [self.raw_capture])
+
+    def test_record_baseline_refuses_captures_behind_a_nested_link(self):
+        fresh, unreadable = self.nested_link_layout()
+        code, stderr, baseline = self.record_baseline(fresh)
+        self.assertEqual(code, 2)
+        for name in unreadable:
+            self.assertIn(name, stderr)
+        self.assertNotIn(f"  {self.raw_capture} ", stderr)
+        self.assertFalse(baseline.exists())
+
+    def record_baseline(self, fresh):
+        spec = importlib.util.spec_from_file_location("pm_landing_check_guard",
+                                                      Path(__file__).with_name("pm-landing-check.py"))
+        check = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(check)
+        baseline = fresh / "baseline.json"
+        stderr = io.StringIO()
+        with patch.object(check, "SHARED_CHECKOUT", self.shared), patch.object(check, "_load_pm_land", return_value=land), \
+             patch.object(sys, "argv", ["pm-landing-check.py", "--root", str(fresh), "--record-baseline",
+                                        "--baseline", str(baseline)]), \
+             patch.object(check, "readiness_source_identity", side_effect=AssertionError("ran past the guard")), \
+             redirect_stderr(stderr), redirect_stdout(io.StringIO()):
+            code = check.main()
+        return code, stderr.getvalue(), baseline
 
     def test_guard_refuses_a_raw_link_outside_the_evidence_share(self):
         fresh = self.fresh_worktree()
@@ -1543,24 +1608,14 @@ print(json.dumps({{"schema_id": "pm.landing_check.report.v1", "commit": {self.he
         self.assertIn(f"{land.RAW_LINK} (missing, or a link that does not resolve", text)
 
     def test_record_baseline_refuses_the_reviewers_case_and_writes_no_baseline(self):
-        spec = importlib.util.spec_from_file_location("pm_landing_check_guard",
-                                                      Path(__file__).with_name("pm-landing-check.py"))
-        check = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(check)
         self.relative_raw_link(self.shared)
         fresh = self.fresh_worktree("deeper/fresh")
         land.copy_inputs(self.shared, fresh, keep_present=True)
         self.relative_raw_link(fresh)
-        baseline = fresh / "baseline.json"
-        stderr = io.StringIO()
-        with patch.object(check, "SHARED_CHECKOUT", self.shared), patch.object(check, "_load_pm_land", return_value=land), \
-             patch.object(sys, "argv", ["pm-landing-check.py", "--root", str(fresh), "--record-baseline",
-                                        "--baseline", str(baseline)]), \
-             patch.object(check, "readiness_source_identity", side_effect=AssertionError("ran past the guard")), \
-             redirect_stderr(stderr), redirect_stdout(io.StringIO()):
-            self.assertEqual(check.main(), 2)
-        self.assertIn("refusing to record a baseline", stderr.getvalue())
-        self.assertIn(land.RAW_LINK, stderr.getvalue())
+        code, stderr, baseline = self.record_baseline(fresh)
+        self.assertEqual(code, 2)
+        self.assertIn("refusing to record a baseline", stderr)
+        self.assertIn(land.RAW_LINK, stderr)
         self.assertFalse(baseline.exists())
 
     def test_copy_inputs_refuses_a_symlinked_folder_before_any_write(self):

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import ast
+import importlib.util
 from collections import Counter
 from datetime import datetime, timezone
 import hashlib
@@ -478,18 +479,39 @@ def missing_ignored_inputs(worktree, shared=None, *, prefixes=None, exclude=()):
         # The link counts only when it resolves, from this tree, to the evidence share, and every
         # capture the tracked manifest names is a file behind it. A verbatim copy of the shared
         # checkout's relative link dangles here and hides all of them (Astra deep review, r0).
+        # A capture counts only when json_syntax itself would read it: the verifier's own rule,
+        # which also refuses a nested link anywhere below the capture link (Astra r1 deep review).
         captures = sorted(raw_paths(worktree, tracked, None))
         selected.extend([RAW_LINK, *captures])
-        link = worktree / RAW_LINK
-        try:
-            target = link.resolve(strict=True) if link.is_symlink() and link.is_dir() else None
-        except (OSError, RuntimeError):
-            target = None
-        if target is None or not target.is_relative_to(EVIDENCE.resolve()):
+        verifier = raw_capture_verifier()
+        evidence = verifier.RAW_EVIDENCE_DIRECTORY
+        if not verifier.raw_capture_link_admitted(worktree, evidence):
             missing.extend([RAW_LINK, *captures])
         else:
-            missing.extend(name for name in captures if not (worktree / name).is_file())
+            readable = {path.relative_to(worktree).as_posix()
+                        for path in verifier.admitted_raw_captures(worktree, captures, evidence)}
+            missing.extend(name for name in captures if name not in readable)
     return selected, missing
+
+
+_VERIFIER = []
+
+
+def raw_capture_verifier():
+    """scripts/pm-plans-verify.py beside this script: the json_syntax reader whose capture rule
+    the guard applies, loaded once."""
+    if not _VERIFIER:
+        path = Path(__file__).resolve().with_name("pm-plans-verify.py")
+        spec = importlib.util.spec_from_file_location("pm_plans_verify_raw_captures", path)
+        if spec is None or spec.loader is None:
+            raise Refusal(f"cannot load the json_syntax verifier {path}")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        for name in ("raw_capture_link_admitted", "admitted_raw_captures", "RAW_EVIDENCE_DIRECTORY"):
+            if not hasattr(module, name):
+                raise Refusal(f"the json_syntax verifier {path} has no {name}")
+        _VERIFIER.append(module)
+    return _VERIFIER[0]
 
 
 def describe_missing(selected, missing):
@@ -505,7 +527,11 @@ def describe_missing(selected, missing):
         captures = sum(within(name, RAW_LINK) and name != RAW_LINK for name in missing)
         lines.append(f"{RAW_LINK} (missing, or a link that does not resolve from this tree to the evidence "
                      f"share; all {captures} captures behind it)")
-        missing = [name for name in missing if not within(name, RAW_LINK)]
+    else:
+        # Each capture by name: json_syntax cannot read it (absent, or behind a nested link).
+        lines.extend(f"{name} (json_syntax cannot read it: absent, or behind a nested link)"
+                     for name in missing if within(name, RAW_LINK))
+    missing = [name for name in missing if not within(name, RAW_LINK)]
     for name in missing:
         parts = PurePosixPath(name).parts
         directory = next(("/".join(parts[:depth]) for depth in range(COLLAPSE_DEPTH, len(parts))
