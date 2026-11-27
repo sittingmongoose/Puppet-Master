@@ -16,9 +16,10 @@
    section each and are drawn as before; so is the first page after load and every page mounted later.
    A scroll that lands on sections content-visibility still skips shows them before its frame is drawn (FO-245), so a
    fast wheel never shows the page's ground where rows are; the arrival's first frame still skips every far section.
-   A scroll that lands on a page of the chapter still unmounted mounts it before its frame (FO-245 r3); every other page
-   stays a placeholder until the observer reaches it. End / Home keep the browser's own smooth scroll, as before; the
-   blank frames it still shows while pages are unmounted are tracked in FO-248. */
+   A wheel scroll that lands on a page of the chapter still unmounted mounts it before its frame (FO-245 r3, gated on a
+   recent wheel in r6); every other scroll (End / Home, PageDown, arrows, the scroll bar, jump links, a script) mounts
+   exactly as before, through the observer, so End lands at the end it measured. End / Home keep the browser's own smooth
+   scroll; the blank frames it still shows while pages are unmounted are tracked in FO-248. */
 
 const O55FS_ATTR = 'data-o55-fill';
 const o55fs = {
@@ -281,7 +282,15 @@ function o55fsShowNear(sc) {
    sections of a page mounted in the last two frames that are in the view are shown like the skipped ones above, so the
    frame that scrolls there paints its rows. That frame costs the mount (one longer frame on the source view, never a
    blank one); placeholders outside the view stay as they are, and the observer's 360 px margin keeps mounting them
-   ahead of an ordinary scroll, as before. */
+   ahead of an ordinary scroll, as before.
+   FO-245 r6 (R145): only a wheel scroll mounts here. Chrome animates a keyboard End over 5 to 17 scroll events toward the
+   end it measured at the key (scroll-behavior does not govern it), and a mount on the way grew the document 1,100 to
+   1,700 px under that animation, which then stopped 630 to 1,270 px short of the new end (26 of 112 presses; main 0 of
+   107). So a passive wheel listener (it never cancels or delays the wheel; no key listener is involved) notes the time of
+   the last wheel event, and the scroll event mounts only while that wheel's smooth scroll can still be running
+   (O55FS_WHEEL_MS; Chrome 158: a real wheel tick scrolls for 165-190 ms and its last scroll event comes at most 275 ms
+   after the last tick; a single long wheel needs its mount 11-31 ms after the wheel). Every other scroll mounts as on
+   main: the observer, after the frame. */
 const o55fsFresh = new Set();
 const o55fsMount = mountContinuousWorkspace;
 mountContinuousWorkspace = function (id) {
@@ -308,7 +317,11 @@ function o55fsMountNear(sc) {
   }
   return n;
 }
-root.addEventListener('scroll', e => { if (e.target.id === 'settings-document') { o55fsMountNear(e.target); o55fsFillNear(e.target); o55fsShowNear(e.target); } }, true);
+const O55FS_WHEEL_MS = 400;
+let o55fsWheelAt = -Infinity;
+root.addEventListener('wheel', () => { o55fsWheelAt = performance.now(); }, { capture: true, passive: true });
+const o55fsWheeling = () => performance.now() - o55fsWheelAt <= O55FS_WHEEL_MS;
+root.addEventListener('scroll', e => { if (e.target.id === 'settings-document') { if (o55fsWheeling()) o55fsMountNear(e.target); o55fsFillNear(e.target); o55fsShowNear(e.target); } }, true);
 /* These global keys belong to Settings only while its panel can receive input. Onboarding leaves the active class
    in place beneath its inert app; modal dialogs can cover Settings without changing either (R97 P1). */
 function o55fsInteractive() {
