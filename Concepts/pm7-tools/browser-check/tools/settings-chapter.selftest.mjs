@@ -3,7 +3,7 @@
 // The page probe itself is tested in a browser on a constructed page: diagnostics/settings-chapter-probe.check.mjs.
 import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
-import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT, press, selectAllModifier, flingScrollGate, filmFling, flingFilm, FLING_FILM, FLING_RETRY, flingAttempt, retryFling, flingRetryVerdict, FLING_ROUTES, FLING_LOOKS, flingLooks, flingRoute, filmBands, tabEndVerdict, tabEndRoute, TAB_END_TRAVEL, rosterEndVerdict, rosterEndRoute, wpkHomeVerdict, wpkHomeRoute, GUARD_TRAVEL, ROSTER_MIN_ROOM, WPK_MIN_TOP, tests } from '../checks/perf-settings-chapter.check.mjs';
+import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT, press, selectAllModifier, flingScrollGate, filmFling, flingFilm, FLING_FILM, FLING_RETRY, flingAttempt, retryFling, flingRetryVerdict, FLING_ROUTES, FLING_LOOKS, flingLooks, flingRoute, filmBands, tabEndVerdict, tabEndRoute, TAB_END_TRAVEL, rosterEndVerdict, rosterEndRoute, wpkHomeVerdict, wpkHomeRoute, GUARD_TRAVEL, ROSTER_MIN_ROOM, WPK_MIN_TOP, endLandVerdict, endLandRoute, END_GAP, END_REPS, END_MIN_TRAVEL, END_SETTLE, END_CAP, tests } from '../checks/perf-settings-chapter.check.mjs';
 import { encodePng, decodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
 const decodeOnce = (png) => decodePng(png);
 /* the round 1 reading, kept here only to show what it counted: the share of a rect's pixels ten or more grey levels from
@@ -523,11 +523,92 @@ const modeSpread = (img, rect) => {
 		assert.equal(/preventDefault|scrollTo|scrollBy|scrollTop\s*=|scrollIntoView/.test(body), false, `a keydown listener neither scrolls nor takes a key's default: ${body.split('\n')[0]}`);
 	}
 	assert.equal(/document\.addEventListener\('pointerdown'/.test(code), false, 'no pointer-down memory on document (round 4\'s text-click route)');
-	// kept: the scroll handler mounts a cold page, fills and shows skipped sections before the frame
-	assert.match(code, /root\.addEventListener\('scroll', e => \{ if \(e\.target\.id === 'settings-document'\) \{ o55fsMountNear\(e\.target\); o55fsFillNear\(e\.target\); o55fsShowNear\(e\.target\); \} \}, true\);/, 'the scroll handler mounts the cold page, fills and shows before the frame (FO-245 r1/r3 kept)');
+	// kept: the scroll handler mounts a cold page (behind r6's wheel gate, pinned below), fills and shows skipped sections before the frame
+	assert.match(code, /root\.addEventListener\('scroll', e => \{ if \(e\.target\.id === 'settings-document'\) \{ if \(o55fsWheeling\(\)\) o55fsMountNear\(e\.target\); o55fsFillNear\(e\.target\); o55fsShowNear\(e\.target\); \} \}, true\);/, 'the scroll handler mounts the cold page while a wheel scrolls, fills and shows before the frame (FO-245 r1/r3 kept, r6 gate)');
 	for (const kept of ['function o55fsMountNear(sc)', 'function o55fsShowNear(sc)', 'function o55fsShowFor(shown)', 'const o55fsFresh = new Set();', 'mountContinuousWorkspace = function (id)', "root.addEventListener('contentvisibilityautostatechange'"])
 		assert.ok(code.includes(kept), `kept: ${kept}`);
 	console.log('PASS End/Home: the product has no End/Home key listener of its own (FO-248); the cold-page mount and the content-visibility show are kept');
+}
+
+/* FO-245 r6 (option E, R145 medium): round 3's cold-page mount runs in the scroll event only while a wheel scroll is under
+   way. A passive wheel listener notes the time; no key listener of any kind is added; every other scroll mounts through
+   main's observer, so End lands at the end. The guard "End from a fresh Code & Tools lands at the end" is live on both
+   surfaces and judged. */
+{
+	const fs = await import('node:fs');
+	const prod = fs.readFileSync(new URL('../../../onboarding/opus-5.5/src/settings/kit.d/46-first-screen.js', import.meta.url), 'utf8');
+	const code = prod.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+	// the gate: one passive wheel listener writes the time, the scroll handler is the only caller of the mount
+	const wheels = [...code.matchAll(/addEventListener\(\s*['"`]wheel['"`]/g)];
+	assert.equal(wheels.length, 1, 'one wheel listener in the product file (the gate)');
+	assert.match(code, /\nroot\.addEventListener\('wheel', \(\) => \{ o55fsWheelAt = performance\.now\(\); \}, \{ capture: true, passive: true \}\);\n/, 'the wheel listener is passive, captures on root and only notes the time');
+	assert.equal(/preventDefault/.test(code), false, 'nothing in the product file cancels an event\'s default');
+	assert.equal((code.match(/o55fsWheelAt\s*=(?!=)/g) || []).length, 2, 'o55fsWheelAt is set only where it is declared and in the wheel listener');
+	assert.match(code, /\nconst o55fsWheeling = \(\) => performance\.now\(\) - o55fsWheelAt <= O55FS_WHEEL_MS;\n/, 'the gate compares the time since the last wheel with O55FS_WHEEL_MS');
+	const ms = Number((code.match(/\nconst O55FS_WHEEL_MS = (\d+);\n/) || [])[1]);
+	assert.ok(ms >= 100 && ms <= 1000, `O55FS_WHEEL_MS covers a wheel's smooth scroll and no more than a second (${ms})`);
+	assert.equal((code.match(/let o55fsWheelAt = -Infinity;/g) || []).length, 1, 'no wheel before the first one');
+	const calls = [...code.matchAll(/o55fsMountNear\(/g)].map((m) => code.slice(code.lastIndexOf('\n', m.index) + 1, code.indexOf('\n', m.index)));
+	assert.deepEqual(calls.map((l) => l.trim().startsWith('function') ? 'def' : /if \(o55fsWheeling\(\)\) o55fsMountNear\(e\.target\);/.test(l) ? 'gated' : 'other'), ['def', 'gated'], 'o55fsMountNear is defined once and called only behind the wheel gate');
+	assert.equal((code.match(/o55fsWheeling\(\)/g) || []).length, 1, 'the gate is read only by the scroll handler');
+	// no key listener of any kind: the three keydown listeners are main's (End/Home fill, Find/F3/Select All, Tab), no keyup/keypress
+	assert.equal([...code.matchAll(/addEventListener\(\s*['"`]key(down|up|press)['"`]/g)].length, 3, 'three key listeners, all main\'s');
+	assert.equal([...code.matchAll(/addEventListener\(\s*['"`](keyup|keypress|beforeinput)['"`]/g)].length, 0, 'no keyup or keypress listener');
+	for (const m of code.matchAll(/addEventListener\('keydown',/g)) {
+		let i = code.indexOf('{', m.index), depth = 0, j = i;
+		for (; j < code.length; j++) { if (code[j] === '{') depth++; else if (code[j] === '}' && --depth === 0) break; }
+		assert.equal(/o55fsWheel|o55fsMountNear|mountContinuousWorkspace/.test(code.slice(m.index, j + 1)), false, 'no key listener touches the gate or mounts a page');
+	}
+	console.log(`PASS wheel gate: one passive wheel listener notes the time, o55fsMountNear runs only behind it (${ms} ms), no key listener is added`);
+}
+{
+	const live = (src, re) => {
+		for (const m of src.matchAll(new RegExp(re.source, re.flags.replace('g', '') + 'g'))) {
+			const before = src.slice(0, m.index), line = before.slice(before.lastIndexOf('\n') + 1);
+			if (before.lastIndexOf('/*') > before.lastIndexOf('*/') || line.includes('//')) continue;
+			return true;
+		}
+		return false;
+	};
+	// main lands 45-46 px from the end every press (R145); the revert stopped 634-1,268 px short in about one press in four
+	const press = (o) => ({ key: true, keyName: 'End', from: 'button', focusOk: true, focusAtKey: 'button in the document', coldAtKey: 6, travelWant: 19100, settled: true, gap: 45, top: 20155, ...o });
+	const mainRun = Array.from({ length: 2 * END_REPS }, (_, i) => press({ from: i % 2 ? 'text' : 'button', gap: 45 + (i % 2) }));
+	assert.deepEqual(endLandVerdict(mainRun).map((x) => x.ok), [true, true], 'main: every press within the bound');
+	const rev = mainRun.map((p, i) => i === 5 ? { ...p, gap: 1268 } : p);
+	assert.deepEqual(endLandVerdict(rev).map((x) => x.ok), [true, false], 'the revert: one press 1,268 px short fails');
+	assert.match(endLandVerdict(rev)[1].detail, /1 of 16 short: .*gap 1268 px/);
+	assert.equal(endLandVerdict(mainRun.map((p, i) => i ? p : { ...p, gap: 634 }))[1].ok, false, 'R145\'s shortest short landing (634 px) fails');
+	assert.equal(endLandVerdict(mainRun.map((p, i) => i ? p : { ...p, gap: END_GAP + 1 }))[1].ok, false, 'one px past the bound fails');
+	assert.equal(endLandVerdict(mainRun.map((p, i) => i ? p : { ...p, gap: END_GAP }))[1].ok, true, 'the bound itself passes');
+	assert.ok(END_GAP >= 3 * 46 && END_GAP < 634, `END_GAP (${END_GAP}) clears main's 46 px with room and stays under R145's shortest short landing`);
+	for (const [o, why] of [[{ coldAtKey: 0 }, 'no unmounted page at the key'], [{ key: false }, 'no trusted End'], [{ focusOk: false }, 'focus not where the route put it'], [{ travelWant: END_MIN_TRAVEL }, 'too little left to scroll'], [{ settled: false }, 'still scrolling at the cap'], [{ gap: null }, 'no gap read']]) {
+		const v = endLandVerdict(mainRun.map((p, i) => i === 3 ? { ...p, ...o } : p));
+		assert.deepEqual(v.map((x) => x.ok), [false, false], `not judgeable: ${why}`);
+	}
+	assert.deepEqual(endLandVerdict(mainRun.slice(0, -1)).map((x) => x.ok), [false, false], 'fewer presses than asked fails');
+	assert.deepEqual(endLandVerdict([]).map((x) => x.ok), [false, false], 'no press fails');
+	assert.deepEqual(endLandVerdict(null).map((x) => x.ok), [false, false], 'no reading fails');
+	assert.equal(endLandVerdict(mainRun.map((p) => ({ ...p, gap: -1 })))[1].ok, true, 'a rounding px past the end passes');
+	// registered on both surfaces, through its route, with its input, precondition, settle and live sink
+	for (const surface of ['normal', 'sandbox']) {
+		const name = `R93 #4 End from a fresh Code & Tools lands at the end (${surface})`;
+		assert.equal(typeof tests[name], 'function', `the End landing guard is a live test on the ${surface} surface`);
+		assert.ok(live(String(tests[name]), /endLandRoute\(t, surface\)/), 'the End landing test runs endLandRoute');
+	}
+	const src = String(endLandRoute);
+	for (const [re, msg] of [[/guardPage\(t, surface, 'general', 'code'\)/, 'a fresh Code & Tools'],
+		[/\.domain-link\[data-domain="general"\]'\)\.first\(\)\.click\(\);[^\n]*\n\t*await f\.locator\('#pm-settings-root \.domain-link\[data-domain="code"\]'\)\.first\(\)\.click\(\);/, 'each press enters Code & Tools fresh from General'],
+		[/const from = i % 2 \? 'text' : 'button', keyName = i % 4 < 2 \? 'End' : 'Control\+End';/, 'both starts and both keys'],
+		[/b\?\.focus\(\{preventScroll:true\}\);/, 'the button focused without scrolling'], [/await f\.locator\('\[data-psc-end-text\]'\)\.click\(\{position:at\}\);/, 'a trusted click on plain text'],
+		[/if\(e\.key!=='End'\|\|!e\.isTrusted\|\|R\.key\)return;R\.key=true;/, 'the trusted End'],
+		[/R\.focusOk=from==='button'\?!!a&&a\.tagName==='BUTTON'&&sc\.contains\(a\):a===document\.body;/, 'the focus each start must give'],
+		[/R\.coldAtKey=sc\.querySelectorAll\('\[data-continuous-workspace-body\]\[data-workspace-mounted="false"\]'\)\.length;R\.travelWant=Math\.round\(sc\.scrollHeight-sc\.clientHeight-sc\.scrollTop\);/, 'the cold pages and the distance at the key'],
+		[/await t\.page\.keyboard\.press\(keyName\);/, 'a trusted key press'], [/\[END_SETTLE,END_CAP\]/, 'the settle and its cap'],
+		[/gap:Math\.round\(sc\.scrollHeight-sc\.clientHeight-sc\.scrollTop\)/, 'the gap read after the settle'],
+		[/for \(const row of endLandVerdict\(presses, 2 \* reps\)\) await t\.check\(`\$\{surface\}: \$\{row\.name\}`,row\.ok,row\.detail\);/, 'the live sink records each row']])
+		assert.ok(live(src, re), `the End landing route: ${msg}`);
+	assert.ok(END_SETTLE >= 1500 && END_CAP >= 6000 && END_REPS >= 8, 'settle 1.5 s, cap 6 s, at least 8 presses of each start');
+	console.log('PASS End landing guard: every End from a fresh Code & Tools must land within ' + END_GAP + ' px of the end (main 45-46), judged only with unmounted pages at the key; live on both surfaces');
 }
 
 /* R97 #6: the wait ends on the fill's own completion, and an unfinished fill is told apart from a missing row */

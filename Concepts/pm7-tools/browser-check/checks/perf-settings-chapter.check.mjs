@@ -1094,6 +1094,80 @@ export async function wpkHomeRoute(t, surface) {
 	t.log(`${surface} Home on the wallpaper picker: ${JSON.stringify(r)}`);
 	for (const row of wpkHomeVerdict(r)) await t.check(`${surface}: ${row.name}`,row.ok,row.detail);
 }
+/* FO-245 round 6 (R145 medium, exported for tools/settings-chapter.selftest.mjs): End from a fresh Code & Tools lands at
+   the end, as on main. Chrome animates a keyboard End (5-17 scroll events, even with scroll-behavior auto under Reduced
+   Motion) toward the end it measured at the key. Round 3's cold-page mount ran in every scroll event, so on the round 5
+   revert it mounted 2-5 pages during that animation; the document grew 1,100-1,700 px and the animation still stopped at
+   the old end, 630-1,270 px short, in 26 of 112 presses. Main mounts only through its IntersectionObserver and always
+   lands 45-46 px from the end (0 of 107 short). Round 6 mounts in the scroll event only while a wheel scroll is under way.
+   Each press: Code & Tools entered fresh from General, then a trusted End or Ctrl+End, alternately from a visible button of
+   the first view (focused without scrolling) and after a trusted click on plain text (focus on the body). The press is
+   judged once the document has held still for END_SETTLE ms (capped at END_CAP ms), and only when the chapter still had
+   unmounted pages at the key and the key had more than END_MIN_TRAVEL px to go. END_GAP: main lands 45-46 px from the end in
+   every press (R145, 107 presses, three hosts) and R145's shortest short landing was 634 px; 150 px is three times main's
+   landing and under a quarter of the shortest short one. The revert is short in about one press in four, so END_REPS
+   presses of each start (2 x END_REPS per surface) leave it green by chance about once in a hundred runs (0.77^16). */
+export const END_GAP = 150;
+export const END_REPS = 8;
+export const END_MIN_TRAVEL = 5000;
+export const END_SETTLE = 1500;
+export const END_CAP = 6000;
+export function endLandVerdict(list, want = 2 * END_REPS) {
+	const presses = Array.isArray(list) ? list : [];
+	const judgeable = (p) => !!p && p.key === true && p.coldAtKey > 0 && p.focusOk === true && p.travelWant > END_MIN_TRAVEL && p.settled === true && p.gap != null;
+	const bad = presses.filter((p) => !judgeable(p));
+	const ok0 = presses.length >= want && !bad.length;
+	const short = presses.filter((p) => judgeable(p) && !(p.gap >= -2 && p.gap <= END_GAP));
+	const line = (p) => p ? `${p.key === true ? p.keyName : 'no key'} from ${p.from}: gap ${p.gap} px${p.settled === true ? '' : ' (still scrolling at the cap)'}, ${p.coldAtKey} cold, ${p.travelWant} px to go, focus ${p.focusAtKey}` : 'no reading';
+	return [
+		{ name: `every End reached a fresh Code & Tools (unmounted pages at the key, more than ${END_MIN_TRAVEL} px to go, focus where the route put it) and its scroll settled`, ok: ok0,
+			detail: presses.length < want ? `${presses.length} of ${want} presses read` : bad.length ? `not judgeable: ${bad.slice(0, 4).map(line).join('; ')}` : `${presses.length} presses, each with ${Math.min(...presses.map((p) => p.coldAtKey))}+ unmounted pages at the key` },
+		{ name: `End from a fresh Code & Tools lands at the end: every press within ${END_GAP} px of it (main: 45-46 px)`, ok: ok0 && !short.length,
+			detail: short.length ? `${short.length} of ${presses.length} short: ${short.slice(0, 6).map(line).join('; ')}` : `gaps ${presses.map((p) => p.gap).join(', ')} px` }
+	];
+}
+export async function endLandRoute(t, surface) {
+	if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+	const f = await guardPage(t, surface, 'general', 'code');
+	const reps = Number(t.args.endReps || END_REPS), presses = [];
+	for (let i = 0; i < 2 * reps; i++) {
+		const from = i % 2 ? 'text' : 'button', keyName = i % 4 < 2 ? 'End' : 'Control+End';
+		if (i) {
+			await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click(); await t.page.waitForTimeout(700);
+			await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
+			await f.waitForFunction(()=>document.querySelector('#pm-settings-root .domain-link.active')?.dataset.domain==='code',null,{timeout:5000}).catch(()=>{});
+			await t.page.waitForTimeout(700);
+		}
+		if (from === 'button') {
+			await f.evaluate(()=>{const d=document.querySelector('#pm-settings-root #settings-document'),v=d.getBoundingClientRect();const b=[...d.querySelectorAll('button')].find(x=>{const r=x.getBoundingClientRect();return r.height&&r.top>=v.top&&r.bottom<v.bottom&&getComputedStyle(x).visibility==='visible';});b?.focus({preventScroll:true});});
+		} else {
+			/* a trusted click on a plain paragraph of the first view (inside no control), which leaves focus on the body */
+			const at=await f.evaluate(()=>{const d=document.querySelector('#pm-settings-root #settings-document'),v=d.getBoundingClientRect();const own='button, a, input, select, textarea, label, summary, [tabindex], [contenteditable], [data-action], .is-clickable, [role="button"], [role="link"], [role="tab"], [role="option"], [role="menuitem"], [role="switch"], [role="checkbox"]';const p=[...d.querySelectorAll('p')].find(x=>{const r=x.getBoundingClientRect(),o=x.closest(own);return r.height>8&&r.width>40&&r.top>=v.top+40&&r.bottom<v.bottom-40&&!(o&&d.contains(o))&&x.textContent.trim().length>8&&getComputedStyle(x).visibility==='visible';});if(!p)return null;p.setAttribute('data-psc-end-text','');const r=p.getBoundingClientRect();return {x:Math.min(20,r.width/3),y:r.height/2};});
+			if (at) { await f.locator('[data-psc-end-text]').click({position:at}); await f.evaluate(()=>document.querySelector('[data-psc-end-text]')?.removeAttribute('data-psc-end-text')); await t.page.waitForTimeout(300); }
+		}
+		await f.evaluate((from) => {
+			const sc=document.querySelector('#pm-settings-root #settings-document');
+			const R=window.__pscEnd={key:false,from};
+			const key=e=>{if(e.key!=='End'||!e.isTrusted||R.key)return;R.key=true;R.keyName=e.ctrlKey?'Control+End':'End';const a=document.activeElement;
+				R.focusAtKey=a===document.body?'body':a?a.tagName.toLowerCase()+(sc.contains(a)?' in the document':' outside the document'):'none';
+				R.focusOk=from==='button'?!!a&&a.tagName==='BUTTON'&&sc.contains(a):a===document.body;
+				R.coldAtKey=sc.querySelectorAll('[data-continuous-workspace-body][data-workspace-mounted="false"]').length;R.travelWant=Math.round(sc.scrollHeight-sc.clientHeight-sc.scrollTop);};
+			window.addEventListener('keydown',key,{capture:true,passive:true});
+			R.stop=()=>window.removeEventListener('keydown',key,{capture:true,passive:true});
+		}, from);
+		await t.page.keyboard.press(keyName);
+		/* settled: the document has held still for END_SETTLE ms of animation frames, or END_CAP ms have passed */
+		const settled = await f.evaluate(([quiet,cap])=>new Promise(res=>{const sc=document.querySelector('#pm-settings-root #settings-document'),t00=performance.now();let top=sc.scrollTop,h=sc.scrollHeight,t0=t00;const step=()=>{if(sc.scrollTop!==top||sc.scrollHeight!==h){top=sc.scrollTop;h=sc.scrollHeight;t0=performance.now();}if(performance.now()-t0>=quiet)return res(true);if(performance.now()-t00>=cap)return res(false);requestAnimationFrame(step);};requestAnimationFrame(step);}),[END_SETTLE,END_CAP]).catch(()=>false);
+		const r = await f.evaluate((settled) => {
+			const sc=document.querySelector('#pm-settings-root #settings-document'),R=window.__pscEnd;R.stop();
+			const {stop,...out}=R;
+			return {...out,settled,gap:Math.round(sc.scrollHeight-sc.clientHeight-sc.scrollTop),top:Math.round(sc.scrollTop)};
+		}, settled);
+		t.log(`${surface} End landing ${i + 1}/${2 * reps}: ${JSON.stringify(r)}`);
+		presses.push(r);
+	}
+	for (const row of endLandVerdict(presses, 2 * reps)) await t.check(`${surface}: ${row.name}`,row.ok,row.detail);
+}
 /* One fling route (FLING_ROUTES) on one surface, in every fling look (exported for the selftest's live pins). */
 export async function flingRoute(t, surface, route) {
 	if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
@@ -1226,6 +1300,9 @@ for (const surface of ['normal', 'sandbox']) {
 	tests[`R93 #4 End on a focused tab keeps the tab's behaviour (${surface})`] = (t) => tabEndRoute(t, surface);
 	tests[`R93 #4 End on the AI & Providers roster scrolls the roster (${surface})`] = (t) => rosterEndRoute(t, surface);
 	tests[`R93 #4 Home on the General wallpaper picker keeps the document still (${surface})`] = (t) => wpkHomeRoute(t, surface);
+	/* FO-245 round 6 (R145 medium): the document's own End lands at the end, as on main; red on the round 5 revert
+	   (010495410f), whose scroll-event mount grew the document under Chrome's End animation */
+	tests[`R93 #4 End from a fresh Code & Tools lands at the end (${surface})`] = (t) => endLandRoute(t, surface);
 }
 for (const surface of ['normal', 'sandbox']) {
 	tests[`R93 #3 cross-chapter search does not fill the chapter being discarded (${surface})`] = async (t) => {
