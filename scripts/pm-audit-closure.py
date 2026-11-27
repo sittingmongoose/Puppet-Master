@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
 import hashlib
 import json
 import re
@@ -586,13 +587,16 @@ def markdown_headings(lines: list[str]) -> list[dict[str, Any]]:
         from markdown_it import MarkdownIt  # noqa: PLC0415 - only section anchors need it.
     except ImportError as exc:  # pragma: no cover - environment dependent
         raise AnchorError("section anchors need markdown-it-py (Debian/Ubuntu: python3-markdown-it)") from exc
-    tokens = MarkdownIt("commonmark").parse("\n".join(lines) + "\n")
-    headings: list[dict[str, Any]] = []
-    for position, token in enumerate(tokens):
-        if token.type == "heading_open" and token.level == 0 and token.map and token.markup.startswith("#"):
-            title = tokens[position + 1].content.strip() if position + 1 < len(tokens) else ""
-            headings.append({"index": token.map[0], "level": int(token.tag[1]), "title": title})
-    return headings
+    source = "\n".join(lines) + "\n"
+    if source not in _MARKDOWN_HEADINGS:  # keyed by the text parsed; callers only read the list
+        tokens = MarkdownIt("commonmark").parse(source)
+        headings: list[dict[str, Any]] = []
+        for position, token in enumerate(tokens):
+            if token.type == "heading_open" and token.level == 0 and token.map and token.markup.startswith("#"):
+                title = tokens[position + 1].content.strip() if position + 1 < len(tokens) else ""
+                headings.append({"index": token.map[0], "level": int(token.tag[1]), "title": title})
+        _MARKDOWN_HEADINGS[source] = headings
+    return _MARKDOWN_HEADINGS[source]
 
 
 def _section_end(headings: list[dict[str, Any]], position: int, line_count: int) -> int:
@@ -637,6 +641,46 @@ def _unique_key_yaml_loader() -> Any:
     return _UNIQUE_YAML_LOADER
 
 
+# Parses keyed by the text parsed, shared by every resolver in the process. Validation makes a
+# resolver per registry row and per recheck commit, and each one used to parse its documents again:
+# with 1,020 re-audit rows that was 51,534 YAML loads and 3,089 Python parses of the same few texts,
+# about 800 s of a 865 s run on Nas1 (landing-check timeout, 2026-11-27). The parse of a text does
+# not depend on its path or commit, so a hit returns exactly what a fresh parse would. Callers only
+# read the shared results.
+_PLAN_UNITS: dict[str, tuple[dict[str, list[Any]], str | None]] = {}
+# The versions of one document at different recheck commits differ in a few blocks, so a block's
+# parse is kept on its own as well: 338 document versions held 35,809 blocks.
+_PLAN_UNIT_BLOCKS: dict[str, tuple[Any, str | None]] = {}
+_MARKDOWN_HEADINGS: dict[str, list[dict[str, Any]]] = {}
+_PYTHON_SEGMENTS: dict[tuple[str, str, str], tuple[str | None, str | None]] = {}
+
+
+def _plan_units(text: str) -> tuple[dict[str, list[Any]], str | None]:
+    """PlanUnit YAML blocks of one text keyed by plan_unit_id, with the first parse failure."""
+    if text not in _PLAN_UNITS:
+        yaml = _yaml_module()
+        found: dict[str, list[Any]] = {}
+        problem: str | None = None
+        for match in PLAN_UNIT_FENCE_RE.finditer(text):
+            block = match.group(1)
+            if "plan_unit_id:" not in block:
+                continue
+            if block not in _PLAN_UNIT_BLOCKS:
+                try:
+                    _PLAN_UNIT_BLOCKS[block] = (yaml.load(block, Loader=_unique_key_yaml_loader()), None)
+                except Exception as exc:  # noqa: BLE001 - reported as an anchor failure.
+                    _PLAN_UNIT_BLOCKS[block] = (None, str(exc))
+            data, block_problem = _PLAN_UNIT_BLOCKS[block]
+            if block_problem is not None:
+                if problem is None:
+                    problem = block_problem
+                continue
+            if isinstance(data, dict) and data.get("plan_unit_id"):
+                found.setdefault(str(data["plan_unit_id"]), []).append(data)
+        _PLAN_UNITS[text] = (found, problem)
+    return _PLAN_UNITS[text]
+
+
 class AnchorResolver:
     """Resolves anchored refs against one repository root, caching each parsed file."""
 
@@ -676,22 +720,12 @@ class AnchorResolver:
         every ```yaml fence that mentions plan_unit_id, parsed with PyYAML's pure SafeLoader
         (libyaml's CSafeLoader reads some flow scalars differently)."""
         if rel_path not in self._units:
-            yaml = _yaml_module()
-            found: dict[str, list[Any]] = {}
-            for match in PLAN_UNIT_FENCE_RE.finditer(self.text(rel_path)):
-                block = match.group(1)
-                if "plan_unit_id:" not in block:
-                    continue
-                try:
-                    data = yaml.load(block, Loader=_unique_key_yaml_loader())
-                except Exception as exc:  # noqa: BLE001 - reported as an anchor failure.
-                    # A block that does not parse cannot be assigned to one PlanUnit with any
-                    # confidence (duplicate or folded plan_unit_id keys), so every unit anchor in
-                    # this document fails until the document parses, as pm-plan-index.py fails it.
-                    self._unit_errors.setdefault(rel_path, f"{rel_path} has a PlanUnit block that does not parse: {exc}")
-                    continue
-                if isinstance(data, dict) and data.get("plan_unit_id"):
-                    found.setdefault(str(data["plan_unit_id"]), []).append(data)
+            found, problem = _plan_units(self.text(rel_path))
+            if problem is not None:
+                # A block that does not parse cannot be assigned to one PlanUnit with any
+                # confidence (duplicate or folded plan_unit_id keys), so every unit anchor in
+                # this document fails until the document parses, as pm-plan-index.py fails it.
+                self._unit_errors.setdefault(rel_path, f"{rel_path} has a PlanUnit block that does not parse: {problem}")
             self._units[rel_path] = found
         return self._units[rel_path]
 
@@ -949,6 +983,7 @@ class CommitResolver(AnchorResolver):
         super().__init__(root)
         self.commit = commit
         self._blobs: dict[str, bytes] = {}
+        self._dirs: dict[str, bool] = {}
 
     def _git(self, *args: str) -> bytes:
         import subprocess  # noqa: PLC0415
@@ -969,13 +1004,16 @@ class CommitResolver(AnchorResolver):
         raise AnchorError("CommitResolver reads git objects, not paths")
 
     def is_dir(self, rel_path: str) -> bool:
-        try:
-            canonical_rel_path(rel_path)
-            listing = self._git("ls-tree", "-z", self.commit, "--", rel_path).split(b"\0")
-        except AnchorError:
-            return False
-        entry = next((item for item in listing if item.endswith(b"\t" + rel_path.encode())), None)
-        return entry is not None and entry.split(b"\t", 1)[0].split(b" ")[1] == b"tree"
+        if rel_path not in self._dirs:  # one commit's tree never changes
+            try:
+                canonical_rel_path(rel_path)
+                listing = self._git("ls-tree", "-z", self.commit, "--", rel_path).split(b"\0")
+            except AnchorError:
+                self._dirs[rel_path] = False
+                return False
+            entry = next((item for item in listing if item.endswith(b"\t" + rel_path.encode())), None)
+            self._dirs[rel_path] = entry is not None and entry.split(b"\t", 1)[0].split(b" ")[1] == b"tree"
+        return self._dirs[rel_path]
 
     def read_bytes(self, rel_path: str) -> bytes:
         canonical_rel_path(rel_path)
@@ -1099,6 +1137,21 @@ def _symtable_ownership(source: str, qualname: str, ref: str) -> None:
 
 
 def _python_segment(source: str, qualname: str, ref: str) -> str:
+    """_python_segment_uncached, once per (source, qualname, ref); a refusal is replayed as the
+    same AnchorError message."""
+    key = (source, qualname, ref)
+    if key not in _PYTHON_SEGMENTS:
+        try:
+            _PYTHON_SEGMENTS[key] = (_python_segment_uncached(source, qualname, ref), None)
+        except AnchorError as exc:
+            _PYTHON_SEGMENTS[key] = (None, str(exc))
+    segment, problem = _PYTHON_SEGMENTS[key]
+    if problem is not None:
+        raise AnchorError(problem)
+    return segment  # type: ignore[return-value]
+
+
+def _python_segment_uncached(source: str, qualname: str, ref: str) -> str:
     """The source segment of the definition `qualname` names, refused unless the name is bound
     exactly once where it is looked up.
 
@@ -2468,9 +2521,38 @@ def reaudit_split_anchor_hashes(
     return extra
 
 
+# HEAD lookups kept while a read-only validation runs (validation_cache): nothing commits under
+# it, so HEAD cannot change. A registry of 1,854 rows asked `git ls-tree HEAD` 13,004 times for a
+# handful of paths, about 50 s on Nas1 (landing-check timeout, 2026-11-27). Outside the scope every
+# lookup asks git again, so a caller that commits between two validations reads the new HEAD.
+_VALIDATION_CACHE: dict[tuple[str, ...], Any] | None = None
+
+
+@contextlib.contextmanager
+def validation_cache() -> Any:
+    """Keep HEAD lookups for the duration of a read-only validation; nested scopes share one."""
+    global _VALIDATION_CACHE  # noqa: PLW0603
+    outer = _VALIDATION_CACHE
+    if outer is None:
+        _VALIDATION_CACHE = {}
+    try:
+        yield
+    finally:
+        _VALIDATION_CACHE = outer
+
+
 def _committed_entry(path: str) -> tuple[str, str] | None:
     """The (git mode, object) HEAD holds for one path, or None when git holds nothing there: no
     history yet, or the path is only in the working copy."""
+    if _VALIDATION_CACHE is None:
+        return _committed_entry_uncached(path)
+    key = ("committed_entry", str(ROOT), path)
+    if key not in _VALIDATION_CACHE:
+        _VALIDATION_CACHE[key] = _committed_entry_uncached(path)
+    return _VALIDATION_CACHE[key]
+
+
+def _committed_entry_uncached(path: str) -> tuple[str, str] | None:
     entry = _git_bytes(ROOT, "ls-tree", "HEAD", "--", path)
     if entry is None or not entry.strip():
         return None
@@ -8492,6 +8574,9 @@ def run() -> int:
 
     argparse._SubParsersAction.add_parser = described  # type: ignore[method-assign]
     try:
+        if sys.argv[1:2] == ["validate"]:  # read-only for its whole run
+            with validation_cache():
+                return main()
         return main()
     finally:
         argparse._SubParsersAction.add_parser = add_parser  # type: ignore[method-assign]

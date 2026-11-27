@@ -94,7 +94,8 @@ def closure_open_findings() -> list[dict[str, Any]]:
     open until a re-audit row validly supersedes it, and a closing successor whose own hashes went
     stale leaves it open. Rows are read with the validator's own reader, so line numbers agree."""
     closure = closure_validator()
-    report = closure.validate_registry(REGISTRY)
+    with closure.validation_cache():  # read-only: HEAD lookups are kept for this one validation
+        report = closure.validate_registry(REGISTRY)
     rows_by_line = {row["_line_no"]: row for row in closure.read_jsonl(REGISTRY, [], required=False)}
     findings = []
     for open_row in report["open_rows"]:

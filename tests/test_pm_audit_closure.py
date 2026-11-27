@@ -3028,5 +3028,174 @@ class PmAuditStatusIndexOpenSetTests(unittest.TestCase):
         self.assertEqual(err.getvalue(), "")
 
 
+class PmAuditClosureParseCacheTests(unittest.TestCase):
+    """Landing-check timeout (2026-11-27): validation made a resolver per registry row and per recheck
+    commit, and each parsed its documents again, so audit-closure and audit-status-index ran 700 to
+    1,100 s on Nas1 and passed the 1,800 s subcheck limit under a landing check's load. Parses are now
+    shared by the text parsed, and HEAD lookups are kept only inside a read-only validation."""
+
+    DOC_V1 = (
+        "# Doc\n\n```yaml\nplan_unit_id: PU-A\ntitle: alpha\n```\n\n"
+        "```yaml\nplan_unit_id: PU-B\ntitle: beta\n```\n"
+    )
+    DOC_V2 = DOC_V1.replace("title: beta", "title: beta two")
+
+    def setUp(self) -> None:
+        temporary = tempfile.TemporaryDirectory(prefix="pm-parse-cache-")
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name).resolve()
+        for memo in (pm_audit_closure._PLAN_UNITS, pm_audit_closure._PLAN_UNIT_BLOCKS,
+                     pm_audit_closure._PYTHON_SEGMENTS, pm_audit_closure._MARKDOWN_HEADINGS):
+            cleared = patch.dict(memo, clear=True)
+            cleared.start()
+            self.addCleanup(cleared.stop)
+
+    def write(self, rel: str, text: str) -> Path:
+        path = self.root / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text, encoding="utf-8")
+        return path
+
+    def counting_yaml(self) -> list[str]:
+        loads: list[str] = []
+        yaml = pm_audit_closure._yaml_module()
+
+        class Counting:
+            def __getattr__(self, name: str) -> Any:
+                return getattr(yaml, name)
+
+            @staticmethod
+            def load(block: str, Loader: Any) -> Any:  # noqa: N803 - PyYAML's keyword
+                loads.append(block)
+                return yaml.load(block, Loader=Loader)
+
+        counting = patch.object(pm_audit_closure, "_yaml_module", lambda: Counting())
+        counting.start()
+        self.addCleanup(counting.stop)
+        return loads
+
+    def test_unit_blocks_parse_once_across_resolvers_and_document_versions(self) -> None:
+        self.write("a/Plans/Doc.md", self.DOC_V1)
+        self.write("b/Plans/Other.md", self.DOC_V1)
+        self.write("c/Plans/Doc.md", self.DOC_V2)
+        expected = {
+            ("a", "Plans/Doc.md", "PU-B"): pm_audit_closure.AnchorResolver(self.root / "a").content("Plans/Doc.md#unit=PU-B"),
+            ("c", "Plans/Doc.md", "PU-B"): pm_audit_closure.AnchorResolver(self.root / "c").content("Plans/Doc.md#unit=PU-B"),
+        }
+        for memo in (pm_audit_closure._PLAN_UNITS, pm_audit_closure._PLAN_UNIT_BLOCKS):
+            memo.clear()
+        loads = self.counting_yaml()
+        for _ in range(3):  # a fresh resolver per row, as validation makes them
+            for root, rel in (("a", "Plans/Doc.md"), ("b", "Plans/Other.md"), ("c", "Plans/Doc.md")):
+                resolver = pm_audit_closure.AnchorResolver(self.root / root)
+                for unit in ("PU-A", "PU-B"):
+                    content = resolver.content(f"{rel}#unit={unit}")
+                    if (root, rel, unit) in expected:
+                        self.assertEqual(content, expected[(root, rel, unit)])
+        # Three distinct blocks: PU-A, PU-B and the edited PU-B. Before the fix this was 18 loads.
+        self.assertEqual(len(loads), 3, loads)
+        self.assertIn('"title":"beta two"', pm_audit_closure.AnchorResolver(self.root / "c").content("Plans/Doc.md#unit=PU-B")[0])
+
+    def test_unit_parse_failure_still_names_each_resolvers_own_path(self) -> None:
+        broken = "```yaml\nplan_unit_id: PU-A\nplan_unit_id: PU-A\n```\n"
+        self.write("a/Plans/One.md", broken)
+        self.write("b/Plans/Two.md", broken)
+        for root, rel in (("a", "Plans/One.md"), ("b", "Plans/Two.md")):
+            with self.assertRaises(pm_audit_closure.AnchorError) as raised:
+                pm_audit_closure.AnchorResolver(self.root / root).content(f"{rel}#unit=PU-A")
+            self.assertIn(f"{rel} has a PlanUnit block that does not parse", str(raised.exception))
+            self.assertIn("found duplicate key", str(raised.exception))
+        self.assertEqual(len(pm_audit_closure._PLAN_UNIT_BLOCKS), 1)
+
+    def test_python_segment_is_parsed_once_and_replays_a_refusal(self) -> None:
+        source = "def f():\n    return 1\n\n\ndef g():\n    return 2\n"
+        twice = "def f():\n    return 1\n\n\ndef f():\n    return 2\n"
+        calls: list[str] = []
+        uncached = pm_audit_closure._python_segment_uncached
+
+        def counting(src: str, qualname: str, ref: str) -> str:
+            calls.append(qualname)
+            return uncached(src, qualname, ref)
+
+        with patch.object(pm_audit_closure, "_python_segment_uncached", counting):
+            for _ in range(3):
+                self.assertEqual(pm_audit_closure._python_segment(source, "g", "s.py#pydef=g"), "def g():\n    return 2")
+            messages = set()
+            for _ in range(3):
+                with self.assertRaises(pm_audit_closure.AnchorError) as raised:
+                    pm_audit_closure._python_segment(twice, "f", "s.py#pydef=f")
+                messages.add(str(raised.exception))
+        self.assertEqual(calls, ["g", "f"])
+        self.assertEqual(len(messages), 1)
+        with self.assertRaises(pm_audit_closure.AnchorError) as fresh:
+            uncached(twice, "f", "s.py#pydef=f")
+        self.assertEqual(messages, {str(fresh.exception)})
+
+    def git(self, *args: str) -> None:
+        subprocess.run(["git", "-C", str(self.root), "-c", "user.name=t", "-c", "user.email=t@invalid", *args],
+                       check=True, capture_output=True)
+
+    def test_head_lookups_are_kept_only_inside_a_validation_cache(self) -> None:
+        self.git("init", "-q")
+        self.write("x.txt", "x\n")
+        self.git("add", "x.txt")
+        self.git("commit", "-q", "-m", "x")
+        rooted = patch.object(pm_audit_closure, "ROOT", self.root)
+        rooted.start()
+        self.addCleanup(rooted.stop)
+        calls: list[tuple[str, ...]] = []
+        git_bytes = pm_audit_closure._git_bytes
+
+        def counting(root: Path, *args: str) -> bytes | None:
+            calls.append(args)
+            return git_bytes(root, *args)
+
+        counted = patch.object(pm_audit_closure, "_git_bytes", counting)
+        counted.start()
+        self.addCleanup(counted.stop)
+        self.assertIsNotNone(pm_audit_closure._committed_entry("x.txt"))
+        self.assertIsNotNone(pm_audit_closure._committed_entry("x.txt"))
+        self.assertEqual(len(calls), 2)  # no scope: every lookup asks git
+        calls.clear()
+        with pm_audit_closure.validation_cache():
+            for _ in range(3):
+                self.assertIsNotNone(pm_audit_closure._committed_entry("x.txt"))
+                self.assertIsNone(pm_audit_closure._committed_entry("y.txt"))
+            with pm_audit_closure.validation_cache():  # a nested scope shares the outer one
+                self.assertIsNone(pm_audit_closure._committed_entry("y.txt"))
+        self.assertEqual(len(calls), 2)
+        self.assertIsNone(pm_audit_closure._VALIDATION_CACHE)
+        # A commit between two validations is seen by the next one.
+        self.write("y.txt", "y\n")
+        self.git("add", "y.txt")
+        self.git("commit", "-q", "-m", "y")
+        with pm_audit_closure.validation_cache():
+            self.assertIsNotNone(pm_audit_closure._committed_entry("y.txt"))
+
+    def test_validate_command_and_status_index_run_inside_the_cache(self) -> None:
+        seen: list[bool] = []
+
+        def record() -> int:
+            seen.append(pm_audit_closure._VALIDATION_CACHE is not None)
+            return 0
+
+        with patch.object(pm_audit_closure, "main", record):
+            for argv, scoped in ((["pm-audit-closure.py", "validate"], True), (["pm-audit-closure.py", "reaudit-append"], False)):
+                with patch.object(sys, "argv", argv):
+                    self.assertEqual(pm_audit_closure.run(), 0)
+                self.assertEqual(seen.pop(), scoped, argv)
+        self.assertIsNone(pm_audit_closure._VALIDATION_CACHE)
+
+        closure = argparse.Namespace(
+            validation_cache=pm_audit_closure.validation_cache,
+            validate_registry=lambda registry: (seen.append(pm_audit_closure._VALIDATION_CACHE is not None), {"open_rows": []})[1],
+            read_jsonl=lambda *args, **kwargs: [],
+        )
+        with patch.object(pm_audit_status_index, "closure_validator", lambda: closure):
+            self.assertEqual(pm_audit_status_index.closure_open_findings(), [])
+        self.assertEqual(seen, [True])
+        self.assertIsNone(pm_audit_closure._VALIDATION_CACHE)
+
+
 if __name__ == "__main__":
     unittest.main()
