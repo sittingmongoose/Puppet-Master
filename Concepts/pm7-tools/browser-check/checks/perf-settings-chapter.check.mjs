@@ -24,6 +24,7 @@
 // `--set settle=<ms>` waits after each look change (default 4000).
 import { setLookBySetting, guardPaintedLook } from '../helpers/settings-look.mjs';
 import { muteSound } from '../helpers/quiet-page.mjs';
+import { decodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
 
 const ALL = ['basic-light', 'basic-dark', 'friendly-light', 'friendly-dark', 'glass-light', 'glass-dark', 'retro-light', 'retro-dark', 'nier-light', 'nier-dark'];
 const LOOKS = ['basic-dark', 'friendly-light', 'retro-dark', 'glass-dark', 'nier-light'];
@@ -317,16 +318,89 @@ export function hoverVerdict(rows) {
 		{ name: 'the old chapter\'s tagged nodes let go of their tags by collection after the fill\'s completion wait', ok: !kept.length, detail: kept.map((r) => `${r.pair}: ${r.taggedStill} of ${r.tagged}`).join('; ') }
 	];
 }
+/* FO-245: what the fling displayed, from the compositor's frames. A DOM read cannot judge it. Astra's batch-21 films
+   (60 fps, GTX 1070 Ti and RTX 3080) showed the page's background for one to seven frames while this row's DOM read
+   passed; on the published page the list was filled before the scroll frame, and post-paint reads (a task posted from
+   each animation-frame callback after the scroll, checkVisibility with contentVisibilityAuto) found every row in view
+   and none skipped while the screencast showed the blank frames: content-visibility had skipped the destination
+   sections in the frame that scrolled to them, and the page cannot read what the compositor drew. So the frames are the compositor's own, by
+   CDP screencast (Page.startScreencast, every frame, half size, acknowledged at once and decoded only after the run), the
+   frames a GPU film of the same run shows (FO-245 report). Each frame's view of the settings document, inset 24 px, is
+   cut into four bands; a band's ink is the share of its pixels at least ten grey levels from the band's commonest level
+   (text, rules and controls against the list's ground). The settled frame (the last one) names the bands that hold rows
+   (ink of 1 % or more); a frame after the wheel whose ink in any such band falls under a tenth of the settled ink shows
+   a blank or unfilled list there. The first displayed destination frame is the first frame after the wheel that is
+   blank or unfilled, or differs from the last frame before it in at least half as many pixels as the settled frame does. Shares of the frame's own pixels, no times: the same on every host. */
+export const FLING_FILM = { bands: 4, inset: 24, level: 10, floor: 0.01, keep: 0.1, width: 960, height: 540 };
+export async function filmFling(client) {
+	const frames = [];
+	const on = (ev) => {
+		client.send('Page.screencastFrameAck', { sessionId: ev.sessionId }).catch(() => {});
+		frames.push({ wall: ev.metadata.timestamp * 1000, png: Buffer.from(ev.data, 'base64') });
+	};
+	client.on('Page.screencastFrame', on);
+	await client.send('Page.startScreencast', { format: 'png', everyNthFrame: 1, maxWidth: FLING_FILM.width, maxHeight: FLING_FILM.height });
+	return { frames, async stop() { await client.send('Page.stopScreencast').catch(() => {}); client.off('Page.screencastFrame', on); return frames.slice().sort((a, b) => a.wall - b.wall); } };
+}
+export function filmBands(img, rect, bands = FLING_FILM.bands) {
+	const h = Math.floor((rect.y1 - rect.y0) / bands), out = [];
+	for (let k = 0; k < bands; k++) {
+		const hist = new Uint32Array(256), y0 = rect.y0 + k * h, y1 = y0 + h;
+		for (let y = y0; y < y1; y++) for (let x = rect.x0; x < rect.x1; x++) {
+			const i = (y * img.width + x) * 4;
+			hist[Math.round(0.299 * img.data[i] + 0.587 * img.data[i + 1] + 0.114 * img.data[i + 2])]++;
+		}
+		let mode = 0, n = 0, far = 0;
+		for (let g = 0; g < 256; g++) { n += hist[g]; if (hist[g] > hist[mode]) mode = g; }
+		for (let g = 0; g < 256; g++) if (Math.abs(g - mode) >= FLING_FILM.level) far += hist[g];
+		out.push(n ? +(far / n).toFixed(4) : 0);
+	}
+	return out;
+}
+/* frames: [{wall, png}] sorted; box: the settings document in the top page's CSS pixels; view: the page's size; wheel: the
+   wheel's delivery (ms since the epoch, the frames' clock) */
+export function flingFilm(frames, { box, view, wheel }) {
+	if (!frames || !frames.length || !box || !view || !(wheel > 0)) return { frames: frames ? frames.length : 0 };
+	const imgs = frames.map((f) => decodePng(f.png)), sx = imgs[0].width / view.width, sy = imgs[0].height / view.height, i = FLING_FILM.inset;
+	const rect = { x0: Math.max(0, Math.round((box.x + i) * sx)), y0: Math.max(0, Math.round((box.y + i) * sy)), x1: Math.min(imgs[0].width, Math.round((box.x + box.width - i) * sx)), y1: Math.min(imgs[0].height, Math.round((box.y + box.height - i) * sy)) };
+	const rows = frames.map((f, k) => ({ i: k, dt: +(f.wall - wheel).toFixed(1), bands: filmBands(imgs[k], rect) }));
+	const settled = rows.at(-1).bands, judged = settled.map((v) => v >= FLING_FILM.floor);
+	const before = rows.filter((r) => r.dt < 0).at(-1), after = rows.filter((r) => r.dt >= 0);
+	for (const r of rows) r.bad = r.bands.some((v, k) => judged[k] && v < settled[k] * FLING_FILM.keep);
+	/* moved: the frame differs from the last frame before the wheel in at least half as many pixels as the settled frame
+	   does (a hover or a caret changes a few rows, the scroll changes the view) */
+	const src = before ? imgs[before.i] : null, last = imgs.at(-1);
+	const diff = (img) => { let n = 0, d = 0; for (let y = rect.y0; y < rect.y1; y += 2) for (let x = rect.x0; x < rect.x1; x += 2) { const p = (y * img.width + x) * 4; n++; if (Math.max(Math.abs(img.data[p] - src.data[p]), Math.abs(img.data[p + 1] - src.data[p + 1]), Math.abs(img.data[p + 2] - src.data[p + 2])) > 24) d++; } return n ? d / n : 0; };
+	const moved = src ? diff(last) : 0;
+	const dest = src && moved > 0 ? after.find((r) => r.bad || diff(imgs[r.i]) >= moved / 2) || null : null;
+	/* Capture fidelity (as chat-resize-raster, F12E-SB-AB-RASTER-NOISE): the test keeps a compositor-only 2 px marker
+	   animating, so the compositor makes a frame every vsync and a screencast gap is a lost frame. From the last frame
+	   before the wheel to the frame after the first destination frame, no gap may exceed three of the capture's median
+	   intervals, or a blank frame could have gone uncaptured there. */
+	const gaps = after.slice(1).map((r, k) => +(r.dt - after[k].dt).toFixed(1));
+	const sortedGaps = gaps.slice().sort((x, y) => x - y), median = sortedGaps.length ? sortedGaps[sortedGaps.length >> 1] : null;
+	const span = dest && before ? rows.slice(before.i, Math.min(rows.length, dest.i + 2)) : [];
+	const spanGap = span.length > 1 ? Math.max(...span.slice(1).map((r, k) => r.dt - span[k].dt)) : null;
+	const resolved = median > 0 && spanGap != null && spanGap <= 3 * median;
+	return { frames: frames.length, scale: +sx.toFixed(3), rect, settled, moved: +moved.toFixed(4), judged: judged.filter(Boolean).length, source: before ? before.bands : null,
+		after: after.length, dest, median, spanGap: spanGap == null ? null : +spanGap.toFixed(1), resolved, timeline: rows.filter((r) => r.dt > -250 && r.dt < 500).map((r) => `${r.dt}:${r.bands.map((v) => Math.round(v * 1000)).join('/')}${r.bad ? '!' : ''}`).join(' '), bad: after.filter((r) => r.bad).map(({ i, dt, bands }) => ({ i, dt, bands })), maxGap: gaps.length ? Math.max(...gaps) : null };
+}
 /* R93 #4's fling rows (exported for tools/settings-chapter.selftest.mjs). R97 #3: Terminal look must still be pending
    when the wheel is delivered (the commit's sample is logged only), and the scroll frame's sample must have Terminal look
-   in view, so the empty-list row has the pending target in front of it. */
-export function flingVerdict(r) {
+   in view, so the empty-list row has the pending target in front of it. FO-245: the frames on screen are judged by
+   flingFilm; a missing film, a settled view without two banded rows or no destination frame cannot pass. */
+export function flingVerdict(r, film) {
+	const f = film && film.settled ? film : { frames: film ? film.frames : 0, bad: [], unread: true };
+	const shown = (x) => x ? `frame ${x.i} at ${x.dt} ms [${x.bands.join(', ')}]` : 'none';
 	return [
 		{ name: 'the wheel was delivered with Terminal look pending', ok: !!r.wheel && r.wheelPending > 0 && r.wheelTargetPending === true,
 			detail: r.wheel ? `at wheel delivery ${r.wheelPending} lists pending, Terminal look pending ${r.wheelTargetPending} (at commit ${r.pending}, ${r.targetPending})` : 'no wheel event was seen after the commit' },
 		{ name: 'a real wheel crossed at least one viewport and brought Terminal look into view', ok: !!r.sampled && r.moved >= r.height && r.targetInView === true,
 			detail: r.sampled ? `moved ${r.moved} px of a ${r.height} px view; Terminal look in view ${!!r.targetInView}` : `no scroll-frame sample with Terminal look in view (${r.framesBefore || 0} scroll frames past one viewport without it)` },
-		{ name: 'no visible list is empty at the scroll frame', ok: !!r.sampled && r.empty.length === 0, detail: (r.empty || []).join(',') || 'no scroll-frame sample' }
+		{ name: 'no visible list is empty at the scroll frame', ok: !!r.sampled && r.empty.length === 0, detail: (r.empty || []).join(',') || 'no scroll-frame sample' },
+		{ name: 'the first displayed destination frame, and every frame after the wheel, shows the destination rows (screencast pixels)',
+			ok: f.frames > 0 && f.judged >= 2 && f.moved > 0 && !!f.dest && f.resolved === true && !f.dest.bad && f.bad.length === 0,
+			detail: !f.frames ? 'no screencast frames' : f.unread ? `${f.frames} screencast frames, not read (no wheel time, view or document box)` : `${f.frames} frames (${f.after} after the wheel, largest gap ${f.maxGap} ms, median ${f.median} ms; largest gap from the last source frame to the frame after the first destination frame ${f.spanGap} ms${f.resolved ? '' : ', over three medians or unmeasured: a blank frame could be missing, not judged'}); settled view differs from the source in ${f.moved} of its pixels; settled ink [${(f.settled || []).join(', ')}], ${f.judged} bands judged; first destination ${shown(f.dest)}${f.dest && f.dest.bad ? ' BLANK' : ''}; ${f.bad.length} blank or unfilled frame(s) after the wheel${f.bad.length ? ': ' + f.bad.slice(0, 8).map(shown).join('; ') : ''}` }
 	];
 }
 /* R132-FOLLOWUPS 3 (exported for tools/settings-chapter.selftest.mjs): the fling scroll gate. Only a scroll after the
@@ -818,7 +892,7 @@ for (const surface of ['normal', 'sandbox']) {
 				const wheel=()=>{
 					if(!R.committed||R.wheel)return;
 					const sec=root.querySelector('#section-editor-terminal-look');
-					R.wheel=performance.now();R.wheelPending=root.querySelectorAll('[data-o55-fill="pending"]').length;
+					R.wheel=performance.now();R.wheelEpoch=performance.timeOrigin+R.wheel;R.wheelPending=root.querySelectorAll('[data-o55-fill="pending"]').length;
 					R.wheelTargetPending=!!sec?.querySelector('[data-o55-fill="pending"]');
 					R.wheelTop=root.querySelector('#settings-document')?.scrollTop??null;
 				};
@@ -827,17 +901,30 @@ for (const surface of ['normal', 'sandbox']) {
 				window.addEventListener('wheel',wheel,{capture:true,passive:true});
 				R.stop=()=>{mo.disconnect();window.removeEventListener('scroll',scroll,true);window.removeEventListener('wheel',wheel,{capture:true,passive:true});};
 			});
+			/* FO-245: the compositor's frames from before the press to after the fling settles (flingFilm) */
+			const client=await t.page.context().newCDPSession(t.page);let film,frames=[];
 			try {
+				/* the capture-fidelity marker (flingFilm): top right of the top page, outside the settings document. A Web
+				   Animations opacity animation, which the page's reduced-motion rules (animation: none) cannot stop. */
+				await t.page.evaluate(()=>{const d=document.createElement('div');d.id='psc-vsync-marker';d.setAttribute('aria-hidden','true');Object.assign(d.style,{position:'fixed',right:'0',top:'0',width:'2px',height:'2px',background:'currentColor',willChange:'opacity',pointerEvents:'none',zIndex:'2147483647'});document.documentElement.appendChild(d);d.animate([{opacity:.5},{opacity:1}],{duration:1000,iterations:Infinity,direction:'alternate'});});
+				film=await filmFling(client);
+				await t.page.waitForFunction(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>r(true)))));
 				await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
 				await f.waitForFunction(()=>window.__pscFling.committed,null,{timeout:5000});
 				const delta=await f.evaluate(()=>window.__pscFling.delta);
 				await t.page.mouse.move(box.x+box.width*.65,box.y+box.height*.55);
 				await t.page.mouse.wheel(0,Math.ceil(delta));
 				await f.waitForFunction(()=>window.__pscFling.sampled,null,{timeout:5000}).catch(()=>{});
+				/* the fling has settled when the scroller has held still for a second of animation frames */
+				await f.waitForFunction(()=>new Promise(res=>{const sc=document.querySelector('#pm-settings-root #settings-document');let top=sc&&sc.scrollTop,t0=performance.now();const step=()=>{if(!sc)return res(true);if(sc.scrollTop!==top){top=sc.scrollTop;t0=performance.now();}if(performance.now()-t0>=1000)return res(true);requestAnimationFrame(step);};requestAnimationFrame(step);}),null,{timeout:15000}).catch(()=>{});
+				frames=await film.stop();
 				const r=await f.evaluate(()=>{const {stop,...r}=window.__pscFling;return r;});
-				t.log(`${look} ${surface} fling: ${r.pending} lists pending at commit, target pending ${r.targetPending}; at wheel delivery ${r.wheel?`${r.wheelPending} pending, target pending ${r.wheelTargetPending}`:'no wheel seen'}; moved ${r.moved} px (${r.height} px view), Terminal look in view ${!!r.targetInView}; empty visible lists at scroll-frame rAF: ${r.empty.join(',')||'none'}`);
-				for (const row of flingVerdict(r)) await t.check(`${look} ${surface}: ${row.name}`,row.ok,row.detail);
-			} finally {await f.evaluate(()=>window.__pscFling.stop());}
+				const view=t.page.viewportSize()||await t.page.evaluate(()=>({width:innerWidth,height:innerHeight}));
+				const px=flingFilm(frames,{box,view,wheel:r.wheelEpoch});
+				t.log(`${look} ${surface} fling: ${r.pending} lists pending at commit, target pending ${r.targetPending}; at wheel delivery ${r.wheel?`${r.wheelPending} pending, target pending ${r.wheelTargetPending}`:'no wheel seen'}; moved ${r.moved} px (${r.height} px view), Terminal look in view ${!!r.targetInView}; empty visible lists at scroll-frame rAF: ${r.empty.join(',')||'none'}; screencast: ${px.frames} frames, first destination ${px.dest?`frame ${px.dest.i} at ${px.dest.dt} ms${px.dest.bad?' BLANK':''}`:'none'}, ${px.bad?px.bad.length:'?'} blank or unfilled after the wheel`);
+				t.log(`${look} ${surface} screencast timeline (document box ${[box.x,box.y,box.width,box.height].map(Math.round).join(',')}; ms from the wheel: band ink per mille, ! blank or unfilled): ${px.timeline||'none'}`);
+				for (const row of flingVerdict(r,px)) await t.check(`${look} ${surface}: ${row.name}`,row.ok,row.detail);
+			} finally {await t.page.evaluate(()=>document.getElementById('psc-vsync-marker')?.remove()).catch(()=>{});if(film&&!frames.length)await film.stop().catch(()=>{});await client.detach().catch(()=>{});await f.evaluate(()=>window.__pscFling.stop());}
 		}
 	};
 }

@@ -2,7 +2,9 @@
 // node tools/settings-chapter.selftest.mjs
 // The page probe itself is tested in a browser on a constructed page: diagnostics/settings-chapter-probe.check.mjs.
 import assert from 'node:assert/strict';
-import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT, press, selectAllModifier, flingScrollGate } from '../checks/perf-settings-chapter.check.mjs';
+import { EventEmitter } from 'node:events';
+import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT, press, selectAllModifier, flingScrollGate, filmFling, flingFilm, FLING_FILM, tests } from '../checks/perf-settings-chapter.check.mjs';
+import { encodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
 
 /* SETCHAPTER-ROWCOUNT-FIRST-RAF: the first-screen row over the Code & Tools arrivals */
 {
@@ -39,8 +41,9 @@ import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arriv
 /* R97 #3: the fling's precondition at wheel delivery, and the target in the sampled view */
 {
 	const fling = (o) => ({ committed: true, pending: 33, targetPending: true, wheel: 1200, wheelPending: 30, wheelTargetPending: true, sampled: true, start: 0, top: 2900, moved: 2900, height: 880, targetInView: true, empty: [], ...o });
-	const ok = (r) => flingVerdict(r).map((x) => x.ok);
+	const ok = (r) => flingVerdict(r).slice(0, 3).map((x) => x.ok);
 	assert.deepEqual(ok(fling({})), [true, true, true], 'pending at the wheel, a viewport crossed onto Terminal look, nothing empty: passes');
+	assert.equal(flingVerdict(fling({}))[3].ok, false, 'FO-245: without screencast frames the displayed frames are not judged, so the fling cannot pass');
 	// R97 #3's case: pending at the commit, but the idle fill finished before the wheel; the old row passed on the commit's sample
 	const filled = flingVerdict(fling({ wheelPending: 0, wheelTargetPending: false }));
 	assert.equal(filled[0].ok, false, 'Terminal look already filled at the wheel: the fling did not test a pending target');
@@ -140,6 +143,85 @@ import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arriv
 	assert.equal(flingScrollGate({ ...delivered, sampled: true }, 1800).arms, false);
 	assert.equal(flingScrollGate({ ...delivered, armed: true }, 1800).arms, false);
 	console.log('PASS fling travel: a pre-wheel programmatic scroll neither arms nor credits travel; the wheel travel is measured from its delivery position, and a real fling keeps its pass');
+}
+
+/* FO-245: the fling is judged on the compositor's frames. Astra's batch-21 films showed one to seven blank frames while
+ * the DOM rows passed; on the published page the list was filled before the scroll frame and content-visibility had
+ * skipped the destination sections in that frame. Constructed screencast frames (PNG, the half-size the check asks for)
+ * go through the live recorder (filmFling, fed by a stand-in CDP session) and the live judge (flingFilm, flingVerdict). */
+{
+	const fling = (o) => ({ committed: true, pending: 33, targetPending: true, wheel: 1200, wheelPending: 30, wheelTargetPending: true, sampled: true, start: 0, top: 2900, moved: 2900, height: 880, targetInView: true, empty: [], ...o });
+	const view = { width: 1920, height: 1080 }, box = { x: 627, y: 143, width: 685, height: 912 }, W = FLING_FILM.width, H = FLING_FILM.height;
+	// a frame: the list's ground with text-like rules every 12 px from `phase`, leaving `holes` bands (0-3) empty
+	const frame = (phase, { holes = [], blank = false } = {}) => {
+		const data = Buffer.alloc(W * H * 4);
+		for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+			const i = (y * W + x) * 4, inDoc = x >= 313 && x < 656 && y >= 71 && y < 527;
+			const band = Math.floor((y - 83) / Math.floor((515 - 83) / 4));
+			const ink = inDoc && !blank && !holes.includes(band) && (y + phase) % 12 < 2 && (x + phase) % 9 < 6;
+			const g = ink ? 200 : inDoc ? 45 : 20;
+			data[i] = data[i + 1] = data[i + 2] = g; data[i + 3] = 255;
+		}
+		return encodePng({ width: W, height: H, data });
+	};
+	const SRC = frame(0), DST = frame(5), BLANK = frame(0, { blank: true }), HOLE = frame(5, { holes: [2] });
+	const wheel = 1_000_000;
+	// frames every 16.7 ms: [ms from the wheel, png]
+	const film = (seq) => seq.map(([dt, png]) => ({ wall: wheel + dt, png }));
+	const run = (seq) => flingFilm(film(seq), { box, view, wheel });
+	const v = (seq, r = fling({})) => flingVerdict(r, run(seq))[3];
+	const at = (from, n, png) => Array.from({ length: n }, (_, k) => [from + k * 16.7, png]);
+	const good = [...at(-83.5, 5, SRC), ...at(16.7, 20, DST)];
+	assert.equal(v(good).ok, true, `the destination on its first displayed frame passes: ${v(good).detail}`);
+	assert.equal(run(good).dest.dt, 16.7, 'the first destination frame is the first frame after the wheel that shows the new view');
+	const blank = [...at(-83.5, 5, SRC), ...at(16.7, 3, BLANK), ...at(66.8, 20, DST)];
+	const b = v(blank);
+	assert.equal(b.ok, false, 'Astra\'s case: blank frames between the source and the destination rows fail');
+	assert.match(b.detail, /first destination frame 5 at 16\.7 ms \[0, 0, 0, 0\] BLANK; 3 blank or unfilled frame\(s\)/);
+	const hole = [...at(-83.5, 5, SRC), ...at(16.7, 2, HOLE), ...at(50.1, 20, DST)];
+	assert.equal(v(hole).ok, false, 'a frame whose rows are missing in one band of the view (an unfilled list) fails');
+	// a blank frame after a good first destination frame (a hand-back that let content-visibility skip the rows again)
+	const late = [...at(-83.5, 5, SRC), ...at(16.7, 3, DST), ...at(66.8, 2, BLANK), ...at(100.2, 20, DST)];
+	assert.equal(run(late).dest.bad, false, 'the first destination frame itself shows the rows');
+	assert.equal(v(late).ok, false, 'a later blank frame after the wheel still fails');
+	// a lost frame next to the arrival: the gap could have held a blank frame, so the fling is not judged
+	const lost = [...at(-83.5, 5, SRC), ...at(100.2, 20, DST)];
+	assert.equal(v(lost).ok, false, 'a gap of six frames from the last source frame to the destination is not judged');
+	assert.match(v(lost).detail, /over three medians or unmeasured/);
+	assert.equal(v(at(-83.5, 25, SRC)).ok, false, 'a view that never moved has no destination frame');
+	assert.equal(v([...at(-83.5, 5, SRC)]).ok, false, 'no frame after the wheel');
+	// the live recorder: a stand-in CDP session that films the constructed sequence once screencasting starts
+	const recorded = await (async () => {
+		const client = new EventEmitter(), acks = [], calls = [];
+		client.send = async (method, params) => {
+			calls.push([method, params]);
+			if (method === 'Page.screencastFrameAck') acks.push(params.sessionId);
+			if (method === 'Page.startScreencast') setTimeout(() => blank.slice().reverse().forEach(([dt, png], k) => client.emit('Page.screencastFrame', { sessionId: k, data: png.toString('base64'), metadata: { timestamp: (wheel + dt) / 1000 } })), 0);
+			return {};
+		};
+		const rec = await filmFling(client);
+		await new Promise((r) => setTimeout(r, 20));
+		const frames = await rec.stop();
+		return { frames, acks, calls };
+	})();
+	assert.deepEqual(recorded.calls[0], ['Page.startScreencast', { format: 'png', everyNthFrame: 1, maxWidth: W, maxHeight: H }], 'every frame, half size, PNG');
+	assert.equal(recorded.acks.length, blank.length, 'each frame is acknowledged at once, so Chrome keeps sending');
+	assert.equal(recorded.calls.at(-1)[0], 'Page.stopScreencast');
+	assert.deepEqual(recorded.frames.map((f) => Math.round(f.wall - wheel)), blank.map(([dt]) => Math.round(dt)), 'frames come back in display order with their swap times');
+	assert.equal(flingVerdict(fling({}), flingFilm(recorded.frames, { box, view, wheel }))[3].ok, false, 'the recorded blank sequence fails through the live path');
+	// the live test calls the recorder and the judge (a revert to the DOM-only verdict, or a recorder or judge of its own,
+	// fails here), keeps the capture-fidelity marker running by Web Animations, and keeps its wheel gate (ASTRA21-SETTINGS-LIVE-ARM)
+	for (const surface of ['normal', 'sandbox']) {
+		const src = String(tests[`R93 #4 a fast wheel into lower Code fills visible lists before the frame (${surface})`]);
+		assert.match(src, /film=await filmFling\(client\)/, 'the live test films the fling');
+		assert.match(src, /const px=flingFilm\(frames,\{box,view,wheel:r\.wheelEpoch\}\)/, 'the live test reads the frames with the shared judge');
+		assert.match(src, /for \(const row of flingVerdict\(r,px\)\)/, 'the live verdict includes the frames');
+		assert.match(src, /R\.wheelEpoch=performance\.timeOrigin\+R\.wheel/, 'the wheel time is on the frames\' clock');
+		assert.match(src, /psc-vsync-marker[\s\S]*d\.animate\(/, 'the capture-fidelity marker runs by Web Animations');
+		assert.match(src, /if\(sc\.id!=='settings-document'\|\|!R\.committed\|\|!R\.wheel\|\|R\.sampled\|\|R\.armed\|\|Math\.abs\(sc\.scrollTop-R\.start\)<R\.height\)return;/, 'the live scroll gate arms only after the delivered wheel (flingScrollGate)');
+		assert.match(src, /R\.moved=R\.wheelTop==null\?null:R\.top-R\.wheelTop/, 'the live travel is measured from the wheel delivery position (flingScrollGate)');
+	}
+	console.log('PASS fling frames: blank and unfilled frames on screen fail through the live recorder and judge, a lost arrival frame is not judged, and the live test uses both');
 }
 
 /* R97 #6: the wait ends on the fill's own completion, and an unfinished fill is told apart from a missing row */

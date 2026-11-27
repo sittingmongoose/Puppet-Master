@@ -13,7 +13,9 @@
    A redraw in place (a changed setting) draws a filled section in full and a pending one as a shell again, so it never
    drops rows or builds them early. A fill only puts rows into a section's existing list: it replaces no layout, adds no
    page-enter and animates nothing, so the chapter's one entrance (pageIn) never plays twice. Manager pages are one
-   section each and are drawn as before; so is the first page after load and every page mounted later. */
+   section each and are drawn as before; so is the first page after load and every page mounted later.
+   A scroll that lands on sections content-visibility still skips shows them before its frame is drawn (FO-245), so a
+   fast wheel never shows the page's ground where rows are; the arrival's first frame still skips every far section. */
 
 const O55FS_ATTR = 'data-o55-fill';
 const o55fs = {
@@ -24,6 +26,7 @@ const o55fs = {
   pending: new Map(),  // section id -> { section, workspace, index }
   scroller: null, observer: null, idleTimer: 0, idleJob: null, ticket: 0
 };
+const o55fsSkipped = new Set();   /* sections content-visibility skips now (FO-245, below) */
 const o55fsRows = s => (s && Array.isArray(s.settings) ? s.settings.length : 0);
 const o55fsRowH = () => (hostIsNarrow() ? 112 : 70);
 const o55fsEst = s => 64 + o55fsRows(s) * o55fsRowH();
@@ -171,6 +174,7 @@ renderApp = function () {
   /* Home and manager-only pages render no plain section, so their replacement must end the old job here. */
   if (o55fs.scroller && o55fs.scroller !== root.querySelector('#settings-document')) o55fsReset();
   if (o55fs.pending.size && !o55fs.observer && !o55fs.idleTimer && !o55fs.idleJob) o55fsArm();
+  for (const s of o55fsSkipped) if (!s.isConnected) o55fsSkipped.delete(s);   /* a redraw's removed sections (FO-245) */
   return r;
 };
 
@@ -226,7 +230,36 @@ root.addEventListener('pointerdown', e => {
   const sc = root.querySelector('#settings-document');
   if (o55fs.pending.size && sc && e.target === sc) o55fsFillAll();   /* its scroll bar */
 }, true);
-root.addEventListener('scroll', e => { if (e.target.id === 'settings-document') o55fsFillNear(e.target); }, true);
+/* FO-245: a section that content-visibility skipped is not painted in the frame a scroll brings it into view. Chrome
+   decides that it is relevant only after that frame's layout, so a wheel that jumps past a screen showed the page's
+   ground, without even the sections' own cards, for one to seven frames of a 60 fps film, rows filled or not (a fill on
+   the wheel event changed nothing; content-visibility off removed every blank frame). The scroll event runs before that
+   frame's style and layout: a skipped section that the new position puts in the view is shown now (content-visibility:
+   visible, inline), so the frame that scrolls to it paints it, and two frames later it is handed back to
+   content-visibility, which by then has found it relevant (no blank frame at the hand-back either). Only skipped
+   sections in the view are touched, so an ordinary scroll, which content-visibility's own margin keeps ahead of, changes
+   nothing, a shown section is never skipped again at the hand-back (no one-frame unlock), and an arrival's first frame
+   still skips every far section (FO-196). */
+root.addEventListener('contentvisibilityautostatechange', e => {
+  const s = e.target;
+  if (!s.matches || !s.matches('.settings-section')) return;
+  if (e.skipped) o55fsSkipped.add(s); else o55fsSkipped.delete(s);
+}, true);
+function o55fsShowNear(sc) {
+  if (!o55fsSkipped.size) return;
+  const view = sc.getBoundingClientRect(), shown = [];
+  for (const s of o55fsSkipped) {
+    if (!s.isConnected) { o55fsSkipped.delete(s); continue; }
+    if (!sc.contains(s) || s.closest('details:not([open])')) continue;
+    const box = s.getBoundingClientRect();
+    if (box.height && box.bottom > view.top && box.top < view.bottom) { s.style.contentVisibility = 'visible'; o55fsSkipped.delete(s); shown.push(s); }
+  }
+  if (shown.length) requestAnimationFrame(() => requestAnimationFrame(() => shown.forEach(s => {
+    s.style.removeProperty('content-visibility');
+    if (!s.getAttribute('style')) s.removeAttribute('style');
+  })));
+}
+root.addEventListener('scroll', e => { if (e.target.id === 'settings-document') { o55fsFillNear(e.target); o55fsShowNear(e.target); } }, true);
 /* These global keys belong to Settings only while its panel can receive input. Onboarding leaves the active class
    in place beneath its inert app; modal dialogs can cover Settings without changing either (R97 P1). */
 function o55fsInteractive() {
