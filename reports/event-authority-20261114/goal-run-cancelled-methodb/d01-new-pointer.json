@@ -1,0 +1,746 @@
+{
+  "census_sha256": "e90632b6aac7410726c18e710e5c49e1b23aac41cdaa5b785df9dc5bf7881c6c",
+  "examples": {
+    "dg5:7f39aa8746808e38": {
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/CurrentPointer/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/CurrentPointer/properties/inventory_head/anyOf": {
+        "path": [
+          "record",
+          "inventory_head"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/CurrentPointer/properties/inventory_head/anyOf/1/type": {
+        "path": [
+          "record",
+          "inventory_head"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/CurrentPointer/properties/last_origin_operation_id/minLength": {
+        "path": [
+          "record",
+          "last_origin_operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/CurrentPointer/properties/last_origin_operation_id/type": {
+        "path": [
+          "record",
+          "last_origin_operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/CurrentPointer/properties/pending_operation_id/anyOf": {
+        "path": [
+          "record",
+          "pending_operation_id"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/CurrentPointer/properties/pending_operation_id/anyOf/0/minLength": {
+        "path": [
+          "record",
+          "pending_operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/CurrentPointer/properties/pending_operation_id/anyOf/0/type": {
+        "path": [
+          "record",
+          "pending_operation_id"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/CurrentPointer/properties/pending_operation_id/anyOf/1/type": {
+        "path": [
+          "record",
+          "pending_operation_id"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/CurrentPointer/properties/revision/minimum": {
+        "path": [
+          "record",
+          "revision"
+        ],
+        "value": 0
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/CurrentPointer/properties/revision/type": {
+        "path": [
+          "record",
+          "revision"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/CurrentPointer/properties/scheduler_control/anyOf": {
+        "path": [
+          "record",
+          "scheduler_control"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/CurrentPointer/properties/scheduler_control/anyOf/1/type": {
+        "path": [
+          "record",
+          "scheduler_control"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/CurrentPointer/required": {
+        "member": [
+          "remove",
+          "scope"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/CurrentPointer/type": {
+        "path": [
+          "record"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/StorageCurrentPointer/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/StorageCurrentPointer/properties/schema_id/const": {
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_workflow_current_pointer.v2x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/StorageCurrentPointer/properties/schema_version/const": {
+        "path": [
+          "schema_version"
+        ],
+        "value": "2.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/StorageCurrentPointer/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v6.schema.json#/$defs/StorageCurrentPointer/type": {
+        "path": [],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "scope"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "goal_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "goal_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_run_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_run_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/project_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/project_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "project_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/storage_instance_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/storage_instance_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "scope"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/type": {
+        "path": [
+          "record",
+          "scope"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "workflow_head"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/family_id/minLength": {
+        "path": [
+          "record",
+          "workflow_head",
+          "family_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/family_id/type": {
+        "path": [
+          "record",
+          "workflow_head",
+          "family_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_key/minLength": {
+        "path": [
+          "record",
+          "workflow_head",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_key/type": {
+        "path": [
+          "record",
+          "workflow_head",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/pattern": {
+        "path": [
+          "record",
+          "workflow_head",
+          "physical_value_sha256"
+        ],
+        "value": "578a4cfe0498582b45f4fd40f7fbd1758e96e9d5e8023f32478ba241e3f03ef6\n"
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/type": {
+        "path": [
+          "record",
+          "workflow_head",
+          "physical_value_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_id/minLength": {
+        "path": [
+          "record",
+          "workflow_head",
+          "schema_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_id/type": {
+        "path": [
+          "record",
+          "workflow_head",
+          "schema_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_version/minLength": {
+        "path": [
+          "record",
+          "workflow_head",
+          "schema_version"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_version/type": {
+        "path": [
+          "record",
+          "workflow_head",
+          "schema_version"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/storage_instance_id/minLength": {
+        "path": [
+          "record",
+          "workflow_head",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/storage_instance_id/type": {
+        "path": [
+          "record",
+          "workflow_head",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "workflow_head"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/type": {
+        "path": [
+          "record",
+          "workflow_head"
+        ],
+        "value": null
+      }
+    },
+    "dg5:f3bf89e49d148a32": {
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentPointer/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentPointer/properties/inventory_head/anyOf": {
+        "path": [
+          "record",
+          "inventory_head"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentPointer/properties/inventory_head/anyOf/1/type": {
+        "path": [
+          "record",
+          "inventory_head"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentPointer/properties/last_origin_operation_id/minLength": {
+        "path": [
+          "record",
+          "last_origin_operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentPointer/properties/last_origin_operation_id/type": {
+        "path": [
+          "record",
+          "last_origin_operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentPointer/properties/pending_operation_id/anyOf": {
+        "path": [
+          "record",
+          "pending_operation_id"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentPointer/properties/pending_operation_id/anyOf/0/minLength": {
+        "path": [
+          "record",
+          "pending_operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentPointer/properties/pending_operation_id/anyOf/0/type": {
+        "path": [
+          "record",
+          "pending_operation_id"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentPointer/properties/pending_operation_id/anyOf/1/type": {
+        "path": [
+          "record",
+          "pending_operation_id"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentPointer/properties/revision/minimum": {
+        "path": [
+          "record",
+          "revision"
+        ],
+        "value": 0
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentPointer/properties/revision/type": {
+        "path": [
+          "record",
+          "revision"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentPointer/properties/scheduler_control/anyOf": {
+        "path": [
+          "record",
+          "scheduler_control"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentPointer/properties/scheduler_control/anyOf/1/type": {
+        "path": [
+          "record",
+          "scheduler_control"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentPointer/required": {
+        "member": [
+          "remove",
+          "scope"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentPointer/type": {
+        "path": [
+          "record"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageCurrentPointer/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageCurrentPointer/properties/schema_id/const": {
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_workflow_current_pointer.v2x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageCurrentPointer/properties/schema_version/const": {
+        "path": [
+          "schema_version"
+        ],
+        "value": "2.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageCurrentPointer/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/StorageCurrentPointer/type": {
+        "path": [],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "scope"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "goal_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "goal_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_run_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_run_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/project_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/project_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "project_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/storage_instance_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/storage_instance_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "scope"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/type": {
+        "path": [
+          "record",
+          "scope"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "workflow_head"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/family_id/minLength": {
+        "path": [
+          "record",
+          "workflow_head",
+          "family_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/family_id/type": {
+        "path": [
+          "record",
+          "workflow_head",
+          "family_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_key/minLength": {
+        "path": [
+          "record",
+          "workflow_head",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_key/type": {
+        "path": [
+          "record",
+          "workflow_head",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/pattern": {
+        "path": [
+          "record",
+          "workflow_head",
+          "physical_value_sha256"
+        ],
+        "value": "b180b73ed311024afff6248c2da1ac3437609e645b969b1690e4fd0a42fa4eff\n"
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/type": {
+        "path": [
+          "record",
+          "workflow_head",
+          "physical_value_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_id/minLength": {
+        "path": [
+          "record",
+          "workflow_head",
+          "schema_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_id/type": {
+        "path": [
+          "record",
+          "workflow_head",
+          "schema_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_version/minLength": {
+        "path": [
+          "record",
+          "workflow_head",
+          "schema_version"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_version/type": {
+        "path": [
+          "record",
+          "workflow_head",
+          "schema_version"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/storage_instance_id/minLength": {
+        "path": [
+          "record",
+          "workflow_head",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/storage_instance_id/type": {
+        "path": [
+          "record",
+          "workflow_head",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "workflow_head"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/type": {
+        "path": [
+          "record",
+          "workflow_head"
+        ],
+        "value": null
+      }
+    }
+  },
+  "family": "goal_run.cancelled",
+  "routes": [
+    {
+      "call": "publish_pointer",
+      "detail": null,
+      "edition": "integrated_native",
+      "refusal": "d01/new_pointer/schema/:additionalProperties",
+      "root": "dg5:7f39aa8746808e38",
+      "site": [
+        "scripts/pm_goal_dg_int_world.py",
+        232
+      ]
+    },
+    {
+      "call": "publish_pointer",
+      "detail": null,
+      "edition": "integrated_original",
+      "refusal": "d01/new_pointer/schema/:additionalProperties",
+      "root": "dg5:f3bf89e49d148a32",
+      "site": [
+        "scripts/pm_goal_dg_int_world.py",
+        232
+      ]
+    }
+  ],
+  "row": "dg5/d01/new_pointer/schema",
+  "sites": [
+    [
+      "scripts/pm_goal_dg_int_world.py",
+      232
+    ]
+  ],
+  "source": "34f212d3fbcc8051ce2922d1de9dd75714ae361a"
+}

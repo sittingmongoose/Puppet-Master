@@ -16,6 +16,7 @@ import sys
 import tempfile
 import time
 from collections import Counter
+from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
 from copy import deepcopy
 from datetime import datetime, timezone
@@ -26,6 +27,7 @@ from urllib.parse import urlparse
 
 if str(Path(__file__).resolve().parent) not in sys.path:
     sys.path.insert(0, str(Path(__file__).resolve().parent))
+from pm_readiness_audit import AUDIT_REL, SNAPSHOT_CAPABILITY, audit_input, logical_path, snapshot_for, tree_paths
 from pm_wiring_inventory import command_handler_bindings, wiring_command_excluded
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -70,7 +72,7 @@ def utc_now() -> str:
 
 
 def rel(path: Path) -> str:
-    return path.resolve().relative_to(ROOT).as_posix()
+    return logical_path(ROOT, path.resolve()).relative_to(ROOT).as_posix()
 
 
 def exact_path(ref: str) -> tuple[Path | None, dict[str, Any] | None]:
@@ -82,6 +84,8 @@ def exact_path(ref: str) -> tuple[Path | None, dict[str, Any] | None]:
         return None, {"path": ref, "error": "absolute_ref_not_allowed"}
 
     current = ROOT
+    snapshot = snapshot_for(ROOT)
+    audit_dir = ROOT / AUDIT_REL
     resolved_parts: list[str] = []
     for part in posix.parts:
         if part in {"", "."}:
@@ -94,8 +98,12 @@ def exact_path(ref: str) -> tuple[Path | None, dict[str, Any] | None]:
             children = {child.name: child for child in current.iterdir()}
         except NotADirectoryError:
             return None, {"path": ref, "error": "parent_not_directory", "parent": "/".join(resolved_parts)}
+        if snapshot is not None and current == audit_dir.parent:
+            children.pop(audit_dir.name, None)
+            if snapshot.is_dir():
+                children[audit_dir.name] = snapshot
         if part not in children:
-            case_matches = [child.name for child in children.values() if child.name.lower() == part.lower()]
+            case_matches = [name for name in children if name.lower() == part.lower()]
             if case_matches:
                 actual_parts = resolved_parts + [case_matches[0]]
                 return None, {
@@ -172,6 +180,229 @@ class SubcheckTimeout(RuntimeError):
 
 
 _AGGREGATE_CHILD_ENV = "PM_PLANS_VERIFY_AGGREGATE_CHILD"
+
+# One budget covers the subprocess validators from both aggregates and the exports (review N-F).
+# The landing checker creates the slot directory, and each validator holds a slot while it runs.
+# The standalone migration process and in-process Spec Lock check do not acquire these slots.
+#
+# The memory floor limits concurrency, never progress (deep review 2, D2-1/D2-2). A start is decided
+# under one cross-process start lock in the same directory, shared by both aggregates and the exports. With no validator of this run running, a validator always starts, whatever MemAvailable
+# reads: base ran one validator at a time, so a low-memory host gets exactly that instead of waiting.
+# A second or later validator starts only while MemAvailable is at least the floor plus
+# MEMORY_HEADROOM_MB for each validator already running, and only after START_SETTLE_SECONDS since the
+# last start, so the reading includes the process just started. A held-back start logs once a minute
+# and retries; it can never wait without end, because the running validator's exit makes the next
+# start the first one again.
+SLOTS_DIR_ENV = "PM_LANDING_CHECK_SLOTS_DIR"
+SLOTS_COUNT_ENV = "PM_LANDING_CHECK_SLOTS"
+MEMORY_FLOOR_MB_ENV = "PM_LANDING_CHECK_MEMORY_FLOOR_MB"
+MEMORY_HEADROOM_MB_ENV = "PM_LANDING_CHECK_MEMORY_HEADROOM_MB"
+START_SETTLE_SECONDS_ENV = "PM_LANDING_CHECK_START_SETTLE_SECONDS"
+MAX_JOBS = 8
+CLOSURE_EXPORT_CAPABILITY = "landing_closure_export_v1"
+DEFAULT_MEMORY_HEADROOM_MB = 2048
+DEFAULT_START_SETTLE_SECONDS = 10.0
+START_LOCK_NAME = "start.lock"
+LAST_START_NAME = "last-start"
+HOLD_LOG_SECONDS = 60.0
+START_RETRY_SECONDS = 0.25
+
+
+def memory_available_mb(meminfo: str = "/proc/meminfo") -> int | None:
+    """MemAvailable in MiB, or None where the kernel does not say (no floor is enforced then).
+
+    The kernel writes the value in kB (KiB), so it is divided by 1024; read raw it made the 6 GiB floor 6 MiB
+    (cheap review r2 N1).
+    """
+    try:
+        with open(meminfo, encoding="utf-8") as handle:
+            for line in handle:
+                if line.startswith("MemAvailable:"):
+                    fields = line.split()
+                    if len(fields) < 3 or fields[2] != "kB":
+                        return None
+                    return int(fields[1]) // 1024
+    except (OSError, ValueError, IndexError):
+        return None
+    return None
+
+
+class ValidatorSlots:
+    """At most `count` validators at once, under a memory floor that limits concurrency, never progress.
+
+    Each slot is a file held with an exclusive flock while its validator runs, so the budget is shared
+    by every process in the landing check rather than one pool per aggregate. Every start is decided
+    under one cross-process start lock (`start.lock` in the same directory):
+
+    - with no validator of this run running, a validator always starts, whatever MemAvailable reads:
+      that is base's serial behaviour, so a low-memory host runs one at a time instead of waiting;
+    - a second or later validator starts only when MemAvailable is at least the floor plus one
+      headroom for each validator already running, after a settle time since the last start so the
+      reading includes the process just started.
+
+    A held-back start releases the lock, says so once a minute and retries; the validator that is
+    running can finish, which makes the next start the first one again, so the run always advances.
+    A standalone verifier has no slot directory, and a host without fcntl cannot share slots.
+    If the host has no MemAvailable reading, only the slot count is enforced.
+    """
+
+    def __init__(self, directory, count: int, floor_mb: int = 0, *, fcntl_module,
+                 available=memory_available_mb, sleep=time.sleep,
+                 headroom_mb: int = DEFAULT_MEMORY_HEADROOM_MB,
+                 settle_seconds: float = DEFAULT_START_SETTLE_SECONDS,
+                 clock=time.monotonic):
+        self.directory = Path(directory)
+        self.count = count
+        self.floor_mb = max(0, floor_mb)
+        self.headroom_mb = max(0, headroom_mb)
+        self.settle_seconds = max(0.0, settle_seconds)
+        self.fcntl = fcntl_module
+        self._available = available
+        self._sleep = sleep
+        self._clock = clock
+        self._last_hold_log = float("-inf")
+
+    @classmethod
+    def from_environment(cls) -> "ValidatorSlots | None":
+        directory = os.environ.get(SLOTS_DIR_ENV)
+        count = os.environ.get(SLOTS_COUNT_ENV)
+        if not directory or not count:
+            return None
+        try:
+            count_value = int(count)
+        except ValueError:
+            return None
+        if count_value < 1:
+            return None
+        try:
+            import fcntl  # noqa: PLC0415 - POSIX only; a host without it keeps today's behaviour.
+        except ImportError:  # pragma: no cover - Windows
+            return None
+        floor = os.environ.get(MEMORY_FLOOR_MB_ENV)
+        try:
+            floor_value = max(0, int(floor)) if floor else 0
+        except ValueError:
+            floor_value = 0
+        headroom = os.environ.get(MEMORY_HEADROOM_MB_ENV)
+        try:
+            headroom_value = max(0, int(headroom)) if headroom else DEFAULT_MEMORY_HEADROOM_MB
+        except ValueError:
+            headroom_value = DEFAULT_MEMORY_HEADROOM_MB
+        settle = os.environ.get(START_SETTLE_SECONDS_ENV)
+        try:
+            settle_value = max(0.0, float(settle)) if settle else DEFAULT_START_SETTLE_SECONDS
+        except ValueError:
+            settle_value = DEFAULT_START_SETTLE_SECONDS
+        return cls(directory, count_value, floor_value, fcntl_module=fcntl,
+                   headroom_mb=headroom_value, settle_seconds=settle_value)
+
+    def _try_slot_lock(self, handle) -> bool:
+        try:
+            self.fcntl.flock(handle.fileno(), self.fcntl.LOCK_EX | self.fcntl.LOCK_NB)
+        except BlockingIOError:
+            return False
+        return True
+
+    def _running_count(self) -> int:
+        """How many slots of this run are held right now; read under the start lock."""
+        running = 0
+        for index in range(self.count):
+            with (self.directory / f"slot-{index}.lock").open("a+b") as handle:
+                if not self._try_slot_lock(handle):
+                    running += 1
+        return running
+
+    @contextmanager
+    def _start_lock(self):
+        """Hold the cross-process start lock until the file is closed."""
+        with (self.directory / START_LOCK_NAME).open("a+b") as handle:
+            self.fcntl.flock(handle.fileno(), self.fcntl.LOCK_EX)
+            yield
+
+    def _settle_if_needed(self) -> None:
+        """Wait out the settle time since the last start, so memory includes that process."""
+        if self.settle_seconds <= 0:
+            return
+        try:
+            last = float((self.directory / LAST_START_NAME).read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            return
+        remaining = self.settle_seconds - (self._clock() - last)
+        if remaining > 0:
+            self._sleep(remaining)
+
+    def _note_start(self) -> None:
+        try:
+            (self.directory / LAST_START_NAME).write_text(f"{self._clock():.6f}\n", encoding="utf-8")
+        except OSError:
+            pass
+
+    def _log_held_back(self, label: str, available: int, threshold: int, running: int) -> None:
+        now = self._clock()
+        if now - self._last_hold_log < HOLD_LOG_SECONDS:
+            return
+        self._last_hold_log = now
+        print(f"[pm-plans-verify] holding back {label}: {available / 1024:.1f} GiB available, "
+              f"floor {self.floor_mb / 1024:.1f} GiB + {self.headroom_mb / 1024:.1f} GiB headroom for "
+              f"{running} running validator(s), need {threshold / 1024:.1f} GiB",
+              file=sys.stderr, flush=True)
+
+    def _take(self):
+        """Return a held slot handle, or None when all are busy."""
+        for index in range(self.count):
+            handle = (self.directory / f"slot-{index}.lock").open("a+b")
+            try:
+                locked = self._try_slot_lock(handle)
+            except OSError:
+                handle.close()
+                raise
+            if locked:
+                return handle
+            handle.close()
+        return None
+
+    def _try_start(self, label: str):
+        """Take a slot or return None while another validator has to finish first."""
+        with self._start_lock():
+            running = self._running_count()
+            if running:
+                self._settle_if_needed()
+                running = self._running_count()
+            # The first validator may start regardless of the memory reading.
+            if running:
+                threshold = self.floor_mb + self.headroom_mb * running
+                available = self._available()
+                if available is not None and available < threshold:
+                    self._log_held_back(label, available, threshold, running)
+                    return None
+            slot = self._take()
+            if slot is not None:
+                self._note_start()
+            return slot
+
+    @contextmanager
+    def hold(self, label: str):
+        while True:
+            try:
+                slot = self._try_start(label)
+            except OSError as exc:
+                raise RuntimeError(f"cannot acquire the shared validator budget for {label}: {exc}") from exc
+            if slot is not None:
+                with slot:
+                    yield
+                return
+            self._sleep(START_RETRY_SECONDS)
+
+
+@contextmanager
+def validator_slot(label: str):
+    """Hold one shared slot, and the memory floor, for one validator's process; a no-op standalone."""
+    pool = ValidatorSlots.from_environment()
+    if pool is None:
+        yield
+        return
+    with pool.hold(label):
+        yield
 
 
 def _terminate_process_group(proc: subprocess.Popen) -> tuple[bool, str]:
@@ -481,6 +712,58 @@ def run_named_check(
     return name, report
 
 
+def default_jobs() -> int:
+    """A standalone aggregate runs one subcheck at a time.
+
+    Only a landing check asks for more: it passes --jobs, and it can see how much other work the
+    machine carries (review N-G: a hand-run run-gates used to take four workers by default).
+    """
+    return 1
+
+
+def aggregate_jobs(args: argparse.Namespace) -> int:
+    requested = int(getattr(args, "jobs", 0) or 0)
+    return max(1, min(requested if requested > 0 else default_jobs(), MAX_JOBS))
+
+
+def run_aggregate_checks(
+    check_specs: list[tuple[str, Any, argparse.Namespace]],
+    *,
+    progress: bool,
+    timeout_seconds: int,
+    jobs: int,
+) -> list[tuple[str, dict[str, Any]]]:
+    """Run one aggregate's subchecks, in order of their results, `jobs` at a time.
+
+    `jobs == 1` is exactly the serial loop it was before: one subcheck, then the next, in
+    `check_specs` order. Above that, each subcheck still runs in its own process with its own temp
+    and report paths (`_run_subprocess_check`); only the waiting overlaps. Results are read back in
+    `check_specs` order, so stdout, each subcheck's report and the aggregate's exit code do not
+    depend on which validator finished first. The one in-process subcheck (`verify_spec_lock`)
+    stays on the main thread, because its SIGALRM backstop can only be armed there; it is cheap.
+    """
+    if jobs <= 1:
+        return [
+            run_named_check(name, func, namespace, progress=progress, timeout_seconds=timeout_seconds)
+            for name, func, namespace in check_specs
+        ]
+    results: list[tuple[str, dict[str, Any]] | None] = [None] * len(check_specs)
+    with ThreadPoolExecutor(max_workers=jobs, thread_name_prefix="pm-aggregate") as pool:
+        pending: dict[int, Any] = {}
+        for index, (name, func, namespace) in enumerate(check_specs):
+            if name in _INPROCESS_AGGREGATE_CHECKS:
+                results[index] = run_named_check(
+                    name, func, namespace, progress=progress, timeout_seconds=timeout_seconds)
+            else:
+                pending[index] = pool.submit(
+                    run_named_check, name, func, namespace,
+                    progress=progress, timeout_seconds=timeout_seconds)
+        for index, future in pending.items():
+            results[index] = future.result()
+    assert all(result is not None for result in results)
+    return [result for result in results if result is not None]
+
+
 def _run_inprocess_check(
     name: str,
     func: Any,
@@ -535,13 +818,14 @@ def _run_subprocess_check(
             str(temp_path),
         ]
         argv.extend(extra_cli_args)
-        proc, timeout_report = run_validator_subprocess(
-            name,
-            argv,
-            timeout_seconds=timeout_seconds,
-            extra_failure_fields={"command_id": command_id},
-            aggregate_child=True,
-        )
+        with validator_slot(name):
+            proc, timeout_report = run_validator_subprocess(
+                name,
+                argv,
+                timeout_seconds=timeout_seconds,
+                extra_failure_fields={"command_id": command_id},
+                aggregate_child=True,
+            )
         if timeout_report is not None:
             # Rewrite the check name to the aggregate subcheck name the caller expects.
             timeout_report["check"] = _aggregate_check_name(name)
@@ -875,20 +1159,20 @@ def iter_repo_files(capture_paths: Iterable[str] | None = None) -> list[Path]:
         for raw in proc.stdout.split(b"\0"):
             if not raw:
                 continue
-            path = ROOT / raw.decode("utf-8")
+            path = audit_input(ROOT, raw.decode("utf-8"))
             try:
                 if not path.is_symlink() and path.is_file():
                     files.append(path)
             except OSError:
                 continue
     else:
-        for path in ROOT.rglob("*"):
+        for path in tree_paths(ROOT, ROOT):
             try:
                 if path.is_symlink() or not path.is_file():
                     continue
             except OSError:
                 continue
-            parts = path.relative_to(ROOT).parts
+            parts = logical_path(ROOT, path).relative_to(ROOT).parts
             if ".git" not in parts:
                 files.append(path)
 
@@ -1035,7 +1319,7 @@ def cmd_json_syntax(args: argparse.Namespace) -> dict[str, Any]:
         if path.suffix not in {".json", ".jsonl"}:
             continue
         files_checked += 1
-        path_ref = path.relative_to(ROOT).as_posix()
+        path_ref = logical_path(ROOT, path).relative_to(ROOT).as_posix()
         capture = capture_modes.get(path_ref)
         if capture is not None:
             consumed_capture_paths.add(path_ref)
@@ -1662,10 +1946,10 @@ def cmd_validate_plan_graph(args: argparse.Namespace) -> dict[str, Any]:
 
 def plan_text_files() -> list[Path]:
     files: list[Path] = []
-    for path in PLANS.rglob("*"):
+    for path in tree_paths(ROOT, PLANS):
         if not path.is_file():
             continue
-        parts = path.relative_to(PLANS).parts
+        parts = logical_path(ROOT, path).relative_to(PLANS).parts
         if parts and parts[0] in {".pipeline", "_shards", ".evidence", "ledgers"}:
             continue
         if path.suffix.lower() in {".md", ".json"}:
@@ -6364,7 +6648,7 @@ def cmd_validate_web_capability_contracts(args: argparse.Namespace) -> dict[str,
             if token not in text:
                 failures.append({"path": rel(path), "token": token, "error": "missing_web_capability_doc_token"})
 
-    for path in PLANS.rglob("*"):
+    for path in tree_paths(ROOT, PLANS):
         if not path.is_file():
             continue
         path_rel = rel(path)
@@ -7033,7 +7317,7 @@ def cmd_validate_audit_closure(args: argparse.Namespace) -> dict[str, Any]:
         )
 
     failures: list[dict[str, Any]] = []
-    for detail in raw_report.get("errors", [])[:200]:
+    for detail in raw_report.get("errors", []):
         failures.append(
             {
                 "path": rel(registry),
@@ -7112,10 +7396,9 @@ def cmd_validate_audit_closure(args: argparse.Namespace) -> dict[str, Any]:
     return report
 
 
-def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
-    progress = progress_enabled(args)
-    timeout_seconds = subcheck_timeout_seconds(args)
-    check_specs = [
+def run_gates_check_specs(timeout_seconds: int) -> list[tuple[str, Any, argparse.Namespace]]:
+    """Every run-gates subcheck, in the order its report prints them."""
+    return [
         ("json_syntax", cmd_json_syntax, argparse.Namespace()),
         ("verify_spec_lock", cmd_verify_spec_lock, argparse.Namespace()),
         ("validate_plan_graph", cmd_validate_plan_graph, argparse.Namespace(paths=[])),
@@ -7155,10 +7438,17 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("validate_audit_status_index", cmd_validate_audit_status_index, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("check_shards", cmd_check_shards, argparse.Namespace(report=None)),
     ]
-    checks = [
-        run_named_check(name, func, namespace, progress=progress, timeout_seconds=timeout_seconds)
-        for name, func, namespace in check_specs
-    ]
+
+
+def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
+    progress = progress_enabled(args)
+    timeout_seconds = subcheck_timeout_seconds(args)
+    checks = run_aggregate_checks(
+        run_gates_check_specs(timeout_seconds),
+        progress=progress,
+        timeout_seconds=timeout_seconds,
+        jobs=aggregate_jobs(args),
+    )
 
     failures: list[dict[str, Any]] = []
     for name, report in checks:
@@ -7172,10 +7462,9 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
     )
 
 
-def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
-    progress = progress_enabled(args)
-    timeout_seconds = subcheck_timeout_seconds(args)
-    check_specs = [
+def audit_governance_check_specs(timeout_seconds: int) -> list[tuple[str, Any, argparse.Namespace]]:
+    """Every audit-governance subcheck, in the order its report prints them."""
+    return [
         ("spec_lock", cmd_verify_spec_lock, argparse.Namespace()),
         ("plan_graph", cmd_validate_plan_graph, argparse.Namespace(paths=[])),
         ("auto_decisions", cmd_validate_auto_decisions, argparse.Namespace()),
@@ -7212,10 +7501,17 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("audit_closure", cmd_validate_audit_closure, argparse.Namespace()),
         ("audit_status_index", cmd_validate_audit_status_index, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
     ]
-    checks = [
-        run_named_check(name, func, namespace, progress=progress, timeout_seconds=timeout_seconds)
-        for name, func, namespace in check_specs
-    ]
+
+
+def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
+    progress = progress_enabled(args)
+    timeout_seconds = subcheck_timeout_seconds(args)
+    checks = run_aggregate_checks(
+        audit_governance_check_specs(timeout_seconds),
+        progress=progress,
+        timeout_seconds=timeout_seconds,
+        jobs=aggregate_jobs(args),
+    )
     check_map = {name: report for name, report in checks}
     failures: list[dict[str, Any]] = []
     for name, report in checks:
@@ -7363,7 +7659,19 @@ def main() -> int:
                 help="Maximum seconds for each aggregate subcheck before reporting the stuck check.",
             )
             sub.add_argument("--quiet-progress", action="store_true", help="Suppress aggregate subcheck progress on stderr.")
+            sub.add_argument(
+                "--jobs",
+                type=int,
+                default=default_jobs(),
+                help="Run this many independent subchecks at once, each still in its own process with its own "
+                     f"temp and report paths; results are emitted in the original order (default: {default_jobs()}; "
+                     f"1 is the serial run; at most {MAX_JOBS}, and a landing check shares one such budget "
+                     "across aggregates (landing-budget-v1); supports a run-owned readiness snapshot "
+                     f"({SNAPSHOT_CAPABILITY}); writes complete audit-closure exports ({CLOSURE_EXPORT_CAPABILITY}).",
+            )
     args = parser.parse_args()
+    if hasattr(args, "jobs") and not 1 <= int(args.jobs) <= MAX_JOBS:
+        parser.error(f"--jobs must be between 1 and {MAX_JOBS}")
     if not hasattr(args, "subcheck_timeout_seconds"):
         args.subcheck_timeout_seconds = DEFAULT_SUBCHECK_TIMEOUT_SECONDS
     if not hasattr(args, "paths"):

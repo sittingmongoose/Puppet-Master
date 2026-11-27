@@ -1,0 +1,1348 @@
+{
+  "census_sha256": "e90632b6aac7410726c18e710e5c49e1b23aac41cdaa5b785df9dc5bf7881c6c",
+  "examples": {
+    "dg5:15c2d63af795cf3a": {
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "owner"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/owner_epoch/minimum": {
+        "path": [
+          "record",
+          "owner",
+          "owner_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/owner_epoch/type": {
+        "path": [
+          "record",
+          "owner",
+          "owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/owner_ref/minLength": {
+        "path": [
+          "record",
+          "owner",
+          "owner_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/owner_ref/type": {
+        "path": [
+          "record",
+          "owner",
+          "owner_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/server_claim_epoch/minimum": {
+        "path": [
+          "record",
+          "owner",
+          "server_claim_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/server_claim_epoch/type": {
+        "path": [
+          "record",
+          "owner",
+          "server_claim_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/server_id/minLength": {
+        "path": [
+          "record",
+          "owner",
+          "server_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/server_id/type": {
+        "path": [
+          "record",
+          "owner",
+          "server_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/required": {
+        "member": [
+          "remove",
+          "owner_ref"
+        ],
+        "path": [
+          "record",
+          "owner"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/type": {
+        "path": [
+          "record",
+          "owner"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "scope"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "goal_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "goal_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_run_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_run_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/project_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/project_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "project_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/storage_instance_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/storage_instance_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "scope"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/type": {
+        "path": [
+          "record",
+          "scope"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/closed_members": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "7928c07f-9815-4211-a1e2-65bf7032c6e6"
+          }
+        },
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "pending_candidate"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/family_id/minLength": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "7928c07f-9815-4211-a1e2-65bf7032c6e6"
+          }
+        },
+        "path": [
+          "record",
+          "pending_candidate",
+          "family_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/family_id/type": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "7928c07f-9815-4211-a1e2-65bf7032c6e6"
+          }
+        },
+        "path": [
+          "record",
+          "pending_candidate",
+          "family_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_key/minLength": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "7928c07f-9815-4211-a1e2-65bf7032c6e6"
+          }
+        },
+        "path": [
+          "record",
+          "pending_candidate",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_key/type": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "7928c07f-9815-4211-a1e2-65bf7032c6e6"
+          }
+        },
+        "path": [
+          "record",
+          "pending_candidate",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/pattern": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "7928c07f-9815-4211-a1e2-65bf7032c6e6"
+          }
+        },
+        "path": [
+          "record",
+          "pending_candidate",
+          "physical_value_sha256"
+        ],
+        "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/type": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "7928c07f-9815-4211-a1e2-65bf7032c6e6"
+          }
+        },
+        "path": [
+          "record",
+          "pending_candidate",
+          "physical_value_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_id/minLength": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "7928c07f-9815-4211-a1e2-65bf7032c6e6"
+          }
+        },
+        "path": [
+          "record",
+          "pending_candidate",
+          "schema_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_id/type": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "7928c07f-9815-4211-a1e2-65bf7032c6e6"
+          }
+        },
+        "path": [
+          "record",
+          "pending_candidate",
+          "schema_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_version/minLength": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "7928c07f-9815-4211-a1e2-65bf7032c6e6"
+          }
+        },
+        "path": [
+          "record",
+          "pending_candidate",
+          "schema_version"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_version/type": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "7928c07f-9815-4211-a1e2-65bf7032c6e6"
+          }
+        },
+        "path": [
+          "record",
+          "pending_candidate",
+          "schema_version"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/storage_instance_id/minLength": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "7928c07f-9815-4211-a1e2-65bf7032c6e6"
+          }
+        },
+        "path": [
+          "record",
+          "pending_candidate",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/storage_instance_id/type": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "7928c07f-9815-4211-a1e2-65bf7032c6e6"
+          }
+        },
+        "path": [
+          "record",
+          "pending_candidate",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/required": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "7928c07f-9815-4211-a1e2-65bf7032c6e6"
+          }
+        },
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "pending_candidate"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/type": {
+        "path": [
+          "record",
+          "pending_candidate"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Control/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Control/properties/committed_start/anyOf": {
+        "path": [
+          "record",
+          "committed_start"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Control/properties/committed_start/anyOf/1/type": {
+        "path": [
+          "record",
+          "committed_start"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Control/properties/epoch/minimum": {
+        "path": [
+          "record",
+          "epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Control/properties/epoch/type": {
+        "path": [
+          "record",
+          "epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Control/properties/original_operation_id/anyOf": {
+        "path": [
+          "record",
+          "original_operation_id"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Control/properties/original_operation_id/anyOf/0/minLength": {
+        "path": [
+          "record",
+          "original_operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Control/properties/original_operation_id/anyOf/0/type": {
+        "path": [
+          "record",
+          "original_operation_id"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Control/properties/original_operation_id/anyOf/1/type": {
+        "path": [
+          "record",
+          "original_operation_id"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Control/properties/pending_candidate/anyOf": {
+        "path": [
+          "record",
+          "pending_candidate"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Control/properties/pending_candidate/anyOf/1/type": {
+        "path": [
+          "record",
+          "pending_candidate"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Control/required": {
+        "member": [
+          "remove",
+          "scope"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/Control/type": {
+        "path": [
+          "record"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageControl/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageControl/properties/physical_key/minLength": {
+        "path": [
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageControl/properties/physical_key/type": {
+        "path": [
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageControl/properties/schema_id/const": {
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.storage_value.workflow_start_control.v1x"
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageControl/properties/schema_version/const": {
+        "path": [
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageControl/properties/storage_instance_id/minLength": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageControl/properties/storage_instance_id/type": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageControl/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v2.schema.json#/$defs/StorageControl/type": {
+        "path": [],
+        "value": true
+      }
+    },
+    "dg5:50355b38c00a4bb9": {
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "owner"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/owner_epoch/minimum": {
+        "path": [
+          "record",
+          "owner",
+          "owner_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/owner_epoch/type": {
+        "path": [
+          "record",
+          "owner",
+          "owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/owner_ref/minLength": {
+        "path": [
+          "record",
+          "owner",
+          "owner_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/owner_ref/type": {
+        "path": [
+          "record",
+          "owner",
+          "owner_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/server_claim_epoch/minimum": {
+        "path": [
+          "record",
+          "owner",
+          "server_claim_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/server_claim_epoch/type": {
+        "path": [
+          "record",
+          "owner",
+          "server_claim_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/server_id/minLength": {
+        "path": [
+          "record",
+          "owner",
+          "server_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/properties/server_id/type": {
+        "path": [
+          "record",
+          "owner",
+          "server_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/required": {
+        "member": [
+          "remove",
+          "owner_ref"
+        ],
+        "path": [
+          "record",
+          "owner"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/OwnerIdentity/type": {
+        "path": [
+          "record",
+          "owner"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "scope"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "goal_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "goal_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_run_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_run_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/project_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/project_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "project_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/storage_instance_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/storage_instance_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "scope"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/type": {
+        "path": [
+          "record",
+          "scope"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/closed_members": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "9011ddcf-9c59-400a-a915-eab06b7e3b2d"
+          }
+        },
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "pending_candidate"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/family_id/minLength": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "9011ddcf-9c59-400a-a915-eab06b7e3b2d"
+          }
+        },
+        "path": [
+          "record",
+          "pending_candidate",
+          "family_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/family_id/type": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "9011ddcf-9c59-400a-a915-eab06b7e3b2d"
+          }
+        },
+        "path": [
+          "record",
+          "pending_candidate",
+          "family_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_key/minLength": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "9011ddcf-9c59-400a-a915-eab06b7e3b2d"
+          }
+        },
+        "path": [
+          "record",
+          "pending_candidate",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_key/type": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "9011ddcf-9c59-400a-a915-eab06b7e3b2d"
+          }
+        },
+        "path": [
+          "record",
+          "pending_candidate",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/pattern": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "9011ddcf-9c59-400a-a915-eab06b7e3b2d"
+          }
+        },
+        "path": [
+          "record",
+          "pending_candidate",
+          "physical_value_sha256"
+        ],
+        "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/type": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "9011ddcf-9c59-400a-a915-eab06b7e3b2d"
+          }
+        },
+        "path": [
+          "record",
+          "pending_candidate",
+          "physical_value_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_id/minLength": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "9011ddcf-9c59-400a-a915-eab06b7e3b2d"
+          }
+        },
+        "path": [
+          "record",
+          "pending_candidate",
+          "schema_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_id/type": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "9011ddcf-9c59-400a-a915-eab06b7e3b2d"
+          }
+        },
+        "path": [
+          "record",
+          "pending_candidate",
+          "schema_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_version/minLength": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "9011ddcf-9c59-400a-a915-eab06b7e3b2d"
+          }
+        },
+        "path": [
+          "record",
+          "pending_candidate",
+          "schema_version"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_version/type": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "9011ddcf-9c59-400a-a915-eab06b7e3b2d"
+          }
+        },
+        "path": [
+          "record",
+          "pending_candidate",
+          "schema_version"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/storage_instance_id/minLength": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "9011ddcf-9c59-400a-a915-eab06b7e3b2d"
+          }
+        },
+        "path": [
+          "record",
+          "pending_candidate",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/storage_instance_id/type": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "9011ddcf-9c59-400a-a915-eab06b7e3b2d"
+          }
+        },
+        "path": [
+          "record",
+          "pending_candidate",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/required": {
+        "control": {
+          "path": [
+            "record",
+            "pending_candidate"
+          ],
+          "value": {
+            "family_id": "workflow_start_candidate",
+            "physical_key": "TEST_ONLY:pending",
+            "physical_value_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "schema_id": "pm.storage_value.workflow_start_candidate.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "9011ddcf-9c59-400a-a915-eab06b7e3b2d"
+          }
+        },
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "pending_candidate"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/type": {
+        "path": [
+          "record",
+          "pending_candidate"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Control/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Control/properties/committed_start/anyOf": {
+        "path": [
+          "record",
+          "committed_start"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Control/properties/committed_start/anyOf/1/type": {
+        "path": [
+          "record",
+          "committed_start"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Control/properties/epoch/minimum": {
+        "path": [
+          "record",
+          "epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Control/properties/epoch/type": {
+        "path": [
+          "record",
+          "epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Control/properties/original_operation_id/anyOf": {
+        "path": [
+          "record",
+          "original_operation_id"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Control/properties/original_operation_id/anyOf/0/minLength": {
+        "path": [
+          "record",
+          "original_operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Control/properties/original_operation_id/anyOf/0/type": {
+        "path": [
+          "record",
+          "original_operation_id"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Control/properties/original_operation_id/anyOf/1/type": {
+        "path": [
+          "record",
+          "original_operation_id"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Control/properties/pending_candidate/anyOf": {
+        "path": [
+          "record",
+          "pending_candidate"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Control/properties/pending_candidate/anyOf/1/type": {
+        "path": [
+          "record",
+          "pending_candidate"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Control/required": {
+        "member": [
+          "remove",
+          "scope"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/Control/type": {
+        "path": [
+          "record"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/StorageControl/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/StorageControl/properties/physical_key/minLength": {
+        "path": [
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/StorageControl/properties/physical_key/type": {
+        "path": [
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/StorageControl/properties/schema_id/const": {
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.storage_value.workflow_start_control.v1x"
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/StorageControl/properties/schema_version/const": {
+        "path": [
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/StorageControl/properties/storage_instance_id/minLength": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/StorageControl/properties/storage_instance_id/type": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/StorageControl/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/workflow_start_original_custody.v6.schema.json#/$defs/StorageControl/type": {
+        "path": [],
+        "value": true
+      }
+    }
+  },
+  "family": "goal_run.cancelled",
+  "routes": [
+    {
+      "call": "issue_physical",
+      "detail": [
+        "Additional properties are not allowed ('methodb_extra' was unexpected)"
+      ],
+      "edition": "original_profile",
+      "mutation": false,
+      "refusal": "issue/workflow_start_control/schema/",
+      "root": "dg5:15c2d63af795cf3a",
+      "site": [
+        "scripts/pm_goal_dg_r_world.py",
+        446
+      ],
+      "start": "started"
+    },
+    {
+      "call": "issue_physical",
+      "detail": [
+        "Additional properties are not allowed ('methodb_extra' was unexpected)"
+      ],
+      "edition": "native_v7",
+      "mutation": false,
+      "refusal": "issue/workflow_start_control/schema/",
+      "root": "dg5:50355b38c00a4bb9",
+      "site": [
+        "scripts/pm_goal_dg_r_world.py",
+        446
+      ],
+      "start": "started"
+    }
+  ],
+  "row": "dg5/issue/workflow_start_control/schema",
+  "sites": [
+    [
+      "scripts/pm_goal_dg_r_world.py",
+      446
+    ]
+  ],
+  "source": "34f212d3fbcc8051ce2922d1de9dd75714ae361a"
+}

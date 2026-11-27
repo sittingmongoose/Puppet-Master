@@ -7713,7 +7713,7 @@
           "provider_id": null,
           "account_id": null
         },
-        "rule_id": "rule-a",
+        "rule_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
         "normalized_pattern": "web.search",
         "action": "deny",
         "expected_owner_revision": 0,
@@ -7752,7 +7752,7 @@
           "provider_id": null,
           "account_id": null
         },
-        "rule_id": "rule-a",
+        "rule_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
         "normalized_pattern": "web.search",
         "action": "deny",
         "expected_owner_revision": null,
@@ -7791,7 +7791,7 @@
           "provider_id": null,
           "account_id": null
         },
-        "rule_id": "rule-a",
+        "rule_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
         "normalized_pattern": "web.search",
         "action": "deny",
         "expected_owner_revision": 0,
@@ -7869,7 +7869,7 @@
           "provider_id": null,
           "account_id": null
         },
-        "rule_id": "rule-a",
+        "rule_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
         "normalized_pattern": "web.search",
         "action": "allow",
         "expected_owner_revision": 0,
@@ -7908,7 +7908,7 @@
           "provider_id": null,
           "account_id": null
         },
-        "rule_id": "rule-a",
+        "rule_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
         "normalized_pattern": "web.search",
         "action": "allow",
         "expected_owner_revision": 0,
@@ -7947,7 +7947,7 @@
           "provider_id": null,
           "account_id": null
         },
-        "rule_id": "rule-a",
+        "rule_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
         "normalized_pattern": "web.search",
         "action": "deny",
         "expected_owner_revision": 0,
@@ -7986,7 +7986,7 @@
           "provider_id": null,
           "account_id": null
         },
-        "rule_id": "rule-a",
+        "rule_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
         "normalized_pattern": "web.search",
         "action": "deny",
         "expected_owner_revision": null,
@@ -8025,7 +8025,7 @@
           "provider_id": null,
           "account_id": null
         },
-        "rule_id": "rule-a",
+        "rule_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
         "normalized_pattern": "web.search",
         "action": "deny",
         "expected_owner_revision": 0,
@@ -8103,7 +8103,7 @@
           "provider_id": null,
           "account_id": null
         },
-        "rule_id": "rule-a",
+        "rule_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
         "normalized_pattern": "web.search",
         "action": "deny",
         "expected_owner_revision": 0,
@@ -8142,7 +8142,7 @@
           "provider_id": null,
           "account_id": null
         },
-        "rule_id": "rule-a",
+        "rule_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
         "normalized_pattern": "web.search",
         "action": "deny",
         "expected_owner_revision": null,
@@ -8181,7 +8181,7 @@
           "provider_id": null,
           "account_id": null
         },
-        "rule_id": "rule-a",
+        "rule_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
         "normalized_pattern": "web.search",
         "action": "deny",
         "expected_owner_revision": 0,
@@ -8259,7 +8259,7 @@
           "provider_id": null,
           "account_id": null
         },
-        "rule_id": "rule-a",
+        "rule_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
         "normalized_pattern": "web.search",
         "action": "deny",
         "expected_owner_revision": 0,
@@ -8298,7 +8298,7 @@
           "provider_id": null,
           "account_id": null
         },
-        "rule_id": "rule-a",
+        "rule_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
         "normalized_pattern": "web.search",
         "action": "deny",
         "expected_owner_revision": null,
@@ -8337,7 +8337,7 @@
           "provider_id": null,
           "account_id": null
         },
-        "rule_id": "rule-a",
+        "rule_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
         "normalized_pattern": "web.search",
         "action": "deny",
         "expected_owner_revision": 0,
@@ -8426,6 +8426,162 @@
         "return_context_ref": "fixture-a"
       },
       "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-update_rule-legacy-rule-id",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.update_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": "rule-a",
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-revoke-legacy-rule-id",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.revoke",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": "rule-a",
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-create_project_rule-uuid-rule-id",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.create_project_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "scope_partition": "project~cHJvamVjdC1h",
+          "project_id": "project-a",
+          "project_home_server_id": "server-a",
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "project",
+          "level_key": "project-a",
+          "computer_key": null,
+          "project_id": "project-a",
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": "0b6f8d4e-3c1a-4f2b-9d7e-5a8c2e1f4b30",
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-rule-create_project_rule-non-uuid-rule-id",
+      "schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
+      "record": {
+        "command_id": "cmd.permissions.create_project_rule",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "scope_partition": "project~cHJvamVjdC1h",
+          "project_id": "project-a",
+          "project_home_server_id": "server-a",
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "client_id": "fixture-a",
+        "target": {
+          "level": "project",
+          "level_key": "project-a",
+          "computer_key": null,
+          "project_id": "project-a",
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "rule_id": "rule-a",
+        "normalized_pattern": "web.search",
+        "action": "deny",
+        "expected_owner_revision": 0,
+        "expected_source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_authority_ref": null,
+        "repository_origin_acceptance_ref": null,
+        "idempotency_key": "fixture-a",
+        "return_context_ref": "fixture-a"
+      },
+      "expected_schema_valid": false,
       "semantic_checks": [],
       "native_runtime_executed": false
     }

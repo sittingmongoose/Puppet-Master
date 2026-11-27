@@ -95,13 +95,13 @@ import fs from 'fs';
 
 // R133-FOLLOWUPS 5 (T92): the rolling above-target window's charge for one observer interval. A sampled state
 // covers the interval until the next frame, but a long gap must not charge the whole gap to the last above-target
-// sample: the product's compositor fade may have completed inside it. With the shy fade on, the above-target
-// interval ends when the fade reached its target (shyAt + shyFade), not at the next sample; with no fade the Pod
-// stayed opaque and the whole interval is real exposure. The page tick mirrors this inline (it is serialized into
-// the page); exported for tests/pod-window-charge.selftest.mjs, which extracts it from this file's source.
-export function podWindowCharge({ wasOpaque, dt, now, shy, shyAt, shyFade }) {
+// sample when the product's compositor fade completed inside it. The interval ends at shyAt + shyFade only after
+// a sample by that deadline witnessed opacity at target; without that evidence the Pod may still be opaque and the
+// whole interval is charged. The page tick mirrors this inline; exported for tests/pod-window-charge.selftest.mjs.
+export function podWindowCharge({ wasOpaque, dt, now, shy, shyAt, shyFade, shyTargetAt = null }) {
   if (!wasOpaque || dt <= 0) return null;
-  const end = shy && shyAt !== null ? Math.min(now, shyAt + shyFade) : now;
+  const fadeEnd = shy && shyAt !== null ? shyAt + shyFade : null;
+  const end = fadeEnd !== null && shyTargetAt !== null && shyTargetAt <= fadeEnd ? Math.min(now, fadeEnd) : now;
   const start = now - dt;
   return end > start ? [start, end] : null;
 }
@@ -1992,7 +1992,7 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
       }, SELFTEST);
       /* T47 round 2: the fade-back mechanism, frame by frame (see above) */
       await p.evaluate(([HOST, P]) => {
-        const M = window.__nvPodOpaque = { phase: '', ep: null, over: [], worst: 0, worstAt: '', worstLate: 0, worstLateAt: '', frames: 0, shyAt: null, shyFade: null, shyTiming: '', lastFrame: null, gaps: [] };
+        const M = window.__nvPodOpaque = { phase: '', ep: null, over: [], worst: 0, worstAt: '', worstLate: 0, worstLateAt: '', frames: 0, shyAt: null, shyFade: null, shyTargetAt: null, shyTiming: '', lastFrame: null, gaps: [] };
         const samples = [];
         let sampleMs = 0, wasOpaque = false, worstWindowMs = 0, worstWindowAt = '';
         let windowFlaggedPhase = null, offscreenFlaggedPhase = null;
@@ -2018,12 +2018,21 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
           return null;
         };
         /* data-shy on: when, and the transition the product's style gives the Pod then (reading it starts the transition) */
-        new MutationObserver(recs => { for (const r of recs) { if (r.target.id !== 'o55np-pod') continue;
-          const pod = r.target, now = performance.now();
-          if (pod.hasAttribute('data-shy')) { if (M.shyAt === null) { const f = fadeOf(pod); M.shyAt = now; M.shyFade = f.total; M.shyTiming = f.txt;
-            const open = M.ep && (M.ep.under || now - M.ep.lastUnder < P.clearMs);
-            if (open && f.total > P.fadeMs) flag('fade', `the Pod's opacity transition is ${f.txt} = ${Math.round(f.total)} ms (the product's fade: ${P.fadeMs} ms) over transcript ${M.ep.what}`); } }
-          else M.shyAt = null; } }).observe(document.documentElement, { subtree: true, attributes: true, attributeFilter: ['data-shy'] });
+        new MutationObserver(recs => {
+          for (const r of recs) {
+            if (r.target.id !== 'o55np-pod') continue;
+            const pod = r.target, now = performance.now();
+            if (pod.hasAttribute('data-shy')) {
+              if (M.shyAt === null) {
+                const f = fadeOf(pod); M.shyAt = now; M.shyFade = f.total; M.shyTargetAt = null; M.shyTiming = f.txt;
+                const open = M.ep && (M.ep.under || now - M.ep.lastUnder < P.clearMs);
+                if (open && f.total > P.fadeMs) flag('fade', `the Pod's opacity transition is ${f.txt} = ${Math.round(f.total)} ms (the product's fade: ${P.fadeMs} ms) over transcript ${M.ep.what}`);
+              }
+            } else {
+              M.shyAt = null; M.shyTargetAt = null;
+            }
+          }
+        }).observe(document.documentElement, { subtree: true, attributes: true, attributeFilter: ['data-shy'] });
         const tick = () => {
           const now = performance.now(), pod = document.getElementById('o55np-pod'), dt = M.lastFrame === null ? 0 : now - M.lastFrame;
           if (M.lastFrame !== null) { M.gaps.push([now, now - M.lastFrame]); if (M.gaps.length > 600) M.gaps.splice(0, 300); }
@@ -2041,10 +2050,11 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
           // interval at the window boundary so a partial frame cannot inflate the sum.
           if (wasOpaque && dt > 0) {
             // R133-FOLLOWUPS 5 (T92): a long observer gap must not charge the whole gap to the last above-target
-            // sample — the compositor may have faded the Pod inside it. With the shy fade on, the above-target
-            // interval ends when the fade reached its target (shyAt + shyFade), not at the next sample. Mirrors
-            // the exported podWindowCharge (tests/pod-window-charge.selftest.mjs).
-            const end = shy && M.shyAt !== null ? Math.min(now, M.shyAt + M.shyFade) : now;
+            // sample when a sample by the fade deadline witnessed opacity at target. Without that evidence the
+            // fade may be stuck and the whole interval stays charged. Mirrors the exported podWindowCharge.
+            const fadeEnd = shy && M.shyAt !== null ? M.shyAt + M.shyFade : null;
+            if (fadeEnd !== null && M.shyTargetAt === null && now <= fadeEnd && op <= P.target + P.targetSlack) M.shyTargetAt = now;
+            const end = fadeEnd !== null && M.shyTargetAt !== null && M.shyTargetAt <= fadeEnd ? Math.min(now, fadeEnd) : now;
             if (end > now - dt) { samples.push([now - dt, end]); sampleMs += end - (now - dt); }
           }
           wasOpaque = Boolean(what && op > P.target + P.targetSlack);

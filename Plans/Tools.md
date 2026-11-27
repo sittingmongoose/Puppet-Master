@@ -319,13 +319,15 @@ All core tool-contract (`/tool-contract`) adapters default to sync execution sem
 
 #### 3.5.0A Typed recovery and artifact-backed output
 
-Every failed, partial, truncated, or recoverable tool attempt returns a bounded `ToolRecoveryEnvelope` alongside `ToolTurnSettlement`. Canonical fields are:
+Every failed, partial, truncated, or recoverable tool attempt returns a bounded `ToolRecoveryEnvelope` alongside `ToolTurnSettlement`. This includes calls denied before dispatch. Canonical fields are:
 
 ```text
 logical_operation_id
-original_tool_call_id
+original_tool_call_id?
+parent_operation_id?
+gate_id?
 attempt_id
-tool_ref
+tool_ref?
 status
 failure_class
 retryable
@@ -350,6 +352,8 @@ next_safe_action_ids[]
 
 Fields that do not apply retain their typed empty/false state; adapters must not substitute ambiguous prose. `failure_class` is structured and is the only input to automatic retry policy. Permission denial, user decline, FileSafe block, schema mismatch, validation failure, safety stop, and secret-policy block are terminal policy outcomes and MUST NOT be relabeled transient.
 
+`original_tool_call_id` copies the nonempty `tool_call_id` of the settlement, including the provider's original id on duplicate-id denials and the host-issued id on T-189 host-carried calls and T-190 nested calls. Omit it only for a provider-native call the gate denied without an id, including a `length_truncated` denial. `parent_operation_id` copies the settlement's enclosing operation id for a nested call. `gate_id` is the nonempty PM id from the gate record, present for a gated call and absent otherwise. The runtime assigns `logical_operation_id` and `attempt_id` independently of the call id, including for a denied call. `tool_ref` is the normalized tool reference, omitted only when pre-dispatch admission could not resolve it. Omitted members carry neither `null` nor an empty string.
+
 `status` is exactly `complete | partial | timed_out | truncated | unavailable | blocked | failed`. `next_safe_action_ids[]` contains stable preregistered action IDs only; it never embeds arbitrary commands, shell text, credentials, or provider-supplied remediation code.
 
 Recovery rules:
@@ -357,8 +361,8 @@ Recovery rules:
 - One failure never silently becomes multiple attempts. Every retry has a new `attempt_id`, remains under the same `logical_operation_id`, increments `retry_count`, and preserves the preceding settlement.
 - Blind reruns are prohibited. A retry requires a permitted failure class, remaining parent deadline/resource budget, a concrete changed recovery condition, and an unspent class-specific retry allowance.
 - MCP invocations use the stricter MCP-owner rule: at most one additional bounded invoke-time reconnect or noninteractive auth-refresh retry. The general tool retry allowance MUST NOT add retries above that MCP limit.
-- Complete large output is redacted before artifact spill. The model-visible result includes bounded head/tail, exact original size, truncation state, and a canonical artifact ref. If retention fails, settlement is `fatal` or `partial_truncated`, never success.
-- Amended 2026-10-31 (DL-270): the spill target is the content-addressed payload store (SP-337). The canonical artifact ref is a payload reference (BLAKE3 hash, pack, offset), and spilled output is stored once, reference-counted, with garbage collection honouring holds. The same applies to ToolRecoveryEnvelope and ToolManagedOutputRef (T-177).
+- Complete large output is redacted before artifact spill. On successful spill, the model-visible result includes bounded head/tail, exact original size, truncation state, and a canonical artifact ref. If retention fails, the settlement is `fatal` or `partial_truncated` and carries an explicit retention failure. Omit `artifact_or_spill_ref` and `retention_ref` when the complete output could not be retained.
+- Amended 2026-10-31 (DL-270): the spill target is the content-addressed payload store (SP-337). `ToolRecoveryEnvelope.artifact_or_spill_ref` is the canonical SP-337 payload reference. The payload index resolves its BLAKE3 content ID to the pack and offset. `ToolManagedOutputRef` (T-177) carries the same content ID in `ToolTurnSettlement.retention_ref`. Spilled output is stored once, reference-counted, with garbage collection honouring holds.
 - Artifact/spill refs follow canonical retention, access-control, cleanup, and redaction owners; raw secrets, decrypted headers, tokens, cookies, or unredacted environment values never enter the envelope, receipt, prompt, cache, or spill.
 - Terminal recovery reports `cwd_before`/`cwd_after`, bounded pattern-based hints, and the retained full redacted output ref. It tells the caller to inspect the artifact instead of rerunning only to recover omitted bytes.
 - Patch/write reports already-applied success/no-op only when post-read proof shows new content present and old content absent. Whitespace mismatch and ambiguous locations are explicit; mutation remains atomic, FileSafe-approved, and post-write verified.
@@ -376,7 +380,7 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Permissions_Syst
 | `mode` | enum (`"sync"` \| `"async"`) | no | Execution mode. Default `sync`. `sync` waits through `initial_wait`; `async` returns immediately with a live shell handle. |
 | `initial_wait` | integer seconds | no | Sync-mode wait window before returning partial output and a running shell handle. Default `30`; minimum `1`; maximum `300`; values outside this closed range are `validation_error`. |
 | `shellId` | string | no | Existing shell/session binding to reuse for stateful commands; omitted to create a new shell binding. |
-| `detach` | boolean | no | Async-only. When `true`, the process is fully detached and survives client shutdown; when `false`, it remains attached to the shell session. |
+| `detach` | boolean | no | Async-only. When `true`, the process survives client shutdown under execution-host custody. When `false`, it follows the shell session's ordinary lifetime. |
 
 Amended 2026-10-09 (DL-181): `shellId` is the caller's opaque handle for the one canonical `terminal_session_id` its shell binds to (T-007). The runtime keeps that join, so Open in Terminal and Show Terminal reveal the session's terminal tab (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-017`, `#SMPFS-180`), and the handle never appears in the UI. A `shellId` that resolves to a terminal a human opened writes only under the human's grant and the rules of `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-182`: without a grant the write is refused before any byte reaches the session, after a human keystroke it is refused as `preempted`, during a password or secret prompt as `secret_input`, and under input protection with the explicit blocked result of SMPFS-165; the result fields are `Plans/Contracts_V0.md#CV-362`'s. `detach` means process detachment: the process keeps running after the client shuts down. It is not a panel tab's placement or a pop-out, and it opens, moves or closes no tab.
 
@@ -386,7 +390,9 @@ Amended 2026-10-09 (DL-181): `shellId` is the caller's opaque handle for the one
 - Sync still running after `initial_wait`: `{ shellId, status: "running", stdout, stderr, exit_code: null }`
 - Async launch: `{ shellId, status: "running", detach, pid? }`
 
-`stdout` and `stderr` are strings; `exit_code` is an integer on completion and `null` while still running.
+`stdout` and `stderr` are strings. `exit_code` is an integer on authoritative completion and `null` while running, on timeout, or if the session ends without an authoritative command outcome. When the terminal provides a single merged stream, `stdout` carries that stream and `stderr` is empty by definition.
+
+Each status refers to the individual invocation. A fresh binding starts a persistent shell and submits the first command to it. Later calls with the same live `shellId` submit to that shell, retaining its working directory, exported variables and other shell state. The Tool Turn Contract Minima below define submission and authoritative completion. A completed command can leave its shell ready for another call. If the shell ends, its handle identifies the ended session for review and cannot dispatch another command. `detach: true` keeps the running process under the execution host's custody across client shutdown, using the same binding and command boundary.
 
 **Error cases**
 
@@ -395,7 +401,8 @@ Amended 2026-10-09 (DL-181): `shellId` is the caller's opaque handle for the one
 | `validation_error` | Invalid parameter combination, such as `detach` without `mode: "async"` or malformed `initial_wait`. |
 | `permission_denied` | Tool blocked by tool policy before execution. |
 | `filesafe_blocked` | Shell command rejected by FileSafe, command blocklist, or path guard. |
-| `shell_not_found` | Referenced `shellId` does not exist or is no longer active. |
+| `shell_not_found` | Referenced `shellId` does not exist or is no longer active, including when the session ends during a call without authoritative completion for that invocation. |
+| `shell_busy` | The bound shell is handling a command or has no verified idle input boundary. The call writes nothing and is not queued. |
 | `spawn_failed` | Runtime could not start the shell or child process. |
 | `preempted` | The write targeted a terminal where a human took over; nothing was written and the agent has been told (added 2026-10-09, SMPFS-182). |
 | `secret_input` | The terminal is reading a password or other secret, which only the human may answer; nothing was written (added 2026-10-09, SMPFS-182). |
@@ -408,7 +415,7 @@ Amended 2026-10-09 (DL-181): `shellId` is the caller's opaque handle for the one
 - Accepted `initial_wait` range: `1..=300` seconds. `0`, negative values, fractional values, and values above `300` are rejected before dispatch.
 - Recommended hard execution ceiling: `30m` per shell command unless a stricter runner limit is configured.
 - If `initial_wait` expires first, the command remains live and returns `status: "running"` with partial `stdout` / `stderr`.
-- If the hard execution ceiling expires, the runtime terminates the process and returns `{ shellId, status: "timed_out", stdout, stderr, exit_code: null, error: { code: "timeout" } }`.
+- If the hard execution ceiling expires, the runtime stops the exact invocation through terminal runtime control and returns `{ shellId, status: "timed_out", stdout, stderr, exit_code: null, error: { code: "timeout" } }`. If it must end a PM-owned shell to stop the invocation, the binding ends. On a human-opened session, stop only a foreground job the runtime can still attribute to that invocation and has authority to interrupt. If the runtime cannot confirm termination, add `termination_confirmed: false` to `error`. Further dispatch requires a verified idle boundary.
 
 #### 3.5.2 `edit` contract
 
@@ -970,7 +977,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 |---|---|---|---|
 | `goal` | `string` | yes | The delegated work to perform. |
 | `context?` | `object` | no | Structured supporting context, refs, or constraints. |
-| `owner_hint?` | `string` | no | Exact-match hint against `crew.roles`; on no match the current session remains the owner. |
+| `owner_hint?` | `string` | no | Exact-match hint against `crew.roles`, matched to a `role_id` from the closed set `planner`, `implementer`, `reviewer`, `tester`, `designer`, `security`, `release`, `governance` (Personas §10, DL-2602); on no match the current session remains the owner. |
 | `subagent_type?` | `string` | no | Optional child role selector; when present, validate it against the `subagent_registry` enum of 42 subagent types before launch. |
 | `resume?` | `{ delegated_session_id: string }` | no | Resume token for an existing delegated run. |
 | `timeout_s?` | `number` | no | Caller-selected ceiling when policy allows. |
@@ -1098,7 +1105,7 @@ See [OpenCode -- Custom tools](https://opencode.ai/docs/tools/#custom-tools) for
 
 `Persistent EvalSession` lifecycle, retained-variable/kernel identity, Host/Environment lease, resource accounting, restart, idle handling, cleanup, and durable session records are owned by `Plans/Shared_Integration_Runtime.md`. Tools does not create a second evaluator or kernel manager.
 
-An EvalSession may request nested Puppet Master tools only through the same `CapabilityStageRecord`, request selection, policy snapshot, schema validation, parent deadline, FileSafe, network/host, and `ToolRecoveryEnvelope` path as any other caller. Nested calls carry EvalSession/session/operation identity, but possession of a live kernel is never authority to widen the tool universe, access raw credentials, start hidden agents, bypass approval, or extend the parent deadline. Local evaluation time and external tool/provider wait remain separately attributable.
+An EvalSession may request nested Puppet Master tools only through the same `CapabilityStageRecord`, request selection, policy snapshot, schema validation, parent deadline, FileSafe, network/host, and `ToolRecoveryEnvelope` path as any other caller. If the child makes a provider request, that request needs its own provider dispatch permit under Shared Integration Runtime §11. Before tool admission, the host dispatcher mints a `tool_call_id` distinct from the enclosing call and sibling calls and binds it to the EvalSession and enclosing operation. The child keeps that ID through any retry under its own logical operation, with a new `attempt_id` for each retry. Its settlement and any recovery envelope carry the child ID and the enclosing `parent_operation_id` under the typed contracts below, including T-190's Code Mode binding. Possession of a live kernel is never authority to widen the tool universe, access raw credentials, start hidden agents, bypass approval, or extend the parent deadline. Local evaluation time and external tool/provider wait remain separately attributable.
 
 The tool layer may expose an EvalSession-backed capability only when the Shared Integration Runtime reports a product-approved, sandboxed, resource-bounded session for the exact Host/Environment. Failure or cleanup of that session is projected as typed unavailable/recovery evidence; Tools MUST NOT silently create a global kernel or emulate persistence in process-global state. No EvalSession state uses SQLite. Browser actions, when selected as nested tools, remain PM-native Browser Program calls; an EvalSession does not establish a PM-owned external browser-test runtime or compatibility facade.
 
@@ -1267,9 +1274,9 @@ Shell-dispatch rules are part of the canonical tool flow:
 - banned-command checks scan the full rendered command string, including metacharacter and control forms such as `;`, `&&`, `||`, `|`, subshell/grouping constructs, command substitution (`$()` and backticks), and redirection operators where relevant to the shell family; this is full-string validation for the shell-runtime surface
 - implementations SHOULD prefer structured parsing or AST-aware validation where the shell family makes it practical; fallback scanning still MUST evaluate the full rendered command rather than only the first token
 - dispatch occurs through exactly one shell interpretation layer; never eval, and `eval` or equivalent second-pass command construction is prohibited
-- Unix-style shell dispatch passes the already `shellQuote`-protected command through `exec.Command("bash", "-c", command)` or an equivalent one-layer platform runner; it must not run a second interpreter after quoting.
+- For standalone Unix `shell_string` dispatch (no `terminal_session_id`), pass the approved text unchanged as the single command argument after `-c` to the resolved interpreter, as in `exec.Command("bash", "-c", command)` for Bash. The session-bound form used by every `bash` tool call submits the approved literal buffer once to the persistent session interpreter using the Tool Turn Contract Minima. A reused `shellId` keeps the interpreter's working directory and exports (§3.5.1).
 - shell selection is platform-aware (`/bin/bash` or equivalent on Unix; `cmd.exe` / PowerShell family on Windows based on configured tool semantics)
-- all paths interpolated into shell commands MUST be shell-escaped for the target platform; on Windows this means quoting, double-backslash handling, or forward-slash conversion according to the selected shell, and individual tools MUST NOT implement their own competing escaping layer
+- When PM constructs a shell string, the shared escaping layer escapes internally interpolated values, including paths, for the selected shell before full-string validation and approval. Use `shellQuote` on Unix and the selected Windows shell's quoting, double-backslash handling or forward-slash conversion on Windows. Individual tools MUST NOT implement a competing escaping layer. Both dispatch forms use the approved `shell_string` byte for byte, with any terminal transport framing and submit action outside that text.
 - shell instances are isolated per agent tree so environment variables do not leak across session/agent boundaries
 - shell lifecycle is mutex-guarded; work queues MUST be `/non-blocking`, and writes to a dead shell return a structured error instead of hanging forever
 - `OC-LIFE-006` requires an alive-check before queue writes; if the shell is dead, PM returns a structured LIFE error instead of blocking forever
@@ -2032,7 +2039,7 @@ Core rules:
 - DuckDuckGo capability rows must preserve native-ish search, PM-composed research/fetch/extract, and partial crawl behavior instead of flattening those cells to unsupported.
 - Google must remain a pluggable adapter slot with display label Google, and its ledger support semantics must not be collapsed away.
 - GUI/help canon must preserve row-level health/error disclosure, last-failure messaging, inline contextual help, and availability/support-tier visibility in Settings and /web help/autocomplete. Help appears inline as a tooltip or below-field text, not as a separate help page; Settings UI, `/web` help, and autocomplete show both provider availability and support tier per provider × operation as a capability matrix or per-provider badge rows.
-- Retire stale cited-search ownership residue from reference sections; provider-capability and web-routing canon is owned by Plans/Tools.md sections 11-12, while Plans/newtools.md#8.2.1 is non-normative consumer guidance only.
+- The **Provider capability matrix** and **Web tool routing algorithm** headings in `Plans/Tools.md` own provider capability and web routing. Stale cited-search ownership in reference sections is retired. `Plans/newtools.md#8.2.1` is consumer guidance only.
 - Firecrawl provider identity canon includes exact provider ID firecrawl, display name Firecrawl, default lower-priority position below Exa and Tavily and above DuckDuckGo, user-adjustable ordering, default-disabled state until API key or self-hosted URL is configured, and retirement of exact stale residue "stale cited-search framing and older `newtools` wording" from owner/provider canon.
 - Firecrawl gap coverage is MVP scope across high/medium/lower source findings; lower-priority provider placement controls default ordering only and remains user-changeable.
 - Support-tier stored canon uses `pm_composed` for PM-assembled behavior; `pm-composed` is only a display/source-lineage alias and must normalize to `pm_composed`.
@@ -2151,7 +2158,7 @@ Core rules:
 - Site Reader canon must require real browser interaction, reserve `Reading Site` for the PM-native Site Reader path, and prevent provider-routed fetch from reusing that reserved identity.
 - Answer construction must preserve search-then-read behavior, final citations must come from the actual read path rather than raw search snippets alone, and web activity/provenance docs must use the exact storage/contracts/browser ContractRef targets instead of malformed generic anchors.
 - Routing must remain cost-aware when multiple providers offer similar capability; static priority alone is insufficient, and the >100 credits warning plus 500 credits cap must remain aligned with routing.
-- Retire stale cited-search ownership residue from reference sections; provider-capability and web-routing canon is owned by Plans/Tools.md sections 11-12, while Plans/newtools.md#8.2.1 is non-normative consumer guidance only.
+- The **Provider capability matrix** and **Web tool routing algorithm** headings in `Plans/Tools.md` own provider capability and web routing. Stale cited-search ownership in reference sections is retired. `Plans/newtools.md#8.2.1` is consumer guidance only.
 - Natural-language web intents must hit the same dispatcher as slash commands, and site or page reading intents must resolve to webfetch rather than websearch or provider extract.
 - `search_provider` override is NOT exposed as a tool parameter; provider selection is handled by the capability-based routing algorithm and configured provider stack.
 - Adapter-agnostic routing follows the ordered sequence: Step 1: NORMALIZE OPERATION - normalize the requested operation/input; resolve the canonical runtime snapshot; resolve permission for the canonical web tool key; Step 5: QUERY CAPABILITY MATRIX by querying the provider capability registry / adapter contract; filter eligible adapters by runtime identity constraints, support tier, execution role, account/auth viability, and freshness/health constraints; choose the effective adapter through the shared runtime/provider resolver; fallback only to the next eligible adapter for the same operation; and persist both canonical runtime snapshot + web-operation payload.
@@ -2410,7 +2417,7 @@ Browser capture actions — visible full screenshot, explicit full-page screensh
 
 ### 15.8 Consumed command IDs
 
-Tools registers no new command IDs for this section. It dispatches for the owners below and its required result boundary is stated so a consumer cannot mistake a tool receipt for a domain mutation.
+Tools registers no new command IDs for this section. It dispatches for the owners below and its required result boundary is stated so a consumer cannot mistake a tool receipt for a domain mutation. Browser command tokens that Section 15 names in Tools' area resolve as follows, and none of them is a Tools tool name: `cmd.browser.share_with_agent` is a registered catalog command owned by `Plans/Section15_MVP_Promoted_Features_Spec.md` (`Plans/UI_Command_Catalog.md`, payload `{ browser_session_id, thread_id }`, event `browser.context_shared`); it changes browser-session share state only, Tools dispatches nothing for it, and an agent's later browser actions on the shared session are ordinary Tools browser actions under the three-layer browser permissions model stated in this document's browser permissions/safety rule. `browser_run_code` and `browser_evaluate` are retired bare spellings, accepted only as compatibility inputs that normalize to `cmd.browser.program.run` (`source_form: pm_browser_script`, `capability_profile: advanced`) and `cmd.browser.page.evaluate` respectively (`Plans/Section15_MVP_Promoted_Features_Spec.md`, §3.18A PM Browser Script, BrowserProgram, and local execution, subsection Receipts, events, ObservableWork, commands, and projections; and Browser Action Table And Timeouts); Tools registers no tool, alias or handler under either spelling.
 
 | Command ID | Owner | Required result boundary |
 |---|---|---|
@@ -2445,7 +2452,7 @@ Tools is the single-owner SSOT for tool-level web operation behavior, provider c
 
 OpenCode billing and /caching evidence confirms that extra abstraction layers make tracking HARDER, not easier; Tools therefore owns explicit tool-level cache-routing and provider-capability decisions while usage, storage, prompt-cache, and provider bridge owners keep their narrower accounting and persistence contracts.
 
-- Firecrawl/web operations in `Plans/Tools.md` span `### 3.5C`, `### 3.5D`, `## 10`, `### 10.3`, `### 10.7`, `### 11.1`, and `## 14`. This document owns Firecrawl integration, TODO contract carry-through, provider placement, cache, audit/error mapping, and the traceability obligations `obl-013`, `obl-014`, `obl-041`, `obl-053`, `obl-054`, `obl-062`, `obl-066`, `obl-067`, `obl-029`, `obl-040`, `obl-043`, and `obl-068`.
+- Firecrawl/web operations in `Plans/Tools.md` span `todowrite` and `todoread` runtime contract, Web operation family runtime contract, Firecrawl provider integration (PM-to-Firecrawl mapping and Audit, error, and self-hosted rules), Provider capability matrix (Provider classes, defaults, and fallback disclosure), and Web content caching layer. This document owns Firecrawl integration, TODO contract carry-through, provider placement, cache, audit/error mapping, and the traceability obligations `obl-013`, `obl-014`, `obl-041`, `obl-053`, `obl-054`, `obl-062`, `obl-066`, `obl-067`, `obl-029`, `obl-040`, `obl-043`, and `obl-068`.
 - Stale permission, LSP, and web-output carry-through markers such as `/LSP/web-output`, `/web-output/LSP/permission`, and legacy `web-output` phrasing are retired as owner text; live tool canon points to the dedicated Contracts and storage owners for WebAction, common web output fields, and blocked-action payloads.
 
 ### Consumer propagation
@@ -3476,6 +3483,8 @@ canonical_text: >-
   process detachment, never tab placement or pop-out; a write through a `shellId` into a terminal a human opened
   follows Section 15's SMPFS-182 and is refused without the human's grant, as `preempted` after a take-over and as
   `secret_input` during a secret prompt.
+  In §3.5.1 and Tool Turn Contract Minima, the first and subsequent calls execute in the same persistent shell.
+  Completion and exit status belong to the invocation. The shell can remain live after the command completes.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
@@ -3488,6 +3497,8 @@ acceptance_criteria:
 - Parameters `command`, `mode`, `initial_wait`, `shellId`, and `detach` remain preserved.
 - Output shapes for completed sync, still-running sync, and async launch remain preserved.
 - All error codes and timeout behavior remain preserved.
+- A first command changes directory and exports a variable, then completes. A second call using its shellId observes both changes. A further call can exit nonzero while the shell remains live.
+- Output or elapsed time alone cannot complete a command. A fresh or reused session that ends without authoritative command completion retains available output and gives no exit code for the command.
 - "Amended 2026-10-09 (DL-181): every shellId resolves to exactly one terminal_session_id that Open in Terminal and Show Terminal can reveal as its terminal tab; detach never opens, moves or closes a tab; writes into a human-opened terminal follow SMPFS-182 with explicit preempted and secret_input refusals."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -6928,7 +6939,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: Shell dispatch validates the full rendered command string, prefers structured parsing where practical, uses
-  exactly one shell interpretation layer, prohibits `eval`, and requires platform-correct path escaping.
+  exactly one shell interpretation layer, and prohibits `eval`. Platform-correct escaping applies to inputs PM
+  interpolates before validation and approval. Standalone Unix dispatch passes the approved shell string unchanged as
+  one command argument. Session-bound dispatch submits it unchanged to the persistent interpreter (T-018).
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
@@ -6937,7 +6950,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Banned-command checks scan the full rendered command string.
-- Unix shell dispatch uses one shell interpretation layer.
+- The standalone Unix runner receives the exact approved shell string as one command argument. The session-bound runner submits the exact approved buffer once to the persistent interpreter.
 - Individual tools do not implement competing escaping layers.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -10577,11 +10590,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:14
 - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:11
 - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:20
-- Plans/Tools.md:623
-- Plans/Tools.md:669
-- Plans/Tools.md:2160
-- Plans/Tools.md:2163
-- Plans/Tools.md:2164
+- "Plans/Tools.md#section=13. Batch operations"
 preserved_exact_tokens:
 - 'urls: string[]'
 - 'formats?: string[]'
@@ -11185,7 +11194,7 @@ gui_classification_reason: Tool schema and section numbering are backend/tooling
 depends_on: [T-055, T-056, T-104]
 unblocks: []
 acceptance_criteria:
-  - Section references such as Tools.md Section 12 resolve unambiguously after cleanup.
+  - References to the second numbered block resolve by heading name, including Provider capability matrix and Web tool routing algorithm.
   - task tool subagent_type validation routes through subagent_registry.
   - Stale count-based subagent lists do not become live registry authority.
 validation_surfaces:
@@ -11260,9 +11269,9 @@ source_lineage:
   - pldg-20260615-001-part-4-fable-cleanup:atom-0010
   - pldg-20260615-001-part-4-fable-cleanup:atom-0011
   - pldg-20260615-001-part-4-fable-cleanup:atom-0012
-  - local:Plans/Tools.md:2039
-  - local:Plans/Tools.md:2113
-  - local:Plans/Tools.md:2169
+  - "local:Plans/Tools.md#section=11.1 Provider classes, defaults, and fallback disclosure"
+  - "local:Plans/Tools.md#section=11.2 Support-tier vocabulary"
+  - "local:Plans/Tools.md#section=12. Web tool routing algorithm"
 preserved_exact_tokens:
   - "Fields:"
   - "Rules:"
@@ -11739,6 +11748,7 @@ unblocks: []
 acceptance_criteria:
 - finish_reason=length with tool call is classified partial_truncated.
 - nullable reasoning/content arrays are normalized without crashing and without dropping provider-native metadata.
+- After dispatch, missing or null required content produces a typed result fact and cannot settle as success. An optional null reasoning array alongside a valid result keeps its provider metadata.
 - large MCP tool_result is stored as managed output ref or rejected with explicit retention failure.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
@@ -11814,7 +11824,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  P2-CACHEABLE-TOOL-OUTPUT-REFS (P2) is compiled as canonical Puppet Master intent for Hash-addressed cache refs for stable large tool outputs: Large stable outputs use refs with TTL/redaction; secrets are never cached; model-visible preview references complete retained output. Amended 2026-10-31 (DL-270): hash-addressed refs for large stable outputs resolve to payload-store entries (SP-337). Dedupe, reference counts and garbage collection holds live in the payload store; the TTL here is a cache-eligibility rule, not a separate storage owner.
+  P2-CACHEABLE-TOOL-OUTPUT-REFS (P2) records the intent for Hash-addressed cache refs for stable large tool outputs.
+  Hash-addressed refs resolve to SP-337 payload-store entries under DL-270. Model-visible previews reference the
+  complete retained redacted output. Secrets are never cached. Cache eligibility TTL and reuse across calls are
+  deferred until Tools defines the cache key, TTL start, duration and expiry rule. Until then T-168 admits no cache
+  hits across calls. Authorized reads of retained output, deduplication, reference counts and garbage collection
+  holds still follow SP-337.
 gui_related: false
 gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
 depends_on:
@@ -11822,14 +11837,14 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- Large stable outputs use refs with TTL/redaction
+- Large stable outputs use refs with TTL/redaction once cache reuse is defined above. Until then a later call cannot use a T-168 cache hit even if a previous call retained an identical payload.
 - secrets are never cached
 - model-visible preview references complete retained output.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
-- Large stable outputs use refs with TTL/redaction
+- Large stable outputs use refs with TTL/redaction once cache reuse is defined above. Until then a later call cannot use a T-168 cache hit even if a previous call retained an identical payload.
 - secrets are never cached
 - model-visible preview references complete retained output.
 risk_class: p2_context_cache_coverage
@@ -11884,6 +11899,7 @@ status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
   P0-TOOL-CALL-MALFORMATION-GATE (P0) is compiled as canonical Puppet Master intent for Malformed/truncated/partial tool-turn admission: Add ProviderToolTurnAdmissionGate. Only settled tool calls with valid schema, args, IDs, provider-native metadata, and truncation state can enter replayable history. Rejected turns become provider_turn_malformed records with raw-redacted reference and loop policy. The preserved PM gap/delta is: Malformed provider output must be stopped before durable history admission, not only before actual tool execution. The observed external-repo signal remains source-lineage evidence: OpenCode, Cline, Agent Zero, and Pi all show broken tool-call deltas, XML/JSON fragments, nullable reasoning/content, stringified MCP params, truncation, empty tool calls, and loops when malformed turns reach history or repair logic.
+  The typed payload in Tool Turn Contract Minima uses the PM gate_id to correlate a denial and discloses when redacted evidence is unavailable.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -11894,6 +11910,7 @@ acceptance_criteria:
 - Partial streamed JSON/tool XML never becomes replayable assistant history.
 - A length finishReason on tool-call deltas blocks/retries under typed policy, not as ordinary no-tool response.
 - Replayed history never includes malformed or duplicate tool_call IDs.
+- A length-ended call without a provider id carries the same gate_id on the gate, malformed record, settlement and recovery envelope. The provider id members are absent, and settlement is partial_truncated.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
@@ -12226,14 +12243,15 @@ unblocks: []
 acceptance_criteria:
 - Empty output remains empty with reason
 - Missing image does not become fake caption
-- Malformed JSON records parse error and raw captured bytes
+- Malformed JSON records parse error and raw captured bytes when safe capture is available. The parse error is always recorded. Available evidence has `raw_redacted_state` set to `available` and a `raw_redacted_ref` to the redacted capture. Otherwise `raw_redacted_state` is `unavailable` and the ref is omitted.
+- Apply the post-dispatch result table to zero bytes, empty arrays, absent required images and complete responses with invalid JSON. Check the settlement state, typed fact and evidence ref or explicit unavailability.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
 - Empty output remains empty with reason
 - Missing image does not become fake caption
-- Malformed JSON records parse error and raw captured bytes
+- Malformed JSON records parse error and raw captured bytes when safe capture is available. Check the parse error and the `available` state with a redacted capture ref, or the `unavailable` state with the ref omitted.
 risk_class: p0_mcp_tools_and_tool_settlement_hardening
 reasoning_tier: high
 context_scope: mcp_tools_and_tool_settlement
@@ -12286,6 +12304,7 @@ status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
   tool_output_retention (P0) is compiled as canonical Puppet Master intent for tool_output_retention: Add ToolManagedOutputRef and retention-failure semantics The preserved PM gap/delta is: No hard no-lossy-success rule for managed tool output retention The observed external-repo signal remains source-lineage evidence: OpenCode v2 Tool output bounding/managed storage; large body issues
+  T-177 defines ToolManagedOutputRef as the content ID of the retained redacted output in the SP-337 payload store.
 gui_related: false
 gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
 depends_on:
@@ -12427,23 +12446,254 @@ This addendum is canonical tool contract text for deferred non-runtime FABLE row
 Repairs row `sfk-88d65b2be00892daadd2f0d8`.
 
 - The first `## 10. Implementation plan: permissions (spec for implementers)` remains a permissions implementation-plan compatibility section.
-- The second `## 10. Firecrawl provider integration` is canonically superseded as `## 11. Firecrawl provider integration`.
-- Citations to Firecrawl subsections must use `Firecrawl provider integration` plus the subsection title rather than bare `§10.x` until the heading numbers are mechanically renumbered in a dedicated structural cleanup.
+- The second block of numbered chapters, from the second `## 10. Firecrawl provider integration` through `## 15. Assistant collaboration, To-Do proposal, and read-only advisor tool boundaries` (with its `## 11.` to `## 14.`), is cited by heading name: the chapter and subsection numbers in that block are not authoritative, because `## 10.` to `## 13.` also number the first block (`Implementation plan: permissions`, `Relationship to other plans`, `Implementation checklist`, `References`). Corrected 2026-11-24 (Decision_Log DL-2602, C-FIX79): the earlier line here that superseded the second `## 10.` as `## 11. Firecrawl provider integration` is withdrawn, since `## 11. Relationship to other plans` already holds that number; no heading is renamed.
+- Citations to Firecrawl subsections must use `Firecrawl provider integration` plus the subsection title rather than bare `§10.x`. Renumbering the second block is left to a scheduled structural cleanup.
 - Citations to permissions implementation subsections must include `Implementation plan: permissions` plus the subsection title.
 
 ### Tool Turn Contract Minima
 
 Repairs rows `sfk-0649b6a2c860f179ee699f58`, `sfk-e257db159bd84ee85f74371d`, and `sfk-47f640ed50d4ed24f6b34c49`.
 
-`ToolTurnSettlement` fields are `settlement_id`, `tool_call_id`, `settlement_state`, `result_ref?`, `error_ref?`, `truncation_ref?`, `redaction_ref?`, `retention_ref?`, `retry_after_ms?`, `created_at_utc`, and `schema_version`.
+`ToolTurnSettlement` fields are `settlement_id`, `tool_call_id?`, `parent_operation_id?`, `gate_id?`, `settlement_state`, `result_ref?`, `result_facts?`, `error_ref?`, `truncation_ref?`, `redaction_ref?`, `retention_ref?`, `retry_after_ms?`, `created_at_utc`, and `schema_version`. The typed shape below gives the ID provenance and all field presence rules.
 
-`settlement_state` values are `success`, `partial`, `partial_truncated`, `malformed`, `nullable_content`, `redacted`, `retained`, `retryable`, and `fatal`. `success` is legal only when required result, error, truncation, retention, and redaction metadata are normalized.
+`settlement_state` values are `success`, `partial`, `partial_truncated`, `malformed`, `nullable_content`, `redacted`, `retained`, `retryable`, and `fatal`. `success` follows the §3.5 rule and the post-dispatch normalization below.
 
-`CommandInvocationContract` fields are `invocation_id`, `tool_call_id`, `invocation_kind`, `interpreter`, `argv?`, `shell_string?`, `powershell_script?`, `pty_input_ref?`, `cwd`, `env_policy_ref`, `permission_snapshot_id?`, `configured`, `allowed`, `injected`, `visible_to_model`, `created_at_utc`, and `schema_version`.
+`CommandInvocationContract` fields are `invocation_id`, `tool_call_id`, `invocation_kind`, `interpreter`, `argv?`, `shell_string?`, `powershell_script?`, `pty_input_ref?`, `cwd`, `env_policy_ref`, `permission_snapshot_id?`, `configured`, `allowed`, `injected`, `visible_to_model`, `created_at_utc`, and `schema_version`. Amended 2026-11-26: the list also has `terminal_session_id?`, typed below.
 
 `invocation_kind` values are `shell_string`, `argv`, `powershell_script`, `pty_input`, and `tui_automation`.
 
-`ProviderToolTurnAdmissionGate` fields are `gate_id`, `tool_call_id`, `provider_id`, `model_id`, `allowed`, `denial_reason_code?`, `permission_snapshot_id?`, `capability_snapshot_id?`, and `created_at_utc`.
+`ProviderToolTurnAdmissionGate` fields are `gate_id`, `tool_call_id?`, `call_index`, `provider_id`, `model_id`, `allowed`, `denial_reason_code?`, `permission_snapshot_id?`, `capability_snapshot_id?`, and `created_at_utc`. The typed contract below gives the provider-native and T-189 in-band ID rules.
+
+#### `interpreter` type and the `bash` adapter binding (added 2026-11-25)
+
+`CommandInvocationContract.interpreter` is an object `{ interpreter_kind, executable_path, version? }`. `interpreter_kind` is the closed enum `bash`, `zsh`, `sh`, `fish`, `pwsh`, `powershell`, `cmd`, and `none`; `executable_path` is the absolute path the runtime resolved, never a bare name; `version` is an optional string. `none` is legal only with `invocation_kind = argv` (direct exec with no shell). A call whose interpreter cannot be resolved is refused with `spawn_failed` before dispatch.
+
+Every `bash` tool call (§3.5.1) that reaches command normalization produces exactly one `CommandInvocationContract` before invocation approval and dispatch, mapped field by field. A call denied by T-169 has no invocation contract.
+
+| Contract field | Value for a `bash` call |
+|---|---|
+| `invocation_id` | New for every call, also when `shellId` reuses a session. |
+| `tool_call_id` | The `bash` tool call's id. |
+| `invocation_kind` | Always `shell_string`. `bash` never produces `argv`, `powershell_script`, `pty_input`, or `tui_automation`. |
+| `interpreter` | With `shellId`: the shell of the bound `terminal_session_id` (DL-181). Without it: the shell the runtime resolves for the frozen Project/worktree or Computer/working-root context (T-187) when it creates the binding. |
+| `shell_string` | `command`, byte for byte: no trimming, re-quoting or splitting. |
+| `argv`, `powershell_script`, `pty_input_ref` | Absent. |
+| `terminal_session_id` | With `shellId`, use the bound session's id (DL-181). Without it, reserve the canonical id of the new session before building the contract. No terminal starts on reservation. On admission and startup the result's `shellId` binds to that id. Release an unused reservation if approval or startup fails. |
+| `cwd` | The frozen working root (T-187) for a new binding; for a reused `shellId`, the session's working directory observed at dispatch. |
+| `env_policy_ref` | The environment policy of the shell binding. |
+| `permission_snapshot_id` | The snapshot the pre-dispatch Permissions and FileSafe evaluation used. |
+| `configured`, `allowed`, `injected`, `visible_to_model` | Copied from the `bash` entry of the `ActiveToolNamespaceReceipt` current at dispatch (below). |
+| `created_at_utc` | Stamped by the runtime when it builds the contract, before dispatch (RFC 3339 UTC). |
+| `schema_version` | `1.0.0`. |
+
+`mode`, `initial_wait`, `detach`, and `shellId` are execution controls of §3.5.1 and are not contract fields. After admission and per-invocation approval, a new binding starts `executable_path` as a persistent interactive shell on the reserved terminal session, using the contract's `cwd` and `env_policy_ref`. Startup must establish shell readiness and authoritative command tracking before command submission or returns `spawn_failed`. A reused binding submits to the existing interpreter. Every admitted `bash` dispatch with either binding uses the session-bound `shell_string` variant below.
+
+For both bindings, check terminal input ownership under DL-181 and SMPFS-182, including the human-write grant, take-over, secret-input and input-protection checks of CV-362. Recheck the approved target and observed `cwd` at the verified idle shell boundary before writing. A changed target or directory requires fresh admission before any bytes are written. Each shell accepts one `bash` invocation at a time. The terminal adapter supplies the exact bytes as one shell input buffer, using the profile's literal command-entry path, then submits that buffer once. Transport framing and the separate submit action are outside the approved command text. Preserve newlines and quoting in the buffer. If the profile cannot submit the full text unchanged, refuse with `validation_error` before writing. The shell evaluates the buffer in its current interpreter context. It does not run the command in a separate interpreter or subshell unless the approved command itself asks for one.
+
+At submission, bind the invocation to its session and command boundary. Settle command completion once, from shell integration authenticated under SMPFS-183 or authoritative runtime evidence for that exact invocation and its integer exit status. A prompt-like string, unmatched mark, quiet interval or session disconnect supplies no exit code (SMPFS-021, SMPFS-022, SMPFS-129). Attribute only the invocation's output to its result and apply SMPFS-023 and CV-362 backing and loss rules to terminal reads. If the session ends without authoritative command completion, return the available output with `status: "failed"`, `exit_code: null` and `error.code: "shell_not_found"`. Completion of a command does not retire a live binding. Sync waits up to `initial_wait`, and async returns on dispatch. The hard ceiling applies to the command under §3.5.1.
+
+`command` is never executed as `argv[0]`, and a non-string `command` is `validation_error`. `powershell_script` stays reserved for inspected PowerShell wrapper scripts (T-171) and `pty_input` for raw input to an interactive program. Approval UI shows `shell_string` verbatim beside `interpreter_kind` and `executable_path` and identifies the new shell or the existing terminal by its tab.
+
+#### `CommandInvocationContract` typed shape and variants (added 2026-11-26)
+
+Field types, for every tool that builds the contract (the `bash` mapping above is one producer):
+
+| Field | Type | Rule |
+|---|---|---|
+| `invocation_id` | string (UUID) | New for every call. |
+| `tool_call_id` | string | The tool call that produced the contract. |
+| `invocation_kind` | closed enum | One of the five values above; selects exactly one content field (variant table below). |
+| `interpreter` | object `{ interpreter_kind, executable_path, version? }` | As defined in the `interpreter` subsection above. |
+| `argv` | array of strings, at least 1 entry | `argv[0]` is the program, resolved to an absolute path before dispatch; each entry is passed as one argument with no shell. |
+| `shell_string` | string, at least 1 byte | Byte for byte, never trimmed, re-quoted or split. The session-bound form submits one shell input buffer under the rules above. The standalone form passes one command argument. |
+| `powershell_script` | string, at least 1 byte | The text of an inspected PowerShell wrapper script. |
+| `pty_input_ref` | string | Reference to the exact bytes written to the PTY of a bound terminal session. |
+| `terminal_session_id` | string, optional | The canonical terminal session (DL-181) the contract writes into. Required for `pty_input` and the session-bound `shell_string` form, including the new session of a first `bash` call. Absent for standalone `shell_string`, `argv` and `powershell_script`. |
+| `cwd` | string | Absolute path. |
+| `env_policy_ref` | string | The environment policy applied to the process. |
+| `permission_snapshot_id` | string, optional | Present on every contract that is dispatched: the snapshot the pre-dispatch Permissions and FileSafe evaluation used. Absent only on a contract refused before that evaluation ran. |
+| `configured`, `allowed`, `injected`, `visible_to_model` | boolean | Copied from the producing tool's `ToolNamespaceEntry` in the `ActiveToolNamespaceReceipt` current at dispatch. |
+| `created_at_utc` | RFC 3339 UTC string | Stamped by the runtime when it builds the contract, before dispatch. |
+| `schema_version` | string | `1.0.0`. |
+
+Variants are exclusive. Exactly the content field the kind names is present; the other three content fields are absent:
+
+| `invocation_kind` | Required content field | `interpreter_kind` | Dispatch |
+|---|---|---|---|
+| `shell_string` | `shell_string` | any value except `none`; with `terminal_session_id`, the shell of that session | Session-bound: submit to the new or reused live shell using the terminal write and completion rules above. Standalone (no `terminal_session_id`, never produced by `bash`): run the text as one command argument for a one-shot process with `-c` (`bash`, `zsh`, `sh`, `fish`), `-NoProfile -Command` (`pwsh`, `powershell`) or `/d /s /c` (`cmd`). |
+| `argv` | `argv` | `none` | Direct exec of `argv`; never routed through a shell (T-171). |
+| `powershell_script` | `powershell_script` | `pwsh` or `powershell` | Needs the inspected-wrapper receipt and, when configured, one-shot approval (T-171). |
+| `pty_input` | `pty_input_ref` | the shell of the bound terminal session; not `none` | The referenced bytes are written to the `terminal_session_id` session, exactly and with nothing appended, under the DL-181 and SMPFS-182 write rules. |
+| `tui_automation` | none defined | none defined | Reserved, not admitted: no registered tool produces this kind and no body field exists for it. A contract carrying it is refused with `validation_error` before dispatch until an owner registers a TUI-automation tool and adds its body field to this table. |
+
+A contract that breaks a presence, type or variant rule is refused with `validation_error` before dispatch and nothing runs. Approval UI shows the one content field verbatim beside `invocation_kind`, `interpreter_kind` and `executable_path`. For a terminal target it identifies the new shell or the existing terminal by its tab. For a standalone target it shows the one-shot interpreter form and flags (T-171 criterion 2).
+
+#### `ActiveToolNamespaceReceipt` typed contract (added 2026-11-25)
+
+T-172's receipt is one immutable record per session namespace generation:
+
+| Field | Type | Rule |
+|---|---|---|
+| `receipt_id` | string | Opaque and unique. |
+| `session_id` | string | The session the namespace belongs to. |
+| `thread_id` | string | |
+| `run_id` | string, optional | Present for run-scoped sessions. |
+| `provider_id`, `model_id` | string | The route that receives the tool schemas. |
+| `namespace_generation` | integer ≥ 1 | Rises by one on every change to any entry; a change always writes a new receipt. |
+| `catalog_generation` | integer | The `CapabilityMaterializationReceipt.catalog_generation` it was built from (§1.0A). |
+| `policy_snapshot_id` | string | |
+| `entries[]` | array of `ToolNamespaceEntry` | One per tool namespace, ordered by the §1.0A schema order. |
+| `created_at_utc` | RFC 3339 UTC string | |
+| `schema_version` | string | `1.0.0`. |
+
+`ToolNamespaceEntry` fields: `namespace_id` (string; the canonical tool or family name, such as `bash`, `computer.screen`, or `mcp.<server>`), `capability_ref` (string; the `CapabilityStageRecord` capability), `configured`, `allowed`, `injected`, `visible_to_model`, `visible_to_ui` (all boolean), `startup_status` (closed enum `not_required`, `pending`, `ready`, `failed`, `timed_out`), `denial_reason_code?`, `schema_ref?` (`{ schema_id, schema_version, schema_sha256 }`, required when `visible_to_model` is true), and `evidence_ref?` (string).
+
+`configured` is true when the capability's `installed` and `project_enabled` stages are true; `allowed` when `policy_available` is also true; `injected` when its L2 schema was materialized into this provider request. `injected` requires `allowed`, `allowed` requires `configured`, `visible_to_model` requires `injected`, and `visible_to_ui` requires `configured`. `denial_reason_code` is required whenever any of the five booleans is false or `startup_status` is `pending`, `failed`, or `timed_out`; its values are the §1.0A omission codes (`not_installed`, `project_disabled`, `policy_denied`, `incompatible_runtime`, `unavailable`, `not_selected`, `budget_deferred`, `schema_unavailable`, `collision_suppressed`) plus `provider_not_receiving`, `startup_pending`, and `startup_failed`. When all five booleans are true, `startup_status` decides the code: `pending` gives `startup_pending`, and `failed` or `timed_out` gives `startup_failed`; `ready` and `not_required` carry no code. A `startup_pending` denial is not final: the startup settling is an entry change, so it writes the next receipt generation with `startup_status` `ready` (no code) or `failed`/`timed_out` (`startup_failed`).
+
+For a direct tool call, dispatch requires all five entry booleans to be true and `startup_status` to be `ready` or `not_required`. For direct dispatch, any other entry denies the call with that entry's `denial_reason_code` before dispatch (T-172 criterion 2). Tool mentions, UI chips, and model-visible schemas read one receipt at one `namespace_generation` (T-172 criterion 3).
+
+For a nested EvalSession call, the host admits the request-selected tool and validates its L2 schema under §4.4. In Code Mode this requires membership in T-189's callable catalog and T-190's checks on each call. Nested calls are exempt from the generic direct-exposure checks for `injected`, `visible_to_model`, and `visible_to_ui`. T-186 still requires all its receipt flags for every computer tool call, including nested dispatch. The tool's own capability, policy, and readiness checks still apply.
+
+Example:
+
+```json
+{
+  "receipt_id": "atnr_01",
+  "session_id": "sess_7",
+  "thread_id": "thr_3",
+  "provider_id": "provider_a",
+  "model_id": "model_a",
+  "namespace_generation": 4,
+  "catalog_generation": 12,
+  "policy_snapshot_id": "pol_88",
+  "entries": [
+    { "namespace_id": "bash", "capability_ref": "builtin:bash", "configured": true, "allowed": true, "injected": true, "visible_to_model": true, "visible_to_ui": true, "startup_status": "not_required", "schema_ref": { "schema_id": "pm.tool.bash", "schema_version": "1.0.0", "schema_sha256": "<64 hex>" } },
+    { "namespace_id": "computer.screen", "capability_ref": "builtin:computer.screen", "configured": true, "allowed": false, "injected": false, "visible_to_model": false, "visible_to_ui": true, "startup_status": "not_required", "denial_reason_code": "policy_denied" }
+  ],
+  "created_at_utc": "2026-11-25T15:00:00Z",
+  "schema_version": "1.0.0"
+}
+```
+
+Persistence of this receipt is not settled here: it needs a storage registration in `Plans/storage-plan.md` (a redb family or an admitted seglog event family), which this section does not create.
+
+#### `ProviderToolTurnAdmissionGate` typed contract (T-169, added 2026-11-26)
+
+One gate record is written for every provider-native tool call subject to PM admission and every T-189 in-band tool call before the turn that carries it may enter replayable history or be dispatched. An EvalSession nested call enters the host admission path above and the per-tool dispatch checks of §4.4 and T-190 using its host-issued identity, outside this provider-turn gate.
+
+| Field | Type | Rule |
+|---|---|---|
+| `gate_id` | string | Opaque and unique, minted by PM. It correlates the gate with the records that reference this decision. |
+| `tool_call_id` | nonempty string, optional | For provider-native carriage, copy the provider's own id. An omitted or empty provider id is absent here and always denied as `tool_call_id_missing`, or as `length_truncated` when that check fired first. Native carriage never receives a stand-in. For T-189 in-band carriage, use the id that PM minted for this call before the gate. |
+| `call_index` | integer, at least 0 | The call's position among the tool calls of its provider turn, in stream order. With `gate_id` it identifies a denied call with no native id. |
+| `provider_id`, `model_id` | string | The route that produced the call. |
+| `allowed` | boolean | True only when every check below passes. |
+| `denial_reason_code` | closed enum, optional | Required when `allowed` is false, absent when it is true. |
+| `permission_snapshot_id` | string, optional | The Permissions snapshot the dispatch check used; present whenever that check ran. |
+| `capability_snapshot_id` | string, optional | The `Plans/Models_System.md` capability snapshot of the route; present whenever the route has one. |
+| `created_at_utc` | RFC 3339 UTC string | |
+
+Checks, in this order; the first that fails gives the code: `length_truncated` (the provider ended the tool-call deltas with a length finish reason; checked first, so a length-ended call keeps this code even when its id, name or arguments are also incomplete, which is the Truncation gate case of §8.2 and T-167's `partial_truncated` rule), `tool_call_id_missing` (the call has no id), `tool_call_id_duplicate` (the id was already admitted in this session), `empty_tool_call` (no tool name), `args_unparseable` (streamed JSON or tool XML is partial, or the arguments are not one complete JSON value, in a call that did not end on length), `tool_not_in_namespace` (the `ActiveToolNamespaceReceipt` current for the turn has no entry for the tool), then the namespace dispatch rule above (an entry that does not permit dispatch denies with its own `denial_reason_code`), `schema_invalid` (the arguments fail that entry's `schema_ref` schema), and `provider_metadata_missing` (provider-native metadata the route requires is absent). `denial_reason_code` is closed to these eight codes plus the `ToolNamespaceEntry.denial_reason_code` values.
+
+A denied call never enters replayable history and is never dispatched. The gate emits one `provider_turn_malformed` record per denied call, using the payload below (T-169). The eight gate codes normalize to `failure_class = structured_output_invalid` and follow its `Plans/Executor_Protocol.md` §7.1 row (max retries 2, no backoff). If another provider-turn retry is admitted under that row and the existing retry budget and loop rules, the tool turn settles `retryable`. Otherwise it settles `malformed` and the run takes that classifier's escalation. The one exception is `length_truncated`: it follows the same retry row and settles `partial_truncated` on every attempt, as T-167 requires. Its structured error is `truncated_by_length` (Truncation gate), and no argument is synthesized. A namespace denial settles `fatal` with the receipt entry's own code and does not retry. An admitted provider retry requests one replacement for the failed turn, even when several calls were denied. It performs no invocation retry under §3.5.0A or "Retry classification and bounded recovery".
+
+All four records for a denied call carry the same `gate_id`: the gate record, the `provider_turn_malformed` record, the `ToolTurnSettlement` and the `ToolRecoveryEnvelope`. Copy the gate's `tool_call_id` to each record when present, as `original_tool_call_id` in the recovery envelope. For a provider-native call that arrived without an id, omit the corresponding member in all four records. The envelope has `retryable: false` because the denied call itself cannot be dispatched again. Its `status` is `truncated` for `length_truncated`, `blocked` for a namespace denial and `failed` for other gate denials. Persistence of gate and `provider_turn_malformed` records waits on the same Storage registration as the receipt above.
+
+#### `provider_turn_malformed` payload (T-169)
+
+The payload is one UTF-8 JSON object containing only the following members. Optional members are omitted when absent. Use `gate_id` as its record identity and to resolve the gate's provider/model route. The payload is per-call recovery evidence outside replayable assistant history. The turn-level history admission and quarantine contract remains owned by `Plans/Prompt_Pipeline.md#PP-060`.
+
+| Field | Type | Rule |
+|---|---|---|
+| `record_type` | string constant | `provider_turn_malformed`. |
+| `schema_version` | string constant | `1.0.0`. |
+| `gate_id` | nonempty string | Matches the denied gate record. |
+| `call_index` | integer, at least 0 | Copy the gate's position in the provider turn. |
+| `tool_call_id` | nonempty string, optional | Copy the gate's call id when present. |
+| `denial_reason_code` | closed enum | Copy the gate's reason, including the receipt's namespace reason when that check denied admission. |
+| `raw_redacted_state` | closed enum | `available` if redacted provider evidence could be captured and referenced, otherwise `unavailable`. |
+| `raw_redacted_ref` | nonempty string, optional | Required when `raw_redacted_state` is `available`, otherwise absent. Resolves to evidence from the same provider turn containing the rejected call's source as received, after secret redaction. |
+| `created_at_utc` | RFC 3339 UTC string | Copy the gate's timestamp. |
+
+Capture evidence with the bounded redaction and access controls of §3.5.0A. The reference is opaque to the provider. The payload carries no inline provider bytes or hashes of unredacted material. If capture or redaction fails, use `unavailable` and preserve the denial, settlement and retry decision. A `length_truncated` settlement's `truncation_ref` still resolves to this record even when its source evidence is unavailable.
+
+Example of a length-ended call cut off before its provider id arrived, with redacted source evidence available:
+
+```json
+{
+  "record_type": "provider_turn_malformed",
+  "schema_version": "1.0.0",
+  "gate_id": "gate_42",
+  "call_index": 0,
+  "denial_reason_code": "length_truncated",
+  "raw_redacted_state": "available",
+  "raw_redacted_ref": "redacted_42",
+  "created_at_utc": "2026-11-26T12:00:00Z"
+}
+```
+
+#### `ToolTurnSettlement` typed shape (T-167, added 2026-11-26)
+
+One immutable settlement is written per tool call attempt, including a call the admission gate denied. It carries one `settlement_state`; when several conditions hold at once, the §3.5 precedence (`fatal` > `malformed` > `partial_truncated` > `redacted` > `nullable_content` > `partial` > `retryable` > `retained` > `success`) picks that one value, and the refs of the other conditions that hold are still present.
+
+| Field | Type | Rule |
+|---|---|---|
+| `settlement_id` | string | Opaque and unique. |
+| `tool_call_id` | nonempty string, optional | Copy the gated call id when present. Use the trusted PM-issued call id for a hosted structured intent or an EvalSession nested call. Omit only for a provider-native call denied without an id. |
+| `parent_operation_id` | nonempty string, optional | Required for an EvalSession nested call. The enclosing operation's `logical_operation_id`, which for Code Mode is the outer script's operation id. Absent on the outer script and other direct calls. |
+| `gate_id` | nonempty string, optional | The call's `ProviderToolTurnAdmissionGate` record. Present for every call judged by that gate, including native calls denied without an id. Absent for every other call, including nested calls. |
+| `settlement_state` | closed enum | One of the nine values above. |
+| `result_ref` | string or SP-337 payload reference object, optional | Present whenever a normalized tool result exists, including a valid partial result. Use the SP-337 object `{blake3_id, byte_size, media_type}` for a spilled result (DL-270, §3.5.0A) and a string reference otherwise. Absent for a gate denial or when no normalized result exists. Required for `success` unless the tool's own contract omits it. |
+| `result_facts` | nonempty array of objects, optional | Required when a dispatched call matches a row in the post-dispatch result table below, with one fact per affected value. Absent otherwise. |
+| `error_ref` | string, optional | Reference to the structured error (its code and the `ToolRecoveryEnvelope`). Required for `malformed`, `retryable` and `fatal`, every gate denial, and any post-dispatch failure fact below even when another state takes precedence. Absent for `success`. |
+| `truncation_ref` | string, optional | Required whenever output or arguments were truncated, including every `partial_truncated` settlement. Absent for `success`. For a `length_truncated` denial, it resolves to the `provider_turn_malformed` record. For output truncation with successful spill, it resolves to the bounded head/tail, exact original size and artifact ref of §3.5.0A. If the complete-output spill fails, it resolves to the attempt's `ToolRecoveryEnvelope` with the truncation flag and byte counts. The `error_ref` records the explicit retention failure in either `fatal` or `partial_truncated`. |
+| `redaction_ref` | string, optional | Reference to the redaction applied. Required whenever any result or output content was redacted, so always for `redacted`. |
+| `retention_ref` | `ToolManagedOutputRef` string, optional | The SP-337 content ID of this attempt's retained output, defined by T-177. Present whenever output was successfully spilled or retained, so always for `retained`. |
+| `retry_after_ms` | integer, at least 0, optional | Present only with `retryable`, when the retry row or a provider minimum delay sets one. |
+| `created_at_utc` | RFC 3339 UTC string | |
+| `schema_version` | string | `1.0.0`. |
+
+`success` is legal only under the §3.5 rule (required result, error, truncation, retention and redaction metadata normalized and persisted, or intentionally omitted by the tool's own contract); a settlement that would break a presence rule above is never written as `success`: it takes the state the missing metadata gives (for failed retention, `fatal` or `partial_truncated`, §3.5.0A). Persistence of settlements waits on the same Storage registration as the receipt above.
+
+**Post-dispatch result normalization (T-167, T-173).** After dispatch, the adapter checks the returned result against the selected tool's result contract before settling the attempt or projecting its result into history. The table sets the facts and candidate states for the returned content. A typed execution error that accounts for the missing result follows its own error path. For declared output truncation use `truncation_ref` and `partial_truncated`; do not infer malformed or missing content solely from the cut. Normalize optional absent or null content and reasoning fields with their provider-native metadata intact. Keep any usable, valid content in its original shape, including empty strings or arrays, and preserve absence or null where observed. Never fill an empty or missing value with generated text, a caption or an image placeholder.
+
+| Observed result | `reason_code` | Candidate `settlement_state` |
+|---|---|---|
+| A tool result or result field that the tool contract requires to be present and non-null is absent or explicitly null, with no prior execution error explaining the absence. | `required_content_missing` for absence, `required_content_null` for null. | `nullable_content` |
+| A result field that requires an image lacks the actual image or its required artifact reference, including absent, null or empty image values. Use this row for the image field in place of the generic missing, null or empty row. | `required_image_missing` | `nullable_content` |
+| A zero-byte result, empty string or empty array that the tool contract requires to contain content. | `required_content_empty` | `nullable_content` |
+| An empty result allowed by the tool contract, including an explicitly void result. | `empty_output_allowed` | No failure state. Apply the ordinary settlement rules. |
+| A complete nonempty body declared JSON cannot be decoded as UTF-8 and one complete JSON value. Syntactically valid JSON `null` follows the content rules above. | `invalid_result_json` | `malformed` |
+
+Each fact has a `reason_code` from the table and `result_path`, a string JSON Pointer locating the field in the result contract's shape (empty string for the whole result or a body that could not be parsed). For `invalid_result_json`, the fact also has `parse_byte_offset`, a zero-based nonnegative integer offset into the received body where decoding or parsing failed (body length at EOF), and `raw_redacted_state` (`available` or `unavailable`). When `available`, `raw_redacted_ref` is a nonempty string resolving to the original result bytes after secret redaction, captured before any repair or reserialization and protected by the bounded capture and access rules of §3.5.0A. If policy, bounds or a capture/redaction failure prevents a safe capture, use `unavailable` and omit the ref. All three parse-only members are absent for other reasons. Keep these source bytes outside replayable history and surface only the typed failure and any valid normalized result.
+
+Every reason except `empty_output_allowed` is a failure fact. Preserve its code in `result_facts` even when another state wins under §3.5. `error_ref` resolves to the structured error and recovery envelope. Use the tool owner's code when it supplies one, such as `mcp_schema_mismatch`; otherwise use the reason of the first failure fact in table order, breaking ties by ascending UTF-8 `result_path`. For these content and parse failures use the terminal schema-mismatch classification and `retryable: false`, with `status: partial` if valid result content survives or `status: failed` if none survives. An independently applicable higher-priority failure keeps its own recovery status and diagnostics. The dispatched attempt receives its own settlement and never enters T-169's provider-turn denial or replacement path.
+
+#### `ToolProgressHeartbeat` contract (T-175, added 2026-11-26)
+
+Every long-running tool call of the families `mcp`, `subagent`, `browser` and `device` emits heartbeats while it runs. The PM-side adapter that supervises the call emits them while the server, child session, browser session or device session behind it is alive and responsive, so silence means liveness was lost, not that the work is slow. A heartbeat is a live progress signal on the tool call; it is not a durable record. Command tools (`bash`) follow §3.5.1 for terminal liveness and per-invocation completion.
+
+| Field | Type | Rule |
+|---|---|---|
+| `tool_call_id` | string | The running call. |
+| `tool_family` | closed enum `mcp`, `subagent`, `browser`, `device` | |
+| `sequence` | integer, at least 1 | Rises by one per heartbeat of the call. |
+| `progress` | object, optional | `{ completed?, total?, message? }`: `completed` integer at least 0, `total` integer at least 1, `message` string of at most 200 characters. |
+| `emitted_at_utc` | RFC 3339 UTC string | |
+
+Intervals. A family emits a heartbeat at least every `heartbeat_interval_ms`. For `mcp` that is the `Plans/MCP_Integration.md` liveness default (`heartbeat_interval_ms` 15000); the other three families use the same 15000 ms default. `max_silent_interval_ms` is twice the heartbeat interval (30000 by default). A heartbeat, an output chunk or a settlement of the call resets the silence timer.
+
+States of a running call, shown on its tool card:
+
+| From | Event | To |
+|---|---|---|
+| `running` | silent for `max_silent_interval_ms` | `stalled`: the card shows the call as stalled with the time since the last signal and keeps its Stop control |
+| `stalled` | any heartbeat, output chunk or settlement | `running` (or settled) |
+| `stalled` | still silent when the silence reaches `heartbeat_lost_after_ms` (120000 ms for every family; an `mcp` call's own `tool_call_timeout_ms`, counted from the call's start, still applies beside it) | settled: `ToolTurnSettlement.settlement_state = fatal` with error code `heartbeat_lost`, the code the MCP synthetic settlement receipt already uses |
+| `running` or `stalled` | user stops the call | settled through that tool's own stop path |
+
+`stalled` is a display state, not a settlement: the call keeps running and nothing is retried automatically.
+
 
 ### Webcrawl Host Pattern Matcher Owner
 
@@ -12555,12 +12805,17 @@ canonical_text: >-
   artifact with bounded head/tail and exact size; blind retry and loss-shaped success are prohibited. Amended 2026-10-31
   (DL-270): the canonical artifact is a payload-store entry (SP-337) referenced by content hash; no separate artifact store
   exists for large output.
+  ToolManagedOutputRef is the BLAKE3 content ID (a 64-character lowercase hexadecimal string) of the SP-337 entry
+  containing the attempt's complete redacted output. ToolTurnSettlement.retention_ref carries that ID directly. When
+  ToolRecoveryEnvelope.artifact_or_spill_ref is present for the same attempt, its BLAKE3 content ID must equal
+  retention_ref. An authorized read resolves the ID in the attempt's SP-337 store to the complete redacted output bytes.
 gui_related: false
 gui_classification_reason: Backend result, retry, artifact, and verification contract; UI consumers only project its evidence.
 depends_on: [T-007, T-077, T-079, T-167, T-173, T-174]
 unblocks: []
 acceptance_criteria:
   - Truncated terminal output retains complete redacted artifact evidence, bounded head/tail, original size, and cwd changes.
+  - The settlement and recovery envelope identify the same payload, and an authorized read by that ID returns the full redacted output, including bytes omitted from the preview.
   - Already-applied patch is success/no-op only with post-read proof; ambiguous or whitespace-mismatched patch does not mutate.
   - Retention failure cannot settle as success, and policy/FileSafe/secret/schema denials cannot become transient retries.
   - Every retry is a separate attempt under one logical operation and requires a typed changed recovery condition.
@@ -13359,11 +13614,13 @@ ContractRef: ContractName:Plans/Tools.md#T-187, ContractName:Plans/Settings_Syst
 
 This addendum records Jared's 2026-11-15 direction that production Puppet Master uses Code Mode for tool calls on every provider. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, generated governance artifacts, or governance seal.
 
+**Amended 2026-11-24.** Jared asked whether Code Mode can be turned off in Settings and directed that it must be. T-191 adds the Settings row and its meaning; T-188 and T-189 are amended so the requested mode follows that row. T-189 also adds the ordinary tool-call path on the routes that had none: in-band carriage of the request-selected tools, and their one-by-one projection under DAE. Jared was asked whether a run with Code Mode on that cannot be offered the script tool should get those paths too, and chose "Give the fallback the same direct calls" (2026-11-25), so they apply on every request on which the script tool is not offered, whatever the reason and however the offer changes during a run; under DAE a request is one prepared launch of the CLI process, as T-189 says. So a request that has an ordinary Puppet Master tool channel and is not offered the script tool is offered, directly, the tools materialized for that channel within T-176's bounds. A script that was offered and then fails keeps its existing typed failure. What a run records, its effective mode and typed reason, is defined once, in T-188. The typed reasons gain setting and not materialized. In T-190, one acceptance criterion, on what a script may call, is reworded to compare admission of the call rather than whether the direct channel could carry it, and two sentences that said "in Code Mode" now say "on a request on which the script tool is offered". Code Mode stays On by default.
+
 **What Code Mode is.** The model does its work by writing JavaScript that calls Puppet Master tools, and sends that script as one tool call, instead of calling tools one provider tool call at a time. One script can read several files, filter the results and act on them without a provider round trip between each step.
 
 **What was looked at.** Claude Code 2.1.325 ships this as an experimental mode that, on that version, runs only in its interactive terminal and refuses headless launches. OMP 18.20.2 has no mode of that name: it has an eval tool whose JavaScript cells call tools as `tool.<name>(…)` beside ordinary direct calls, and a separate Tool Calling Mode setting that carries tool calls in the model's text: in its GLM dialect when Auto finds the model marked as having no provider-native tool calls, or always in a dialect the setting names. Puppet Master takes the script-calls-tools idea and the in-band carriage for models without native tool calls. It does not take Claude Code's auto-mode safety check, which reads each script once before it runs and does not check the tool calls the script then makes. The observations are in `/mnt/Cursor/PuppetMaster-Evidence/tests/code-mode-20261115/OBSERVATIONS.md` (SHA-256 `337e09ac2929163d17b05a0150cff4a6aa1963421802220929f7d85f376386ee`).
 
-### T-188 - Code Mode Is The Requested Tool-Calling Mode For Every Provider
+### T-188 - Code Mode Is The Default Tool-Calling Mode For Every Provider
 
 ```yaml
 plan_unit_id: T-188
@@ -13371,33 +13628,81 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  In production Puppet Master the requested tool-calling mode of every provider route is Code Mode: the model writes
+  In production Puppet Master the requested tool-calling mode of every provider route is Code Mode, unless the Settings
+  row of T-191 is Off for the run, in which case the run requests ordinary tool calls. In Code Mode the model writes
   JavaScript that calls Puppet Master tools and sends it as one script tool call, instead of calling tools one provider
   tool call at a time. The script runs in a JavaScript EvalSession owned by Shared Integration Runtime, with variable scope session,
   so a script's variables live only as long as the EvalSession that run uses, and every tool
   the script calls is a nested Puppet Master tool call on the T-178 path, permitted by the
   request's permission policy snapshot; Code Mode adds no opt-in step of its own. Tools marks the JavaScript EvalSession adapter
-  supported for Code Mode, subject to the security owner. The script tool is offered on a run only when Shared
-  Integration Runtime reports a product-approved JavaScript EvalSession for the exact Host/Environment, the request's
-  policy admits the script tool, and the route can carry Puppet Master tools. Every run records its requested and effective
-  tool-calling mode. Puppet Master owns the tools and the script runtime, so Code Mode does not depend on the provider
-  having a code mode of its own. The effective mode is Code Mode, mixed or ordinary tool calls,
-  where ordinary tool calls means the run was not offered the Puppet Master script tool; a run offered it that made
-  no tool calls, or only the directly callable calls named in T-190, keeps Code Mode unless T-189 records the route as
-  mixed. When it is not Code Mode the run records one typed reason, the first that applies
-  of the execution shape named in T-189, no approved JavaScript EvalSession, policy, and provider-kept native tools;
-  it is never a silent fallback, and Code Mode is never reported as effective
-  for a run in which any tool other than the directly callable tools named in T-190 was dispatched another way. A resumed
-  session requests Code Mode again like any other run, and an effective mode that differs from the session's earlier
-  runs is recorded, with its typed reason when it is not Code Mode.
-gui_related: false
-gui_classification_reason: Runtime tool-dispatch mode and its recorded truth; presentation of the mode is owned elsewhere.
+  supported for Code Mode, subject to the security owner. Puppet Master owns the tools and the script runtime, so Code
+  Mode does not depend on the provider having a code mode of its own. The requested mode is decided once for the run.
+  The offer of the script tool is decided for each request: it is offered on a request only when the run requests
+  Code Mode, Shared Integration Runtime reports a product-approved JavaScript EvalSession for the exact
+  Host/Environment, the request's policy admits the script tool, the request's route can carry Puppet Master
+  tools, and the script tool itself, together with the essential catalog search that T-190 puts in its callable
+  catalog where that search is policy-available, is materialized for the request under T-176's bounded materialization, so the
+  offer is decided only when the request's tool materialization is final; under the DAE strategy a request is one prepared launch of the CLI process, as T-189 says. On a request on which it is not offered, for any reason, the request-selected tools travel by the route's
+  ordinary tool-call path under T-189. A request counts for the record once Puppet Master has decided the offer for
+  it, whether or not it is then sent to the provider. Every run records its requested and effective tool-calling mode. This unit
+  alone defines the run's record, its effective mode and its typed reason, and derives both from the run's requests;
+  T-189 and T-191 add no rule of their own for either. A run that did not request Code Mode always records ordinary tool
+  calls with the typed reason setting, from its frozen preference alone, whether or not it reached a request. A run
+  that requested Code Mode and ended before the offer was decided for any request, for example on a pre-dispatch
+  budget stop, records its effective mode as not applicable, with no typed reason, and no surface describes it as
+  Code Mode. For a run that requested Code Mode and had the offer decided for at least one request, the effective
+  mode is exactly one of Code Mode, mixed and ordinary tool calls. It is ordinary tool calls when no request of the run was offered the script tool. It is mixed
+  when at least one request was offered it and either the route selected for any counted request keeps native tools
+  Puppet Master cannot disable, which T-189 names, or a Puppet Master tool other than the directly callable tools
+  named in T-190 was dispatched on a request on which the script tool was not offered. It is Code Mode otherwise:
+  for example, a run offered the script tool on every request, on a route that keeps no such tools, is Code Mode
+  even if it made no tool calls, or only the directly callable calls named in T-190. When that mode is mixed or ordinary tool calls the run records exactly one typed reason: the one that comes first, in the order
+  setting, execution shape, no approved JavaScript EvalSession, policy, not materialized, provider-kept native tools, among the reasons
+  that count for the run. Each condition of the offer that a request does not meet is a reason that kept the script
+  tool off that request: setting when the run did not request Code Mode, the execution shape named in T-189,
+  delegated or reasoning-only, when the request's route cannot carry Puppet Master tools, the shape recorded being
+  that of the earliest counted request with this reason when counted requests differ in shape, no approved JavaScript
+  EvalSession when Shared Integration Runtime gives no positive report of a product-approved one for the exact
+  Host/Environment, which covers a negative report, an unavailable owner and missing or stale approval evidence,
+  with the owner's own diagnostics kept, policy when the request's policy does not admit the
+  script tool, and not materialized when the script tool, or the essential catalog search its catalog must hold, is finally left out of the request by selection or materialization
+  under section 1.0A and T-176 for any cause the earlier reasons do not explain, whatever that owner calls the
+  omission (not_selected, budget_deferred, schema_unavailable); the detailed omission stays with T-176. For a run with ordinary tool calls, every reason that kept the script tool off any of its
+  requests counts. For a mixed run, a reason that kept the script tool off a request counts only when a Puppet
+  Master tool other than the directly callable tools named in T-190 was dispatched on that request, and
+  provider-kept native tools counts when the route selected for any counted request keeps them, whether or not that
+  request was then sent. So every run recorded as mixed or ordinary tool calls carries a typed reason, request-level
+  admission diagnostics stay with their owners, and a run that requested Code Mode and is recorded as mixed or
+  ordinary tool calls is never a silent fallback: the run's own status or stop entry shows the effective mode and
+  typed reason that this unit records for the run, in the transcript for a run that has one a person can open, and
+  otherwise on the run owner's existing status or stop projection, for example the advisor's Context Details, whatever its requests did and whether or not any of them was
+  sent or produced a turn, so the disclosure never depends on a particular request. Every other surface that shows the run's tool-calling mode shows
+  them with it, while a run that did not request Code Mode is shown, where its tool-calling mode is shown at all, neutrally as T-191 says.
+  Code Mode is never reported as effective for a run in which any tool other than the
+  directly callable tools named in T-190 was dispatched another way. Where a run's requested
+  mode comes from is T-191's alone: a new run that inherits no value and has none frozen for it, including such a
+  run in a resumed session or conversation, reads T-191's row when it starts, and every other run, whether it
+  continues under the same run ID, is a child or subagent run, follows a context rotation, or is dispatched from
+  scheduled, delayed or earlier-frozen work, takes its value as T-191 says. An effective mode that differs from the session's earlier
+  runs is recorded, with its typed reason when it is mixed or ordinary tool calls; a not applicable record carries no reason.
+gui_related: true
+gui_classification_reason: Mixed unit. It defines the runtime tool-dispatch mode and its record, and it also requires the run's transcript status or stop entry, and every other surface that shows the tool-calling mode, to show a fallback's effective mode and typed reason. Split recommended when a GUI owner unit for the transcript takes the presentation rule; kept together here so the record and its one required disclosure cannot drift apart.
+split_recommended: true
 depends_on: [T-169, T-176, T-177, T-178]
-unblocks: [T-189, T-190]
+unblocks: [T-189, T-190, T-191]
 acceptance_criteria:
-  - With no user action, a run on any provider route requests Code Mode, and its record shows requested and effective tool-calling mode.
+  - A run for which T-191's row resolves On, which is its default and needs no user action, requests Code Mode on any provider route, and its record shows requested and effective tool-calling mode.
+  - A run for which T-191's row is Off requests ordinary tool calls, is offered the script tool on no request, and records effective mode ordinary tool calls with the typed reason setting, including a run that ended before its first request.
+  - A run that requested Code Mode and ended before the offer was decided for any request records its effective mode as not applicable with no typed reason; a request whose offer was decided counts even if it was never sent to the provider.
   - A run whose effective mode is mixed or ordinary tool calls carries exactly one typed reason, and no surface describes that run as Code Mode.
-  - Code Mode is unavailable, with a typed reason, whenever Shared Integration Runtime reports no product-approved JavaScript EvalSession for the exact Host/Environment.
+  - A run that requested Code Mode and is recorded as mixed or ordinary tool calls shows that effective mode and typed reason on its own status or stop entry, and on every other surface that shows its tool-calling mode. The entry is in the transcript where the run has one a person can open; a run without one, such as an advisor review whose transcript is not kept, shows them on its owner's existing status or stop projection. This holds whichever request contributed the reason and whether or not any request was sent or produced a turn, including a DAE launch that was prepared and never spawned, or spawned and ended before any provider turn. A run that requested Code Mode and reached at least one offer decision, whose policy denies the script tool on every counted request, shows ordinary tool calls with the reason policy when no earlier reason in the order counts, and with that earlier reason when one does, for example when there is also no positive report of an approved JavaScript EvalSession.
+  - The script tool is not offered on a request for which Shared Integration Runtime gives no positive report of a product-approved JavaScript EvalSession for the exact Host/Environment, whether it reports none, is unavailable, or its approval evidence is missing or stale; that request's tools travel by the route's ordinary tool-call path under T-189, and a run that is ordinary or mixed records the typed reason no approved JavaScript EvalSession when that is the earliest counted reason in this unit's order.
+  - A request with the row On, a positive report of an approved JavaScript EvalSession and policy admission, whose script tool is left out by selection or materialization under T-176 (not_selected, budget_deferred or schema_unavailable), is not offered the script tool; its request-selected tools travel by the ordinary path within the same bounds, and a run that is ordinary or mixed records the typed reason not materialized when that is the earliest counted reason in this unit's order. When both of these reasons count for one ordinary or mixed run under this unit's rules, it records no approved JavaScript EvalSession, the earlier of the two, when no still earlier reason counts, and only that. A reason that kept the script tool off a request counts for a mixed run only when a tool other than the directly callable ones was dispatched on that request, while provider-kept native tools counts by its own rule. For example, with the script tool offered on a first request, no evaluator and no such dispatch on a second, and the script tool not materialized with such a dispatch on a third, on a route that keeps no native tools, the run records mixed with not materialized.
+  - A run that requests Code Mode on a direct API route that keeps no native tools Puppet Master cannot disable, and is offered the script tool on its first requests but not on later ones because Shared Integration Runtime then reports no approved JavaScript EvalSession, records Code Mode when nothing, or only the directly callable tools named in T-190, was dispatched on the later requests, including when an ordinary call the model wrote there was rejected before dispatch, and mixed with the typed reason no approved JavaScript EvalSession when any other Puppet Master tool was dispatched on them.
+  - The same run under the DAE strategy, on a CLI that accepts projected Puppet Master tools, or on any other route that keeps native tools Puppet Master cannot disable, records mixed in both of those dispatch cases, whichever of these routes it is on, with the typed reason provider-kept native tools when nothing, or only the directly callable tools, was dispatched on the later requests, and no approved JavaScript EvalSession when any other Puppet Master tool was dispatched on them.
+  - A run whose only request had the script tool offered, on a route that keeps native tools Puppet Master cannot disable, and was stopped before that request was sent, records mixed with the typed reason provider-kept native tools.
+  - A run that requested Code Mode whose first counted request is on a delegated route and whose second is on a reasoning-only route, neither able to carry Puppet Master tools, records ordinary tool calls with the execution-shape reason delegated, the shape of the earliest such request; each request keeps its own diagnostics.
+  - T-189 and T-191 state no rule for the effective mode or the typed reason; every record they name is the one this unit derives.
   - Tools creates no second evaluator, kernel manager or script runtime for Code Mode.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py lint-contractrefs
@@ -13416,6 +13721,7 @@ node_compile_hint:
 source_lineage:
   - 'Jared, 2026-11-15: "I want to add to our plans to use that for puppet master for all providers. Like the production puppet master, once it is built, will use this for tool calls on all providers."'
   - 'Jared, 2026-11-15: "I believe the plan with puppet master is to own the tool calls, unlike T3. So Puppet master is more of a harness than T3 is. In that case, using the code mode method like claude code does, we should be able to do all tool calls that way for all providers right?"'
+  - 'Jared, 2026-11-24: "I want to check, is code mode an option in settings that can be turned off?  If not, it needs to be."'
   - /mnt/Cursor/PuppetMaster-Evidence/tests/code-mode-20261115/OBSERVATIONS.md sha256:337e09ac2929163d17b05a0150cff4a6aa1963421802220929f7d85f376386ee
 source_atom_ids: []
 preserved_exact_tokens:
@@ -13442,36 +13748,124 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  When T-188's availability and policy gates admit the script tool, Puppet Master offers it through whichever channel
-  carries Puppet Master tools on that route, and the directly callable tools named in T-190 travel on every route by
-  the same channel as the script tool. If the script tool is not offered, the existing ordinary tool-call path is
-  preserved, with T-188's effective-mode and typed-reason rules. Under
-  Host Tool Execution on a direct API route whose Models_System tool_use capability is true it is a tool in
-  the provider's tool-call API, and where it is false the owned in-band path below is used; on a bridged CLI under the HTE strategy it, and the directly callable tools named in T-190, travel through the
+  On a request on which T-188 offers the script tool, Puppet Master carries it by whichever channel carries Puppet
+  Master tools on that route, and the directly callable tools named in T-190 travel by the same channel as the
+  script tool. On a request on which it is not offered, for any reason, the request-selected tools travel by the
+  route's ordinary tool-call path: the existing one where the route has one, and on the routes that had none, the
+  in-band carriage and the DAE projection that this unit adds below. Under
+  Host Tool Execution on a direct API route whose Models_System tool_use capability is currently affirmed true the script tool is a tool in
+  the provider's tool-call API, and where it is not, whether false, unknown or stale under Models_System, the owned in-band path below is used; on a bridged CLI under the HTE strategy it, and the directly callable tools named in T-190, travel through the
   Run_Modes hosted action loop as structured tool intents where its capability entry reports structured_tool_intents
   supported, otherwise as in-band tool calls, never as a provider tool_use; under
-  the DAE strategy, where the CLI accepts Puppet Master tools through provider-native feature projection, it is a projected Puppet Master tool beside the CLI's own tools, so the run is mixed with the provider-kept native tools reason. When the script tool is offered, the request-selected registry tools other than the directly
+  the DAE strategy, where the CLI accepts Puppet Master tools through provider-native feature projection, it is a projected Puppet Master tool beside the CLI's own tools. When the script tool is offered, the request-selected registry tools other than the directly
   callable tools named in T-190 are described to the model as the
-  script's callable catalog under T-176 materialization, rather than as one provider tool schema each. Wherever tool calls are carried
-  in-band, including where the selected model's Models_System tool_use capability is false, the script tool and the
+  script's callable catalog under T-176 materialization, rather than as one provider tool schema each. The in-band
+  routes are the two just named: a direct API route under Host Tool Execution whose model's tool_use capability is
+  not currently affirmed true, and a bridged CLI under the HTE strategy whose capability entry does not report structured_tool_intents
+  supported. An unknown or stale tool_use capability is never treated as supported: the provider's tool-call API is
+  used only on current affirmative evidence, Models_System's capability notice is unchanged, and on either in-band route, where Tools has no
+  owned dialect for the model family, the request cannot carry Puppet Master tools: it takes the fallback shape
+  that CLI_Bridged_Providers' fallback rules admit for it, reasoning-only on a direct API route and delegated or
+  reasoning-only on a bridged CLI, that shape is its execution-shape reason, and where those rules admit none the
+  request is stopped before its offer is decided and counts nothing. On an in-band route the script tool and the
   directly callable tools named in T-190 are carried as in-band tool calls in an owned dialect that Tools selects for the model family and records on the run; the T-169 admission gate
   applies, with Puppet Master-minted call IDs standing in for provider IDs, and text in which the model
-  writes a tool result itself is discarded and never enters replayable history. Where the script tool is offered and the provider keeps native tools that
-  Puppet Master cannot disable, the script tool is not withdrawn, the provider's own tool calls stay outside Code
-  Mode, and the run's effective mode is mixed. Where a provider accepts no Puppet Master tools at all, the effective
-  mode is ordinary tool calls with a typed reason naming the execution shape, delegated or reasoning-only, and no
-  Puppet Master tool call is counted for the run; that execution-shape reason is the one recorded when another
-  reason would also apply. A provider's own code mode, where it has one, is a provider-native feature handled
+  writes a tool result itself is discarded and never enters replayable history. On a request on which the script
+  tool is not offered, on an in-band route, the request-selected tools themselves are carried as
+  in-band tool calls in that same owned dialect, under the same admission gate, call-ID and discarded-result rules;
+  that is the ordinary tool-call path of such a route. On a direct API in-band route the result of an accepted
+  in-band call, of the script tool or of an ordinary tool, goes back to the model in the next request, if one is
+  admitted and sent with the same model family, carriage and owned dialect, as a Puppet
+  Master-authored result in the owned dialect, tied to the Puppet Master-minted call ID, through the prompt
+  transport that route permits, with its content shaped and replayed as Prompt_Pipeline's tool-result rules say, including where those rules
+  keep a result's content from the model, and when no later request is
+  sent the result and the stop keep their existing owners' handling, while any other later request, one whose model
+  family, carriage or dialect differs, takes the settled call and result pair through Prompt_Pipeline's replay and compatibility
+  rules, by the call's existing receipt, rather than in the old dialect; on
+  a bridged CLI under HTE the hosted action loop returns the result as Run_Modes says. The carriage follows the route, not the model's
+  tool_use flag alone: a bridged CLI under HTE that reports structured tool intents carries, as structured
+  tool intents through the hosted action loop as before, the script tool and the directly callable tools on a
+  request that is offered the script tool, and the individually materialized request-selected tools on a request
+  that is not, a cooperative SDK or protocol route
+  keeps returning tool intents to Puppet Master and a server bridge keeps its Puppet Master tool and MCP projection
+  as CLI_Bridged_Providers describes those classes. On a server bridge a request is sent only with a projection
+  that gives it exactly its own offer and bounded selection; a projection that several requests share, such as an
+  existing profile-wide ordinary projection, is allowed while it is exactly that for each of them, so no request is
+  shown a tool outside its own offer and selection. Where the bridge cannot present that for a request, because a
+  shared tool configuration would show some request a tool outside its own offer and selection or because it
+  cannot change what one run is shown between requests, Puppet Master binds the request to a fresh provider session
+  if the bridge's owner permits one and that gives the request its own projection; failing that, the bridge cannot
+  present the script tool for the request, which for an otherwise eligible request of a run that requested Code
+  Mode is T-188's not materialized reason unless an earlier reason counts, and the request uses the ordinary
+  projection if the bridge can present that request's bounded ordinary selection. Where the bridge cannot present even that,
+  the request is one on a route that cannot carry Puppet Master tools: it takes whichever fallback shape, delegated
+  or reasoning-only, CLI_Bridged_Providers' fallback rules admit for it, that shape is its execution-shape reason,
+  and where those rules admit neither the request is stopped before its offer is decided and counts nothing. T-188
+  derives each run's record from such a request by its own rules, so a run that did not request Code Mode still
+  records setting. Nothing in this unit changes the tier disclosure CLI_Bridged_Providers already requires. A DAE route follows the DAE sentences below,
+  and a route that accepts no Puppet Master tools carries none. Each call travels by exactly one channel. Wherever
+  this unit says the request-selected tools are carried or projected on an ordinary request, it means those the
+  ordinary form materializes under T-176; a tool that owner defers or cannot materialize keeps its explicit
+  omission or stop outcome. The
+  essential catalog search of T-176, where it is policy-available, is selected through T-176's bounded bootstrap
+  materialization, with that owner's omissions and stop outcomes, for every request that can carry
+  Puppet Master tools, whether or not the script tool is offered: with the script tool it is in the callable
+  catalog as T-190 says, and without it, it is carried directly like the other request-selected tools. Under the
+  DAE strategy, on a request on which the script tool is not offered, where the CLI accepts Puppet Master
+  tools through provider-native feature projection, the request-selected Puppet Master tools are projected one by one
+  beside the CLI's own tools through that same projection, and Puppet Master dispatches each call with the same
+  permission, approval, FileSafe, network and schema checks a script's call to that tool gets; that is the ordinary tool-call path of
+  such a route, and the CLI's own jailed tools stay under the DAE restriction and reconciliation rules either way.
+  Every Puppet Master tool call that reaches Puppet Master through the DAE projection, from a script or as a
+  projected tool called directly, is dispatched inside the run's admitted DAE execution context: what it does to
+  files and commands happens only in the run's jail under its execution identity, never directly in the canonical
+  workspace, and reaches that workspace only through the scans and reconciliation Run_Modes keeps for DAE, with the
+  Permissions-owned boundaries unchanged. Under the DAE strategy Puppet Master does not prepare the provider's
+  requests; it prepares the CLI process, under DAE's deterministic pre-spawn restriction. So under DAE, for T-188
+  and for this unit, a request is one prepared launch of the CLI process: the offer and the request-selected tools
+  are decided when Puppet Master prepares the launch, before the process is spawned, and the launch counts for
+  T-188 from that decision, whether or not the spawn then happens or the process ever sends a provider request; a
+  stop before that decision counts nothing. A spawned process is shown exactly that projection for as long as it
+  lives, and nothing in the projection is replaced while it runs. A change in the offer or in the selected tools
+  takes effect at the run's next launch, under the run's existing attempt and recovery rules, and that launch is
+  prepared from the conditions that hold then. Within a process, a script call made after the approved JavaScript EvalSession is gone
+  fails with the evaluator-unavailable result that section 4.4 of this document and Shared Integration Runtime own,
+  as it would after dispatch on any other route; nothing runs it elsewhere and no ordinary tool is added to a running process.
+  So on any one route, a request of a run with the row On that is not offered the script tool and a request of a
+  run with the row Off get the same ordinary carriage and the same bounded tool selection for the same inputs,
+  however the offer changes during a run. Between a request that is offered the script tool and one that is not,
+  what stays equal is tool authority and the call-time checks on the same admitted tool and inputs; which tools are
+  materialized in each form stays subject to that form's own selection, schema and payload-budget limits under
+  T-176, Prompt_Pipeline and Models_System, including their deferred and unavailable outcomes. A route keeps native tools that Puppet Master cannot disable, in the sense
+  of T-188's record, where the provider has such tools, and under the DAE strategy, where the CLI's own tools run
+  beside any projected Puppet Master tool; there the native tools alone never withdraw a script tool that T-188
+  offers on a request, a request on which T-188 does not offer it carries none, and the provider's own tool calls
+  stay outside Code Mode. Where a provider accepts no Puppet Master tools at all, the route cannot carry Puppet
+  Master tools: its execution shape, delegated or reasoning-only, is T-188's execution-shape reason, and no
+  Puppet Master tool call is counted on it. This unit adds no rule of its own for the effective mode or the
+  typed reason; T-188 derives both from the run's requests. A provider's own code mode, where it has one, is a provider-native feature handled
   under the provider-native feature policy and is never what makes Code Mode effective.
 gui_related: false
 gui_classification_reason: Provider request shaping and execution-shape behaviour; not GUI implementation work.
 depends_on: [T-169, T-176, T-188]
-unblocks: []
+unblocks: [T-191]
 acceptance_criteria:
   - Under Host Tool Execution a request on which the script tool is offered carries it and does not also carry one provider tool schema per registry tool the script can call; a request on which it is not offered keeps the ordinary tool-call path.
-  - A model whose Models_System tool_use is false can use Code Mode through an owned in-band dialect, and a tool result the model wrote itself never reaches replayable history.
-  - A bridged CLI under the HTE strategy on which the script tool is offered runs in Code Mode through the hosted action loop with no provider tool_use, unless the next criterion applies, whether or not that CLI has a code mode of its own; under the DAE strategy with the Puppet Master script tool offered, the run is recorded as mixed. The exception changes only the effective tool-calling mode label; under HTE, RM-021 still terminates the run on a provider-originated tool_use.
-  - A run on which the script tool is offered, on a provider that keeps native tools Puppet Master could not disable, is recorded as mixed, never as Code Mode.
+  - A model whose Models_System tool_use is false can use Code Mode through an owned in-band dialect on an in-band route, and a tool result the model wrote itself never reaches replayable history.
+  - On a direct API route whose model's tool_use capability is unknown or stale, with the row On and with it Off, no request uses the provider's tool-call API; Puppet Master tools travel in the owned in-band dialect where Tools has one for the model family, and otherwise the request carries none, is reasoning-only where CLI_Bridged_Providers admits that shape, with that execution-shape reason as its own, and is otherwise stopped before its offer is decided and counts nothing; Models_System's capability notice is unchanged throughout.
+  - On a direct API in-band route, the result of an accepted in-band call, from a script or from an ordinary tool, is returned in the next request, if one is admitted and sent with the same model family, carriage and owned dialect, as a Puppet Master-authored result in the owned dialect carrying the Puppet Master-minted call ID, holding whatever content Prompt_Pipeline's tool-result rules admit for the model; where those rules keep the content from the model, what the model is shown for that call is what those rules say, and the settled call and result stay in history under their owners. When no later request is sent, the result and the stop keep their existing owners' handling; when the next request differs in model family, carriage or dialect, the settled call and result pair goes through Prompt_Pipeline's replay and compatibility rules instead.
+  - On a server bridge every request is sent with a projection that gives it exactly its own offer and bounded selection. Two requests on one profile with the same ordinary selection may share the bridge's existing ordinary projection; a run with the row On and one with it Off never see a tool outside their own offer and selection, and a run whose offer changes between requests is never sent a stale projection. Where the bridge still cannot present the script tool to a request in that way after any fresh provider session its owner permits, for example because the profile's shared projection holds a tool outside that request's own selection, that request is not offered the script tool through that projection, while another request for which the same shared projection is exactly its own offer and selection may still be sent with it; for an otherwise eligible request of a run with the row On, one with a positive report of an approved JavaScript EvalSession and policy admission, the omission reason is not materialized, and the request uses the ordinary projection where the bridge can present its bounded ordinary selection. Where the bridge cannot present that either, the request, of either run, takes the fallback shape, delegated or reasoning-only, that CLI_Bridged_Providers admits, or is stopped before its offer is decided. A request that takes the fallback shape has that execution-shape reason as its own, and what it contributes to its run's record is T-188's to decide; a request stopped before its offer is decided contributes no request and no reason. A run with the row Off records setting in every one of these cases, and T-188 derives every run's record.
+  - On a request on which the script tool is not offered, for any reason, on an in-band route (a direct API route under Host Tool Execution whose model's tool_use capability is not currently affirmed true, whether false, unknown or stale, or a bridged CLI under the HTE strategy without supported structured tool intents), every Puppet Master tool call made on that request is an in-band tool call in the owned dialect, under the same admission gate; on a bridged CLI under HTE with supported structured tool intents the same calls are structured tool intents, never in-band.
+  - Under the DAE strategy, on a request on which the script tool is not offered, for any reason, a CLI that accepts projected Puppet Master tools is offered each request-selected Puppet Master tool that the ordinary form materializes as its own projected tool, and Puppet Master dispatches each call with the checks a script's call to that tool gets.
+  - A run offered the script tool on some requests and not on others carries, on every request that is sent and whose route can carry Puppet Master tools, that request's selected tool calls by the one channel this unit gives it. A request stopped before it is sent carries nothing and is recorded as T-188 says; a request on a route that accepts no Puppet Master tools carries none.
+  - Under the DAE strategy, a projected Puppet Master tool that writes a file, called directly or from a script, changes only the run's jail, and the change reaches the canonical workspace only through DAE's scans and reconciliation.
+  - Under the DAE strategy a prepared launch fixes Puppet Master's projection for that launch; if the process is spawned it sees exactly that projection for its lifetime, beside the CLI's own tools, and it is never replaced while the process runs. When the offer or the selected tools change during a run, the next prepared launch fixes the new projection, in both directions (script tool to one-by-one projection and back). T-188 counts each prepared launch as one request from the moment its offer is decided, including a launch whose spawn was then stopped or failed; a stop before that decision counts nothing.
+  - Under the DAE strategy, a script call in a process whose approved JavaScript EvalSession is gone fails with the evaluator-unavailable result that Tools section 4.4 and Shared Integration Runtime own, and no ordinary tool is added to that process.
+  - Where the essential catalog search of T-176 is policy-available, a request that can carry Puppet Master tools has it selected by T-176's bounded bootstrap path, with that owner's omissions and stop outcomes, in all three cases, which are the row On with the script tool offered (in the callable catalog), the row On with the script tool not offered (carried directly), and the row Off (carried directly).
+  - A request that otherwise meets every condition for the script tool, whose policy-available essential catalog search cannot be materialized in the script's callable catalog, is not offered the script tool; it uses the ordinary form with that form's own omission or stop outcomes, the request's own omission reason is not materialized, and what that contributes to the run's record is T-188's to decide.
+  - On a bridged CLI under the HTE strategy, a request on which the script tool is offered carries it through the hosted action loop with no provider tool_use, whether or not that CLI has a code mode of its own, and RM-021 still terminates the run on a provider-originated tool_use; under the DAE strategy, on a launch that is offered the script tool, it is a projected Puppet Master tool beside the CLI's own tools.
+  - On a route that keeps native tools Puppet Master cannot disable, including a CLI's own tools under the DAE strategy, a request on which T-188 offers the script tool still carries it, a request on which T-188 does not offer it does not, and the provider's own tool calls stay outside Code Mode.
+  - Every effective mode and typed reason on these routes is the one T-188 derives from the run's requests; this unit adds no rule for either.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py lint-contractrefs
   - python3 scripts/pm-plan-index.py validate
@@ -13488,6 +13882,7 @@ node_compile_hint:
 source_lineage:
   - 'Jared, 2026-11-15: "I believe OMP uses this for its tool calls, so you could pull it in and see how it does it. (It may not be the best way)."'
   - /mnt/Cursor/PuppetMaster-Evidence/tests/code-mode-20261115/OBSERVATIONS.md sha256:337e09ac2929163d17b05a0150cff4a6aa1963421802220929f7d85f376386ee
+  - 'Jared, 2026-11-25 (EST), answering the card "Should Code Mode''s fallback also get direct tool calls?": "Give the fallback the same direct calls".'
 source_atom_ids: []
 preserved_exact_tokens:
   - Host Tool Execution
@@ -13533,18 +13928,19 @@ canonical_text: >-
   fail the script; crossing the EvalSession hard output-byte ceiling ends it with typed recovery evidence. Each nested call emits the same
   tool events, receipts and usage rollups as a direct call and also carries the script's operation identity, so the
   transcript shows the script and every tool call it made. Only question and task, whose
-  contracts hand the turn to a person or to another agent, stay directly callable in Code Mode; they are not in the
+  contracts hand the turn to a person or to another agent, stay directly callable on a request on which the script tool is offered; they are not in the
   script's callable catalog, and calling them directly does not make the run mixed. The essential catalog search of
   T-176 is selected for every request on which the script tool is offered and in which it is policy_available, and is in the script's callable
-  catalog; in Code Mode that is how T-176's directly available catalog search is reached.
+  catalog; on such a request that is how T-176's directly available catalog search is reached.
 gui_related: false
 gui_classification_reason: Backend authority, limit and evidence rules for nested tool calls; not GUI implementation work.
 depends_on: [T-176, T-177, T-178, T-188]
 unblocks: []
 acceptance_criteria:
-  - A script cannot make a tool call that the same request could not make as a direct call, including when the argument values are computed while the script runs.
+  - A script cannot make a tool call that the same request's selection and policy would not admit as a direct call. The normalized call and its arguments, including values computed while the script runs, pass the same admission checks at the shared T-178 boundary, with selection and policy held constant. Whether the route's direct channel could carry that call, its schema being offered there and its size, is the matter of T-189 and T-191, not of this test.
   - An approval asked for inside a script suspends that script and is answered through the ordinary approval path; a denial, including the immediate one when no person is available, reaches the script as a typed result.
   - Every nested call appears in the event log, receipts and usage rollups exactly as a direct call would, plus the script's operation identity.
+  - With the catalog search L2 schema materialized only on the host, two searches within one script can settle successfully with distinct host-issued child IDs and the same parent_operation_id. A failed nested call repeats its child ID and parent_operation_id in the recovery envelope. The enclosing script retains its own call ID.
   - A script that passes its deadline or the EvalSession hard output-byte ceiling ends with typed recovery evidence, not a success-shaped result.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py lint-contractrefs
@@ -13581,3 +13977,113 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Tools.md#T-188, ContractName:Plans/Tools.md#T-176, ContractName:Plans/Tools.md#T-177, ContractName:Plans/Tools.md#T-178, ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/Permissions_System.md#PS-145, ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the-loop.md
+
+### T-191 - Code Mode Can Be Turned Off In Settings
+
+```yaml
+plan_unit_id: T-191
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: >-
+  Code Mode can be turned off in Settings. The ordinary setting row code.execution.code-mode in
+  Plans/settings_inventory.json is a toggle labelled Code Mode, On by default, that can be set Everywhere and
+  differ by Project, and Settings layering under Settings_System resolves it like any other inventory row. Its
+  value is read once, when a run that inherits no value and has none frozen for it starts, and that run keeps it until it ends: changing the row applies from the next
+  run that reads the row and never changes a run in progress, and a run that is paused and resumed under the same run ID, or given a
+  new attempt, is still that run. Scheduled or delayed work takes the row's value in the same snapshot, at the same
+  moment, as the rest of its requested configuration under its delayed-work owners (Run_Modes RM-053, Permissions
+  PS-145, and SQR-019 of Scheduling_and_Quota_Resume), and its run uses that value when it is dispatched. A snapshot or a run that was frozen before this row existed
+  holds no value for it and is read as On, the behaviour before the row, without consulting current Settings and
+  without rewriting the snapshot. A child or subagent run started by a run in progress uses its parent's frozen
+  value, and a follow-up run spawned by context rotation continues the run it follows and uses that run's value, as
+  Run_Modes has it inherit that run's mode, strategy, effective runtime state and a narrowed-or-equal tool-policy snapshot. On, the run requests Code Mode under T-188. Off, the run requests
+  ordinary tool calls: Puppet Master does not offer the script tool or the script's callable catalog on any route or
+  by any channel, including the in-band carriage and the DAE projection of T-189; the run uses the route's ordinary
+  tool-call path, one channel for each call: the existing adapter-owned channel where the route has one, whichever
+  adapter class of CLI_Bridged_Providers the route belongs to, for example
+  the provider's tool-call API on a direct API route, tool intents returned to Puppet Master on a cooperative SDK
+  or protocol route, Puppet Master tool and MCP projection on a server bridge, or structured tool intents through
+  the hosted action loop on a bridged CLI under HTE; T-189's in-band
+  carriage of the request-selected tools themselves on a route that carries Puppet Master tool calls in-band; and
+  T-189's one-by-one projection of them on a DAE route whose CLI accepts projected Puppet Master tools. A route that
+  accepts no Puppet Master tools carries none, On or Off. The run records
+  requested and effective mode ordinary tool calls and the typed reason setting, as T-188's record gives them. The row
+  changes only the requested mode and, through it, whether the script tool can be offered, how the request-selected
+  tools are packaged for the route's one channel, as a script tool with its callable catalog or as individually
+  callable tools, what T-188's record shows, how a server-bridge request proceeds where
+  T-189's session and fallback rule applies, and the differences listed below. The tools selected for
+  the request, and each tool's own permission, approval, FileSafe, network and schema checks, deadline, events,
+  receipt and usage rules, apply the same way in both modes, so the row changes no tool authority: in both modes
+  the tools a run may call are bounded by what the request's policy snapshot allows, and each call gets the same checks.
+  Within that ceiling each form selects and materializes under its own limits, as T-189 says, and the two ordinary
+  paths, a request with the row Off and a request with the row On that lacks the script tool, get identical
+  selections and omissions for identical inputs.
+  With the row On, a request on which T-188 does not offer the script tool, for any reason, uses the same ordinary
+  paths as a request of a run with the row Off, with the same bounded tool selection for the same inputs; the
+  limits on what each form can materialize are T-189's. Tool execution records
+  reflect the calls that ran, and the run's mode record is T-188's alone: with a script, T-190's script operation and nested-call attribution; and because a
+  script can chain calls inside one provider round, the number of rounds a piece of work takes, where the run's
+  tool-round ceiling falls, and the usage observed can differ between the two modes. A script can also pass a tool an
+  argument it computed; an ordinary call carries only what the model writes out in one reply, so not every call a
+  script made can be repeated as one ordinary call. The row governs Puppet Master's Code
+  Mode only; a provider's own code mode stays a provider-native feature under the provider-native feature policy.
+  Off is a choice, not a fault: no surface presents the Off preference, or the typed reason setting, as a fallback, a
+  warning or a degraded run. No surface is required to show an Off run's tool-calling mode: a surface that shows a run's tool-calling mode shows
+  ordinary tool calls for such a run, with the reason setting where that surface shows reasons, and the run's
+  status or stop entry need not mention it. Every other disclosure a run owes stays as its owner says, whatever the row's value:
+  the execution tier and its limits, a delegated or reasoning-only fallback, model substitution and capability
+  notices, and permission and safety notices.
+gui_related: true
+gui_classification_reason: Mixed unit. It adds a visible, searchable Settings toggle and governs how its Off state is presented, and it also defines the runtime meaning of the row, where a run's value comes from and what stays equal between the two modes. Split recommended into the Settings row and Off presentation on one side and the runtime preference and dispatch meaning on the other; kept together here so the switch and what it means land as one decision.
+split_recommended: true
+depends_on: [T-188, T-189]
+unblocks: []
+acceptance_criteria:
+  - Plans/settings_inventory.json holds exactly one row code.execution.code-mode, a toggle whose default is On; Settings renders and searches it from the inventory, with one manager home and no separately owned duplicate control. The ordinary All Settings entry of the same row, bound to the same value, is not a duplicate.
+  - With the row Off for a run, no request of that run carries the script tool or the script's callable catalog on any route, and the run's record shows requested and effective ordinary tool calls with the typed reason setting.
+  - Changing the row while a run is in progress or paused does not change that run, including after it resumes under the same run ID or gets a new attempt, and does not change a child or subagent run it starts afterwards or a follow-up run spawned by its context rotation; the next run that reads the row follows the new value.
+  - A run dispatched from scheduled or delayed work uses the row value held in that work's frozen requested configuration, so a change to the row between scheduling and dispatch does not alter it; a quota or window resume of a run already started keeps the value under the same-run-ID rule.
+  - A schedule saved, or a run started, before this row existed holds no value for it; when it is dispatched or continues, it requests Code Mode as it would have before the row, even if the row is Off in Settings at that moment, and its stored snapshot is not rewritten.
+  - With the row Off, the run is offered, through the route's ordinary channel where the route has one or T-189 adds one, each request-selected tool that the ordinary form materializes under T-176; a tool that T-176 defers or cannot materialize keeps that owner's explicit omission or stop outcome, and a request with the row On that lacks the script tool gets the same selection and the same omissions for the same inputs.
+  - For any complete call to a tool that is materialized and admitted both in the script's callable catalog with the row On and in the ordinary form with the row Off, the permission, approval, FileSafe, network and schema decision is the same in both; for the directly callable tools named in T-190, where present in both, the decision on the same direct call is the same with the row On and Off. Both comparisons use the same request, policy snapshot, call-time inputs and answer to any approval prompt. With the row Off the script tool and its callable catalog are absent, and which tools each form materializes stays subject to that form's own limits under T-189, so a tool one form defers is outside this comparison; the script wrapper and nested identity on the records, the number of provider rounds and the observed usage may differ, and a call whose arguments only a script could supply is not required to be repeatable as one ordinary call.
+  - With the row Off, on a route that carries Puppet Master tool calls in-band under T-189, every Puppet Master tool call made on a request on that route is carried in-band, any request-selected tool that the ordinary form materializes can be called that way, and the run's record shows requested and effective ordinary tool calls with the typed reason setting.
+  - With the row Off on a delegated or reasoning-only route, the run's record shows the typed reason setting and the route's own execution-tier disclosure is still shown.
+  - On a route that carries Puppet Master tool calls in-band, or a DAE route that accepts projected Puppet Master tools, with no approved JavaScript EvalSession on any request of the run, a run with the row On and a run with the row Off that differ only in the row, with identical request-selection and materialization inputs, the same policy snapshot, the same final call context and the same answer to any approval prompt, are both offered, through T-189's added path, the same request-selected tools that the ordinary form materializes, with equal admission decisions; what each records and shows is T-188's and this unit's matter, not this comparison's; the permission, approval, FileSafe, network and schema decision on any call either run makes is the same for the same call-time inputs.
+  - With the row Off, a run under the DAE strategy on a CLI that accepts projected Puppet Master tools is offered each request-selected Puppet Master tool that the ordinary form materializes as its own projected tool under T-189, and its record shows requested and effective ordinary tool calls with the typed reason setting.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - python3 scripts/pm-plans-verify.py validate-settings-layering
+  - python3 scripts/pm-plan-index.py validate
+risk_class: code_mode_setting_truth_drift
+reasoning_tier: high
+context_scope: code_mode_tool_calling
+implementation_surfaces:
+  - Plans/Tools.md
+  - Plans/settings_inventory.json
+  - Plans/Settings_System.md
+node_compile_hint:
+  mode: owner_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - 'Jared, 2026-11-24: "I want to check, is code mode an option in settings that can be turned off?  If not, it needs to be."'
+  - Plans/Tools.md#T-188 and Plans/Tools.md#T-189 (requested and effective tool-calling mode, typed reasons, the preserved ordinary tool-call path)
+  - 'Jared, 2026-11-25 (EST), answering the card "Should Code Mode''s fallback also get direct tool calls?": "Give the fallback the same direct calls".'
+source_atom_ids: []
+preserved_exact_tokens:
+  - code.execution.code-mode
+  - On by default
+  - ordinary tool calls
+negative_constraints:
+  - Do not make the switch a hidden, debug-only, environment-variable or per-provider control; it is one ordinary Settings row.
+  - Do not present the Off preference or the setting reason as an error, a fallback or a degraded state, and do not suppress any other disclosure a run owes because the row is Off.
+  - Do not let the row change tool authority, which is the ceiling the request's policy snapshot allows, any permission, approval, FileSafe, network or schema decision, or the ordinary carriage and bounded tool selection that a request without the script tool gets; the script form and the ordinary form may select and materialize differently inside that ceiling under T-189.
+  - Do not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, generated governance artifacts, or governance seal outputs.
+owner_hints:
+  - Plans/Tools.md
+  - Plans/Settings_System.md
+  - Plans/settings_inventory.json
+```
+
+ContractRef: ContractName:Plans/Tools.md#T-188, ContractName:Plans/Tools.md#T-189, ContractName:Plans/Settings_System.md, ContractName:Plans/settings_inventory.json

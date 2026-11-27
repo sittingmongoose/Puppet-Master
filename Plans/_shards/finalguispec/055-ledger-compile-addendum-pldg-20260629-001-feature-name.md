@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L28897-L29087
+Source lines: L28930-L29121
 
-Source SHA256: `7ba17c5aa7fb716a162c335b6ec6e71fc68d986a5c12f560da9fc6c85b205c7a`
+Source SHA256: `7c52aa35b4fb3b308c17b6cf275e1f2f81fab5151885cf7a52d3ae688fdbe180`
 
 ---
 
@@ -79,7 +79,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The model settings GUI exposes a manual all-provider model refresh button near model settings and passive Free Models update timestamps. Successful validated Auto Apply updates create no notification/inbox item and normal settings show only `Last checked` and `Last updated`, with recent-change details behind details or Advanced/Support. Failed or quarantined Free Models updates keep current known-good active and show `Free Models update needs attention` with `Retry check` and `View details`. Routine automatic offline/launch failures remain passive as `Could not check` unless routing availability is affected.
+  The model settings GUI exposes a manual all-provider model refresh button near model settings and passive Free Models update timestamps. Successful validated Auto Apply updates create no notification/inbox item and normal settings show only `Last checked` and `Last updated`, with recent-change details behind details or Advanced/Support. Failed or quarantined Free Models updates keep current known-good active and show `Free Models update needs attention` with `Retry check` and `View details`. Routine automatic offline/launch failures remain passive as `Could not check` unless routing availability is affected. Bound 2026-11-24 (DL-2602): `Refresh Models` and `Retry check` both dispatch `cmd.model.refresh`; `Retry check` sends `refresh_reason = free_models_update_retry` and no `provider_id` (the Free Models grouping is not a provider id, MS-118), and its result and `model.catalog_refreshed` update `Last checked` and `Last updated`. `View details` is a no-persist disclosure that opens the failed or quarantined update's existing activation, quarantine and rollback records (Models_System MS-119); it dispatches no command and writes nothing.
 gui_related: true
 gui_classification_reason: Owns visible model refresh button, update status, timestamps, and attention-state wording.
 depends_on: []
@@ -143,7 +143,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Free Models setup and top-10 screens default to global configuration to keep the GUI cleaner, while making clear that section/surface/role settings override the global top-10. Onboarding/doctor sequencing should set up paid providers first, then show Free Models and let the user configure the top-10. Free Models rows use plain setup actions and friendly unavailable labels, with expanded details for underlying provider/account, current skip reason, cooldown/Retry now state, source/ref, and return context.
+  Free Models setup and top-10 screens default to global configuration to keep the GUI cleaner, while making clear that section/surface/role settings override the global top-10. Onboarding/doctor sequencing should set up paid providers first, then show Free Models and let the user configure the top-10. Free Models rows use plain setup actions and friendly unavailable labels, with expanded details for underlying provider/account, current skip reason, cooldown/Retry now state, source/ref, and return context. Bound 2026-11-24 (DL-2602), applied 2026-11-25: the top-10 is not a second list. Free models are chosen in the one model defaults list, Settings > Models `Default models` (Models_System §7.2): each job row is one `model_defaults.list_setting_ids` setting in `Plans/settings_inventory.json`, holds one model selection at its This project or Everywhere layer, and is saved by the ordinary Settings transaction (`cmd.settings.transaction.preview` / `cmd.settings.transaction.apply`); any Free Models entry can be picked for any job there. The ranked top-10 editor is retired and no ranked top-10 store exists; read top-10 wording as Models_System MS-120 defines it. The Free Models screens show availability rows (the labels above, `Retry check` and `View details` as F3-408 binds them) and one per-model action, `Use for a job`, which asks for a job row and layer and sets that row to the model through the same Settings transaction. Configuring the top-10 in onboarding or Doctor means choosing Free Models on those rows. A section, surface or role setting that overrides the global choice is another job row or a Models_System §2 rung above it, and the GUI states requested/effective behavior.
 gui_related: true
 gui_classification_reason: Owns top-10 setup, onboarding placement, override disclosure, setup labels, and visible availability states.
 depends_on: []
@@ -153,6 +153,7 @@ acceptance_criteria:
   - Top-10 setup is global by default and does not hide that the list spans all providers/models.
   - Future onboarding/doctor flow sets up paid providers before Free Models top-10 configuration.
   - Unavailable rows use the priority `Needs sign-in`, `Rate limited`, `Provider offline`, `No longer free`, `Update issue`, `Unknown`, or `Multiple issues`.
+  - No ranked top-10 editor or store exists (DL-2602); `Use for a job` writes exactly one Default models job row through `cmd.settings.transaction.preview` / `cmd.settings.transaction.apply`, and a cancelled preview writes nothing.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Top-10 override disclosure fixtures

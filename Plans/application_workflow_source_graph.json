@@ -28,7 +28,7 @@
     {
       "retrieval_uri": "https://puppetmaster.local/Plans/section15_browser_program_contracts.schema.json",
       "path": "Plans/section15_browser_program_contracts.schema.json",
-      "whole_resource_sha256": "c3d627e64a3ca958d1f00adc8d2c67614723e207972535f0d461fb7f802a6ce7",
+      "whole_resource_sha256": "b3ffc4021c21e33d9d628d372424bbeb0ff413e740c6357523d0978468c1f753",
       "resource_role": "selected_application_or_current_aggregate",
       "literal_root_pointers": [
         "#/$defs/browser_actionApplicationV1",
@@ -48,7 +48,7 @@
     {
       "retrieval_uri": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json",
       "path": "Plans/shared_integration_runtime.schema.json",
-      "whole_resource_sha256": "0e41d89065463e0581357a514ad3d2510d6db8a3e9356dcd23f717f5db4118f5",
+      "whole_resource_sha256": "55af91ab515d32f556efe0b46e8f47417c4e16fca3e8486fe38f1999f88e5af0",
       "resource_role": "selected_application_or_current_aggregate",
       "literal_root_pointers": [
         "#/$defs/OwnerEvidenceRefV1",
@@ -2128,5 +2128,5 @@
       "adoption_disposition": "specified_unimplemented"
     }
   ],
-  "graph_sha256": "fd892f205eadd0ab4d3da1df061fdfa9038bc848927b2b7bc30303317fd9aa2e"
+  "graph_sha256": "0bc43ff50666103e187fd4dde4408be2b381c09c0730a43aadf4412d93a41321"
 }

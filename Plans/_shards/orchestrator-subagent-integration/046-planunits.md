@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L6616-L31269
+Source lines: L6641-L31405
 
-Source SHA256: `aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26`
+Source SHA256: `97b1d391be028a118aa9ee837749dc861f7f51b6c37f2de93f71048ddf325371`
 
 ---
 
@@ -4298,7 +4298,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Subagent invocation paths that build ExecutionRequest must propagate request.plan_mode from tier_config.plan_mode through TierConfig or IterationContext when enable_tier_subagents is active and subagent execution is not skipped.
+  Subagent invocation paths that build ExecutionRequest must propagate request.plan_mode from the execution unit's plan_mode (carried as tier_config.plan_mode through TierConfig or IterationContext in source lineage) when runtime admission under SubagentPolicy (`schema_id: pm.subagent_policy.v1`, OSI-425) admits subagent execution for that unit and subagent execution is not skipped. enable_tier_subagents is a compatibility import/export key that OSI-425 normalizes into SubagentPolicy; it is never read as the runtime gate.
 gui_related: false
 gui_classification_reason: This unit covers backend request propagation, not GUI behavior.
 split_recommended: false
@@ -4476,7 +4476,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  GuiConfig owns subagent configuration through a top-level subagent SubagentGuiConfig serialized as subagentConfig or equivalent, including enable_tier_subagents, tier_overrides, disabled_subagents, and required_subagents; v1 overrides are per tier type, required wins over disabled, and missing or empty override lists use auto-selection.
+  GuiConfig owns subagent configuration through a top-level subagent SubagentGuiConfig serialized as subagentConfig or equivalent, including enable_tier_subagents, tier_overrides, disabled_subagents, and required_subagents as compatibility import/export fields (OSI-425). Import normalizes v1 overrides per tier type using missing or empty override = use auto-selection. Runtime admission reads only the normalized SubagentPolicy. Runtime selection applies the resulting policy per execution unit, where required wins over disabled (OSI-214).
 gui_related: false
 gui_classification_reason: This unit covers backend/config schema and override semantics, not GUI presentation.
 split_recommended: false
@@ -4954,7 +4954,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Interview question limits replace the single max setting with min_questions_per_phase and max_questions_per_phase Option<u32>, accept phase completion only after the minimum, support None as unlimited, enforce a soft cap with max + 1 grace, force-complete runaway phases with phase.force_completed and max_questions_exceeded, and never reject a phase that already collected valid answers.
+  Interview question limits replace the single max setting with min_questions_per_phase and max_questions_per_phase Option<u32>, accept phase completion only after the minimum, support None as unlimited, enforce a soft cap with max + 1 grace, and never reject a phase that already collected valid answers. When the cap forces ordinary phase completion, emit phase.force_completed with max_questions_exceeded. When OSI-099 applies, the cap ends that round of agent questions and presents the required card. Only the user's Confirm completes that phase.
 gui_related: false
 gui_classification_reason: This unit covers interview runtime behavior, not GUI controls.
 split_recommended: false
@@ -5190,7 +5190,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Structured subagent handoff validation needs platform-specific parser and hook reliability: JSON parsers for Cursor/Claude/Gemini, JSONL/NDJSON aggregation for Codex, regex/text extraction for Copilot, parser.error seglog records with raw-output excerpts, generic fallback extraction, parser_fallback_used metadata, retry behavior, raw output preservation, and malformed/missing-field/edge-case integration tests.
+  Structured subagent handoff validation needs transport-scoped parser and hook reliability under the OSI-004 ProviderTransport taxonomy: CliBridge providers (Cursor, Claude Code) use JSON parsers over their CLI structured output (stream-json NDJSON events); DirectApi providers (Codex, Copilot, Gemini) build SubagentOutput with serde_json from the direct-provider response's final assistant content and have no CLI output to parse; the ServerBridge provider (OpenCode) parses its server event stream. JSONL/NDJSON aggregation for Codex and regex/text extraction for Copilot (the text parser) describe CLI-era output and are historical context only, not implementation targets. Every transport keeps parser.error seglog records with raw-output excerpts, generic fallback extraction, parser_fallback_used metadata, Handoff Retry Ceiling, raw output preservation, and malformed/missing-field/edge-case integration tests.
 gui_related: false
 gui_classification_reason: This unit covers parser and hook backend reliability, not GUI behavior.
 split_recommended: false
@@ -5250,7 +5250,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  If platform-specific and generic parser fallback both fail after retry, the provider error is surfaced to the user with retry, skip, and raw-output viewing options rather than silently dropping output.
+  When the handoff is still invalid after platform parsing and generic fallback and the Handoff Retry Ceiling budget
+  is exhausted, surface the provider error through the needs_review recovery point. Its Retry, Skip and View raw
+  output controls follow the Executor's live allowed_action_ids in Parser-Failure And Unrelated-Failure Recovery Actions.
 gui_related: true
 gui_classification_reason: This unit covers user-visible parser failure recovery affordances.
 split_recommended: false
@@ -5538,7 +5540,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Interview execution must wire require_architecture_confirmation into InterviewOrchestratorConfig from gui_config.interview in app.rs and require explicit architecture/tech-stack confirmation through a phase gate, dedicated phase, or prompt line before phase completion when enabled.
+  Interview execution must wire require_architecture_confirmation into InterviewOrchestratorConfig from gui_config.interview in app.rs and, when enabled, require explicit architecture/tech-stack confirmation through a phase gate before phase completion. The phase gate is the one mechanism; a dedicated phase and a prompt line are rejected alternatives. This contract identifies the interview's architecture and technology phase as `architecture_technology` and applies the gate on that phase's completion transition at Full or Short depth. The gate asks one required shared question card (`QuestionItem`, options Confirm and Change, `allow_freeform` true) that summarizes the phase's architecture and tech-stack decisions. Completion: the phase completes only after the user answers Confirm, recorded as explicit confirmation in the phase's validation artifacts; Change keeps the phase open with the user's note as new phase input and asks again at the next phase-complete attempt. There is no timeout and no agent self-confirmation. The soft cap in OSI-089 also enters this gate and cannot complete the phase. DL-2602 records the user confirmation as the kept choice. When the setting is false, or the phase plan sets `architecture_technology` to Skip, the gate does not run.
 gui_related: true
 gui_classification_reason: This unit covers interview flow UX and confirmation behavior.
 split_recommended: false
@@ -5579,7 +5581,7 @@ preserved_exact_tokens:
 - 'prompt line'
 - 'AGENTS.md'
 negative_constraints: []
-compatibility_only_notes: []
+compatibility_only_notes: [The retired Chain Wizard phase registry is source lineage for the phase identifier.]
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -6109,7 +6111,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Tier-start verification separates BeforeTierStart, DuringTierStart, and AfterTierStart responsibilities, builds StartVerificationResult, logs/handles failures, emits canonical config.validation.passed|warning|failed events, updates redb projections and verification history, and defines src/verification/tier_start.rs with verify_tier_start.
+  VerifyUnitStart verification (legacy alias: tier-start verification) separates its before, during and after phases
+  (legacy aliases BeforeTierStart, DuringTierStart, and AfterTierStart), builds StartVerificationResult, logs/handles
+  failures, emits canonical config.validation.passed|warning|failed events, and updates redb projections and
+  verification history. The source example implements VerifyUnitStart as verify_tier_start in
+  src/verification/tier_start.rs; both are legacy alias spellings (Execution-Unit Hook Naming), and normalized records
+  use VerifyUnitStart.
 gui_related: true
 gui_classification_reason: This unit covers verification result visibility, events, and persisted projections.
 split_recommended: false
@@ -6166,7 +6173,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  The orchestrator tier-entry example runs verify_tier_start before building execution context, handles VerificationStatus Pass/Fail/Warning through FailFast or WarnAndContinue policy, logs and persists results, and builds execution context only after pass or warn-and-continue.
+  The orchestrator unit-entry example runs VerifyUnitStart (legacy alias verify_tier_start, the example's function name)
+  before building execution context, handles VerificationStatus Pass/Fail/Warning through FailFast or WarnAndContinue
+  policy, logs and persists results, and builds execution context only after pass or warn-and-continue (Execution-Unit
+  Hook Naming).
 gui_related: false
 gui_classification_reason: This unit covers backend orchestrator flow, not GUI behavior.
 split_recommended: false
@@ -6285,7 +6295,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  verify_tier_start collects config wiring, GUI-backend mapping, backend-GUI mapping, operation sequence, and known-gap findings; maps severities to fail/warning/pass; and returns a StartVerificationResult with tier_type, node_id, findings, and Utc timestamp.
+  VerifyUnitStart (legacy alias verify_tier_start, the example's function name; Execution-Unit Hook Naming) collects
+  config wiring, GUI-backend mapping, backend-GUI mapping, operation sequence, and known-gap findings; maps severities
+  to fail/warning/pass; and returns a StartVerificationResult with tier_type, node_id, findings, and Utc timestamp.
 gui_related: true
 gui_classification_reason: This unit includes GUI/backend mapping algorithm checks and surfaced verification status.
 split_recommended: false
@@ -6701,7 +6713,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  BeforeTierEnd prepares verification context by collecting tier artifacts, computing git diff where applicable, loading tier context and execution history, and building a context with artifacts, diff, tier context, and config.
+  The before phase of VerifyUnitEnd (legacy alias BeforeTierEnd; Execution-Unit Hook Naming) prepares verification
+  context by collecting tier artifacts, computing git diff where applicable, loading tier context and execution history,
+  and building a context with artifacts, diff, tier context, and config.
 gui_related: false
 gui_classification_reason: This unit covers backend verification context preparation, not GUI behavior.
 split_recommended: false
@@ -6754,7 +6768,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  DuringTierEnd reruns wiring checks, acceptance criteria, quality verification via reviewer subagent and automated gate criteria, Document Set audit checks, collects results, and determines complete, incomplete, or complete-with-warnings tier status.
+  The during phase of VerifyUnitEnd (legacy alias DuringTierEnd; Execution-Unit Hook Naming) reruns wiring checks,
+  acceptance criteria, quality verification via reviewer subagent and automated gate criteria, Document Set audit
+  checks, collects results, and determines complete, incomplete, or complete-with-warnings tier status.
+  complete-with-warnings here is the end-verification outcome for non-blocking quality findings on a validated handoff,
+  never the outcome of a failed handoff (Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery
+  Actions).
 gui_related: true
 gui_classification_reason: This unit includes user-visible tier status outcomes and verification result handling.
 split_recommended: false
@@ -6814,7 +6833,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  AfterTierEnd persists verification results, updates tier status in PRD/state, generates feedback for agent/user when verification fails, and handles failures as rework or complete-with-warnings according to policy.
+  The after phase of VerifyUnitEnd (legacy alias AfterTierEnd; Execution-Unit Hook Naming) persists verification
+  results, updates tier status in PRD/state, generates feedback for agent/user when verification fails, and handles
+  failures as rework or complete-with-warnings according to policy.
 gui_related: true
 gui_classification_reason: This unit covers user/operator feedback and tier status surfaces.
 split_recommended: false
@@ -6872,7 +6893,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  The tier-end orchestrator example introduces tier_end verification integration, collecting artifacts and diff, calling verify_tier_end, mapping VerificationStatus to TierStatus, persisting results, updating tier status, and generating feedback when incomplete.
+  The unit-end orchestrator example introduces VerifyUnitEnd integration (legacy alias spellings in the example: the
+  tier_end module and the verify_tier_end function; Execution-Unit Hook Naming), collecting artifacts and diff, calling
+  VerifyUnitEnd, mapping VerificationStatus to TierStatus, persisting results, updating tier status, and generating
+  feedback when incomplete.
 gui_related: false
 gui_classification_reason: This unit covers backend orchestrator example flow, not GUI behavior.
 split_recommended: false
@@ -7731,9 +7755,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  When a tier fails because of issues outside its intended scope, the orchestrator retries once with the same config, then
-  raises an Assistant chat CTA with review, skip, retry, and abort options; modal escalation is reserved for P0 risk such
-  as possible data loss or workspace corruption, and unrelated failures must not be silently bypassed.
+  When a tier fails because of issues outside its intended scope, the orchestrator applies the Executor's classified
+  retry, remediation and review policy. Use the single CTA-entry transition in Parser-Failure And Unrelated-Failure
+  Recovery Actions at the operator recovery boundary, whether policy admits zero retries or its admitted retries are
+  exhausted. An Assistant chat CTA presents the recovery point's ordered allowed_action_ids[], including review, skip, retry, and abort options
+  for ordinary recovery. Reserve modal escalation for P0 risk such as possible data loss or workspace corruption.
+  Do not silently bypass unrelated failures.
 gui_related: true
 gui_classification_reason: This unit defines user-visible Assistant chat CTA and modal escalation behavior.
 split_recommended: false
@@ -7743,6 +7770,13 @@ depends_on:
 - OSI-127
 unblocks: []
 acceptance_criteria:
+- A zero-retry failure can enter operator recovery from the initial failed attempt when its classifier path reaches
+  that boundary. A failure with admitted automatic retries can enter only after the last admitted retry fails and the
+  classifier path reaches that same boundary.
+- The recovery point identifies the failed attempt and keeps its emitted classifier. A restore-required episode offers
+  Restore and retry only when the Executor admits it.
+- If a required safe point is found missing or corrupt, the same blocked sequence shows the Executor's ordered
+  recovery_unavailable actions and exact owner reason.
 - Covered source spans remain losslessly available for exact-text audit.
 - >-
   The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
@@ -7779,7 +7813,8 @@ preserved_exact_tokens:
 negative_constraints:
 - Do not silently bypass unrelated failures.
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- The source instruction "retry once automatically using the same config" is superseded by classified retry admission.
 owner_boundary_notes: []
 owner_hints:
 - Plans/orchestrator-subagent-integration.md
@@ -7919,9 +7954,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Platform hook registration uses orchestrator-level hooks as primary middleware while optionally integrating native platform
-  hooks: Cursor hook files and events, Codex and Copilot CLI lifecycle outputs, Claude settings hooks with blocking/context
-  behavior, and Gemini orchestrator-level Direct API hooks without native config files.
+  Platform hook registration uses orchestrator-level hooks as primary middleware while optionally integrating native
+  platform hooks for the CliBridge providers only: Cursor hook files and events, and Claude settings hooks with
+  blocking/context behavior. Codex, Copilot and Gemini are DirectApi under OSI-004 and use orchestrator-level Direct API
+  hooks without native config files; the source wording "Codex and Copilot CLI lifecycle outputs" is CLI-era history,
+  not an implementation target.
 gui_related: false
 gui_classification_reason: This unit covers provider/runtime hook registration policy, not GUI presentation.
 split_recommended: false
@@ -8370,8 +8407,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  AfterUnit hook execution runs each hook through safe_hook_main, short-circuits on validation failure, carries validation_error,
-  request_retry, and retry_reason, logs hook failures as warnings, and returns the combined AfterUnitResult.
+  AfterUnit hook execution runs each hook through safe_hook_main and returns the combined AfterUnitResult with validation_error,
+  request_retry, and retry_reason. A validation failure or an error from the required HandoffValidatorHook short-circuits with failed validation and blocks VerifyUnitEnd. Errors from ancillary hooks are logged as warnings.
 gui_related: false
 gui_classification_reason: This unit defines backend AfterUnit execution semantics.
 split_recommended: false
@@ -8498,8 +8535,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Every subagent invocation must produce a structured handoff report with required fields; malformed output blocks completion
-  and requests one retry, with a fail-safe path after retry.
+  Every subagent invocation must produce a structured handoff report with required fields. Malformed output blocks
+  completion and takes the format retry or exhaustion path defined by Handoff Retry Ceiling.
 gui_related: false
 gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
   presentation.
@@ -8542,7 +8579,8 @@ preserved_exact_tokens:
 - block and request one retry
 - fail-safe after retry
 negative_constraints: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- The source wording about one retry describes the default budget.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -8558,10 +8596,13 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  BeforeHandoffValidation detects output format, loads the SubagentOutput schema, and prepares validation context; DuringHandoffValidation
-  parses, validates required fields, types, and findings, extracts from text fallback, and requests one malformed-output retry;
-  AfterHandoffValidation persists validation results, updates tier context, and handles post-retry failure as partial output
-  with complete-with-warnings source disposition.
+  BeforeHandoffValidation detects output format, loads the SubagentOutput schema, and prepares validation context;
+  DuringHandoffValidation parses, validates required fields, types, and findings, extracts from text fallback, and
+  requests a format retry only while the Handoff Retry Ceiling budget remains. AfterHandoffValidation persists validation
+  results and updates the execution-unit context with validated SubagentOutput only. At exhaustion, partial output from a
+  still-invalid handoff stays on the failed attempt for review only and the node takes the needs_review recovery point
+  (Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions). The complete with warnings
+  disposition is retired source lineage.
 gui_related: false
 gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
   presentation.
@@ -8760,8 +8801,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  CursorOutputParser structured handoff parsing reads JSON output according to platform_specs, extracts task_report, downstream_context,
-  and findings, and must not hardcode the output-format behavior.
+  CursorOutputParser follows platform_specs for single-document JSON or stream-json. For stream-json it extracts the handoff
+  from final assistant content assembled from the CliBridge NDJSON events. It extracts task_report, downstream_context and
+  findings without hardcoding the output format.
 gui_related: false
 gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
   presentation.
@@ -8890,8 +8932,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  HandoffValidator validates subagent output by using platform_specs-driven parser selection, trying structured parsing first,
-  requesting retry for malformed output before max retries, and falling back to text extraction after retry exhaustion.
+  HandoffValidator selects the parser through platform_specs, tries structured parsing and validation first, and validates
+  generic text extraction on the same attempt if needed. Output still invalid after fallback goes to the execution
+  loop for the retry or exhaustion decision under Handoff Retry Ceiling.
 gui_related: false
 gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
   presentation.
@@ -8943,7 +8986,7 @@ negative_constraints:
 - Never hardcode parser selection by platform.
 - Do not use match platform statements.
 compatibility_only_notes:
-- The Rust validator snippet is plan evidence only, not an executable node output.
+- The Rust validator snippet is source lineage. Its placement of text extraction after retry exhaustion is retired.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -9023,9 +9066,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  The orchestrator subagent execution loop obtains the platform runner, executes the subagent, validates stdout/stderr through
-  HandoffValidator, returns validated SubagentOutput on success, requests retry with SubagentOutput::example format instructions
-  on malformed output, and after max retries warns and returns extracted partial output.
+  The orchestrator subagent execution loop obtains the platform runner, executes the subagent, validates stdout/stderr
+  through HandoffValidator and returns validated SubagentOutput on success. On output still invalid after fallback,
+  it checks the Handoff Retry Ceiling before scheduling and counts only dispatched automatic retries. If budget
+  remains it retries with SubagentOutput::example format instructions. At exhaustion it keeps the extracted partial output
+  (extract_partial_output) on the failed attempt for review only, and returns an error: the attempt settles with
+  failure_class = structured_output_invalid and the node takes the needs_review recovery point (Handoff failure boundary
+  in Parser-Failure And Unrelated-Failure Recovery Actions). The earlier return of extracted partial output as the
+  loop's result is retired source lineage.
 gui_related: false
 gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
   presentation.
@@ -9077,7 +9125,7 @@ preserved_exact_tokens:
 - tracing::warn!
 negative_constraints: []
 compatibility_only_notes:
-- The Rust orchestrator integration snippet is plan evidence only, not an executable node output.
+- The Rust orchestrator integration snippet is source lineage. Its pre-dispatch retry increment and prompt handling are retired.
 - >-
   Adjacent orphaned parser-tail lines 2573-2585 are preserved as non-standalone example coverage and not as a separate product
   requirement.
@@ -9096,8 +9144,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Handoff validation failure handling requests retry for JSON parse, missing field, and invalid severity failures, and after
-  max retries proceeds with partial output while preserving complete-with-warnings source wording as a compatibility disposition.
+  Handoff validation failure handling requests another format retry for JSON parse, missing field, and invalid severity
+  failures only if output is still invalid after fallback and the Handoff Retry Ceiling budget remains. At exhaustion,
+  partial output stays on the failed attempt for review only and the node takes the needs_review recovery point with
+  the allowed Retry, Skip and View raw output controls (Handoff failure boundary in Parser-Failure And
+  Unrelated-Failure Recovery Actions). The earlier proceed with partial output and complete with warnings wording is
+  preserved only as retired source lineage.
 gui_related: false
 gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
   presentation.
@@ -9162,7 +9214,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   CodexOutputParser parses JSONL according to platform_specs, detects Turn/turn events and structured content, aggregates
-  findings, and reports TextExtraction when no structured output is found.
+  findings, and reports TextExtraction when no structured output is found. This describes CLI-era Codex output and is
+  historical context only, not an implementation target: Codex is DirectApi under OSI-004, and OSI-093 builds its
+  SubagentOutput from the direct-provider response's final assistant content.
 gui_related: false
 gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
   presentation.
@@ -9232,8 +9286,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  ClaudeOutputParser parses Claude structured output according to platform_specs, reads result.content or direct fields, attempts
-  direct SubagentOutput parsing, and manually extracts task_report, downstream_context, and findings when needed.
+  ClaudeOutputParser follows platform_specs for single-document JSON or stream-json. For stream-json it uses final assistant
+  content assembled from the CliBridge NDJSON events. It reads result.content or direct fields, attempts direct SubagentOutput
+  parsing, and extracts task_report, downstream_context and findings when needed.
 gui_related: false
 gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.
 split_recommended: false
@@ -9371,7 +9426,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   CopilotOutputParser parses text according to platform_specs by combining stdout and stderr, extracting the Task Report section
-  as required and Downstream Context as optional through regex section extraction.
+  as required and Downstream Context as optional through regex section extraction. This describes CLI-era Copilot output
+  and is historical context only, not an implementation target: Copilot is DirectApi under OSI-004 and has no stdout or
+  stderr to combine, and OSI-093 builds its SubagentOutput from the direct-provider response's final assistant content.
 gui_related: false
 gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.
 split_recommended: false
@@ -9438,7 +9495,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Copilot findings parsing extracts Findings sections with severity, category, description, file, line, and suggestion fields,
-  mapping Critical, Major, Minor, and Info strings to Severity values before returning SubagentOutput.
+  mapping Critical, Major, Minor, and Info strings to Severity values before returning SubagentOutput. The text-section
+  extraction is the CLI-era Copilot parser and historical context only (OSI-004, OSI-093); the field set and the
+  Critical/Major/Minor/Info to Severity mapping still apply to findings read from Copilot's final assistant content.
 gui_related: false
 gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.
 split_recommended: false
@@ -9577,9 +9636,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  AfterTier handoff validation logs platform, error type, and partial output snippet details, requests one retry with structured
-  JSON output instruction, and after retry failure proceeds with partial output fail-safe while preserving complete-with-warnings
-  source wording.
+  AfterUnit handoff validation (the AfterTier hook name is an import-only alias stored as hook_name_normalized =
+  AfterUnit per Execution-Unit Hook Naming) logs platform, error type, and partial output snippet details. Output still
+  invalid after fallback qualifies for another structured JSON format retry only within Handoff Retry Ceiling. At
+  exhaustion ExecutionUnitContext stays unchanged, partial output stays on the failed attempt for review only and the
+  node takes the needs_review recovery point (Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions). The earlier
+  partial output (fail-safe) with complete with warnings wording is retired source lineage.
 gui_related: false
 gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.
 split_recommended: false
@@ -9631,8 +9693,8 @@ preserved_exact_tokens:
 negative_constraints: []
 compatibility_only_notes:
 - >-
-  The complete with warnings wording is preserved as source text and does not override OSI-093/OSI-157 resolved parser failure
-  behavior.
+  The source wording about one retry describes the default budget. The complete with warnings wording is retired by
+  OSI-093/OSI-157.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -9648,8 +9710,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Existing ParsedOutput integration populates output.subagent_output by attempting parse_subagent_output during platform output
-  parsing, but the .ok() example must not silently drop parser failures contrary to structured handoff failure policy.
+  ParsedOutput populates output.subagent_output from the validated transport-scoped handoff, including the JSONL pass for
+  CliBridge stream-json when required. Unresolved failures go through structured handoff failure handling. The .ok() example
+  is source evidence only.
 gui_related: false
 gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.
 split_recommended: false
@@ -10437,7 +10500,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  BeforeTier/AfterTier hooks, verification functions, and subagent output parsing must use safe handling so hooks never crash,
+  BeforeUnit/AfterUnit hooks (import-only legacy alias: BeforeTier/AfterTier hooks, normalized per Execution-Unit Hook
+  Naming), verification functions, and subagent output parsing must use safe handling so hooks never crash,
   verification returns structured errors, and parse failures produce partial SubagentOutput rather than crashing.
 gui_related: false
 gui_classification_reason: >-
@@ -10628,9 +10692,13 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Runtime handoff contract enforcement validates Task Report, Downstream Context, and Findings through AfterTier validation,
-  blocks malformed responses, requests one retry with format instruction, and then proceeds with partial output complete-with-warnings
-  source disposition if still malformed.
+  Runtime handoff contract enforcement validates Task Report, Downstream Context, and Findings through AfterUnit
+  validation (the AfterTier hook name is an import-only alias stored as hook_name_normalized = AfterUnit per
+  Execution-Unit Hook Naming), blocks malformed responses, and requests a format retry if the output remains invalid
+  after fallback and the Handoff Retry Ceiling budget remains. At exhaustion the node takes the needs_review recovery
+  point and partial output stays on the failed attempt for review only (Handoff failure boundary in Parser-Failure And
+  Unrelated-Failure Recovery Actions); the earlier partial output with complete
+  with warnings source disposition is retired source lineage.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
@@ -10680,7 +10748,8 @@ preserved_exact_tokens:
 negative_constraints: []
 compatibility_only_notes:
 - >-
-  complete with warnings is preserved source wording and must remain aligned with OSI-093/OSI-157 parser failure policy.
+  The source wording about one retry describes the default budget. The complete with warnings wording is retired by
+  OSI-093/OSI-157.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -10696,10 +10765,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Runtime contract enforcement uses platform-specific parser validation across Cursor, Codex, Claude, Gemini, and Copilot
-  while treating provider-doc schema findings as capability evidence rather than a bypass for local validation; provider-native
-  schema enforcement is preferred where available, and weak or unsupported transports fall back to locally validated structured
-  output or partial-output warnings.
+  Runtime contract enforcement uses transport-scoped parser validation (OSI-004, OSI-093) across Cursor, Codex, Claude,
+  Gemini, and Copilot: JSON over CLI output for the CliBridge providers (Cursor, Claude Code) and JSON over the
+  direct-provider response's final assistant content for the DirectApi providers (Codex, Copilot, Gemini), with the same
+  required fields for every provider. Provider-doc schema findings are treated as capability evidence rather than a
+  bypass for local validation; provider-native schema enforcement is preferred where available, and weak or unsupported
+  transports fall back to locally validated structured output or partial-output warnings.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
@@ -10758,8 +10829,9 @@ preserved_exact_tokens:
 negative_constraints: []
 compatibility_only_notes:
 - >-
-  Codex JSON wording is preserved as source shorthand only; Codex JSONL parser behavior remains represented by OSI-158 and
-  the platform summary.
+  The source line "Cursor/Codex/Claude/Gemini: Parse JSON output" fits the transport-scoped contract above. The Codex
+  JSONL parser and Copilot text output parsing are CLI-era history: OSI-158, OSI-161 and the Platform-Specific
+  Implementation Summary mark them historical context only, not implementation targets.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -10776,7 +10848,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   The platform implementation matrix preserves which lifecycle and quality features are orchestrator-level and which require
-  platform-specific parsers or validators across Cursor, Codex, Claude, Gemini, and Copilot.
+  platform-specific parsers or validators across Cursor, Codex, Claude, Gemini, and Copilot, scoped by transport as OSI-093
+  states (JSON over CliBridge CLI output for Cursor and Claude, JSON over the DirectApi final assistant content for Codex,
+  Gemini and Copilot) with native hooks only for the CliBridge providers.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
@@ -10844,9 +10918,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Most lifecycle features are orchestrator-level and platform-agnostic, while handoff validation and contract enforcement
-  require parser-specific JSON, JSONL, or text handling; platform-native hooks may be used where available while orchestrator
-  middleware remains the fallback for all platforms.
+  Most lifecycle features are orchestrator-level and platform-agnostic, while handoff validation and contract
+  enforcement require transport-scoped parser handling (OSI-093): JSON over CliBridge CLI output, JSON over the
+  DirectApi final assistant content, and the ServerBridge event stream. The source's parser-specific JSON, JSONL, or
+  text handling split is CLI-era Codex and Copilot history. The platform-native hooks are used where available, which is
+  only for the CliBridge providers (Cursor, Claude Code), while orchestrator middleware remains the fallback for
+  all platforms.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
@@ -10909,8 +10986,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Lifecycle and quality features complement start/end verification: BeforeTier runs before verify_tier_start, AfterTier runs
-  after verify_tier_end, remediation extends the required reviewer subagent, cross-session continuity enhances Phase 1 context,
+  Lifecycle and quality features complement start/end verification: BeforeUnit runs before VerifyUnitStart, AfterUnit runs
+  after execution and before VerifyUnitEnd. A required handoff must pass AfterUnit validation to enter VerifyUnitEnd.
+  BeforeTier hook, verify_tier_start, AfterTier hook and verify_tier_end are import-only aliases under Execution-Unit
+  Hook Naming. Remediation extends the required reviewer subagent, cross-session continuity enhances Phase 1 context,
   and active tracking enhances logging/debugging.
 gui_related: false
 gui_classification_reason: >-
@@ -11111,8 +11190,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Structured output parsing handles JSON, JSONL, and text variation through multi-pass parsing, best-effort partial output,
-  parser edge-case tests, parser version tracking, and platform CLI version tracking.
+  Structured output parsing handles JSON, JSONL, and text variation through multi-pass parsing scoped by transport
+  (OSI-004, OSI-093): the JSONL pass reads the CliBridge stream-json NDJSON events (Cursor, Claude Code); DirectApi
+  final assistant content (Codex, Copilot, Gemini) is parsed as JSON with generic text extraction as the fallback; a
+  Codex JSONL stream or Copilot text output is CLI-era history, not an implementation target. It keeps best-effort
+  partial output on the attempt for review (never forwarded on exhaustion under Handoff Retry Ceiling, and never marked complete
+  with warnings; Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions), parser edge-case
+  tests, parser version tracking, and platform CLI version tracking for the CliBridge providers, with the provider API
+  and model version tracked in its place for the DirectApi providers.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
@@ -11575,9 +11660,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Structured handoff prompt enforcement includes explicit JSON schema examples for structured-capable providers, markdown
-  examples for Copilot text-only output, validation-error feedback in retry prompts, and best-effort partial output with warnings
-  after retry failure.
+  Structured handoff prompt enforcement includes an explicit JSON schema example for every provider and validation-error
+  feedback in retry prompts while the Handoff Retry Ceiling budget remains. At exhaustion the best-effort partial
+  output is kept for review only and the node takes the needs_review recovery point (Handoff failure boundary in Parser-Failure
+  And Unrelated-Failure Recovery Actions). Copilot is DirectApi (OSI-004, OSI-093) and gets the same JSON schema
+  example; the Gap #22 instruction to give Copilot (text-only) a markdown example instead of JSON is CLI-era history,
+  not an implementation target.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, hook, lifecycle, validation, parser, remediation, continuity, or storage-boundary
@@ -11648,8 +11736,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Platform-native hook adapters for Cursor, Claude, and Gemini normalize platform-specific hook formats, communication protocols,
-  JSON stdin/stdout, exit codes, and error handling behind a PlatformHookAdapter trait and documented platform hook formats.
+  Platform-native hook adapters exist only for the CliBridge providers (OSI-004): CursorNativeHookAdapter and
+  ClaudeNativeHookAdapter normalize platform-specific hook formats, communication protocols, JSON stdin/stdout,
+  exit codes, and error handling behind a PlatformHookAdapter trait and documented platform hook formats. Gemini is
+  DirectApi and has no native hooks, so GeminiNativeHookAdapter is retired CLI-era wording, not an implementation
+  target; Gemini, Codex and Copilot use orchestrator-level middleware.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, hook, lifecycle, validation, parser, remediation, continuity, or storage-boundary
@@ -12872,8 +12963,11 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Orchestrator integration uses src/core/orchestrator.rs and tier_config_for(tier_type) -> &TierConfig as the source for
-  platform, model, and plan_mode, then reads enable_tier_subagents and subagent config, applies tier_overrides, filters
-  disabled_subagents, and adds required_subagents.
+  platform, model, and plan_mode. OSI-425 normalizes the legacy enable_tier_subagents, tier_overrides, disabled_subagents
+  and required_subagents into SubagentPolicy (`schema_id: pm.subagent_policy.v1`) at import. For each execution unit admitted
+  by that policy, the orchestrator runs the selector, replaces its list with the normalized scope override if one exists,
+  filters disabled entries and adds required entries. Required entries win. Runtime admission and selection read only the
+  normalized policy.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration configuration merge behavior rather than GUI presentation.
@@ -13267,9 +13361,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Tier start/end verification lives with config-wiring verification under src/verification/, src/core/, or tier_verification.rs,
-  and the main orchestrator calls verify_tier_start on Phase/Task/Subtask entry and verify_tier_end after the acceptance gate
-  before marking the tier complete.
+  VerifyUnitStart and VerifyUnitEnd verification lives with config-wiring verification under src/verification/,
+  src/core/, or tier_verification.rs (a legacy module spelling), and the main orchestrator calls VerifyUnitStart (legacy
+  alias verify_tier_start) on Phase/Task/Subtask entry and VerifyUnitEnd (legacy alias verify_tier_end) after the
+  acceptance gate before marking the unit complete. Normalized records use the canonical names (Execution-Unit Hook
+  Naming).
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend verification placement and lifecycle timing rather than GUI presentation.
@@ -13437,9 +13533,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Hook integration preserves the ordering that BeforeUnit runs before verify_tier_start and AfterUnit runs after
-  verify_tier_end, with active-subagent tracking, context injection, stale-state pruning, handoff-format validation, and
-  completion tracking treated as compatibility/source summary for the hook owner path.
+  BeforeUnit runs before VerifyUnitStart. AfterUnit runs after execution and validates any required handoff before
+  VerifyUnitEnd may update completion status. Active-subagent tracking, context injection, stale-state pruning, handoff
+  validation and completion tracking follow the hook owner path. verify_tier_start and verify_tier_end are import-only
+  aliases per Execution-Unit Hook Naming.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend hook and verification ordering rather than GUI presentation.
@@ -13722,8 +13819,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  BeforeUnit/AfterUnit hooks delegate to native hooks where possible for Cursor, Claude, and Gemini, while Codex and Copilot
-  use orchestrator-level middleware and canonical coordination projection.
+  BeforeUnit/AfterUnit hooks delegate to native hooks where possible for the CliBridge providers Cursor and Claude
+  (Claude Code), while the DirectApi providers Codex, Copilot and Gemini use orchestrator-level middleware and
+  canonical coordination projection (OSI-004, OSI-139). Gemini is not a native-hook provider; earlier wording that
+  listed it beside Cursor and Claude is CLI-era history.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend platform hook adapter boundaries rather than GUI presentation.
@@ -13778,9 +13877,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Structured handoff validation extends validate_subagent_output() with platform-specific parsers, including JSON for
-  Cursor, Claude, and Gemini, JSONL for Codex, and text parsing for Copilot, and contract enforcement retries malformed
-  output before failing safe.
+  Structured handoff validation extends validate_subagent_output() with transport-scoped parsers (OSI-004, OSI-093):
+  JSON over CLI output for the CliBridge providers (Cursor, Claude Code) and JSON over the direct-provider response's
+  final assistant content for the DirectApi providers (Codex, Copilot, Gemini). Contract enforcement applies the
+  retry or exhaustion path in Handoff Retry Ceiling to output still invalid after generic fallback. The source's parser
+  list (JSON for Cursor/Claude/Gemini, JSONL for Codex, and
+  text parsing for Copilot) describes CLI-era output and is historical context only, not an implementation target.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend structured handoff parsing and contract enforcement rather than GUI presentation.
@@ -13796,7 +13898,10 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
-- Malformed handoff output retries once before fail-safe handling.
+- With a budget of 0, invalid output after fallback takes the recovery path on the initial attempt. With the default
+  budget of 1 it takes that path on the first invalid retry. With a budget of 2 it takes that path on the second
+  invalid retry. A valid handoff from the transport parser or generic fallback takes the validated-output path at
+  any count. A configured value of 3 still observes the Executor ceiling.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - >-
@@ -16219,8 +16324,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  File operations can be detected by parsing agent output, native PreToolUse/PostToolUse hooks where available, or
-  Codex/Copilot normalized CLI stream or tool events.
+  File operations can be detected by parsing agent output, by native PreToolUse/PostToolUse hooks where available (only
+  the CliBridge providers Cursor and Claude Code have them), or by provider tool-call events. For the DirectApi
+  providers (Codex, Copilot, Gemini, OSI-004) that means the tool-call events in the direct-provider response; the
+  source wording "Codex/Copilot normalized CLI stream or tool events" is CLI-era history, not an implementation target.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend event extraction and provider adapter evidence rather than GUI presentation.
@@ -22464,7 +22571,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Pause gate evidence preserves checking .puppet-master/PAUSE.md before each loop iteration, logging the active pause gate,
-  returning a halted result, and waiting for resume.
+  returning a halted result, and waiting for resume. This per-dispatch check is the live pause-gate watcher; its path,
+  scope values, fail-closed parsing and resume rule are the Pause Gate Live Contract in the Closure Re-audit Repair
+  Addendum - 2026-11-25, and human-in-the-loop.md PAUSE.md Gate And Precedence owns the frontmatter fields and HITL order.
 gui_related: false
 gui_classification_reason: This unit covers backend pause detection, not GUI presentation.
 split_recommended: false
@@ -24076,7 +24185,9 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Retry/backoff classifier behavior preserves executor classifier families, auto-retry/backoff/safe-point/remediation
-  matrix entries, and the rule that blocked reasons must not be coerced into failure_class.
+  matrix entries, and the rule that blocked reasons must not be coerced into failure_class. The structured_output_invalid
+  row uses Handoff Retry Ceiling under the Executor's classified outcome ceiling. Exhaustion of a still-invalid handoff
+  takes the needs_review recovery point.
 gui_related: false
 gui_classification_reason: This unit covers backend retry/backoff classification, not GUI presentation.
 split_recommended: false

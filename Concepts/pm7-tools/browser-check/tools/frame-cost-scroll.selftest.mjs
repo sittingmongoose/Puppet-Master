@@ -58,7 +58,24 @@ assert.equal(typeof measureScroll, 'function', 'the scroll window needs a trace-
 // against the same deadline instead of reading 0 ticks and falsely passing the N4 case.
 function virtualClock() {
 	let now = Date.now();
-	return { now: () => now, wait: async (ms) => { now += ms; } };
+	return {
+		now: () => now,
+		wait: async (ms) => { now += ms; },
+		frame: (cb) => new Promise((resolve) => setTimeout(() => { now += 16; cb(now); resolve(); }, 0)),
+	};
+}
+
+// R138-H2 RED: mock animation frames must yield instead of draining a broken settle poll in one microtask spin.
+{
+	const clock = virtualClock();
+	let frames = 0;
+	const first = clock.frame(() => { frames++; });
+	await Promise.resolve();
+	assert.equal(frames, 0, 'an animation-frame callback does not run in the same microtask drain');
+	await first;
+	assert.equal(frames, 1, 'the virtual clock delivers the queued frame');
+	await new Promise((resolve) => clock.frame(() => { frames++; resolve(); }));
+	assert.equal(frames, 2, 'successive frames advance the virtual clock without a microtask spin');
 }
 {
 	const clock = virtualClock();
@@ -97,11 +114,11 @@ function virtualClock() {
 	const f = {
 		evaluate: async (fn, arg) => {
 			events.push([phase, 'evaluate']);
-			const saved = { document: globalThis.document, window: globalThis.window, getComputedStyle: globalThis.getComputedStyle };
-			// rAF stays installed like a real page global: the settle promise's later frames call it after evaluate
-			// returns; microtask-scheduled so the settle is deterministic, never a wall-clock race (R137-F3)
-			Object.assign(globalThis, { document: doc, window: win, getComputedStyle: (x) => ({ overflowY: x === scroller ? 'auto' : 'visible' }), requestAnimationFrame: (cb) => queueMicrotask(cb) });
-			try { return fn(arg); } finally { Object.assign(globalThis, saved); }
+			const saved = { document: globalThis.document, window: globalThis.window, getComputedStyle: globalThis.getComputedStyle, performance: globalThis.performance };
+			// rAF stays installed like a real page global until an async evaluate settles. Frames yield on the virtual
+			// clock instead of draining a broken settle poll in one microtask spin (R137-F3, R138-H2).
+			Object.assign(globalThis, { document: doc, window: win, getComputedStyle: (x) => ({ overflowY: x === scroller ? 'auto' : 'visible' }), performance: { now: clock.now }, requestAnimationFrame: clock.frame });
+			try { return await fn(arg); } finally { Object.assign(globalThis, saved); }
 		},
 	};
 	const wheels = [];
@@ -214,9 +231,9 @@ function virtualClock() {
 	const f = {
 		evaluate: async (fn, arg) => {
 			events.push([phase, 'evaluate']);
-			const saved = { document: globalThis.document, window: globalThis.window, getComputedStyle: globalThis.getComputedStyle };
-			Object.assign(globalThis, { document: doc, window: win, getComputedStyle: (x) => ({ overflowY: x === scroller ? 'auto' : 'visible' }), requestAnimationFrame: (cb) => queueMicrotask(cb) });
-			try { return fn(arg); } finally { Object.assign(globalThis, saved); }
+			const saved = { document: globalThis.document, window: globalThis.window, getComputedStyle: globalThis.getComputedStyle, performance: globalThis.performance };
+			Object.assign(globalThis, { document: doc, window: win, getComputedStyle: (x) => ({ overflowY: x === scroller ? 'auto' : 'visible' }), performance: { now: clock.now }, requestAnimationFrame: clock.frame });
+			try { return await fn(arg); } finally { Object.assign(globalThis, saved); }
 		},
 	};
 	const checks = [];
@@ -314,9 +331,9 @@ function sandboxWorld({ sessionFails = false, sharedTarget = false } = {}) {
 	const f = {
 		evaluate: async (fn, arg) => {
 			events.push([state.phase, 'evaluate']);
-			const saved = { document: globalThis.document, window: globalThis.window, getComputedStyle: globalThis.getComputedStyle };
-			Object.assign(globalThis, { document: doc, window: win, getComputedStyle: (x) => ({ overflowY: x === scroller ? 'auto' : 'visible' }), requestAnimationFrame: (cb) => queueMicrotask(cb) });
-			try { return fn(arg); } finally { Object.assign(globalThis, saved); }
+			const saved = { document: globalThis.document, window: globalThis.window, getComputedStyle: globalThis.getComputedStyle, performance: globalThis.performance };
+			Object.assign(globalThis, { document: doc, window: win, getComputedStyle: (x) => ({ overflowY: x === scroller ? 'auto' : 'visible' }), performance: { now: clock.now }, requestAnimationFrame: clock.frame });
+			try { return await fn(arg); } finally { Object.assign(globalThis, saved); }
 		},
 	};
 	const wheels = [], checks = [];
@@ -420,4 +437,20 @@ function sandboxWorld({ sessionFails = false, sharedTarget = false } = {}) {
 	assert.ok(!w.styleMap.has('scroll-behavior'), 'the inline scroll-behavior is restored even when the trace throws');
 	assert.ok(w.events.some((e) => e[1] === 'frameCdp' && e[2] === 'detach'), 'the frame session is detached even when the trace throws');
 }
-console.log('PASS frame-cost trace hygiene (deterministic virtual clock, R137-F3): discovery, marking, scrollTop=0 and the pointer aim run before the trace, only the wheel runs inside (turning from the passive listener\'s pushed top), and cleanup plus the moved verdict run after; a view with no scroller fails its window; a smooth-behavior scroller resets instantly and settles before the watch starts; the sandbox binding lives on the frame session (or the window says could-not-judge), a shared-target in-process frame measures on the page session it is part of (never could-not-judge, never detached), and a throwing trace still tears everything down');
+// R137-H1 RED: setup after the binding and DOM mark can throw before trace() starts. The same teardown must run.
+{
+	const w = sandboxWorld();
+	const evaluate = w.f.evaluate;
+	w.f.evaluate = async (fn, arg) => {
+		const out = await evaluate(fn, arg);
+		if (String(fn).includes("el.setAttribute('data-fc-scroller', '1')")) throw new Error('setup failed after marking');
+		return out;
+	};
+	await assert.rejects(measureScroll(w.cdp, w.f, w.t, { ms: 50, url: 'file://page', keep: null, label: 'basic-dark usage', trace: async () => ({}) }), /setup failed after marking/);
+	assert.equal(w.scroller.listeners.length, 0, 'no scroll listener is left when setup throws');
+	assert.equal(w.scroller.attrs.size, 0, 'candidate and scroller marks are removed when setup throws');
+	assert.equal(w.frameHandlers.length, 0, 'the binding handler is detached when setup throws');
+	assert.ok(!w.styleMap.has('scroll-behavior'), 'the inline scroll-behavior is restored when setup throws');
+	assert.ok(w.events.some((e) => e[1] === 'frameCdp' && e[2] === 'detach'), 'the frame session is detached when setup throws');
+}
+console.log('PASS frame-cost trace hygiene (deterministic virtual clock, R137-F3): discovery, marking, scrollTop=0 and the pointer aim run before the trace, only the wheel runs inside (turning from the passive listener\'s pushed top), and cleanup plus the moved verdict run after; a view with no scroller fails its window; a smooth-behavior scroller resets instantly and settles before the watch starts; the sandbox binding lives on the frame session (or the window says could-not-judge), a shared-target in-process frame measures on the page session it is part of (never could-not-judge, never detached), and both a throwing trace and a throwing pre-trace setup tear everything down');

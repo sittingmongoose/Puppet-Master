@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L370-L895
 
-Source SHA256: `287cb84653a613ea5b72b8d933972941df90e665fde3fd28c2a8adbff81bdb05`
+Source SHA256: `8739726276ab1980f995281db4a4467a42e4308a5bad7c4af725b78053d81c85`
 
 ---
 
@@ -158,7 +158,7 @@ Child/orchestrator lineage consumers must retire tier-era side files and selecto
 
 Widget and ledger projections consume provider-account storage families rather than owning account state. `widget.multi_account`, `settings/multi_account.*`, `/multi_account`, `/account/receipt-aware`, `/account/trust`, `provider_accounts`, `provider_accounts.*`, `tier-era`, `/effective`, switch-history, projection-trust, attempt/account/receipt-aware routing, and receipt-aware filters must route through the canonical provider_accounts family, requested/effective account envelope, and projection-trust contract before a widget, ledger, or Orchestrator summary displays account health or filters history.
 
-Tool and artifact events are runtime contracts when they affect execution, mutation authority, denial recovery, or provider/account routing. `tool.invoked`, `tool.denied`, `/tool`, `/event`, `/event/policy`, `/attempt/actor/account`, and `mutation_capable` records carry the same blocked reason taxonomy and identity envelope as orchestration events. When a tool event intersects Orchestrator execution it is `runtime-attributed`, not merely `analytics-only`, and the record exposes canonical optional refs for `node_id`, `attempt_id`, `lane_id`, `work_package_id`, `feature_seam_id`, `execution_role`, `/runtime`, `/effective`, `effective_account_id`, and `operational_identity`. Tool/artifact linkage must preserve `artifact_id` back to `attempt_id`, resulting artifact refs, and `usage_event_ref` as a secondary `drill-through` anchor rather than the sole evidence trail.
+Tool and artifact events are runtime contracts when they affect execution, mutation authority, denial recovery, or provider/account routing. `tool.invoked`, `tool.denied`, `/tool`, `/event`, `/event/policy`, `/attempt/actor/account`, and `mutation_capable` records carry the same blocked reason taxonomy and identity envelope as orchestration events. When a tool event intersects Orchestrator execution it is `runtime-attributed`, not merely `analytics-only`, and the record exposes canonical optional refs for `node_id`, `attempt_id`, `lane_id`, `package_id`, `execution_role`, `/runtime`, `/effective`, `effective_account_id`, and `operational_identity` (a `work_package_id` input is import/export compatibility only and normalizes to `package_id` before persistence, and `tool.invoked` / `tool.denied` payloads carry no `feature_seam_id`; CV-038, CV-097, CV-098). Tool/artifact linkage must preserve `artifact_id` back to `attempt_id`, resulting artifact refs, and `usage_event_ref` as a secondary `drill-through` anchor rather than the sole evidence trail.
 
 Runtime attribution packets are carried by immutable prompt handoff bundles, `attempt.started`, `attempt_record`, `/dispatch`, and usage/worker-inspection projections when relevant. `tool.invoked` and `tool.denied` are both first-class runtime trace records; `tool.invoked` must not remain under-attributed analytics exhaust when it affects execution, artifacts, receipts, usage, or operational identity.
 
@@ -489,28 +489,28 @@ Runtime identity, handoff, and stewardship records preserve their concrete keys.
 - Treat `concern resolver` as distinct from owner/source roles.
 - Allow concern ownership reassignment without changing concern identity.
 
-`ConcernRecord` is the canonical typed concern object. Minimum fields are:
+`ConcernRecord` is the canonical typed concern object. Its fields are exactly those of `Plans/concern_created_contracts/concern_record.schema.json` (`additionalProperties: false`): every key in the table below and in [Concern record envelope, references, and redaction fields](#concern-record-envelope-references-and-redaction-fields) is required, a nullable key carries `null` rather than being omitted, and the record has no other field. Concern-action `rationale`, `confirmation_ref` and `audit_refs` belong to the action's typed command response (concern action policy above) and reach the record only as `evidence_refs[]` or `lineage_refs[]` entries; they are required for acknowledged, dismissed, resolved, and structural lineage edits.
 
 | Field | Requirement |
 | --- | --- |
-| `schema_version` | Payload schema version for the concern record. |
-| `concern_id` | Stable concern identity that survives ownership reassignment. |
-| `project_id` | Project scope for the concern. |
-| `run_id?` | Runtime lineage when the concern is attached to a run. |
-| `scope_refs[]` | Node, package, seam, route/open, artifact, or external-resource refs affected by the concern. |
-| `owner_kind` / `owner_ref` | Current owner surface; distinct from creator and resolver. |
-| `created_by_kind` / `created_by_ref` | Actor or system that created the concern. |
-| `status` | Closed enum `active | acknowledged | resolved | dismissed`. |
-| `severity` | Impact severity, independent from `blocking_effect`. |
-| `category` | Stable concern category for dedupe and routing. |
-| `evidence_refs[]` / `source_refs[]` | Evidence and source-lineage refs supporting the concern. |
-| `lineage_refs[]` | Reopen, split, merge, supersession, or graph-patch lineage refs. |
-| `visibility_level` / `attention_level` / `chatworthy` | Projection controls for user attention without changing lifecycle state. |
-| `blocking_effect?` | Runtime/blocking impact, explicitly separate from severity. |
-| `resolution_kind?` | Closed enum `fixed | accepted_risk | superseded | merged | split | invalidated | obsoleted_by_patch | obsoleted_by_recovery`. |
-| `resolved_by_kind?` / `resolved_by_ref?` | Resolver identity when status is `resolved` or `dismissed`. |
-| `rationale?` / `confirmation_ref?` / `audit_refs[]?` | Required for acknowledged, dismissed, resolved, and structural lineage edits. |
-| `review_refs[]?` / `corroboration_refs[]?` / `graph_patch_refs[]?` / `recovery_refs[]?` / `blocked_episode_refs[]?` / `promotion_refs[]?` | Adjacent runtime and governance joins. |
+| `schema_version` | Required; const `1.0.0`. Payload schema version for the concern record. |
+| `concern_id` | Required; non-empty string. Stable concern identity that survives ownership reassignment. |
+| `project_id` | Required; non-empty string. Project scope for the concern. |
+| `concern_category` | Required. Stable concern category for dedupe and routing. Closed enum `coverage_blocker \| projection_trust \| risk \| weak_integration` (C-FIX79 decision, 2026-11-24, recorded in Decision_Log; Orchestrator_Page OP-004 stays the semantic owner of the concern family). Earlier wording called this field `category`; the stored key is `concern_category`. |
+| `severity` | Required. Impact severity, independent from `blocking_effect_ref`. Closed enum `info \| warning \| error \| critical`. |
+| `status` | Required. Closed enum `active \| acknowledged \| resolved \| dismissed`. |
+| `owner_kind` / `owner_ref` | Required. Current owner surface; distinct from creator and resolver. `owner_kind` is the closed enum `Runtime \| Package Overseer \| Seam Overseer \| Corroboration \| Graph Patch \| Recovery \| User \| External Resource`; `owner_ref` is a `pmref:<kind>:<id>` string (8-320 chars). |
+| `created_by_kind` / `created_by_ref` | Required. Actor or system that created the concern. `created_by_kind` is the closed enum `Runtime \| Package Overseer \| Seam Overseer \| Corroboration \| Graph Patch`; `created_by_ref` is a `pmref:<kind>:<id>` string (8-320 chars). |
+| `source_event_refs[]` | Required; 1-64 unique `pmref:<kind>:<id>` string (8-320 chars)s. Source-lineage refs: the events that caused or justified the concern. Earlier wording called these `source_refs[]`. |
+| `evidence_refs[]` | Required; 0-64 unique `pmref:<kind>:<id>` string (8-320 chars)s. Evidence supporting the concern, including the confirmation, rationale and audit refs of the concern actions applied to it. |
+| `lineage_refs[]` | Required; 0-64 unique `pmref:<kind>:<id>` string (8-320 chars)s. Reopen, split, merge, supersession and graph-patch lineage, and the adjacent runtime and governance joins: review, corroboration, graph patch, recovery, blocked episode and promotion refs, each told apart by its pmref kind (`pmref:review:...`, `pmref:corroboration:...`, `pmref:graph_patch:...`, `pmref:recovery:...`, `pmref:blocked_episode:...`, `pmref:promotion:...`). |
+| `created_at` / `updated_at` | Required; RFC 3339 date-time strings. |
+| `visibility_level` / `attention_level` / `chatworthy` | Required. Projection controls for user attention without changing lifecycle state. `visibility_level` is the closed enum `user_visible \| project \| restricted`; `attention_level` is the closed enum `info \| warning \| needs_action`; `chatworthy` is a boolean (C-FIX79 decision, 2026-11-24). |
+| `blocking_effect_ref` | Required, nullable; `pmref:<kind>:<id>` string (8-320 chars) or `null`. Runtime/blocking impact, explicitly separate from severity; earlier wording called it `blocking_effect?`. |
+| `resolution_kind` | Required, nullable. Closed enum `fixed \| accepted_risk \| superseded \| merged \| split \| invalidated \| obsoleted_by_patch \| obsoleted_by_recovery`, or `null` while the concern is `active` or `acknowledged`. |
+| `resolver_ref` / `resolved_at` | Required, nullable. Resolver identity (`pmref:<kind>:<id>` string (8-320 chars)) and RFC 3339 time, set when status is `resolved` or `dismissed`, otherwise `null`. Earlier wording called these `resolved_by_kind?` / `resolved_by_ref?`; the resolver's kind is the pmref kind. |
+| `run_ref` | Required, nullable; `pmref:<kind>:<id>` string (8-320 chars) or `null`. Runtime lineage when the concern is attached to a run; earlier wording called it `run_id?`. |
+| `scope_ref` | Required, nullable; `pmref:<kind>:<id>` string (8-320 chars) or `null`. The primary node, package, seam, route/open, artifact or external-resource scope; further affected refs go in `artifact_refs[]`. Earlier wording called this `scope_refs[]`. |
 
 ### route_target, OpenSubject, and command normalization
 

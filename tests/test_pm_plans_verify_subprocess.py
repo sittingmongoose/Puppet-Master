@@ -4,13 +4,13 @@ import importlib.util
 import json
 import os
 import signal
+import socket
 import stat
 import subprocess
 import sys
 import tempfile
 import time
 import unittest
-from concurrent.futures import ThreadPoolExecutor
 from unittest import mock
 from pathlib import Path
 
@@ -161,19 +161,22 @@ class RunValidatorSubprocessTests(unittest.TestCase):
         # know the grandchild pid directly, so we rely on the bounded elapsed time above as
         # the structural proof that the process group was reaped.
 
-    def test_nested_aggregate_validator_joins_wrapper_process_group_and_is_reaped(self) -> None:
+    def test_wrapper_timeout_kills_the_nested_validator_in_its_process_group(self) -> None:
         nested = self.tmp / "nested.py"
         wrapper = self.tmp / "wrapper.py"
         nested_state = self.tmp / "nested_state.json"
         wrapper_state = self.tmp / "wrapper_state.json"
+        socket_path = str(self.tmp / "nested.sock")
         write_stub_validator(
             nested,
             (
-                "import json, os, time\n"
+                "import json, os, socket\n"
                 "from pathlib import Path\n"
                 f"Path({str(nested_state)!r}).write_text("
                 "json.dumps({'pid': os.getpid(), 'pgid': os.getpgrp()}), encoding='utf-8')\n"
-                "time.sleep(60)\n"
+                "with socket.socket(socket.AF_UNIX) as alive:\n"
+                f"    alive.connect({socket_path!r})\n"
+                "    alive.recv(1)\n"
             ),
         )
         write_stub_validator(
@@ -190,49 +193,47 @@ class RunValidatorSubprocessTests(unittest.TestCase):
             ),
         )
 
-        started = time.monotonic()
-        with ThreadPoolExecutor(max_workers=1) as executor:
-            result = executor.submit(
-                pm_plans_verify.run_validator_subprocess,
-                "aggregate-wrapper",
-                [sys.executable, str(wrapper)],
-                timeout_seconds=10,
-                aggregate_child=True,
-            )
-            readiness_deadline = time.monotonic() + 8
-            while (
-                time.monotonic() < readiness_deadline
-                and not nested_state.exists()
-                and not result.done()
-            ):
-                time.sleep(0.05)
-            nested_started_before_timeout = nested_state.exists()
-            proc, timeout_report = result.result(timeout=15)
-        elapsed = time.monotonic() - started
+        real_popen = subprocess.Popen
+        with socket.socket(socket.AF_UNIX) as listener:
+            listener.bind(socket_path)
+            listener.listen(1)
+            listener.settimeout(15)
+
+            def start_when_nested_is_ready(*args, **kwargs):
+                proc = real_popen(*args, **kwargs)
+                try:
+                    connection, _ = listener.accept()
+                except OSError:
+                    pm_plans_verify._terminate_process_group(proc)
+                    proc.communicate(timeout=3)
+                    raise
+                self.addCleanup(connection.close)
+                connections.append(connection)
+                return proc
+
+            connections = []
+            # Start the real communicate timeout after the nested validator has joined the group.
+            with mock.patch.object(pm_plans_verify.subprocess, "Popen", start_when_nested_is_ready):
+                proc, timeout_report = pm_plans_verify.run_validator_subprocess(
+                    "aggregate-wrapper",
+                    [sys.executable, str(wrapper)],
+                    timeout_seconds=1,
+                    aggregate_child=True,
+                )
 
         self.assertIsNone(proc)
         assert timeout_report is not None
         self.assertEqual(timeout_report["failures"][0]["error"], "subprocess_timeout")
         self.assertTrue(timeout_report["failures"][0]["process_group_killed"])
-        self.assertLess(elapsed, 20.0)
-        self.assertTrue(nested_started_before_timeout)
-        self.assertTrue(wrapper_state.exists())
-        self.assertTrue(nested_state.exists())
         wrapper_process = json.loads(wrapper_state.read_text(encoding="utf-8"))
         nested_process = json.loads(nested_state.read_text(encoding="utf-8"))
         self.assertEqual(wrapper_process["pid"], wrapper_process["pgid"])
         self.assertEqual(nested_process["pgid"], wrapper_process["pgid"])
 
-        nested_pid = nested_process["pid"]
-        deadline = time.monotonic() + 3
-        while time.monotonic() < deadline:
-            try:
-                os.kill(nested_pid, 0)
-            except ProcessLookupError:
-                break
-            time.sleep(0.05)
-        else:
-            self.fail(f"nested aggregate validator still alive after wrapper timeout: pid={nested_pid}")
+        connection, = connections
+        connection.settimeout(3)
+        # EOF observes exit even if the adopting process has yet to reap the child's PID.
+        self.assertEqual(connection.recv(1), b"")
 
     def test_gui_asset_policy_gate_honors_timeout(self) -> None:
         """cmd_validate_gui_asset_policy must respect subcheck_timeout_seconds (regression)."""
@@ -337,6 +338,10 @@ class AggregateSubcheckSubprocessTests(unittest.TestCase):
         json_syntax scans every JSON/JSONL file in the repo (~2s). With a 1s bound it
         must be killed via the process group and surface a structured subprocess_timeout
         with process_group_killed=True and the kill mechanism recorded.
+
+        This is also the regression test for review B1: with a cache inherited from the
+        environment the child answered from it in 0.26 s instead of scanning, and the
+        test failed. The child must run, so it must take longer than the bound.
         """
         import argparse
 
@@ -362,6 +367,30 @@ class AggregateSubcheckSubprocessTests(unittest.TestCase):
         self.assertIsInstance(failure["stdout_excerpt"], str)
         self.assertIsInstance(failure["stderr_excerpt"], str)
         # Must return promptly, proving the stuck child was reaped instead of hanging.
+        self.assertLess(elapsed, 8.0)
+
+    def test_a_sleeping_stub_subprocess_is_killed_at_its_bound(self) -> None:
+        """The same process-group kill, with a child whose runtime cannot depend on the repo."""
+        import argparse
+
+        ns = argparse.Namespace()
+        with tempfile.TemporaryDirectory() as scratch:
+            stub = Path(scratch) / "slow_subcheck.py"
+            write_stub_validator(stub, "import time; time.sleep(30)\n")
+            started = time.monotonic()
+            with mock.patch.object(pm_plans_verify.sys, "executable", str(stub)):
+                name, report = pm_plans_verify.run_named_check(
+                    "json_syntax",
+                    pm_plans_verify.cmd_json_syntax,
+                    ns,
+                    progress=False,
+                    timeout_seconds=1,
+                )
+        elapsed = time.monotonic() - started
+        self.assertEqual(report["check"], "json-syntax")
+        self.assertEqual(report["status"], "fail")
+        self.assertEqual(report["failures"][0]["error"], "subprocess_timeout")
+        self.assertTrue(report["failures"][0]["process_group_killed"])
         self.assertLess(elapsed, 8.0)
 
     def test_run_named_check_inprocess_allowlist_uses_alarm_backstop(self) -> None:
@@ -543,3 +572,582 @@ class AggregateCommandMappingTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class AggregateParallelismTests(unittest.TestCase):
+    """--jobs: the same results in the same order, with the waiting overlapped."""
+
+    def specs(self):
+        import argparse
+
+        return [
+            ("first", None, argparse.Namespace()),
+            ("second", None, argparse.Namespace()),
+            ("third", None, argparse.Namespace()),
+        ]
+
+    def fake_runner(self, delays, active, peak):
+        import threading
+
+        lock = threading.Lock()
+
+        def run(name, func, namespace, *, progress, timeout_seconds):
+            with lock:
+                active["now"] += 1
+                peak["now"] = max(peak["now"], active["now"])
+            try:
+                time.sleep(delays[name])
+                return name, {"check": name, "status": "pass", "failures": []}
+            finally:
+                with lock:
+                    active["now"] -= 1
+
+        return run
+
+    def test_jobs_one_is_the_serial_loop(self):
+        active, peak = {"now": 0}, {"now": 0}
+        with mock.patch.object(
+            pm_plans_verify,
+            "run_named_check",
+            side_effect=self.fake_runner({"first": 0.03, "second": 0.02, "third": 0.01}, active, peak),
+        ):
+            results = pm_plans_verify.run_aggregate_checks(
+                self.specs(), progress=False, timeout_seconds=10, jobs=1)
+        self.assertEqual([name for name, _ in results], ["first", "second", "third"])
+        self.assertEqual(peak["now"], 1)
+
+    def test_parallel_results_keep_the_spec_order(self):
+        active, peak = {"now": 0}, {"now": 0}
+        with mock.patch.object(
+            pm_plans_verify,
+            "run_named_check",
+            side_effect=self.fake_runner({"first": 0.06, "second": 0.01, "third": 0.02}, active, peak),
+        ):
+            results = pm_plans_verify.run_aggregate_checks(
+                self.specs(), progress=False, timeout_seconds=10, jobs=3)
+        self.assertEqual([name for name, _ in results], ["first", "second", "third"])
+        self.assertGreater(peak["now"], 1)
+
+    def test_the_in_process_check_stays_on_the_main_thread(self):
+        import threading
+
+        seen = {}
+
+        def run(name, func, namespace, *, progress, timeout_seconds):
+            seen[name] = threading.current_thread().name
+            return name, {"check": name, "status": "pass", "failures": []}
+
+        specs = [("verify_spec_lock", None, None), ("other", None, None)]
+        with mock.patch.object(pm_plans_verify, "run_named_check", side_effect=run):
+            results = pm_plans_verify.run_aggregate_checks(
+                specs, progress=False, timeout_seconds=10, jobs=2)
+        self.assertEqual([name for name, _ in results], ["verify_spec_lock", "other"])
+        self.assertEqual(seen["verify_spec_lock"], "MainThread")
+
+    def test_a_timeout_report_passes_through_unchanged(self):
+        timeout_report = {
+            "check": "second",
+            "status": "fail",
+            "failures": [{"check": "second", "error": "subprocess_timeout", "timeout_seconds": 10}],
+        }
+
+        def run(name, func, namespace, *, progress, timeout_seconds):
+            if name == "second":
+                return name, timeout_report
+            return name, {"check": name, "status": "pass", "failures": []}
+
+        with mock.patch.object(pm_plans_verify, "run_named_check", side_effect=run):
+            results = pm_plans_verify.run_aggregate_checks(
+                self.specs(), progress=False, timeout_seconds=10, jobs=3)
+        self.assertIs(results[1][1], timeout_report)
+
+    def test_a_failure_is_not_hidden(self):
+        def run(name, func, namespace, *, progress, timeout_seconds):
+            if name == "second":
+                raise RuntimeError("second could not be read")
+            return name, {"check": name, "status": "pass", "failures": []}
+
+        with mock.patch.object(pm_plans_verify, "run_named_check", side_effect=run):
+            with self.assertRaises(RuntimeError) as raised:
+                pm_plans_verify.run_aggregate_checks(
+                    self.specs(), progress=False, timeout_seconds=10, jobs=3)
+        self.assertEqual(str(raised.exception), "second could not be read")
+
+
+class SharedValidatorCommandLinesTests(unittest.TestCase):
+    def test_the_shared_validators_map_to_one_command_line_each(self):
+        import argparse
+
+        timeout_seconds = 1800
+        namespace = argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)
+
+        def command_line(name):
+            return (
+                pm_plans_verify._aggregate_subcheck_command_id(name),
+                tuple(pm_plans_verify._aggregate_subcheck_cli_args(
+                    name, namespace, timeout_seconds=timeout_seconds)),
+            )
+
+        run_names = [name for name, _, _ in pm_plans_verify.run_gates_check_specs(timeout_seconds)]
+        audit_names = [name for name, _, _ in pm_plans_verify.audit_governance_check_specs(timeout_seconds)]
+        audit_lines = {command_line(name) for name in audit_names}
+        shared = [name for name in run_names if command_line(name) in audit_lines]
+        # verify_spec_lock is the one exception: run-gates runs it in-process, not as a command.
+        self.assertIn("verify_spec_lock", shared)
+        shared_commands = [name for name in shared if name != "verify_spec_lock"]
+        self.assertEqual(len(shared_commands), 34)
+        for name in shared_commands:
+            self.assertIn(command_line(name), audit_lines)
+
+
+SLOT_PROBE = """
+import importlib.util, os, sys, time
+spec = importlib.util.spec_from_file_location("v", __MODULE__)
+v = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(v)
+with v.validator_slot("probe"):
+    with open(sys.argv[1], "a", encoding="utf-8") as handle:
+        handle.write("start %.6f %d\\n" % (time.time(), os.getpid()))
+    time.sleep(float(sys.argv[2]))
+    with open(sys.argv[1], "a", encoding="utf-8") as handle:
+        handle.write("end %.6f %d\\n" % (time.time(), os.getpid()))
+"""
+
+
+class MemoryReadingTests(unittest.TestCase):
+    def test_meminfo_kib_is_read_as_mib(self):
+        with tempfile.TemporaryDirectory() as folder:
+            meminfo = Path(folder) / "meminfo"
+            meminfo.write_text("MemAvailable:    6291456 kB\n", encoding="utf-8")
+            self.assertEqual(pm_plans_verify.memory_available_mb(str(meminfo)), 6144)
+
+
+GIB = 1024
+
+
+class ValidatorSlotsTests(unittest.TestCase):
+    """Deep review 2, D2-1/D2-2: the floor limits concurrency, never progress.
+
+    The arithmetic is `floor + headroom * running`. With the floor at 6 GiB and the headroom at 2 GiB,
+    a start with no validator running always happens (5 GiB runs one at a time and finishes), a second
+    validator needs 6 + 2 = 8 GiB, a third 6 + 2 * 2 = 10 GiB, and a fourth 6 + 2 * 3 = 12 GiB.
+    """
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+        self.directory = Path(self._tmp.name) / "slots"
+        self.directory.mkdir()
+
+    def pool(self, count, floor_mb=0, available=None, sleep=None, headroom_mb=0,
+             settle_seconds=0.0, clock=None):
+        import fcntl
+
+        return pm_plans_verify.ValidatorSlots(
+            self.directory, count, floor_mb, fcntl_module=fcntl,
+            available=available or (lambda: 32 * GIB), sleep=sleep or time.sleep,
+            headroom_mb=headroom_mb, settle_seconds=settle_seconds,
+            clock=clock or time.monotonic)
+
+    def measure(self, pools, workers_per_pool, delay):
+        """Run `workers_per_pool` holders on each pool and return the peak active in their bodies."""
+        import threading
+
+        locked = threading.Lock()
+        state = {"now": 0, "peak": 0}
+        start = threading.Barrier(len(pools) * workers_per_pool)
+
+        def work(pool):
+            start.wait(timeout=30)
+            with pool.hold("probe"):
+                with locked:
+                    state["now"] += 1
+                    state["peak"] = max(state["peak"], state["now"])
+                try:
+                    time.sleep(delay)
+                finally:
+                    with locked:
+                        state["now"] -= 1
+
+        threads = [threading.Thread(target=work, args=(pool,))
+                   for pool in pools for _ in range(workers_per_pool)]
+        for thread in threads:
+            thread.start()
+        for thread in threads:
+            thread.join(timeout=60)
+            self.assertFalse(thread.is_alive(), "a validator never started: the run made no progress")
+        return state["peak"]
+
+    def test_at_five_gib_validators_run_one_at_a_time_and_the_run_finishes(self):
+        # 5 GiB is under the 6 GiB floor: the first validator still starts, so the run is serial
+        # rather than waiting, and every validator finishes.
+        pool = self.pool(4, floor_mb=6 * GIB, headroom_mb=2 * GIB, available=lambda: 5 * GIB)
+        self.assertEqual(self.measure([pool], 4, 0.05), 1)
+
+    def test_at_nine_gib_at_most_two_run_at_once(self):
+        # 9 GiB: a second start needs 6 + 2 = 8 GiB and fits; a third needs 6 + 2 * 2 = 10 GiB and
+        # does not, so at most two run at once.
+        pool = self.pool(4, floor_mb=6 * GIB, headroom_mb=2 * GIB, available=lambda: 9 * GIB)
+        self.assertEqual(9 * GIB >= 6 * GIB + 2 * GIB, True)
+        self.assertEqual(9 * GIB < 6 * GIB + 2 * GIB * 2, True)
+        self.assertEqual(self.measure([pool], 6, 0.1), 2)
+
+    def test_at_twenty_gib_four_run_at_once(self):
+        # 20 GiB covers the fourth start (6 + 2 * 3 = 12 GiB); the slot count is what stops the fifth.
+        pool = self.pool(4, floor_mb=6 * GIB, headroom_mb=2 * GIB, available=lambda: 20 * GIB)
+        self.assertEqual(self.measure([pool], 8, 0.1), 4)
+
+    def test_two_aggregates_share_one_start_lock(self):
+        # Two pools are two aggregate processes: one slot directory, one start lock. At 7 GiB a second
+        # start needs 8 GiB, so the shared lock lets exactly one validator start at a time.
+        pools = [self.pool(4, floor_mb=6 * GIB, headroom_mb=2 * GIB, available=lambda: 7 * GIB)
+                 for _ in range(2)]
+        self.assertEqual(self.measure(pools, 4, 0.05), 1)
+        self.assertTrue((self.directory / pm_plans_verify.START_LOCK_NAME).is_file())
+        self.assertTrue((self.directory / pm_plans_verify.LAST_START_NAME).is_file())
+
+    def test_the_settle_time_is_honoured(self):
+        import threading
+
+        clock = {"now": 100.0}
+        slept = []
+
+        def sleep(seconds):
+            slept.append(seconds)
+            clock["now"] += seconds
+
+        pool = self.pool(2, floor_mb=0, headroom_mb=0, available=lambda: 32 * GIB,
+                         sleep=sleep, settle_seconds=10.0, clock=lambda: clock["now"])
+        first_holds = threading.Event()
+        release_first = threading.Event()
+        second_holds = threading.Event()
+
+        def first():
+            with pool.hold("first"):
+                first_holds.set()
+                release_first.wait(10)
+
+        def second():
+            with pool.hold("second"):
+                second_holds.set()
+                release_first.wait(10)
+
+        holder = threading.Thread(target=first)
+        waiter = threading.Thread(target=second)
+        holder.start()
+        self.assertTrue(first_holds.wait(5))
+        waiter.start()
+        self.assertTrue(second_holds.wait(5), "the second start never happened")
+        self.assertEqual(slept, [10.0])
+        release_first.set()
+        holder.join(timeout=10)
+        waiter.join(timeout=10)
+        self.assertEqual(float((self.directory / pm_plans_verify.LAST_START_NAME).read_text()), 110.0)
+
+    def test_a_held_back_start_says_so_once_a_minute(self):
+        import contextlib
+        import io
+
+        clock = {"now": 0.0}
+
+        def sleep(seconds):
+            clock["now"] += seconds
+
+        def pool():
+            return self.pool(2, floor_mb=6 * GIB, headroom_mb=2 * GIB, available=lambda: 5 * GIB,
+                             sleep=sleep, clock=lambda: clock["now"])
+
+        outer, inner = pool(), pool()
+        lines = []
+        with outer.hold("outer"):
+            errors = io.StringIO()
+            with contextlib.redirect_stderr(errors):
+                # hold() calls _try_start, then sleeps 0.25 s, until it can start.
+                for _ in range(241):
+                    self.assertIsNone(inner._try_start("inner"))
+                    sleep(pm_plans_verify.START_RETRY_SECONDS)
+        lines = [line for line in errors.getvalue().splitlines() if "holding back" in line]
+        self.assertEqual(len(lines), 2, errors.getvalue())
+        self.assertIn("need 8.0 GiB", lines[0])
+        self.assertIn("1 running validator(s)", lines[0])
+
+    def test_the_budget_is_shared_by_every_holder_in_one_process(self):
+        import threading
+
+        active = {"now": 0, "peak": 0}
+        lock = threading.Lock()
+
+        def work():
+            with self.pool(2).hold("probe"):
+                with lock:
+                    active["now"] += 1
+                    active["peak"] = max(active["peak"], active["now"])
+                time.sleep(0.05)
+                with lock:
+                    active["now"] -= 1
+
+        threads = [threading.Thread(target=work) for _ in range(6)]
+        for thread in threads:
+            thread.start()
+        for thread in threads:
+            thread.join(timeout=60)
+        self.assertGreater(active["peak"], 1)
+        self.assertLessEqual(active["peak"], 2)
+
+    def test_the_budget_is_shared_across_processes(self):
+        script = self.directory.parent / "slot_probe.py"
+        script.write_text(SLOT_PROBE.replace("__MODULE__", repr(str(MODULE_PATH))), encoding="utf-8")
+        events = self.directory.parent / "events.log"
+        env = dict(os.environ, **{pm_plans_verify.SLOTS_DIR_ENV: str(self.directory),
+                                  pm_plans_verify.SLOTS_COUNT_ENV: "2",
+                                  pm_plans_verify.MEMORY_FLOOR_MB_ENV: "0",
+                                  pm_plans_verify.START_SETTLE_SECONDS_ENV: "0"})
+        processes = [subprocess.Popen([sys.executable, str(script), str(events), "0.4"],
+                                      cwd=ROOT, env=env) for _ in range(4)]
+        self.assertEqual([process.wait(timeout=60) for process in processes], [0, 0, 0, 0])
+        spans = []
+        for line in events.read_text(encoding="utf-8").splitlines():
+            kind, at, pid = line.split()
+            spans.append((float(at), 1 if kind == "start" else -1))
+        active = peak = 0
+        for _at, change in sorted(spans):
+            active += change
+            peak = max(peak, active)
+        self.assertEqual(peak, 2)
+
+    def test_memory_below_the_floor_holds_the_second_start_and_says_so(self):
+        import contextlib
+        import io
+
+        outer = self.pool(4, floor_mb=6 * GIB, headroom_mb=2 * GIB, available=lambda: 5 * GIB)
+        inner = self.pool(4, floor_mb=6 * GIB, headroom_mb=2 * GIB, available=lambda: 5 * GIB)
+        errors = io.StringIO()
+        with outer.hold("validate-evidence"):
+            with contextlib.redirect_stderr(errors):
+                self.assertIsNone(inner._try_start("validate-plan-graph"))
+        self.assertIn("holding back validate-plan-graph", errors.getvalue())
+        self.assertIn("need 8.0 GiB", errors.getvalue())
+
+    def test_a_permanent_flock_error_refuses_start_without_retrying(self):
+        import errno
+
+        retry = mock.Mock(side_effect=AssertionError("retried a permanent lock failure"))
+        pool = self.pool(2, sleep=retry)
+        fcntl = pool.fcntl
+        real_flock = fcntl.flock
+        for fail_start in (True, False):
+            with self.subTest(fail_start=fail_start):
+                def lock(fd, mode):
+                    if fail_start or mode & fcntl.LOCK_NB:
+                        raise OSError(errno.ENOLCK, "No locks available")
+                    return real_flock(fd, mode)
+
+                with mock.patch.object(fcntl, "flock", side_effect=lock), \
+                        self.assertRaisesRegex(RuntimeError, "shared validator budget.*No locks available"):
+                    with pool.hold("probe"):
+                        self.fail("started without a working lock")
+        retry.assert_not_called()
+
+    def test_a_missing_slot_directory_refuses_start(self):
+        pool = pm_plans_verify.ValidatorSlots(
+            self.directory / "absent", 2, 0, fcntl_module=__import__("fcntl"))
+        with self.assertRaisesRegex(RuntimeError, "shared validator budget"):
+            with pool.hold("probe"):
+                self.fail("started without a working lock")
+
+    def test_a_standalone_run_has_no_budget(self):
+        with mock.patch.dict(os.environ, {}, clear=True):
+            self.assertIsNone(pm_plans_verify.ValidatorSlots.from_environment())
+
+    def test_the_environment_carries_the_headroom_and_the_settle(self):
+        with mock.patch.dict(os.environ, {
+                pm_plans_verify.SLOTS_DIR_ENV: str(self.directory),
+                pm_plans_verify.SLOTS_COUNT_ENV: "4",
+                pm_plans_verify.MEMORY_FLOOR_MB_ENV: "6144",
+                pm_plans_verify.MEMORY_HEADROOM_MB_ENV: "1024",
+                pm_plans_verify.START_SETTLE_SECONDS_ENV: "2.5"}, clear=True):
+            pool = pm_plans_verify.ValidatorSlots.from_environment()
+        self.assertEqual((pool.count, pool.floor_mb, pool.headroom_mb, pool.settle_seconds),
+                         (4, 6144, 1024, 2.5))
+        with mock.patch.dict(os.environ, {pm_plans_verify.SLOTS_DIR_ENV: str(self.directory),
+                                          pm_plans_verify.SLOTS_COUNT_ENV: "4"}, clear=True):
+            pool = pm_plans_verify.ValidatorSlots.from_environment()
+        self.assertEqual(pool.headroom_mb, pm_plans_verify.DEFAULT_MEMORY_HEADROOM_MB)
+        self.assertEqual(pool.settle_seconds, pm_plans_verify.DEFAULT_START_SETTLE_SECONDS)
+
+    def test_the_standalone_aggregate_runs_one_subcheck_at_a_time(self):
+        import argparse
+
+        self.assertEqual(pm_plans_verify.default_jobs(), 1)
+        self.assertEqual(pm_plans_verify.aggregate_jobs(argparse.Namespace()), 1)
+        self.assertEqual(pm_plans_verify.aggregate_jobs(argparse.Namespace(jobs=4)), 4)
+        self.assertEqual(pm_plans_verify.aggregate_jobs(argparse.Namespace(jobs=99)), pm_plans_verify.MAX_JOBS)
+
+
+class SlotWaitAndTimeoutTests(unittest.TestCase):
+    """Deep review 2, D2-2: waiting for a start is outside the subcheck's own bound.
+
+    The slot is taken inside `_run_subprocess_check` before `run_validator_subprocess` opens the
+    process, so a validator held back for longer than its bound still gets the whole bound once it
+    runs; the timeout clock starts at Popen.
+    """
+
+    def test_a_slot_wait_does_not_count_against_the_subcheck_timeout(self):
+        import argparse
+        import contextlib
+
+        @contextlib.contextmanager
+        def held(seconds):
+            time.sleep(seconds)
+            yield
+
+        with tempfile.TemporaryDirectory() as scratch:
+            stub = Path(scratch) / "quick_subcheck.py"
+            write_stub_validator(
+                stub,
+                "import json, sys\n"
+                "path = sys.argv[sys.argv.index('--report') + 1]\n"
+                "json.dump({'status': 'pass', 'failures': []}, open(path, 'w'))\n",
+            )
+            started = time.monotonic()
+            with mock.patch.object(pm_plans_verify.sys, "executable", str(stub)), \
+                    mock.patch.object(pm_plans_verify, "validator_slot", lambda name: held(1.5)):
+                _name, report = pm_plans_verify.run_named_check(
+                    "json_syntax", pm_plans_verify.cmd_json_syntax, argparse.Namespace(),
+                    progress=False, timeout_seconds=1)
+        elapsed = time.monotonic() - started
+        self.assertEqual((report["status"], report["failures"]), ("pass", []))
+        self.assertGreaterEqual(elapsed, 1.5, "the wait did not happen, so this proves nothing")
+        self.assertLess(elapsed, 8.0)
+
+
+class AuditClosureCompleteExportTests(unittest.TestCase):
+    """cmd_validate_audit_closure emits every pm-audit-closure.py error without a 200 cap."""
+
+    def _run_closure_with_raw_report(self, raw_report: dict, registry_rows: list[dict]) -> dict:
+        import argparse
+
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            registry = root / "Plans" / ".audits" / "_semantic_closure_registry.jsonl"
+            registry.parent.mkdir(parents=True)
+            registry.write_text(
+                "".join(json.dumps(row, sort_keys=True) + "\n" for row in registry_rows),
+                encoding="utf-8",
+            )
+            fake_proc = subprocess.CompletedProcess(
+                args=["python3", "scripts/pm-audit-closure.py", "validate"],
+                returncode=1 if raw_report.get("errors") else 0,
+                stdout=json.dumps(raw_report),
+                stderr="",
+            )
+            with (
+                mock.patch.object(pm_plans_verify, "ROOT", root),
+                mock.patch.object(pm_plans_verify, "run_validator_subprocess", return_value=(fake_proc, None)),
+            ):
+                return pm_plans_verify.cmd_validate_audit_closure(
+                    argparse.Namespace(registry=str(registry), subcheck_timeout_seconds=60)
+                )
+
+    def test_cmd_validate_audit_closure_emits_all_errors_past_200_cap(self) -> None:
+        errors = [
+            f"Plans/.audits/_semantic_closure_registry.jsonl:{1000 + n}: "
+            f"owner_evidence_hashes for Plans/Doc_{n:03d}.md#unit=U-{n:03d} is stale "
+            f"(stored {'a' * 64}, current {'b' * 64})"
+            for n in range(290)
+        ]
+        open_rows = [
+            {"line": 1, "closure_id": "closure-reopened-001", "finding_key": "sfk-001", "closure_status": "reopened"}
+        ]
+        registry_rows = [
+            {"closure_id": "closure-reopened-001", "finding_key": "sfk-001", "closure_status": "reopened"}
+        ]
+        raw_report = {
+            "schema_id": "pm.audit_closure.validator_report.v1",
+            "status": "fail",
+            "errors": errors,
+            "warnings": [],
+            "audit_dirs": [],
+            "registry": {
+                "row_count": 1,
+                "status_counts": {"reopened": 1},
+                "open_rows": open_rows,
+            },
+        }
+        report = self._run_closure_with_raw_report(raw_report, registry_rows)
+        self.assertEqual(report["status"], "fail")
+        self.assertEqual(len(report["failures"]), 291)
+        validator_errors = [f for f in report["failures"] if f["error"] == "audit_closure_validator_error"]
+        self.assertEqual(len(validator_errors), 290)
+        self.assertEqual([f["detail"] for f in validator_errors], errors)
+        self.assertTrue(all(f["path"] == "Plans/.audits/_semantic_closure_registry.jsonl" for f in validator_errors))
+        reopened = [f for f in report["failures"] if f["error"] == "audit_closure_reopened_rows_present"]
+        self.assertEqual(len(reopened), 1)
+        self.assertEqual(reopened[0]["row_count"], 1)
+
+    def test_cmd_validate_audit_closure_replays_c_290_error_json_without_truncation(self) -> None:
+        evidence = Path(
+            "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/fix79/landcheck/"
+            "validate-audit-closure-207887b456.json"
+        )
+        if not evidence.is_file():
+            self.skipTest("stream C fix79 evidence JSON is not mounted here")
+        raw_report = json.loads(evidence.read_text(encoding="utf-8"))
+        open_rows = raw_report["registry"]["open_rows"]
+        max_line = max(row["line"] for row in open_rows)
+        by_line = {row["line"]: row for row in open_rows}
+        registry_rows = [
+            by_line.get(line, {"closure_id": f"pad-{line}", "finding_key": f"sfk-{line}", "closure_status": "repaired"})
+            for line in range(1, max_line + 1)
+        ]
+        report = self._run_closure_with_raw_report(raw_report, registry_rows)
+        self.assertEqual(len(raw_report["errors"]), 290)
+        self.assertEqual(len(report["failures"]), 291)
+        validator_errors = [f for f in report["failures"] if f["error"] == "audit_closure_validator_error"]
+        self.assertEqual(len(validator_errors), 290)
+        self.assertEqual(validator_errors[-1]["detail"], raw_report["errors"][-1])
+
+    def test_cmd_validate_audit_closure_preserves_stable_shape_under_200(self) -> None:
+        errors = [
+            f"Plans/.audits/_semantic_closure_registry.jsonl:{10 + n}: "
+            f"owner_evidence_hashes for Plans/Base.md is stale (stored {'a' * 64}, current {'b' * 64})"
+            for n in range(39)
+        ]
+        open_rows = [
+            {"line": 1, "closure_id": "closure-reopened-001", "finding_key": "sfk-001", "closure_status": "reopened"}
+        ]
+        registry_rows = [
+            {"closure_id": "closure-reopened-001", "finding_key": "sfk-001", "closure_status": "reopened"}
+        ]
+        raw_report = {
+            "schema_id": "pm.audit_closure.validator_report.v1",
+            "status": "fail",
+            "errors": errors,
+            "warnings": [],
+            "audit_dirs": [],
+            "registry": {"row_count": 1, "status_counts": {"reopened": 1}, "open_rows": open_rows},
+        }
+        report = self._run_closure_with_raw_report(raw_report, registry_rows)
+        self.assertEqual(len(report["failures"]), 40)
+        self.assertEqual(
+            report["failures"][0],
+            {
+                "path": "Plans/.audits/_semantic_closure_registry.jsonl",
+                "error": "audit_closure_validator_error",
+                "detail": errors[0],
+            },
+        )
+        self.assertEqual(report["failures"][-1]["error"], "audit_closure_reopened_rows_present")
+
+    def test_run_gates_help_advertises_complete_closure_export_capability(self) -> None:
+        for columns in ("60", "80", "120"):
+            with self.subTest(columns=columns):
+                proc = subprocess.run(
+                    [sys.executable, "-B", str(MODULE_PATH), "run-gates", "--help"],
+                    cwd=ROOT,
+                    capture_output=True,
+                    text=True,
+                    env={**os.environ, "COLUMNS": columns},
+                    check=True,
+                )
+                self.assertIn("landing_closure_export_v1", proc.stdout)

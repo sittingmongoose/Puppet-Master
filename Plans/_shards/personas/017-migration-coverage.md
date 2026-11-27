@@ -2,9 +2,9 @@
 
 Source: `Plans/Personas.md`
 
-Source lines: L3229-L3239
+Source lines: L3234-L3244
 
-Source SHA256: `e6878d62a0e7037cbcea869cb6f2d6a478706f7f9f8836ed824601fd4dc812d1`
+Source SHA256: `a98ad4e10f141cea7456fed13aaf252adde67a0a27428fc31af93571babb54bb`
 
 ---
 

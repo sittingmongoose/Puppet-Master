@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L11720-L12419
+Source lines: L11729-L12438
 
-Source SHA256: `c53e1f511323d2b029b93798ac3080a116f00947920912fe9c933393c4d2d22e`
+Source SHA256: `49549c0771a51deaab00b327f6bff228f923ce79afbe2c6743de7be2f87f0cce`
 
 ---
 
@@ -30,6 +30,7 @@ unblocks: []
 acceptance_criteria:
 - finish_reason=length with tool call is classified partial_truncated.
 - nullable reasoning/content arrays are normalized without crashing and without dropping provider-native metadata.
+- After dispatch, missing or null required content produces a typed result fact and cannot settle as success. An optional null reasoning array alongside a valid result keeps its provider metadata.
 - large MCP tool_result is stored as managed output ref or rejected with explicit retention failure.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
@@ -105,7 +106,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  P2-CACHEABLE-TOOL-OUTPUT-REFS (P2) is compiled as canonical Puppet Master intent for Hash-addressed cache refs for stable large tool outputs: Large stable outputs use refs with TTL/redaction; secrets are never cached; model-visible preview references complete retained output. Amended 2026-10-31 (DL-270): hash-addressed refs for large stable outputs resolve to payload-store entries (SP-337). Dedupe, reference counts and garbage collection holds live in the payload store; the TTL here is a cache-eligibility rule, not a separate storage owner.
+  P2-CACHEABLE-TOOL-OUTPUT-REFS (P2) records the intent for Hash-addressed cache refs for stable large tool outputs.
+  Hash-addressed refs resolve to SP-337 payload-store entries under DL-270. Model-visible previews reference the
+  complete retained redacted output. Secrets are never cached. Cache eligibility TTL and reuse across calls are
+  deferred until Tools defines the cache key, TTL start, duration and expiry rule. Until then T-168 admits no cache
+  hits across calls. Authorized reads of retained output, deduplication, reference counts and garbage collection
+  holds still follow SP-337.
 gui_related: false
 gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
 depends_on:
@@ -113,14 +119,14 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- Large stable outputs use refs with TTL/redaction
+- Large stable outputs use refs with TTL/redaction once cache reuse is defined above. Until then a later call cannot use a T-168 cache hit even if a previous call retained an identical payload.
 - secrets are never cached
 - model-visible preview references complete retained output.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
-- Large stable outputs use refs with TTL/redaction
+- Large stable outputs use refs with TTL/redaction once cache reuse is defined above. Until then a later call cannot use a T-168 cache hit even if a previous call retained an identical payload.
 - secrets are never cached
 - model-visible preview references complete retained output.
 risk_class: p2_context_cache_coverage
@@ -175,6 +181,7 @@ status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
   P0-TOOL-CALL-MALFORMATION-GATE (P0) is compiled as canonical Puppet Master intent for Malformed/truncated/partial tool-turn admission: Add ProviderToolTurnAdmissionGate. Only settled tool calls with valid schema, args, IDs, provider-native metadata, and truncation state can enter replayable history. Rejected turns become provider_turn_malformed records with raw-redacted reference and loop policy. The preserved PM gap/delta is: Malformed provider output must be stopped before durable history admission, not only before actual tool execution. The observed external-repo signal remains source-lineage evidence: OpenCode, Cline, Agent Zero, and Pi all show broken tool-call deltas, XML/JSON fragments, nullable reasoning/content, stringified MCP params, truncation, empty tool calls, and loops when malformed turns reach history or repair logic.
+  The typed payload in Tool Turn Contract Minima uses the PM gate_id to correlate a denial and discloses when redacted evidence is unavailable.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -185,6 +192,7 @@ acceptance_criteria:
 - Partial streamed JSON/tool XML never becomes replayable assistant history.
 - A length finishReason on tool-call deltas blocks/retries under typed policy, not as ordinary no-tool response.
 - Replayed history never includes malformed or duplicate tool_call IDs.
+- A length-ended call without a provider id carries the same gate_id on the gate, malformed record, settlement and recovery envelope. The provider id members are absent, and settlement is partial_truncated.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
@@ -517,14 +525,15 @@ unblocks: []
 acceptance_criteria:
 - Empty output remains empty with reason
 - Missing image does not become fake caption
-- Malformed JSON records parse error and raw captured bytes
+- Malformed JSON records parse error and raw captured bytes when safe capture is available. The parse error is always recorded. Available evidence has `raw_redacted_state` set to `available` and a `raw_redacted_ref` to the redacted capture. Otherwise `raw_redacted_state` is `unavailable` and the ref is omitted.
+- Apply the post-dispatch result table to zero bytes, empty arrays, absent required images and complete responses with invalid JSON. Check the settlement state, typed fact and evidence ref or explicit unavailability.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
 - Empty output remains empty with reason
 - Missing image does not become fake caption
-- Malformed JSON records parse error and raw captured bytes
+- Malformed JSON records parse error and raw captured bytes when safe capture is available. Check the parse error and the `available` state with a redacted capture ref, or the `unavailable` state with the ref omitted.
 risk_class: p0_mcp_tools_and_tool_settlement_hardening
 reasoning_tier: high
 context_scope: mcp_tools_and_tool_settlement
@@ -577,6 +586,7 @@ status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
   tool_output_retention (P0) is compiled as canonical Puppet Master intent for tool_output_retention: Add ToolManagedOutputRef and retention-failure semantics The preserved PM gap/delta is: No hard no-lossy-success rule for managed tool output retention The observed external-repo signal remains source-lineage evidence: OpenCode v2 Tool output bounding/managed storage; large body issues
+  T-177 defines ToolManagedOutputRef as the content ID of the retained redacted output in the SP-337 payload store.
 gui_related: false
 gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
 depends_on:

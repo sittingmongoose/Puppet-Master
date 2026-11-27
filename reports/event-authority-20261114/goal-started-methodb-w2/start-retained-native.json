@@ -1,0 +1,65 @@
+{
+  "row": "dg5/start/retained_native/schema",
+  "fixtures": [
+    {
+      "route": "publish_retained",
+      "edition": "v3",
+      "root": "dg5:80c244d6a4b70586",
+      "hash_seed": 5,
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [
+          "initial_control_origin"
+        ],
+        "additionalProperties"
+      ]
+    },
+    {
+      "route": "publish_retained",
+      "edition": "v7",
+      "root": "dg5:d3020b7172a4ee5f",
+      "hash_seed": 0,
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [
+          "initial_control_origin"
+        ],
+        "additionalProperties"
+      ]
+    },
+    {
+      "route": "publish_retained",
+      "edition": "v7",
+      "root": "dg5:4d594a7115abd16e",
+      "hash_seed": 8,
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [
+          "initial_control_origin"
+        ],
+        "additionalProperties"
+      ]
+    }
+  ]
+}

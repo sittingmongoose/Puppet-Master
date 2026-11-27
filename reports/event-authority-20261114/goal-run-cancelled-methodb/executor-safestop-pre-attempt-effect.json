@@ -1,0 +1,984 @@
+{
+  "census_sha256": "e90632b6aac7410726c18e710e5c49e1b23aac41cdaa5b785df9dc5bf7881c6c",
+  "examples": {
+    "dg5:d46e96161e9d6e59": {
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "scope"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/properties/goal_id/minLength": {
+        "path": [
+          "value",
+          "scope",
+          "goal_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/properties/goal_id/type": {
+        "path": [
+          "value",
+          "scope",
+          "goal_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/properties/goal_run_id/minLength": {
+        "path": [
+          "value",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/properties/goal_run_id/type": {
+        "path": [
+          "value",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/properties/project_id/minLength": {
+        "path": [
+          "value",
+          "scope",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/properties/project_id/type": {
+        "path": [
+          "value",
+          "scope",
+          "project_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/properties/storage_instance_id/minLength": {
+        "path": [
+          "value",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/properties/storage_instance_id/type": {
+        "path": [
+          "value",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "value",
+          "scope"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/type": {
+        "path": [
+          "value",
+          "scope"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "origin"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/codec/const": {
+        "path": [
+          "value",
+          "origin",
+          "codec"
+        ],
+        "value": "messagepack_canonicalx"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/family_id/const": {
+        "path": [
+          "value",
+          "origin",
+          "family_id"
+        ],
+        "value": "executor_safestop_originx"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/operation_id/minLength": {
+        "path": [
+          "value",
+          "origin",
+          "operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/operation_id/type": {
+        "path": [
+          "value",
+          "origin",
+          "operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/physical_key/minLength": {
+        "path": [
+          "value",
+          "origin",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/physical_key/type": {
+        "path": [
+          "value",
+          "origin",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/schema_id/const": {
+        "path": [
+          "value",
+          "origin",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_safestop_origin.v2x"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/schema_version/const": {
+        "path": [
+          "value",
+          "origin",
+          "schema_version"
+        ],
+        "value": "2.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/storage_instance_id/minLength": {
+        "path": [
+          "value",
+          "origin",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/storage_instance_id/type": {
+        "path": [
+          "value",
+          "origin",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "value",
+          "origin"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/type": {
+        "path": [
+          "value",
+          "origin"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "original_boundary"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/native_capability_fence_ref/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "native_capability_fence_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/native_capability_fence_ref/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "native_capability_fence_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/native_operation_handle_ref/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "native_operation_handle_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/native_operation_handle_ref/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "native_operation_handle_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/native_writer_lease_ref/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "native_writer_lease_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/native_writer_lease_ref/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "native_writer_lease_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/observed_at_utc/format": {
+        "path": [
+          "value",
+          "original_boundary",
+          "observed_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/observed_at_utc/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "observed_at_utc"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/operation_id/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/operation_id/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/transaction_id/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "transaction_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/transaction_id/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "transaction_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/required": {
+        "member": [
+          "remove",
+          "principal"
+        ],
+        "path": [
+          "value",
+          "original_boundary"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/type": {
+        "path": [
+          "value",
+          "original_boundary"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmission/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmission/properties/admission_stage/const": {
+        "path": [
+          "value",
+          "admission_stage"
+        ],
+        "value": "before_original_handoff_releasex"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmission/properties/effect_kind/enum": {
+        "path": [
+          "value",
+          "effect_kind"
+        ],
+        "value": "compiler_artifactx"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmission/properties/native_owner_role/minLength": {
+        "path": [
+          "value",
+          "native_owner_role"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmission/properties/native_owner_role/type": {
+        "path": [
+          "value",
+          "native_owner_role"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmission/properties/operation_id/minLength": {
+        "path": [
+          "value",
+          "operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmission/properties/operation_id/type": {
+        "path": [
+          "value",
+          "operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmission/properties/ordinal/minimum": {
+        "path": [
+          "value",
+          "ordinal"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmission/properties/ordinal/type": {
+        "path": [
+          "value",
+          "ordinal"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmission/properties/original_native_input_contract/minLength": {
+        "path": [
+          "value",
+          "original_native_input_contract"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmission/properties/original_native_input_contract/type": {
+        "path": [
+          "value",
+          "original_native_input_contract"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmission/properties/original_native_input_contract_sha256/pattern": {
+        "path": [
+          "value",
+          "original_native_input_contract_sha256"
+        ],
+        "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmission/properties/original_native_input_contract_sha256/type": {
+        "path": [
+          "value",
+          "original_native_input_contract_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmission/properties/previous_admission/anyOf": {
+        "path": [
+          "value",
+          "previous_admission"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmission/properties/previous_admission/anyOf/1/type": {
+        "path": [
+          "value",
+          "previous_admission"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmission/properties/writer_id/minLength": {
+        "path": [
+          "value",
+          "writer_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmission/properties/writer_id/type": {
+        "path": [
+          "value",
+          "writer_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmission/required": {
+        "member": [
+          "remove",
+          "scope"
+        ],
+        "path": [
+          "value"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmission/type": {
+        "path": [
+          "value"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmissionPhysical/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmissionPhysical/properties/family_id/const": {
+        "path": [
+          "family_id"
+        ],
+        "value": "executor_safestop_pre_attempt_effectx"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmissionPhysical/properties/physical_key/minLength": {
+        "path": [
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmissionPhysical/properties/physical_key/type": {
+        "path": [
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmissionPhysical/properties/schema_id/const": {
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_safestop_pre_attempt_effect.v2x"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmissionPhysical/properties/schema_version/const": {
+        "path": [
+          "schema_version"
+        ],
+        "value": "2.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmissionPhysical/properties/storage_instance_id/minLength": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmissionPhysical/properties/storage_instance_id/type": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmissionPhysical/required": {
+        "member": [
+          "remove",
+          "family_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/PreAttemptEffectAdmissionPhysical/type": {
+        "path": [],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "original_boundary",
+          "principal"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/execution_host_ref/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "execution_host_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/execution_host_ref/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "execution_host_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/native_host_boot_ref/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "native_host_boot_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/native_host_boot_ref/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "native_host_boot_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/native_root_generation/minimum": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "native_root_generation"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/native_root_generation/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "native_root_generation"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/native_root_ref/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "native_root_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/native_root_ref/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "native_root_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/owner_epoch/minimum": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "owner_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/owner_epoch/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/owner_ref/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "owner_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/owner_ref/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "owner_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/required": {
+        "member": [
+          "remove",
+          "owner_ref"
+        ],
+        "path": [
+          "value",
+          "original_boundary",
+          "principal"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "domain_birth"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/codec/const": {
+        "path": [
+          "value",
+          "domain_birth",
+          "codec"
+        ],
+        "value": "messagepack_canonicalx"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/family_id/minLength": {
+        "path": [
+          "value",
+          "domain_birth",
+          "family_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/family_id/type": {
+        "path": [
+          "value",
+          "domain_birth",
+          "family_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/physical_key/minLength": {
+        "path": [
+          "value",
+          "domain_birth",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/physical_key/type": {
+        "path": [
+          "value",
+          "domain_birth",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/physical_sha256/pattern": {
+        "path": [
+          "value",
+          "domain_birth",
+          "physical_sha256"
+        ],
+        "value": "e3f2e506fcf948c62404ae74f267f0cb6b537ca8df269d95d20059dad9f5cb74\n"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/physical_sha256/type": {
+        "path": [
+          "value",
+          "domain_birth",
+          "physical_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/schema_id/minLength": {
+        "path": [
+          "value",
+          "domain_birth",
+          "schema_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/schema_id/type": {
+        "path": [
+          "value",
+          "domain_birth",
+          "schema_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/schema_version/minLength": {
+        "path": [
+          "value",
+          "domain_birth",
+          "schema_version"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/schema_version/type": {
+        "path": [
+          "value",
+          "domain_birth",
+          "schema_version"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/storage_instance_id/minLength": {
+        "path": [
+          "value",
+          "domain_birth",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/storage_instance_id/type": {
+        "path": [
+          "value",
+          "domain_birth",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "value",
+          "domain_birth"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/type": {
+        "path": [
+          "value",
+          "domain_birth"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OriginalSourceBinding/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "original_native_input_source"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OriginalSourceBinding/required": {
+        "member": [
+          "remove",
+          "source"
+        ],
+        "path": [
+          "value",
+          "original_native_input_source"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/OriginalSourceBinding/type": {
+        "path": [
+          "value",
+          "original_native_input_source"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "original_native_input_source",
+          "source"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/family_id/minLength": {
+        "path": [
+          "value",
+          "original_native_input_source",
+          "source",
+          "family_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/family_id/type": {
+        "path": [
+          "value",
+          "original_native_input_source",
+          "source",
+          "family_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_key/minLength": {
+        "path": [
+          "value",
+          "original_native_input_source",
+          "source",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_key/type": {
+        "path": [
+          "value",
+          "original_native_input_source",
+          "source",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/pattern": {
+        "path": [
+          "value",
+          "original_native_input_source",
+          "source",
+          "physical_value_sha256"
+        ],
+        "value": "882e6eabfb257497237e3483b72c26daa9ce6485d9fc6508e3d6614ee7bd4526\n"
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/type": {
+        "path": [
+          "value",
+          "original_native_input_source",
+          "source",
+          "physical_value_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_id/minLength": {
+        "path": [
+          "value",
+          "original_native_input_source",
+          "source",
+          "schema_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_id/type": {
+        "path": [
+          "value",
+          "original_native_input_source",
+          "source",
+          "schema_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_version/minLength": {
+        "path": [
+          "value",
+          "original_native_input_source",
+          "source",
+          "schema_version"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_version/type": {
+        "path": [
+          "value",
+          "original_native_input_source",
+          "source",
+          "schema_version"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/storage_instance_id/minLength": {
+        "path": [
+          "value",
+          "original_native_input_source",
+          "source",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/storage_instance_id/type": {
+        "path": [
+          "value",
+          "original_native_input_source",
+          "source",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "value",
+          "original_native_input_source",
+          "source"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/type": {
+        "path": [
+          "value",
+          "original_native_input_source",
+          "source"
+        ],
+        "value": null
+      }
+    }
+  },
+  "family": "goal_run.cancelled",
+  "routes": [
+    {
+      "call": "issue_physical",
+      "detail": [
+        "Additional properties are not allowed ('methodb_extra' was unexpected)"
+      ],
+      "edition": "original_profile",
+      "mutation": true,
+      "pre_attempt_effect": true,
+      "refusal": "issue/executor_safestop_pre_attempt_effect/schema/",
+      "root": "dg5:d46e96161e9d6e59",
+      "site": [
+        "scripts/pm_goal_dg_r_world.py",
+        446
+      ]
+    }
+  ],
+  "row": "dg5/issue/executor_safestop_pre_attempt_effect/schema",
+  "sites": [
+    [
+      "scripts/pm_goal_dg_r_world.py",
+      446
+    ]
+  ],
+  "source": "34f212d3fbcc8051ce2922d1de9dd75714ae361a"
+}

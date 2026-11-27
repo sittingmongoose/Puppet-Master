@@ -1,0 +1,3550 @@
+{
+  "census_sha256": "e90632b6aac7410726c18e710e5c49e1b23aac41cdaa5b785df9dc5bf7881c6c",
+  "examples": {
+    "dg5:f23ea29fbb2e8ab1": {
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/attempt_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "attempt_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/attempt_id/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "attempt_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/attempt_number/minimum": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "attempt_number"
+        ],
+        "value": 0
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/attempt_number/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "attempt_number"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/dispatch_operation_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "dispatch_operation_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/dispatch_operation_id/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "dispatch_operation_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/dispatch_transaction_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "dispatch_transaction_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/dispatch_transaction_id/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "dispatch_transaction_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/effect_owner_epoch/minimum": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "effect_owner_epoch"
+        ],
+        "value": -1
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/effect_owner_epoch/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "effect_owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/effect_owner_ref/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "effect_owner_ref"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/effect_owner_ref/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "effect_owner_ref"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/invocation_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "invocation_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/invocation_id/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "invocation_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/properties/role/enum": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "role"
+        ],
+        "process_role_or_barrier_enum": "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocation/allOf/1/properties/role/const",
+        "value": "toolx"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/required": {
+        "member": [
+          "remove",
+          "scope"
+        ],
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/executor-workflow-source-closure-20260913/v2/source.schema.json#/$defs/DispatchInvocation/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "execution_unit"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/family_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "execution_unit",
+          "family_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/family_id/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "execution_unit",
+          "family_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/physical_key/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "execution_unit",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/physical_key/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "execution_unit",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/pattern": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "execution_unit",
+          "physical_value_sha256"
+        ],
+        "value": "4caad07372c5ddbd9273673aac45f09a68d6f0184571da11db95b12b1fc4c29c\n"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "execution_unit",
+          "physical_value_sha256"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/schema_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "execution_unit",
+          "schema_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/schema_id/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "execution_unit",
+          "schema_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/schema_version/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "execution_unit",
+          "schema_version"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/schema_version/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "execution_unit",
+          "schema_version"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/storage_instance_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "execution_unit",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/storage_instance_id/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "execution_unit",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "execution_unit"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "execution_unit"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "scope"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/goal_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "scope",
+          "goal_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/goal_id/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "scope",
+          "goal_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/goal_run_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/goal_run_id/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/project_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "scope",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/project_id/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "scope",
+          "project_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/storage_instance_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/storage_instance_id/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/workgraph_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "scope",
+          "workgraph_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/workgraph_id/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "scope",
+          "workgraph_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/workgraph_revision/minimum": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "scope",
+          "workgraph_revision"
+        ],
+        "value": 0
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/workgraph_revision/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "scope",
+          "workgraph_revision"
+        ],
+        "value": 1.5
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/worknode_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "scope",
+          "worknode_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/properties/worknode_id/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "scope",
+          "worknode_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "scope"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/ExecutorScope/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "scope"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/BindingSelector/allOf/1/properties/family_id/const": {
+        "path": [
+          0,
+          "binding",
+          "selector",
+          "family_id"
+        ],
+        "value": "executor_filesafe_invocation_bindingx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/BindingSelector/allOf/1/properties/schema_id/const": {
+        "path": [
+          0,
+          "binding",
+          "selector",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_filesafe_invocation_binding.v2x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/BindingSelector/allOf/1/properties/schema_version/const": {
+        "path": [
+          0,
+          "binding",
+          "selector",
+          "schema_version"
+        ],
+        "value": "2.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/BindingValue/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          0,
+          "binding"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/BindingValue/required": {
+        "member": [
+          "remove",
+          "selector"
+        ],
+        "path": [
+          0,
+          "binding"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/BindingValue/type": {
+        "path": [
+          0,
+          "binding"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocation/allOf/1/properties/role/const": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "invocation",
+          "role"
+        ],
+        "value": "tool"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          0,
+          "binding",
+          "value"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/admitted_at_utc/format": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "admitted_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/admitted_at_utc/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "admitted_at_utc"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/execution_host_ref/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "execution_host_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/execution_host_ref/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "execution_host_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/original_admission_transaction_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_admission_transaction_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/original_admission_transaction_id/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_admission_transaction_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/original_command_id/const": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_command_id"
+        ],
+        "value": "cmd.runtime.restore_safe_point_then_retryx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/original_filesafe_operation_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_filesafe_operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/original_filesafe_operation_id/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_filesafe_operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/original_filesafe_owner_epoch/minimum": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_filesafe_owner_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/original_filesafe_owner_epoch/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_filesafe_owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/original_filesafe_owner_ref/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_filesafe_owner_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/original_filesafe_owner_ref/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_filesafe_owner_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/profile/const": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "profile"
+        ],
+        "value": "local_safe_point_exact_replace_v1x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/redaction_profile/const": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "redaction_profile"
+        ],
+        "value": "redacted_refs_onlyx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/restore_transaction_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "restore_transaction_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/restore_transaction_id/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "restore_transaction_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/schema_id/const": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_filesafe_invocation_binding.v2x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/schema_version/const": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "schema_version"
+        ],
+        "value": "2.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/source_location_ref/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "source_location_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/source_location_ref/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "source_location_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/storage_instance_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/properties/storage_instance_id/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": [
+          0,
+          "binding",
+          "value"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeInvocationBinding/type": {
+        "path": [
+          0,
+          "binding",
+          "value"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/allOf/0/else/properties/prior_origin/not": {
+        "controls": [
+          {
+            "path": [
+              0,
+              "complete_original_origins",
+              0,
+              "value",
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              0,
+              "complete_original_origins",
+              0,
+              "value",
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "prior_origin"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/allOf/0/else/properties/prior_origin/not/type": {
+        "controls": [
+          {
+            "path": [
+              0,
+              "complete_original_origins",
+              0,
+              "value",
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              0,
+              "complete_original_origins",
+              0,
+              "value",
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "prior_origin"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/allOf/0/else/properties/prior_origin/not"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/allOf/0/if/properties/prior_journal_commitment/type": {
+        "controls": [
+          {
+            "path": [
+              0,
+              "complete_original_origins",
+              0,
+              "value",
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              0,
+              "complete_original_origins",
+              0,
+              "value",
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "prior_journal_commitment"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/allOf/0/then/properties/prior_origin/type"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/allOf/0/then/properties/prior_origin/type": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "prior_origin"
+        ],
+        "value": {
+          "codec": "messagepack_canonical",
+          "family_id": "executor_filesafe_journal_origin",
+          "physical_key": "x",
+          "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+          "schema_version": "2.0.0",
+          "storage_instance_id": "x"
+        }
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/allOf/0/then/properties/revision/const": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "revision"
+        ],
+        "value": 2
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/issued_at_utc/format": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "issued_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/issued_at_utc/type": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "issued_at_utc"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/journal_link_fields/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "journal_link_fields"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/journal_link_fields/properties/result_event_ref/anyOf": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "journal_link_fields",
+          "result_event_ref"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/journal_link_fields/properties/result_event_ref/anyOf/0/minLength": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "journal_link_fields",
+          "result_event_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/journal_link_fields/properties/result_event_ref/anyOf/0/type": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "journal_link_fields",
+          "result_event_ref"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/journal_link_fields/properties/result_event_ref/anyOf/1/type": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "journal_link_fields",
+          "result_event_ref"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/journal_link_fields/properties/updated_at_utc/format": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "journal_link_fields",
+          "updated_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/journal_link_fields/properties/updated_at_utc/type": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "journal_link_fields",
+          "updated_at_utc"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/journal_link_fields/required": {
+        "member": [
+          "remove",
+          "updated_at_utc"
+        ],
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "journal_link_fields"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/journal_link_fields/type": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "journal_link_fields"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/original_equality/enum": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "original_equality"
+        ],
+        "value": "not_a_resolved_equalityx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/original_owner_epoch/minimum": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "original_owner_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/original_owner_epoch/type": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "original_owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/original_owner_ref/minLength": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "original_owner_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/original_owner_ref/type": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "original_owner_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/original_write_operation_id/minLength": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "original_write_operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/original_write_operation_id/type": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "original_write_operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/original_write_transaction_id/minLength": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "original_write_transaction_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/original_write_transaction_id/type": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "original_write_transaction_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/prior_journal_commitment/anyOf": {
+        "controls": [
+          {
+            "path": [
+              0,
+              "complete_original_origins",
+              0,
+              "value",
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              0,
+              "complete_original_origins",
+              0,
+              "value",
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "prior_journal_commitment"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/prior_journal_commitment/anyOf/1/type": {
+        "controls": [
+          {
+            "path": [
+              0,
+              "complete_original_origins",
+              0,
+              "value",
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              0,
+              "complete_original_origins",
+              0,
+              "value",
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "prior_journal_commitment"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/prior_origin/anyOf": {
+        "controls": [
+          {
+            "path": [
+              0,
+              "complete_original_origins",
+              0,
+              "value",
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              0,
+              "complete_original_origins",
+              0,
+              "value",
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "prior_origin"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/prior_origin/anyOf/1/type": {
+        "controls": [
+          {
+            "path": [
+              0,
+              "complete_original_origins",
+              0,
+              "value",
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              0,
+              "complete_original_origins",
+              0,
+              "value",
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "prior_origin"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/project_id/minLength": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/project_id/type": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "project_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/redaction_profile/const": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "redaction_profile"
+        ],
+        "value": "redacted_refs_onlyx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/resolved_original_result/anyOf": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "resolved_original_result"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/resolved_original_result/anyOf/1/type": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "resolved_original_result"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/restore_transaction_id/minLength": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "restore_transaction_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/restore_transaction_id/type": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "restore_transaction_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/revision/minimum": {
+        "controls": [
+          {
+            "path": [
+              0,
+              "complete_original_origins",
+              0,
+              "value",
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              0,
+              "complete_original_origins",
+              0,
+              "value",
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "revision"
+        ],
+        "value": 0
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/revision/type": {
+        "controls": [
+          {
+            "path": [
+              0,
+              "complete_original_origins",
+              0,
+              "value",
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              0,
+              "complete_original_origins",
+              0,
+              "value",
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "revision"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/schema_id/const": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_filesafe_journal_origin.v2x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/schema_version/const": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "schema_version"
+        ],
+        "value": "2.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/storage_instance_id/minLength": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/storage_instance_id/type": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/terminal_core_sha256/anyOf": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "terminal_core_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/terminal_core_sha256/anyOf/0/pattern": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "terminal_core_sha256"
+        ],
+        "value": "gc\n"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/terminal_core_sha256/anyOf/0/type": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "terminal_core_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/terminal_core_sha256/anyOf/1/type": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "terminal_core_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/write_kind/enum": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "write_kind"
+        ],
+        "value": "preparex"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/type": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "issued_journal_commitment"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/properties/codec/const": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "issued_journal_commitment",
+          "codec"
+        ],
+        "value": "messagepack_canonicalx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/properties/family_id/const": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "issued_journal_commitment",
+          "family_id"
+        ],
+        "value": "safe_point_restore_transactionx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/properties/issued_physical_sha256/pattern": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "issued_journal_commitment",
+          "issued_physical_sha256"
+        ],
+        "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/properties/issued_physical_sha256/type": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "issued_journal_commitment",
+          "issued_physical_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/properties/kind/const": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "issued_journal_commitment",
+          "kind"
+        ],
+        "value": "historical_issued_value_commitmentx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/properties/physical_key/minLength": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "issued_journal_commitment",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/properties/physical_key/type": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "issued_journal_commitment",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/properties/schema_id/const": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "issued_journal_commitment",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.safe_point_restore_transaction.v1x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/properties/schema_version/const": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "issued_journal_commitment",
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/properties/storage_instance_id/minLength": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "issued_journal_commitment",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/properties/storage_instance_id/type": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "issued_journal_commitment",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/required": {
+        "member": [
+          "remove",
+          "kind"
+        ],
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "issued_journal_commitment"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/type": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "value",
+          "issued_journal_commitment"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalSelector/allOf/1/properties/family_id/const": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "selector",
+          "family_id"
+        ],
+        "value": "safe_point_restore_transactionx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalSelector/allOf/1/properties/schema_id/const": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "selector",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.safe_point_restore_transaction.v1x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalSelector/allOf/1/properties/schema_version/const": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "selector",
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalValue/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          0,
+          "original_terminal_journal"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalValue/required": {
+        "member": [
+          "remove",
+          "selector"
+        ],
+        "path": [
+          0,
+          "original_terminal_journal"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalValue/type": {
+        "path": [
+          0,
+          "original_terminal_journal"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginSelector/allOf/1/properties/family_id/const": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "selector",
+          "family_id"
+        ],
+        "value": "executor_filesafe_journal_originx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginSelector/allOf/1/properties/schema_id/const": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "selector",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_filesafe_journal_origin.v2x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginSelector/allOf/1/properties/schema_version/const": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0,
+          "selector",
+          "schema_version"
+        ],
+        "value": "2.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginValue/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          0,
+          "complete_original_origins",
+          0
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginValue/required": {
+        "member": [
+          "remove",
+          "selector"
+        ],
+        "path": [
+          0,
+          "complete_original_origins",
+          0
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginValue/type": {
+        "path": [
+          0,
+          "complete_original_origins",
+          0
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_canonical_payload"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/attempt_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_canonical_payload",
+          "attempt_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/attempt_id/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_canonical_payload",
+          "attempt_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/baseline_target/const": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_canonical_payload",
+          "baseline_target"
+        ],
+        "value": "safe_pointx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/blocked_sequence/minimum": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_canonical_payload",
+          "blocked_sequence"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/blocked_sequence/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_canonical_payload",
+          "blocked_sequence"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/node_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_canonical_payload",
+          "node_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/node_id/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_canonical_payload",
+          "node_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/project_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_canonical_payload",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/project_id/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_canonical_payload",
+          "project_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/repo_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_canonical_payload",
+          "repo_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/repo_id/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_canonical_payload",
+          "repo_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/run_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_canonical_payload",
+          "run_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/run_id/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_canonical_payload",
+          "run_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/safe_point_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_canonical_payload",
+          "safe_point_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/safe_point_id/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_canonical_payload",
+          "safe_point_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/worktree_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_canonical_payload",
+          "worktree_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/properties/worktree_id/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_canonical_payload",
+          "worktree_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/required": {
+        "member": [
+          "remove",
+          "project_id"
+        ],
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_canonical_payload"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginalRestorePayload/type": {
+        "path": [
+          0,
+          "binding",
+          "value",
+          "original_canonical_payload"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          0,
+          "binding",
+          "selector"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/codec/const": {
+        "path": [
+          0,
+          "binding",
+          "selector",
+          "codec"
+        ],
+        "value": "messagepack_canonicalx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/family_id/minLength": {
+        "filesafe_tuple_selector": true,
+        "path": [
+          0,
+          "binding",
+          "selector",
+          "family_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/family_id/type": {
+        "filesafe_tuple_selector": true,
+        "path": [
+          0,
+          "binding",
+          "selector",
+          "family_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/physical_key/minLength": {
+        "path": [
+          0,
+          "binding",
+          "selector",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/physical_key/type": {
+        "path": [
+          0,
+          "binding",
+          "selector",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/physical_sha256/pattern": {
+        "path": [
+          0,
+          "binding",
+          "selector",
+          "physical_sha256"
+        ],
+        "value": "f6f36a814954b22f12b3dfea88e8fa6dc1203c0de2efcfe40e74b1af8d9e9192\n"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/physical_sha256/type": {
+        "path": [
+          0,
+          "binding",
+          "selector",
+          "physical_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/schema_id/minLength": {
+        "filesafe_tuple_selector": true,
+        "path": [
+          0,
+          "binding",
+          "selector",
+          "schema_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/schema_id/type": {
+        "filesafe_tuple_selector": true,
+        "path": [
+          0,
+          "binding",
+          "selector",
+          "schema_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/schema_version/minLength": {
+        "filesafe_tuple_selector": true,
+        "path": [
+          0,
+          "binding",
+          "selector",
+          "schema_version"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/schema_version/type": {
+        "filesafe_tuple_selector": true,
+        "path": [
+          0,
+          "binding",
+          "selector",
+          "schema_version"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/storage_instance_id/minLength": {
+        "path": [
+          0,
+          "binding",
+          "selector",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/storage_instance_id/type": {
+        "path": [
+          0,
+          "binding",
+          "selector",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          0,
+          "binding",
+          "selector"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/type": {
+        "path": [
+          0,
+          "binding",
+          "selector"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/attempt_id/minLength": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "attempt_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/attempt_id/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "attempt_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/canonical_safe_point_key/minLength": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "canonical_safe_point_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/canonical_safe_point_key/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "canonical_safe_point_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/conflict_reason_code/enum": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "conflict_reason_code"
+        ],
+        "value": "gc:not-a-member"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/conflict_reason_code/type": {
+        "nullable_enum": true,
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "conflict_reason_code"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/hold_refs/items/minLength": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "hold_refs",
+          0
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/hold_refs/items/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "hold_refs",
+          0
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/hold_refs/minItems": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "hold_refs"
+        ],
+        "value": []
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/hold_refs/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "hold_refs"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/hold_refs/uniqueItems": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "hold_refs"
+        ],
+        "value": [
+          "x",
+          "x"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/mutation_lease_ref/minLength": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "mutation_lease_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/mutation_lease_ref/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "mutation_lease_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/node_id/minLength": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "node_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/node_id/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "node_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operation_cursor/minimum": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "operation_cursor"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operation_cursor/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "operation_cursor"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "operations",
+          0
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/properties/canonical_path_ref/minLength": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "operations",
+          0,
+          "canonical_path_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/properties/canonical_path_ref/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "operations",
+          0,
+          "canonical_path_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/properties/expected_before_sha256/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "operations",
+          0,
+          "expected_before_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/properties/operation_id/minLength": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "operations",
+          0,
+          "operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/properties/operation_id/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "operations",
+          0,
+          "operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/properties/operation_kind/minLength": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "operations",
+          0,
+          "operation_kind"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/properties/operation_kind/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "operations",
+          0,
+          "operation_kind"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/properties/stage_ref/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "operations",
+          0,
+          "stage_ref"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/properties/state/minLength": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "operations",
+          0,
+          "state"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/properties/state/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "operations",
+          0,
+          "state"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/properties/target_sha256/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "operations",
+          0,
+          "target_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/required": {
+        "member": [
+          "remove",
+          "operation_id"
+        ],
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "operations",
+          0
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/items/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "operations",
+          0
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/operations/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "operations"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/phase/enum": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "phase"
+        ],
+        "value": "preparedx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/post_restore_state_sha256/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "post_restore_state_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/pre_restore_manifest_ref/minLength": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "pre_restore_manifest_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/pre_restore_manifest_ref/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "pre_restore_manifest_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/pre_restore_manifest_sha256/pattern": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "pre_restore_manifest_sha256"
+        ],
+        "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/pre_restore_manifest_sha256/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "pre_restore_manifest_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/pre_restore_state_sha256/pattern": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "pre_restore_state_sha256"
+        ],
+        "value": "8bab971b45f3085a8e2a6c3ca5e473657fc00e79236b5d31eb43bf8b1cd581ab\n"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/pre_restore_state_sha256/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "pre_restore_state_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/project_id/minLength": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/project_id/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "project_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/recovered_after_restart/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "recovered_after_restart"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/redaction_profile/enum": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "redaction_profile"
+        ],
+        "value": "no_secretsx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/restart_count/minimum": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "restart_count"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/restart_count/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "restart_count"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/restore_outcome/enum": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "restore_outcome"
+        ],
+        "value": "gc:not-a-member"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/restore_outcome/type": {
+        "nullable_enum": true,
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "restore_outcome"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/restore_transaction_id/minLength": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "restore_transaction_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/restore_transaction_id/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "restore_transaction_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/result_event_ref/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "result_event_ref"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/run_id/minLength": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "run_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/run_id/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "run_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/safe_point_id/minLength": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "safe_point_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/safe_point_id/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "safe_point_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/schema_id/const": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.safe_point_restore_transaction.v1x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/schema_version/const": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/started_at_utc/format": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "started_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/started_at_utc/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "started_at_utc"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/target_manifest_ref/minLength": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "target_manifest_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/target_manifest_ref/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "target_manifest_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/target_manifest_sha256/pattern": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "target_manifest_sha256"
+        ],
+        "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/target_manifest_sha256/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "target_manifest_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/target_state_sha256/pattern": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "target_state_sha256"
+        ],
+        "value": "9bbdb37129d1ae74adc9324c07f11105e11e1c7677cecbd5db6c62f1dadf3ada\n"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/target_state_sha256/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "target_state_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/updated_at_utc/format": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "updated_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/properties/updated_at_utc/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value",
+          "updated_at_utc"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_original/safe_point_restore_transaction.schema.json#/type": {
+        "path": [
+          0,
+          "original_terminal_journal",
+          "value"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects/minItems": {
+        "control": {
+          "path": [],
+          "value": []
+        },
+        "path": [],
+        "vacuous": true
+      },
+      "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeEffects/type": {
+        "path": [],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeInvocation/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          0
+        ]
+      },
+      "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeInvocation/properties/complete_original_origins/minItems": {
+        "path": [
+          0,
+          "complete_original_origins"
+        ],
+        "value": []
+      },
+      "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeInvocation/properties/complete_original_origins/type": {
+        "path": [
+          0,
+          "complete_original_origins"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeInvocation/required": {
+        "member": [
+          "remove",
+          "binding"
+        ],
+        "path": [
+          0
+        ]
+      },
+      "https://puppetmaster.local/proposals/goal_run_cancelled_filesafe_arguments.v1.schema.json#/$defs/RetainedFileSafeInvocation/type": {
+        "path": [
+          0
+        ],
+        "value": null
+      }
+    }
+  },
+  "family": "goal_run.cancelled",
+  "fresh_reference_sha256": "1a8193ac78dbe047dd7fda0f897b004fb4a6cf64a16ebbbdd9a875f47296e43a",
+  "routes": [
+    {
+      "call": "read_filesafe",
+      "detail": [
+        "'executor_filesafe_invocation_binding' was expected",
+        "'pm.storage_value.executor_filesafe_invocation_binding.v2' was expected",
+        "'2.0.0' was expected"
+      ],
+      "edition": "original_profile",
+      "fresh_literal_sha256": "99c1ca8799f5b12b9398db65ea8554b33368e171771ef3865ed12d2fe8b78754",
+      "mutation": true,
+      "realm": "filesafe_consumer",
+      "refusal": "tuple/filesafe/schema/0/binding/selector/family_id",
+      "root": "dg5:f23ea29fbb2e8ab1",
+      "site": [
+        "scripts/pm_goal_dg_r_readers.py",
+        154
+      ]
+    },
+    {
+      "call": "read_filesafe",
+      "detail": [
+        "'executor_filesafe_invocation_binding' was expected",
+        "'pm.storage_value.executor_filesafe_invocation_binding.v2' was expected",
+        "'2.0.0' was expected"
+      ],
+      "edition": "integrated_original",
+      "fresh_literal_sha256": "99c1ca8799f5b12b9398db65ea8554b33368e171771ef3865ed12d2fe8b78754",
+      "mutation": true,
+      "realm": "filesafe_consumer",
+      "refusal": "tuple/filesafe/schema/0/binding/selector/family_id",
+      "registry_realm": "cancelled_filesafe_consumer",
+      "root": "dg5:f23ea29fbb2e8ab1",
+      "site": [
+        "scripts/pm_goal_dg_int_schema_cache.py",
+        31
+      ]
+    }
+  ],
+  "row": "dg5/tuple/filesafe/schema",
+  "rule_controls": {
+    "dg5:f23ea29fbb2e8ab1": [
+      {
+        "binding": {
+          "selector": {
+            "codec": "messagepack_canonical",
+            "family_id": "executor_filesafe_invocation_binding",
+            "physical_key": "executor_filesafe_invocation_binding:OWMyMGEwMDAtM2Q2YS00NjE1LWFjMWYtMGJkN2Y1ZDYxZmVl:531c4870cc244a7d0a6daa9654fbb4d16945a9467011cf2e8ff508512e9f6f1d",
+            "physical_sha256": "f6f36a814954b22f12b3dfea88e8fa6dc1203c0de2efcfe40e74b1af8d9e9192",
+            "schema_id": "pm.storage_value.executor_filesafe_invocation_binding.v2",
+            "schema_version": "2.0.0",
+            "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee"
+          },
+          "value": {
+            "admitted_at_utc": "2026-11-20T17:06:43.183Z",
+            "execution_host_ref": "TEST_ONLY:execution_host_ref:ac18915f202f4a82",
+            "invocation": {
+              "attempt_id": "TEST_ONLY:attempt_id:d49a82139a4641dd",
+              "attempt_number": 1,
+              "dispatch_operation_id": "TEST_ONLY:dispatch_operation_id:9ca738c42ef04e43",
+              "dispatch_transaction_id": "TEST_ONLY:dispatch_transaction_id:4b5b7a36210c40c6",
+              "effect_owner_epoch": 0,
+              "effect_owner_ref": "TEST_ONLY:effect_owner_ref:46307e3b8705425b",
+              "execution_unit": {
+                "family_id": "test_only_ancillary",
+                "physical_key": "test_only_ancillary:OWMyMGEwMDAtM2Q2YS00NjE1LWFjMWYtMGJkN2Y1ZDYxZmVl:6ede64cb884a153e1ae9508082745cee44a1ecccde8fedb476fea3342987d288",
+                "physical_value_sha256": "4caad07372c5ddbd9273673aac45f09a68d6f0184571da11db95b12b1fc4c29c",
+                "schema_id": "pm.storage_value.test_only_ancillary.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee"
+              },
+              "invocation_id": "TEST_ONLY:invocation_id:206a651cd17a4a9e",
+              "original_attempt_birth": {
+                "family_id": "test_only_ancillary",
+                "physical_key": "test_only_ancillary:OWMyMGEwMDAtM2Q2YS00NjE1LWFjMWYtMGJkN2Y1ZDYxZmVl:c65b6ab8a704679a8f6c195fa4480278f1794d134b114e405976551e14ce6a57",
+                "physical_value_sha256": "b236e0b841f4fd0394586f799d0fe6ae5e469e532a263b14fa69d4f6a2ca7530",
+                "schema_id": "pm.storage_value.test_only_ancillary.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee"
+              },
+              "role": "filesafe",
+              "scope": {
+                "goal_id": "TEST_ONLY-goal-3e38a6b01c96",
+                "goal_run_id": "TEST_ONLY-goal-run-3e38a6b01c96",
+                "project_id": "TEST_ONLY-project-3e38a6b01c96",
+                "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee",
+                "workgraph_id": "TEST_ONLY:workgraph_id:b24e24aa65f642ac",
+                "workgraph_revision": 1,
+                "worknode_id": "TEST_ONLY:worknode_id:5fc1d5e18f554f4a"
+              }
+            },
+            "original_admission_transaction_id": "TEST_ONLY:original_admission_transaction_id:468e82c5c43c48f3",
+            "original_canonical_payload": {
+              "attempt_id": "TEST_ONLY:attempt_id:3058dc0732014e67",
+              "baseline_target": "safe_point",
+              "blocked_sequence": 0,
+              "node_id": "TEST_ONLY:node_id:8738423c53914408",
+              "project_id": "TEST_ONLY-project-3e38a6b01c96",
+              "repo_id": "TEST_ONLY:repo_id:44dcfd8fe4944116",
+              "run_id": "TEST_ONLY:run_id:326e3a664c484ed5",
+              "safe_point_id": "TEST_ONLY:safe_point_id:930fac965eaa498b",
+              "worktree_id": "TEST_ONLY:worktree_id:664664d3c7624332"
+            },
+            "original_command_id": "cmd.runtime.restore_safe_point_then_retry",
+            "original_command_source": {
+              "family_id": "test_only_ancillary",
+              "physical_key": "test_only_ancillary:OWMyMGEwMDAtM2Q2YS00NjE1LWFjMWYtMGJkN2Y1ZDYxZmVl:c9be99c1b569f752ba4854999de5b562d550e3aa4d12a9785a6255231ca41cc2",
+              "physical_value_sha256": "cf2995d826b351e28bf74e697e4337be0443b01d4ea30e3c25b085223a9ab7df",
+              "schema_id": "pm.storage_value.test_only_ancillary.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee"
+            },
+            "original_dispatch_admission": {
+              "family_id": "test_only_ancillary",
+              "physical_key": "test_only_ancillary:OWMyMGEwMDAtM2Q2YS00NjE1LWFjMWYtMGJkN2Y1ZDYxZmVl:048ab524c31e2755d3231f9cd45789a15eb5b57c01fc7a3fc6146e1dd0f25d5f",
+              "physical_value_sha256": "d4fbc96aa6c82233359081741d885a01fe222f55c58546d0939d24db3cb8c4df",
+              "schema_id": "pm.storage_value.test_only_ancillary.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee"
+            },
+            "original_dispatch_origin": {
+              "family_id": "test_only_ancillary",
+              "physical_key": "test_only_ancillary:OWMyMGEwMDAtM2Q2YS00NjE1LWFjMWYtMGJkN2Y1ZDYxZmVl:8e38fa61aa5093e4a1bcd14e173b9c891ce9ec83c1a6349151be39a965d1b6d6",
+              "physical_value_sha256": "7249314379ef9b90938d2b6850c427c8f885b46a7cd568659399a8f10c2bb50c",
+              "schema_id": "pm.storage_value.test_only_ancillary.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee"
+            },
+            "original_filesafe_operation_id": "TEST_ONLY:original_filesafe_operation_id:b7e2215180644a87",
+            "original_filesafe_owner_epoch": 0,
+            "original_filesafe_owner_ref": "TEST_ONLY:original_filesafe_owner_ref:b8ac7c23b61e451b",
+            "profile": "local_safe_point_exact_replace_v1",
+            "redaction_profile": "redacted_refs_only",
+            "restore_transaction_id": "TEST_ONLY:restore_transaction_id:39213c96ecfa4275",
+            "schema_id": "pm.storage_value.executor_filesafe_invocation_binding.v2",
+            "schema_version": "2.0.0",
+            "source_location_ref": "TEST_ONLY:source_location_ref:5bb261acb71142a5",
+            "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee"
+          }
+        },
+        "complete_original_origins": [
+          {
+            "selector": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "executor_filesafe_journal_origin:OWMyMGEwMDAtM2Q2YS00NjE1LWFjMWYtMGJkN2Y1ZDYxZmVl:6b510a065b4a491ad4bf047c98c565349e491bf854626a13a4115c6130b0f7fa",
+              "physical_sha256": "0761a7698f2995f7124e36b9e2ca68238cabfdf1a8376c49e78743e2cd9c9e29",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee"
+            },
+            "value": {
+              "binding": {
+                "codec": "messagepack_canonical",
+                "family_id": "executor_filesafe_invocation_binding",
+                "physical_key": "executor_filesafe_invocation_binding:OWMyMGEwMDAtM2Q2YS00NjE1LWFjMWYtMGJkN2Y1ZDYxZmVl:ec1968a89f8d2684a3857a21a2bc2cb1a408eea3e070160adfd14bc4e5f9c539",
+                "physical_sha256": "68e6d49c950620070aff314fed503389490266b771d936ec3949757edc29c688",
+                "schema_id": "pm.storage_value.executor_filesafe_invocation_binding.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee"
+              },
+              "issued_at_utc": "2026-11-20T17:06:43.187Z",
+              "issued_journal_commitment": {
+                "codec": "messagepack_canonical",
+                "family_id": "safe_point_restore_transaction",
+                "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "kind": "historical_issued_value_commitment",
+                "physical_key": "x",
+                "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee"
+              },
+              "journal_link_fields": {
+                "result_event_ref": null,
+                "updated_at_utc": "2026-11-20T17:06:43.186Z"
+              },
+              "original_equality": "not_a_resolved_equality",
+              "original_owner_epoch": 0,
+              "original_owner_ref": "TEST_ONLY:original_owner_ref:bef570069d2547ca",
+              "original_write_operation_id": "TEST_ONLY:original_write_operation_id:a9208856a85c4c9d",
+              "original_write_transaction_id": "TEST_ONLY:original_write_transaction_id:95d15cade0694a2e",
+              "prior_journal_commitment": null,
+              "prior_origin": null,
+              "project_id": "TEST_ONLY-project-3e38a6b01c96",
+              "redaction_profile": "redacted_refs_only",
+              "resolved_original_result": null,
+              "restore_transaction_id": "TEST_ONLY:restore_transaction_id:7cba2b6e27684a7e",
+              "revision": 1,
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee",
+              "terminal_core_sha256": null,
+              "write_kind": "prepare"
+            }
+          }
+        ],
+        "original_terminal_journal": {
+          "selector": {
+            "codec": "messagepack_canonical",
+            "family_id": "safe_point_restore_transaction",
+            "physical_key": "safe_point_restore_transaction:OWMyMGEwMDAtM2Q2YS00NjE1LWFjMWYtMGJkN2Y1ZDYxZmVl:88e58405d6456bc8084ba9d332bbb8e4bc2f24772b74e421e890c5b1ec6ee804",
+            "physical_sha256": "2d17ab9cbcc3fa6933c6cd64eb3e22becf5e1e8fce58c61451d55ef05cb458ac",
+            "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee"
+          },
+          "value": {
+            "attempt_id": "TEST_ONLY:attempt_id:5eba47730a954188",
+            "canonical_safe_point_key": "x",
+            "conflict_reason_code": null,
+            "hold_refs": [
+              "x"
+            ],
+            "mutation_lease_ref": "TEST_ONLY:mutation_lease_ref:7b323cf2b0384f1a",
+            "node_id": "TEST_ONLY:node_id:87362ed17a6c4fd8",
+            "operation_cursor": 0,
+            "operations": [
+              {
+                "canonical_path_ref": "TEST_ONLY:path:src/app.py",
+                "expected_before_sha256": "9ad3f73d019edaca5a6f74c3ff517ff7d4cef364f4a9af4af9fb37bd85ef76e2",
+                "operation_id": "TEST_ONLY:op:filesafe:ee60cc3cbe20:restore:0",
+                "operation_kind": "x",
+                "stage_ref": "TEST_ONLY:stage:TEST_ONLY:op:filesafe:ee60cc3cbe20:0",
+                "state": "x",
+                "target_sha256": "fa8f95688d80c41f6839bb608340c813b60671d309180208df0dafe34e361366"
+              },
+              {
+                "canonical_path_ref": "TEST_ONLY:path:src/new.py",
+                "expected_before_sha256": "0ed019e3512f0e2ea6452255ad445f9ff7b540ce5869f2e74bfb322f706773b8",
+                "operation_id": "TEST_ONLY:op:filesafe:ee60cc3cbe20:restore:1",
+                "operation_kind": "x",
+                "stage_ref": "TEST_ONLY:stage:TEST_ONLY:op:filesafe:ee60cc3cbe20:1",
+                "state": "x",
+                "target_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+              }
+            ],
+            "phase": "committed",
+            "post_restore_state_sha256": "9bbdb37129d1ae74adc9324c07f11105e11e1c7677cecbd5db6c62f1dadf3ada",
+            "pre_restore_manifest_ref": "test_only_filesafe_workspace:OWMyMGEwMDAtM2Q2YS00NjE1LWFjMWYtMGJkN2Y1ZDYxZmVl:b50bb6b33e6ad00bee81cef0019ab527174b66a438b8181ce0d9a17b3ed99827",
+            "pre_restore_manifest_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "pre_restore_state_sha256": "8bab971b45f3085a8e2a6c3ca5e473657fc00e79236b5d31eb43bf8b1cd581ab",
+            "project_id": "TEST_ONLY-project-3e38a6b01c96",
+            "recovered_after_restart": false,
+            "redaction_profile": "no_secrets",
+            "restart_count": 0,
+            "restore_outcome": "restored_clean",
+            "restore_transaction_id": "TEST_ONLY:op:filesafe:ee60cc3cbe20",
+            "result_event_ref": null,
+            "run_id": "TEST_ONLY:run_id:310bb1e972cb4f72",
+            "safe_point_id": "TEST_ONLY:safe_point_id:44d445bd96d9420d",
+            "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+            "schema_version": "1.0.0",
+            "started_at_utc": "2026-11-20T17:06:43.184Z",
+            "target_manifest_ref": "test_only_filesafe_workspace:OWMyMGEwMDAtM2Q2YS00NjE1LWFjMWYtMGJkN2Y1ZDYxZmVl:b50bb6b33e6ad00bee81cef0019ab527174b66a438b8181ce0d9a17b3ed99827",
+            "target_manifest_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "target_state_sha256": "9bbdb37129d1ae74adc9324c07f11105e11e1c7677cecbd5db6c62f1dadf3ada",
+            "updated_at_utc": "2026-11-20T17:06:43.185Z"
+          }
+        }
+      },
+      {
+        "binding": {
+          "selector": {
+            "codec": "messagepack_canonical",
+            "family_id": "executor_filesafe_invocation_binding",
+            "physical_key": "executor_filesafe_invocation_binding:OWMyMGEwMDAtM2Q2YS00NjE1LWFjMWYtMGJkN2Y1ZDYxZmVl:2de3dd511096525bc171668230511c0c7bf9d3a0e92047d45b7a0b205bf85056",
+            "physical_sha256": "f632ebaf9e71fb70bb0ef7edecd5bdc151d332142cc2feabf52e0b53384dde21",
+            "schema_id": "pm.storage_value.executor_filesafe_invocation_binding.v2",
+            "schema_version": "2.0.0",
+            "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee"
+          },
+          "value": {
+            "admitted_at_utc": "2026-11-20T17:06:43.188Z",
+            "execution_host_ref": "TEST_ONLY:execution_host_ref:a71ab5f366e54d5b",
+            "invocation": {
+              "attempt_id": "TEST_ONLY:attempt_id:745f8c044d094b79",
+              "attempt_number": 1,
+              "dispatch_operation_id": "TEST_ONLY:dispatch_operation_id:866b68c85ffb4101",
+              "dispatch_transaction_id": "TEST_ONLY:dispatch_transaction_id:31954283e8c7402c",
+              "effect_owner_epoch": 0,
+              "effect_owner_ref": "TEST_ONLY:effect_owner_ref:17604d893b5c481e",
+              "execution_unit": {
+                "family_id": "test_only_ancillary",
+                "physical_key": "test_only_ancillary:OWMyMGEwMDAtM2Q2YS00NjE1LWFjMWYtMGJkN2Y1ZDYxZmVl:6c8c83ea549f92a3d39254938b3ce8e5c0a474d3f2ded7cf6cba8fb5e0e3d1fe",
+                "physical_value_sha256": "4caad07372c5ddbd9273673aac45f09a68d6f0184571da11db95b12b1fc4c29c",
+                "schema_id": "pm.storage_value.test_only_ancillary.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee"
+              },
+              "invocation_id": "TEST_ONLY:invocation_id:0b37607795854f9a",
+              "original_attempt_birth": {
+                "family_id": "test_only_ancillary",
+                "physical_key": "test_only_ancillary:OWMyMGEwMDAtM2Q2YS00NjE1LWFjMWYtMGJkN2Y1ZDYxZmVl:aaa347bcf3177ced5a7f64f28048fe88c11b50ca364f8b09987b97456e091a79",
+                "physical_value_sha256": "b236e0b841f4fd0394586f799d0fe6ae5e469e532a263b14fa69d4f6a2ca7530",
+                "schema_id": "pm.storage_value.test_only_ancillary.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee"
+              },
+              "role": "filesafe",
+              "scope": {
+                "goal_id": "TEST_ONLY-goal-3e38a6b01c96",
+                "goal_run_id": "TEST_ONLY-goal-run-3e38a6b01c96",
+                "project_id": "TEST_ONLY-project-3e38a6b01c96",
+                "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee",
+                "workgraph_id": "TEST_ONLY:workgraph_id:c6f7368c40b8459b",
+                "workgraph_revision": 1,
+                "worknode_id": "TEST_ONLY:worknode_id:2202cd54a3fc4cab"
+              }
+            },
+            "original_admission_transaction_id": "TEST_ONLY:original_admission_transaction_id:8e6582d0453d49f7",
+            "original_canonical_payload": {
+              "attempt_id": "TEST_ONLY:attempt_id:39d3df03c92d4196",
+              "baseline_target": "safe_point",
+              "blocked_sequence": 0,
+              "node_id": "TEST_ONLY:node_id:a9ee9fa96606449f",
+              "project_id": "TEST_ONLY-project-3e38a6b01c96",
+              "repo_id": "TEST_ONLY:repo_id:7077164fa50543e8",
+              "run_id": "TEST_ONLY:run_id:f2f775bfb0a84f86",
+              "safe_point_id": "TEST_ONLY:safe_point_id:2a788ed3727043c8",
+              "worktree_id": "TEST_ONLY:worktree_id:de1c44f1cf634f7b"
+            },
+            "original_command_id": "cmd.runtime.restore_safe_point_then_retry",
+            "original_command_source": {
+              "family_id": "test_only_ancillary",
+              "physical_key": "test_only_ancillary:OWMyMGEwMDAtM2Q2YS00NjE1LWFjMWYtMGJkN2Y1ZDYxZmVl:2d96fa6446bc151d8ea7ab28fc0c3f60c85978a79ce2e3f73d7f3138b8fe07f8",
+              "physical_value_sha256": "cf2995d826b351e28bf74e697e4337be0443b01d4ea30e3c25b085223a9ab7df",
+              "schema_id": "pm.storage_value.test_only_ancillary.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee"
+            },
+            "original_dispatch_admission": {
+              "family_id": "test_only_ancillary",
+              "physical_key": "test_only_ancillary:OWMyMGEwMDAtM2Q2YS00NjE1LWFjMWYtMGJkN2Y1ZDYxZmVl:998e4e9416a0ca0e9c7a66b1a8e58486fdd19db1c8b171234ada6a034c1afaa5",
+              "physical_value_sha256": "d4fbc96aa6c82233359081741d885a01fe222f55c58546d0939d24db3cb8c4df",
+              "schema_id": "pm.storage_value.test_only_ancillary.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee"
+            },
+            "original_dispatch_origin": {
+              "family_id": "test_only_ancillary",
+              "physical_key": "test_only_ancillary:OWMyMGEwMDAtM2Q2YS00NjE1LWFjMWYtMGJkN2Y1ZDYxZmVl:3fa7fc9a51f14e433f9359aaf9458bd0c82cf8de3551f9a7eb4b49ca1ee1b446",
+              "physical_value_sha256": "7249314379ef9b90938d2b6850c427c8f885b46a7cd568659399a8f10c2bb50c",
+              "schema_id": "pm.storage_value.test_only_ancillary.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee"
+            },
+            "original_filesafe_operation_id": "TEST_ONLY:original_filesafe_operation_id:4489cec3e029495c",
+            "original_filesafe_owner_epoch": 0,
+            "original_filesafe_owner_ref": "TEST_ONLY:original_filesafe_owner_ref:238b4dc9f4214788",
+            "profile": "local_safe_point_exact_replace_v1",
+            "redaction_profile": "redacted_refs_only",
+            "restore_transaction_id": "TEST_ONLY:restore_transaction_id:284f1bc9eb79411d",
+            "schema_id": "pm.storage_value.executor_filesafe_invocation_binding.v2",
+            "schema_version": "2.0.0",
+            "source_location_ref": "TEST_ONLY:source_location_ref:88ba94d3683442ef",
+            "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee"
+          }
+        },
+        "complete_original_origins": [
+          {
+            "selector": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "executor_filesafe_journal_origin:OWMyMGEwMDAtM2Q2YS00NjE1LWFjMWYtMGJkN2Y1ZDYxZmVl:63d815614d9adbb730191f32199d1d5d166c99d8aa5578dfaa54856644d34f8f",
+              "physical_sha256": "a6d145bf448efe76ccbcc22facd938816a4d6ed23eb460520a11fe05ff030015",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee"
+            },
+            "value": {
+              "binding": {
+                "codec": "messagepack_canonical",
+                "family_id": "executor_filesafe_invocation_binding",
+                "physical_key": "executor_filesafe_invocation_binding:OWMyMGEwMDAtM2Q2YS00NjE1LWFjMWYtMGJkN2Y1ZDYxZmVl:66163fb0c7727093cfea572f1d37f0736d47bf89907794dd0e0c041d3d43e0d6",
+                "physical_sha256": "68e6d49c950620070aff314fed503389490266b771d936ec3949757edc29c688",
+                "schema_id": "pm.storage_value.executor_filesafe_invocation_binding.v2",
+                "schema_version": "2.0.0",
+                "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee"
+              },
+              "issued_at_utc": "2026-11-20T17:06:43.192Z",
+              "issued_journal_commitment": {
+                "codec": "messagepack_canonical",
+                "family_id": "safe_point_restore_transaction",
+                "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                "kind": "historical_issued_value_commitment",
+                "physical_key": "x",
+                "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee"
+              },
+              "journal_link_fields": {
+                "result_event_ref": null,
+                "updated_at_utc": "2026-11-20T17:06:43.191Z"
+              },
+              "original_equality": "not_a_resolved_equality",
+              "original_owner_epoch": 0,
+              "original_owner_ref": "TEST_ONLY:original_owner_ref:3326ce99e17d463d",
+              "original_write_operation_id": "TEST_ONLY:original_write_operation_id:224b31c1bc254896",
+              "original_write_transaction_id": "TEST_ONLY:original_write_transaction_id:29c7b4e77da14022",
+              "prior_journal_commitment": null,
+              "prior_origin": null,
+              "project_id": "TEST_ONLY-project-3e38a6b01c96",
+              "redaction_profile": "redacted_refs_only",
+              "resolved_original_result": null,
+              "restore_transaction_id": "TEST_ONLY:restore_transaction_id:a7bc210a4c3640b6",
+              "revision": 1,
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee",
+              "terminal_core_sha256": null,
+              "write_kind": "prepare"
+            }
+          }
+        ],
+        "original_terminal_journal": {
+          "selector": {
+            "codec": "messagepack_canonical",
+            "family_id": "safe_point_restore_transaction",
+            "physical_key": "safe_point_restore_transaction:OWMyMGEwMDAtM2Q2YS00NjE1LWFjMWYtMGJkN2Y1ZDYxZmVl:2e83c6d90c5d6f004cec1cc3c0318ca2a68f069702dc4060b6845dcc28447189",
+            "physical_sha256": "ef839e89c26eccad4a7a2884323fba029f19854fd111fd8bd604188362dc99c4",
+            "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+            "schema_version": "1.0.0",
+            "storage_instance_id": "9c20a000-3d6a-4615-ac1f-0bd7f5d61fee"
+          },
+          "value": {
+            "attempt_id": "TEST_ONLY:attempt_id:b3d40b539d2d4aa4",
+            "canonical_safe_point_key": "x",
+            "conflict_reason_code": null,
+            "hold_refs": [
+              "x"
+            ],
+            "mutation_lease_ref": "TEST_ONLY:mutation_lease_ref:780301332070489d",
+            "node_id": "TEST_ONLY:node_id:8f28707d941143a3",
+            "operation_cursor": 0,
+            "operations": [],
+            "phase": "committed",
+            "post_restore_state_sha256": null,
+            "pre_restore_manifest_ref": "test_only_filesafe_workspace:OWMyMGEwMDAtM2Q2YS00NjE1LWFjMWYtMGJkN2Y1ZDYxZmVl:4b235e504a4c010c06da3a6520b958d47f03bd8182c4001c1a9b2ea2c70e608e",
+            "pre_restore_manifest_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "pre_restore_state_sha256": "a348731f2e4d8e123e0d0ba3e47bd9cb78c4e8dbef0162ee830c1372ba109800",
+            "project_id": "TEST_ONLY-project-3e38a6b01c96",
+            "recovered_after_restart": false,
+            "redaction_profile": "no_secrets",
+            "restart_count": 0,
+            "restore_outcome": "restore_skipped",
+            "restore_transaction_id": "TEST_ONLY:op:filesafe:d5eb3ed41c5d",
+            "result_event_ref": null,
+            "run_id": "TEST_ONLY:run_id:4df3aeeab290435d",
+            "safe_point_id": "TEST_ONLY:safe_point_id:807f506bc5d64ee5",
+            "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+            "schema_version": "1.0.0",
+            "started_at_utc": "2026-11-20T17:06:43.189Z",
+            "target_manifest_ref": "test_only_filesafe_workspace:OWMyMGEwMDAtM2Q2YS00NjE1LWFjMWYtMGJkN2Y1ZDYxZmVl:4b235e504a4c010c06da3a6520b958d47f03bd8182c4001c1a9b2ea2c70e608e",
+            "target_manifest_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+            "target_state_sha256": "c0eb80593772ae4b66868909699854358f265977541393a429e481be7c52a5d1",
+            "updated_at_utc": "2026-11-20T17:06:43.190Z"
+          }
+        }
+      }
+    ]
+  },
+  "sites": [
+    [
+      "scripts/pm_goal_dg_int_schema_cache.py",
+      31
+    ],
+    [
+      "scripts/pm_goal_dg_r_readers.py",
+      154
+    ]
+  ],
+  "source": "34f212d3fbcc8051ce2922d1de9dd75714ae361a"
+}

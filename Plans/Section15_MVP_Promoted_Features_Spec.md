@@ -685,7 +685,7 @@ Rules:
 - Capability diagnostics show shell/profile identity when known, capability tier, which shell-integration features are authoritative versus unavailable/degraded, and when PM has fallen back from rich command metadata to plain transcript behavior.
 - Diagnostic logging records terminal subsystem events and failures as metadata, state transitions, failure codes, and performance counters; it must not indiscriminately capture or duplicate full shell content. Transcript capture remains a terminal review feature, not a blanket debug log sink, and logging boundaries distinguish metadata-only artifacts from transcript-including artifacts without unexpectedly exporting sensitive command content/environment data unless the user explicitly chooses that artifact class.
 - Terminal performance instrumentation includes PTY input/output throughput indicators, parser/buffer latency, frame/render timing, dropped/deferred paint counters, search latency on large retained transcript, and transcript flush/persist latency.
-- PM can produce a terminal diagnostic bundle per pane/session/project on request. Bundle contents may include structured lifecycle/error events, renderer/capability/settings state, settings relevant to terminal behavior, and optional transcript excerpts only when explicitly included; support bundles clearly label transcript content as absent, partial, or included.
+- PM can produce a terminal diagnostic bundle per pane/session/project on request. Bundle contents may include structured lifecycle/error events, renderer/capability/settings state, settings relevant to terminal behavior, and optional transcript excerpts only when explicitly included. Support bundles clearly label transcript content as absent, partial, or included. The terminal record wire contract below bounds the history available to diagnostics. Terminal diagnostic log events written to disk and written bundles follow FileSafe's redaction and trace persistence steps (`Plans/FileSafe.md#section=Trace persistence limits and sampling rule (2026-11-25)`). For either write outside any run the required envelope field `run_id` is null. Terminal log events use `quota_owner_kind = terminal_session` and `quota_owner_id` equal to the exact terminal session ID. Bundle writes use `quota_owner_kind = diagnostic_bundle` and `quota_owner_id` equal to the exact bundle request ID.
 - Rollback/snapshot boundary is explicit: PM may snapshot terminal metadata, layout state, settings, and retained transcript artifacts, but PM must not imply that it can roll back arbitrary live PTY runtime/process state after commands already executed. Recovery actions are restart/rerun/reopen/restore-structure, not "undo terminal execution".
 - Repeated identical failures follow the alerting `/noise` rule and are coalesced in diagnostics rather than spamming banners/toasts/logs, while persistent degraded conditions remain inspectable without repeatedly interrupting the user.
 - All major terminal subsystems emit typed events at state-transition boundaries, and diagnostic state is queryable per pane/session and project-wide without scraping rendered UI text.
@@ -777,7 +777,7 @@ Core rules:
 - The default browser bundle profile is a `mostly-full` CEF runtime with modest trimming; aggressively pruned bundles that sacrifice browser capabilities/features are nondefault and must surface requested/effective capability degradation before use.
 - Legacy runtime comparison inputs `Wry`, `WebView2`, `WKWebView`, and `WebKitGTK` are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure `under-specified`, because degraded states are advertised through requested/effective browser capability fields, `runtime_unavailable`, and `/capability-degradation` before a feature is offered.
 - Lightweight `site-reader` and `/web-fetch/read-webpage` flows remain web/read paths; they are distinct from the full interactive built-in browser, visible `automation_session`, and the protected human-only AuthBrowserSession surface.
-- The canonical browser action table schema uses these columns at minimum: `action_id`, `bucket`, `tier` (`guaranteed_everyday` or `advanced_debug_testing`), `permission_layer`, `allowed_session_classes`, `requested_capabilities`, `artifacts_emitted`, `degradation_or_blocking_behavior`, and `user_visible_entry_points`.
+- The canonical browser action table schema uses these columns at minimum: `action_id`, `bucket`, `tier` (`guaranteed_everyday` or `advanced_debug_testing`), `permission_layer`, `allowed_session_classes`, `requested_capabilities`, `artifacts_emitted`, `degradation_or_blocking_behavior`, and `user_visible_entry_points`. Every `cmd.browser.*` command takes its `tier` from the tier rule under "Browser Action Table And Timeouts" (DL-2604), whether or not it has a row in that table.
 - Browser runtime output MUST separate structured page snapshots for actioning from screenshots for evidence/visual output. Action results may expose typed browser-output sections such as `Open tabs`, `Page state`, `Snapshot`, `New console messages`, `Modal state`, and `Downloads` rather than one flat opaque blob.
 
 Fields:
@@ -7301,6 +7301,8 @@ acceptance_criteria:
 - SMPFS-100 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- Every catalogued cmd.browser.* command gets exactly one tier from the tier rule under Browser Action Table And Timeouts
+  (DL-2604), and every explicit tier in that action table agrees with the rule.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -8930,7 +8932,8 @@ canonical_text: >-
   transmission medium and every delete selector), DCS sixel, OSC 1337 iTerm2 images (single and multipart), the kitty
   keyboard protocol's CSI u (SMPFS-158), OSC 7, OSC 9, OSC 777, OSC 99, BEL and Puppet Master's secret-carrying
   shell-integration records, each split at every byte boundary (SMPFS-130), with forged marks that lack the terminal's
-  secret as negative cases (SMPFS-181, SMPFS-183).
+  secret as negative cases (SMPFS-181, SMPFS-183). The oversized negative fixtures cover every byte boundary in a
+  single byte-at-a-time replay alongside whole and selected two-read replays, as specified in Terminal protocol fixture rows.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -9945,17 +9948,53 @@ This addendum is canonical promoted-feature/browser-terminal spec text for defer
 
 Repairs rows `sfk-756cb4154b9e486d8a6d74db`, `sfk-0a996093252d3d35aa59e6f2`, `sfk-ed92df2325332306b2463b50`, and `sfk-47f354a1222d2abb62b4a9a9`.
 
-| action_id | bucket | default_timeout_ms | output fields |
-| --- | --- | ---: | --- |
-| `cmd.browser.share_with_agent` | user-mediated-share | 30000 | `share_receipt_id`, `target_agent_id`, `artifact_refs[]` |
-| `cmd.browser.run_code` | page-evaluation | 5000 | `evaluation_id`, `stdout?`, `result_ref?`, `error_code?` |
-| `cmd.browser.evaluate` | page-evaluation | 5000 | `evaluation_id`, `json_result_ref?`, `dom_scope_ref?`, `error_code?` |
-| `cmd.browser.open_devtools` | diagnostic | 30000 | `devtools_session_id`, `boundary_ref`, `opened_at_utc` |
-| `cmd.browser.capture_artifact` | artifact | 30000 | `artifact_manifest_id`, `artifact_refs[]`, `retention_until_utc` |
+| action_id | bucket | default_timeout_ms | output fields | tier | permission_layer | allowed_session_classes | requested_capabilities | artifacts_emitted | degradation_or_blocking_behavior | user_visible_entry_points |
+| --- | --- | ---: | --- | --- | --- | --- | --- | --- | --- | --- |
+| `cmd.browser.share_with_agent` | user-mediated-share | 30000 | `share_receipt_id`, `target_agent_id`, `artifact_refs[]` | `guaranteed_everyday` | `always_allowed` (explicit share action) | `workspace_preview`, `automation_session`; never `AuthBrowserSession` | none | none: share state only, so `artifact_refs[]` stays empty unless a separate explicit capture command ran | `runtime_unavailable`; `session_class_restricted` for a protected session; until the browser owner settles its request the handler refuses with `handler_unavailable` (`#SMPFS-328`, DL-341) | browser chrome, assistant chat |
+| `cmd.browser.run_code` | page-evaluation | 5000 | `evaluation_id`, `stdout?`, `result_ref?`, `error_code?` | `advanced_debug_testing` | that of `cmd.browser.program.run`, which it normalizes to | `workspace_preview`, `automation_session`; never `AuthBrowserSession` | `capability_profile: advanced` | the Browser Program receipt and capture refs of the normalized run | input that does not compile losslessly to admitted named actions fails typed with no effect | none: compatibility input only, excluded from production wiring |
+| `cmd.browser.evaluate` | page-evaluation | 5000 | `evaluation_id`, `json_result_ref?`, `dom_scope_ref?`, `error_code?` | `advanced_debug_testing` | that of `cmd.browser.page.evaluate`, which it normalizes to | `workspace_preview`, `automation_session`; never `AuthBrowserSession` | none beyond `cmd.browser.page.evaluate` | none | as `cmd.browser.run_code` | none: compatibility input only, excluded from production wiring |
+| `cmd.browser.open_devtools` | diagnostic | 30000 | `devtools_session_id`, `boundary_ref`, `opened_at_utc` | `advanced_debug_testing` | `always_allowed` under `devtools_policy_allows` | ordinary sessions; never `AuthBrowserSession` | DevTools | none (layout/UI state only) | `runtime_unavailable`; `session_class_restricted` for a protected session; policy denial returns a typed permission result; the request is settled (`BrowserDevToolsOpenRequest` → `BrowserDevToolsOpenResultV1`, DL-2602), so the DL-341 refusal no longer applies; `handler_unavailable` stands only until native evidence exists (`#SMPFS-328`) | browser chrome, command palette |
+| `cmd.browser.capture_artifact` | artifact | 30000 | `artifact_manifest_id`, `artifact_refs[]`, `retention_until_utc` | `guaranteed_everyday` (screenshot capture; trace and video capture have no catalogued command yet, see below) | `always_allowed` | `workspace_preview`, `automation_session`; a protected session returns an explicit exclusion, never an empty capture | screenshot capture | `BrowserArtifactManifest` and its `artifact_refs[]` | `runtime_unavailable`; `session_class_restricted` | none: no catalog or wiring row reaches it; see `BrowserArtifactManifest.action_id` for the live producers |
+| `cmd.browser.capture.full_to_chat` | artifact | 30000 | `BrowserActionResultV2` (`operation_id`, `scope`, `workspace_id`, `session_id`, `page_id`, `page_generation`, `status`, `owner_segment_receipt_ref`, `reason_ref`, `return_context_ref`), bound in `Plans/Commands_System.md` and `Plans/UI_Command_Catalog.md` | `guaranteed_everyday` | `capture_permitted` (the catalog precondition) | `workspace_preview`, `automation_session`; never `AuthBrowserSession` (`!protected_auth_browser`) | screenshot capture | `BrowserArtifactManifest` with one `browser_screenshot` item, plus the isolated payload sent to the current composer destination | `runtime_unavailable`; a protected session returns an explicit exclusion, never an empty capture; `handler_unavailable` until source-hashed native evidence exists | browser chrome capture chip (`#SMPFS-089`) |
+| `cmd.browser.capture.region_to_chat` | artifact | 30000 | as `cmd.browser.capture.full_to_chat` | `guaranteed_everyday` | `capture_permitted` (the catalog precondition) | `workspace_preview`, `automation_session`; never `AuthBrowserSession` (`!protected_auth_browser`) | screenshot capture of a user-selected region | as `cmd.browser.capture.full_to_chat` | as `cmd.browser.capture.full_to_chat` | browser chrome capture chip (`#SMPFS-089`) |
 
-The former `browser_run_code` and `browser_evaluate` tokens are compatibility aliases for `cmd.browser.run_code` and `cmd.browser.evaluate`. Timeout constants are disambiguated as follows: `5000ms` applies to page-evaluation commands; `30000ms` applies to user-mediated share, diagnostic, artifact, and open/wait actions; `30s` is display copy for `30000ms`.
+The two `cmd.browser.capture.*_to_chat` rows are the live capture-chip actions. The other live screenshot producers are the four `Plans/UI_Command_Catalog.md` §2.6A rows named under `BrowserArtifactManifest.action_id` below. `cmd.browser.run_code`, `cmd.browser.evaluate` and `cmd.browser.capture_artifact` have no production entry point (the first two are compatibility input only; no catalog or wiring row reaches the third). Trace and video capture (`#SMPFS-091`'s named-action taxonomy) have no catalogued command; they are `advanced_debug_testing`, as this table's capture row said before 2026-11-26, and such a command joins this table before it may produce a manifest. The former `browser_run_code` and `browser_evaluate` tokens are compatibility aliases for `cmd.browser.run_code` and `cmd.browser.evaluate`. Timeout constants are disambiguated as follows: `5000ms` applies to page-evaluation commands; `30000ms` applies to user-mediated share, diagnostic, artifact, and open/wait actions; `30s` is display copy for `30000ms`.
+
+**Tier rule for every browser command (2026-11-26, DL-2604).** Every `cmd.browser.*` command in `Plans/UI_Command_Catalog.md` or this spec takes its `tier` from one rule, by what the command does, instead of from a row of its own in the table above. The rule has four effect levels. A command takes the highest level any of its effects reaches, in this order, highest first:
+
+| Effect level | A command is at this level when it | `tier` |
+| --- | --- | --- |
+| `runs_code_or_debugs` | evaluates code in the page, runs or resumes a Browser Program, or opens or operates DevTools (the `page-evaluation` and `diagnostic` buckets above) | `advanced_debug_testing` |
+| `sends_data_out` | delivers page content (a selection, element, component, screenshot or the session itself) to a destination other than its own caller's result: an agent thread (share with agent), the chat composer or a chat message (capture or add to chat), or anywhere outside Puppet Master | `guaranteed_everyday` |
+| `changes_page_or_session` | changes the page, a browser tab, page or workspace, the browser session or its agent-control state, the browser layout, or a browser setting | `guaranteed_everyday` |
+| `reads_page_only` | reads the page or browser state and changes nothing; it may draw a PM overlay over the page (a picker highlight) and record what it read as PM evidence for its caller (a receipt or a `BrowserArtifactManifest`) | `guaranteed_everyday` |
+
+The rows of the table above keep their explicit `tier`, and each agrees with the rule: `cmd.browser.share_with_agent`, `cmd.browser.capture.full_to_chat` and `cmd.browser.capture.region_to_chat` are `sends_data_out`; `cmd.browser.capture_artifact` is `reads_page_only`; `cmd.browser.run_code`, `cmd.browser.evaluate` and `cmd.browser.open_devtools` are `runs_code_or_debugs`. The rule cannot classify three commands by itself, because by effect alone they would be `changes_page_or_session` (pause, cancel) or `reads_page_only` (inspect), yet they act only on a Browser Program, which only an advanced run creates: `cmd.browser.program.pause`, `cmd.browser.program.cancel` and `cmd.browser.program.inspect` are `advanced_debug_testing`, with `cmd.browser.program.run` and `cmd.browser.program.resume`. Trace and video capture keep `advanced_debug_testing` as stated above. An alias takes its canonical command's level (`cmd.browser.devtools.open` as `cmd.browser.open_devtools`). `cmd.browser.component.recapture` is not a command (BSTALE-004) and no `cmd.browser.auth.*` command exists, so neither is classified. A new `cmd.browser.*` command takes its level from this rule when it is catalogued; it joins the table above only when it also needs its own timeout, output or artifact contract.
+
+Applying the rule to the catalogued commands on 2026-11-26 gives:
+- `runs_code_or_debugs` (`advanced_debug_testing`): `cmd.browser.page.evaluate`, `cmd.browser.program.run`, `cmd.browser.program.resume`, `cmd.browser.run_code`, `cmd.browser.evaluate`, `cmd.browser.open_devtools`, `cmd.browser.devtools.open`, `cmd.browser.toggle_devtools_dock`; by the named exception, `cmd.browser.program.pause`, `cmd.browser.program.cancel`, `cmd.browser.program.inspect`.
+- `sends_data_out` (`guaranteed_everyday`): `cmd.browser.share_with_agent`, `cmd.browser.pick_element_for_chat`, `cmd.browser.add_selection_to_chat`, `cmd.browser.add_selection_screenshot_to_chat`, `cmd.browser.add_selection_full_screenshot_to_chat`, `cmd.browser.add_screenshot_to_chat`, `cmd.browser.add_full_screenshot_to_chat`, `cmd.browser.capture.full_to_chat`, `cmd.browser.capture.region_to_chat`, `cmd.browser.component.send_now`, `cmd.browser.component.add_to_composer`, `cmd.browser.component.insert_at_cursor`.
+- `changes_page_or_session` (`guaranteed_everyday`): `cmd.browser.open_workspace_preview`, `cmd.browser.open_detached_preview`, `cmd.browser.focus_browser_tab`, `cmd.browser.detach_browser_tab`, `cmd.browser.navigate`, `cmd.browser.reload`, `cmd.browser.revoke_share_with_agent`, `cmd.browser.take_over`, `cmd.browser.pause_agent`, `cmd.browser.let_agent_continue`, `cmd.browser.stop_agent_keep_browser`, `cmd.browser.promote_to_normal_browsing`, `cmd.browser.reopen`, `cmd.browser.retry`, `cmd.browser.keep_closed`, `cmd.browser.page.create`, `cmd.browser.page.activate`, `cmd.browser.page.close`, `cmd.browser.workspace.create`, `cmd.browser.workspace.close`, `cmd.browser.workspace.reset`, `cmd.browser.component.mode.set_default`.
+- `reads_page_only` (`guaranteed_everyday`): `cmd.browser.page.representation.capture`, `cmd.browser.page.representation.delta`, `cmd.browser.page.representation.query`, `cmd.browser.component.pick`, `cmd.browser.capture_artifact`.
+
+The tier says which feature set a command belongs to; it grants nothing. Every command still passes its own catalog precondition, `permission_layer` and session-class rules, and none applies to `AuthBrowserSession`.
 
 `BrowserArtifactManifest` fields are `artifact_manifest_id`, `browser_session_id`, `action_id`, `artifact_refs[]`, `retention_class`, `created_at_utc`, `redaction_profile_id`, and `schema_version`.
+
+Typed 2026-11-25 (C-FIX79 fix round, against `Plans/gui_automation_manifest.schema.json`, because `browser screenshots, traces, and combined selection+screenshot captures use the same artifact pipeline as GUI automation, including naming, retention, manifest shape`): `BrowserArtifactManifest` is one JSON object with exactly these eight fields, all required, unknown fields refused. It is the per-action browser view of the GUI automation manifest, not a second manifest shape: each `artifact_refs[]` entry is one artifact item of that schema.
+
+| Field | Type |
+| --- | --- |
+| `artifact_manifest_id` | string, 1 to 256 characters, unique per manifest |
+| `browser_session_id` | string, 1 to 256 characters: the ordinary `BrowserSession` the action ran in (never an `AuthBrowserSession`); every `artifact_refs[]` item carries the same value in its `browser_session_id` |
+| `action_id` | the producing command's exact ID. Live capture-chip producers: `cmd.browser.capture.full_to_chat`, `cmd.browser.capture.region_to_chat`. Live §2.6A catalog producers: `cmd.browser.add_selection_screenshot_to_chat`, `cmd.browser.add_selection_full_screenshot_to_chat`, `cmd.browser.add_screenshot_to_chat`, `cmd.browser.add_full_screenshot_to_chat`. `cmd.browser.capture_artifact` is allowed only for compatibility input. Any other producer requires a row in the action table above before it can produce a manifest |
+| `artifact_refs[]` | array of at least one item, each validating against `Plans/gui_automation_manifest.schema.json#/properties/artifacts/items` (`artifact_id`, `kind`, `relative_path`, `mime_type`, `sha256`, `size_bytes`, and its optional fields), with `kind` one of `browser_screenshot`, `browser_pdf`, `trace`, `recording`, `console`, `network`; that schema's rule that `browser_screenshot`, `browser_pdf`, `console` and `network` items carry `redaction_status` (`not_needed`, `applied` or `blocked`) applies. A protected session returns the explicit exclusion above, never a manifest with an empty array |
+| `retention_class` | string, 1 to 128 characters, naming a class of Testing's run-evidence retention (the retention row of `Plans/Settings_System.md`'s Built-in browser line); Section 15 adds no retention values of its own |
+| `created_at_utc` | RFC 3339 date-time in UTC, as `created_at_utc` in that schema |
+| `redaction_profile_id` | string, 1 to 256 characters, naming the redaction profile applied (`safety.protection.screenshot-redaction`) |
+| `schema_version` | the constant `"1.0.0"` |
+
+`cmd.browser.capture_artifact`'s `retention_until_utc` is an RFC 3339 UTC instant, or `null` while the retention class sets no limit (the shipped `evidence.retention_days: null` retains everything, `Plans/MiscPlan.md`). Two things stay with the testing owner (`Plans/Automated_Testing_System.md`, held while stream E edits it) and are follow-ups, not settled here: the numeric retention values per `retention_class` with the rule that derives `retention_until_utc` from them, and the naming and storage template (`relative_path` root) for interactive browser-session captures made outside a GUI-automation `run_id`.
 
 ### Tab-Cap Policy And Restore Identity
 
@@ -9999,11 +10038,11 @@ Legacy `usage_source` values `provider_reported`, `estimated`, `corrected`, and 
 
 Repairs rows `sfk-c5ad7b33fa51846ef1c86c49` and `sfk-e9cc3bc253470d324d189932`.
 
-Terminal VT/xterm/OSC fixtures are grouped by `fixture_id`, `protocol_family`, `input_bytes_ref`, `expected_screen_hash`, `expected_event_refs[]`, and `negative_case`.
+Terminal VT/xterm/OSC fixtures are grouped by `fixture_id`, `protocol_family`, `input_bytes_ref`, `expected_screen_hash`, `expected_event_refs[]`, and `negative_case`. The fixture rows themselves, with their replay byte streams and expected results, are `### Terminal protocol fixture rows` in the 2026-11-25 addendum at the end of this document.
 
 Required record minima:
 
-- `TerminalIngestionReceipt`: `receipt_id`, `terminal_session_id`, `byte_count`, `protocol_family`, `accepted`, `rejected_reason_code?`, `created_at_utc`.
+- `TerminalIngestionReceipt`: `receipt_id`, `terminal_session_id`, `stage`, `byte_count`, `protocol_family`, `accepted`, `rejected_reason_code?`, `transcript_chunk_refs[]?`, `created_at_utc`.
 - `TerminalBackpressureState`: `terminal_session_id`, `queue_depth`, `dropped_frame_count`, `throttle_state`, `last_transition_at_utc`.
 - `TerminalRenderFrame`: `frame_id`, `terminal_session_id`, `dirty_region_refs[]`, `screen_hash`, `rendered_at_utc`.
 - `TerminalInputEvent`: `event_id`, `terminal_session_id`, `input_kind`, `payload_ref`, `permission_snapshot_id?`, `created_at_utc`.
@@ -10015,7 +10054,7 @@ Required record minima:
 - `TerminalAccessibilitySnapshot`: `snapshot_id`, `terminal_session_id`, `screen_reader_text_ref`, `focus_cell`, `created_at_utc`.
 - `TerminalDiagnosticsEnvelope`: `diagnostic_id`, `terminal_session_id`, `category`, `severity`, `message_ref`, `created_at_utc`.
 
-`TerminalScrollbackAnchor` is a record minimum, not proof of retained content or complete output. Its resolution must satisfy the Terminal output read semantics above, including source identity, whole-range backing validity, mutation handling, and logical-text preservation across ordinary reflow.
+`TerminalScrollbackAnchor` is a record minimum, not proof of retained content or complete output. Its resolution must satisfy the Terminal output read semantics above, including source identity, whole-range backing validity, mutation handling, and logical-text preservation across ordinary reflow. Each of these eleven records has the closed wire shape, field types and owner given in `### Terminal record wire contract` in the 2026-11-25 addendum at the end of this document.
 
 ### Browser Runtime Packaging Boundary
 
@@ -10041,6 +10080,7 @@ unblocks: []
 acceptance_criteria:
 - A fast-output fixture records byte counts and no silent loss.
 - If retention cap prunes, transcript chunk references prove what remains and what was pruned.
+- The save's authoritative chunk inventory proves what remains, and prune receipts name what that operation removed. Diagnostic history eviction follows the terminal record wire contract below and keeps loss accounting available in bounded counters.
 - UI thread never blocks on raw PTY ingestion.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
@@ -10431,12 +10471,15 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - No control sequence bytes leak to visible grid when split across reads
+- Cover all byte boundaries of the oversized negative fixtures in one byte-at-a-time replay per fixture alongside the whole and selected two-read replays in Terminal protocol fixture rows.
+- The intentional plain-text rendering in SMPFS-183 occurs only after the complete unauthenticated sequence is recognized and matches the unsplit replay.
 - Synchronized update state closes correctly after arbitrary chunking
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
 - No control sequence bytes leak to visible grid when split across reads
+- The intentional plain-text rendering in SMPFS-183 occurs only after the complete unauthenticated sequence is recognized and matches the unsplit replay.
 - Synchronized update state closes correctly after arbitrary chunking
 risk_class: p1_terminal_runtime_hardening
 reasoning_tier: standard
@@ -13541,10 +13584,11 @@ canonical_text: >-
   resolved path is checked before opening, and `/proc`, `/sys` and `/dev` (except `/dev/shm`) are refused;
   symlinks are followed and loops fail; every read failure of any file medium (missing, unreadable, not regular,
   sensitive, shorter than claimed) answers exactly `EBADF:Failed to read image file`; temporary files are deleted
-  only inside `/tmp` or `/dev/shm` and only when the path contains `tty-graphics-protocol`; shared memory is
-  unlinked after reading. Remote (SSH) sessions and commands an agent typed may use direct transmission only, and
-  their file, temporary-file and shared-memory media get the same `EBADF` answer. Every error reply is a fixed
-  string that never echoes anything the program sent: `EINVAL:Invalid graphics command`, `ENOENT:Image not
+  only inside `/tmp` or `/dev/shm` and only when the path contains `tty-graphics-protocol`. On macOS, Linux and WSL,
+  shared memory is unlinked after reading. On native Windows the terminal unmaps its views and closes its handles
+  to the named file mapping after reading. Remote (SSH) sessions and commands an agent typed may use direct
+  transmission only, and their file, temporary-file and shared-memory media get the same `EBADF` answer. Every
+  error message is fixed. The kitty reply wraps the message in protocol delimiters and includes any required numeric correlation fields such as `i`, serialized in decimal from validated identifiers. Replies never copy raw program text, paths or image data. Other fixed messages are `EINVAL:Invalid graphics command`, `ENOENT:Image not
   found`, `ENODATA:Insufficient image data`, `EFBIG:Too much data`, `ENOSPC:Storage quota exceeded`,
   `ENOMEM:Image too large`, `EBADPNG:Image could not be decoded`, `EILSEQ:Continuation for an upload that is not in
   progress`, `ETOODEEP`, `ECYCLE` and `ENOPARENT`. A program that sends too much is refused; it never freezes the
@@ -13593,9 +13637,9 @@ acceptance_criteria:
 - "The kitty graphics protocol with every listed feature, sixel and iTerm2 inline images all ship in the first terminal release; none is phased or left behind an off flag."
 - "Every limit holds at its stated number; a sequence over its cap is dropped and kitty gets EFBIG; an over-quota image store evicts images without placements, then transient images, then the least recently used."
 - "A screen buffer keeps at most 4,096 placements, and the 4,097th drops the oldest placement that no other placement hangs from; no placement covers more than 10,000 cells."
-- "Every file-medium read failure answers exactly EBADF:Failed to read image file; /proc, /sys and /dev (except /dev/shm) are refused; symlink loops fail; temporary files are deleted only inside /tmp or /dev/shm and only with tty-graphics-protocol in the path; shared memory is unlinked after reading."
+- "Every file-medium read failure answers exactly EBADF:Failed to read image file; /proc, /sys and /dev (except /dev/shm) are refused; symlink loops fail; temporary files are deleted only inside /tmp or /dev/shm and only with tty-graphics-protocol in the path. After reading shared memory, unlink it on macOS, Linux and WSL. On native Windows unmap all terminal views and close all terminal handles to the named file mapping."
 - "A remote (SSH) session and a command an agent typed can send images only by direct transmission; their file, temporary-file and shared-memory media get EBADF."
-- "Every error reply is one of the fixed strings and never echoes program data."
+- "The error message matches its fixed string exactly. A kitty reply carries only the validated numeric correlation fields required by the protocol wrapper and never echoes raw program bytes."
 - "Output after an image waits for it; images anchor, scroll, reflow and clip with their cells; text written over sixel and iTerm2 images cuts them out; tmux passthrough works through Unicode placeholders."
 - "Saved scrollback keeps images within the SP-332 quota; text never gives way to images; an evicted image leaves its placeholder label; a restored placeholder id never resolves to an image of the new session; saved images are never backed up, exported or synced."
 - "The accessible buffer and agent reads use [image W×H px], [image] and the placeholder label and never return image bytes; under Reduced Motion an animated image holds its first frame; while the terminal is hidden it pauses."
@@ -13704,12 +13748,13 @@ canonical_text: >-
   prompt; <agent> is waiting." with Type it, which focuses the terminal. While an agent drives, the row says
   "<agent> is driving this terminal · step N of M · <label>" with Take over (the human takes the lease), Interrupt
   (SIGINT to the foreground job) and Stop (ends the agent's run and returns the lease to the human); after a
-  take-over it says "You took over. <agent> is paused and has been told." with Hand back and Stop <agent>. Every
-  command record carries `by`, the user or the agent by name, written through shell-integration records that only
-  carry weight with that terminal's secret (SMPFS-183); a mark without the secret is plain output and never
-  attributes a command. Agent reads return rendered text with a read state (`final` for a finished command, and the
-  known-empty, complete-so-far, partial and unavailable states of this document's terminal output read
-  semantics), never raw bytes and never images (SMPFS-181). Input protection (SMPFS-165, DL-037, DL-038) outranks
+  take-over it says "You took over. <agent> is paused and has been told." with Hand back and Stop <agent>. A
+  command record carries `by` as `user` or `agent:<name>` when authenticated, and may omit it or use null without
+  trusted attribution (CV-362). Only a shell-integration record with that terminal's secret sets attribution (SMPFS-183).
+  After the seal, amend Plans/Automated_Testing_System.md#ATS-076 to test the attributed, absent and null cases under CV-362.
+  An unauthenticated mark is plain output. Agent reads return rendered text with a read state (`final` for a
+  finished command, and the known-empty, complete-so-far, partial and unavailable states of this document's
+  terminal output read semantics), never raw bytes and never images (SMPFS-181). Input protection (SMPFS-165, DL-037, DL-038) outranks
   every grant: while it is on, user and agent input are both blocked and the agent receives an explicit blocked
   result. Back Seat Driver never drives a terminal, reads a terminal's screen or saved scrollback, or holds a grant
   (`Plans/Back_Seat_Driver.md#BSD-011`).
@@ -13742,7 +13787,7 @@ acceptance_criteria:
 - "Every command an agent types under any grant still gets its own Tools policy decision and approval over that exact invocation."
 - "No text in the permission row, its hover tags or the Agent input menu says or implies that commands are pre-approved."
 - "During a secret prompt every agent write is refused as secret_input with zero bytes reaching the PTY; the padlock cursor and the Password needed row show."
-- "Every command record carries by; a shell-integration mark or record without the terminal's secret creates no command boundary and no attribution."
+- "Every command record uses CV-362's by field, absent or null without trusted attribution; a shell-integration mark or record without the terminal's secret creates no command boundary and no attribution."
 - "Agent reads return rendered text with a read state, never raw bytes or image data."
 - "Interrupt sends SIGINT to the foreground job; Stop ends the agent's run and returns the writer lease to the human."
 - "Input protection blocks agent input whatever grant is held, with an explicit blocked result."
@@ -13824,8 +13869,15 @@ canonical_text: >-
   (concept lineage: `OSC 133;...;pmn=<secret>`, `OSC 6973;<secret>;E;<base64 command line>` and
   `OSC 6973;<secret>;W;<who>`; the native sequences are the engine's choice). A mark or record without the right secret is plain output, never a
   command boundary and never attribution; the confidence tiers stay SMPFS-021 and SMPFS-129. Each command record
-  (the command block of SMPFS-022) holds `by` (the user or the agent by name), the exit status, the folder it ran
-  in, and its start and end times, and records persist with saved scrollback (`Plans/storage-plan.md#SP-332`).
+  (the command block of SMPFS-022) holds `by` (the user or the agent by name when attributed by an authenticated
+  record, absent or null otherwise under CV-362), the exit status, the folder it ran in, and its start and end
+  times, and records persist with saved scrollback (`Plans/storage-plan.md#SP-332`).
+  Draw a complete unauthenticated shell-integration mark (including an unverified OSC 633 mark) or private record
+  as inert text once the parser recognizes it. Preserve printable ASCII bytes, double literal backslashes and
+  represent each other byte as a literal backslash, lowercase x and two uppercase hexadecimal digits. Append
+  that text through the ordinary text writer
+  without interpreting its contents as controls, bell, command line or attribution. A valid mark or record remains
+  metadata. SMPFS-130 still forbids exposing incomplete controls at read boundaries.
   Links: OSC 8 hyperlinks are program output, so link text is never trusted as the target. The hover tag shows the
   real target before any open; Ctrl+click (Cmd+click) opens and a plain click selects text. `file://` targets and
   detected `path:line:col` references pass FileSafe's path checks and open through the one opening module
@@ -13891,7 +13943,7 @@ unblocks:
 - ATS-076
 acceptance_criteria:
 - "OSC 133 marks and the PM-private command-line and who-typed records count only with the terminal session's secret; the same sequences without it are drawn as output and change no command block."
-- "Every command record holds by, exit status, folder, start and end, and survives a restore with saved scrollback."
+- "Every command record holds exit status, folder, start, end and CV-362's by when authenticated, and survives a restore with saved scrollback."
 - "OSC 8 link text never replaces the target: the hover tag shows the target, only Ctrl+click (Cmd+click) or a menu action opens it, file:// targets and detected paths pass FileSafe's path checks and open through the opening module, and a file:// link naming another host never opens as a local path."
 - "A detected path:line:col link passes FileSafe's path checks before it opens; Ctrl+click, Ctrl+double-click and Ctrl+Alt+click open the preview tab, a kept tab and a new panel, and a plain click selects text."
 - "A bell or an OSC 9, OSC 777 or OSC 99 notification in an unseen terminal tab sets its attention mark and a polite announcement, creates no new notification family, and never also counts as OSC 9;4 progress."
@@ -14057,14 +14109,19 @@ canonical_text: >-
   envelope's optional thread_id binding on capture rows stays the overlay's common optional field; only
   cmd.browser.share_with_agent narrows it to required, as its catalog row states it unadorned. Canon does
   not type the open rows' target, the DevTools mode and dock values, or agent_share_scope; each is marked
-  provenance gap and left open for the compile review rather than invented.
-  Shared conventions of the definitions block: its row cites are the browser command table
-  (UI_Command_Catalog.md:825-846), whose Payload column is history under DL-333 resolution 10 and stays the
-  command-row authority for names. Every wiring row (Wiring_Matrix.production.json entries catalog.browser_*)
-  names BrowserActionRequestV2 and BrowserActionResultV2 (Plans/section15_browser_program_contracts.schema.json).
+  provenance gap and left open for the compile review rather than invented. Amended 2026-11-24 (DL-2602,
+  C-FIX79): the DevTools mode is now typed (docked_bottom | docked_right | undocked) and
+  cmd.browser.open_devtools is a navigation wrapper with BrowserDevToolsOpenRequest and the typed route result
+  BrowserDevToolsOpenResultV1 in Plans/section15_browser_program_contracts.schema.json; the dock values stay open.
+  Shared conventions of the definitions block: its catalog citations name rows by command ID in §2.6A,
+  Browser preview and browsing commands, in Plans/UI_Command_Catalog.md. Under DL-333 resolution 10, its
+  historical Payload column remains the source for argument names. Every wiring row (Wiring_Matrix.production.json entries catalog.browser_*)
+  names BrowserActionRequestV2 and BrowserActionResultV2 (Plans/section15_browser_program_contracts.schema.json),
+  except catalog.browser_open_devtools and assistant.redesign.cmd.browser_devtools_open, which name
+  BrowserDevToolsOpenRequest and BrowserDevToolsOpenResultV1 from 2026-11-24 (DL-2602).
   The table states no command_kind and no disabled reasons for these rows; only cmd.browser.open_devtools has a
-  kind cell, navigation_wrapper, in the row its canonical id takes over (UI_Command_Catalog.md:15658, :19026).
-  CV-360's placement fields go only on the routes its open-routes table lists (UI_Command_Catalog.md:18314-18334):
+  kind cell, navigation_wrapper, inherited by the canonical command from UCC-156 under UCC-202.
+  Under CV-360, use the placement fields only on browser routes named under Every route that opens or reveals a tab in Plans/UI_Command_Catalog.md. The two rows name
   open_workspace_preview and focus_browser_tab.
   BrowserActionRequestV2 requires a closed browser_action whose action_type enum names no share, revoke-share,
   takeover, agent-control, detach, DevTools, dock, promotion, session-recovery or session-tab reveal action. The
@@ -14072,7 +14129,9 @@ canonical_text: >-
   stop_agent_keep_browser, detach_browser_tab, open_devtools, toggle_devtools_dock, focus_browser_tab,
   promote_to_normal_browsing, reopen, retry and keep_closed keep the wired request, map the command onto no action_type, never turn share or revoke into a
   capture, and record the conflict in their owner_request judgments; a handler refuses them with
-  handler_unavailable until the browser owner settles the request (DL-341).
+  handler_unavailable until the browser owner settles the request (DL-341). Settled for open_devtools on
+  2026-11-24 (DL-2602): its definition names BrowserDevToolsOpenRequest, carries no owner_request judgment,
+  and its DL-341 refusal ends; handler_unavailable then stands only until native evidence exists.
 gui_related: true
 gui_classification_reason: Defines the arguments of user-visible browser, preview and DevTools commands.
 split_recommended: false
@@ -14147,16 +14206,16 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:825); common optional field narrowed to required per UCC-230 envelope rule"
+          source: "catalog row payload (UI_Command_Catalog.md §2.6A, cmd.browser.open_workspace_preview); common optional field narrowed to required per UCC-230 envelope rule"
         target:
           type: url
           required: true
           default: none
           provenance: gap
           gap_note: >-
-            Canon names target with no type (UI_Command_Catalog.md:825); the aliases row reads it as
-            "browser session target" (:18306), the launcher rows open "an address" through it, and
-            Commands_System.md:8925-8926 has Open port reuse it "with a server/environment-authoritative URL".
+            Canon names target with no type (UI_Command_Catalog.md §2.6A, cmd.browser.open_workspace_preview); the aliases row reads it as
+            "browser session target" (Aliases and the open routes that keep their ids, cmd.browser.open_workspace_preview), the launcher rows open "an address" through it, and
+            CS-106 has Open port reuse it "with a server/environment-authoritative URL".
             JUDGMENT: url covers the address opens; alternatives not settled by canon are a union with the
             overlay's preview_subject_ref or Primitive:RouteTarget.
         workspace_tab_id:
@@ -14164,32 +14223,32 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:825); token also preserved in UCC-063"
+          source: "catalog row payload (UI_Command_Catalog.md §2.6A, cmd.browser.open_workspace_preview); token also preserved in UCC-063"
         where:
           type: string
           required: false
           default: auto
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23626-23629) names this route: where is auto, tab, panel, right, down or a panel id; default auto; an id that names no panel reads as auto. Open-routes table UI_Command_Catalog.md:18330; DL-180 amendment :850"
+          source: "CV-360 names this route: where is auto, tab, panel, right, down or a panel id; default auto; an id that names no panel reads as auto. Every route that opens or reveals a tab, cmd.browser.open_workspace_preview, and the DL-180 amendment in UI_Command_Catalog.md §2.6A"
         mode:
           type: enum
           values: [preview, keep]
           required: false
           default: none
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep; preview only for kinds with a preview tab; no default stated"
+          source: "CV-360: mode is preview or keep; preview only for kinds with a preview tab; no default stated"
         by:
           type: string
           required: false
           default: user
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user; an agent always opens in the background"
+          source: "CV-360: by is user or agent:<name>; default user; an agent always opens in the background"
         background:
           type: boolean
           required: false
           default: false
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23631): background default false"
+          source: "CV-360: background default false"
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -14202,26 +14261,26 @@ command_payload_definitions:
           choice: navigation_wrapper
           gap_note: >-
             No catalog row states a command_kind; the aliases table records it a kept id, open route with
-            normalization.kind wrapper (UI_Command_Catalog.md:18306), and the open-routes table lists it as
-            an open route (:18330). navigation_wrapper is chosen from the closed set (Contracts_V0.md:1902-1905)
+            normalization.kind wrapper (Aliases and the open routes that keep their ids, cmd.browser.open_workspace_preview), and Every route that opens or reveals a tab lists it as
+            an open route. The definition selects navigation_wrapper from CV-161's closed command_kind set
             because the row opens a route; Contracts_V0 maps no normalization value to a command_kind.
         - key: disabled_reason_codes
           choice: [unsupported]
           gap_note: >-
-            The row (UI_Command_Catalog.md:825) states no disabled reasons; unsupported stands for a host
+            The row (UI_Command_Catalog.md §2.6A, cmd.browser.open_workspace_preview) states no disabled reasons; unsupported stands for a host
             without the browser runtime.
         - key: omitted:target_editor_panel_id
           choice: omitted
           gap_note: >-
-            The row's Payload column (history, UI_Command_Catalog.md:825) still lists target_editor_panel_id?,
-            while the DL-180 amendment (:850) says it no longer selects a home panel and CV-360
-            (Contracts_V0.md:23646) says no route carries another placement field; the definition leaves it
+            The row's Payload column (history, UI_Command_Catalog.md §2.6A, cmd.browser.open_workspace_preview) still lists target_editor_panel_id?,
+            while the DL-180 amendment in UI_Command_Catalog.md §2.6A says it no longer selects a home panel and CV-360
+            says no route carries another placement field; the definition leaves it
             out, and the SMPFS-328 negative constraint keeps it out.
         - key: omitted:target_editor_group_id
           choice: omitted
           gap_note: >-
-            Same as target_editor_panel_id: listed in the history Payload column (UI_Command_Catalog.md:825),
-            retired as home placement by the DL-180 amendment (:850) and CV-360.
+            Same as target_editor_panel_id: listed in the history Payload column (UI_Command_Catalog.md §2.6A, cmd.browser.open_workspace_preview),
+            retired as home placement by the DL-180 amendment in UI_Command_Catalog.md §2.6A and CV-360.
     - command_id: cmd.browser.open_detached_preview
       ucc_units: [UCC-063, UCC-061, UCC-062]
       command_kind: navigation_wrapper
@@ -14232,21 +14291,21 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:826); common optional field narrowed to required per UCC-230 envelope rule"
+          source: "catalog row payload (UI_Command_Catalog.md §2.6A, cmd.browser.open_detached_preview); common optional field narrowed to required per UCC-230 envelope rule"
         target:
           type: url
           required: true
           default: none
           provenance: gap
           gap_note: >-
-            Same untyped target as cmd.browser.open_workspace_preview (UI_Command_Catalog.md:826); the url
+            Same untyped target as cmd.browser.open_workspace_preview (UI_Command_Catalog.md §2.6A, cmd.browser.open_detached_preview); the url
             choice and its alternatives stay open as there.
         source_workspace_tab_id:
           type: id
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:826); token also preserved in UCC-063"
+          source: "catalog row payload (UI_Command_Catalog.md §2.6A, cmd.browser.open_detached_preview); token also preserved in UCC-063"
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -14259,7 +14318,7 @@ command_payload_definitions:
           choice: navigation_wrapper
           gap_note: >-
             No catalog row states a command_kind; the row opens a target in a detached browser
-            (UI_Command_Catalog.md:826), an open like open_workspace_preview but outside the home panels.
+            (UI_Command_Catalog.md §2.6A, cmd.browser.open_detached_preview), an open like open_workspace_preview but outside the home panels.
         - key: disabled_reason_codes
           choice: [unsupported]
           gap_note: >-
@@ -14267,10 +14326,10 @@ command_payload_definitions:
         - key: omitted:where
           choice: omitted
           gap_note: >-
-            CV-360 (Contracts_V0.md:23626-23627) and its open-routes table (UI_Command_Catalog.md:18314-18334)
-            do not list this route, the DL-180 amendment (:850) moves only open_workspace_preview onto CV-360,
-            and the row opens a detached browser (:826), not a home-panel tab; so no CV-360 placement field is
-            carried.
+            CV-360 and the catalog table Every route that opens or reveals a tab
+            do not list this route, the DL-180 amendment in UI_Command_Catalog.md §2.6A moves only open_workspace_preview onto CV-360,
+            and the cmd.browser.open_detached_preview row opens a detached browser (UI_Command_Catalog.md §2.6A).
+            The detached route carries no CV-360 placement fields.
         - key: omitted:mode
           choice: omitted
           gap_note: "Same reason as where: CV-360 does not list this route."
@@ -14290,32 +14349,32 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:827); overlay UCC-061..065 identity browser_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md §2.6A, cmd.browser.focus_browser_tab); overlay UCC-061..065 identity browser_session_id?"
         where:
           type: string
           required: false
           default: auto
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23628-23629; acceptance :23646, every open route UCC-200 lists carries the fields): where is auto, tab, panel, right, down or a panel id; default auto. The open-routes table lists this route (UI_Command_Catalog.md:18330)"
+          source: "CV-360: where is auto, tab, panel, right, down or a panel id; default auto. Every route that opens or reveals a tab lists cmd.browser.focus_browser_tab"
         mode:
           type: enum
           values: [preview, keep]
           required: false
           default: none
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep; no default stated. Route listed at UI_Command_Catalog.md:18330"
+          source: "CV-360: mode is preview or keep; no default stated. See cmd.browser.focus_browser_tab under Every route that opens or reveals a tab"
         by:
           type: string
           required: false
           default: user
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user. Route listed at UI_Command_Catalog.md:18330"
+          source: "CV-360: by is user or agent:<name>; default user. See cmd.browser.focus_browser_tab under Every route that opens or reveals a tab"
         background:
           type: boolean
           required: false
           default: false
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23631): background default false. Route listed at UI_Command_Catalog.md:18330"
+          source: "CV-360: background default false. See cmd.browser.focus_browser_tab under Every route that opens or reveals a tab"
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -14327,8 +14386,8 @@ command_payload_definitions:
         - key: command_kind
           choice: shell_view
           gap_note: >-
-            No catalog row states a command_kind; the row is "layout/UI state only" (UI_Command_Catalog.md:827)
-            and the open-routes table calls it layout-only (:18330).
+            No catalog row states a command_kind; the row is "layout/UI state only" (UI_Command_Catalog.md §2.6A, cmd.browser.focus_browser_tab)
+            and Every route that opens or reveals a tab marks cmd.browser.focus_browser_tab layout-only.
         - key: disabled_reason_codes
           choice: [unsupported]
           gap_note: >-
@@ -14337,11 +14396,11 @@ command_payload_definitions:
           choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
           gap_note: >-
             As recorded on cmd.browser.share_with_agent: the wired BrowserActionRequestV2 lists this command
-            (Plans/section15_browser_program_contracts.schema.json:5145) but requires a closed browser_action whose
-            action_type enum (:377) has no action that reveals the tab hosting a browser session (select_tab
-            selects a page tab inside the session), and neither the request nor the closed action arguments
-            (:423) has a field for where, mode, by or background, a layout/UI state change
-            (UI_Command_Catalog.md:827). The definition keeps the wired request and the catalog row's args, maps
+            (Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2/properties/command_id/enum) but requires a closed browser_action whose
+            action_type enum has no action that reveals the tab hosting a browser session (select_tab
+            selects a page tab inside the session), and neither the request nor the closed argument object
+            of browser_action has a field for where, mode, by or background, a layout/UI state change
+            (UI_Command_Catalog.md §2.6A, cmd.browser.focus_browser_tab). The definition keeps the wired request and the catalog row's args, maps
             the command onto no action_type, and a handler sends no BrowserActionRequestV2 for it and refuses it
             with handler_unavailable until the browser owner settles the request (DL-341 open_owner_questions).
     - command_id: cmd.browser.detach_browser_tab
@@ -14354,7 +14413,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:828); overlay UCC-061..065 identity browser_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md §2.6A, cmd.browser.detach_browser_tab); overlay UCC-061..065 identity browser_session_id?"
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -14367,8 +14426,8 @@ command_payload_definitions:
           choice: domain_action
           gap_note: >-
             No catalog row states a command_kind; the row emits browser.session.state_changed
-            (UI_Command_Catalog.md:828), a session-state mutation like reopen and retry. The DL-180 amendment
-            (:850, UCC-203) says it has no producer on a panel tab because no tab pops out; the row stays for
+            (UI_Command_Catalog.md §2.6A, cmd.browser.detach_browser_tab), a session-state mutation like reopen and retry. The DL-180 amendment
+            (UI_Command_Catalog.md §2.6A and UCC-203) says it has no producer on a panel tab because no tab pops out; the row stays for
             lineage.
         - key: disabled_reason_codes
           choice: [unsupported]
@@ -14379,9 +14438,9 @@ command_payload_definitions:
           choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
           gap_note: >-
             As recorded on cmd.browser.share_with_agent: the wired BrowserActionRequestV2 lists this command
-            (Plans/section15_browser_program_contracts.schema.json:5130) but requires a closed browser_action whose
-            action_type enum (:377) has no detach action; its tab primitives list_tabs, create_tab, select_tab and
-            close_tab do not detach the tab that hosts a session (UI_Command_Catalog.md:828). The definition keeps
+            (Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2/properties/command_id/enum) but requires a closed browser_action whose
+            action_type enum has no detach action; its tab primitives list_tabs, create_tab, select_tab and
+            close_tab do not detach the tab that hosts a session (UI_Command_Catalog.md §2.6A, cmd.browser.detach_browser_tab). The definition keeps
             the wired request and the catalog row's args, maps the command onto no action_type, and a handler sends
             no BrowserActionRequestV2 for it and refuses it with handler_unavailable until the browser owner settles
             the request (DL-341 open_owner_questions).
@@ -14395,60 +14454,30 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:829); overlay UCC-061..065 identity browser_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md §2.6A, cmd.browser.open_devtools); overlay UCC-061..065 identity browser_session_id?"
         mode:
-          type: string
+          type: enum
+          values: [docked_bottom, docked_right, undocked]
           required: false
           default: none
-          provenance: gap
-          gap_note: >-
-            Catalog payload names mode? with no values (UI_Command_Catalog.md:829). The named request contract
-            BrowserDevToolsOpenRequest (UI_Command_Catalog.md:15658, :19026) is placed at
-            Plans/browser_capture_contracts.schema.json by Commands_System.md:6486, and that file does not exist
-            in Plans, so the DevTools mode vocabulary is still open. JUDGMENT: string holds the value; an enum
-            needs the owner to name the modes.
-      owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
+          provenance: canon
+          source: "Decision_Log DL-2602 (C-FIX79, 2026-11-24): Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenRequest; catalog row payload mode? (UI_Command_Catalog.md §2.6A, cmd.browser.open_devtools)"
+      owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenRequest
       result:
         response: Plans/ui_command_response.schema.json
-        owner_result: local:BrowserDevToolsOpenResultV1
+        owner_result: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenResultV1
       error_codes: [invalid_args, invalid_route, permission_denied, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported, permission_required]
       aliases:
-        - {command_id: cmd.browser.devtools.open, kind: alias, source: "UCC-202 and the duplicate-ids table (UI_Command_Catalog.md:19026); UCC-063 stale_retired_dispositions"}
+        - {command_id: cmd.browser.devtools.open, kind: alias, source: "UCC-202 Duplicate Command Ids Settled; UCC-063 stale_retired_dispositions"}
       judgments:
         - key: disabled_reason_codes
           choice: [unsupported, permission_required]
           gap_note: >-
             The canonical id takes the preconditions browser_runtime_available && !protected_auth_browser &&
-            devtools_policy_allows (UI_Command_Catalog.md:15658, :19026) but no disabled reasons; unsupported
+            devtools_policy_allows from UCC-156 under UCC-202. Neither unit states disabled reasons. unsupported
             stands for a missing browser runtime or the protected authentication browser, and
             permission_required for the DevTools policy.
-        - key: owner_request
-          choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
-          gap_note: >-
-            Canon conflict: the wiring rows catalog.browser_open_devtools and
-            assistant.redesign.cmd.browser_devtools_open name BrowserActionRequestV2, while the catalog
-            (UI_Command_Catalog.md:15658, :19026) and Commands_System.md:6486 name BrowserDevToolsOpenRequest,
-            which has no schema in Plans. The definition takes the wiring row, the only one that resolves.
-            The wired request also requires a closed browser_action
-            (Plans/section15_browser_program_contracts.schema.json:5114, :5216), whose action_type enum (:377) has
-            no DevTools action (console and network take query refs and open no DevTools), and its closed action
-            arguments (:423) have no field for mode (UI_Command_Catalog.md:829). As recorded on
-            cmd.browser.share_with_agent, the definition maps the command onto no action_type, and a handler sends
-            no BrowserActionRequestV2 for it and refuses it with handler_unavailable until the browser owner settles
-            the request (DL-341 open_owner_questions).
-        - key: owner_result
-          choice: local:BrowserDevToolsOpenResultV1
-          gap_note: >-
-            Canon conflict: the catalog (UI_Command_Catalog.md:15658, :19026) and Commands_System.md:6486
-            name RouteResult, and both RouteResult schemas in Plans are fixed to other commands
-            (Plans/assistant_chat_contracts.schema.json#/$defs/RouteResult to cmd.chat.goal.open_editor,
-            Plans/collaborative_workflows_contracts.schema.json#/$defs/RouteResult to cmd.chat.crew_auto.open_config);
-            the wiring rows name BrowserActionResultV2; Section15's Browser Action Table gives this action's
-            output fields (Section15_MVP_Promoted_Features_Spec.md:9953).
-            The definition takes Section15's fields, because the wiring rows' own effect_contract says "Owner
-            typed result and projection under Plans/Section15_MVP_Promoted_Features_Spec.md"; the owner should
-            pick one contract.
     - command_id: cmd.browser.toggle_devtools_dock
       ucc_units: [UCC-063, UCC-061, UCC-062]
       command_kind: shell_view
@@ -14459,14 +14488,14 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:830); overlay UCC-061..065 identity browser_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md §2.6A, cmd.browser.toggle_devtools_dock); overlay UCC-061..065 identity browser_session_id?"
         dock:
           type: string
           required: true
           default: none
           provenance: gap
           gap_note: >-
-            Catalog payload names dock with no type or values (UI_Command_Catalog.md:830). JUDGMENT: string
+            Catalog payload names dock with no type or values (UI_Command_Catalog.md §2.6A, cmd.browser.toggle_devtools_dock). JUDGMENT: string
             holds the value; alternatives are an enum of dock positions or a boolean toggle, and the owner
             must name the dock vocabulary before an enum can be written.
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
@@ -14480,7 +14509,7 @@ command_payload_definitions:
         - key: command_kind
           choice: shell_view
           gap_note: >-
-            No catalog row states a command_kind; the row is "layout/UI state only" (UI_Command_Catalog.md:830).
+            No catalog row states a command_kind; the row is "layout/UI state only" (UI_Command_Catalog.md §2.6A, cmd.browser.toggle_devtools_dock).
         - key: disabled_reason_codes
           choice: [unsupported]
           gap_note: >-
@@ -14490,9 +14519,9 @@ command_payload_definitions:
           choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
           gap_note: >-
             As recorded on cmd.browser.share_with_agent: the wired BrowserActionRequestV2 lists this command
-            (Plans/section15_browser_program_contracts.schema.json:5130) but requires a closed browser_action whose
-            action_type enum (:377) has no DevTools or dock action, and neither the request nor the closed action
-            arguments (:423) has a field for dock, a layout/UI state change (UI_Command_Catalog.md:830). The
+            (Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2/properties/command_id/enum) but requires a closed browser_action whose
+            action_type enum has no DevTools or dock action, and neither the request nor the closed
+            argument object of browser_action has a field for dock, a layout/UI state change (UI_Command_Catalog.md §2.6A, cmd.browser.toggle_devtools_dock). The
             definition keeps the wired request and the catalog row's args, maps the command onto no action_type, and
             a handler sends no BrowserActionRequestV2 for it and refuses it with handler_unavailable until the
             browser owner settles the request (DL-341 open_owner_questions).
@@ -14506,7 +14535,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:831); overlay UCC-061..065 identity browser_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md §2.6A, cmd.browser.pick_element_for_chat); overlay UCC-061..065 identity browser_session_id?"
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -14519,7 +14548,7 @@ command_payload_definitions:
           choice: domain_action
           gap_note: >-
             No catalog row states a command_kind; the row emits browser.context_captured
-            (UI_Command_Catalog.md:831), a capture the composer receives.
+            (UI_Command_Catalog.md §2.6A, cmd.browser.pick_element_for_chat), a capture the composer receives.
         - key: disabled_reason_codes
           choice: [unsupported, permission_required]
           gap_note: >-
@@ -14528,11 +14557,11 @@ command_payload_definitions:
         - key: owner_request
           choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
           gap_note: >-
-            The wired BrowserActionRequestV2 lists this command (Plans/section15_browser_program_contracts.schema.json:5160).
-            Canon does not say which closed action_type (:377) this capture uses. Choice: snapshot, the enum's
-            page capture; the element or selection is not a field of the row (UI_Command_Catalog.md:831). The
+            The wired BrowserActionRequestV2 command_id enum includes this command (Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2/properties/command_id/enum).
+            Canon does not say which closed action_type in browser_action this capture uses. Choice: snapshot, the enum's
+            page capture; the element or selection is not a field of the row (UI_Command_Catalog.md §2.6A, cmd.browser.pick_element_for_chat). The
             optional thread_id has no field in the request or the closed action arguments
-            (Plans/section15_browser_program_contracts.schema.json:423) and stays on the
+            (Plans/section15_browser_program_contracts.schema.json#/$defs/browser_action/properties/arguments) and stays on the
             UICommand envelope (DL-341 open_owner_questions).
     - command_id: cmd.browser.add_selection_to_chat
       ucc_units: [UCC-064, UCC-061, UCC-062]
@@ -14544,7 +14573,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:832); overlay UCC-061..065 identity browser_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md §2.6A, cmd.browser.add_selection_to_chat); overlay UCC-061..065 identity browser_session_id?"
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -14557,7 +14586,7 @@ command_payload_definitions:
           choice: domain_action
           gap_note: >-
             No catalog row states a command_kind; the row emits browser.context_captured
-            (UI_Command_Catalog.md:832), a capture the composer receives.
+            (UI_Command_Catalog.md §2.6A, cmd.browser.add_selection_to_chat), a capture the composer receives.
         - key: disabled_reason_codes
           choice: [unsupported, permission_required]
           gap_note: >-
@@ -14566,11 +14595,11 @@ command_payload_definitions:
         - key: owner_request
           choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
           gap_note: >-
-            The wired BrowserActionRequestV2 lists this command (Plans/section15_browser_program_contracts.schema.json:5136).
-            Canon does not say which closed action_type (:377) this capture uses. Choice: snapshot, the enum's
-            page capture; the element or selection is not a field of the row (UI_Command_Catalog.md:832). The
+            The wired BrowserActionRequestV2 command_id enum includes this command (Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2/properties/command_id/enum).
+            Canon does not say which closed action_type in browser_action this capture uses. Choice: snapshot, the enum's
+            page capture; the element or selection is not a field of the row (UI_Command_Catalog.md §2.6A, cmd.browser.add_selection_to_chat). The
             optional thread_id has no field in the request or the closed action arguments
-            (Plans/section15_browser_program_contracts.schema.json:423) and stays on the
+            (Plans/section15_browser_program_contracts.schema.json#/$defs/browser_action/properties/arguments) and stays on the
             UICommand envelope (DL-341 open_owner_questions).
     - command_id: cmd.browser.add_selection_screenshot_to_chat
       ucc_units: [UCC-064, UCC-061, UCC-062]
@@ -14582,14 +14611,14 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:833); overlay UCC-061..065 identity browser_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md §2.6A, cmd.browser.add_selection_screenshot_to_chat); overlay UCC-061..065 identity browser_session_id?"
         scope:
           type: const
           value: clip
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload scope:'clip' (UI_Command_Catalog.md:833)"
+          source: "catalog row payload scope:'clip' (UI_Command_Catalog.md §2.6A, cmd.browser.add_selection_screenshot_to_chat)"
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -14602,23 +14631,23 @@ command_payload_definitions:
           choice: domain_action
           gap_note: >-
             No catalog row states a command_kind; the row emits browser.context_captured and
-            runtime_artifact.screenshot (UI_Command_Catalog.md:833), a capture.
+            runtime_artifact.screenshot (UI_Command_Catalog.md §2.6A, cmd.browser.add_selection_screenshot_to_chat), a capture.
         - key: disabled_reason_codes
           choice: [unsupported, permission_required]
           gap_note: >-
             The row states no disabled reasons; the same choice as pick_element_for_chat (browser runtime,
             capture permission). Until native capture exists the handler fails closed with
-            handler_unavailable (capture event rules, UI_Command_Catalog.md:853).
+            handler_unavailable (UI_Command_Catalog.md §2.6A capture event rules).
         - key: owner_request
           choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
           gap_note: >-
-            The wired BrowserActionRequestV2 lists this command (Plans/section15_browser_program_contracts.schema.json:5135).
-            Canon does not say which closed action_type (:377) this capture uses. Choice: screenshot. Neither the
-            request nor the closed action arguments (:423) has a field for the row's scope:'clip'
-            (UI_Command_Catalog.md:833) or for its optional thread_id, which stays on the UICommand envelope; the
+            The wired BrowserActionRequestV2 lists this command (Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2/properties/command_id/enum).
+            Canon does not say which closed action_type in browser_action this capture uses. Choice: screenshot. Neither the
+            request nor the closed argument object of browser_action has a field for the row's scope:'clip'
+            (UI_Command_Catalog.md §2.6A, cmd.browser.add_selection_screenshot_to_chat) or for its optional thread_id, which stays on the UICommand envelope; the
             definition keeps the row's scope arg, and how it reaches the owner is asked of the browser owner
             (DL-341 open_owner_questions). Until native capture exists the handler fails closed with
-            handler_unavailable (UI_Command_Catalog.md:853).
+            handler_unavailable (UI_Command_Catalog.md §2.6A capture event rules).
     - command_id: cmd.browser.add_selection_full_screenshot_to_chat
       ucc_units: [UCC-064, UCC-061, UCC-062]
       command_kind: domain_action
@@ -14629,14 +14658,14 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:834); overlay UCC-061..065 identity browser_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md §2.6A, cmd.browser.add_selection_full_screenshot_to_chat); overlay UCC-061..065 identity browser_session_id?"
         scope:
           type: const
           value: full
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload scope:'full' (UI_Command_Catalog.md:834)"
+          source: "catalog row payload scope:'full' (UI_Command_Catalog.md §2.6A, cmd.browser.add_selection_full_screenshot_to_chat)"
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -14649,7 +14678,7 @@ command_payload_definitions:
           choice: domain_action
           gap_note: >-
             No catalog row states a command_kind; the row emits browser.context_captured and
-            runtime_artifact.screenshot (UI_Command_Catalog.md:834), a capture.
+            runtime_artifact.screenshot (UI_Command_Catalog.md §2.6A, cmd.browser.add_selection_full_screenshot_to_chat), a capture.
         - key: disabled_reason_codes
           choice: [unsupported, permission_required]
           gap_note: >-
@@ -14658,13 +14687,13 @@ command_payload_definitions:
         - key: owner_request
           choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
           gap_note: >-
-            The wired BrowserActionRequestV2 lists this command (Plans/section15_browser_program_contracts.schema.json:5134).
-            Canon does not say which closed action_type (:377) this capture uses. Choice: screenshot. Neither the
-            request nor the closed action arguments (:423) has a field for the row's scope:'full'
-            (UI_Command_Catalog.md:834) or for its optional thread_id, which stays on the UICommand envelope; the
+            The wired BrowserActionRequestV2 lists this command (Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2/properties/command_id/enum).
+            Canon does not say which closed action_type in browser_action this capture uses. Choice: screenshot. Neither the
+            request nor the closed argument object of browser_action has a field for the row's scope:'full'
+            (UI_Command_Catalog.md §2.6A, cmd.browser.add_selection_full_screenshot_to_chat) or for its optional thread_id, which stays on the UICommand envelope; the
             definition keeps the row's scope arg, and how it reaches the owner is asked of the browser owner
             (DL-341 open_owner_questions). Until native capture exists the handler fails closed with
-            handler_unavailable (UI_Command_Catalog.md:853).
+            handler_unavailable (UI_Command_Catalog.md §2.6A capture event rules).
     - command_id: cmd.browser.add_screenshot_to_chat
       ucc_units: [UCC-064, UCC-061, UCC-062]
       command_kind: domain_action
@@ -14675,14 +14704,14 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:835); overlay UCC-061..065 identity browser_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md §2.6A, cmd.browser.add_screenshot_to_chat); overlay UCC-061..065 identity browser_session_id?"
         scope:
           type: const
           value: clip
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload scope:'clip' (UI_Command_Catalog.md:835)"
+          source: "catalog row payload scope:'clip' (UI_Command_Catalog.md §2.6A, cmd.browser.add_screenshot_to_chat)"
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -14695,7 +14724,7 @@ command_payload_definitions:
           choice: domain_action
           gap_note: >-
             No catalog row states a command_kind; the row emits runtime_artifact.screenshot
-            (UI_Command_Catalog.md:835), a capture.
+            (UI_Command_Catalog.md §2.6A, cmd.browser.add_screenshot_to_chat), a capture.
         - key: disabled_reason_codes
           choice: [unsupported, permission_required]
           gap_note: >-
@@ -14704,13 +14733,13 @@ command_payload_definitions:
         - key: owner_request
           choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
           gap_note: >-
-            The wired BrowserActionRequestV2 lists this command (Plans/section15_browser_program_contracts.schema.json:5133).
-            Canon does not say which closed action_type (:377) this capture uses. Choice: screenshot. Neither the
-            request nor the closed action arguments (:423) has a field for the row's scope:'clip'
-            (UI_Command_Catalog.md:835) or for its optional thread_id, which stays on the UICommand envelope; the
+            The wired BrowserActionRequestV2 lists this command (Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2/properties/command_id/enum).
+            Canon does not say which closed action_type in browser_action this capture uses. Choice: screenshot. Neither the
+            request nor the closed argument object of browser_action has a field for the row's scope:'clip'
+            (UI_Command_Catalog.md §2.6A, cmd.browser.add_screenshot_to_chat) or for its optional thread_id, which stays on the UICommand envelope; the
             definition keeps the row's scope arg, and how it reaches the owner is asked of the browser owner
             (DL-341 open_owner_questions). Until native capture exists the handler fails closed with
-            handler_unavailable (UI_Command_Catalog.md:853).
+            handler_unavailable (UI_Command_Catalog.md §2.6A capture event rules).
     - command_id: cmd.browser.add_full_screenshot_to_chat
       ucc_units: [UCC-064, UCC-061, UCC-062]
       command_kind: domain_action
@@ -14721,14 +14750,14 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:836); overlay UCC-061..065 identity browser_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md §2.6A, cmd.browser.add_full_screenshot_to_chat); overlay UCC-061..065 identity browser_session_id?"
         scope:
           type: const
           value: full
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload scope:'full' (UI_Command_Catalog.md:836)"
+          source: "catalog row payload scope:'full' (UI_Command_Catalog.md §2.6A, cmd.browser.add_full_screenshot_to_chat)"
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -14741,7 +14770,7 @@ command_payload_definitions:
           choice: domain_action
           gap_note: >-
             No catalog row states a command_kind; the row emits runtime_artifact.screenshot
-            (UI_Command_Catalog.md:836), a capture.
+            (UI_Command_Catalog.md §2.6A, cmd.browser.add_full_screenshot_to_chat), a capture.
         - key: disabled_reason_codes
           choice: [unsupported, permission_required]
           gap_note: >-
@@ -14750,13 +14779,13 @@ command_payload_definitions:
         - key: owner_request
           choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
           gap_note: >-
-            The wired BrowserActionRequestV2 lists this command (Plans/section15_browser_program_contracts.schema.json:5132).
-            Canon does not say which closed action_type (:377) this capture uses. Choice: screenshot. Neither the
-            request nor the closed action arguments (:423) has a field for the row's scope:'full'
-            (UI_Command_Catalog.md:836) or for its optional thread_id, which stays on the UICommand envelope; the
+            The wired BrowserActionRequestV2 lists this command (Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2/properties/command_id/enum).
+            Canon does not say which closed action_type in browser_action this capture uses. Choice: screenshot. Neither the
+            request nor the closed argument object of browser_action has a field for the row's scope:'full'
+            (UI_Command_Catalog.md §2.6A, cmd.browser.add_full_screenshot_to_chat) or for its optional thread_id, which stays on the UICommand envelope; the
             definition keeps the row's scope arg, and how it reaches the owner is asked of the browser owner
             (DL-341 open_owner_questions). Until native capture exists the handler fails closed with
-            handler_unavailable (UI_Command_Catalog.md:853).
+            handler_unavailable (UI_Command_Catalog.md §2.6A capture event rules).
     - command_id: cmd.browser.share_with_agent
       ucc_units: [UCC-064, UCC-061, UCC-062]
       command_kind: domain_action
@@ -14767,13 +14796,13 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:837); overlay UCC-061..065 identity browser_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md §2.6A, cmd.browser.share_with_agent); overlay UCC-061..065 identity browser_session_id?"
         thread_id:
           type: id
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload names thread_id unadorned (UI_Command_Catalog.md:837); common optional field narrowed to required per UCC-230 envelope rule"
+          source: "catalog row payload names thread_id unadorned (UI_Command_Catalog.md §2.6A, cmd.browser.share_with_agent); common optional field narrowed to required per UCC-230 envelope rule"
         agent_share_scope:
           type: string
           required: false
@@ -14781,7 +14810,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             The overlay lists agent_share_scope? as row-group identity for capture/share/takeover commands
-            (UI_Command_Catalog.md:8853) but no canon types it or gives values, and no concrete row payload
+            (UI_Command_Catalog.md, strict schema overlay row for UCC-061 through UCC-065) but no canon types it or gives values, and no concrete row payload
             carries it. JUDGMENT: string holds the value pending an owner decision on a scope enum; whether
             the share row carries it at all stays open.
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
@@ -14796,7 +14825,7 @@ command_payload_definitions:
           choice: domain_action
           gap_note: >-
             No catalog row states a command_kind; the row updates browser-session share state and emits
-            browser.context_shared (UI_Command_Catalog.md:837, :855; SMPFS-089).
+            browser.context_shared (UI_Command_Catalog.md §2.6A, cmd.browser.share_with_agent and the Browser-session share state rule, plus SMPFS-089).
         - key: disabled_reason_codes
           choice: [unsupported, permission_required]
           gap_note: >-
@@ -14806,20 +14835,20 @@ command_payload_definitions:
           choice: local:BrowserShareWithAgentResultV1
           gap_note: >-
             The wiring row catalog.browser_share_with_agent names BrowserActionResultV2 as result_schema_ref,
-            while Section15's Browser Action Table gives this action its own output fields
-            (Section15_MVP_Promoted_Features_Spec.md:9950). The definition takes the owner doc's fields, the
+            while Browser Action Table And Timeouts lists this action's output fields
+            under cmd.browser.share_with_agent. The definition takes the owner doc's fields, the
             more specific of the two; the owner should say whether they travel inside BrowserActionResultV2.
         - key: owner_request
           choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
           gap_note: >-
             Canon conflict. The wiring row catalog.browser_share_with_agent names BrowserActionRequestV2, whose
-            command_id enum lists this command (Plans/section15_browser_program_contracts.schema.json:5130), but the
-            request requires action (:5114), the closed browser_action record (:5216, :363), whose required
-            action_type enum (:377) holds page and tab primitives such as navigate, click, screenshot, list_tabs and
+            command_id enum lists this command (Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2/properties/command_id/enum), but the
+            request requires action, which references Plans/section15_browser_program_contracts.schema.json#/$defs/browser_action, whose required
+            action_type enum holds page and tab primitives such as navigate, click, screenshot, list_tabs and
             bookmark_capture and no share, revoke-share, takeover or agent-control action. Neither the request nor
-            the closed action arguments (:423) has a field for the share's required thread_id
-            (UI_Command_Catalog.md:837). Sharing updates browser-session share state only and creates no capture
-            event (UI_Command_Catalog.md:855; Section15_MVP_Promoted_Features_Spec.md:748), so no capture action
+            the closed argument object of browser_action has a field for the share's required thread_id
+            (UI_Command_Catalog.md §2.6A, cmd.browser.share_with_agent). Sharing updates browser-session share state only and creates no capture
+            event (UI_Command_Catalog.md §2.6A Browser-session share state rule and SMPFS-089), so no capture action
             (screenshot, snapshot or bookmark_capture) may stand in for it. Side taken: the definition keeps the
             wired request as the owner request, since it is the request the dispatch boundary names, and the catalog
             row's args, and maps the command onto no action_type and no action argument. Until the browser owner
@@ -14836,7 +14865,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:838); overlay UCC-061..065 identity browser_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md §2.6A, cmd.browser.revoke_share_with_agent); overlay UCC-061..065 identity browser_session_id?"
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -14849,7 +14878,7 @@ command_payload_definitions:
           choice: domain_action
           gap_note: >-
             No catalog row states a command_kind; the row updates browser-session share state and emits
-            browser.context_share_revoked (UI_Command_Catalog.md:838, :855; SMPFS-089).
+            browser.context_share_revoked (UI_Command_Catalog.md §2.6A, cmd.browser.revoke_share_with_agent and the Browser-session share state rule, plus SMPFS-089).
         - key: disabled_reason_codes
           choice: [unsupported]
           gap_note: >-
@@ -14859,10 +14888,10 @@ command_payload_definitions:
           choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
           gap_note: >-
             As recorded on cmd.browser.share_with_agent: the wired BrowserActionRequestV2 lists this command
-            (Plans/section15_browser_program_contracts.schema.json:5130) but requires a closed browser_action whose
-            action_type enum (:377) has no revoke-share action, and its closed action arguments (:423) have no field
-            for the row's thread_id? (UI_Command_Catalog.md:838). Revoking updates browser-session share state only
-            and is not a capture (UI_Command_Catalog.md:855; Section15_MVP_Promoted_Features_Spec.md:748), so no
+            (Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2/properties/command_id/enum) but requires a closed browser_action whose
+            action_type enum has no revoke-share action, and its closed argument object of browser_action has no field
+            for the row's thread_id? (UI_Command_Catalog.md §2.6A, cmd.browser.revoke_share_with_agent). Revoking updates browser-session share state only
+            and is not a capture (UI_Command_Catalog.md §2.6A Browser-session share state rule and SMPFS-089), so no
             capture action may stand in for it. The definition keeps the wired request and the catalog row's args,
             maps the command onto no action_type, and a handler sends no BrowserActionRequestV2 for it and refuses
             it with handler_unavailable until the browser owner settles the request (DL-341 open_owner_questions).
@@ -14876,14 +14905,14 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:839); overlay UCC-061..065 identity browser_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md §2.6A, cmd.browser.take_over); overlay UCC-061..065 identity browser_session_id?"
         takeover_choice:
           type: enum
           values: [pause_agent, let_agent_continue, stop_agent_keep_browser]
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload takeover_choice:'pause_agent'|'let_agent_continue'|'stop_agent_keep_browser' (UI_Command_Catalog.md:839); tokens preserved in UCC-065"
+          source: "catalog row payload takeover_choice:'pause_agent'|'let_agent_continue'|'stop_agent_keep_browser' (UI_Command_Catalog.md §2.6A, cmd.browser.take_over); tokens preserved in UCC-065"
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -14896,7 +14925,7 @@ command_payload_definitions:
           choice: domain_action
           gap_note: >-
             No catalog row states a command_kind; the row changes the takeover state and emits
-            browser.session.takeover_state_changed (UI_Command_Catalog.md:839).
+            browser.session.takeover_state_changed (UI_Command_Catalog.md §2.6A, cmd.browser.take_over).
         - key: disabled_reason_codes
           choice: [unsupported]
           gap_note: >-
@@ -14905,9 +14934,9 @@ command_payload_definitions:
           choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
           gap_note: >-
             As recorded on cmd.browser.share_with_agent: the wired BrowserActionRequestV2 lists this command
-            (Plans/section15_browser_program_contracts.schema.json:5130) but requires a closed browser_action whose
-            action_type enum (:377) has no takeover or agent-control action, and neither the request nor the closed
-            action arguments (:423) has a field for the required takeover_choice (UI_Command_Catalog.md:839). A page
+            (Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2/properties/command_id/enum) but requires a closed browser_action whose
+            action_type enum has no takeover or agent-control action, and neither the request nor the closed
+            argument object of browser_action has a field for the required takeover_choice (UI_Command_Catalog.md §2.6A, cmd.browser.take_over). A page
             primitive would not carry the choice between pause_agent, let_agent_continue and
             stop_agent_keep_browser. The definition keeps the wired request and the catalog row's args, maps the
             command onto no action_type, and a handler sends no BrowserActionRequestV2 for it and refuses it with
@@ -14922,7 +14951,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:840); overlay UCC-061..065 identity browser_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md §2.6A, cmd.browser.pause_agent); overlay UCC-061..065 identity browser_session_id?"
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -14935,7 +14964,7 @@ command_payload_definitions:
           choice: domain_action
           gap_note: >-
             No catalog row states a command_kind; the row changes the takeover state and emits
-            browser.session.takeover_state_changed (UI_Command_Catalog.md:840).
+            browser.session.takeover_state_changed (UI_Command_Catalog.md §2.6A, cmd.browser.pause_agent).
         - key: disabled_reason_codes
           choice: [unsupported]
           gap_note: >-
@@ -14944,9 +14973,9 @@ command_payload_definitions:
           choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
           gap_note: >-
             As recorded on cmd.browser.take_over: the wired BrowserActionRequestV2 lists this command
-            (Plans/section15_browser_program_contracts.schema.json:5130) but requires a closed browser_action whose
-            action_type enum (:377) has no agent-control action; the row changes the takeover state
-            (UI_Command_Catalog.md:840). The definition keeps the wired request and the catalog row's args, maps the
+            (Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2/properties/command_id/enum) but requires a closed browser_action whose
+            action_type enum has no agent-control action; the row changes the takeover state
+            (UI_Command_Catalog.md §2.6A, cmd.browser.pause_agent). The definition keeps the wired request and the catalog row's args, maps the
             command onto no action_type, and a handler sends no BrowserActionRequestV2 for it and refuses it with
             handler_unavailable until the browser owner settles the request (DL-341 open_owner_questions).
     - command_id: cmd.browser.let_agent_continue
@@ -14959,7 +14988,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:841); overlay UCC-061..065 identity browser_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md §2.6A, cmd.browser.let_agent_continue); overlay UCC-061..065 identity browser_session_id?"
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -14972,7 +15001,7 @@ command_payload_definitions:
           choice: domain_action
           gap_note: >-
             No catalog row states a command_kind; the row changes the takeover state and emits
-            browser.session.takeover_state_changed (UI_Command_Catalog.md:841).
+            browser.session.takeover_state_changed (UI_Command_Catalog.md §2.6A, cmd.browser.let_agent_continue).
         - key: disabled_reason_codes
           choice: [unsupported]
           gap_note: >-
@@ -14981,9 +15010,9 @@ command_payload_definitions:
           choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
           gap_note: >-
             As recorded on cmd.browser.take_over: the wired BrowserActionRequestV2 lists this command
-            (Plans/section15_browser_program_contracts.schema.json:5130) but requires a closed browser_action whose
-            action_type enum (:377) has no agent-control action; the row changes the takeover state
-            (UI_Command_Catalog.md:841). The definition keeps the wired request and the catalog row's args, maps the
+            (Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2/properties/command_id/enum) but requires a closed browser_action whose
+            action_type enum has no agent-control action; the row changes the takeover state
+            (UI_Command_Catalog.md §2.6A, cmd.browser.let_agent_continue). The definition keeps the wired request and the catalog row's args, maps the
             command onto no action_type, and a handler sends no BrowserActionRequestV2 for it and refuses it with
             handler_unavailable until the browser owner settles the request (DL-341 open_owner_questions).
     - command_id: cmd.browser.stop_agent_keep_browser
@@ -14996,7 +15025,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:842); overlay UCC-061..065 identity browser_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md §2.6A, cmd.browser.stop_agent_keep_browser); overlay UCC-061..065 identity browser_session_id?"
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -15009,7 +15038,7 @@ command_payload_definitions:
           choice: domain_action
           gap_note: >-
             No catalog row states a command_kind; the row ends the agent run and emits
-            browser.session.takeover_state_changed and dev.session.stopped (UI_Command_Catalog.md:842).
+            browser.session.takeover_state_changed and dev.session.stopped (UI_Command_Catalog.md §2.6A, cmd.browser.stop_agent_keep_browser).
         - key: disabled_reason_codes
           choice: [unsupported]
           gap_note: >-
@@ -15018,9 +15047,9 @@ command_payload_definitions:
           choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
           gap_note: >-
             As recorded on cmd.browser.take_over: the wired BrowserActionRequestV2 lists this command
-            (Plans/section15_browser_program_contracts.schema.json:5130) but requires a closed browser_action whose
-            action_type enum (:377) has no agent-control action; the row ends the agent run and keeps the browser
-            (UI_Command_Catalog.md:842). The definition keeps the wired request and the catalog row's args, maps the
+            (Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2/properties/command_id/enum) but requires a closed browser_action whose
+            action_type enum has no agent-control action; the row ends the agent run and keeps the browser
+            (UI_Command_Catalog.md §2.6A, cmd.browser.stop_agent_keep_browser). The definition keeps the wired request and the catalog row's args, maps the
             command onto no action_type, and a handler sends no BrowserActionRequestV2 for it and refuses it with
             handler_unavailable until the browser owner settles the request (DL-341 open_owner_questions).
     - command_id: cmd.browser.promote_to_normal_browsing
@@ -15033,13 +15062,13 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:843); overlay UCC-061..065 identity browser_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md §2.6A, cmd.browser.promote_to_normal_browsing); overlay UCC-061..065 identity browser_session_id?"
         target_workspace_tab_id:
           type: id
           required: false
           default: none
           provenance: canon
-          source: "catalog row payload target_workspace_tab_id? (UI_Command_Catalog.md:843)"
+          source: "catalog row payload target_workspace_tab_id? (UI_Command_Catalog.md §2.6A, cmd.browser.promote_to_normal_browsing)"
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -15052,7 +15081,7 @@ command_payload_definitions:
           choice: domain_action
           gap_note: >-
             No catalog row states a command_kind; the row emits browser.session.promoted
-            (UI_Command_Catalog.md:843), a session-state change.
+            (UI_Command_Catalog.md §2.6A, cmd.browser.promote_to_normal_browsing), a session-state change.
         - key: disabled_reason_codes
           choice: [unsupported]
           gap_note: >-
@@ -15061,9 +15090,9 @@ command_payload_definitions:
           choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
           gap_note: >-
             As recorded on cmd.browser.share_with_agent: the wired BrowserActionRequestV2 lists this command
-            (Plans/section15_browser_program_contracts.schema.json:5130) but requires a closed browser_action whose
-            action_type enum (:377) has no promotion action, and neither the request nor the closed action arguments
-            (:423) has a field for target_workspace_tab_id? (UI_Command_Catalog.md:843). The definition keeps the
+            (Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2/properties/command_id/enum) but requires a closed browser_action whose
+            action_type enum has no promotion action, and neither the request nor the closed argument object
+            of browser_action has a field for target_workspace_tab_id? (UI_Command_Catalog.md §2.6A, cmd.browser.promote_to_normal_browsing). The definition keeps the
             wired request and the catalog row's args, maps the command onto no action_type, and a handler sends no
             BrowserActionRequestV2 for it and refuses it with handler_unavailable until the browser owner settles
             the request (DL-341 open_owner_questions).
@@ -15077,7 +15106,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:844); overlay UCC-061..065 identity browser_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md §2.6A, cmd.browser.reopen); overlay UCC-061..065 identity browser_session_id?"
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -15090,7 +15119,7 @@ command_payload_definitions:
           choice: domain_action
           gap_note: >-
             No catalog row states a command_kind; the row emits browser.session.state_changed
-            (UI_Command_Catalog.md:844), a session-state change.
+            (UI_Command_Catalog.md §2.6A, cmd.browser.reopen), a session-state change.
         - key: disabled_reason_codes
           choice: [unsupported]
           gap_note: >-
@@ -15099,9 +15128,9 @@ command_payload_definitions:
           choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
           gap_note: >-
             As recorded on cmd.browser.share_with_agent: the wired BrowserActionRequestV2 lists this command
-            (Plans/section15_browser_program_contracts.schema.json:5130) but requires a closed browser_action whose
-            action_type enum (:377) has no session recovery action. Its reload, create_tab and close_tab act on a
-            page or tab, while this row answers the recovery banner for the session (UI_Command_Catalog.md:844), so
+            (Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2/properties/command_id/enum) but requires a closed browser_action whose
+            action_type enum has no session recovery action. Its reload, create_tab and close_tab act on a
+            page or tab, while this row answers the recovery banner for the session (UI_Command_Catalog.md §2.6A, cmd.browser.reopen), so
             none stands for it. The definition keeps the wired request and the catalog row's args, maps the command
             onto no action_type, and a handler sends no BrowserActionRequestV2 for it and refuses it with
             handler_unavailable until the browser owner settles the request (DL-341 open_owner_questions).
@@ -15115,7 +15144,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:845); overlay UCC-061..065 identity browser_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md §2.6A, cmd.browser.retry); overlay UCC-061..065 identity browser_session_id?"
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -15128,7 +15157,7 @@ command_payload_definitions:
           choice: domain_action
           gap_note: >-
             No catalog row states a command_kind; the row emits browser.session.state_changed
-            (UI_Command_Catalog.md:845), a session-state change.
+            (UI_Command_Catalog.md §2.6A, cmd.browser.retry), a session-state change.
         - key: disabled_reason_codes
           choice: [unsupported]
           gap_note: >-
@@ -15137,10 +15166,10 @@ command_payload_definitions:
           choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
           gap_note: >-
             As recorded on cmd.browser.share_with_agent: the wired BrowserActionRequestV2 lists this command
-            (Plans/section15_browser_program_contracts.schema.json:5130) but requires a closed browser_action whose
-            action_type enum (:377) has no session recovery action. Its reload acts on a page, and the same
-            command_id enum lists cmd.browser.reload as a separate command (:5167), while this row answers the
-            recovery banner for the session (UI_Command_Catalog.md:845), so reload does not stand for it. The
+            (Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2/properties/command_id/enum) but requires a closed browser_action whose
+            action_type enum has no session recovery action. Its reload acts on a page. The
+            BrowserActionRequestV2.command_id enum separately lists cmd.browser.reload. This row answers the
+            recovery banner for the session (UI_Command_Catalog.md §2.6A, cmd.browser.retry), so reload does not stand for it. The
             definition keeps the wired request and the catalog row's args, maps the command onto no action_type, and
             a handler sends no BrowserActionRequestV2 for it and refuses it with handler_unavailable until the
             browser owner settles the request (DL-341 open_owner_questions).
@@ -15154,7 +15183,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:846); overlay UCC-061..065 identity browser_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md §2.6A, cmd.browser.keep_closed); overlay UCC-061..065 identity browser_session_id?"
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -15167,7 +15196,7 @@ command_payload_definitions:
           choice: domain_action
           gap_note: >-
             No catalog row states a command_kind; the row closes the session and emits browser.session.closed
-            (UI_Command_Catalog.md:846).
+            (UI_Command_Catalog.md §2.6A, cmd.browser.keep_closed).
         - key: disabled_reason_codes
           choice: [unsupported]
           gap_note: >-
@@ -15176,29 +15205,24 @@ command_payload_definitions:
           choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
           gap_note: >-
             As recorded on cmd.browser.share_with_agent: the wired BrowserActionRequestV2 lists this command
-            (Plans/section15_browser_program_contracts.schema.json:5130) but requires a closed browser_action whose
-            action_type enum (:377) has no session recovery action. Its close_tab acts on a tab, while this row
-            answers the recovery banner by keeping the session closed (UI_Command_Catalog.md:846), so close_tab does
+            (Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2/properties/command_id/enum) but requires a closed browser_action whose
+            action_type enum has no session recovery action. Its close_tab acts on a tab, while this row
+            answers the recovery banner by keeping the session closed (UI_Command_Catalog.md §2.6A, cmd.browser.keep_closed), so close_tab does
             not stand for it. The definition keeps the wired request and the catalog row's args, maps the command
             onto no action_type, and a handler sends no BrowserActionRequestV2 for it and refuses it with
             handler_unavailable until the browser owner settles the request (DL-341 open_owner_questions).
   results:
-    BrowserDevToolsOpenResultV1:
-      fields:
-        devtools_session_id: {type: id, required: true, default: none, provenance: gap, gap_note: "named at Section15_MVP_Promoted_Features_Spec.md:9953 (Browser Action Table output fields); no typed contract exists. The owner_result judgment of cmd.browser.open_devtools records the RouteResult and BrowserActionResultV2 sides of the canon conflict"}
-        boundary_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "named at Section15_MVP_Promoted_Features_Spec.md:9953; no typed contract exists"}
-        opened_at_utc: {type: timestamp, required: true, default: none, provenance: gap, gap_note: "named at Section15_MVP_Promoted_Features_Spec.md:9953; no typed contract exists"}
     BrowserShareWithAgentResultV1:
       fields:
-        share_receipt_id: {type: id, required: true, default: none, provenance: gap, gap_note: "named at Section15_MVP_Promoted_Features_Spec.md:9950 (Browser Action Table output fields); no typed contract exists"}
-        target_agent_id: {type: id, required: true, default: none, provenance: gap, gap_note: "named at Section15_MVP_Promoted_Features_Spec.md:9950; no typed contract exists"}
+        share_receipt_id: {type: id, required: true, default: none, provenance: gap, gap_note: "listed in the output fields of cmd.browser.share_with_agent in Browser Action Table And Timeouts; no typed contract exists"}
+        target_agent_id: {type: id, required: true, default: none, provenance: gap, gap_note: "listed in the output fields of cmd.browser.share_with_agent in Browser Action Table And Timeouts; no typed contract exists"}
         artifact_refs:
           type: list
           item: {type: ref}
           required: true
           default: none
           provenance: gap
-          gap_note: "named at Section15_MVP_Promoted_Features_Spec.md:9950; item type ref by suffix; no typed contract exists"
+          gap_note: "listed in the output fields of cmd.browser.share_with_agent in Browser Action Table And Timeouts; item type ref by suffix; no typed contract exists"
 ```
 
 ### SMPFS-329 - Terminal, dev-session and catalog command payload definitions
@@ -15550,8 +15574,8 @@ command_payload_definitions:
             Canon names "command replay or shell profile hints" (UI_Command_Catalog.md:888) without a field
             shape. JUDGMENT: command_ref, type ref, optional, for the replay hint; the overlay's command_ref?
             identity is the candidate name. The hint is never replayed automatically: a restart records the
-            newly resolved environment without automatic command replay (SMPFS-164 acceptance criterion,
-            Section15_MVP_Promoted_Features_Spec.md:11666-11669).
+            newly resolved environment without automatic command replay (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-164,
+            Environment Provenance And Pending Launch Changes acceptance criteria).
       owner_request: Plans/shared_runtime_command_contracts.schema.json#/$defs/TerminalActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -19167,3 +19191,143 @@ negative_constraints:
 - Preparation is not admission, native execution, checkpoint authority, readiness, or a governance seal.
 - No registry entry, Decision Log entry, retention policy or competing-owner decision is created.
 ```
+
+## Terminal Protocol Fixture Rows And Terminal Record Wire Contract — 2026-11-25
+
+This addendum completes `### Terminal Fixture Matrix And Record Minima` (FABLE Deferred Action Concrete Repair Addendum) for `#SMPFS-124` and `#SMPFS-125` through `#SMPFS-136`. It supplies the fixture rows that the matrix format only described, and gives each of the eleven record minima a closed wire shape and an owner. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, storage families or EventRecord families, and it changes no behaviour that `#SMPFS-127`, `#SMPFS-129`, `#SMPFS-130`, `#SMPFS-158`, `#SMPFS-162`, `#SMPFS-181` or `#SMPFS-183` already state; each expected result below is that unit's rule applied to one byte stream.
+
+### Terminal protocol fixture rows
+
+**Replay inputs.** The `input_bytes` column is the replay byte stream itself. It is written with C escapes: `\e` is 0x1B, `\a` is 0x07, `\r` is 0x0D, `\n` is 0x0A, `\\` is one backslash, `\xHH` is the byte HH, and every other character is its ASCII byte. `<S>` stands for the fixture session's shell-integration secret, which the harness mints per run and substitutes before replay. `<N × c>` stands for exactly N copies of the byte `c` (N written in decimal), so a long stream is still one exact byte sequence. When a row calls for a fixture file or shared-memory object, the harness recreates it before each replay from the stated path or name and bytes, then applies the row's platform-specific resource check afterwards. On native Windows the harness maps a `/tmp/` or `/var/tmp/` path to the matching folder under its own temporary folder and substitutes the base64 of the mapped path. For shared memory use the native Windows mapping name and base64 substitution below. A row whose input is a user action (paste, focus change, mouse click, pasteboard content) states the action and the bytes Puppet Master must write to the PTY. The `input_bytes` column, after these substitutions and the shell-integration rewrite below, is the normative replay data; no replay file or screen hash is checked into `Plans/`, because the planning phase has no reference parser and `<S>` is minted per run. The matrix's grouping fields map onto each row as follows. `input_bytes_ref` names the corpus file `terminal-fixtures/<fixture_id>.bin` that the build's harness writes from the decoded `input_bytes` (with `<S>` and any mapped path or name substituted and the shell-integration forms rewritten) before each replay. `expected_screen_hash` is the SHA-256 of the reference parser's screen state after replay. Pin it in the corpus manifest only when the reference parser exists and passes every assertion in the row, including the independently computed plain-text expectation where specified below. Wire spellings that yield different visible text have separate pins keyed by the manifest's byte template. `expected_event_refs[]` are the records the row's `expected_result` names, compared as normalized records (below); a row that names none expects none beyond the session's ingestion, backpressure and render records. The assertions in `expected_result` are normative; the hash only detects later drift.
+
+**Native Windows shared-memory setup and oracle.** For `tpf-kitty-shm` and `tpf-kitty-remote-temp-shm`, substitute `TG9jYWxccG0tZml4dHVyZS1zaG0=` (base64 of `Local\pm-fixture-shm`) for `L3BtLWZpeHR1cmUtc2ht` before writing the `.bin` file. Run these replays serially in the same Windows session as the parser. Before each replay the harness creates a fresh six-byte pagefile-backed mapping with `CreateFileMappingW`, writes six zero bytes and unmaps its setup view. For `tpf-kitty-shm` the harness closes its sole creation handle as soon as the parser's real `OpenFileMappingW` succeeds, before letting the parser continue. After the reply settles and before session teardown, assert that the parser successfully unmapped every view and closed every handle it acquired for the mapping. The harness then probes with `OpenFileMappingW(FILE_MAP_READ, FALSE, name)` and expects `NULL` with `GetLastError() == ERROR_FILE_NOT_FOUND`. For `tpf-kitty-remote-temp-shm` the harness keeps its creation handle through the probe. Assert zero parser attempts to open or map the object, then require the same probe to succeed and a read-only view of the reopened mapping to contain the same six zero bytes. The harness releases its probe and creation references after checking. After the seal, amend `Plans/Automated_Testing_System.md#ATS-076` to check POSIX unlinking on macOS, Linux and WSL, and on native Windows to use the mapping release and refusal checks above under `#SMPFS-181` (DL-182).
+
+**Shell-integration encoding.** The `shell_integration` rows write Puppet Master's secret-carrying marks and private records in the concept-lineage spellings of `#SMPFS-183`: the `;pmn=<secret>` parameter on an OSC 133 mark, `\e]6973;<secret>;E;<base64 command line>\a` and `\e]6973;<secret>;W;<who>\a`. `#SMPFS-183` leaves the native sequences to the engine, so in these rows the three spellings stand for the engine's admitted encoding; they are not wire requirements. The build's corpus manifest declares that encoding as one byte template per form, each with a slot for the secret value and a slot for the form's own value (the OSC 133 mark letter with its other parameters, the base64 command line, or `<who>`), and each template is exactly the bytes the engine's own shell-integration scripts emit and its parser admits for that form. Before replay, and before the `.bin` file is written, the harness rewrites every lineage form in the decoded stream into its template. Substitute the minted secret for `<S>` and keep wrong values such as `wrong` or `bad` unchanged. If a negative row's wrong value happens to equal the minted secret, mint again before building its stream. An OSC 133 mark without a `pmn` parameter (`tpf-osc133-forged`, `tpf-osc133-bare-key`) is the public mark and is never rewritten, and neither is `\e]633;A\a` (`tpf-osc633-foreign`) or any byte outside the three forms. When the engine admits the lineage spellings themselves, the rewrite changes nothing.
+
+**Plain-text oracle.** For each unauthenticated mark or record the row identifies, the harness takes its exact bytes after rewriting and constructs the inert visible text using `#SMPFS-183`'s byte rule. It compares the resulting grid cells and cursor against a reference text write at that point in the stream, with all other screen effects in stream order. For a lineage-encoded wrong-secret `A` mark the first row reads literally `\x1B]133;A;pmn=wrong\x07`. This expectation is computed independently of the tested parser. No rejected mark or record may create a semantic boundary, supply command metadata, or produce an active control effect. Only the inert rendering of an already identified rejected record may depend on the admitted wire spelling.
+
+**Harness defaults.** 80 columns by 24 rows, main screen, terminal focused, user looking at the tab, local session typed by the user, OSC 52 policy `allow`, bracketed paste, focus reporting, mouse reporting and synchronized output off until the stream enables them. A row states any change to these.
+
+**OSC 7 setup.** For both `cwd_report` rows, the harness supplies `pm-fixture.example` to the parser through its normal source of local-host identity. Use that fixed identity for every replay, independent of the test machine's hostname or DNS. Initialize the session's reported current folder to `/` on macOS, Linux and WSL, and `C:\` on native Windows. Select each row's literal byte template for the parser build, decode the C escapes and write those bytes to `terminal-fixtures/<fixture_id>.bin` before replay.
+
+**Replay schedule.** On each macOS, Linux, Windows and WSL parser build, replay each row whole and at every byte boundary in two reads (`#SMPFS-130`), except for the four oversized rows named below. All splits of a materialized stream use its same bytes, including its fixture secret. Replays of the same materialized bytes and initial state must give identical screen state, PTY replies and normalized records on all four builds. When a build's admitted encoding or a platform substitution changes the bytes, that build must still pass every applicable assertion in the row, including the plain-text oracle on its rewritten bytes and the resource checks for that platform. Control sequence fragments never leak into the grid at a read boundary. For each kitty error assert the exact PTY reply shown, including the numeric image ID in the protocol wrapper and the fixed error message under `#SMPFS-181`. Check the normalized records at emission, before the diagnostic history's eviction rule. They are every record emitted while the stream is replayed except `TerminalIngestionReceipt`, `TerminalBackpressureState` and `TerminalRenderFrame`, in emission order, with the fields each run mints itself removed (`terminal_session_id`, the record's own identifier `receipt_id`, `event_id`, `anchor_id`, `decision_id`, `snapshot_id` or `diagnostic_id`, and every field ending `_utc`) and each `ref` replaced by the content it names; the session-start `TerminalProfileResolution` is not part of a replay. The three excluded records follow read boundaries and paint timing, so a split replay legitimately yields more of them and different `byte_count` and `protocol_family` values (a read can end inside an OSC). For them every replay checks that the emitted `accepted_by_pty` receipts and the emitted `parsed_to_grid` receipts each sum their `byte_count`, accepted or rejected, to the length of the materialized stream, that every receipt is `accepted: true` unless the row names a rejection, and that the last render frame's `screen_hash` is the hash of the final screen state. A row's own frame assertion (such as `tpf-sync-update`) must hold in every replay.
+
+For `tpf-osc52-oversize`, `tpf-kitty-oversize`, `tpf-sixel-oversize` and `tpf-iterm2-part-oversize`, use the full materialized stream and production limits for five replays, each from the same initial state. Replay once whole, once with one byte per read to exercise every boundary, and three times in two reads, after byte 1, after byte `floor(length / 2)` and after the penultimate byte. Count receipts at emission with running totals. Each replay must satisfy the row and the same screen, reply and record assertions above. The schedule reads five times the stream length per row per build.
+
+| fixture_id | protocol_family | input_bytes | negative_case | expected_result |
+| --- | --- | --- | --- | --- |
+| `tpf-osc52-write` | `clipboard` | `\e]52;c;aGVsbG8=\a` | false | Clipboard write of `hello` is requested under the OSC 52 policy; `TerminalOscEvent{osc_code: "52", allowed: true}`; grid unchanged. |
+| `tpf-osc52-unfocused` | `clipboard` | `\e]52;c;aGVsbG8=\a` with the terminal unfocused | true | No clipboard write; `TerminalOscEvent{osc_code: "52", allowed: false, blocked_reason_code: osc52_unfocused}` (DL-228 in `#SMPFS-183`). |
+| `tpf-osc52-read` | `clipboard` | `\e]52;c;?\a` | true | No reply is written to the PTY; `blocked_reason_code: osc52_read_refused`. |
+| `tpf-osc52-oversize` | `clipboard` | `\e]52;c;` + base64 of 1,048,577 bytes of `A` + `\aX` | true | Write ignored; `blocked_reason_code: osc52_over_size`; the parser returns to ground state, so the `X` after the BEL prints at the cursor (row 0, column 0) and nothing else is in the grid. |
+| `tpf-osc52-policy-deny` | `clipboard` | `\e]52;c;aGVsbG8=\a` with OSC 52 policy `deny` | true | No clipboard write; `blocked_reason_code: osc52_policy_denied`. |
+| `tpf-osc8-link` | `hyperlink` | `\e]8;;https://example.com/\e\\link\e]8;;\e\\` | false | Cells 0–3 of row 0 hold `link` with link target `https://example.com/`; cell 4 has no link; nothing opens. |
+| `tpf-osc8-remote-file` | `hyperlink` | `\e]8;;file://otherhost/etc/hosts\e\\x\e]8;;\e\\` | true | The cell holds `x` with target host `otherhost`; the target is never resolved as a local path (`#SMPFS-183`). |
+| `tpf-osc9-4-progress` | `progress` | `\e]9;4;1;42\a` | false | Determinate session-advisory progress 42; no notification and no attention mark (`#SMPFS-162`). |
+| `tpf-osc9-4-invalid` | `progress` | `\e]9;4;1;250\a` | true | Ignored or diagnosed as invalid progress; it never falls through to a notification. |
+| `tpf-osc9-notify` | `notification` | `\e]9;Build done\a` with the user not looking at the tab | false | The tab's attention mark is set and announced politely; the text is shown as plain text; no new notification family. |
+| `tpf-osc777-notify` | `notification` | `\e]777;notify;Title;Body\a` with the user not looking at the tab | false | Same result as `tpf-osc9-notify`. |
+| `tpf-osc99-notify` | `notification` | `\e]99;;Hello\e\\` with the user not looking at the tab | false | Same result as `tpf-osc9-notify`. |
+| `tpf-bel` | `notification` | `\a` with the user not looking at the tab | false | Visual bell per the look and the tab's attention mark; no audible bell. |
+| `tpf-osc133-secret` | `shell_integration` | `\e]133;A;pmn=<S>\a$ \e]133;B;pmn=<S>\als\r\n\e]133;C;pmn=<S>\aout\r\n\e]133;D;0;pmn=<S>\a` | false | Exactly one command block: prompt `$ `, command `ls`, output `out`, exit status 0. |
+| `tpf-osc133-forged` | `shell_integration` | `\e]133;A\a$ \e]133;B\a` with requested shell-integration tier `rich` and no verified shell-integration capability in the session | true | After replay the session reports requested tier `rich` and effective tier `opaque` (`#SMPFS-021`). No command block or boundary. The grid shows `\x1B]133;A\x07$ \x1B]133;B\x07` under the plain-text oracle. |
+| `tpf-osc133-wrong-secret` | `shell_integration` | `\e]133;A;pmn=wrong\a` | true | No command block or boundary. The grid and cursor match the plain-text oracle for the rewritten wrong-secret `A` mark. |
+| `tpf-osc133-bare-key` | `shell_integration` | `\e]133;A;k\a` | true | No crash or boundary (`#SMPFS-129`). The grid shows `\x1B]133;A;k\x07` under the plain-text oracle. |
+| `tpf-osc633-foreign` | `shell_integration` | `\e]633;A\a` | true | No command block or boundary. The grid shows `\x1B]633;A\x07` under the plain-text oracle. |
+| `tpf-osc6973-command` | `shell_integration` | `\e]133;A;pmn=<S>\a$ \e]133;B;pmn=<S>\a\e]6973;<S>;E;bHMgLWxh\a\r\n\e]133;C;pmn=<S>\aout\r\n\e]133;D;0;pmn=<S>\a` | false | Exactly one command block: prompt `$ `, output `out`, exit status 0, and command line `ls -la`, which can come only from the `E` record because the stream echoes no command text; the record is consumed and not shown. |
+| `tpf-osc6973-forged` | `shell_integration` | the `tpf-osc6973-command` stream with `\e]6973;bad;E;bHMgLWxh\a` in place of its `E` record | true | The authenticated marks still create one command block with exit status 0. The grid shows the rejected `E` record at its input position under the plain-text oracle. No command line is recorded, including `ls -la`. |
+| `tpf-osc6973-who` | `shell_integration` | `\e]133;A;pmn=<S>\a$ \e]133;B;pmn=<S>\a\e]6973;<S>;W;user\als\r\n\e]133;C;pmn=<S>\aout\r\n\e]133;D;0;pmn=<S>\a` | false | Exactly one command block as in `tpf-osc133-secret`, whose `by` is the user (`#SMPFS-183`: `<who>` is `user` for the user and the agent's name for an agent); the record is consumed and not shown. |
+| `tpf-osc6973-who-forged` | `shell_integration` | the `tpf-osc6973-who` stream with `\e]6973;bad;W;fixture-agent\a` in place of its `W` record. `fixture-agent` is a known agent name in the harness and the actual writer is the user. | true | The authenticated marks still create one command block with exit status 0. The emitted command record omits `by` or sets it to `null` because no trusted `W` record attributed the command (CV-362 and SMPFS-182). The grid shows the rejected `W` record at its input position under the plain-text oracle. |
+| `tpf-osc7-cwd` | `cwd_report` | macOS/Linux/WSL: `\e]7;file://pm-fixture.example/home/u/proj\a`. Native Windows: `\e]7;file://pm-fixture.example/C:/pm-fixture/proj\a`. | false | The report matches the session's local host and sets its current folder to exactly `/home/u/proj` on macOS/Linux/WSL or `C:\pm-fixture\proj` on native Windows. |
+| `tpf-osc7-remote` | `cwd_report` | macOS/Linux/WSL: `\e]7;file://otherhost/home/u/proj\a`. Native Windows: `\e]7;file://otherhost/C:/pm-fixture/proj\a`. | true | The local current folder stays `/` on macOS/Linux/WSL and `C:\` on native Windows. |
+| `tpf-bpaste-on` | `bracketed_paste` | stream `\e[?2004h`, then the user pastes `abc` | false | PTY receives `\e[200~abc\e[201~`. |
+| `tpf-bpaste-off` | `bracketed_paste` | stream `\e[?2004h\e[?2004l`, then the user pastes `abc` | false | PTY receives `abc`. |
+| `tpf-bpaste-controls` | `bracketed_paste` | stream `\e[?2004h`, then the user pastes `x\e[201~rm -rf ~\r` | true | Nothing is written until the control-character confirmation (`#SMPFS-127`); the pasted ESC byte is never written raw, so the paste cannot close the bracket early. |
+| `tpf-focus` | `focus` | stream `\e[?1004h`, then focus out, then focus in | false | PTY receives `\e[O` then `\e[I`; with `?1004` never set, no bytes. |
+| `tpf-mouse-sgr` | `mouse` | stream `\e[?1000h\e[?1006h`, then a left press and release at column 5, row 3 (1-based) | false | PTY receives `\e[<0;5;3M` then `\e[<0;5;3m`. |
+| `tpf-mouse-utf8` | `mouse` | stream `\e[?1000h\e[?1005h` on a 400-column grid, then a left press at column 300, row 2 | false | PTY receives `\e[M \xc5\x8c"`. |
+| `tpf-sync-update` | `sync_update` | `\e[?2026hAB\e[?2026l` | false | No frame shows `A` without `B`; one frame after `\e[?2026l` shows `AB`. |
+| `tpf-sync-query` | `sync_update` | `\e[?2026$p` | false | PTY receives `\e[?2026;2$y`. |
+| `tpf-alt-screen` | `alt_screen` | `main\e[?1049hALT\e[?1049l` | false | The main screen shows `main` with the cursor where it was; `ALT` is in no scrollback and in no saved copy (`Plans/storage-plan.md#SP-332`). |
+| `tpf-xtversion` | `negotiation` | `\e[>0q` | false | PTY receives `\eP>\|PuppetMaster <version>\e\\`. |
+| `tpf-scheme-report` | `negotiation` | `\e[?996n` | false | PTY receives `\e[?997;1n` when the drawn scheme's ground is dark and `\e[?997;2n` when it is light. |
+| `tpf-csi-u-set` | `kitty_keyboard` | `\e[?u\e[=1;1u\e[?u` | false | PTY receives exactly `\e[?0u` then `\e[?1u`. Set replaces the active flags with `1` and emits no reply by itself (`#SMPFS-158`). |
+| `tpf-csi-u-stack` | `kitty_keyboard` | `\e[?u\e[>1u\e[?u\e[<u\e[?u` | false | PTY receives `\e[?0u`, `\e[?1u`, `\e[?0u` in that order; input stays legacy until the push (`#SMPFS-158`). |
+| `tpf-csi-u-alt-stack` | `kitty_keyboard` | `\e[>1u\e[?1049h\e[?u\e[?1049l\e[?u` | false | PTY receives `\e[?0u` then `\e[?1u`: the alternate screen has its own stack. |
+| `tpf-kitty-chunked` | `kitty_graphics` | `\e_Ga=T,f=24,s=2,v=1,i=1,m=1;AAAA\e\\\e_Gm=0;AAAA\e\\` | false | One 2 by 1 px black image placed at the cursor; PTY receives `\e_Gi=1;OK\e\\` once, after the last chunk. |
+| `tpf-kitty-proc-file` | `kitty_graphics` | `\e_Ga=T,t=f,i=2;L3Byb2Mvc2VsZi9lbnZpcm9u\e\\` | true | No file is opened; PTY receives `\e_Gi=2;EBADF:Failed to read image file\e\\` (`#SMPFS-181`). |
+| `tpf-kitty-local-file` | `kitty_graphics` | `\e_Ga=T,t=f,f=24,s=2,v=1,i=5;L3RtcC9wbS1maXh0dXJlL2ltZy5yZ2I=\e\\` (path `/tmp/pm-fixture/img.rgb`, a regular file of `<6 × \x00>` the harness creates) | false | One 2 by 1 px black image placed at the cursor; PTY receives `\e_Gi=5;OK\e\\`; the file still exists afterwards (a plain file medium is never deleted). |
+| `tpf-kitty-remote-file` | `kitty_graphics` | `\e_Ga=T,t=f,f=24,s=2,v=1,i=4;L3RtcC9wbS1maXh0dXJlL2ltZy5yZ2I=\e\\` (the `tpf-kitty-local-file` file), replayed once in an SSH session and once as output of a command an agent typed | true | No file is opened and no image is placed; PTY receives `\e_Gi=4;EBADF:Failed to read image file\e\\` in both replays; only direct transmission is accepted there. |
+| `tpf-kitty-temp-file` | `kitty_graphics` | `\e_Ga=T,t=t,f=24,s=2,v=1,i=6;L3RtcC90dHktZ3JhcGhpY3MtcHJvdG9jb2wtcG0tZml4dHVyZS5yZ2I=\e\\` (path `/tmp/tty-graphics-protocol-pm-fixture.rgb`, a regular file of `<6 × \x00>`) | false | One 2 by 1 px black image placed at the cursor; PTY receives `\e_Gi=6;OK\e\\`. On macOS, Linux and WSL the file is deleted after reading. On native Windows the mapped file still exists after reading because the harness's temporary folder is outside the deletion roots in `#SMPFS-181`. |
+| `tpf-kitty-temp-file-no-token` | `kitty_graphics` | `\e_Ga=T,t=t,f=24,s=2,v=1,i=7;L3RtcC9wbS1maXh0dXJlL2ltZy5yZ2I=\e\\` (path `/tmp/pm-fixture/img.rgb`) | false | Image placed and `\e_Gi=7;OK\e\\`; the file is not deleted, because its path does not contain `tty-graphics-protocol`. |
+| `tpf-kitty-temp-file-outside` | `kitty_graphics` | `\e_Ga=T,t=t,f=24,s=2,v=1,i=8;L3Zhci90bXAvdHR5LWdyYXBoaWNzLXByb3RvY29sLXBtLWZpeHR1cmUucmdi\e\\` (path `/var/tmp/tty-graphics-protocol-pm-fixture.rgb`, a regular file of `<6 × \x00>`) | false | Image placed and `\e_Gi=8;OK\e\\`; the file is not deleted, because temporary files are deleted only inside `/tmp` or `/dev/shm`. |
+| `tpf-kitty-shm` | `kitty_graphics` | `\e_Ga=T,t=s,f=24,s=2,v=1,i=9;L3BtLWZpeHR1cmUtc2ht\e\\` (the harness creates the POSIX object `/pm-fixture-shm` or the native Windows mapping above, each of `<6 × \x00>`) | false | A 2 by 1 px black image is placed and the PTY receives `\e_Gi=9;OK\e\\`. On macOS, Linux and WSL the object is unlinked after reading and `shm_open` without `O_CREAT` fails with `ENOENT`. On native Windows apply the mapping release and failed reopen checks above. |
+| `tpf-kitty-remote-temp-shm` | `kitty_graphics` | `\e_Ga=T,t=t,f=24,s=2,v=1,i=10;L3RtcC90dHktZ3JhcGhpY3MtcHJvdG9jb2wtcG0tZml4dHVyZS5yZ2I=\e\\\e_Ga=T,t=s,f=24,s=2,v=1,i=11;L3BtLWZpeHR1cmUtc2ht\e\\` (the `tpf-kitty-temp-file` file and the `tpf-kitty-shm` object or mapping), replayed once in an SSH session and once as output of a command an agent typed | true | No image is placed; PTY receives `\e_Gi=10;EBADF:Failed to read image file\e\\` then `\e_Gi=11;EBADF:Failed to read image file\e\\`. The parser opens neither resource and the file still exists. On macOS, Linux and WSL `shm_open` without `O_CREAT` reopens the object and a read-only mapping contains the same six zero bytes. On native Windows apply the untouched mapping and successful reopen checks above. |
+| `tpf-kitty-oversize` | `kitty_graphics` | `\e_Ga=T,f=24,s=1,v=1,i=3;<8388609 × A>\e\\` (one APC command over 8 MiB) | true | Command dropped; PTY receives `\e_Gi=3;EFBIG:Too much data\e\\`; no freeze. |
+| `tpf-kitty-delete` | `kitty_graphics` | the 22 cases `tpf-kitty-delete-<selector>` in the delete-selector table below this one, one per selector `a A i I n N c C f F p P q Q r R x X y Y z Z`, each the shared setup stream followed by the exact case bytes | false | Each placement selector removes exactly the placements its row names, and its uppercase twin also frees image data if that image has no placement left anywhere, scrollback included. The `f`/`F` pair uses its frame-specific assertion below. |
+| `tpf-sixel` | `sixel` | `\ePq#0;2;100;0;0#0!6~\e\\` | false | One 6 by 6 px red image at the cursor; the cursor moves below it. With `\e[?80h` first, the image sits at the top left and the cursor stays where it was. |
+| `tpf-sixel-oversize` | `sixel` | `\ePq<25165825 × ?>\e\\X` (one DCS sixel sequence whose data alone is 24 MiB + 1 byte, then `X`) | true | Sequence dropped and no image; parser back in ground state, so `X` prints at the cursor; no freeze. |
+| `tpf-iterm2-single` | `iterm2_image` | `\e]1337;File=inline=1;size=70:iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==\a` | false | One 1 by 1 px image at the cursor. |
+| `tpf-iterm2-multipart` | `iterm2_image` | `\e]1337;MultipartFile=inline=1;size=70\a\e]1337;FilePart=iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAA\a\e]1337;FilePart=DUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==\a\e]1337;FileEnd\a` | false | Same image as `tpf-iterm2-single`. |
+| `tpf-iterm2-part-oversize` | `iterm2_image` | `\e]1337;MultipartFile=inline=1;size=1048577\a\e]1337;FilePart=<1398100 × A>AAA=\a\e]1337;FileEnd\aX` (one part carrying the base64 of 1,048,577 zero bytes, over 1 MiB whether counted as base64 text or decoded bytes, then `X`) | true | The upload is refused; no image; parser back in ground state, so `X` prints at the cursor; no freeze. |
+| `tpf-utf8-zwj` | `c0_text` | `\xf0\x9f\x91\xa9\xe2\x80\x8d\xf0\x9f\x92\xbb` | false | One grapheme in two cells; no crash, also when split inside any of its bytes. |
+| `tpf-unknown-osc` | `osc` | `\e]4242;x\a` | true | Consumed and not shown; `TerminalOscEvent{osc_code: "4242", allowed: false, blocked_reason_code: unsupported_sequence}`. |
+| `tpf-paste-flavours` | `pasteboard` | the user pastes from a pasteboard holding `text/plain` `a.txt` and `text/uri-list` `file:///tmp/a.txt` | false | `a.txt` is inserted as plain text; the file flavour is used only through an explicit URI action (`#SMPFS-127`, `#SMPFS-136`). |
+
+**Delete-selector cases (`tpf-kitty-delete`).** Every case starts from the same setup stream, which places three one-cell images and returns the cursor to the top left; `q=1` suppresses the `OK` replies, so the setup writes nothing to the PTY:
+
+`\e_Ga=T,f=24,s=2,v=1,i=1,q=1;AAAAAAAA\e\\\e[1;5H\e_Ga=T,f=24,s=2,v=1,i=2,z=-1,q=1;AAAAAAAA\e\\\e[3;1H\e_Ga=T,f=24,s=2,v=1,I=7,q=1;AAAAAAAA\e\\\e[1;1H`
+
+Image 1 is placed at row 1, column 1; image 2 at row 1, column 5 with z-index −1; the image numbered 7 at row 3, column 1 (rows, columns and the `x`/`y` keys below are 1-based cells). For placement selectors, a lowercase case keeps the image data of what it removes. Its uppercase twin removes the same placements and frees data for images with no placement left. Each uppercase twin has a separate fixture id ending in `-upper` so the replay files stay distinct on case-insensitive file systems. Nothing outside a row's removed set changes.
+
+| fixture_id (lowercase / uppercase) | delete command after the setup (lowercase; the uppercase twin differs only in the `d=` letter) | placements removed |
+| --- | --- | --- |
+| `tpf-kitty-delete-a` / `tpf-kitty-delete-a-upper` | `\e_Ga=d,d=a\e\\` | images 1, 2 and 7: every visible placement |
+| `tpf-kitty-delete-i` / `tpf-kitty-delete-i-upper` | `\e_Ga=d,d=i,i=1\e\\` | image 1 |
+| `tpf-kitty-delete-n` / `tpf-kitty-delete-n-upper` | `\e_Ga=d,d=n,I=7\e\\` | the image numbered 7 |
+| `tpf-kitty-delete-c` / `tpf-kitty-delete-c-upper` | `\e_Ga=d,d=c\e\\` | image 1 (the one under the cursor) |
+| `tpf-kitty-delete-f` / `tpf-kitty-delete-f-upper` | `\e_Ga=f,i=1,f=24,s=2,v=1,q=1;////////\e\\\e_Ga=d,d=f,i=1,r=2\e\\` (the first command appends the white frame as frame 2 of image 1) | Both selectors leave all placements intact. Image 1 has exactly one frame, its black root frame, and shows it at row 1, column 1. |
+| `tpf-kitty-delete-p` / `tpf-kitty-delete-p-upper` | `\e_Ga=d,d=p,x=5,y=1\e\\` | image 2 (the one intersecting cell 5,1) |
+| `tpf-kitty-delete-q` / `tpf-kitty-delete-q-upper` | `\e_Ga=d,d=q,x=5,y=1,z=-1\e\\` | image 2 (cell 5,1 at z-index −1) |
+| `tpf-kitty-delete-r` / `tpf-kitty-delete-r-upper` | `\e_Ga=d,d=r,x=1,y=1\e\\` | image 1 (image ids 1 to 1) |
+| `tpf-kitty-delete-x` / `tpf-kitty-delete-x-upper` | `\e_Ga=d,d=x,x=5\e\\` | image 2 (column 5) |
+| `tpf-kitty-delete-y` / `tpf-kitty-delete-y-upper` | `\e_Ga=d,d=y,y=3\e\\` | the image numbered 7 (row 3) |
+| `tpf-kitty-delete-z` / `tpf-kitty-delete-z-upper` | `\e_Ga=d,d=z,z=-1\e\\` | image 2 (z-index −1) |
+
+`tpf-osc133-forged` checks `#SMPFS-124`'s requested-versus-effective downgrade against the session's disclosed shell-integration tiers. `tpf-osc133-wrong-secret` and `tpf-osc633-foreign` also check that unverified marks yield no command block (`#SMPFS-129` and `#SMPFS-183`). `tpf-unknown-osc` checks refusal of an unsupported OSC.
+
+### Terminal record wire contract
+
+The eleven records of `### Terminal Fixture Matrix And Record Minima` are values of the Puppet Master terminal engine (`#SMPFS-184`). Their owner is the engine instance of the one terminal session named by `terminal_session_id` (`TerminalProfileResolution`: the engine instance that is starting that session). The engine keeps its live history in memory, subject to the limits below, and drops any remaining live history when the session ends. Disk writes follow the boundaries below. None of them is a storage family, a storage value, an EventRecord or a seglog row. What a terminal keeps across restarts is exactly what `Plans/storage-plan.md#SP-332` keeps (the session record and the saved scrollback with its command records); none of these eleven is added to it, and a restored tab mints new anchors rather than reading old ones.
+
+**Bounded history.** The engine keeps a single recent diagnostic history per session, with at most 1,024 records and at most 1 MiB of their serialized UTF-8 wire bytes across all eleven record types. Append in emission order and evict oldest first until both limits fit. Skip retaining an entry that exceeds the byte limit by itself. Release evicted entries and keep no separate per-type history, tombstones, or referenced payload copies. A historical reference is a correlation label. A live read or transport resolves content only through its existing owner and backing lifetime. Keep current backpressure and other live state in the existing owner buffers. Sending a frame, input event, anchor or accessibility snapshot does not add a retained copy outside this budget.
+
+Update fixed-size, saturating unsigned 64-bit stage totals on receipt emission for both receipt count and `byte_count`, split by `accepted` and, on refusal, `rejected_reason_code`. Keep one saturating count of entries evicted or too large to retain. Terminal diagnostics and the bundle's diagnostic summary show that count when nonzero and identify the detail as partial. These totals account for older activity after its individual receipts expire. Dropping diagnostic detail does not drop PTY bytes, reset a loss counter, or change saved scrollback or the read state of a range.
+
+**Export policy.** A user-requested diagnostic bundle under `#SMPFS-076` takes a snapshot of the recent history and its counters at the time of capture. It copies only retained records whose row names the diagnostic bundle. Keep at most one record snapshot per session in flight, bounded by the same record and byte limits as the live history. The requested write owns that snapshot. Reuse it for serialization and release it at write settlement. Subsequent requests for that session take their snapshot after that release, without holding up PTY ingestion or painting. The content behind a `payload_ref`, `env_summary_ref` or `message_ref` stays out unless `#SMPFS-076` allows it as explicitly included transcript content; transcript excerpts come from their existing owner. `TerminalRenderFrame`, `TerminalScrollbackAnchor` and `TerminalAccessibilitySnapshot` name no bundle and are never in one. A bundle is never read back to restore a session or a record. Writing it passes FileSafe's redaction (`Plans/FileSafe.md#F2-195`) and trace persistence steps (`Plans/FileSafe.md#section=Trace persistence limits and sampling rule (2026-11-25)`, quota class `support_bundle`). A runless bundle uses the required `run_id = null`, `quota_owner_kind = diagnostic_bundle` and `quota_owner_id` equal to the exact bundle request ID. When the bundle includes transcript bytes, the session's `TerminalIngestionReceipt` with `stage` `diagnostic_exported` records them by the table's per-read rule. No other export, sync or backup carries one of these records.
+
+**Terminal diagnostic log writes.** FileSafe may also write a redacted `TerminalDiagnosticsEnvelope` to the ordinary terminal diagnostic log under `#SMPFS-076`. This write carries diagnostic metadata and no transcript or content behind `message_ref`. Outside a run, the trace envelope carries `run_id = null`, `quota_owner_kind = terminal_session` and `quota_owner_id` equal to the exact terminal session ID.
+
+For each `TerminalDiagnosticsEnvelope` written to the log or a bundle, apply the terminal diagnostic severity mapping in `Plans/FileSafe.md#section=Trace persistence limits and sampling rule (2026-11-25)` at the severity and sampling filter and quota check. FileSafe evaluates source `warning` as trace `warn` and source `critical` as trace `error`, including when checking eligibility for the quota reserve. Keep the source `severity` in the serialized terminal record.
+
+**Wire shape.** When a record leaves the engine it is one JSON object (RFC 8259, UTF-8) with exactly the record's minimum fields plus `record_type`, a constant equal to the record name, and `schema_version`, the constant `"1.0.0"`. Unknown fields, missing required fields and values outside the types below are refused; a field marked `?` may be absent but is never `null`. A record leaves the engine only over the boundaries its row names: the web GUI terminal transport (DL-139, `Plans/FinalGUISpec.md#F3-583`), the user-requested diagnostic bundle (`#SMPFS-076`, which carries shell content only as transcript content it labels absent, partial or included), FileSafe's ordinary terminal diagnostic logging (`#SMPFS-076`), the in-process accessibility bridge (`#SMPFS-126`, `#SMPFS-131`), and agent reads (`#SMPFS-182`).
+
+**Field types.** `id`: string matching `^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$`. `utc`: RFC 3339 instant ending in `Z`. `count`: integer 0 to 2^64−1. `ref`: opaque string of 1 to 256 bytes naming an in-memory buffer of the same session; it is never a path and never carries the content. Inside the engine's process (the accessibility bridge and agent reads) the reader resolves a `ref` against the engine's own buffer. The web GUI terminal transport crosses a process boundary, and the remote web client shares no memory with the Server's engine, so there a `ref` is resolved against the transport message rather than shared memory: the message that carries a record also carries, beside the record object and keyed by the record's `ref` value, the content the receiving side needs, and the receiver keeps that content under the same `ref` in its own copy of the session for as long as the session's buffer would. Client to Server, a `TerminalInputEvent` message carries the input bytes named by `payload_ref`; Server to client, a `TerminalRenderFrame` message carries the changed grid rows named by each `dirty_region_refs[]` entry (the row diff the web terminal draws, `Plans/FinalGUISpec.md#F3-583`), and a `TerminalAccessibilitySnapshot` message carries the text named by `screen_reader_text_ref`. The record object itself is still exactly its row's fields, so the refusal of unknown fields is unchanged, and the content beside it is never written to the diagnostic bundle except as `#SMPFS-076` allows. `hash`: `^[0-9a-f]{64}$` (SHA-256). `path`: absolute path string as the host reports it. `bool`: JSON boolean.
+
+| Record | Fields and types | Leaves the engine over |
+| --- | --- | --- |
+| `TerminalIngestionReceipt` | `receipt_id` id; `terminal_session_id` id; `stage` `accepted_by_pty` \| `parsed_to_grid` \| `appended_to_transcript` \| `flushed_to_storage` \| `painted` \| `pruned` \| `redacted` \| `diagnostic_exported` (one receipt per read for each stage its bytes reach, so a parsed read and a read flushed to storage are separate receipts); `byte_count` count (bytes of the read that reached `stage`; for `pruned` and `redacted`, retained bytes the retention cap pruned or the redaction replaced); `protocol_family` enum below (the family the parser is in when the read ends, `c0_text` in ground state); `accepted` bool; `rejected_reason_code?` `over_sequence_cap` \| `malformed` \| `deferred_queue_full` \| `session_closed`, present exactly when `accepted` is false (a dropped or deferred read is an `accepted_by_pty` or `parsed_to_grid` receipt with `accepted` false); `transcript_chunk_refs[]?` array of id, the transcript chunks of the session's saved scrollback (`Plans/storage-plan.md#SP-332`) that the stage appended, flushed, pruned or redacted, present exactly when `stage` is `appended_to_transcript`, `flushed_to_storage`, `pruned` or `redacted`, naming chunks and never carrying their content; `created_at_utc` utc. A `pruned` receipt identifies the chunks that operation removed. The current saved-scrollback chunk inventory under SP-332 determines what remains, including after receipt eviction. | diagnostic bundle |
+| `TerminalBackpressureState` | `terminal_session_id` id; `queue_depth` count; `dropped_frame_count` count (painted frames skipped, never bytes); `throttle_state` `normal` \| `throttled` \| `reader_paused`; `last_transition_at_utc` utc | web GUI transport (status), diagnostic bundle |
+| `TerminalRenderFrame` | `frame_id` id; `terminal_session_id` id; `dirty_region_refs[]` array of ref; `screen_hash` hash; `rendered_at_utc` utc | web GUI transport |
+| `TerminalInputEvent` | `event_id` id; `terminal_session_id` id; `input_kind` `key` \| `text_commit` \| `ime_preedit` \| `mouse` \| `focus` \| `paste` \| `resize`; `payload_ref` ref; `permission_snapshot_id?` id; `created_at_utc` utc | web GUI transport (client to Server); the diagnostic bundle carries it without `payload_ref` content |
+| `TerminalPasteReceipt` | `receipt_id` id; `terminal_session_id` id; `paste_kind` `bracketed` \| `unbracketed` \| `confirmed_with_controls` \| `refused`; `byte_count` count; `sanitized` bool; `created_at_utc` utc | diagnostic bundle |
+| `TerminalOscEvent` | `event_id` id; `terminal_session_id` id; `osc_code` string matching `^[0-9]{1,5}(;[0-9]{1,3})?$`; `payload_ref` ref; `allowed` bool; `blocked_reason_code?` `osc52_read_refused` \| `osc52_unfocused` \| `osc52_over_size` \| `osc52_policy_denied` \| `mark_secret_missing` \| `over_sequence_cap` \| `file_medium_refused` \| `unsupported_sequence` \| `malformed`, present exactly when `allowed` is false | diagnostic bundle, without `payload_ref` content |
+| `TerminalScrollbackAnchor` | `anchor_id` id; `terminal_session_id` id; `line_offset` count (lines from the oldest retained line); `screen_hash` hash; `created_at_utc` utc | agent reads, web GUI transport |
+| `TerminalProfileResolution` | `resolution_id` id; `profile_id` id; `shell_path` path; `cwd` path; `env_summary_ref` ref (names and counts only, never values); `created_at_utc` utc | diagnostic bundle |
+| `TerminalSessionRestoreDecision` | `decision_id` id; `terminal_session_id` id; `restore_state` `restored_live` \| `restored_exited` \| `restored_disconnected` \| `restored_without_history` (`#SMPFS-063`); `reason_code` `live_session_survived` \| `process_exited` \| `host_unreachable` \| `saved_copy_missing` \| `saved_copy_load_timeout`; `created_at_utc` utc | web GUI transport (restore notice), diagnostic bundle |
+| `TerminalAccessibilitySnapshot` | `snapshot_id` id; `terminal_session_id` id; `screen_reader_text_ref` ref (the visible range or the asked range only, never the whole scrollback); `focus_cell` object `{row: count, col: count}`; `created_at_utc` utc | accessibility bridge, web GUI transport |
+| `TerminalDiagnosticsEnvelope` | `diagnostic_id` id; `terminal_session_id` id; `category` `lifecycle` \| `parser` \| `renderer` \| `input` \| `clipboard` \| `restore` \| `host_provenance` \| `performance`; `severity` `info` \| `warning` \| `error` \| `critical`; `message_ref` ref; `created_at_utc` utc | FileSafe terminal diagnostic log, diagnostic bundle |
+
+`protocol_family` is the closed enum `c0_text` \| `csi` \| `osc` \| `dcs` \| `apc` \| `clipboard` \| `hyperlink` \| `progress` \| `notification` \| `shell_integration` \| `cwd_report` \| `bracketed_paste` \| `focus` \| `mouse` \| `sync_update` \| `alt_screen` \| `negotiation` \| `kitty_keyboard` \| `kitty_graphics` \| `sixel` \| `iterm2_image` \| `pasteboard`; the fixture rows above use the same values.
+
+**Acceptance.** Every serialized record validates against its row. A user-requested diagnostic bundle is the only export and carries only the eligible recent records and the bounded diagnostic summary. Bundle content and live agent reads obey their own transcript and backing rules. Verify ordinary log and bundle writes independently against FileSafe's terminal-session and diagnostic-bundle quota ownership cases. At FileSafe's `errors` level, send successfully redacted `info`, `warning` and `critical` records with the base quota exhausted and enough space in both applicable caps, including reserves, for the two retained records. Assert that the filter drops `info` and the writer admits `warning` and `critical` through the reserve with their original `severity` on disk. Replay every fixture on all four parser builds using the replay schedule above. Independently cross the history's count cap with small records and its byte cap below 1,024 records, then emit one record larger than 1 MiB. In each case assert both caps, the exact oldest entries evicted or the single oversized entry omitted, and correct stage totals and partial-history status. Repeat with a pending bundle write to verify that the bounded snapshot excludes later entries and that PTY ingestion and painting continue. After a prune receipt ages out, verify that the current saved-scroll inventory still reports the correct retained range and that the stage totals still include the prune.

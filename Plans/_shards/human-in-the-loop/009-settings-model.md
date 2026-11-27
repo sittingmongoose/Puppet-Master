@@ -4,7 +4,7 @@ Source: `Plans/human-in-the-loop.md`
 
 Source lines: L168-L254
 
-Source SHA256: `6046975aa33bbc7a605c4a92db94927d926294c54e606c56754cab2113bbfb4d`
+Source SHA256: `97a7e70457d42fe62cdf5fb08e993d78a1c37728a82ed8a6a9763d4669f3df0f`
 
 ---
 
@@ -93,5 +93,5 @@ ContractRef: ContractName:Plans/assistant-chat-design.md
 
 ### Relation to Existing Pause
 
-The Plans/orchestrator-subagent-integration.md mentions a **pause gate** (`PAUSE.md` file) that halts the run until the file is removed or the user resumes. HITL is **separate**: it is a package-complete / seam-complete approval gate driven by settings, not by a global pause file. The two can coexist: global pause can still apply; HITL adds additional, gate-specific approval points when enabled.
+The Plans/orchestrator-subagent-integration.md mentions a **pause gate** (`PAUSE.md` file) that halts the run until the file is removed or expires; only then is the user's resume (`cmd.orchestrator.resume`) admitted, and a resume while the gate is active is not admitted (Pause Gate Live Contract in `Plans/orchestrator-subagent-integration.md#section=Closure Re-audit Repair Addendum - 2026-11-25`; see PAUSE.md Gate And Precedence below). HITL is **separate**: it is a package-complete / seam-complete approval gate driven by settings, not by a global pause file. The two can coexist: global pause can still apply; HITL adds additional, gate-specific approval points when enabled.
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md

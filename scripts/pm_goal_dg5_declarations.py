@@ -1,0 +1,212 @@
+"""Source-derived DG5 duplicate invariants, declared before the run that judges them.
+
+1. Authored: the request's current integer primitive and its complete owner schema both
+   reject a Boolean expected_revision. SirOwner.admit checks those two sites before
+   hashing/storing the request.
+2. Chains (scripts/pm_goal_dg5_duplicates.json): for a call whose single declared row was
+   COVERED_LATER in a discovery run, the rows each widened cut uncovered until the complete
+   call accepted (pm_goal_dg5_sweep.chain). The file is written from that run before the
+   judging run starts; the judging run credits a set only when its joint cut accepts and each
+   site, with the others cut, still refuses alone (GH1 _site_cuts). This declaration itself
+   earns no credit.
+"""
+import json
+from pathlib import Path
+
+DUPLICATES = Path(__file__).resolve().parent / 'pm_goal_dg5_duplicates.json'
+_CHAINS = None
+
+
+def chains():
+    global _CHAINS
+    if _CHAINS is None:
+        _CHAINS = json.loads(DUPLICATES.read_text())['calls'] if DUPLICATES.exists() else {}
+    return _CHAINS
+
+
+U_SITE = 'dg5/site/pm_goal_dg_u_owners.py:'
+
+# Authored case -> (declared duplicate set, reason). Every member checks the same field with
+# the same predicate; written from the source before the judging run.
+DECLARED = {
+    'U2/N/expected_revision_bool': (
+        ('dg5/dgu/sir/request/expected_revision/number', 'dg5/dgu/sir/request/schema'),
+        'SirOwner.admit: NUMRULE current integer and the owner schema integer type both reject a Boolean '
+        'expected_revision (CV-1100 exact integer primitive).'),
+    'U1/N/objective_4001_scalars': (
+        ('dg5/dgu/sir/request/schema', U_SITE + '724'),
+        'GoalUpdateRequestV2 objective_text maxLength 4000 (Unicode code points) and SirOwner.admit '
+        'scalars(text) <= OBJECTIVE_LIMIT (4000, len over code points) bound the same field by the same predicate.'),
+    'adapter/dg5-shared/frame_fixture:huge_declared_payload': ((
+        'dg5/site/pm_goal_test_storage.py:537', 'dg5/site/pm_goal_test_storage.py:539'),
+        'decode_frame bounds the same declared payload_len prefix field twice for this input: '
+        'by PAYLOAD_CAP at :537 and by the bytes actually present at :539; the fixture declared '
+        'length exceeds both bounds, and with both cuts the genuine payload slice decodes.'),
+    'adapter/source/token_frontier_revision': ((
+        'dg5/site/pm_goal_test_source.py:210', 'dg5/site/pm_goal_test_source.py:227'),
+        'GenericSource token verification compares the same storage_token frontier_revision '
+        'field by equality twice for this input (only that field is mutated): against the '
+        'canonical state index_frontier_revision at :210 and against the checkpoint node '
+        'frontier publication_revision at :227. The two compared values are recordings of '
+        'the one committed frontier, cross-checked in the canonical-state rebuild.'),
+    'adapter/dg5-shared/images_current_schema:907': ((
+        'dg5/site/pm_goal_test_storage.py:907', 'dg5/site/pm_goal_test_storage.py:908'),
+        'The empty birth_operation_ref is copied verbatim into both canonical seglog '
+        'images by build_seglog_images (current birth_operation_ref and the manifest '
+        'selection id derivation), and both whole-schema validators bound that same '
+        'field by string minLength 1 in the same _commit_state call.'),
+    'adapter/dg5-shared/index_retained_inventory_only:202': ((
+        'dg5/site/pm_goal_test_source.py:202', 'dg5/site/pm_goal_test_source.py:446'),
+        'For this input only the token source_selection retained_inventory_sha256 is '
+        'substituted: GenericSource token verification compares it to the digest of the '
+        'manifest retained inventory at :202, and the index read compares the identical '
+        'token source_selection object to the checkpoint frontier source_selection at '
+        ':446. Both refuse solely on that one substituted field value.'),
+    'U5/N/occurred_time_trailing_lf': ((
+        'dg5/dgu/source/capture/occurred_at_utc/date-time',
+        'dg5/dgu/source/capture/prepared_producer/schema', 'dg5/dgu/progress/schema'),
+        'The same metadata occurred_at_utc value is bounded by the identical NUMRULE '
+        'EVENT_RECORD date-time predicate three times in one capture call: directly by '
+        'NR.event_time, through the ProducerInput format check in prepared_event, and '
+        'through the Progress producer_metadata format check at progress write. The '
+        'trailing-LF input fails that one predicate at every member.'),
+}
+
+
+STOP_LATCHED = tuple(U_SITE + str(n) for n in (1518, 1582))
+HITL_TARGET = (U_SITE + '975', U_SITE + '998')
+# Reviewed DG5 sets (same field, same predicate): (case-id test, set, reason).
+DECLARED_RULES = (
+    (lambda cid: cid == 'U2/N/stop_at_capture' or (cid.startswith('U5/F/source.capture/after:') and cid.endswith('/stop')),
+     STOP_LATCHED,
+     "UpdateSourceOwner.capture checks `not stop['stop_latched']` on the Goal's current host Stop record "
+     '(w.stops.current(goal_id)) at pm_goal_dg_u_owners.py:1518 and re-reads it at its final boundary :1582 '
+     "(`not stop2['stop_latched']`): the same field, the same predicate."),
+    (lambda cid: cid == 'U5/N/goal_id_empty',
+     ('dg5/dgu/sir/request/schema', U_SITE + '294'),
+     'GoalUpdateRequestV2 goal_id minLength 1 and exact_str (pm_goal_dg_u_owners.py:294) `value != \'\'` require the '
+     'same field to be non-empty.'),
+    (lambda cid: cid.startswith('U5/F/hitl.capture/after:') and cid.endswith('/body')
+     and not cid.startswith('U5/F/hitl.capture/after:current_goal/'),
+     HITL_TARGET,
+     "ApprovalOwner.capture checks the Goal body's revision and currentness_hash against the proposal target at :975 "
+     'and re-reads and re-checks the identical predicate at its final boundary :998. '
+     'The after:current_goal fault lands between the two checks, so that case targets :998 alone.'),
+)
+
+
+DECLARED_RULES += (
+    (lambda cid: cid == 'U5/G/commit_reserved_control_substituted',
+     (U_SITE + '1213', U_SITE + '1244'),
+     "GoalBodyOwner.commit requires `A.same(<current control>, reserved_control)`: :1213 on its first read and :1244 "
+     'on its final re-read of the same Goal control record (the same field, the same predicate).'),
+    (lambda cid: cid == 'U5/G/release_reserved_control_substituted',
+     (U_SITE + '1274', U_SITE + '1279'),
+     "GoalBodyOwner.release requires `A.same(<current control>, reserved_control)`: :1274 on its first read and :1279 "
+     'on its final re-read of the same Goal control record (the same field, the same predicate).'),
+    (lambda cid: cid == 'U5/N/goal_id_array',
+     ('dg5/dgu/sir/request/schema', U_SITE + '293'),
+     'GoalUpdateRequestV2 goal_id `type: string` and exact_str (pm_goal_dg_u_owners.py:293) `type(value) is str` '
+     'require the same field to be a string.'),
+    (lambda cid: cid == 'U5/N/actor_object',
+     ('dg5/dgu/sir/request/schema', U_SITE + '293'),
+     'GoalUpdateRequestV2 actor_ref `type: string` and exact_str (pm_goal_dg_u_owners.py:293) `type(value) is str` '
+     'require the same field to be a string.'),
+)
+
+
+# Enum- or const-closed equivalent checks (lead decision 1116073727-d098; listed apart in the report).
+APPROVAL_CLOSURE = ("Plans/goal_runtime_contracts.schema.json ApprovalResolution.decision is enum-closed "
+                    "{approved, denied, expired}; ApprovalOwner.decide validates the resolution against it at "
+                    "pm_goal_dg_u_owners.py:1025 before read_resolution's checks run. Path checked for :1046 alone: a "
+                    "stored resolution re-put without its schema (ApprovalOwner cells are digest-checked only) carries "
+                    "an out-of-enum decision past :1044/:1045; supplement U-DG5/N/approval_decision_out_of_enum KILLS "
+                    ":1046 alone.")
+ENUM_CLOSED_RULES = (
+    (lambda cid: cid == 'U5/N/approval_denied', (U_SITE + '1044', U_SITE + '1046'),
+     "decision != 'denied' (:1044) and decision == 'approved' (:1046) agree on the defect value 'denied' over the "
+     'enum-closed domain. ' + APPROVAL_CLOSURE),
+    (lambda cid: cid == 'U5/N/approval_expired', (U_SITE + '1045', U_SITE + '1046'),
+     "decision != 'expired' (:1045) and decision == 'approved' (:1046) agree on the defect value 'expired' over the "
+     'enum-closed domain. ' + APPROVAL_CLOSURE),
+)
+DECLARED_RULES += ENUM_CLOSED_RULES
+
+DECLARED_RULES += (
+    (lambda cid: cid == 'U5/G/api_body_start_existing_goal',
+     (U_SITE + '1094', 'dg5/site/pm_goal_test_storage.py:1654'),
+     "GoalBodyOwner.start requires the goal body cell absent (:1094, cell(T_BODY, body_key) is None) and "
+     "Storage's transact requires every expected=None write's current cell absent (tx/cas_absent, "
+     "pm_goal_test_storage.py:1654): the same start-bundle cells, the same absence predicate. The start "
+     "pre-check names the body key; the CAS enforces absence on it and its four sibling start keys."),
+    (lambda cid: cid == 'U5/G/api_metadata_state_unknown',
+     (U_SITE + '1296', 'dg5/dgu/body/metadata/intent/schema', 'dg5/dgu/body/goal_body_record/schema'),
+     "metadata_update requires change.state in (active, paused, blocked, completed) at :1296; the intent "
+     "record carries that same after_record body (pending schema, :1313 validate) and the stored body row "
+     "is validated against storage_body, whose state is the same four-value enum: one field, one predicate."),
+    (lambda cid: cid == 'U5/G/acceptance_direct_authority_missing',
+     (U_SITE + '1954', 'dg5/dgu/source/capture/source/schema'),
+     "Direct Save acceptance requires adm.direct_save_authority_ref is not None at :1954 and copies it "
+     "into the source record acceptance original_change_authority_ref (:1958), which the StorageSourceAudit "
+     "schema requires to be a non-null string when capture validates the source wrapper: the same field, "
+     "the same non-null predicate."),
+    (lambda cid: cid == 'U5/F/producer.publish/before_release/candidate',
+     (U_SITE + '1800', U_SITE + '1807'),
+     "publish requires A.same(ctx candidate, frozen producer_input) at :1800 before the append and "
+     "A.same(producer25(stored event), frozen producer_input) at :1807 after it: the same whole "
+     "producer_input value, the same exact-equality predicate, once on the candidate and once on "
+     "its stored round-trip (producer25 is the stored event minus Storage-assigned fields)."),
+    (lambda cid: cid == 'U5/G/api_metadata_blocked_without_reason',
+     (U_SITE + '1298', 'dg5/dgu/body/metadata/intent/schema', 'dg5/dgu/body/goal_body_record/schema'),
+     "metadata_update requires (state == blocked) == (blocked_reason_ref is not None) at :1298 on the "
+     "change, then on the after body it builds from it (state and blocked_reason_ref copied at :1303-1304): "
+     "the intent pending schema over after_record and the storage_body schema encode the same equivalence "
+     "on the same two fields."),
+)
+
+
+FAMILY_MODULES = ('s', 'ca', 'r', 'cf')   # pm_goal_dg5_declarations_<x>.py, one owner per file (SPLIT.md)
+_LOADED = []
+
+
+def _family_rules():
+    """Per-family declaration files (each defines DECLARED and/or DECLARED_RULES like this module)."""
+    if not _LOADED:
+        import importlib
+        for name in FAMILY_MODULES:
+            try:
+                module = importlib.import_module('pm_goal_dg5_declarations_' + name)
+            except ModuleNotFoundError as error:
+                if error.name != 'pm_goal_dg5_declarations_' + name:
+                    raise
+                continue
+            _LOADED.append(module)
+        _LOADED.append(None)  # loaded marker
+    return [m for m in _LOADED if m is not None]
+
+
+def declared(case_id):
+    if case_id in DECLARED:
+        return DECLARED[case_id]
+    for module in _family_rules():
+        if case_id in getattr(module, 'DECLARED', {}):
+            return module.DECLARED[case_id]
+        for test, members, reason in getattr(module, 'DECLARED_RULES', ()):
+            if test(case_id):
+                return members, reason
+    for test, members, reason in DECLARED_RULES:
+        if test(case_id):
+            return members, reason
+    return None
+
+
+def target(case, ordinary, label=None):
+    if case.get('dg5_target') is not None:  # a DG5 supplement case declares its own target
+        return case['dg5_target']
+    found = declared(case['id'])
+    if found is not None:
+        return found[0]
+    chain = chains().get(label) if label else None
+    if chain and ordinary in chain:
+        return tuple(sorted(chain))
+    return ordinary

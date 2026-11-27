@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L2620-L11156
+Source lines: L2627-L11165
 
-Source SHA256: `c53e1f511323d2b029b93798ac3080a116f00947920912fe9c933393c4d2d22e`
+Source SHA256: `49549c0771a51deaab00b327f6bff228f923ce79afbe2c6743de7be2f87f0cce`
 
 ---
 
@@ -867,6 +867,8 @@ canonical_text: >-
   process detachment, never tab placement or pop-out; a write through a `shellId` into a terminal a human opened
   follows Section 15's SMPFS-182 and is refused without the human's grant, as `preempted` after a take-over and as
   `secret_input` during a secret prompt.
+  In §3.5.1 and Tool Turn Contract Minima, the first and subsequent calls execute in the same persistent shell.
+  Completion and exit status belong to the invocation. The shell can remain live after the command completes.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
@@ -879,6 +881,8 @@ acceptance_criteria:
 - Parameters `command`, `mode`, `initial_wait`, `shellId`, and `detach` remain preserved.
 - Output shapes for completed sync, still-running sync, and async launch remain preserved.
 - All error codes and timeout behavior remain preserved.
+- A first command changes directory and exports a variable, then completes. A second call using its shellId observes both changes. A further call can exit nonzero while the shell remains live.
+- Output or elapsed time alone cannot complete a command. A fresh or reused session that ends without authoritative command completion retains available output and gives no exit code for the command.
 - "Amended 2026-10-09 (DL-181): every shellId resolves to exactly one terminal_session_id that Open in Terminal and Show Terminal can reveal as its terminal tab; detach never opens, moves or closes a tab; writes into a human-opened terminal follow SMPFS-182 with explicit preempted and secret_input refusals."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -4319,7 +4323,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: Shell dispatch validates the full rendered command string, prefers structured parsing where practical, uses
-  exactly one shell interpretation layer, prohibits `eval`, and requires platform-correct path escaping.
+  exactly one shell interpretation layer, and prohibits `eval`. Platform-correct escaping applies to inputs PM
+  interpolates before validation and approval. Standalone Unix dispatch passes the approved shell string unchanged as
+  one command argument. Session-bound dispatch submits it unchanged to the persistent interpreter (T-018).
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
@@ -4328,7 +4334,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Banned-command checks scan the full rendered command string.
-- Unix shell dispatch uses one shell interpretation layer.
+- The standalone Unix runner receives the exact approved shell string as one command argument. The session-bound runner submits the exact approved buffer once to the persistent interpreter.
 - Individual tools do not implement competing escaping layers.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -7968,11 +7974,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:14
 - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:11
 - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:20
-- Plans/Tools.md:623
-- Plans/Tools.md:669
-- Plans/Tools.md:2160
-- Plans/Tools.md:2163
-- Plans/Tools.md:2164
+- "Plans/Tools.md#section=13. Batch operations"
 preserved_exact_tokens:
 - 'urls: string[]'
 - 'formats?: string[]'

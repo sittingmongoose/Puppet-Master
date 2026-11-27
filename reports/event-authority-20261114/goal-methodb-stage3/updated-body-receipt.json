@@ -1,0 +1,810 @@
+{
+  "census_sha256": "647eb062f2b9f8438e26716e3e058e1ac61193a2c266bbf12f4664495598fab7",
+  "examples": {
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/allOf/0/else/properties/before_currentness_hash/pattern": {
+      "controls": [
+        {
+          "path": [
+            "record",
+            "before_revision"
+          ],
+          "value": 1
+        },
+        {
+          "path": [
+            "record",
+            "before_currentness_hash"
+          ],
+          "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ],
+      "path": [
+        "record",
+        "before_currentness_hash"
+      ],
+      "receipt_implication": true,
+      "value": "d90f90aa172cea7ca06cf81961905ab7d9d268ad62c9e5c31de8a7f723b4d0d1\n"
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/allOf/0/else/properties/before_currentness_hash/type": {
+      "controls": [
+        {
+          "path": [
+            "record",
+            "before_revision"
+          ],
+          "value": 1
+        },
+        {
+          "path": [
+            "record",
+            "before_currentness_hash"
+          ],
+          "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ],
+      "path": [
+        "record",
+        "before_currentness_hash"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/allOf/0/if/properties/before_revision/type": {
+      "controls": [
+        {
+          "path": [
+            "record",
+            "before_revision"
+          ],
+          "value": 1
+        },
+        {
+          "path": [
+            "record",
+            "before_currentness_hash"
+          ],
+          "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ],
+      "path": [
+        "record",
+        "before_revision"
+      ],
+      "selector_messages": [
+        "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/allOf/0/then/properties/before_currentness_hash/type"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/allOf/0/then/properties/before_currentness_hash/type": {
+      "path": [
+        "record",
+        "before_currentness_hash"
+      ],
+      "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/allOf/1/else/properties/accepted_revision_hash/pattern": {
+      "path": [
+        "record",
+        "accepted_revision_hash"
+      ],
+      "receipt_implication": true,
+      "value": "3abaab22541f629549075f31ca05098b26004bf52577a4b32e2d326ad97d947d\n"
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/allOf/1/else/properties/accepted_revision_hash/type": {
+      "path": [
+        "record",
+        "accepted_revision_hash"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/allOf/1/if/properties/accepted_objective_revision/type": {
+      "path": [
+        "record",
+        "accepted_objective_revision"
+      ],
+      "selector_messages": [
+        "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/allOf/1/then/properties/accepted_revision_hash/type"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/allOf/1/then/properties/accepted_revision_hash/type": {
+      "controls": [
+        {
+          "path": [
+            "record",
+            "before_revision"
+          ],
+          "value": 1
+        },
+        {
+          "path": [
+            "record",
+            "before_currentness_hash"
+          ],
+          "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        {
+          "path": [
+            "record",
+            "accepted_objective_revision"
+          ],
+          "value": null
+        },
+        {
+          "path": [
+            "record",
+            "accepted_revision_hash"
+          ],
+          "value": null
+        }
+      ],
+      "path": [
+        "record",
+        "accepted_revision_hash"
+      ],
+      "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/allOf/2/if/properties/before_revision/type": {
+      "controls": [
+        {
+          "path": [
+            "record",
+            "before_revision"
+          ],
+          "value": 1
+        },
+        {
+          "path": [
+            "record",
+            "before_currentness_hash"
+          ],
+          "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        {
+          "path": [
+            "record",
+            "after_revision"
+          ],
+          "value": 2
+        },
+        {
+          "path": [
+            "record",
+            "accepted_objective_revision"
+          ],
+          "value": 2
+        }
+      ],
+      "path": [
+        "record",
+        "before_revision"
+      ],
+      "selector_messages": [
+        "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/allOf/2/then/properties/after_revision/const",
+        "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/allOf/2/then/properties/accepted_objective_revision/const"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/allOf/2/then/properties/accepted_objective_revision/const": {
+      "path": [
+        "record",
+        "accepted_objective_revision"
+      ],
+      "value": 2
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/allOf/2/then/properties/after_revision/const": {
+      "path": [
+        "record",
+        "after_revision"
+      ],
+      "value": 2
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/closed_members": {
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "record"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/accepted_objective_revision/anyOf": {
+      "controls": [
+        {
+          "path": [
+            "record",
+            "before_revision"
+          ],
+          "value": 1
+        },
+        {
+          "path": [
+            "record",
+            "before_currentness_hash"
+          ],
+          "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ],
+      "path": [
+        "record",
+        "accepted_objective_revision"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/accepted_objective_revision/anyOf/0/minimum": {
+      "controls": [
+        {
+          "path": [
+            "record",
+            "before_revision"
+          ],
+          "value": 1
+        },
+        {
+          "path": [
+            "record",
+            "before_currentness_hash"
+          ],
+          "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ],
+      "path": [
+        "record",
+        "accepted_objective_revision"
+      ],
+      "value": 0
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/accepted_objective_revision/anyOf/0/type": {
+      "controls": [
+        {
+          "path": [
+            "record",
+            "before_revision"
+          ],
+          "value": 1
+        },
+        {
+          "path": [
+            "record",
+            "before_currentness_hash"
+          ],
+          "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ],
+      "path": [
+        "record",
+        "accepted_objective_revision"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/accepted_objective_revision/anyOf/1/type": {
+      "controls": [
+        {
+          "path": [
+            "record",
+            "before_revision"
+          ],
+          "value": 1
+        },
+        {
+          "path": [
+            "record",
+            "before_currentness_hash"
+          ],
+          "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ],
+      "path": [
+        "record",
+        "accepted_objective_revision"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/accepted_revision_hash/anyOf": {
+      "controls": [
+        {
+          "path": [
+            "record",
+            "before_revision"
+          ],
+          "value": 1
+        },
+        {
+          "path": [
+            "record",
+            "before_currentness_hash"
+          ],
+          "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        {
+          "path": [
+            "record",
+            "accepted_objective_revision"
+          ],
+          "value": null
+        },
+        {
+          "path": [
+            "record",
+            "accepted_revision_hash"
+          ],
+          "value": null
+        }
+      ],
+      "path": [
+        "record",
+        "accepted_revision_hash"
+      ],
+      "receipt_implication": true,
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/accepted_revision_hash/anyOf/0/pattern": {
+      "path": [
+        "record",
+        "accepted_revision_hash"
+      ],
+      "receipt_implication": true,
+      "value": "3abaab22541f629549075f31ca05098b26004bf52577a4b32e2d326ad97d947d\n"
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/accepted_revision_hash/anyOf/0/type": {
+      "controls": [
+        {
+          "path": [
+            "record",
+            "before_revision"
+          ],
+          "value": 1
+        },
+        {
+          "path": [
+            "record",
+            "before_currentness_hash"
+          ],
+          "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        {
+          "path": [
+            "record",
+            "accepted_objective_revision"
+          ],
+          "value": null
+        },
+        {
+          "path": [
+            "record",
+            "accepted_revision_hash"
+          ],
+          "value": null
+        }
+      ],
+      "path": [
+        "record",
+        "accepted_revision_hash"
+      ],
+      "receipt_implication": true,
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/accepted_revision_hash/anyOf/1/type": {
+      "controls": [
+        {
+          "path": [
+            "record",
+            "before_revision"
+          ],
+          "value": 1
+        },
+        {
+          "path": [
+            "record",
+            "before_currentness_hash"
+          ],
+          "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        {
+          "path": [
+            "record",
+            "accepted_objective_revision"
+          ],
+          "value": null
+        },
+        {
+          "path": [
+            "record",
+            "accepted_revision_hash"
+          ],
+          "value": null
+        }
+      ],
+      "path": [
+        "record",
+        "accepted_revision_hash"
+      ],
+      "receipt_implication": true,
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/after_currentness_hash/pattern": {
+      "path": [
+        "record",
+        "after_currentness_hash"
+      ],
+      "value": "d90f90aa172cea7ca06cf81961905ab7d9d268ad62c9e5c31de8a7f723b4d0d1\n"
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/after_currentness_hash/type": {
+      "path": [
+        "record",
+        "after_currentness_hash"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/after_revision/minimum": {
+      "controls": [
+        {
+          "path": [
+            "record",
+            "before_revision"
+          ],
+          "value": 1
+        },
+        {
+          "path": [
+            "record",
+            "before_currentness_hash"
+          ],
+          "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ],
+      "path": [
+        "record",
+        "after_revision"
+      ],
+      "value": 0
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/after_revision/type": {
+      "controls": [
+        {
+          "path": [
+            "record",
+            "before_revision"
+          ],
+          "value": 1
+        },
+        {
+          "path": [
+            "record",
+            "before_currentness_hash"
+          ],
+          "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ],
+      "path": [
+        "record",
+        "after_revision"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/authority_ref/minLength": {
+      "path": [
+        "record",
+        "authority_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/authority_ref/type": {
+      "path": [
+        "record",
+        "authority_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/before_currentness_hash/anyOf": {
+      "path": [
+        "record",
+        "before_currentness_hash"
+      ],
+      "receipt_implication": true,
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/before_currentness_hash/anyOf/0/pattern": {
+      "controls": [
+        {
+          "path": [
+            "record",
+            "before_revision"
+          ],
+          "value": 1
+        },
+        {
+          "path": [
+            "record",
+            "before_currentness_hash"
+          ],
+          "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ],
+      "path": [
+        "record",
+        "before_currentness_hash"
+      ],
+      "receipt_implication": true,
+      "value": "gc\n"
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/before_currentness_hash/anyOf/0/type": {
+      "path": [
+        "record",
+        "before_currentness_hash"
+      ],
+      "receipt_implication": true,
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/before_currentness_hash/anyOf/1/type": {
+      "path": [
+        "record",
+        "before_currentness_hash"
+      ],
+      "receipt_implication": true,
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/before_revision/anyOf": {
+      "controls": [
+        {
+          "path": [
+            "record",
+            "before_revision"
+          ],
+          "value": 1
+        },
+        {
+          "path": [
+            "record",
+            "before_currentness_hash"
+          ],
+          "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ],
+      "path": [
+        "record",
+        "before_revision"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/before_revision/anyOf/0/minimum": {
+      "controls": [
+        {
+          "path": [
+            "record",
+            "before_revision"
+          ],
+          "value": 1
+        },
+        {
+          "path": [
+            "record",
+            "before_currentness_hash"
+          ],
+          "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ],
+      "path": [
+        "record",
+        "before_revision"
+      ],
+      "value": 0
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/before_revision/anyOf/0/type": {
+      "controls": [
+        {
+          "path": [
+            "record",
+            "before_revision"
+          ],
+          "value": 1
+        },
+        {
+          "path": [
+            "record",
+            "before_currentness_hash"
+          ],
+          "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ],
+      "path": [
+        "record",
+        "before_revision"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/before_revision/anyOf/1/type": {
+      "controls": [
+        {
+          "path": [
+            "record",
+            "before_revision"
+          ],
+          "value": 1
+        },
+        {
+          "path": [
+            "record",
+            "before_currentness_hash"
+          ],
+          "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ],
+      "path": [
+        "record",
+        "before_revision"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/committed_at/format": {
+      "path": [
+        "record",
+        "committed_at"
+      ],
+      "value": "not-a-date-time"
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/committed_at/type": {
+      "path": [
+        "record",
+        "committed_at"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/goal_id/minLength": {
+      "path": [
+        "record",
+        "goal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/goal_id/type": {
+      "path": [
+        "record",
+        "goal_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/intent_sha256/pattern": {
+      "path": [
+        "record",
+        "intent_sha256"
+      ],
+      "value": "3e1173bac643295d654947f241055cab1e7f705a07a361aa1036f96b8eda9952\n"
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/intent_sha256/type": {
+      "path": [
+        "record",
+        "intent_sha256"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/operation_id/minLength": {
+      "path": [
+        "record",
+        "operation_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/operation_id/type": {
+      "path": [
+        "record",
+        "operation_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/owner_ref/minLength": {
+      "path": [
+        "record",
+        "owner_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/owner_ref/type": {
+      "path": [
+        "record",
+        "owner_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/project_id/minLength": {
+      "path": [
+        "record",
+        "project_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/project_id/type": {
+      "path": [
+        "record",
+        "project_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/schema_id/const": {
+      "path": [
+        "record",
+        "schema_id"
+      ],
+      "value": "pm.goal.body_mutation_receipt.v1x"
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/storage_instance_id/minLength": {
+      "path": [
+        "record",
+        "storage_instance_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/storage_instance_id/type": {
+      "path": [
+        "record",
+        "storage_instance_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/thread_id/minLength": {
+      "path": [
+        "record",
+        "thread_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/properties/thread_id/type": {
+      "path": [
+        "record",
+        "thread_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/required": {
+      "member": [
+        "remove",
+        "schema_id"
+      ],
+      "path": [
+        "record"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/receipt/type": {
+      "path": [
+        "record"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_receipt/closed_members": {
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_receipt/properties/schema_id/const": {
+      "path": [
+        "schema_id"
+      ],
+      "value": "pm.storage_value.goal_body_mutation_receipt.v1x"
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_receipt/properties/schema_version/const": {
+      "path": [
+        "schema_version"
+      ],
+      "value": "1.0.0x"
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_receipt/required": {
+      "member": [
+        "remove",
+        "schema_id"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_body_custody/1.0.0/goal_body_custody.schema.json#/$defs/storage_receipt/type": {
+      "path": [],
+      "value": true
+    }
+  },
+  "family": "goal.updated",
+  "root": "dg5:db2820b0e5939c64",
+  "route": "body_start",
+  "row": "dg5/dgu/body/goal_body_mutation_receipt/schema",
+  "site": [
+    "scripts/pm_goal_dg_u_owners.py",
+    1081
+  ],
+  "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0",
+  "transaction": true
+}

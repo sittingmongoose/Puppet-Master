@@ -2,9 +2,9 @@
 
 Source: `Plans/Personas.md`
 
-Source lines: L691-L3227
+Source lines: L694-L3232
 
-Source SHA256: `e6878d62a0e7037cbcea869cb6f2d6a478706f7f9f8836ed824601fd4dc812d1`
+Source SHA256: `a98ad4e10f141cea7456fed13aaf252adde67a0a27428fc31af93571babb54bb`
 
 ---
 
@@ -1375,6 +1375,7 @@ status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
   Persona auto-resolution uses explicit manual/run override, scoped natural-language override, surface-specific explicit mapping, surface auto resolver candidate, config default, then canonical fallback; actor and operation type outrank stack hints, governance/review/corroboration Personas do not collapse into implementation Personas, and exact crew.roles tag mappings either resolve or return capability_unavailable without silent tuple fallback.
+  From 2026-11-24 (DL-2602): crew.roles is the role record map keyed by the closed role_id set planner, implementer, reviewer, tester, designer, security, release, governance; owner_hint matches a role_id exactly, the Persona comes from allowed_persona_ids[] or default_persona_id, and provider and model come only from the Models_System selection order; the provider/model/persona tuple form is retired source lineage.
 gui_related: false
 gui_classification_reason: This unit defines runtime resolution and crew-role routing behavior rather than visual presentation.
 split_recommended: false
@@ -1385,7 +1386,8 @@ unblocks: []
 acceptance_criteria:
   - Auto-resolution precedence remains ordered and deterministic.
   - owner_hint is advisory until resolved by the crew-role map.
-  - Missing exact tag mappings fall back to the current session provider/model with requested Persona behavior, while unavailable mapped provider/model returns capability_unavailable.
+  - Missing exact tag mappings fall back to the current session provider/model with requested Persona behavior, while unavailable mapped provider/model returns capability_unavailable. Retired 2026-11-26 (DL-2602) as tuple-form lineage; a role record has no provider or model to be unavailable, so a missing role match keeps the current session owner with the requested Persona behavior and the only capability_unavailable result is the Persona rule below.
+  - From DL-2602, a matched role_id resolves the requested Persona when it is in allowed_persona_ids[], else default_persona_id, else capability_unavailable; no crew.roles entry carries a provider or model.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate

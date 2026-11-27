@@ -1,0 +1,41 @@
+{
+  "row": "dg5/issue/activation_source:certified_graph/schema",
+  "fixtures": [
+    {
+      "route": "issue/activation_source:certified_graph",
+      "edition": "v3",
+      "root": "dg5:17f77b58cac43409",
+      "hash_seed": 0,
+      "edit": [
+        1,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    },
+    {
+      "route": "issue/activation_source:certified_graph",
+      "edition": "v7",
+      "root": "dg5:de63dd260157f9cf",
+      "hash_seed": 5,
+      "edit": [
+        1,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    }
+  ]
+}

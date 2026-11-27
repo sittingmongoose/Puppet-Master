@@ -65,10 +65,12 @@
       "minimum": 1
     },
     "concern_category": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 96,
-      "pattern": "^[a-z][a-z0-9_]*$(?![\\s\\S])"
+      "enum": [
+        "coverage_blocker",
+        "projection_trust",
+        "risk",
+        "weak_integration"
+      ]
     },
     "severity": {
       "enum": [
@@ -191,12 +193,18 @@
       "format": "date-time"
     },
     "visibility_level": {
-      "type": "string",
-      "minLength": 1
+      "enum": [
+        "user_visible",
+        "project",
+        "restricted"
+      ]
     },
     "attention_level": {
-      "type": "string",
-      "minLength": 1
+      "enum": [
+        "info",
+        "warning",
+        "needs_action"
+      ]
     },
     "chatworthy": {
       "type": "boolean"

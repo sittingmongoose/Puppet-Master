@@ -1,0 +1,2596 @@
+{
+  "census_sha256": "e90632b6aac7410726c18e710e5c49e1b23aac41cdaa5b785df9dc5bf7881c6c",
+  "examples": {
+    "dg5:6044e4cde4ed6c0f": {
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/else/properties/assistant_plan_id/type": {
+        "path": [
+          "original_execution_binding",
+          "assistant_plan_id"
+        ],
+        "value": "gc"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/else/properties/goal_plan_binding_ref/type": {
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_ref"
+        ],
+        "value": "gc"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/else/properties/goal_plan_binding_sha256/type": {
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_sha256"
+        ],
+        "value": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/else/properties/plan_hash/type": {
+        "path": [
+          "original_execution_binding",
+          "plan_hash"
+        ],
+        "value": "2222222222222222222222222222222222222222222222222222222222222222"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/else/properties/plan_run_id/type": {
+        "path": [
+          "original_execution_binding",
+          "plan_run_id"
+        ],
+        "value": "gc"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/else/properties/plan_version/type": {
+        "path": [
+          "original_execution_binding",
+          "plan_version"
+        ],
+        "value": 7
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/if/properties/kind/const": {
+        "path": [
+          "original_execution_binding",
+          "kind"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/active_run_ref/type",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/assistant_plan_id/type",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/goal_plan_binding_ref/type",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/goal_plan_binding_sha256/type",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_hash/type",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_run_id/type",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_version/type"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/active_run_ref/minLength": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/active_run_ref/oneOf",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/active_run_ref/oneOf/0/minLength",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/active_run_ref/oneOf/1/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "active_run_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/active_run_ref/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "active_run_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/assistant_plan_id/minLength": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/assistant_plan_id/oneOf",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/assistant_plan_id/oneOf/0/minLength",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/assistant_plan_id/oneOf/1/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "assistant_plan_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/assistant_plan_id/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "assistant_plan_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/goal_plan_binding_ref/minLength": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_ref/oneOf",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_ref/oneOf/0/minLength",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_ref/oneOf/1/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/goal_plan_binding_ref/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/goal_plan_binding_sha256/pattern": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_sha256/oneOf",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_sha256/oneOf/0/pattern",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_sha256/oneOf/1/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_sha256"
+        ],
+        "value": "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/goal_plan_binding_sha256/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_hash/pattern": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_hash/oneOf",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_hash/oneOf/0/pattern",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_hash/oneOf/1/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "plan_hash"
+        ],
+        "value": "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_hash/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "plan_hash"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_run_id/minLength": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_run_id/oneOf",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_run_id/oneOf/0/minLength",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_run_id/oneOf/1/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "plan_run_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_run_id/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "plan_run_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_version/minimum": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_version/oneOf",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_version/oneOf/0/minimum",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_version/oneOf/1/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "plan_version"
+        ],
+        "value": 0
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_version/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "plan_version"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "original_execution_binding"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/active_run_ref/oneOf": {
+        "path": [
+          "original_execution_binding",
+          "active_run_ref"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/active_run_ref/oneOf/0/minLength": {
+        "path": [
+          "original_execution_binding",
+          "active_run_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/active_run_ref/oneOf/0/type": {
+        "path": [
+          "original_execution_binding",
+          "active_run_ref"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/active_run_ref/oneOf/1/type": {
+        "path": [
+          "original_execution_binding",
+          "active_run_ref"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/assistant_plan_id/oneOf": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/assistant_plan_id/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "assistant_plan_id"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/assistant_plan_id/oneOf/0/minLength": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/assistant_plan_id/minLength"
+        ],
+        "path": [
+          "original_execution_binding",
+          "assistant_plan_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/assistant_plan_id/oneOf/0/type": {
+        "path": [
+          "original_execution_binding",
+          "assistant_plan_id"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/assistant_plan_id/oneOf"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/assistant_plan_id/oneOf/1/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "assistant_plan_id"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/assistant_plan_id/oneOf"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/execution_owner_ref/minLength": {
+        "path": [
+          "original_execution_binding",
+          "execution_owner_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/execution_owner_ref/type": {
+        "path": [
+          "original_execution_binding",
+          "execution_owner_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_ref/oneOf": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/goal_plan_binding_ref/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_ref"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_ref/oneOf/0/minLength": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/goal_plan_binding_ref/minLength"
+        ],
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_ref/oneOf/0/type": {
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_ref"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_ref/oneOf"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_ref/oneOf/1/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_ref"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_ref/oneOf"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_sha256/oneOf": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/goal_plan_binding_sha256/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_sha256/oneOf/0/pattern": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/goal_plan_binding_sha256/pattern"
+        ],
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_sha256"
+        ],
+        "value": "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_sha256/oneOf/0/type": {
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_sha256"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_sha256/oneOf"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_sha256/oneOf/1/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_sha256"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_sha256/oneOf"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/kind/enum": {
+        "path": [
+          "original_execution_binding",
+          "kind"
+        ],
+        "value": "no_bound_planx"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/original_binding_source_ref/minLength": {
+        "path": [
+          "original_execution_binding",
+          "original_binding_source_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/original_binding_source_ref/type": {
+        "path": [
+          "original_execution_binding",
+          "original_binding_source_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_hash/oneOf": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_hash/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "plan_hash"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_hash/oneOf/0/pattern": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_hash/pattern"
+        ],
+        "path": [
+          "original_execution_binding",
+          "plan_hash"
+        ],
+        "value": "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_hash/oneOf/0/type": {
+        "path": [
+          "original_execution_binding",
+          "plan_hash"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_hash/oneOf"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_hash/oneOf/1/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "plan_hash"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_hash/oneOf"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_run_id/oneOf": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_run_id/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "plan_run_id"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_run_id/oneOf/0/minLength": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_run_id/minLength"
+        ],
+        "path": [
+          "original_execution_binding",
+          "plan_run_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_run_id/oneOf/0/type": {
+        "path": [
+          "original_execution_binding",
+          "plan_run_id"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_run_id/oneOf"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_run_id/oneOf/1/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "plan_run_id"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_run_id/oneOf"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_version/oneOf": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_version/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "plan_version"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_version/oneOf/0/minimum": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_version/minimum"
+        ],
+        "path": [
+          "original_execution_binding",
+          "plan_version"
+        ],
+        "value": 0
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_version/oneOf/0/type": {
+        "path": [
+          "original_execution_binding",
+          "plan_version"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_version/oneOf"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_version/oneOf/1/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:0959cd666c974fe2",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:56d3bcd45c384d7f",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "plan_version"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_version/oneOf"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/required": {
+        "member": [
+          "remove",
+          "active_run_ref"
+        ],
+        "path": [
+          "original_execution_binding"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/type": {
+        "path": [
+          "original_execution_binding"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/after_continuation_epoch/minimum": {
+        "path": [
+          "after_continuation_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/after_continuation_epoch/type": {
+        "path": [
+          "after_continuation_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/after_user_stop_epoch/minimum": {
+        "path": [
+          "after_user_stop_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/after_user_stop_epoch/type": {
+        "path": [
+          "after_user_stop_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/before_continuation_epoch/minimum": {
+        "path": [
+          "before_continuation_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/before_continuation_epoch/type": {
+        "path": [
+          "before_continuation_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/before_stop_control_sha256/pattern": {
+        "path": [
+          "before_stop_control_sha256"
+        ],
+        "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/before_stop_control_sha256/type": {
+        "path": [
+          "before_stop_control_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/before_user_stop_epoch/minimum": {
+        "path": [
+          "before_user_stop_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/before_user_stop_epoch/type": {
+        "path": [
+          "before_user_stop_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/expected_currentness_hash/pattern": {
+        "path": [
+          "expected_currentness_hash"
+        ],
+        "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/expected_currentness_hash/type": {
+        "path": [
+          "expected_currentness_hash"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/expected_revision/minimum": {
+        "path": [
+          "expected_revision"
+        ],
+        "value": 0
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/expected_revision/type": {
+        "path": [
+          "expected_revision"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/goal_id/minLength": {
+        "path": [
+          "goal_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/goal_id/type": {
+        "path": [
+          "goal_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/operation_id/minLength": {
+        "path": [
+          "operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/operation_id/type": {
+        "path": [
+          "operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/original_accepted_cancel_ref/minLength": {
+        "path": [
+          "original_accepted_cancel_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/original_accepted_cancel_ref/type": {
+        "path": [
+          "original_accepted_cancel_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/original_host_owner_epoch/minimum": {
+        "path": [
+          "original_host_owner_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/original_host_owner_epoch/type": {
+        "path": [
+          "original_host_owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/project_id/minLength": {
+        "path": [
+          "project_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/project_id/type": {
+        "path": [
+          "project_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/requested_at/format": {
+        "path": [
+          "requested_at"
+        ],
+        "value": "not-a-date-time"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/requested_at/type": {
+        "path": [
+          "requested_at"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/schema_id/const": {
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.goal.cancel.stop_intent.v1x"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/schema_version/const": {
+        "path": [
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/source_audit_sha256/pattern": {
+        "path": [
+          "source_audit_sha256"
+        ],
+        "value": "e85a84d6197f5c1a9c9aa29a942834ed9cd377820e421e3919d0acbfe40f5c7a\n"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/source_audit_sha256/type": {
+        "path": [
+          "source_audit_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/storage_instance_id/minLength": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/storage_instance_id/type": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/thread_id/minLength": {
+        "path": [
+          "thread_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/thread_id/type": {
+        "path": [
+          "thread_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/type": {
+        "path": [],
+        "value": true
+      }
+    },
+    "dg5:b903c4989730f5a8": {
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/else/properties/assistant_plan_id/type": {
+        "path": [
+          "original_execution_binding",
+          "assistant_plan_id"
+        ],
+        "value": "gc"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/else/properties/goal_plan_binding_ref/type": {
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_ref"
+        ],
+        "value": "gc"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/else/properties/goal_plan_binding_sha256/type": {
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_sha256"
+        ],
+        "value": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/else/properties/plan_hash/type": {
+        "path": [
+          "original_execution_binding",
+          "plan_hash"
+        ],
+        "value": "2222222222222222222222222222222222222222222222222222222222222222"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/else/properties/plan_run_id/type": {
+        "path": [
+          "original_execution_binding",
+          "plan_run_id"
+        ],
+        "value": "gc"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/else/properties/plan_version/type": {
+        "path": [
+          "original_execution_binding",
+          "plan_version"
+        ],
+        "value": 7
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/if/properties/kind/const": {
+        "path": [
+          "original_execution_binding",
+          "kind"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/active_run_ref/type",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/assistant_plan_id/type",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/goal_plan_binding_ref/type",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/goal_plan_binding_sha256/type",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_hash/type",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_run_id/type",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_version/type"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/active_run_ref/minLength": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/active_run_ref/oneOf",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/active_run_ref/oneOf/0/minLength",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/active_run_ref/oneOf/1/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "active_run_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/active_run_ref/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "active_run_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/assistant_plan_id/minLength": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/assistant_plan_id/oneOf",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/assistant_plan_id/oneOf/0/minLength",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/assistant_plan_id/oneOf/1/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "assistant_plan_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/assistant_plan_id/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "assistant_plan_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/goal_plan_binding_ref/minLength": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_ref/oneOf",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_ref/oneOf/0/minLength",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_ref/oneOf/1/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/goal_plan_binding_ref/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/goal_plan_binding_sha256/pattern": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_sha256/oneOf",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_sha256/oneOf/0/pattern",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_sha256/oneOf/1/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_sha256"
+        ],
+        "value": "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/goal_plan_binding_sha256/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_hash/pattern": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_hash/oneOf",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_hash/oneOf/0/pattern",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_hash/oneOf/1/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "plan_hash"
+        ],
+        "value": "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_hash/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "plan_hash"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_run_id/minLength": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_run_id/oneOf",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_run_id/oneOf/0/minLength",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_run_id/oneOf/1/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "plan_run_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_run_id/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "plan_run_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_version/minimum": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_version/oneOf",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_version/oneOf/0/minimum",
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_version/oneOf/1/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "plan_version"
+        ],
+        "value": 0
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_version/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "plan_version"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "original_execution_binding"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/active_run_ref/oneOf": {
+        "path": [
+          "original_execution_binding",
+          "active_run_ref"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/active_run_ref/oneOf/0/minLength": {
+        "path": [
+          "original_execution_binding",
+          "active_run_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/active_run_ref/oneOf/0/type": {
+        "path": [
+          "original_execution_binding",
+          "active_run_ref"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/active_run_ref/oneOf/1/type": {
+        "path": [
+          "original_execution_binding",
+          "active_run_ref"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/assistant_plan_id/oneOf": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/assistant_plan_id/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "assistant_plan_id"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/assistant_plan_id/oneOf/0/minLength": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/assistant_plan_id/minLength"
+        ],
+        "path": [
+          "original_execution_binding",
+          "assistant_plan_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/assistant_plan_id/oneOf/0/type": {
+        "path": [
+          "original_execution_binding",
+          "assistant_plan_id"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/assistant_plan_id/oneOf"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/assistant_plan_id/oneOf/1/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "assistant_plan_id"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/assistant_plan_id/oneOf"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/execution_owner_ref/minLength": {
+        "path": [
+          "original_execution_binding",
+          "execution_owner_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/execution_owner_ref/type": {
+        "path": [
+          "original_execution_binding",
+          "execution_owner_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_ref/oneOf": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/goal_plan_binding_ref/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_ref"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_ref/oneOf/0/minLength": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/goal_plan_binding_ref/minLength"
+        ],
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_ref/oneOf/0/type": {
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_ref"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_ref/oneOf"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_ref/oneOf/1/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_ref"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_ref/oneOf"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_sha256/oneOf": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/goal_plan_binding_sha256/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_sha256/oneOf/0/pattern": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/goal_plan_binding_sha256/pattern"
+        ],
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_sha256"
+        ],
+        "value": "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_sha256/oneOf/0/type": {
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_sha256"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_sha256/oneOf"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_sha256/oneOf/1/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "goal_plan_binding_sha256"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/goal_plan_binding_sha256/oneOf"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/kind/enum": {
+        "path": [
+          "original_execution_binding",
+          "kind"
+        ],
+        "value": "no_bound_planx"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/original_binding_source_ref/minLength": {
+        "path": [
+          "original_execution_binding",
+          "original_binding_source_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/original_binding_source_ref/type": {
+        "path": [
+          "original_execution_binding",
+          "original_binding_source_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_hash/oneOf": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_hash/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "plan_hash"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_hash/oneOf/0/pattern": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_hash/pattern"
+        ],
+        "path": [
+          "original_execution_binding",
+          "plan_hash"
+        ],
+        "value": "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_hash/oneOf/0/type": {
+        "path": [
+          "original_execution_binding",
+          "plan_hash"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_hash/oneOf"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_hash/oneOf/1/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "plan_hash"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_hash/oneOf"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_run_id/oneOf": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_run_id/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "plan_run_id"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_run_id/oneOf/0/minLength": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_run_id/minLength"
+        ],
+        "path": [
+          "original_execution_binding",
+          "plan_run_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_run_id/oneOf/0/type": {
+        "path": [
+          "original_execution_binding",
+          "plan_run_id"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_run_id/oneOf"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_run_id/oneOf/1/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "plan_run_id"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_run_id/oneOf"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_version/oneOf": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_version/type"
+        ],
+        "path": [
+          "original_execution_binding",
+          "plan_version"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_version/oneOf/0/minimum": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "execution_binding_implication": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/allOf/0/then/properties/plan_version/minimum"
+        ],
+        "path": [
+          "original_execution_binding",
+          "plan_version"
+        ],
+        "value": 0
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_version/oneOf/0/type": {
+        "path": [
+          "original_execution_binding",
+          "plan_version"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_version/oneOf"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_version/oneOf/1/type": {
+        "control": {
+          "path": [
+            "original_execution_binding"
+          ],
+          "value": {
+            "active_run_ref": "TEST_ONLY:run",
+            "assistant_plan_id": "TEST_ONLY:plan",
+            "execution_owner_ref": "TEST_ONLY:execution_owner_ref:bcb5874b11f046e0",
+            "goal_plan_binding_ref": "TEST_ONLY:binding",
+            "goal_plan_binding_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+            "kind": "bound_plan",
+            "original_binding_source_ref": "TEST_ONLY:original_binding_source_ref:9f1414eb11ac48d8",
+            "plan_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+            "plan_run_id": "TEST_ONLY:plan-run",
+            "plan_version": 1
+          }
+        },
+        "path": [
+          "original_execution_binding",
+          "plan_version"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/properties/plan_version/oneOf"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/required": {
+        "member": [
+          "remove",
+          "active_run_ref"
+        ],
+        "path": [
+          "original_execution_binding"
+        ]
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/ExecutionBinding/type": {
+        "path": [
+          "original_execution_binding"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/after_continuation_epoch/minimum": {
+        "path": [
+          "after_continuation_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/after_continuation_epoch/type": {
+        "path": [
+          "after_continuation_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/after_user_stop_epoch/minimum": {
+        "path": [
+          "after_user_stop_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/after_user_stop_epoch/type": {
+        "path": [
+          "after_user_stop_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/before_continuation_epoch/minimum": {
+        "path": [
+          "before_continuation_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/before_continuation_epoch/type": {
+        "path": [
+          "before_continuation_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/before_stop_control_sha256/pattern": {
+        "path": [
+          "before_stop_control_sha256"
+        ],
+        "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/before_stop_control_sha256/type": {
+        "path": [
+          "before_stop_control_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/before_user_stop_epoch/minimum": {
+        "path": [
+          "before_user_stop_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/before_user_stop_epoch/type": {
+        "path": [
+          "before_user_stop_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/expected_currentness_hash/pattern": {
+        "path": [
+          "expected_currentness_hash"
+        ],
+        "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/expected_currentness_hash/type": {
+        "path": [
+          "expected_currentness_hash"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/expected_revision/minimum": {
+        "path": [
+          "expected_revision"
+        ],
+        "value": 0
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/expected_revision/type": {
+        "path": [
+          "expected_revision"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/goal_id/minLength": {
+        "path": [
+          "goal_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/goal_id/type": {
+        "path": [
+          "goal_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/operation_id/minLength": {
+        "path": [
+          "operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/operation_id/type": {
+        "path": [
+          "operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/original_accepted_cancel_ref/minLength": {
+        "path": [
+          "original_accepted_cancel_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/original_accepted_cancel_ref/type": {
+        "path": [
+          "original_accepted_cancel_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/original_host_owner_epoch/minimum": {
+        "path": [
+          "original_host_owner_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/original_host_owner_epoch/type": {
+        "path": [
+          "original_host_owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/project_id/minLength": {
+        "path": [
+          "project_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/project_id/type": {
+        "path": [
+          "project_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/requested_at/format": {
+        "path": [
+          "requested_at"
+        ],
+        "value": "not-a-date-time"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/requested_at/type": {
+        "path": [
+          "requested_at"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/schema_id/const": {
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.goal.cancel.stop_intent.v1x"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/schema_version/const": {
+        "path": [
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/source_audit_sha256/pattern": {
+        "path": [
+          "source_audit_sha256"
+        ],
+        "value": "df99c6ae585c371d3755b1335e3a875c3a79975462256924495d725cc507fa84\n"
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/source_audit_sha256/type": {
+        "path": [
+          "source_audit_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/storage_instance_id/minLength": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/storage_instance_id/type": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/thread_id/minLength": {
+        "path": [
+          "thread_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/properties/thread_id/type": {
+        "path": [
+          "thread_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/schemas/goal_cancel_command_custody/1.0.0/goal_cancel_command_custody.schema.json#/$defs/StopIntent/type": {
+        "path": [],
+        "value": true
+      }
+    }
+  },
+  "family": "goal_run.cancelled",
+  "fresh_reference_sha256": "1a8193ac78dbe047dd7fda0f897b004fb4a6cf64a16ebbbdd9a875f47296e43a",
+  "routes": [
+    {
+      "call": "issue_physical",
+      "detail": [
+        "Additional properties are not allowed ('methodb_extra' was unexpected)"
+      ],
+      "edition": "native_v7",
+      "freeze_owner_clock": true,
+      "mutation": false,
+      "realm": "goal_consumer",
+      "refusal": "issue/goal_cancel_stop_intent/schema/",
+      "root": "dg5:6044e4cde4ed6c0f",
+      "site": [
+        "scripts/pm_goal_dg_r_world.py",
+        446
+      ]
+    },
+    {
+      "call": "issue_physical",
+      "detail": [
+        "Additional properties are not allowed ('methodb_extra' was unexpected)"
+      ],
+      "edition": "original_profile",
+      "freeze_owner_clock": true,
+      "fresh_literal_sha256": "81afe52f3e9de42387f5a9f2b92181455ee5968cd6d882b26e5a5acb4a4a6696",
+      "mutation": false,
+      "realm": "goal_consumer",
+      "refusal": "issue/goal_cancel_stop_intent/schema/",
+      "root": "dg5:b903c4989730f5a8",
+      "site": [
+        "scripts/pm_goal_dg_r_world.py",
+        446
+      ]
+    }
+  ],
+  "row": "dg5/issue/goal_cancel_stop_intent/schema",
+  "sites": [
+    [
+      "scripts/pm_goal_dg_r_world.py",
+      446
+    ]
+  ],
+  "source": "34f212d3fbcc8051ce2922d1de9dd75714ae361a"
+}

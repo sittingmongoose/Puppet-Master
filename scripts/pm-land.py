@@ -81,19 +81,19 @@ def say(message: str) -> None:
     print(message, flush=True)
 
 
-def command(argv, *, capture=True, check=True, input_text=None):
+def command(argv, *, capture=True, check=True, input_text=None, env=None):
     result = subprocess.run(argv, check=False, text=True,
                             stdout=subprocess.PIPE if capture else None,
                             stderr=subprocess.PIPE if capture else None,
-                            encoding="utf-8", errors="surrogateescape", input=input_text)
+                            encoding="utf-8", errors="surrogateescape", input=input_text, env=env)
     if check and result.returncode:
         raise Refusal(f"{shlex.join(map(str, argv))} exited {result.returncode}"
                       + (f": {result.stderr.strip()}" if result.stderr else ""))
     return result
 
 
-def git(root, *args, check=True):
-    return command(["git", "--no-optional-locks", "-C", str(root), *args], check=check)
+def git(root, *args, check=True, env=None):
+    return command(["git", "--no-optional-locks", "-C", str(root), *args], check=check, env=env)
 
 
 def revision(root, ref):
@@ -593,6 +593,155 @@ def verify_rollback(candidate, target):
     require_clean_shared_index(root)
     require_clean_shared_tracked(root)
     say(f"Verified rollback paths from {candidate} to {target}.")
+    return 0
+
+
+def push_targets(root: Path) -> list[tuple[list[str], str]]:
+    """List each push URL once with the names of all remotes that use it.
+
+    Git lists remote names alphabetically and resolves each remote's push URLs in order.
+    Shared URLs need only one push and verification.
+    """
+    by_url: dict[str, list[str]] = {}
+    for name in git(root, "remote").stdout.split():
+        urls = git(root, "remote", "get-url", "--push", "--all", name).stdout.splitlines()
+        for url in dict.fromkeys(urls):
+            by_url.setdefault(url, []).append(name)
+    return [(names, url) for url, names in by_url.items()]
+
+
+def require_literal_push_target(root: Path, probe: str, url: str) -> None:
+    """Check how Git will interpret an already resolved URL when passed as a destination."""
+    if git(root, "remote", "get-url", "--", url, check=False).returncode == 0:
+        raise Refusal(f"push target {url!r} also names a Git remote; use an unambiguous URL")
+    fetch_url = git(root, "ls-remote", "--get-url", "--", url).stdout.splitlines()
+    # Older Git does not clear configured URLs with empty overrides. A fresh remote
+    # exposes the push rewrite for this URL without contacting the remote.
+    rows = git(root, "-c", f"remote.{probe}.url={url}", "remote", "-v",
+               env={**os.environ, "LC_ALL": "C"}).stdout.splitlines()
+    prefix, suffix = f"{probe}\t", " (push)"
+    push_urls = [row.removeprefix(prefix).removesuffix(suffix)
+                 for row in rows if row.startswith(prefix) and row.endswith(suffix)]
+    if push_urls != [url] or fetch_url != [url]:
+        raise Refusal(f"Git would rewrite push target {url!r} when publishing by URL "
+                      f"(push: {push_urls!r}, readback: {fetch_url!r}); check the URL rewrite rules")
+
+
+def pushed_main(root: Path, url: str) -> Optional[str]:
+    """The published main at one push target, read without updating any local ref; None when it has none."""
+    for line in git(root, "ls-remote", "--refs", "--", url, MAIN_REF).stdout.splitlines():
+        value, _, ref = line.partition("\t")
+        if ref == MAIN_REF:
+            return sha(value, f"main on {url}")
+    return None
+
+
+def update_publish_tracking_refs(root: Path, names: Collection[str], verified_urls: Collection[str],
+                                 commit: str) -> None:
+    """Advance tracking refs for verified fetch endpoints without overwriting concurrent updates."""
+    for name in sorted(names):
+        fetch = git(root, "remote", "get-url", "--", name, check=False)
+        if fetch.returncode or fetch.stdout.rstrip("\n") not in verified_urls:
+            say(f"fetch {name} before the next verify")
+            continue
+        ref = f"refs/remotes/{name}/main"
+        previous = git(root, "rev-parse", "--verify", "--quiet", ref, check=False).stdout.strip()
+        if previous == commit:
+            continue
+        if previous and not is_ancestor(root, previous, commit):
+            raise Refusal(f"{ref} at {previous} cannot fast-forward to {commit}; inspect the tracking ref")
+        git(root, "update-ref", "--no-deref", ref, commit, previous or "0" * len(commit))
+
+
+def behind_publish_target(root: Path, url: str, tip: Optional[str], lease: str) -> Optional[str]:
+    """Suggest a manual fast-forward only when the failed target is provably behind the lease."""
+    try:
+        if tip is None or tip == lease or not is_ancestor(root, tip, lease):
+            return None
+    except Refusal:
+        # A tip whose commit is unknown locally cannot be classified as behind.
+        return None
+    repair = shlex.join(["git", "-C", str(root.resolve()), "push", "--no-follow-tags",
+                         f"--force-with-lease={MAIN_REF}:{tip}",
+                         "--", url, f"{lease}^{{commit}}:{MAIN_REF}"])
+    return f"main at {tip} is behind publication lease {lease}. One-time catch-up:\n{repair}"
+
+
+def publish_main(root: Path, lease: str, commit: str) -> int:
+    """Push the landed SHA to every configured push target under the verify lease, and verify each.
+
+    The hand-push workflow only verified origin's fetch URL. Read main at every push target
+    before reporting publication complete.
+    """
+    for label, value in (("publication lease", lease), ("landed commit", commit)):
+        sha(value, label)
+        result = git(root, "--no-replace-objects", "cat-file", "-t", value, check=False)
+        if result.returncode or result.stdout.strip() != "commit":
+            raise Refusal(f"{label} is not a commit in {root}: {value!r}")
+    if not is_ancestor(root, lease, commit):
+        raise Refusal(f"publication lease {lease} is not an ancestor of landed commit {commit}: rebase on "
+                      "the pinned main and check again, so the push is a fast-forward")
+    local_main = revision(root, MAIN_REF)
+    if commit != local_main:
+        raise Refusal(f"landed commit {commit} differs from {MAIN_REF} at {local_main} in {root}")
+    targets = push_targets(root)
+    if not targets:
+        raise Refusal(f"no push targets are configured for {root}: add a remote before publishing")
+    remote_names = {name for names, _ in targets for name in names}
+    probe = "pm-land-push-probe"
+    while probe in remote_names:
+        probe += "-"
+    for _, url in targets:
+        require_literal_push_target(root, probe, url)
+    destinations = [(f"remote {', '.join(names)} ({url})", url) for names, url in targets]
+    say("Push targets:\n" + "\n".join(f"  {label}" for label, _ in destinations))
+    push_errors: dict[str, str] = {}
+    for label, url in destinations:
+        # The commit expression keeps a ref named after the object ID from shadowing it.
+        result = git(root, "push", "--no-follow-tags", f"--force-with-lease={MAIN_REF}:{lease}",
+                     "--", url, f"{commit}^{{commit}}:{MAIN_REF}", check=False)
+        if result.returncode:
+            push_errors[url] = (f"{label}: push exited {result.returncode}"
+                                + (f": {result.stderr.strip()}" if result.stderr.strip() else ""))
+
+    failures: list[str] = []
+    warnings: list[str] = []
+    verified: dict[str, str] = {}
+    for label, url in destinations:
+        push_error = push_errors.get(url)
+        try:
+            tip = pushed_main(root, url)
+        except Refusal as exc:
+            if push_error:
+                failures.append(push_error)
+            failures.append(f"{label}: could not verify main: {exc}")
+            continue
+        if tip == commit:
+            verified[url] = f"Published {tip} to {label}: main verified"
+            if push_error:
+                warnings.append(f"Warning, main verified despite a push error: {push_error}")
+            continue
+        if push_error:
+            failures.append(push_error)
+        failures.append(f"{label}: main is {tip or 'missing'}; expected {commit}")
+        if push_error and (repair := behind_publish_target(root, url, tip, lease)):
+            failures.append(f"{label}: {repair}")
+    if not failures:
+        try:
+            update_publish_tracking_refs(root, remote_names, verified, commit)
+        except Refusal as exc:
+            failures.append(f"could not update local tracking refs: {exc}")
+    if failures:
+        report = ["publishing the landed commit to every push target failed:", *failures, *warnings]
+        if verified:
+            report.extend(["Verified targets:", *verified.values(),
+                           "the landed targets are published; fix the failing one and rerun publish "
+                           "with the same arguments (landed targets report up to date)"])
+        raise Refusal("\n".join(report))
+    for warning in warnings:
+        print(warning, file=sys.stderr)
+    for line in verified.values():
+        say(line)
     return 0
 
 
@@ -2143,7 +2292,8 @@ def judge_batch_member(shared: Path, start: str, code: int, report: Optional[dic
         return 1, lines, ("batch_exit", f"the landing check exited {code}")
     owed = []
     if code == 1 and report["infrastructure"]:
-        owed.append(f"{report['infrastructure']} subcheck(s) timed out: rerun each on its own and judge what it reports")
+        owed.append(f"{report['infrastructure']} subcheck(s) did not finish (timed out or were killed). "
+                    "Rerun each on its own and judge what it reports")
     if code == 1 and report["compare"]:
         owed.append(f"{report['compare']} pre-existing failure(s) changed content on files this branch touched: compare those "
                     "with the baseline's rows")
@@ -2808,6 +2958,15 @@ def main(argv=None):
         member.add_argument("--lock-dir", type=Path, default=LOCK_DIR, help="the rule's lock directory (default: the landing lock)")
         member.add_argument("--check-source", type=Path, help="the landing check's source at the receipt's commit "
                                                               "(default: scripts/pm-landing-check.py at that commit in --repo)")
+        publish = commands.add_parser("publish",
+                                      help="push the landed SHA to every configured push target with the lease "
+                                           "and verify each")
+        publish.add_argument("--repo", type=Path, default=None,
+                             help="checkout the landed commit and the remotes are read from (default: this worktree)")
+        publish.add_argument("--lease", required=True, help="the PUBLISH_LEASE verify printed: the main every "
+                                                            "target must still be at")
+        publish.add_argument("--commit", required=True,
+                             help="the landed full SHA, which must match refs/heads/main in --repo")
         args = parser.parse_args(argv)
         if args.command == "check":
             root = Path(git(Path.cwd(), "rev-parse", "--show-toplevel").stdout.strip())
@@ -2819,6 +2978,9 @@ def main(argv=None):
         if args.command == "batch-check":
             repo = args.repo or Path(git(Path.cwd(), "rev-parse", "--show-toplevel").stdout.strip())
             return batch_check(repo, args.lock_dir, args.receipt, args.check_source)
+        if args.command == "publish":
+            repo = args.repo or Path(git(Path.cwd(), "rev-parse", "--show-toplevel").stdout.strip())
+            return publish_main(repo, args.lease, args.commit)
         if args.rollback_check:
             if args.batch_start is not None or args.batch_close:
                 verify.error("--batch-start and --batch-close verify a receipt and do not go with --rollback-check")

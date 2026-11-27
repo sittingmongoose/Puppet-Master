@@ -1,0 +1,265 @@
+#!/usr/bin/env python3
+"""Complete-call checker tests for the Goal Update and Goal started coverage tables."""
+
+import argparse
+import gzip
+import json
+from pathlib import Path
+import sys
+
+import pm_goal_dg5_boundaries as bridge
+import pm_goal_guard_sweep as sweep
+import pm_goal_guard_tables as tables
+import pm_goal_dg_u_oracles as updated
+
+ROOT = Path(__file__).resolve().parents[1]
+FAMILY = 'goal.updated'
+OWNERS = 'scripts/pm_goal_dg_u_owners.py'
+STORAGE = 'scripts/pm_goal_test_storage.py'
+ADAPTERS = 'scripts/pm_goal_test_owner_adapters.py'
+PHASE = 'pm_goal_dg5_methodb_pilot_phase_'
+
+
+def require(condition, detail):
+    if not condition:
+        raise ValueError(detail)
+
+
+def write(path, value):
+    path.write_text(json.dumps(value, indent=2, sort_keys=True) + '\n')
+
+
+def reinstall(directory, negative):
+    world = updated.world(directory)
+    if not negative:
+        world.installation.withdraw()
+    return world, world.installation.reinstall, (), {}
+
+
+def reservation_retry(directory, negative):
+    world, goal = updated._goal(directory)
+    first = updated.O.direct_request(world, goal, 'first')
+    second = updated.O.direct_request(world, goal, 'second')
+    first_admission, _ = world.command.admit_and_capture(first)
+    second_admission, _ = world.command.admit_and_capture(second)
+    world.command.reserve(first_admission)
+    scope = goal['scope']
+    current = world.body.read_private(scope, 'stage7')
+    pending = current['control']['pending']
+    if negative:
+        source = world.source.read_source(scope, updated.op_of(second_admission), 'stage7')
+        pending = world.command._pending(second_admission, source, current, 'stage7')
+    return world, world.body.reserve, (scope, pending, lambda control: []), {}
+
+
+def receipt_intent(directory, negative):
+    world, goal, _, admission, _ = updated._upto(directory, 'reserve')
+    scope = goal['scope']
+    control = world.body.read_private(scope, 'stage7')['control']
+    world.command.commit(admission)
+    if negative:
+        control['pending']['intent_sha256'] = '6' * 64
+    return world, world.body.commit, (scope, control, [], lambda receipt: []), {}
+
+
+def terminal_kind(directory, negative):
+    world, goal = updated._goal(directory)
+    request = updated.O.direct_request(world, goal, 'terminal result')
+    command_id = request['command_instance_id']
+    world.command.run(request, stop_after='freeze')
+    world.command.mark_unknown(command_id)
+    world.command.recover(command_id)
+    original = world.sir.replay(command_id)['terminal']['kind']
+    require(original != 'succeeded', 'fixture must retain the unknown terminal')
+    kind = 'succeeded' if negative else original
+    return world, world.sir.terminalize, (command_id, kind), {}
+
+
+def storage_cas(directory, negative):
+    storage = updated.O.S.TestOwnerStorage.create(directory / 'storage')
+    storage.transact([dict(table='stage7', key='versioned', expected=None, value={'value': 'first'})])
+    version = storage.cell('stage7', 'versioned')['version']
+    write = dict(table='stage7', key='versioned', expected=version + int(negative),
+                 value={'value': 'second'})
+    return storage, storage.transact, ([write],), {}
+
+
+def json_key(directory, negative):
+    storage = updated.O.S.TestOwnerStorage.create(directory / 'storage')
+    return storage, updated.O.A.exact_json, ({1 if negative else '1': 'fixture'},), {}
+
+
+def stored_producer(directory, negative):
+    world, goal, _, admission, _ = updated._upto(directory, 'freeze')
+    if negative:
+        # Only the appender's readback copy differs. The original append
+        # and the original receipt still run against the unchanged candidate.
+        original_read = world.producer.appender.event
+
+        def readback(handle):
+            event = original_read(handle)
+            return dict(event, correlation_id='TEST_ONLY:alternate-correlation')
+
+        world.producer.appender.event = readback
+    return world, world.producer.publish, (goal['scope'], updated.op_of(admission)), {}
+
+
+def published_event(directory):
+    world, goal, _, admission, _ = updated._upto(directory, 'publish')
+    event_id = updated.event_of(world, goal, admission)
+    return world, world.storage.read_event(event_id)
+
+
+def event_record(directory, negative):
+    world, event = published_event(directory)
+    if negative:
+        event['correlation_id'] = ''
+    return world, updated.O.S.validate_event_record, (event, 'append/event'), {}
+
+
+FAILURE_ONLY = {'event-record', 'frame-event-record'}
+
+
+def frame_header_cap(directory, negative):
+    world, event = published_event(directory)
+    if negative:
+        event['event_id'] = 'TEST_ONLY:' + ('x' * updated.O.S.HEADER_CAP)
+    return world, updated.O.S.encode_event_frame, (event, 1), {}
+
+
+def frame_payload_cap(directory, negative):
+    world, event = published_event(directory)
+    if negative:
+        event['payload'] = dict(event['payload'], stage7_large_value='x' * updated.O.S.PAYLOAD_CAP)
+    return world, updated.O.S.encode_event_frame, (event, 1), {}
+
+
+def frame_event_record(directory, negative):
+    world, event = published_event(directory)
+    storage = updated.O.S
+    header = storage.canonical(storage.event_header(event))
+    if negative:
+        event['correlation_id'] = ''
+    payload = storage.canonical(event)
+    prefix = storage._prefix(len(header), len(payload), 0, 1, event['sequence_id'],
+                             storage.crc32(header), storage.crc32(payload))
+    return world, storage.decode_frame, (prefix + header + payload, 0), dict(
+        generation=1, prior_sequence=None, prior_control=False)
+
+
+# The explicit lines match the input matrix. Validate the observed location on every run.
+CASES = {
+    'frame-event-record': (STORAGE, 581, 'Corrupt:event_record:frame/event/schema/correlation_id', frame_event_record),
+    'frame-payload-cap': (STORAGE, 441, 'frame/payload_cap', frame_payload_cap),
+    'frame-header-cap': (STORAGE, 440, 'frame/header_cap', frame_header_cap),
+    'event-record': (STORAGE, 473, 'append/event/schema/correlation_id', event_record),
+    'stored-producer': (OWNERS, 1807, 'dgu/producer/publish/stored_producer', stored_producer),
+    'json-key': (ADAPTERS, 421, 'custody/exact_json/key', json_key),
+    'storage-cas': (STORAGE, 1657, 'tx/cas_version', storage_cas),
+    'terminal-kind': (OWNERS, 803, 'dgu/sir/terminal_immutable', terminal_kind),
+    'receipt-intent': (OWNERS, 1210, 'dgu/body/commit/receipt_intent', receipt_intent),
+    'reservation-retry': (OWNERS, 1173, 'dgu/body/reserve/conflicting_reservation', reservation_retry),
+    'reinstall': (OWNERS, 493, 'dgu/installation/not_withdrawn', reinstall),
+}
+
+
+def call(fixture, label, collector, *, valid=None, target=None, cut=(), family=FAMILY):
+    world, method, args, kwargs = fixture
+    action = lambda: method(*args, **kwargs)
+    work = world.work if family == 'goal_run.started' else world.root
+    saved = tables.COLLECTOR, tables.CUT, tables.NO_CACHE
+    tables.COLLECTOR, tables.CUT, tables.NO_CACHE = collector, frozenset(cut), True
+    try:
+        result, code = bridge.invoke(
+            label, family, action, work, world=world,
+            arguments=dict(receiver=getattr(method, '__self__', None), args=args, kwargs=kwargs),
+            original=getattr(method, '__func__', method), valid=valid, target=target,
+        )
+    finally:
+        tables.COLLECTOR, tables.CUT, tables.NO_CACHE = saved
+    require(not collector.failures, collector.failures)
+    record = collector.ledger[-1]
+    return dict(result, code=code, input_sha256=record['input_sha256'], failing=record['failing'])
+
+
+def save_proof(output, collector, row, site, table_report, table_path, family):
+    proof = output / 'proof'
+    summary = proof / 'tables'
+    write(summary / 'summary.json', [table_report])
+    write(summary / 'rows.json', [dict(guard=row, table=table_report['table'],
+                                      status='PASS' if table_report['status'] == 'PASS' else 'UNPROVED',
+                                      table_status=table_report['status'])])
+    write(proof / 'family-rows.json', {family: [row]})
+    write(proof / 'collection.json', dict(calls=collector.calls, failures=collector.failures,
+                                        rows={row: {'sites': [site]}}))
+    paths = {ROOT / site[0], table_path, Path(__file__), ROOT / 'scripts/pm_guard_isolation.py'}
+    for module in tuple(sys.modules.values()):
+        filename = getattr(module, '__file__', None)
+        if filename:
+            path = Path(filename).resolve()
+            if path.is_relative_to(ROOT / 'scripts') and path.name.startswith('pm_goal') and path.suffix == '.py':
+                paths.add(path)
+    write(proof / 'source-bindings.json',
+          {'files': {str(p.relative_to(ROOT)): bridge._file_sha(p) for p in sorted(paths)}})
+    for name, value in (('ledger', collector.ledger),
+                        ('signatures', [sorted(s) for s in collector.signature_list])):
+        with gzip.open(proof / (name + '.json.gz'), 'wt') as stream:
+            json.dump(value, stream, sort_keys=True)
+
+
+def run(name, output, *, leave_enabled=False, cases=CASES, family=FAMILY, row=None):
+    source, line, expected, make = cases[name]
+    row = row or bridge.site_name(source, line)
+    site = (source, line)
+    output.mkdir(parents=True)
+    tables.DISCOVERY = True
+    collector = sweep.Collector()
+    label = family + '/stage7/' + name
+    control = call(make(output / 'valid', False), label + '/valid', collector, valid=True, family=family)
+    fixture = make(output / 'invalid', True)
+    negative_label = label + '/invalid'
+    negative = call(fixture, negative_label, collector, valid=False, target=row, family=family)
+    disabled = call(fixture, negative_label, sweep.Collector(judge=False),
+                    cut=() if leave_enabled else (row,), family=family)
+    restored = call(fixture, negative_label, sweep.Collector(judge=False), family=family)
+    result = dict(row=row, location=site, expected=expected, control=control,
+                  negative=negative, disabled=disabled, restored=restored)
+    write(output / 'calls.json', result)
+    require(control['errors'] == [] and control['code'] is None, f'{row}: valid input refused')
+    reached_on_acceptance = bool(collector.rows.get(row, {}).get('controls'))
+    require(reached_on_acceptance == (name not in FAILURE_ONLY),
+            f'{row}: accepted call did not match the expected checker path')
+    require(collector.rows[row]['sites'] == {site}, f'{row}: checker location changed')
+    require(negative['errors'] == restored['errors'] == [row] and
+            negative['code'] == restored['code'] == expected, f'{row}: exact refusal did not repeat')
+    require(negative['input_sha256'] == disabled['input_sha256'] == restored['input_sha256'],
+            f'{row}: refused input changed between calls')
+    require(disabled['errors'] == [] and disabled['code'] is None,
+            f'{row}: disabling only the checker did not allow the input')
+    require(collector.ledger[-1]['kill'] == 'KILLED', f'{row}: stock replay did not pass')
+
+    ident = sweep.table_id([row])
+    table_path = ROOT / 'scripts' / (PHASE + ident + '.py')
+    summary = output / 'proof' / 'tables'
+    summary.mkdir(parents=True)
+    report = sweep.prove_table(collector, ident, [row], sweep.table_records(collector),
+                               summary, module_name=table_path.stem)
+    if name in FAILURE_ONLY:
+        require(report['status'] == 'NOT_RUN' and report['reason'] == 'no control vector', report)
+    else:
+        require(report['status'] == 'PASS' and report['proved'] == [row], report)
+    save_proof(output, collector, row, site, report, table_path, family)
+    return result
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('case', choices=CASES)
+    parser.add_argument('--out', type=Path, required=True)
+    parser.add_argument('--leave-enabled', action='store_true')
+    args = parser.parse_args()
+    run(args.case, args.out.resolve(), leave_enabled=args.leave_enabled)
+
+
+if __name__ == '__main__':
+    main()

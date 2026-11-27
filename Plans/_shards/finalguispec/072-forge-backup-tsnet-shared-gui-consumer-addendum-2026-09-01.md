@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L37584-L37806
+Source lines: L37619-L37841
 
-Source SHA256: `7ba17c5aa7fb716a162c335b6ec6e71fc68d986a5c12f560da9fc6c85b205c7a`
+Source SHA256: `7c52aa35b4fb3b308c17b6cf275e1f2f81fab5151885cf7a52d3ae688fdbe180`
 
 ---
 
@@ -36,7 +36,7 @@ canonical_text: 'Final GUI presents one canonical repository_automation side-pan
   Backup and Retention and RestorePreview also show the last verified backup, meaning the newest backup at Structure
   verified or higher with its level, its time and its last event, and say plainly what a restore from it would lose (everything
   written after its capture point), with a newer unverified backup shown beside it. The line and the loss statement are
-  one backup-status record that the Backup manager, the restore preview, the recovery shell (section 15.6) and Storage
+  one backup-status record that the Backup manager, the restore preview, the recovery shell (15.6 Durable Storage Recovery, Continuity, and Trust Surfaces (Case L)) and Storage
   & Retention (F3-457) read; no surface computes them. Derived families are not backed up and rebuild on restore.
 
 

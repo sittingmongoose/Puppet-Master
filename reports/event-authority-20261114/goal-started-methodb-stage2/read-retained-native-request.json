@@ -1,0 +1,37 @@
+{
+  "row": "dg5/read_retained_native/request/schema",
+  "fixtures": [
+    {
+      "route": "read_retained_native",
+      "edition": "v3",
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    },
+    {
+      "route": "read_retained_native",
+      "edition": "v7",
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    }
+  ]
+}

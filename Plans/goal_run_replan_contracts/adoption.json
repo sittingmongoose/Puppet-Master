@@ -34,9 +34,9 @@
  },
  "placement": {
   "dir": "Plans/goal_run_replan_contracts/source-v8/",
-  "placed_members": 74,
-  "rule": "Placed members are byte-identical copies at their package-relative paths; each equals its manifest entry and, where listed, its preimage whole_members entry. The other preimage whole members (composition banks, inputs, originals) are not copied into this repository: they resolve only against frozen_source.root, each authenticated by its preimage sha256 before use. They are never resolved against canon, a shared checkout or a newer same-ID resource, and a missing or unequal external member makes installation unavailable, never substituted.",
-  "external_whole_members": 1433
+  "placed_members": 70,
+  "rule": "Placed members are byte-identical copies at their package-relative paths; each equals its manifest entry and, where listed, its preimage whole_members entry. The four case-only duplicate aliases (coordinator/protocol.md, native-v8/protocol.md, producer-combined/protocol.md, replan/protocol.md) are not placed: a case-insensitive checkout cannot hold a path that differs from one of its siblings only by case, and each alias duplicates that sibling's PROTOCOL.md (replan's is that file minus its four-line Stop preface). The other preimage whole members (composition banks, inputs, originals) are not copied into this repository: they resolve only against frozen_source.root, each authenticated by its preimage sha256 before use. They are never resolved against canon, a shared checkout or a newer same-ID resource, and a missing or unequal external member makes installation unavailable, never substituted.",
+  "external_whole_members": 1437
  },
  "fresh_birth": {
   "rule": "Only a genuine original Workflow birth installs v8. WorkflowBirth.writer_contract is the v8 constant; WorkflowBirth.installed_contract_digest and combined Enrollment installed_descriptor_sha256 equal the canon adoption digest in adoption-digest.txt. The frozen digest alone never authorizes a birth, because it selects the draft delivery profile (C1). No v3, v6 or v7 birth and no all_writers.stop_block.v1 birth is enrolled, upgraded, cast or late-enrolled; their profiles, keys, headers and generations stay exact.",

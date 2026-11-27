@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L1056-L8894
+Source lines: L1056-L8896
 
-Source SHA256: `b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3`
+Source SHA256: `99353ac63ed50aff8d14e4b7787cf016aa84695c424599552c60c0da79f20d67`
 
 ---
 
@@ -6256,6 +6256,8 @@ acceptance_criteria:
 - SMPFS-100 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- Every catalogued cmd.browser.* command gets exactly one tier from the tier rule under Browser Action Table And Timeouts
+  (DL-2604), and every explicit tier in that action table agrees with the rule.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate

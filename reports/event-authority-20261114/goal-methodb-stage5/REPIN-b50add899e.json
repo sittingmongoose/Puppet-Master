@@ -1,0 +1,359 @@
+{
+ "ruling": "DG5 1121195425-2086 option (A); pm-ea-lead 1121193449-2312 (Certified rows are judged on Certified's base b50add899e)",
+ "old_source": "76e7a4f279d974b3635eaf22b08e07967dbbf2ae",
+ "new_source": "b50add899ed9c7f8e81f389f2f2dbd571cff3824",
+ "why": "76e7a4f279 (\"Use the shared timestamp checker in scoped Goal certification schemas\") is an unpushed orphan: it exists only in the pilot agent's scratch repository (~/pm-scratch/ea-goal-methodb-pilot/repo), no branch or remote contains it, and its source tree stage4-cf-source is gone, so the Stage 5 Certified runs are not reproducible on it. b50add899e (\"Use the shared timestamp checker in scoped certification\") is its pushed equivalent on Certified's base.",
+ "owner_file_evidence": {
+  "file": "REPIN-b50add899e-owner-files.json",
+  "patterns": [
+   "scripts/pm_goal_dg_cf*",
+   "scripts/pm_goal_test_*",
+   "scripts/pm_goal_own_*"
+  ],
+  "files": 50,
+  "all_identical": true,
+  "note": "every scripts/pm_goal_dg_cf*, pm_goal_test_* and pm_goal_own_* file has the same sha256 at both commits"
+ },
+ "other_differences": {
+  "files": [
+   "scripts/pm_goal_certified_scoped_format_selftest.py",
+   "scripts/pm_goal_dg5_boundaries.py",
+   "scripts/pm_goal_dg5_closure.py",
+   "scripts/pm_goal_dg5_collector_selftest.py",
+   "scripts/pm_goal_dg_r_oracles.py",
+   "scripts/pm_goal_dg_s_oracles.py"
+  ],
+  "note": "76e7a4f279..b50add899e changes only these: the DG-S and DG-R oracles (not Certified), a scoped-format selftest, pm_goal_dg5_collector_selftest, pm_goal_dg5_boundaries (2 lines, _CONTEXT_SENTINELS in the descriptor pickler; replaced by the byte-identical fixed judge in b4c7f7c416) and pm_goal_dg5_closure (_describe_inventory finds scoped DG-R/INT banks by their MRO; the Certified RealmBank is neither)"
+ },
+ "judge_source": "fix/covered-later-stock-b50-20261121 at b4c7f7c41662e73ba7e51c33534f1080b5c6f08f (parent b50add899e; the 13 judge-fix files byte-identical to 0dc66db2c9); checked at run time by pm_goal_dg5_methodb_export.fixed_judge_source",
+ "declarations": {
+  "certified-append-outer-evidence.json": {
+   "before": "2a12e12480ef0972449105ca334d398c3e3358b359f9889f4584135c77f562ab",
+   "after": "bb8c86b4301dcdfde583edbb32ef968c40d6bc5c424e551ea5b1aaebdb0bab53",
+   "row": "dg5/append_outer/evidence/schema",
+   "role": "judged row"
+  },
+  "certified-commit-evidence.json": {
+   "before": "b76290cd62278e2936529c6d4e924d4ee14b356babf810308fe0602c29077efd",
+   "after": "7a88956ace1f981f5aaffeb5209707a91751f331cc14452428545104c1e6070a",
+   "row": "dg5/commit/evidence/schema",
+   "role": "judged row"
+  },
+  "certified-current-guard.json": {
+   "before": "31afc2df123761c0c2872604dfb003b9bd82f8c6d7ef6f2b96cfc5fc573f8c38",
+   "after": "1dfdb2c507980058d927a51811c41f145885ffbc67fc0fc0e05db69275a0453b",
+   "row": "dg5/current/guard/schema",
+   "role": "judged row"
+  },
+  "certified-f5a-control.json": {
+   "before": "2f4b209748c67bb9ebb91576b122276af83b1f902c9178352e9cadda6396a121",
+   "after": "dd2309ba4244ede821e07ccf6616e5673c0d322f4b98dbea7295abb33ec56397",
+   "row": "dg5/f5a/control/schema",
+   "role": "judged row"
+  },
+  "certified-f5a-intent.json": {
+   "before": "3de0b7de688cdfb2dd725ba6cb48599c1f76db0c2ce747a2cfe28a3f97ce54a4",
+   "after": "b4dbc38c0a28145714b324c11f5a1508be36415ebba239ff75cc5af6ba074cd6",
+   "row": "dg5/f5a/intent/schema",
+   "role": "judged row"
+  },
+  "certified-f5d-evidence.json": {
+   "before": "4fe858573146cd9948fe8e9859272bf9a9246a6b28ece01372a5d45a533ca038",
+   "after": "1073a7c77a1d8797c9abf6fb76f417566c1fd351e3d278aa51ebb17de0de8131",
+   "row": "dg5/f5d/evidence/schema",
+   "role": "judged row"
+  },
+  "certified-intent.json": {
+   "before": "4bd9eae6cd590e4e4af516a126410d74fb08c5ec3d24cb4b9a39cc02fd172007",
+   "after": "b10d4835b66eabf76c9a6abdee98d5278f33ed2ec8bda2da7267d33287291c41",
+   "row": "dg5/intent/schema",
+   "role": "judged row"
+  },
+  "certified-retry-evidence.json": {
+   "before": "757c16b32d9c9bfda4463fdc8484bd80d4421674643a22a41fa07e3d7656e46d",
+   "after": "58bb198e28a39a73535540127fc9d0030896c5ed556ebfdc0ba94fc5ea239a2e",
+   "row": "dg5/retry/evidence/schema",
+   "role": "judged row"
+  },
+  "certified-guard-result.json": {
+   "before": "8727ad66574d7d24804aced5d860ed29e0e63dabf1ceb8964b76a12a1e284b5e",
+   "after": "3d40f228f498ae053afc11753afba92bc670978d90a40f3059453c9d9572eb14",
+   "row": "dg5/guard/result/schema",
+   "role": "shared GuardReadResult examples of certified-current-guard (use_guard_result_examples requires the same source)"
+  }
+ },
+ "census_unchanged": true,
+ "outcome": "NOT RE-PINNED: every row fails the lead's conditions (pm-ea-lead 1121195856-9925)",
+ "conditions": "per row, every owner, test and harness file the row's judging imports (less the judge files) needs the hash the orphan run recorded, equal to b50's blob; any file without a recorded hash, or differing, holds the row as CANNOT_DECIDE",
+ "orphan_hash_source": "the only per-file hashes the orphan runs recorded are each row's published proof/source-bindings.json (goal-methodb-pilot/stage-5/<row>/proof/source-bindings.json): the row's table, its site file, every pm_goal_dg5_*.py in the source folder and five named files. The 76e7a4f279 commit object still exists in ~/pm-scratch/ea-goal-methodb-pilot/repo, but a commit tree is not a recorded per-file hash (DG5 (3)); its blobs are supporting evidence only",
+ "rows": {
+  "certified-append-outer-evidence": {
+   "verdict": "HOLD (CANNOT_DECIDE)",
+   "files": 22,
+   "recorded": 7,
+   "no_recorded_hash": [
+    "scripts/pm_event_datetime.py",
+    "scripts/pm_event_index_binding.py",
+    "scripts/pm_event_numbers.py",
+    "scripts/pm_goal_bank_diagnostics.py",
+    "scripts/pm_goal_dg_cf2_consumer.py",
+    "scripts/pm_goal_dg_cf2_native.py",
+    "scripts/pm_goal_dg_cf2_oracles.py",
+    "scripts/pm_goal_go2_closure.py",
+    "scripts/pm_goal_own_c3_w5_oracles.py",
+    "scripts/pm_goal_own_c3_w5_successor_oracles.py",
+    "scripts/pm_goal_test_demo_cf01.py",
+    "scripts/pm_goal_test_numrule.py",
+    "scripts/pm_goal_test_owner_adapters.py",
+    "scripts/pm_goal_test_source.py",
+    "scripts/pm_goal_test_storage.py"
+   ],
+   "differs": [
+    "scripts/pm_goal_dg5_closure.py"
+   ],
+   "supporting_all_equal": false,
+   "held": "CANNOT_DECIDE"
+  },
+  "certified-commit-evidence": {
+   "verdict": "HOLD (CANNOT_DECIDE)",
+   "files": 22,
+   "recorded": 7,
+   "no_recorded_hash": [
+    "scripts/pm_event_datetime.py",
+    "scripts/pm_event_index_binding.py",
+    "scripts/pm_event_numbers.py",
+    "scripts/pm_goal_bank_diagnostics.py",
+    "scripts/pm_goal_dg_cf2_consumer.py",
+    "scripts/pm_goal_dg_cf2_native.py",
+    "scripts/pm_goal_dg_cf2_oracles.py",
+    "scripts/pm_goal_go2_closure.py",
+    "scripts/pm_goal_own_c3_w5_oracles.py",
+    "scripts/pm_goal_own_c3_w5_successor_oracles.py",
+    "scripts/pm_goal_test_demo_cf01.py",
+    "scripts/pm_goal_test_numrule.py",
+    "scripts/pm_goal_test_owner_adapters.py",
+    "scripts/pm_goal_test_source.py",
+    "scripts/pm_goal_test_storage.py"
+   ],
+   "differs": [
+    "scripts/pm_goal_dg5_closure.py"
+   ],
+   "supporting_all_equal": false,
+   "held": "CANNOT_DECIDE"
+  },
+  "certified-current-guard": {
+   "verdict": "HOLD (CANNOT_DECIDE)",
+   "files": 22,
+   "recorded": 7,
+   "no_recorded_hash": [
+    "scripts/pm_event_datetime.py",
+    "scripts/pm_event_index_binding.py",
+    "scripts/pm_event_numbers.py",
+    "scripts/pm_goal_bank_diagnostics.py",
+    "scripts/pm_goal_dg_cf2_consumer.py",
+    "scripts/pm_goal_dg_cf2_native.py",
+    "scripts/pm_goal_dg_cf2_oracles.py",
+    "scripts/pm_goal_go2_closure.py",
+    "scripts/pm_goal_own_c3_w5_oracles.py",
+    "scripts/pm_goal_own_c3_w5_successor_oracles.py",
+    "scripts/pm_goal_test_demo_cf01.py",
+    "scripts/pm_goal_test_numrule.py",
+    "scripts/pm_goal_test_owner_adapters.py",
+    "scripts/pm_goal_test_source.py",
+    "scripts/pm_goal_test_storage.py"
+   ],
+   "differs": [
+    "scripts/pm_goal_dg5_closure.py"
+   ],
+   "supporting_all_equal": false,
+   "held": "CANNOT_DECIDE"
+  },
+  "certified-f5a-control": {
+   "verdict": "HOLD (CANNOT_DECIDE)",
+   "files": 22,
+   "recorded": 7,
+   "no_recorded_hash": [
+    "scripts/pm_event_datetime.py",
+    "scripts/pm_event_index_binding.py",
+    "scripts/pm_event_numbers.py",
+    "scripts/pm_goal_bank_diagnostics.py",
+    "scripts/pm_goal_dg_cf2_consumer.py",
+    "scripts/pm_goal_dg_cf2_native.py",
+    "scripts/pm_goal_dg_cf2_oracles.py",
+    "scripts/pm_goal_go2_closure.py",
+    "scripts/pm_goal_own_c3_w5_oracles.py",
+    "scripts/pm_goal_own_c3_w5_successor_oracles.py",
+    "scripts/pm_goal_test_demo_cf01.py",
+    "scripts/pm_goal_test_numrule.py",
+    "scripts/pm_goal_test_owner_adapters.py",
+    "scripts/pm_goal_test_source.py",
+    "scripts/pm_goal_test_storage.py"
+   ],
+   "differs": [
+    "scripts/pm_goal_dg5_closure.py"
+   ],
+   "supporting_all_equal": false,
+   "held": "CANNOT_DECIDE"
+  },
+  "certified-f5a-intent": {
+   "verdict": "HOLD (CANNOT_DECIDE)",
+   "files": 22,
+   "recorded": 7,
+   "no_recorded_hash": [
+    "scripts/pm_event_datetime.py",
+    "scripts/pm_event_index_binding.py",
+    "scripts/pm_event_numbers.py",
+    "scripts/pm_goal_bank_diagnostics.py",
+    "scripts/pm_goal_dg_cf2_consumer.py",
+    "scripts/pm_goal_dg_cf2_native.py",
+    "scripts/pm_goal_dg_cf2_oracles.py",
+    "scripts/pm_goal_go2_closure.py",
+    "scripts/pm_goal_own_c3_w5_oracles.py",
+    "scripts/pm_goal_own_c3_w5_successor_oracles.py",
+    "scripts/pm_goal_test_demo_cf01.py",
+    "scripts/pm_goal_test_numrule.py",
+    "scripts/pm_goal_test_owner_adapters.py",
+    "scripts/pm_goal_test_source.py",
+    "scripts/pm_goal_test_storage.py"
+   ],
+   "differs": [
+    "scripts/pm_goal_dg5_closure.py"
+   ],
+   "supporting_all_equal": false,
+   "held": "CANNOT_DECIDE"
+  },
+  "certified-f5d-evidence": {
+   "verdict": "HOLD (CANNOT_DECIDE)",
+   "files": 22,
+   "recorded": 7,
+   "no_recorded_hash": [
+    "scripts/pm_event_datetime.py",
+    "scripts/pm_event_index_binding.py",
+    "scripts/pm_event_numbers.py",
+    "scripts/pm_goal_bank_diagnostics.py",
+    "scripts/pm_goal_dg_cf2_consumer.py",
+    "scripts/pm_goal_dg_cf2_native.py",
+    "scripts/pm_goal_dg_cf2_oracles.py",
+    "scripts/pm_goal_go2_closure.py",
+    "scripts/pm_goal_own_c3_w5_oracles.py",
+    "scripts/pm_goal_own_c3_w5_successor_oracles.py",
+    "scripts/pm_goal_test_demo_cf01.py",
+    "scripts/pm_goal_test_numrule.py",
+    "scripts/pm_goal_test_owner_adapters.py",
+    "scripts/pm_goal_test_source.py",
+    "scripts/pm_goal_test_storage.py"
+   ],
+   "differs": [
+    "scripts/pm_goal_dg5_closure.py"
+   ],
+   "supporting_all_equal": false,
+   "held": "CANNOT_DECIDE"
+  },
+  "certified-intent": {
+   "verdict": "HOLD (CANNOT_DECIDE)",
+   "files": 22,
+   "recorded": 7,
+   "no_recorded_hash": [
+    "scripts/pm_event_datetime.py",
+    "scripts/pm_event_index_binding.py",
+    "scripts/pm_event_numbers.py",
+    "scripts/pm_goal_bank_diagnostics.py",
+    "scripts/pm_goal_dg_cf2_consumer.py",
+    "scripts/pm_goal_dg_cf2_native.py",
+    "scripts/pm_goal_dg_cf2_oracles.py",
+    "scripts/pm_goal_go2_closure.py",
+    "scripts/pm_goal_own_c3_w5_oracles.py",
+    "scripts/pm_goal_own_c3_w5_successor_oracles.py",
+    "scripts/pm_goal_test_demo_cf01.py",
+    "scripts/pm_goal_test_numrule.py",
+    "scripts/pm_goal_test_owner_adapters.py",
+    "scripts/pm_goal_test_source.py",
+    "scripts/pm_goal_test_storage.py"
+   ],
+   "differs": [
+    "scripts/pm_goal_dg5_closure.py"
+   ],
+   "supporting_all_equal": false,
+   "held": "CANNOT_DECIDE"
+  },
+  "certified-retry-evidence": {
+   "verdict": "HOLD (CANNOT_DECIDE)",
+   "files": 22,
+   "recorded": 7,
+   "no_recorded_hash": [
+    "scripts/pm_event_datetime.py",
+    "scripts/pm_event_index_binding.py",
+    "scripts/pm_event_numbers.py",
+    "scripts/pm_goal_bank_diagnostics.py",
+    "scripts/pm_goal_dg_cf2_consumer.py",
+    "scripts/pm_goal_dg_cf2_native.py",
+    "scripts/pm_goal_dg_cf2_oracles.py",
+    "scripts/pm_goal_go2_closure.py",
+    "scripts/pm_goal_own_c3_w5_oracles.py",
+    "scripts/pm_goal_own_c3_w5_successor_oracles.py",
+    "scripts/pm_goal_test_demo_cf01.py",
+    "scripts/pm_goal_test_numrule.py",
+    "scripts/pm_goal_test_owner_adapters.py",
+    "scripts/pm_goal_test_source.py",
+    "scripts/pm_goal_test_storage.py"
+   ],
+   "differs": [
+    "scripts/pm_goal_dg5_closure.py"
+   ],
+   "supporting_all_equal": false,
+   "held": "CANNOT_DECIDE"
+  }
+ },
+ "guard_declarations": {
+  "certified-append-guard": {
+   "verdict": "stays on 76e7a4f279 (fails the conditions); certified-guard-result.json is restored to 76e7a4f279 too, so it stays loadable",
+   "differs": [
+    "scripts/pm_goal_dg5_closure.py",
+    "scripts/pm_goal_dg5_collector_selftest.py"
+   ]
+  },
+  "certified-arm-guard": {
+   "verdict": "stays on 76e7a4f279 (fails the conditions); certified-guard-result.json is restored to 76e7a4f279 too, so it stays loadable",
+   "differs": [
+    "scripts/pm_goal_dg5_closure.py",
+    "scripts/pm_goal_dg5_collector_selftest.py"
+   ]
+  },
+  "certified-commit-guard": {
+   "verdict": "stays on 76e7a4f279 (fails the conditions); certified-guard-result.json is restored to 76e7a4f279 too, so it stays loadable",
+   "differs": [
+    "scripts/pm_goal_dg5_closure.py",
+    "scripts/pm_goal_dg5_collector_selftest.py"
+   ]
+  },
+  "certified-consumer-current-final-guard": {
+   "verdict": "stays on 76e7a4f279 (fails the conditions); certified-guard-result.json is restored to 76e7a4f279 too, so it stays loadable",
+   "differs": [
+    "scripts/pm_goal_dg5_closure.py",
+    "scripts/pm_goal_dg5_collector_selftest.py"
+   ]
+  },
+  "certified-current-final-guard": {
+   "verdict": "stays on 76e7a4f279 (fails the conditions); certified-guard-result.json is restored to 76e7a4f279 too, so it stays loadable",
+   "differs": [
+    "scripts/pm_goal_dg5_closure.py",
+    "scripts/pm_goal_dg5_collector_selftest.py"
+   ]
+  },
+  "certified-prepare-guard": {
+   "verdict": "stays on 76e7a4f279 (fails the conditions); certified-guard-result.json is restored to 76e7a4f279 too, so it stays loadable",
+   "differs": [
+    "scripts/pm_goal_dg5_closure.py",
+    "scripts/pm_goal_dg5_collector_selftest.py"
+   ]
+  },
+  "certified-release-guard": {
+   "verdict": "stays on 76e7a4f279 (fails the conditions); certified-guard-result.json is restored to 76e7a4f279 too, so it stays loadable",
+   "differs": [
+    "scripts/pm_goal_dg5_closure.py",
+    "scripts/pm_goal_dg5_collector_selftest.py"
+   ]
+  }
+ },
+ "declarations_restored_to": "76e7a4f279d974b3635eaf22b08e07967dbbf2ae"
+}

@@ -77,10 +77,11 @@ const ALL = ['basic-light', 'basic-dark', 'friendly-light', 'friendly-dark', 'gl
 const HOME_BEAT_TAIL = 1200;
 
 // In the page: every animation, endless or not, with what it is; the endless ones that run are kept for (c)
-export const CENSUS = () => {
+export const CENSUS = async () => {
 	const desc = (el) => { if (!el) return 'none'; const c = typeof el.className === 'string' ? el.className : (el.className && el.className.baseVal) || ''; return el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + (c.trim() ? '.' + c.trim().split(/\s+/).slice(0, 3).join('.') : ''); };
 	const out = { still: document.documentElement.hasAttribute('data-pm-still'), hasScript: !!window.PM_STILL, marks: document.querySelectorAll('[data-pm-held]').length, marked: [], run: [], runAt: [], held: 0, exempt: [], finPaused: [], finRun: 0, finList: [], stray: [], now: performance.now(), stillAt: window.__stillOnAt ?? null };
 	const keep = [];
+	const pending = [];
 	const catalog = new Map();
 	for (const a of document.getAnimations()) {
 		let it = 1; try { it = a.effect.getTiming().iterations; } catch (e) { /* none */ }
@@ -95,8 +96,15 @@ export const CENSUS = () => {
 			const markedPart = !!(el && el.getAttribute && (el.getAttribute('data-pm-held') || '').split(' ').includes(a.effect.pseudoElement ? a.effect.pseudoElement.replace(/^::?/, '') : 'self'));
 			// each running loop's start (document timeline time, performance.now()'s clock), its mark and whether a finite
 			// animation runs on the same element (the page waits for that to end before it holds the loop)
-			if (a.playState === 'running') { if (caret) out.exempt.push(what); else { out.run.push(what); keep.push(a); out.runAt.push({ what, start: a.startTime, state: a.playState, pending: !!a.pending, currentTime: a.currentTime ?? null, held: (el && el.getAttribute && el.getAttribute('data-pm-held')) || '', finite: !!(el && el.getAnimations && el.getAnimations().some((x) => { try { return x !== a && x.effect && x.effect.target === el && x.playState === 'running' && x.effect.getTiming().iterations !== Infinity; } catch (e) { return false; } })) }); } }
-			else if (a.playState === 'paused' && markedPart) { out.held++; keep.push(a); }
+			if (a.playState === 'running') {
+				if (caret) out.exempt.push(what);
+				else {
+					out.run.push(what); keep.push(a);
+					const rec = { what, start: a.startTime, state: a.playState, pending: !!a.pending, currentTime: a.currentTime ?? null, held: (el && el.getAttribute && el.getAttribute('data-pm-held')) || '', finite: !!(el && el.getAnimations && el.getAnimations().some((x) => { try { return x !== a && x.effect && x.effect.target === el && x.playState === 'running' && x.effect.getTiming().iterations !== Infinity; } catch (e) { return false; } })) };
+					out.runAt.push(rec);
+					if (rec.pending && rec.start == null && (rec.currentTime == null || rec.currentTime === 0)) pending.push([a, rec]);
+				}
+			} else if (a.playState === 'paused' && markedPart) { out.held++; keep.push(a); }
 		} else if (a.playState === 'paused') out.finPaused.push(what);
 		else if (a.playState === 'running') { out.finRun++; if (out.finList.length < 6) { let d = 0; try { d = Math.round(a.effect.getComputedTiming().activeDuration); } catch (e) { /* none */ } out.finList.push(`${what} (${d} ms)`); } }
 	}
@@ -111,6 +119,15 @@ export const CENSUS = () => {
 			if (!anims.some((x) => { try { return x.effect.getTiming().iterations === Infinity; } catch (e) { return false; } })) out.stray.push(`${p} on ${desc(el)}`);
 		}
 		out.marked.push(item);
+	}
+	if (pending.length) {
+		const pendingAfterFrames = 4;
+		for (let i = 0; i < pendingAfterFrames; i++) await new Promise((resolve) => requestAnimationFrame(resolve));
+		for (const [a, rec] of pending) {
+			rec.pendingAfterFrames = pendingAfterFrames;
+			rec.stillPending = !!(a.playState === 'running' && a.pending && a.startTime == null && (a.currentTime == null || a.currentTime === 0));
+		}
+		out.pendingRecheckMs = Math.round(performance.now() - out.now);
 	}
 	return out;
 };
@@ -147,12 +164,12 @@ export function stillJudged(view, { drawn = 15, main = 10, starts = 60, hz = nul
 }
 
 // The 23 s Home census split (PM7PERF-STILL-PENDING-AGE): a queued animation (Chrome's pending flag, null start,
-// current time 0 — sol-max-15's instrumented runtime saw five at 22780.6 ms after the last move) is logged, not
-// judged; an older loop (started before the still mark, or more than lookAgain before the census, or an unclassified
-// null start) is due; one that began after the still mark and less than lookAgain before the census is young, logged.
-// Exported for tools/still-home-census.selftest.mjs.
+// current time 0) is rechecked after four frames. One that has started or paused is logged; one still running
+// and pending with a null start and zero or null current time is due. An older loop (started before the still mark, or more than lookAgain before the census, or an
+// unclassified null start) is due; one that began after the still mark and less than lookAgain before the census is
+// young, logged. Exported for tools/still-home-census.selftest.mjs.
 export function stillHomeDue(runAt, { stillAt, now, lookAgain = 5000 }) {
-	const queued = runAt.filter((r) => r.pending && r.start == null && (r.currentTime == null || r.currentTime === 0));
+	const queued = runAt.filter((r) => r.pending && r.start == null && (r.currentTime == null || r.currentTime === 0) && !r.stillPending);
 	const due = runAt.filter((r) => !queued.includes(r) && (stillAt == null || r.start == null || r.start < stillAt || now - r.start > lookAgain));
 	const young = runAt.filter((r) => !due.includes(r) && !queued.includes(r));
 	return { due, young, queued };

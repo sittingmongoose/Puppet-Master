@@ -1,0 +1,1203 @@
+{
+  "census_sha256": "e90632b6aac7410726c18e710e5c49e1b23aac41cdaa5b785df9dc5bf7881c6c",
+  "examples": {
+    "dg5:d6641135e49ed05a": {
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/BindingSelector/allOf/1/properties/family_id/const": {
+        "path": [
+          "binding",
+          "family_id"
+        ],
+        "value": "executor_filesafe_invocation_bindingx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/BindingSelector/allOf/1/properties/schema_id/const": {
+        "path": [
+          "binding",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_filesafe_invocation_binding.v2x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/BindingSelector/allOf/1/properties/schema_version/const": {
+        "path": [
+          "binding",
+          "schema_version"
+        ],
+        "value": "2.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/allOf/0/else/properties/prior_origin/not": {
+        "controls": [
+          {
+            "path": [
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "path": [
+          "prior_origin"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/allOf/0/else/properties/prior_origin/not/type": {
+        "controls": [
+          {
+            "path": [
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "path": [
+          "prior_origin"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/allOf/0/else/properties/prior_origin/not"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/allOf/0/if/properties/prior_journal_commitment/type": {
+        "controls": [
+          {
+            "path": [
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "path": [
+          "prior_journal_commitment"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/allOf/0/then/properties/prior_origin/type"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/allOf/0/then/properties/prior_origin/type": {
+        "path": [
+          "prior_origin"
+        ],
+        "value": {
+          "codec": "messagepack_canonical",
+          "family_id": "executor_filesafe_journal_origin",
+          "physical_key": "x",
+          "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+          "schema_version": "2.0.0",
+          "storage_instance_id": "x"
+        }
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/allOf/0/then/properties/revision/const": {
+        "path": [
+          "revision"
+        ],
+        "value": 2
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/issued_at_utc/format": {
+        "path": [
+          "issued_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/issued_at_utc/type": {
+        "path": [
+          "issued_at_utc"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/journal_link_fields/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "journal_link_fields"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/journal_link_fields/properties/result_event_ref/anyOf": {
+        "path": [
+          "journal_link_fields",
+          "result_event_ref"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/journal_link_fields/properties/result_event_ref/anyOf/0/minLength": {
+        "path": [
+          "journal_link_fields",
+          "result_event_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/journal_link_fields/properties/result_event_ref/anyOf/0/type": {
+        "path": [
+          "journal_link_fields",
+          "result_event_ref"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/journal_link_fields/properties/result_event_ref/anyOf/1/type": {
+        "path": [
+          "journal_link_fields",
+          "result_event_ref"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/journal_link_fields/properties/updated_at_utc/format": {
+        "path": [
+          "journal_link_fields",
+          "updated_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/journal_link_fields/properties/updated_at_utc/type": {
+        "path": [
+          "journal_link_fields",
+          "updated_at_utc"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/journal_link_fields/required": {
+        "member": [
+          "remove",
+          "updated_at_utc"
+        ],
+        "path": [
+          "journal_link_fields"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/journal_link_fields/type": {
+        "path": [
+          "journal_link_fields"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/original_equality/enum": {
+        "path": [
+          "original_equality"
+        ],
+        "value": "not_a_resolved_equalityx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/original_owner_epoch/minimum": {
+        "path": [
+          "original_owner_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/original_owner_epoch/type": {
+        "path": [
+          "original_owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/original_owner_ref/minLength": {
+        "path": [
+          "original_owner_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/original_owner_ref/type": {
+        "path": [
+          "original_owner_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/original_write_operation_id/minLength": {
+        "path": [
+          "original_write_operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/original_write_operation_id/type": {
+        "path": [
+          "original_write_operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/original_write_transaction_id/minLength": {
+        "path": [
+          "original_write_transaction_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/original_write_transaction_id/type": {
+        "path": [
+          "original_write_transaction_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/prior_journal_commitment/anyOf": {
+        "controls": [
+          {
+            "path": [
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "path": [
+          "prior_journal_commitment"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/prior_journal_commitment/anyOf/1/type": {
+        "controls": [
+          {
+            "path": [
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "path": [
+          "prior_journal_commitment"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/prior_origin/anyOf": {
+        "controls": [
+          {
+            "path": [
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "path": [
+          "prior_origin"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/prior_origin/anyOf/1/type": {
+        "controls": [
+          {
+            "path": [
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "path": [
+          "prior_origin"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/project_id/minLength": {
+        "path": [
+          "project_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/project_id/type": {
+        "path": [
+          "project_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/redaction_profile/const": {
+        "path": [
+          "redaction_profile"
+        ],
+        "value": "redacted_refs_onlyx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/resolved_original_result/anyOf": {
+        "path": [
+          "resolved_original_result"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/resolved_original_result/anyOf/1/type": {
+        "path": [
+          "resolved_original_result"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/restore_transaction_id/minLength": {
+        "path": [
+          "restore_transaction_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/restore_transaction_id/type": {
+        "path": [
+          "restore_transaction_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/revision/minimum": {
+        "controls": [
+          {
+            "path": [
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "path": [
+          "revision"
+        ],
+        "value": 0
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/revision/type": {
+        "controls": [
+          {
+            "path": [
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "path": [
+          "revision"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/schema_id/const": {
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_filesafe_journal_origin.v2x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/schema_version/const": {
+        "path": [
+          "schema_version"
+        ],
+        "value": "2.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/storage_instance_id/minLength": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/storage_instance_id/type": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/terminal_core_sha256/anyOf": {
+        "path": [
+          "terminal_core_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/terminal_core_sha256/anyOf/0/pattern": {
+        "path": [
+          "terminal_core_sha256"
+        ],
+        "value": "gc\n"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/terminal_core_sha256/anyOf/0/type": {
+        "path": [
+          "terminal_core_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/terminal_core_sha256/anyOf/1/type": {
+        "path": [
+          "terminal_core_sha256"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/write_kind/enum": {
+        "path": [
+          "write_kind"
+        ],
+        "value": "preparex"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/type": {
+        "path": [],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "issued_journal_commitment"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/properties/codec/const": {
+        "path": [
+          "issued_journal_commitment",
+          "codec"
+        ],
+        "value": "messagepack_canonicalx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/properties/family_id/const": {
+        "path": [
+          "issued_journal_commitment",
+          "family_id"
+        ],
+        "value": "safe_point_restore_transactionx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/properties/issued_physical_sha256/pattern": {
+        "path": [
+          "issued_journal_commitment",
+          "issued_physical_sha256"
+        ],
+        "value": "0000000000000000000000000000000000000000000000000000000000000000\n"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/properties/issued_physical_sha256/type": {
+        "path": [
+          "issued_journal_commitment",
+          "issued_physical_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/properties/kind/const": {
+        "path": [
+          "issued_journal_commitment",
+          "kind"
+        ],
+        "value": "historical_issued_value_commitmentx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/properties/physical_key/minLength": {
+        "path": [
+          "issued_journal_commitment",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/properties/physical_key/type": {
+        "path": [
+          "issued_journal_commitment",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/properties/schema_id/const": {
+        "path": [
+          "issued_journal_commitment",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.safe_point_restore_transaction.v1x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/properties/schema_version/const": {
+        "path": [
+          "issued_journal_commitment",
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/properties/storage_instance_id/minLength": {
+        "path": [
+          "issued_journal_commitment",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/properties/storage_instance_id/type": {
+        "path": [
+          "issued_journal_commitment",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/required": {
+        "member": [
+          "remove",
+          "kind"
+        ],
+        "path": [
+          "issued_journal_commitment"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/JournalIssueCommitment/type": {
+        "path": [
+          "issued_journal_commitment"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginSelector/allOf/1/properties/family_id/const": {
+        "controls": [
+          {
+            "path": [
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "path": [
+          "prior_origin",
+          "family_id"
+        ],
+        "value": "executor_filesafe_journal_originx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginSelector/allOf/1/properties/schema_id/const": {
+        "controls": [
+          {
+            "path": [
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "path": [
+          "prior_origin",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_filesafe_journal_origin.v2x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginSelector/allOf/1/properties/schema_version/const": {
+        "controls": [
+          {
+            "path": [
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "path": [
+          "prior_origin",
+          "schema_version"
+        ],
+        "value": "2.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "binding"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/codec/const": {
+        "path": [
+          "binding",
+          "codec"
+        ],
+        "value": "messagepack_canonicalx"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/family_id/minLength": {
+        "controls": [
+          {
+            "path": [
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "filesafe_selector_implication": [
+          "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/prior_origin/anyOf",
+          "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/prior_origin/anyOf/1/type",
+          "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginSelector/allOf/1/properties/family_id/const"
+        ],
+        "path": [
+          "prior_origin",
+          "family_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/family_id/type": {
+        "controls": [
+          {
+            "path": [
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "filesafe_selector_implication": [
+          "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/prior_origin/anyOf",
+          "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/prior_origin/anyOf/1/type",
+          "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginSelector/allOf/1/properties/family_id/const"
+        ],
+        "path": [
+          "prior_origin",
+          "family_id"
+        ],
+        "value": false
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/physical_key/minLength": {
+        "path": [
+          "binding",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/physical_key/type": {
+        "path": [
+          "binding",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/physical_sha256/pattern": {
+        "path": [
+          "binding",
+          "physical_sha256"
+        ],
+        "value": "68e6d49c950620070aff314fed503389490266b771d936ec3949757edc29c688\n"
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/physical_sha256/type": {
+        "path": [
+          "binding",
+          "physical_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/schema_id/minLength": {
+        "controls": [
+          {
+            "path": [
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "filesafe_selector_implication": [
+          "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/prior_origin/anyOf",
+          "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/prior_origin/anyOf/1/type",
+          "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginSelector/allOf/1/properties/schema_id/const"
+        ],
+        "path": [
+          "prior_origin",
+          "schema_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/schema_id/type": {
+        "controls": [
+          {
+            "path": [
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "filesafe_selector_implication": [
+          "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/prior_origin/anyOf",
+          "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/prior_origin/anyOf/1/type",
+          "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginSelector/allOf/1/properties/schema_id/const"
+        ],
+        "path": [
+          "prior_origin",
+          "schema_id"
+        ],
+        "value": false
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/schema_version/minLength": {
+        "controls": [
+          {
+            "path": [
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "filesafe_selector_implication": [
+          "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/prior_origin/anyOf",
+          "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/prior_origin/anyOf/1/type",
+          "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginSelector/allOf/1/properties/schema_version/const"
+        ],
+        "path": [
+          "prior_origin",
+          "schema_version"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/schema_version/type": {
+        "controls": [
+          {
+            "path": [
+              "prior_journal_commitment"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "safe_point_restore_transaction",
+              "issued_physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "kind": "historical_issued_value_commitment",
+              "physical_key": "x",
+              "schema_id": "pm.storage_value.safe_point_restore_transaction.v1",
+              "schema_version": "1.0.0",
+              "storage_instance_id": "x"
+            }
+          },
+          {
+            "path": [
+              "prior_origin"
+            ],
+            "value": {
+              "codec": "messagepack_canonical",
+              "family_id": "executor_filesafe_journal_origin",
+              "physical_key": "x",
+              "physical_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+              "schema_id": "pm.storage_value.executor_filesafe_journal_origin.v2",
+              "schema_version": "2.0.0",
+              "storage_instance_id": "x"
+            }
+          }
+        ],
+        "filesafe_selector_implication": [
+          "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/prior_origin/anyOf",
+          "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/FileSafeJournalOrigin/properties/prior_origin/anyOf/1/type",
+          "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/OriginSelector/allOf/1/properties/schema_version/const"
+        ],
+        "path": [
+          "prior_origin",
+          "schema_version"
+        ],
+        "value": false
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/storage_instance_id/minLength": {
+        "path": [
+          "binding",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/properties/storage_instance_id/type": {
+        "path": [
+          "binding",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "binding"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_filesafe_injective_key_sources.v1.schema.json#/$defs/SourceSelector/type": {
+        "path": [
+          "binding"
+        ],
+        "value": null
+      }
+    }
+  },
+  "family": "goal_run.cancelled",
+  "routes": [
+    {
+      "call": "filesafe_invocation",
+      "detail": [
+        "Additional properties are not allowed ('methodb_extra' was unexpected)"
+      ],
+      "edition": "original_profile",
+      "mutation": true,
+      "refusal": "issue/executor_filesafe_journal_origin/schema/",
+      "restore": "rollback",
+      "root": "dg5:d6641135e49ed05a",
+      "site": [
+        "scripts/pm_goal_dg_r_world.py",
+        446
+      ]
+    }
+  ],
+  "row": "dg5/issue/executor_filesafe_journal_origin/schema",
+  "sites": [
+    [
+      "scripts/pm_goal_dg_r_world.py",
+      446
+    ]
+  ],
+  "source": "34f212d3fbcc8051ce2922d1de9dd75714ae361a"
+}

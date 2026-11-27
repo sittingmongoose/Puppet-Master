@@ -139,15 +139,15 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Inv
 
 - **Gap:** `active_worktrees` is in-memory only. After restart it is empty; real worktrees may still exist under `.puppet-master/worktrees/`, but `get_node_worktree(node_id)` returns `None`, so iterations use the main repo path.
 - **Fix (choose one or combine):**
-  - **Option A:** On orchestrator init (or when loading a run), repopulate `active_worktrees` from `worktree_manager.list_worktrees()` for paths under `worktree_base`.
-  - **Option B:** When resolving working directory for a node, if `active_worktrees` has no entry, fall back to `worktree_manager.get_worktree_path(node_id)` and verify the path exists and is a valid worktree (e.g. in `list_worktrees()`); if so, use it and optionally re-register.
+  - **Option A:** On orchestrator init (or when loading a run), repopulate `active_worktrees` from `worktree_manager.list_worktrees()` for paths under `worktree_base`, inserting only entries that `worktree_exists` returns `exists_valid` for (section 7.6).
+  - **Option B:** When resolving working directory for a node, if `active_worktrees` has no entry, fall back to `worktree_manager.get_worktree_path(node_id)` and call `worktree_exists(node_id, expected_branch)` (section 2.7) with the node's recorded branch when one is known; only `exists_valid` lets it use the path and re-register it; every other state is not re-registered and is handled as section 2.7 "Callers" says.
 
 ### 2.3 Merge conflicts: worktree kept but re-run can destroy it
 
 
 - **Gap:** On merge conflict, `cleanup_subtask_worktree` returns without removing the worktree but removes the node from `active_worktrees`. Re-running the same subtask calls `create_subtask_worktree` → `create_worktree` → "if path exists remove_worktree", so the conflicting worktree is removed and the conflict state is lost.
 - **Fix:**
-  - On conflict, either: (1) surface the worktree path to the user (e.g. toast or status) and avoid reusing that node_id for a new worktree until the user resolves or discards, or (2) document clearly that re-running will replace the worktree and lose unmerged state.
+  - On conflict, surface the worktree path to the user (e.g. toast or status) and do not reuse that node_id for a new worktree until the user resolves or discards. The conflict is recorded durably as `worktree_conflict_state.v1:{project_id}:{worktree_id}` (section 7.4, resolved in section 7.14 Worktree item 3), so the block survives restart. The earlier alternative of documenting that a re-run replaces the worktree and loses unmerged state is retired.
   - Optionally: add a "Resolve worktree conflicts" action that lists worktrees with merge conflicts and offers to open in editor or remove after confirmation.
 
 ### 2.4 Node ID and branch name sanitization
@@ -168,6 +168,21 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Inv
 
 - **Gap:** `list_worktrees` only sets `branch` when it sees a `branch refs/heads/...` line. Detached HEAD worktrees yield empty `branch`; `merge_worktree` would then call `git merge ""`.
 - **Fix:** When parsing porcelain output, treat missing branch as "detached". In `merge_worktree`, if source_branch is empty, skip merge or merge by commit hash and document behavior.
+
+### 2.7 worktree_exists validity
+
+- **Gap:** `worktree_exists(node_id)` returns true when the directory `worktree_base.join(node_id)` exists, so an empty folder, a folder whose `.git` link points at a pruned gitdir, or a worktree of another repo or branch counts as a usable worktree; create, cleanup, re-registration (section 2.2, 7.14 Worktree item 2) and conflict preservation (section 2.3) all rely on it.
+- **Fix:** `worktree_exists(node_id, expected_branch: Option<&str>) -> WorktreeValidity` runs these checks in order from the project repo root and returns the first state that fails; it never mutates the path, the gitdir or any ref.
+  1. Resolve the sanitized path (section 2.4) under `worktree_base`; the path must pass the path guard rules (section 2.0.1). Path absent → `missing`. A path guard refusal or permission denial at any step → `permission_denied`.
+  2. Resolve the `.git` file's `gitdir:` target relative to that file's directory. Absent `.git` file or a missing target of a well-formed link → `gitdir_missing`. An existing gitdir outside the project common dir's `worktrees/`, or a standalone `.git` directory at the candidate path → `wrong_repo`. A malformed link → `unknown_error`.
+  3. `git rev-parse --is-inside-work-tree` in the path must print `true`, and `git rev-parse --git-common-dir` must resolve to the project repo's common dir, which carries the current `repo_id` (section 2.8, "Worktree identity, active context, and copy contracts"). A different common dir → `wrong_repo`; a probe that successfully reports `false` → `unknown_error`.
+  4. The path must appear in `list_worktrees()`. An unregistered path with an existing gitdir → `unknown_error`. When `expected_branch` is supplied, the porcelain `branch refs/heads/<expected_branch>` line must match; a detached entry (section 2.6) matches only when no branch was expected. Branch mismatch → `wrong_branch`.
+  5. Any Git exit or I/O error not classified above → `unknown_error`; carry the Git exit class from section 3.0.1 when a Git command failed.
+  6. All checks pass → `exists_valid`.
+- **`WorktreeValidity` is a closed enum:** `exists_valid`, `missing`, `gitdir_missing`, `wrong_repo`, `wrong_branch`, `permission_denied`, `unknown_error` (the same seven states as the 2026-07-08 repair addendum at the end of this document).
+- **Callers:** only `exists_valid` counts as an existing worktree; every other state counts as not usable. Before create or recreate on either `missing` or `gitdir_missing`, check the durable unresolved-conflict authority (section 7.4 and W-050) for the node and worktree. A conflict row, or inability to verify its absence, blocks any prune, removal or create. When the check clears, `missing` permits normal creation and `gitdir_missing` permits prune and recreation under the existing cleanup guards. `wrong_repo`, `wrong_branch` or `permission_denied` fails with that state and deletes nothing. Ordinary cleanup removes only an `exists_valid` worktree cleared by the same conflict guard. Re-registration into `active_worktrees` requires `exists_valid` and retains any unresolved-conflict fence. Every recovery caller (sections 2.2, 2.9, 2.12, 7.6 and 7.14 Worktree item 2) passes the node's recorded branch as `expected_branch`: the branch the worktree was created on for that node (`branch_name` in the create result, named by the single branch-naming function of section 3.6). It passes `None` only when no branch was recorded for the node, so presence in `list_worktrees()` never substitutes for the branch check. `unknown_error` follows the section 3.0.1 table when it carries an exit class. With no retryable class or after that retry budget is exhausted, it fails as `unknown_error` without changing disk or refs.
+- **Exact binding:** for a node with a planned worktree, any final result other than `exists_valid` blocks iteration and PR head resolution with the specific validity state. Keep the durable binding and conflict fence. For `missing` or `gitdir_missing`, resume only after guarded recovery of that binding and a fresh `exists_valid` probe. A node explicitly bound to the main checkout still uses its own binding.
+- **Acceptance:** a temp repo test covers all seven states: valid linked worktree (`exists_valid`); absent path (`missing`); folder without `.git` and link pointing to a pruned gitdir (both `gitdir_missing`); linked worktree of a second repo at the candidate path (`wrong_repo`, assigned at step 2); worktree on another branch with `expected_branch` set (`wrong_branch`); denied metadata read (`permission_denied`; inject the refusal where the platform cannot deny reads); and a malformed `.git` link, plus separately an injected fatal probe failure (`unknown_error` each). Create succeeds on cleared `missing`, and prune and recreation are allowed only on cleared `gitdir_missing`. On either of those states, a durable conflict row still blocks create after restart even with an empty in-memory set. Failed create and cleanup leave path and refs unchanged; cleanup leaves every non-valid or unresolved-conflict worktree untouched.
 
 ### 2.8 Lane/worktree lifecycle, storage families, and historical vocabulary
 
@@ -306,7 +321,7 @@ SCM `/receipt` lineage records include worktree path/worktree id, branch, commit
 ### 2.9 PR creation after restart uses main repo branch
 
 - **Gap:** After restart, `get_node_worktree(node_id)` is `None`. `create_node_pr` then uses `git_manager.current_branch()` for head_branch, so the PR is created from the main repo branch, not the worktree branch.
-- **Fix:** When resolving head branch for PR, also consider `worktree_manager`: if a worktree path exists for this node (e.g. from `list_worktrees()` or path existence + valid worktree), use that worktree's branch even when `active_worktrees` has no entry.
+- **Fix:** When resolving head branch for PR, also consider `worktree_manager`: if `worktree_exists(node_id, expected_branch)` (section 2.7) returns `exists_valid` for this node, use that worktree's branch even when `active_worktrees` has no entry. A non-valid result follows section 2.7 and blocks PR creation for the planned worktree binding.
 
 ### 2.10 merge_worktree assumes target_branch exists
 
@@ -320,7 +335,7 @@ SCM `/receipt` lineage records include worktree path/worktree id, branch, commit
 
 ### 2.12 Optional: re-validate worktree path before use
 
-- Before building `IterationContext`, optionally verify the worktree path still exists and is still in `git worktree list`; if not, remove from `active_worktrees` and fall back to main repo (and log).
+- Before building `IterationContext`, optionally repeat the section 2.7 probe on a cached worktree entry. On any final result other than `exists_valid`, log the state and evict only the stale `active_worktrees` projection entry. Apply section 2.7 to keep the planned binding blocked with that state, preserve any unresolved-conflict fence, and leave disk and refs untouched. The optional repeat probe on a cached entry does not replace the validity check required when recovering the binding.
 
 ---
 
@@ -446,11 +461,11 @@ Source Control mirrors Orchestrator's SCM lineage acceptance details for worktre
 
 Source Control owns two GUI task modes above the ordinary staged/unstaged diff list.
 
-- `History / graph / worktree parity` and `Branch/worktree lineage graph` go beyond a plain commit graph by showing which worktree, run, or branch owns each branch tip in `Source Control > Graph`. Required GUI state includes branch filter, worktree overlay toggle, ahead`/behind/diverged` badges, compact vs expanded graph density, and persisted graph viewport/filter state. Required `/events/storage` behavior: `cmd.source_control.graph.focus/filter/layout`, `cmd.source_control.graph_focus`, and `cmd.source_control.graph_filter` compatibility aliases resolve to `cmd.source_control.graph.focus`, `cmd.source_control.graph.filter`, and `cmd.source_control.graph.layout`; actual graph viewport/selection/targets remain Project runtime/view state; ordinary filter/layout presentation defaults consume the Settings ladder without copying graph identity. Orchestrator linkage lets graph nodes deep-link to run history and lets run history focus a graph node when a `/commit` belongs to a known run. `/disabled` fallback degrades to branch list/history when repo graph parsing fails. `/tradeoffs`: dense graphs must balance rendering density and performance on large repos.
-- `AI commit batching` suggests logical commit groupings and draft messages from diff clusters in `Source Control > Changes` near staged and `/unstaged` groups. Required `/settings` include auto-suggest on/off, batching aggressiveness, message tone/style, and cross-directory grouping. `cmd.source_control.suggest_commit_batches` produces advisory candidate batches only; no grouping, staging, or `/commit` is canonical until the user accepts it. Accepted batches preserve run/tier attribution in receipts where available, while manual staging/commit remains the canonical fallback. `/tradeoffs`: incorrect grouping can damage history, so batching is advisory, reviewable, and never automatic.
+- `History / graph / worktree parity` and `Branch/worktree lineage graph` go beyond a plain commit graph by showing which worktree, run, or branch owns each branch tip in `Source Control > Graph`. Required GUI state includes branch filter, worktree overlay toggle, ahead`/behind/diverged` badges, compact vs expanded graph density, and persisted graph viewport/filter state. Required `/events/storage` behavior: `cmd.source_control.graph.focus/filter/layout` denotes the three canonical graph commands. The registered `cmd.source_control.graph_focus` and `cmd.source_control.graph_filter` aliases normalize to `cmd.source_control.graph.focus` and `cmd.source_control.graph.filter` respectively. Actual graph viewport/selection/targets remain Project runtime/view state. Ordinary filter/layout presentation defaults consume the Settings ladder without copying graph identity. Orchestrator linkage lets graph nodes deep-link to run history and lets run history focus a graph node when a `/commit` belongs to a known run. `/disabled` fallback degrades to branch list/history when repo graph parsing fails. `/tradeoffs`: dense graphs must balance rendering density and performance on large repos.
+- `AI commit batching` suggests logical commit groupings and draft messages from diff clusters in `Source Control > Changes` near staged and `/unstaged` groups. Required `/settings` include auto-suggest on/off, batching aggressiveness, message tone/style, and cross-directory grouping. `cmd.source_control.suggest_commit_batches` produces advisory candidate batches only. Accept verifies the reviewed index selection or stages the reviewed changes under the batch contract below. Commit remains a separate user action. Accepted batches preserve run/tier attribution in receipts where available, while manual staging/commit remains the canonical fallback. `/tradeoffs`: incorrect grouping can damage history, so batching is advisory, reviewable, and never automatic.
 - External Source Control UX baselines reinforce dense owner-surface behavior without making the panel side-panel-only. JetBrains Git log and conflict-resolution references validate roomy history/log tabs, strong filtering, and a dedicated conflict-resolution surface; GitLens and `/GitKraken` validate commit-graph-centric workflows, `/compare` discovery, and worktree compare affordances. These references justify letting dense Source Control `/resources` expand beyond a cramped side panel when needed.
 - `Review mode` compares a worktree against a base branch, another worktree, a PR target, or a selected commit range in a roomy diff-centric Source Control GUI lens. `Source Control > History` and `Worktrees` both expose `Open Review Mode`; dense compares may take over the editor-area while staying a Source Control task mode rather than ordinary file editing. Required `/settings` include left/right compare targets, preferred diff mode, ignore-whitespace, file filter, collapse-unchanged, generated-file visibility, and review-comments/notes local state. Required `/events/storage` behavior: `cmd.source_control.review.open/swap/filter` compatibility aliases resolve to `cmd.source_control.open_review`, `cmd.source_control.set_compare_target`, and `cmd.source_control.toggle_generated_filter`; these commands persist the last compare target and filter choices per-project without turning review notes into canonical history before user acceptance. Run receipts and blocked cards open directly into a compare target when review is the remediation step. `/disabled` fallback: when the compare target is gone, pruned, or otherwise a `stale-target`, open the nearest valid baseline when one exists, explain the stale-target downgrade, and offer alternate pivots. `/tradeoffs`: direct comparison between worktrees requires robust baseline selection so the GUI does not present confusing or misleading diffs.
-- `Conflict assistant` turns merge, `/rebase/worktree`, and worktree conflict-caused blocked episodes into a guided repair flow instead of leaving users only with raw file markers. The primary placement is the `Source Control > Changes` conflict group plus a dedicated conflict flyout; blocked worktree cards should include affected file list, safe-point context, and an `Open Conflict Assistant` action into the same surface. Required `/settings` include conflict presentation mode, show base/origin annotations, open external merge tool preference, AI assist enabled/disabled, and an `auto-open` first conflicted file toggle. Required `/event/storage` behavior: `cmd.source_control.open_conflict`, `cmd.source_control.open_merge_editor`, `cmd.source_control.resolve_conflict_side`, and `cmd.source_control.mark_conflict_resolved` persist per-project presentation preference, not conflict content; resolution events and blocked-state handoff outcomes are recorded separately. `/disabled` fallback: if the structured merge view cannot load, show the file list, textual diff/conflict markers, and an explicit warning rather than hiding the conflict. `/tradeoffs`: assistant guidance must explain choices and propose repairs, but it must not silently resolve semantic conflicts or auto-write a side selection without explicit approval.
+- `Conflict assistant` turns merge, `/rebase/worktree`, and worktree conflict-caused blocked episodes into a guided repair flow instead of leaving users only with raw file markers. The primary placement is the `Source Control > Changes` conflict group plus a dedicated conflict flyout; blocked worktree cards should include affected file list, safe-point context, and an `Open Conflict Assistant` action into the same surface. Required `/settings` include conflict presentation mode, show base/origin annotations, open external merge tool preference, AI assist enabled/disabled, and an `auto-open` first conflicted file toggle. Required `/event/storage` behavior: `cmd.source_control.open_conflict`, `cmd.source_control.open_merge_editor`, `cmd.source_control.resolve_conflict_side`, and `cmd.source_control.mark_conflict_resolved` use the Conflict Assistant payloads and results below. Per-project presentation preferences belong to Settings. Resolution effects and blocked-state handoff outcomes stay in their owner records. `/disabled` fallback: if the structured merge view cannot load, show the file list, textual diff/conflict markers, and an explicit warning rather than hiding the conflict. `/tradeoffs`: assistant guidance must explain choices and propose repairs, but it must not silently resolve semantic conflicts or auto-write a side selection without explicit approval.
 - Source Control owns the canonical compare/diff identity contract for reuse across chat, file surfaces, and Source Control. Hunk-level actions are explicit review commands: `stage`, `unstage`, `discard`, `apply`, `expand/collapse`, and conflict-resolution actions. Grouped undo/redo for diff-driven mutations must explain whether a change is buffer-local, restore-history, or git/source-control history. Search-within-diff is scoped to the active compare identity, and diff heat-map/change-marker behavior is a review projection over that same identity. Starter file sets are Project-owned (PJCT-011), distinct from Saved setups. FGI-024 contribution sync consumes exact original/fork, head/base and fetched-revision/native-workspace/reconciliation-strategy identity through the existing remote.sync owner; W-073 consumes the selected `source_control_command_request_v2`/`remote_operation_target_v2`/`remote_sync_local_reconcile_target_v2`; dispatch still requires its actual native/source/currentness evidence.
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Orchestrator_Page.md#Source Control boundary, ContractName:Plans/storage-plan.md
@@ -499,7 +514,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 ### Dependency order (implement in this order within phases)
 
 - **Phase 1** must complete before Phase 2 and Phase 3 (config and project path are prerequisites).
-- **Phase 2:** 2.4 (sanitize) → 2.1, 2.5, 2.9; 2.7 (worktree_exists validity) before create/cleanup that rely on it; 2.8 (recovery uses project path) → 2.2, 2.11; 2.6 (detached HEAD) → 2.10.
+- **Phase 2:** 2.4 (sanitize) → 2.1, 2.5, 2.9; 2.7 (worktree_exists validity) before create/cleanup that rely on it; recovery uses project path (section 7.3 and section 7.14, Worktree item 5) → 2.2, 2.11; 2.6 (detached HEAD) → 2.10. (Section 2.8 is now lane/worktree lifecycle; the recovery item formerly numbered 2.8 lives in section 7.3.)
 - **Phase 3:** 3.1 (git binary) → 3.3, 3.4, 3.10; 3.2 (GitHub API PR integration) independent; 3.5 → 3.6 → 3.7.
 - **Cross-phase:** Phase 3.1 before Phase 2.11 (Doctor worktrees check uses shared git resolution).
 - **Phase 2 and Phase 3** can proceed in parallel after Phase 1; **Phase 5** integration tests assume both Phase 2 and Phase 3 are done.
@@ -513,14 +528,14 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 ### Phase 2: Worktrees
 
 - [ ] Base branch: ensure worktrees are created from `config.branching.base_branch` (checkout or use as ref).
-- [ ] active_worktrees: repopulate on init from `list_worktrees()` and/or fallback to worktree path when resolving working directory.
-- [ ] Merge conflict: document or surface conflict worktrees; avoid silent overwrite on re-run.
+- [ ] active_worktrees: repopulate on init from `list_worktrees()` and/or fallback to worktree path when resolving working directory, re-registering only paths that `worktree_exists` (section 2.7) returns `exists_valid` for, with the recorded expected branch.
+- [ ] Merge conflict: surface conflict worktrees and record each one durably as a `worktree_conflict_state.v1:{project_id}:{worktree_id}` row (section 2.3, section 7.14 Worktree item 3); block reuse of that node_id until the user resolves or discards, so a re-run never silently overwrites it. Documenting the overwrite instead is retired.
 - [ ] Sanitize node_id (path) and branch name (ref).
 - [ ] Branch already exists: handle existing branch when creating worktree (use existing branch or safe delete).
 - [ ] Detached HEAD: handle empty branch in list_worktrees and merge_worktree.
-- [ ] worktree_exists: require path + worktree validity (e.g. .git file or list_worktrees).
+- [ ] worktree_exists: return `WorktreeValidity` from the ordered checks in section 2.7; only `exists_valid` counts as existing.
 - [ ] Recovery: use project path when known; run when project is selected if not at startup.
-- [ ] PR head branch: use worktree branch from list_worktrees when active_worktrees has no entry.
+- [ ] PR head branch: recover the recorded worktree branch through section 2.7 when `active_worktrees` has no entry. Block the PR if the bound worktree cannot be validated.
 - [ ] merge_worktree: ensure target_branch exists or create/error clearly.
 - [ ] STATE_FILES.md: document worktrees.
 - [ ] Doctor: add worktrees check.
@@ -559,7 +574,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 | Phase | Acceptance criteria |
 |-------|----------------------|
 | **Phase 1** | (1) With "Enable parallel execution" on and no Save, start run → worktrees are created when applicable. (2) Run started from Dashboard uses `current_project.path` as config hint (e.g. `discover_with_hint` called with it). (3) Branching/base_branch and auto_pr from GUI are present in the config passed to the orchestrator at run start. |
-| **Phase 2** | (1) After restart, `get_node_worktree(node_id)` returns the path for nodes that still have worktrees under worktree_base (repopulation or fallback). (2) New worktrees are created from `config.branching.base_branch` (checkout or ref). (3) Doctor "worktrees" check runs when project is a git repo and reports worktree count and/or orphaned suggestion. |
+| **Phase 2** | (1) After restart, `get_node_worktree(node_id)` returns the path for nodes that still have `exists_valid` worktrees under worktree_base (repopulation or fallback, section 2.7); a listed worktree on another branch is not returned. (2) New worktrees are created from `config.branching.base_branch` (checkout or ref). (3) Doctor "worktrees" check runs when project is a git repo and reports worktree count and/or orphaned suggestion. |
 | **Phase 3** | (1) GitManager and Doctor git checks use the same resolved `git` binary (e.g. shared `path_utils::resolve_git_executable()`). (2) Iteration commits use CommitFormatter and produce "pm:"-style messages. (3) git-actions.log path matches REQUIREMENTS (`.puppet-master/logs/git-actions.log`) and is documented in .gitignore if runtime-only. |
 | **Phase 4** | (1) Branching tab has Enable Git, Auto PR, Branch strategy wired to run config (run uses current GUI values). (2) Naming pattern is either wired to branch names or hidden and documented. (3) After GUI changes, `scripts/generate-widget-catalog.sh` and `scripts/check-widget-reuse.sh` run and pass. |
 | **Phase 5** | (1) Integration test: parallel run in temp git repo creates worktree dirs and uses them as cwd for subtasks. (2) Integration test: run with Git disabled does not create branches/commits/PRs. (3) AGENTS.md Pre-Completion Verification Checklist completed and Task Status Log updated for any closed tasks. |
@@ -624,7 +639,8 @@ pub enum BranchGranularity {
 
 ### 7.4 Merge conflicts: persisting "conflict worktrees"
 
-- To "avoid reusing that node_id for a new worktree until the user resolves," the app must remember which node_ids have unresolved merge conflicts. Options: (1) typed conflict rows (node_id, branch, recorded time) in the canonical redb family (SP-340), written when a merge fails and cleared when the user runs "Recover worktrees" or resolves manually; no JSON state file is written (SP-339); (2) in-memory only (lost on restart, so re-run would still overwrite after restart). The plan should specify which approach or mark as "optional: in-memory set for the session only" to avoid scope creep.
+- To "avoid reusing that node_id for a new worktree until the user resolves," the app must remember which node_ids have unresolved merge conflicts. **Resolved (no longer an option list):** typed conflict rows keyed `worktree_conflict_state.v1:{project_id}:{worktree_id}` carry `node_id`, `branch`, `worktree_path` (display only), and `recorded_at`. A merge that leaves an unresolved conflict writes the row, and only verified resolution or explicit discard (including through "Recover worktrees") clears it. The in-memory `HashSet<node_id>` is a per-session projection loaded from those rows at startup or project open and never the authority. The former choice "(2) in-memory only (lost on restart, so re-run would still overwrite after restart)" and the fallback "optional: in-memory set for the session only" are retired, because a child worktree in conflict must stay `blocked_preserved` across restart (section "Child Worktree Runtime Lifecycle and Typed Lease Protocol", "Integration failure and result survival" and "Restart reconciliation and safe cold revival").
+- **Storage admission before implementation:** the conflict key and value shape require registration in the canonical redb family under SP-340 and storage-plan §2.3.1. `Plans/storage_value_registry.json` does not yet register this key, and the deferred `worktree_lane_thread_families` entry does not admit it. The storage owner must register the key, schema and conflict-preserving write, clear and recovery behavior before the initial release can enable this path. Fail closed on reuse or ordinary cleanup if conflict authority cannot be verified. No JSON state file is written (SP-339).
 
 ### 7.5 Binary resolution: exact functions
 
@@ -633,7 +649,7 @@ pub enum BranchGranularity {
 
 ### 7.6 active_worktrees repopulation
 
-- `list_worktrees()` already returns only worktrees under `worktree_base` and only includes entries for which `extract_node_id(&path)` is `Some` (i.e. path under our base). So repopulating `active_worktrees` from `list_worktrees()` is a matter of iterating the result and doing `active_worktrees.insert(worktree.node_id, worktree.path)`. No extra filtering needed beyond what's already there.
+- `list_worktrees()` already returns only worktrees under `worktree_base` and only includes entries for which `extract_node_id(&path)` is `Some` (i.e. path under our base). So repopulating `active_worktrees` from `list_worktrees()` is a matter of iterating the result, calling `worktree_exists(worktree.node_id, expected_branch)` (section 2.7) with the node's recorded branch when one is known, and doing `active_worktrees.insert(worktree.node_id, worktree.path)` only for `exists_valid`. Membership in `list_worktrees()` alone is not enough: a listed worktree on a different expected branch is `wrong_branch` and is not inserted.
 
 ### 7.7 Granularity vs BranchStrategy
 
@@ -657,7 +673,7 @@ pub enum BranchGranularity {
 
 All gaps from audit are closed with the following decisions. Implementers should follow these so the plan has no ambiguity.
 
-**Worktree (Section 2):** (1) **Base branch:** Use checkout base_branch then add for initial release; create from ref (e.g. `git worktree add -b <branch> <path> <base_branch>`) is optional later. (2) **active_worktrees repopulation:** On first resolve with no entry, if path exists and is in `list_worktrees()`, use it and re-register in `active_worktrees` for that session. (3) **Conflict persistence:** In-memory only for initial release -- `HashSet<node_id>` of conflict worktrees; optional Phase 6: typed conflict rows in the canonical redb family (SP-340). No JSON file is written (SP-339). (4) **Detached HEAD merge:** In `merge_worktree`, if source_branch is empty: read HEAD commit from that worktree (`git rev-parse HEAD` in worktree path), then in main repo `git merge --no-ff <commit>`; document in STATE_FILES.md. (5) **Recovery:** If no project path at startup, skip worktree recovery; run recovery when user first selects/opens a project or when a run starts with config hint. (6) **Repopulation failure:** If `list_worktrees()` fails during repopulation, log error and start with empty `active_worktrees`. (7) **Doctor worktrees:** Must run `list_worktrees` and report state; optionally call `detect_orphaned_worktrees()` and include count; Recover remains a separate UI action. (8) **Platform:** Sanitization and path handling must be safe on Windows (use `PathBuf`/`join`; no assumption that `/` is the only separator). (9) **Section 2.12:** Re-validate worktree path before use is Phase 6 / optional.
+**Worktree (Section 2):** (1) **Base branch:** Use checkout base_branch then add for initial release; create from ref (e.g. `git worktree add -b <branch> <path> <base_branch>`) is optional later. (2) **active_worktrees repopulation:** On first resolve with no entry, call `worktree_exists(node_id, expected_branch)` (section 2.7), passing the node's recorded branch when one is known; only `exists_valid` lets the path be used and re-registered in `active_worktrees` for that session, with any unresolved-conflict fence kept. Every other state is handled as section 2.7 "Callers" says and is not re-registered. (3) **Conflict persistence:** Durable from the initial release: typed `worktree_conflict_state.v1:{project_id}:{worktree_id}` rows require registration in the canonical redb family (SP-340) before the initial release can use them, as section 7.4 specifies; the `HashSet<node_id>` of conflict worktrees is a per-session projection rebuilt from those rows and never the authority. The earlier "in-memory only for initial release, typed rows optional in Phase 6" decision is retired. No JSON file is written (SP-339). (4) **Detached HEAD merge:** In `merge_worktree`, if source_branch is empty: read HEAD commit from that worktree (`git rev-parse HEAD` in worktree path), then in main repo `git merge --no-ff <commit>`; document in STATE_FILES.md. (5) **Recovery:** If no project path at startup, skip worktree recovery; run recovery when user first selects/opens a project or when a run starts with config hint. (6) **Repopulation failure:** If `list_worktrees()` fails during repopulation, log error and start with empty `active_worktrees`. (7) **Doctor worktrees:** Must run `list_worktrees` and report state; optionally call `detect_orphaned_worktrees()` and include count; Recover remains a separate UI action. (8) **Platform:** Sanitization and path handling must be safe on Windows (use `PathBuf`/`join`; no assumption that `/` is the only separator). (9) **Section 2.12:** Re-validate worktree path before use is Phase 6 / optional.
 
 **Git (Section 3):** (1) **Git binary:** Add `path_utils::resolve_git_executable() -> Option<PathBuf>` (same logic as `find_tool_executable("git")`); GitManager and GitInstalledCheck both use it; tag `// DRY:FN:resolve_git_executable`. If resolver returns None, GitManager fails the operation; Doctor fails the check. (2) **GitHub PRs:** PR creation uses GitHub HTTPS API only (no GitHub CLI) per `Plans/GitHub_API_Auth_and_Flows.md`. (3) **naming_pattern:** Hide in GUI and document Reserved for future use in initial release; do not wire to branch naming. (4) **git-actions.log:** Move to `.puppet-master/logs/git-actions.log`; add to .gitignore as runtime-only per STATE_FILES.
 
@@ -1278,7 +1294,7 @@ plan_unit_id: W-008
 unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
-canonical_text: After restart, worktree resolution and PR head branch resolution recover from durable or listed worktrees instead of falling back to the main repo path or main repo branch.
+canonical_text: After restart, worktree resolution and PR head branch resolution recover from durable or listed worktrees that the section 2.7 worktree_exists check returns exists_valid for, with the node's recorded branch as expected_branch, instead of falling back to the main repo path or main repo branch.
 gui_related: false
 gui_classification_reason: This unit defines backend/runtime, storage, governance, or command policy rather than visual presentation.
 split_recommended: false
@@ -1291,6 +1307,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - W-008 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage.
+- A non-valid exact binding blocks both iteration and PR creation with the section 2.7 state, including when a cache entry is evicted by section 2.12. The durable binding, unresolved-conflict fence, path and refs remain intact.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
@@ -1941,7 +1958,7 @@ plan_unit_id: W-020
 unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
-canonical_text: Worktree state files are documented, Doctor adds worktree checks and orphan detection, and optional path/list revalidation can remove stale active_worktrees before use.
+canonical_text: Worktree state files are documented, Doctor adds worktree checks and orphan detection, and optional path/list revalidation can evict a stale active_worktrees projection entry before use. Section 2.7 governs the resulting block on the exact durable binding.
 gui_related: false
 gui_classification_reason: This unit defines backend/runtime, storage, governance, or command policy rather than visual presentation.
 split_recommended: false
@@ -3633,7 +3650,7 @@ plan_unit_id: W-050
 unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
-canonical_text: "Conflict worktree persistence may be in-memory for the initial release, while longer-lived conflict state records use typed rows in the canonical redb family (SP-340) with no JSON state file (SP-339), without conflating conflict cleanup with normal worktree cleanup."
+canonical_text: "Conflict worktree persistence is durable from the initial release: each unresolved merge conflict requires a typed worktree_conflict_state.v1:{project_id}:{worktree_id} row. Registration in the canonical redb family (SP-340 and storage-plan section 2.3.1) is an outstanding release prerequisite specified in section 7.4. There is no JSON state file (SP-339). Clear the row only on verified resolution or explicit discard. An in-memory HashSet<node_id> is a per-session projection of those rows and never the authority. The former in-memory-only initial release option is retired, and conflict cleanup is never conflated with normal worktree cleanup."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
 split_recommended: false
@@ -3648,6 +3665,9 @@ depends_on:
 - W-033
 unblocks: []
 acceptance_criteria:
+- "After a merge conflict on node N, restarting the app and re-running N does not remove or recreate N's worktree: the worktree_conflict_state.v1 row is read at startup or project open and reuse stays blocked until resolve or explicit discard deletes the row."
+- "Clearing the in-memory projection (new session) without deleting the worktree_conflict_state.v1 row leaves the conflict visible and reuse blocked; ordinary worktree cleanup never deletes a worktree whose row exists."
+- "A missing path or gitdir and an unavailable durable conflict lookup each leave reuse blocked until the owner verifies that no unresolved conflict remains."
 - "W-050 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
 - "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
@@ -3738,7 +3758,7 @@ plan_unit_id: W-052
 unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
-canonical_text: "active_worktrees is repopulated from listed worktree paths by extracting node identity and inserting canonical entries rather than relying on stale in-memory state."
+canonical_text: "active_worktrees is repopulated from listed worktree paths by extracting node identity and inserting canonical entries only for worktrees whose section 2.7 worktree_exists check, with the recorded expected branch when known, returns exists_valid, rather than relying on stale in-memory state."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
 split_recommended: false
@@ -3948,7 +3968,7 @@ plan_unit_id: W-056
 unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
-canonical_text: "Resolved worktree decisions require HashSet<node_id> active tracking, detached HEAD merge handling, recovery timing, and Windows-safe path behavior for worktree lifecycle implementation."
+canonical_text: "Resolved worktree decisions require durable conflict persistence as typed worktree_conflict_state.v1:{project_id}:{worktree_id} rows in the canonical redb family (SP-340), with the HashSet<node_id> active tracking of conflict worktrees kept only as a per-session projection rebuilt from those rows and never the authority (section 7.14 Worktree item 3, section 7.4), plus detached HEAD merge handling, recovery timing, and Windows-safe path behavior for worktree lifecycle implementation. Registering that key and value shape in Plans/storage_value_registry.json is an outstanding prerequisite (section 7.4) before the initial release enables the path."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
 split_recommended: false
@@ -5287,6 +5307,99 @@ This addendum repairs non-runtime worktree rows without creating WorkNodes, impl
 - Repairs `sfk-be3c6367e06fceee5d56722a`: conflict-worktree persistence uses `worktree_conflict_state.v1:{project_id}:{worktree_id}`. In-memory hints and branch-name derivations are projections only.
 - Repairs `sfk-6bbb00970054c395801c3aab`: Source Control graph, AI commit batching, and conflict assistant commands are enabled only when repo identity is valid, worktree status is fresh, no protected-branch mutation is pending, and permission snapshot allows the requested command. Disabled reason codes are `repo_missing`, `status_stale`, `protected_branch`, `permission_denied`, and `operation_in_progress`.
 
+### Source Control graph and AI commit batching payloads and failure results (2026-11-25)
+
+This section and the Conflict Assistant contract below complete `sfk-6bbb00970054c395801c3aab` for section 4.1. The activation rule and disabled reason codes above apply. Field types: `identity_id` and `timestamp` are the `Plans/source_control_contracts.schema.json` `$defs` of those names; `full_oid` is a full 40- or 64-hex commit object id; `repo_relative_path` is a forward-slash path under the repo root with no `..` segment. The registered underscore aliases `cmd.source_control.graph_focus`, `cmd.source_control.graph_filter` and `cmd.source_control.suggest_commit_groups` normalize respectively to `cmd.source_control.graph.focus`, `cmd.source_control.graph.filter` and `cmd.source_control.suggest_commit_batches` before payload validation and idempotency evaluation. Each uses its canonical handler, state projection, result id and receipt. Preserve the invoked alias in dispatch provenance. The catalog's `cmd.source_control.graph.focus/filter/layout` is shorthand for the command family.
+
+**Wire contract.** These tables are the plain-language view of the strict schemas that `Plans/Wiring_Matrix.production.json` (rows `catalog.source_control_graph_focus_canonical`, `catalog.source_control_graph_filter_canonical`, `catalog.source_control_graph_layout`, `catalog.source_control_suggest_commit_batches`, `catalog.source_control_accept_commit_group` and their alias rows) and `Plans/projects_refresh_command_bindings.json` bind to these commands; where the two differ, the schema wins.
+- Request: `Plans/source_control_contracts.schema.json#/$defs/source_control_command_request_v2` selects the exact canonical branch for each graph and batching command: `source_graph_focus_request_v2`, `source_graph_filter_request_v2`, `source_graph_layout_request_v2`, `commit_batch_suggest_request_v2` or `commit_batch_accept_request_v2`. Each branch is `additionalProperties: false` and carries `schema_id: "pm.source_control.command_request.v2"`, `schema_version: "2.0.0"`, `command_id` (the canonical id), the payload fields in the tables below, `idempotency_key` and `return_context_ref`. These five ids use the direct v2 branches. A request that fails the schema is refused at dispatch with the wiring row's `UICommandError` and produces no result; the `payload_invalid` failure code below covers owner checks the schema cannot express.
+- Result: `Plans/source_control_contracts.schema.json#/$defs/source_control_command_result_v2` with `command_id` (canonical), `operation_id`, `status`, `owner_result_ref`, `inspection: null`, `local_config_before_sha256: null`, `local_config_after_sha256: null`, `native_result_evidence` (null except where accept records Git stage evidence), `network_effect_performed: false` and `return_context_ref`. The `outcome`, `failure_code` and per-command fields in the tables below are the owner result `source_view_command_owner_result_v1` (same schema file) that `owner_result_ref` names; batches are `commit_batch_v1`.
+- `status` mapping: every success outcome (`focused`, `applied`, `suggested`, `no_changes`, `staged_for_review`) is `succeeded`. Failures with `repo_identity_invalid`, `projection_stale`, `status_stale`, `permission_denied` or `stage_selection_mismatch` are `blocked`. `backend_unsupported` is `unsupported`, `stage_effect_unknown` is `unknown`, and other failures map to `failed`.
+- Effect: each dispatch records its `<command id>.dispatch_receipt` no-persist receipt, and `expected_event_types` stays `[]`.
+
+**Graph commands.** They change Project view state only, never repository state, refs, the index or files.
+
+| Command | Payload (all fields required unless marked `?`) | Result on success |
+|---|---|---|
+| `cmd.source_control.graph.focus` | `project_id: identity_id`, `repo_id: identity_id`, `target_kind: "branch" \| "commit" \| "worktree" \| "run"`, `target_ref: string` (branch name, `full_oid`, `worktree_id` or `run_id`, matching `target_kind`), `projection_id?: identity_id` | `outcome: "focused"`, `projection_id: identity_id`, `node_ref: string` (the `source_graph_projection` node now selected) |
+| `cmd.source_control.graph.filter` | `project_id`, `repo_id`, `branches?: string[]` (at most 64), `worktree_ids?: identity_id[]` (at most 64), `worktree_overlay: boolean`, `ownership: "any" \| "run_owned" \| "user_owned"`, `status?: ("ahead" \| "behind" \| "diverged" \| "conflicted")[]` | `outcome: "applied"`, `projection_id`, `returned_count: integer >= 0` |
+| `cmd.source_control.graph.layout` | `project_id`, `repo_id`, `density: "compact" \| "expanded"` | `outcome: "applied"` |
+
+Graph failure results are `outcome: "failed"` with one `failure_code` from this closed set:
+
+| `failure_code` | When | Retry | How it settles |
+|---|---|---|---|
+| `payload_invalid` | payload fails the shape above | none | prior focus, filter and layout unchanged |
+| `repo_identity_invalid` | `repo_id` does not resolve to the current durable repo identity | none | unchanged; the `repo_missing` disabled reason is shown |
+| `target_not_found` | focus target absent from the repo or the current projection | none | prior focus kept; inline reason names the target |
+| `projection_stale` | `source_graph_projection.currentness.state` is `stale` or past `expires_at_utc` | one automatic projection refresh, then one retry | if still stale: unchanged, stale banner with a Refresh action |
+| `graph_parse_failed` | the repo graph cannot be parsed | none | graph surface degrades to branch list and history (section 4.1 disabled fallback) |
+
+Filter and layout write Project view state only on `applied`; a failed command writes nothing.
+
+**AI commit batching.** Suggestions are advisory and never stage, commit or change the index.
+
+**Unborn HEAD.** Both batching commands require `head_commit_present`: `HEAD` resolves to a commit. While `HEAD` is unborn (a new repository, or an orphan branch, before its first commit) Suggest and Accept are shown disabled with reason `head_unborn`, which this section adds to the disabled reason codes above for these two commands only, and no request is dispatched. `expected_head_oid` stays a required `full_oid` with no null form, because the Accept stage steps bind `expected_git_state.head_oid` in `Plans/git_adapter_command_contracts.schema.json`, which also requires a commit OID. A request that reaches the owner after `HEAD` became unborn fails `status_stale` and changes nothing. The graph commands and the `changes.staged` compare of an unborn repository (`Plans/GitHub_Integration.md`, compare operands) are not affected.
+
+| Command | Payload | Result on success |
+|---|---|---|
+| `cmd.source_control.suggest_commit_batches` | `project_id`, `repo_id`, `worktree_id: identity_id`, `scope: "staged" \| "unstaged" \| "both"`, `expected_head_oid: full_oid`, `status_generation: integer >= 0`, `max_batches?: integer 1..20` (default 8). Aggressiveness, tone and cross-directory grouping come from the Settings ladder (section 4.1), not the payload. | `outcome: "suggested"` with `suggestion_set_id: identity_id`, `created_at: timestamp`, `batches: [{ batch_id: identity_id, paths: repo_relative_path[]` (whole files), `hunk_selections: [{ path: repo_relative_path, hunk_ids: string[]` (at least 1) `}]`, `draft_message: string`, `rationale: string }]` (1 to `max_batches`; each batch has at least one entry in `paths` or `hunk_selections`; a path appears once per batch and in no other batch); or `outcome: "no_changes"` with an empty `batches` when the scope has no changes |
+| `cmd.source_control.accept_commit_group` | `project_id`, `repo_id`, `worktree_id`, `suggestion_set_id`, `batch_id`, `expected_head_oid: full_oid`, `status_generation: integer >= 0`, `include_untracked?: boolean` (required when the selected batch contains whole-file paths) | `outcome: "staged_for_review"` verifies the exact reviewed selection in the index, preserves staging outside it, fills the commit box with its `draft_message`, and leaves commit to a separate action. `stage_result_refs` holds one ref per actual stage step. A verified `staged`-scope batch already in the index returns `staging_disposition: "already_staged"` and empty `stage_result_refs`. Accept is Git-only and returns `backend_unsupported` on Jujutsu |
+
+The owner retains the Suggest scope and the exact reviewed diff operands in the suggestion-set snapshot. Under FileSafe, the matching writer lease and currentness guards, verify the entire batch before any stage dispatch. For `staged` scope, verify each selected whole-file entry or hunk against the reviewed `HEAD <-> index` diff and keep the index as-is, including when the same path has extra unstaged edits. Dispatch neither whole-file nor hunk staging in that case. Verify that the current index still contains the exact selection before setting the draft message.
+
+For `unstaged` or `both`, prove that each planned stage step applies only its reviewed selection and retains unrelated staged content. Check the Git index entry each whole-file operation would produce, including content, mode or deletion, and resolve each hunk against the exact current index-to-worktree diff. Recheck the operands at the effect boundary. If preflight cannot guarantee that exact effect, fail `stage_selection_mismatch` before dispatching any stage step. If a recheck detects a change after an earlier step, stop and apply the rollback and reconciliation rules below. Stage the whole-file `paths[]` in one `cmd.git.stage` request and dispatch one `cmd.git.stage_hunks { path, hunk_ids }` per hunk-selection entry. Whole-file paths stay on the whole-file command (UCC-167).
+
+For the whole-file stage step, resolve `status_selection_ref` to the status snapshot and exact whole-file paths of the selected suggestion set and batch. Under the same Git `repo_id` and `workspace_id`, bind the snapshot's expected workspace revision (`expected_git_state`), currentness and the matching writer lease. Set `whole_file_only=true`, carry the caller's explicit `include_untracked` decision from this Accept request and declare exactly the untracked subset of the batch's `paths[]` as `untracked_paths_declared`. When a whole-file batch lacks a decision or includes untracked files that the decision disallows, stop before any stage step with `permission_denied`. These admission checks also apply when accepting an already indexed whole-file selection. Refuse stale status, revision or currentness and mismatched lease authority before any stage step. Apply the Source Control owner's whole-file checks under `Plans/Source_Control_System.md#section=Git Adapter Command Contracts - 2026-09-27 (ACT011/014/015/018/019/020/021)`.
+
+A suggestion set lives in Project view state until accepted, discarded, or superseded by a new set or by a status change (new `HEAD` or `status_generation`), which marks it stale. An unresolved stage effect fences the exact set and batch from reuse, as described below. Batching failure results are `outcome: "failed"` with one `failure_code` from this closed set:
+
+| `failure_code` | Commands | When | Retry | How it settles |
+|---|---|---|---|---|
+| `payload_invalid` | both | payload fails the shape above | none | nothing changes |
+| `status_stale` | both | `HEAD` differs from `expected_head_oid` or is unborn, `status_generation` is not current, or Accept's stage selection, expected revision or currentness no longer matches | none automatic; the user refreshes status and runs again | nothing changes; an earlier suggestion set is shown as stale |
+| `permission_denied` | both | permission snapshot refuses the command, or Accept lacks valid writer-lease or untracked-file admission for the exact batch | none | nothing changes; disabled reason `permission_denied` |
+| `assistant_unavailable` | suggest | no assistant provider or model is configured or reachable | none automatic; user may run again | nothing changes; manual staging remains available |
+| `assistant_failed` | suggest | the model call errors or times out | one automatic retry with the same inputs | if the retry fails: nothing changes, no partial batches are shown |
+| `output_invalid` | suggest | model output does not parse into the result shape, names a path outside the scope's diff, or puts a path in two batches | one automatic retry with the same inputs | if the retry fails: nothing changes, no partial batches are shown |
+| `suggestion_not_found` | accept | `suggestion_set_id` or `batch_id` is unknown, discarded or stale | none | nothing changes |
+| `stage_selection_mismatch` | accept | preflight cannot verify the exact reviewed selection in the index or prove that all planned stage steps will produce it | none automatic | keep the index and commit box unchanged and offer review of the current diff |
+| `stage_failed` | accept | a `cmd.git.stage` or `cmd.git.stage_hunks` step fails and the owner verifies that the index is at its pre-accept state, whether unchanged or restored | none (section 3.0.1 governs Git retries inside the stage step) | the suggestion set stays selectable while its selection is still current |
+| `stage_effect_unknown` | accept | a stage step reports an unknown effect or rollback to the pre-accept index cannot be verified | `retry_allowed=false`; use the Source Control owner's reconciliation | result `unknown`; retain `suggestion_set_id`, `batch_id` and any available `stage_result_refs`. Preserve the observed index state, withhold the commit-box message and fence acceptance of the suggestion set until owner reconciliation establishes the actual effect. A changed index makes the set stale; any fresh Accept requires current selection and authority |
+| `backend_unsupported` | accept | the worktree's backend is Jujutsu, so Git staging does not apply (UCC-167 forbids routing Git staging through Jujutsu) | none | nothing changes; status `unsupported` |
+
+Acceptance: (1) each graph command with a valid payload returns its success result and leaves `git status --porcelain` and every ref unchanged; (2) each graph `failure_code` row is produced by its stated cause and leaves prior view state unchanged; (3) `suggest_commit_batches` on a repo with changes returns at least one batch whose paths are all in the scope's diff and the index is unchanged; (4) a forced model timeout yields one retry then `assistant_failed` with no batches shown; (5) changing `HEAD` between suggest and accept yields `status_stale` on accept with the index unchanged; (6) a stage failure returns `stage_failed` only when the owner verifies the pre-accept index; an unknown stage effect or an unverified restoration returns `stage_effect_unknown` / `unknown`, keeps Accept disabled until reconciliation and leaves the commit message unchanged; (7) for `unstaged` or `both` when every step can reproduce the reviewed change, accepting a batch with only whole-file `paths` (including an untracked and a binary file) dispatches exactly one `cmd.git.stage` with that batch’s status selection, revision, lease and explicit untracked admission, and no `cmd.git.stage_hunks`, and a batch with only `hunk_selections` dispatches one `cmd.git.stage_hunks` per entry and no `cmd.git.stage`; (8) every request and result for these commands validates against `source_control_command_request_v2` and `source_control_command_result_v2`, and every `owner_result_ref` target against `source_view_command_owner_result_v1`, with `scripts/pm-new-contracts-verify.py` passing; (9) an accept-only code on Suggest and a suggest-only code on Accept both fail validation; (10) in a repository with staged changes and an unborn `HEAD`, Suggest and Accept are disabled with `head_unborn` and dispatch nothing, and a request whose `HEAD` became unborn after dispatch returns `status_stale` with the index unchanged.
+
+Also verify the alias and canonical Suggest invocations with the same key and payload reach one owner operation. For `staged` scope, with distinct HEAD, index and working-file versions, the reviewed index version stays staged and Accept reports `already_staged` with no stage calls. Verify the same preservation for staged hunk selections. If a planned stage would include content outside the reviewed selection, Accept returns `stage_selection_mismatch` without staging any part of the batch.
+
+### Conflict Assistant command payloads and results
+
+The four catalog actions under "Source Control review and conflict commands" use the `conflict_assistant_request_v2` branch of `source_control_command_request_v2`. Every request carries the v2 envelope, `project_id`, `repo_id`, `worktree_id`, `status_generation` and `conflict_selection_ref`. The ref binds one conflict operation and the current conflict projection selection. For a file selection, send its repo-relative `path` and `conflict_id` together. Open Conflict Assistant may instead use the selected group ref alone. Editors and mutations require one file. The Git-only mutation rule and Jujutsu read-only or built-in view behavior follow DL-056 and SCS-006. A merge, rebase or worktree conflict awaiting this exact selection is the target of the action. `operation_in_progress` blocks only an incompatible operation.
+
+| Command | Additional request fields | Verified success |
+|---|---|---|
+| `cmd.source_control.open_conflict` | File selection or conflict group | `opened` with the exact `route_ref` |
+| `cmd.source_control.open_merge_editor` | File selection and the CV-360 placement fields `where`, `mode`, `by`, `background` | `opened` with the built-in merge editor's `route_ref` to the shared opening result |
+| `cmd.source_control.resolve_conflict_side` | File selection, optional `hunk_id`, `resolution_side` of `ours\|theirs\|base\|manual`, `confirmation_ref`, and `manual_result_ref` for `manual` only | `side_applied` with `effect_receipt_ref` after the exact confirmed file or hunk content is written and verified. The index and resolution status are unchanged |
+| `cmd.source_control.mark_conflict_resolved` | File selection | `marked_resolved` with `effect_receipt_ref` after checking the exact saved content for conflict markers and verifying removal of that file's unmerged index entries |
+
+Side application and marking revalidate the exact conflict selection and current contents under FileSafe and the same Git writer lease before effect. A manual result ref names the exact built-in editor result for the confirmed target and revision. Mark Resolved performs its own marker check and currentness validation even after an earlier side application. Preserve other files and the active operation. Section 7.4 governs any worktree conflict-fence clear after verified resolution of the whole worktree. The low-level `cmd.git.conflict_apply_resolution` keeps its separate `ours\|theirs\|both` contract.
+
+The `source_control_command_result_v2` envelope carries an `owner_result_ref` to `conflict_assistant_owner_result_v1`, with the same command, operation and selection identity. Success maps to `succeeded`. On `failed`, the following closed codes map to the indicated outer status.
+
+| Failure code | Commands | Result |
+|---|---|---|
+| `conflict_not_found`, `status_stale`, `permission_denied`, `protected_branch`, `operation_in_progress` | all, when the applicable owner admission fails | `blocked`, with no effect |
+| `editor_unavailable` | Open Merge Editor | `unsupported`, with the text review fallback |
+| `conflict_surface_read_only_on_jujutsu` | mutations on Jujutsu | `unsupported`, with the safe next action `inspect` |
+| `confirmation_required` | Resolve Conflict Side with missing current approval for the exact action | `blocked`, with no effect |
+| `conflict_markers_remaining` | Mark Conflict Resolved | `blocked`, with the index and conflict fence intact |
+| `route_unavailable` | open actions | `failed` when the initiating context or route cannot be opened |
+| `write_failed` | mutations | `failed` only when the owner verifies the pre-command file and index state |
+| `write_effect_unknown` | mutations | `unknown`, preserve observed state and fence redispatch until reconciliation verifies the effect |
+
+The two open actions return their route. Open Merge Editor forwards the CV-360 placement fields to the shared opening module (DR-071). CV-361 governs its existing `workspace.layout_changed` effect when the layout changes. A reveal with no layout change returns its route without an event. Each mutation returns its exact owner result and uses the existing dispatch receipt. No conflict mutation EventRecord is admitted through this binding. No failure automatically retries. Preserve the initiating Client and return context for every dispatch regardless of later focus changes. Acceptance exercises the group and file routes, each side choice with explicit approval, a stale or cross-worktree selection, markers remaining, the Jujutsu refusal, and an unknown effect with no retry or fence clear. Validating a request with the low-level Git choice `both`, a manual selection without its result ref, or a hunk selection for Mark Resolved must fail.
+
 ## Cozy Shelves Panel Reconciliation Addendum - 2026-07-27
 
 The winning Cozy Shelves left-rail concept (`Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html` and `c2-cozy-shelves-files.html`, illustrative source lineage only; no HTML, CSS, or class names from those files are canon) exposed spec gaps this doc must close as the Git/worktree policy owner: the mandated "persisted worktree panel filters" (section 4.0) never enumerated filterable dimensions; the concept fixture term `blocked_by_gate` has no home in the reserved lifecycle vocabulary; the `locked` flag (section 4.0) has no lock/unlock command surface or provenance rule; `cmd.git.worktree.remove` has no graduated confirmation ladder; and the worktree row has no ruling on what the unified expander row contract shows collapsed versus expanded. The five PlanUnits below close those gaps. The implementation base is the c2 concept files patched in place (user decision 2026-07-27). The unified expander row contract (collapsed-by-default rows, single accessible header button with aria-expanded, fixed body slot order, body height cap, blocked reasons outside the collapsible body, shared confirm surface for destructive actions) is owned outside this doc and is consumed by reference here, never redefined. No existing PlanUnit block, preserved exact token, canonical text, or retired bridge is edited; supersession is expressed only through the new units' explicit amendment notes. This addendum creates no WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
@@ -6136,7 +6249,7 @@ command_payload_definitions:
             (UI_Command_Catalog.md:714) and names no single target. It is recorded on open, not on select, because
             the alias ends in the open (the select is the selection open already requires, precondition
             worktree_selected, :701), and one alias token is recorded on one definition. open_files is open's alias
-            (:702, :12495). GitHub_Integration.md:2115 lists switch among its Command IDs; the catalog, which keeps
+            (:702, :12495). GitHub_Integration.md:2215 lists switch among its Command IDs; the catalog, which keeps
             aliases, makes it an alias, and this definition follows the catalog. cmd.chat.worktree.open_files is
             recorded here too. Canon conflict: CV-160 lets it route to the canonical assistant worktree commands
             (Contracts_V0.md:1889, :11253), but none of the six opens files, while the catalog routes Open Files
@@ -6391,14 +6504,14 @@ command_payload_definitions:
           choice: [not_configured, permission_required, blocked_state_required, stale_projection]
           gap_note: >-
             The GitHub_Integration Worktree Topology disabled states, which cover cmd.git.worktree.create
-            (GitHub_Integration.md:2115-2117), map through the UCC-230 owner_state_code_map to
+            (GitHub_Integration.md:2215-2217), map through the UCC-230 owner_state_code_map to
             blocked_state_required (dirty_worktree, untracked_files, protected_branch, operation_in_progress),
             not_configured (missing_remote) and permission_required (permission_denied). The choice is the rest:
             not_configured also covers git_available false, blocked_state_required covers worktree_limit_reached
             (UI_Command_Catalog.md:704), and stale_projection is the 2.0B clause.
       aliases:
         - {command_id: cmd.worktree.provision, kind: compatibility_alias,
-           source: "Commands_System.md:4087 (compatibility spelling, not registered; canonical command cmd.git.worktree.create) and the catalog's candidate compatibility and rejection table (UI_Command_Catalog.md:14253, alias intent, no new row); a thread-scoped caller may use only the existing thread wrapper (DRY_Rules.md:2272; Shared_Integration_Runtime.md:352); UCC-230 non_definition_tokens targets it to this command"}
+           source: "Commands_System.md:4087 (compatibility spelling, not registered; canonical command cmd.git.worktree.create) and the catalog's candidate compatibility and rejection table (UI_Command_Catalog.md:14253, alias intent, no new row); a thread-scoped caller may use only the existing thread wrapper (DRY_Rules.md:2312; Shared_Integration_Runtime.md:352); UCC-230 non_definition_tokens targets it to this command"}
     - command_id: cmd.git.worktree.remove
       ucc_units: [UCC-054, UCC-055]
       command_kind: domain_action
@@ -6548,33 +6661,33 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "GitHub_Integration.md:2117 Worktree Topology Commands destructive confirmation field target_worktree_id (id per the UCC-230 *_id typing); the confirm-surface subject, the same worktree as worktree_id"
+          source: "GitHub_Integration.md:2217 Worktree Topology Commands destructive confirmation field target_worktree_id (id per the UCC-230 *_id typing); the confirm-surface subject, the same worktree as worktree_id"
         expected_path:
           type: path
           required: true
           default: none
           provenance: gap
-          gap_note: "GitHub_Integration.md:2117 names the destructive confirmation field expected_path and makes it required, but states no type. Choice: the vocabulary's path type; FileSafe normalizes it at run time (DL-333 resolution 11)."
+          gap_note: "GitHub_Integration.md:2217 names the destructive confirmation field expected_path and makes it required, but states no type. Choice: the vocabulary's path type; FileSafe normalizes it at run time (DL-333 resolution 11)."
         expected_branch:
           type: string
           required: true
           default: none
           constraints: {min_length: 1, max_length: 256}
           provenance: gap
-          gap_note: "GitHub_Integration.md:2117 names the destructive confirmation field expected_branch and makes it required, but states no type or bounds. Choice: a branch-name string of 1..256 characters."
+          gap_note: "GitHub_Integration.md:2217 names the destructive confirmation field expected_branch and makes it required, but states no type or bounds. Choice: a branch-name string of 1..256 characters."
         confirmation_text:
           type: string
           required: true
           default: none
           constraints: {min_length: 1, max_length: 256}
           provenance: gap
-          gap_note: "GitHub_Integration.md:2117 names the destructive confirmation field confirmation_text and makes it required, but states no type or bounds. Choice: a string of 1..256 characters."
+          gap_note: "GitHub_Integration.md:2217 names the destructive confirmation field confirmation_text and makes it required, but states no type or bounds. Choice: a string of 1..256 characters."
         permission_snapshot_id:
           type: id
           required: true
           default: none
           provenance: canon
-          source: "GitHub_Integration.md:2117 Worktree Topology Commands destructive confirmation field permission_snapshot_id (id per the UCC-230 *_id typing)"
+          source: "GitHub_Integration.md:2217 Worktree Topology Commands destructive confirmation field permission_snapshot_id (id per the UCC-230 *_id typing)"
         override_record_ref:
           type: ref
           required: false
@@ -6623,14 +6736,14 @@ command_payload_definitions:
           choice: [not_configured, permission_required, blocked_state_required, stale_projection]
           gap_note: >-
             The Worktree Topology Commands disabled states dirty_worktree, untracked_files, protected_branch,
-            missing_remote, permission_denied and operation_in_progress (GitHub_Integration.md:2117) map through the
+            missing_remote, permission_denied and operation_in_progress (GitHub_Integration.md:2217) map through the
             UCC-230 owner_state_code_map to blocked_state_required, not_configured and permission_required (DL-333
             resolution 6). The choice is the rest: the W-077 locked refusal and the row's other preconditions
             (UI_Command_Catalog.md:705) are blocked_state_required, git_available false is not_configured, and
             stale_projection is the 2.0B clause. Canon conflict: W-078 lets a dirty worktree be removed after a
             confirmation that previews the dirty paths (WorktreeGitImprovement.md:5463), while the row's precondition
             worktree_clean (UI_Command_Catalog.md:705) and GI's dirty_worktree disabled state
-            (GitHub_Integration.md:2117) block it. The definition takes the
+            (GitHub_Integration.md:2217) block it. The definition takes the
             row and GI side, so a dirty worktree is blocked_state_required; the owner doc has not reconciled them.
       aliases: []
     - command_id: cmd.git.worktree.prune
@@ -6785,7 +6898,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             GI-041 makes the approved request the command's subject ("it requires the approved request as its
-            subject"; direct prune execution without an approved request is invalid, GitHub_Integration.md:2500-2504)
+            subject"; direct prune execution without an approved request is invalid, GitHub_Integration.md:2600-2604)
             but names no field. Choice: a ref to the approved prune request that cmd.git.worktree.request_prune
             produced: the value of WorktreeRequestPruneResultV1.prune_request_ref once that request is approved.
         target_worktree_id:
@@ -6793,33 +6906,33 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "GI-041 canonical_text destructive confirmation field target_worktree_id (GitHub_Integration.md:2501; id per the UCC-230 *_id typing)"
+          source: "GI-041 canonical_text destructive confirmation field target_worktree_id (GitHub_Integration.md:2601; id per the UCC-230 *_id typing)"
         expected_path:
           type: path
           required: true
           default: none
           provenance: gap
-          gap_note: "GI-041 names the destructive confirmation field expected_path (GitHub_Integration.md:2501) and its acceptance criterion requires all five, but canon states no type. Choice: the vocabulary's path type; FileSafe normalizes it at run time (DL-333 resolution 11)."
+          gap_note: "GI-041 names the destructive confirmation field expected_path (GitHub_Integration.md:2601) and its acceptance criterion requires all five, but canon states no type. Choice: the vocabulary's path type; FileSafe normalizes it at run time (DL-333 resolution 11)."
         expected_branch:
           type: string
           required: true
           default: none
           constraints: {min_length: 1, max_length: 256}
           provenance: gap
-          gap_note: "GI-041 names the destructive confirmation field expected_branch (GitHub_Integration.md:2501) but states no type or bounds. Choice: a branch-name string of 1..256 characters."
+          gap_note: "GI-041 names the destructive confirmation field expected_branch (GitHub_Integration.md:2601) but states no type or bounds. Choice: a branch-name string of 1..256 characters."
         confirmation_text:
           type: string
           required: true
           default: none
           constraints: {min_length: 1, max_length: 256}
           provenance: gap
-          gap_note: "GI-041 names the destructive confirmation field confirmation_text (GitHub_Integration.md:2501) but states no type or bounds. Choice: a string of 1..256 characters."
+          gap_note: "GI-041 names the destructive confirmation field confirmation_text (GitHub_Integration.md:2601) but states no type or bounds. Choice: a string of 1..256 characters."
         permission_snapshot_id:
           type: id
           required: true
           default: none
           provenance: canon
-          source: "GI-041 canonical_text destructive confirmation field permission_snapshot_id (GitHub_Integration.md:2501; id per the UCC-230 *_id typing)"
+          source: "GI-041 canonical_text destructive confirmation field permission_snapshot_id (GitHub_Integration.md:2601; id per the UCC-230 *_id typing)"
         override_record_ref:
           type: ref
           required: false
@@ -6866,7 +6979,7 @@ command_payload_definitions:
         - key: disabled_reason_codes
           choice: [not_configured, permission_required, blocked_state_required, stale_projection]
           gap_note: >-
-            GI-041's six disabled states (GitHub_Integration.md:2502-2503) map through the UCC-230
+            GI-041's six disabled states (GitHub_Integration.md:2602-2603) map through the UCC-230
             owner_state_code_map to blocked_state_required, not_configured and permission_required (DL-333
             resolution 6). The choice is the rest: the W-077 locked refusal and the row's other preconditions
             (UI_Command_Catalog.md:706) are blocked_state_required, git_available false is not_configured, and
@@ -6894,7 +7007,7 @@ command_payload_definitions:
           required: false
           default: none
           provenance: canon
-          source: "overlay UCC-054..UCC-055 optional identity safe_point_id; safe worktree action commands carry optional safe_point_id (UI_Command_Catalog.md:720); GI-041 gates the request form on safe-point awareness (GitHub_Integration.md:2498), and the cmd.git.worktree.prune that executes the request carries the same optional field"
+          source: "overlay UCC-054..UCC-055 optional identity safe_point_id; safe worktree action commands carry optional safe_point_id (UI_Command_Catalog.md:720); GI-041 gates the request form on safe-point awareness (GitHub_Integration.md:2598), and the cmd.git.worktree.prune that executes the request carries the same optional field"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -6918,7 +7031,7 @@ command_payload_definitions:
           choice: [not_configured, permission_required, blocked_state_required, stale_projection]
           gap_note: >-
             Canon names no disabled set for this row. GI-041 gates the request form on ownership badges, admin
-            override policy, prune protection defaults and safe-point awareness (GitHub_Integration.md:2497-2498);
+            override policy, prune protection defaults and safe-point awareness (GitHub_Integration.md:2597-2598);
             those map to permission_required and blocked_state_required. not_configured covers git_available false
             (UI_Command_Catalog.md:707), and stale_projection is the 2.0B clause.
       aliases: []
@@ -7565,7 +7678,7 @@ command_payload_definitions:
             to release; canon does not say whether release is offered on one.
       aliases:
         - {command_id: cmd.worktree.release, kind: compatibility_alias,
-           source: "Commands_System.md:4088 (compatibility spelling, not registered; canonical command cmd.git.worktree.release) and the catalog's candidate compatibility and rejection table (UI_Command_Catalog.md:14253, alias intent, no new row); DRY_Rules.md:2273 and Shared_Integration_Runtime.md:353 normalize it to this command; UCC-230 non_definition_tokens targets it to this command"}
+           source: "Commands_System.md:4088 (compatibility spelling, not registered; canonical command cmd.git.worktree.release) and the catalog's candidate compatibility and rejection table (UI_Command_Catalog.md:14253, alias intent, no new row); DRY_Rules.md:2313 and Shared_Integration_Runtime.md:353 normalize it to this command; UCC-230 non_definition_tokens targets it to this command"}
     - command_id: cmd.git.worktree.lock
       ucc_units: [UCC-054]
       command_kind: domain_action
@@ -7699,7 +7812,7 @@ command_payload_definitions:
         receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "dispatch receipt (catalog.git_worktree_prune)"}
     WorktreeRequestPruneResultV1:
       fields:
-        prune_request_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "the produced prune request, the subject cmd.git.worktree.prune executes once approved, where it is the value of approved_request_ref (GI-041, GitHub_Integration.md:2499-2500)"}
+        prune_request_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "the produced prune request, the subject cmd.git.worktree.prune executes once approved, where it is the value of approved_request_ref (GI-041, GitHub_Integration.md:2599-2600)"}
         receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "dispatch receipt (catalog.git_worktree_request_prune)"}
     WorktreeReuseResultV1:
       fields:

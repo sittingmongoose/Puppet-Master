@@ -149,8 +149,12 @@ def ctx_key(entry):
     return (entry[0], entry[1], entry[2], id(entry[3]))
 
 
-def walk(v):
-    """Every schema node with: the instance path patterns that reach it and the conditions on the way."""
+def walk(v, *, resolve_reference=None, locate=None):
+    """Every schema node with the instance path patterns and conditions that reach it."""
+    if resolve_reference is None:
+        resolve_reference = lambda node, resolver: resolver.lookup(node['$ref'])
+    if locate is None:
+        locate = lambda node: node['x-pm-oracle-id'] if 'x-pm-oracle-id' in node else json.dumps(node, sort_keys=True)
     nodes = {}
     def visit(node, resolver, ipath, ctx, steps, depth, obj=None, empty=None):
         if not isinstance(node, dict) or depth > 40:
@@ -164,7 +168,7 @@ def walk(v):
                 resolver = resolver.in_subresource(DRAFT202012.create_resource(node))
             except Exception:  # noqa: BLE001 - keep the enclosing resolver
                 pass
-        location = node.get('x-pm-oracle-id', json.dumps(node, sort_keys=True))
+        location = locate(node)
         RESOLVERS.setdefault(id(node), resolver)
         key = (location, ipath, tuple(ctx_key(c) for c in ctx))
         if key in seen:
@@ -176,7 +180,7 @@ def walk(v):
             dict(ipath=ipath, ctx=ctx, steps=steps, obj=obj, empty_domain=empty))
         if '$ref' in node:
             try:
-                resolved = resolver.lookup(node['$ref'])
+                resolved = resolve_reference(node, resolver)
             except Exception as exc:  # noqa: BLE001 - a dangling ref: recorded per root, never descended
                 UNRESOLVED.append(dict(location=location, ref=node['$ref'], error=type(exc).__name__))
                 resolved = None
@@ -1202,11 +1206,13 @@ def swap_candidates(v, controls, reach, limit=6):
     return out
 
 
-def close_root(root, v, seeds, budget, carried=None, elsewhere=None, deadline=None):
+def close_root(root, v, seeds, budget, carried=None, elsewhere=None, deadline=None,
+               *, clause_identity=None, nodes=None):
     carried = carried or {}
     elsewhere = elsewhere or {}
     CURRENT[0] = v
-    nodes = walk(v)
+    if nodes is None:
+        nodes = walk(v)
     by_ipath = collections.defaultdict(list)
     for location, info in nodes.items():
         for reach in info['reach']:
@@ -1226,14 +1232,15 @@ def close_root(root, v, seeds, budget, carried=None, elsewhere=None, deadline=No
             if time.monotonic() - done[1] > 300:  # GO addition: progress line every five minutes
                 done[1] = time.monotonic()
                 print(f'  {root[:60]}: clause {done[0]}/{total}, validations {COUNT[0] - root0}', file=sys.stderr, flush=True)
-            clause = location + '/' + name_of(keyword)
+            name, ident = (clause_identity(node, keyword) if clause_identity else
+                           (name_of(keyword), common.schema_guard(node, keyword)))
+            clause = location + '/' + name
             if clause in carried:  # --carry: a clause the earlier report did not leave UNCOVERED
                 entries[clause] = carried[clause]
                 continue
             if clause in elsewhere:  # --distinct-from: a witness for this clause exists in another root of every family
                 entries[clause] = dict(cls='SEARCHED_ELSEWHERE', closed_in=elsewhere[clause])
                 continue
-            ident = common.schema_guard(node, keyword)
             if all(r['empty_domain'] for r in info['reach']):
                 entries[clause] = dict(cls='UNREACHABLE', proof='every instance location of the clause is an item of an array '
                                        'whose owner node has maxItems 0 (' + info['reach'][0]['empty_domain'] + '): no valid instance holds an item')

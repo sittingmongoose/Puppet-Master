@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L27075-L27199
+Source lines: L27094-L27232
 
-Source SHA256: `7ba17c5aa7fb716a162c335b6ec6e71fc68d986a5c12f560da9fc6c85b205c7a`
+Source SHA256: `7c52aa35b4fb3b308c17b6cf275e1f2f81fab5151885cf7a52d3ae688fdbe180`
 
 ---
 
@@ -108,6 +108,19 @@ canonical_text: >-
   Section 15.3 Tantivy Indices reference; promoted-widget catalog material must use a non-conflicting addendum anchor or an
   explicitly named promoted-widget section. Terminal Settings Ownership and Agent Config Skills are nested under Settings and
   inspectors rather than remaining competing Section 7.4 headings.
+  Amended 2026-11-24 (DL-2602, C-FIX79): the accepted end state is the named-heading rule of "Settings Registry And
+  Numbering Supersession", not a rename. The two `## 15.` chapters (`## 15. Persistence` and `## 15. Promoted widget
+  catalog (web tools, planning, question, operation cards)`) and the two `#### 7.4.2` headings (`#### 7.4.2 Indexing
+  settings subsection` and `#### 7.4.2 Agent Config Skills tab`) stay as declared aliases, and no heading is renamed.
+  Citations into any of them use the full heading name, and a bare §7.4.2 is not cited. A bare §15 or §15.n already in
+  the plans resolves to the heading its own context names (an adjacent ContractRef or the heading title written beside
+  it, as in §15.3 Tantivy Indices); only a bare citation whose context names neither chapter's heading means the
+  Persistence chapter. Renumbering is left to a scheduled structural cleanup. Applied 2026-11-25: the bare §7.4.2
+  citations in 00-plans-index, this document, OpenCode_Coverage_Matrix and LSPSupport now name the full heading; the
+  Settings > LSP ones never meant either 7.4.2 heading and now cite `§7.4.4 Settings (Unified) panel specification`
+  (its LSP row). Where a preserved exact token pins the old wording (the LSPSupport checklist lines), the bare §7.4.2
+  stays inside that token with the full heading named beside it. The chat visualizer cites `15.6 Mermaid and inline
+  visualizer widgets` by name, distinct from `15.6 Durable Storage Recovery, Continuity, and Trust Surfaces (Case L)`.
 gui_related: true
 gui_classification_reason: Numbering deconfliction affects user-visible GUI spec sections, settings sections, and cross-reference anchors.
 depends_on: [F3-387]
@@ -116,6 +129,7 @@ acceptance_criteria:
   - Section 15.3 resolves to Persistence/Tantivy rather than an ambiguous promoted-widget chapter.
   - Terminal Settings Ownership and Agent Config Skills tab are subordinate Settings anchors.
   - Structural renumbering does not change GUI behavior or widget ownership.
+  - Until a scheduled structural cleanup, the duplicate `## 15.` and `#### 7.4.2` headings are declared aliases and every citation into them names the full heading (DL-2602); a §7.4.2 kept inside a preserved exact token has the full heading named beside it.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - manual FinalGUISpec heading review

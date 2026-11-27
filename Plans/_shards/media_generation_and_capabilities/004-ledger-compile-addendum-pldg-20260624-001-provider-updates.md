@@ -2,9 +2,9 @@
 
 Source: `Plans/Media_Generation_and_Capabilities.md`
 
-Source lines: L83-L374
+Source lines: L83-L376
 
-Source SHA256: `847fc414c8756dcf511b1cdd79bca4551a6915978b6dccf524d46258f128e492`
+Source SHA256: `59866e6dec8c7d4ecf7e2ec6a8bef3b056fd55803ee6c8d5ba7e4e1ea4413904`
 
 ---
 
@@ -20,7 +20,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
 canonical_text: >-
-  Provider media support is route-specific and must be modeled as separate `media_input`, `media_output`, and `generated_media_routes[]` capabilities under concrete provider/model rows. PM must preserve explicit per-media support-state labels for green, disabled, capability-gated, unverified, unsupported, separate-profile, and source-lineage-only states. The media/capability matrix includes every public `agy models` row under Antigravity with explicit modality truth, even when generated image, generated video, generated audio/TTS, music, or artifact output are false. Selectable generated-media engines are a narrower subset: OpenAI API-key `gpt-image-2`, Responses `image_generation`, mandatory OpenAI/Codex subscription-backed image generation, MiniMax global `image-01`, Gemini Direct generated-image routes where verified, and the separate capability-gated Antigravity OAuth/internal `gemini-3.1-flash-image` route where locally proven. Gemini CLI removal also removes Gemini-default setup copy; Gemini Direct API remains a media-capable direct provider route where verified.
+  Provider media support is route-specific and must be modeled as separate `media_input`, `media_output`, and `generated_media_routes[]` capabilities under concrete provider/model rows. PM must preserve explicit per-media support-state labels for green, disabled, capability-gated, unverified, unsupported, separate-profile, and source-lineage-only states. The media/capability matrix includes every public `agy models` row under Antigravity with explicit modality truth, even when generated image, generated video, generated audio/TTS, music, or artifact output are false. Selectable generated-media engines are a narrower subset: OpenAI API-key `gpt-image-2`, Responses `image_generation`, mandatory OpenAI/Codex subscription-backed image generation, MiniMax global `image-01`, and Gemini Direct generated-image routes where verified. The separate Antigravity OAuth/internal `gemini-3.1-flash-image` route is listed in capability metadata as `capability_gated` under MGAC-098. Its local artifact proof does not make it selectable or probe-eligible while it is in that state. Gemini CLI removal also removes Gemini-default setup copy; Gemini Direct API remains a media-capable direct provider route where verified.
 gui_related: false
 gui_classification_reason: Canonical media capability schema and support-state semantics rather than visual presentation.
 depends_on: [MS-113, CV-094]
@@ -196,7 +196,7 @@ acceptance_criteria:
   - Public `agy` rows do not appear as selectable image-generation engines unless that exact public route later has generated-artifact proof.
   - The Antigravity OAuth/internal `gemini-3.1-flash-image` route is distinct from Gemini Direct and from public `agy` CLI catalog rows.
   - "`gemini-3-pro-image`, `gemini-2.5-flash-image`, Nano Banana, Nanobanana, Imagen, and Veo remain unverified for the tested Antigravity account/project unless fresh catalog and artifact proof supersede this state."
-  - Private/internal endpoint support carries capability-gated support-state, terms/risk labeling, fallback/error handling, and secret-redaction requirements.
+  - Private/internal endpoint support carries capability-gated support-state, terms/risk labeling, fallback/error handling, and secret-redaction requirements. The recorded local proof does not clear the gate or count as the Settings Verify result for an exact route row.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
@@ -246,6 +246,8 @@ ContractRef: ToolID:capabilities.get, ContractName:Plans/Contracts_V0.md
 | `QUOTA_EXCEEDED` | The API quota for this capability has been exhausted. |
 
 These values are the canonical enum; implementations MUST use exactly these strings.
+
+These six strings are the only `disabled_reason` values a `capabilities.get` response carries. The ten lowercase values in "Disabled Reason Enum" (FABLE Deferred Action Concrete Repair Addendum, end of this document) are `generated_media_route` row values, not `capabilities.get` values; the adapter table there maps each of them to exactly one value above before a response is built (2026-11-25).
 
 ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2
 

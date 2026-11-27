@@ -5,7 +5,7 @@
   "evidence_level": "static_contract_examples_only",
   "native_runtime_executed": false,
   "source_companion_ref": "Plans/projects_refresh_command_bindings.json",
-  "source_companion_sha256": "6cdbc8daffb51742d680c70a882169ebfbc709cbe7a4b40910c9ceea1cd9ee30",
+  "source_companion_sha256": "ea6d0f6a1b173e02a618b8e665c1d40944afd1cb3e8c31d627dcb2c24a0fbf1b",
   "projects_refresh_cases": [
     {
       "case_id": "fd-binding-commands",
@@ -1682,8 +1682,8 @@
             "command_id": "cmd.browser.open_devtools",
             "owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180",
             "handler": "handlers::browser_runtime::devtools_open",
-            "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2",
-            "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionResultV2",
+            "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenRequest",
+            "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenResultV1",
             "group": "no_project",
             "gui_consumers": [
               "Puppet Master Assistant > browser_toolbar"
@@ -21581,7 +21581,7 @@
             "gui_consumers": [
               "Source Control surface"
             ],
-            "effect": "cmd.source_control.graph_filter records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+            "effect": "cmd.source_control.graph_filter normalizes to cmd.source_control.graph.filter before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance.",
             "availability": "One reviewed Project setup binding serves onboarding/New Project/conversion-to-new; no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing, and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive pause and last-good protection. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
             "currentness": "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
@@ -21605,8 +21605,8 @@
             "command_kind": "domain_action",
             "confirmation": "owner_policy",
             "normalization": {
-              "kind": "canonical",
-              "alias_of_command_id": null
+              "kind": "compatibility_alias",
+              "alias_of_command_id": "cmd.source_control.graph.filter"
             },
             "handler_status": "specified",
             "availability_until_native_evidence": "handler_unavailable",
@@ -21679,7 +21679,7 @@
             "gui_consumers": [
               "Source Control surface"
             ],
-            "effect": "cmd.source_control.graph_focus records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+            "effect": "cmd.source_control.graph_focus normalizes to cmd.source_control.graph.focus before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance.",
             "availability": "One reviewed Project setup binding serves onboarding/New Project/conversion-to-new; no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing, and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive pause and last-good protection. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
             "currentness": "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
@@ -21703,8 +21703,8 @@
             "command_kind": "domain_action",
             "confirmation": "owner_policy",
             "normalization": {
-              "kind": "canonical",
-              "alias_of_command_id": null
+              "kind": "compatibility_alias",
+              "alias_of_command_id": "cmd.source_control.graph.focus"
             },
             "handler_status": "specified",
             "availability_until_native_evidence": "handler_unavailable",
@@ -21924,7 +21924,7 @@
             "gui_consumers": [
               "Source Control surface"
             ],
-            "effect": "cmd.source_control.mark_conflict_resolved records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+            "effect": "Mark Conflict Resolved returns a typed owner result for the verified file resolution under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results. The binding admits no EventRecord.",
             "availability": "One reviewed Project setup binding serves onboarding/New Project/conversion-to-new; no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing, and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive pause and last-good protection. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
             "currentness": "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
@@ -21973,7 +21973,7 @@
             "gui_consumers": [
               "Source Control surface"
             ],
-            "effect": "cmd.source_control.open_conflict records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+            "effect": "Open Conflict Assistant returns the exact selected route or a typed owner refusal under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results. The binding admits no EventRecord.",
             "availability": "One reviewed Project setup binding serves onboarding/New Project/conversion-to-new; no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing, and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive pause and last-good protection. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
             "currentness": "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
@@ -22022,7 +22022,7 @@
             "gui_consumers": [
               "Source Control surface"
             ],
-            "effect": "cmd.source_control.open_merge_editor resolves through the one opening module (F3-634, DR-071) into an editor tab (diff mode for diffs) with CV-360's placement fields. An open that adds a tab emits the one workspace.layout_changed with its v2 payload (CV-361); an open whose id is already open reveals that tab where it is, returns its receipt or route/open disposition and emits nothing. Corrected 2026-10-09 (WM-092): the row declared no event although an added tab is a structural change (DL-180).",
+            "effect": "Open Merge Editor returns the typed route or refusal for the exact selected file and forwards CV-360 placement to the shared opening module (F3-634, DR-071). The existing production route emits one workspace.layout_changed for a layout change under CV-361, including an added tab, and none for an unchanged reveal. This Projects refresh binding grants no event admission. Selection and owner results follow Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results.",
             "availability": "One reviewed Project setup binding serves onboarding/New Project/conversion-to-new; no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing, and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive pause and last-good protection. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
             "currentness": "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
@@ -22365,7 +22365,7 @@
             "gui_consumers": [
               "Source Control surface"
             ],
-            "effect": "cmd.source_control.resolve_conflict_side records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+            "effect": "Resolve Conflict Side returns a typed owner result for the exact confirmed file or hunk write under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results. The binding admits no EventRecord.",
             "availability": "One reviewed Project setup binding serves onboarding/New Project/conversion-to-new; no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing, and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive pause and last-good protection. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
             "currentness": "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
@@ -23044,14 +23044,14 @@
           {
             "command_id": "cmd.source_control.suggest_commit_groups",
             "owner_ref": "Plans/Source_Control_System.md#SCS-025",
-            "handler": "handlers::source_control::suggest_commit_groups",
+            "handler": "handlers::source_control::suggest_commit_batches",
             "request_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_request_v2",
             "result_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_result_v2",
             "group": "projects",
             "gui_consumers": [
               "Source Control surface"
             ],
-            "effect": "cmd.source_control.suggest_commit_groups records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+            "effect": "cmd.source_control.suggest_commit_groups normalizes to cmd.source_control.suggest_commit_batches before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance.",
             "availability": "One reviewed Project setup binding serves onboarding/New Project/conversion-to-new; no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing, and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive pause and last-good protection. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
             "currentness": "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
@@ -23070,13 +23070,13 @@
               "D-F04",
               "C-F01"
             ],
-            "state_selector": "state.commands.source_control_suggest_commit_groups.availability",
-            "disabled_reason_projection": "state.commands.source_control_suggest_commit_groups.disabled_reason",
+            "state_selector": "state.commands.source_control_suggest_commit_batches.availability",
+            "disabled_reason_projection": "state.commands.source_control_suggest_commit_batches.disabled_reason",
             "command_kind": "domain_action",
             "confirmation": "owner_policy",
             "normalization": {
-              "kind": "canonical",
-              "alias_of_command_id": null
+              "kind": "compatibility_alias",
+              "alias_of_command_id": "cmd.source_control.suggest_commit_batches"
             },
             "handler_status": "specified",
             "availability_until_native_evidence": "handler_unavailable",
@@ -29259,8 +29259,8 @@
             "command_id": "cmd.browser.open_devtools",
             "owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180",
             "handler": "handlers::browser_runtime::devtools_open",
-            "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2",
-            "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionResultV2",
+            "request_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenRequest",
+            "result_schema_ref": "Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenResultV1",
             "group": "no_project",
             "gui_consumers": [
               "Puppet Master Assistant > browser_toolbar"
@@ -49158,7 +49158,7 @@
             "gui_consumers": [
               "Source Control surface"
             ],
-            "effect": "cmd.source_control.graph_filter records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+            "effect": "cmd.source_control.graph_filter normalizes to cmd.source_control.graph.filter before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance.",
             "availability": "One reviewed Project setup binding serves onboarding/New Project/conversion-to-new; no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing, and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive pause and last-good protection. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
             "currentness": "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
@@ -49182,8 +49182,8 @@
             "command_kind": "domain_action",
             "confirmation": "owner_policy",
             "normalization": {
-              "kind": "canonical",
-              "alias_of_command_id": null
+              "kind": "compatibility_alias",
+              "alias_of_command_id": "cmd.source_control.graph.filter"
             },
             "handler_status": "specified",
             "availability_until_native_evidence": "handler_unavailable",
@@ -49256,7 +49256,7 @@
             "gui_consumers": [
               "Source Control surface"
             ],
-            "effect": "cmd.source_control.graph_focus records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+            "effect": "cmd.source_control.graph_focus normalizes to cmd.source_control.graph.focus before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance.",
             "availability": "One reviewed Project setup binding serves onboarding/New Project/conversion-to-new; no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing, and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive pause and last-good protection. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
             "currentness": "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
@@ -49280,8 +49280,8 @@
             "command_kind": "domain_action",
             "confirmation": "owner_policy",
             "normalization": {
-              "kind": "canonical",
-              "alias_of_command_id": null
+              "kind": "compatibility_alias",
+              "alias_of_command_id": "cmd.source_control.graph.focus"
             },
             "handler_status": "specified",
             "availability_until_native_evidence": "handler_unavailable",
@@ -49501,7 +49501,7 @@
             "gui_consumers": [
               "Source Control surface"
             ],
-            "effect": "cmd.source_control.mark_conflict_resolved records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+            "effect": "Mark Conflict Resolved returns a typed owner result for the verified file resolution under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results. The binding admits no EventRecord.",
             "availability": "One reviewed Project setup binding serves onboarding/New Project/conversion-to-new; no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing, and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive pause and last-good protection. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
             "currentness": "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
@@ -49550,7 +49550,7 @@
             "gui_consumers": [
               "Source Control surface"
             ],
-            "effect": "cmd.source_control.open_conflict records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+            "effect": "Open Conflict Assistant returns the exact selected route or a typed owner refusal under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results. The binding admits no EventRecord.",
             "availability": "One reviewed Project setup binding serves onboarding/New Project/conversion-to-new; no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing, and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive pause and last-good protection. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
             "currentness": "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
@@ -49599,7 +49599,7 @@
             "gui_consumers": [
               "Source Control surface"
             ],
-            "effect": "cmd.source_control.open_merge_editor resolves through the one opening module (F3-634, DR-071) into an editor tab (diff mode for diffs) with CV-360's placement fields. An open that adds a tab emits the one workspace.layout_changed with its v2 payload (CV-361); an open whose id is already open reveals that tab where it is, returns its receipt or route/open disposition and emits nothing. Corrected 2026-10-09 (WM-092): the row declared no event although an added tab is a structural change (DL-180).",
+            "effect": "Open Merge Editor returns the typed route or refusal for the exact selected file and forwards CV-360 placement to the shared opening module (F3-634, DR-071). The existing production route emits one workspace.layout_changed for a layout change under CV-361, including an added tab, and none for an unchanged reveal. This Projects refresh binding grants no event admission. Selection and owner results follow Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results.",
             "availability": "One reviewed Project setup binding serves onboarding/New Project/conversion-to-new; no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing, and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive pause and last-good protection. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
             "currentness": "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
@@ -49942,7 +49942,7 @@
             "gui_consumers": [
               "Source Control surface"
             ],
-            "effect": "cmd.source_control.resolve_conflict_side records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+            "effect": "Resolve Conflict Side returns a typed owner result for the exact confirmed file or hunk write under Plans/WorktreeGitImprovement.md#section=Conflict Assistant command payloads and results. The binding admits no EventRecord.",
             "availability": "One reviewed Project setup binding serves onboarding/New Project/conversion-to-new; no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing, and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive pause and last-good protection. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
             "currentness": "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
@@ -50621,14 +50621,14 @@
           {
             "command_id": "cmd.source_control.suggest_commit_groups",
             "owner_ref": "Plans/Source_Control_System.md#SCS-025",
-            "handler": "handlers::source_control::suggest_commit_groups",
+            "handler": "handlers::source_control::suggest_commit_batches",
             "request_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_request_v2",
             "result_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_result_v2",
             "group": "projects",
             "gui_consumers": [
               "Source Control surface"
             ],
-            "effect": "cmd.source_control.suggest_commit_groups records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+            "effect": "cmd.source_control.suggest_commit_groups normalizes to cmd.source_control.suggest_commit_batches before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance.",
             "availability": "One reviewed Project setup binding serves onboarding/New Project/conversion-to-new; no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing, and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive pause and last-good protection. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
             "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
             "currentness": "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
@@ -50647,13 +50647,13 @@
               "D-F04",
               "C-F01"
             ],
-            "state_selector": "state.commands.source_control_suggest_commit_groups.availability",
-            "disabled_reason_projection": "state.commands.source_control_suggest_commit_groups.disabled_reason",
+            "state_selector": "state.commands.source_control_suggest_commit_batches.availability",
+            "disabled_reason_projection": "state.commands.source_control_suggest_commit_batches.disabled_reason",
             "command_kind": "domain_action",
             "confirmation": "owner_policy",
             "normalization": {
-              "kind": "canonical",
-              "alias_of_command_id": null
+              "kind": "compatibility_alias",
+              "alias_of_command_id": "cmd.source_control.suggest_commit_batches"
             },
             "handler_status": "specified",
             "availability_until_native_evidence": "handler_unavailable",
@@ -56814,6 +56814,240 @@
           }
         }
       ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "c-fix79-persona-update-set-enabled",
+      "schema_ref": "Plans/shared_integration_runtime.schema.json#/$defs/persona_update_request_v2",
+      "record": {
+        "command_id": "cmd.persona.update",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "server_id": "server-settings-home",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null
+        },
+        "client_id": "client-one",
+        "persona_id": "writer-one",
+        "source_id": "writer-one",
+        "source_revision": 1,
+        "source_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "project_version_id": null,
+        "reach_ref": "ref:reach/every-project",
+        "expected_owner_revision": 1,
+        "return_context_ref": "ref:return/original",
+        "destination_home_ref": "ref:home/library",
+        "whole_record_ref": "ref:persona/whole",
+        "whole_record_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "project_switch_ids": [],
+        "permission_evidence": {
+          "schema_id": "pm.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Permissions_System.md",
+          "source_ref": "ref:permission/one",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "idempotency_key": "persona-op-c-fix79-persona-update-set-enabled",
+        "update_operation": "set_enabled",
+        "enabled": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "c-fix79-persona-update-restore-shipped-default",
+      "schema_ref": "Plans/shared_integration_runtime.schema.json#/$defs/persona_update_request_v2",
+      "record": {
+        "command_id": "cmd.persona.update",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "server_id": "server-settings-home",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null
+        },
+        "client_id": "client-one",
+        "persona_id": "writer-one",
+        "source_id": "writer-one",
+        "source_revision": 1,
+        "source_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "project_version_id": null,
+        "reach_ref": "ref:reach/every-project",
+        "expected_owner_revision": 1,
+        "return_context_ref": "ref:return/original",
+        "destination_home_ref": "ref:home/library",
+        "whole_record_ref": "ref:persona/whole",
+        "whole_record_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "project_switch_ids": [],
+        "permission_evidence": {
+          "schema_id": "pm.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Permissions_System.md",
+          "source_ref": "ref:permission/one",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "idempotency_key": "persona-op-c-fix79-persona-update-restore-shipped-default",
+        "update_operation": "restore_shipped_default"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "c-fix79-persona-update-reject-set-enabled-without-enabled",
+      "schema_ref": "Plans/shared_integration_runtime.schema.json#/$defs/persona_update_request_v2",
+      "record": {
+        "command_id": "cmd.persona.update",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "server_id": "server-settings-home",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null
+        },
+        "client_id": "client-one",
+        "persona_id": "writer-one",
+        "source_id": "writer-one",
+        "source_revision": 1,
+        "source_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "project_version_id": null,
+        "reach_ref": "ref:reach/every-project",
+        "expected_owner_revision": 1,
+        "return_context_ref": "ref:return/original",
+        "destination_home_ref": "ref:home/library",
+        "whole_record_ref": "ref:persona/whole",
+        "whole_record_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "project_switch_ids": [],
+        "permission_evidence": {
+          "schema_id": "pm.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Permissions_System.md",
+          "source_ref": "ref:permission/one",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "idempotency_key": "persona-op-c-fix79-persona-update-reject-set-enabled-without-enabled",
+        "update_operation": "set_enabled"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "c-fix79-persona-update-reject-operation-on-create",
+      "schema_ref": "Plans/shared_integration_runtime.schema.json#/$defs/persona_update_request_v2",
+      "record": {
+        "command_id": "cmd.persona.create",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "server_id": "server-settings-home",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null
+        },
+        "client_id": "client-one",
+        "persona_id": "writer-one",
+        "source_id": "writer-one",
+        "source_revision": 1,
+        "source_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "project_version_id": null,
+        "reach_ref": "ref:reach/every-project",
+        "expected_owner_revision": 1,
+        "return_context_ref": "ref:return/original",
+        "destination_home_ref": "ref:home/library",
+        "whole_record_ref": "ref:persona/whole",
+        "whole_record_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "project_switch_ids": [],
+        "permission_evidence": {
+          "schema_id": "pm.owner_evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "Plans/Permissions_System.md",
+          "source_ref": "ref:permission/one",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "idempotency_key": "persona-op-c-fix79-persona-update-reject-operation-on-create",
+        "update_operation": "set_enabled",
+        "enabled": true
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "source-control-suggest-groups-cannot-be-a-canonical-binding",
+      "schema_ref": "Plans/projects_refresh_command_bindings.schema.json#/$defs/CommandBinding",
+      "record": {
+        "command_id": "cmd.source_control.suggest_commit_groups",
+        "owner_ref": "Plans/Source_Control_System.md#SCS-025",
+        "handler": "handlers::source_control::suggest_commit_batches",
+        "request_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_request_v2",
+        "result_schema_ref": "Plans/source_control_contracts.schema.json#/$defs/source_control_command_result_v2",
+        "group": "projects",
+        "gui_consumers": [
+          "Source Control surface"
+        ],
+        "effect": "cmd.source_control.suggest_commit_groups normalizes to cmd.source_control.suggest_commit_batches before validation and dedupe, uses its dispatch receipt, and preserves the invoked alias in provenance.",
+        "availability": "One reviewed Project setup binding serves onboarding/New Project/conversion-to-new; no generic create or clone wrapper. Preserve all nine historical registration kinds, add owner-verified mounted_existing, and native clone plus acquisition provenance for online_import/fork_contribute. Rename changes display name only; refresh remains nullable-Project registry read; remove remains list-only and delete_data remains strong Storage purge. Inspection is read-only evidence, not a linked origin. Source-location repoint and physical move remain distinct. Starters/My starters are file sets; Saved setups are detached own values/things/account choices. Preserve FO-22 and live DL-273 service admission, Git/JJ capabilities, exact remote-create/fork recovery and all receipt joins. Backups use first-policy absent-key CAS, Standard plus Advanced, archive pause and last-good protection. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
+        "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
+        "currentness": "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
+        "return_contract": "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
+        "request_ids": [
+          "E-F01",
+          "E-F02",
+          "E-F03",
+          "E-F04",
+          "E-F05",
+          "E-F06",
+          "E-F07",
+          "E-F08",
+          "E-F09",
+          "B-F15",
+          "D-F04",
+          "C-F01"
+        ],
+        "state_selector": "state.commands.source_control_suggest_commit_batches.availability",
+        "disabled_reason_projection": "state.commands.source_control_suggest_commit_batches.disabled_reason",
+        "command_kind": "domain_action",
+        "confirmation": "owner_policy",
+        "normalization": {
+          "kind": "canonical",
+          "alias_of_command_id": null
+        },
+        "handler_status": "specified",
+        "availability_until_native_evidence": "handler_unavailable",
+        "expected_event_types": [],
+        "event_policy": "Preserve existing owner admission; no EventRecord is admitted by this binding. Required unadmitted producers block their effects.",
+        "error_schema_ref": "Plans/ui_command_response.schema.json#/$defs/UICommandError",
+        "new_primary": false,
+        "row_id": "catalog.source_control_suggest_commit_groups",
+        "contract_status": "scope-aware definition specified; historical resources remain exact; native evidence unproved",
+        "production_row_ids": [
+          "catalog.source_control_suggest_commit_groups"
+        ]
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
       "native_runtime_executed": false
     }
   ],

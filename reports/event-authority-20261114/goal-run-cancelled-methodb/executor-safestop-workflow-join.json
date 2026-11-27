@@ -1,0 +1,2258 @@
+{
+  "census_sha256": "e90632b6aac7410726c18e710e5c49e1b23aac41cdaa5b785df9dc5bf7881c6c",
+  "examples": {
+    "dg5:3be787c243fe755a": {
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "workflow_birth"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/family_id/minLength": {
+        "path": [
+          "value",
+          "workflow_birth",
+          "family_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/family_id/type": {
+        "path": [
+          "value",
+          "workflow_birth",
+          "family_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/physical_key/minLength": {
+        "path": [
+          "value",
+          "workflow_birth",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/physical_key/type": {
+        "path": [
+          "value",
+          "workflow_birth",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/pattern": {
+        "path": [
+          "value",
+          "workflow_birth",
+          "physical_value_sha256"
+        ],
+        "value": "fac61bc85d2bce3ed444cf8cfe78fc73653a404393300071367244ebf4786ab5\n"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/type": {
+        "path": [
+          "value",
+          "workflow_birth",
+          "physical_value_sha256"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/schema_id/minLength": {
+        "path": [
+          "value",
+          "workflow_birth",
+          "schema_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/schema_id/type": {
+        "path": [
+          "value",
+          "workflow_birth",
+          "schema_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/schema_version/minLength": {
+        "path": [
+          "value",
+          "workflow_birth",
+          "schema_version"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/schema_version/type": {
+        "path": [
+          "value",
+          "workflow_birth",
+          "schema_version"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/storage_instance_id/minLength": {
+        "path": [
+          "value",
+          "workflow_birth",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/storage_instance_id/type": {
+        "path": [
+          "value",
+          "workflow_birth",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "value",
+          "workflow_birth"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/type": {
+        "path": [
+          "value",
+          "workflow_birth"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "scope"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/properties/goal_id/minLength": {
+        "path": [
+          "value",
+          "scope",
+          "goal_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/properties/goal_id/type": {
+        "path": [
+          "value",
+          "scope",
+          "goal_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/properties/goal_run_id/minLength": {
+        "path": [
+          "value",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/properties/goal_run_id/type": {
+        "path": [
+          "value",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/properties/project_id/minLength": {
+        "path": [
+          "value",
+          "scope",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/properties/project_id/type": {
+        "path": [
+          "value",
+          "scope",
+          "project_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/properties/storage_instance_id/minLength": {
+        "path": [
+          "value",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/properties/storage_instance_id/type": {
+        "path": [
+          "value",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "value",
+          "scope"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/type": {
+        "path": [
+          "value",
+          "scope"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "origin"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/codec/const": {
+        "path": [
+          "value",
+          "origin",
+          "codec"
+        ],
+        "value": "messagepack_canonicalx"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/family_id/const": {
+        "path": [
+          "value",
+          "origin",
+          "family_id"
+        ],
+        "value": "executor_safestop_originx"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/operation_id/minLength": {
+        "path": [
+          "value",
+          "origin",
+          "operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/operation_id/type": {
+        "path": [
+          "value",
+          "origin",
+          "operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/physical_key/minLength": {
+        "path": [
+          "value",
+          "origin",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/physical_key/type": {
+        "path": [
+          "value",
+          "origin",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/schema_id/const": {
+        "path": [
+          "value",
+          "origin",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_safestop_origin.v2x"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/schema_version/const": {
+        "path": [
+          "value",
+          "origin",
+          "schema_version"
+        ],
+        "value": "2.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/storage_instance_id/minLength": {
+        "path": [
+          "value",
+          "origin",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/storage_instance_id/type": {
+        "path": [
+          "value",
+          "origin",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "value",
+          "origin"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/type": {
+        "path": [
+          "value",
+          "origin"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "original_boundary"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/native_capability_fence_ref/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "native_capability_fence_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/native_capability_fence_ref/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "native_capability_fence_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/native_operation_handle_ref/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "native_operation_handle_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/native_operation_handle_ref/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "native_operation_handle_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/native_writer_lease_ref/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "native_writer_lease_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/native_writer_lease_ref/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "native_writer_lease_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/observed_at_utc/format": {
+        "path": [
+          "value",
+          "original_boundary",
+          "observed_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/observed_at_utc/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "observed_at_utc"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/operation_id/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/operation_id/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/transaction_id/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "transaction_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/transaction_id/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "transaction_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/required": {
+        "member": [
+          "remove",
+          "principal"
+        ],
+        "path": [
+          "value",
+          "original_boundary"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/type": {
+        "path": [
+          "value",
+          "original_boundary"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "original_boundary",
+          "principal"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/execution_host_ref/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "execution_host_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/execution_host_ref/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "execution_host_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/native_host_boot_ref/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "native_host_boot_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/native_host_boot_ref/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "native_host_boot_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/native_root_generation/minimum": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "native_root_generation"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/native_root_generation/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "native_root_generation"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/native_root_ref/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "native_root_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/native_root_ref/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "native_root_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/owner_epoch/minimum": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "owner_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/owner_epoch/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/owner_ref/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "owner_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/owner_ref/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "owner_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/required": {
+        "member": [
+          "remove",
+          "owner_ref"
+        ],
+        "path": [
+          "value",
+          "original_boundary",
+          "principal"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "allocation"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/codec/const": {
+        "path": [
+          "value",
+          "allocation",
+          "codec"
+        ],
+        "value": "messagepack_canonicalx"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/family_id/minLength": {
+        "path": [
+          "value",
+          "allocation",
+          "family_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/family_id/type": {
+        "path": [
+          "value",
+          "allocation",
+          "family_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/physical_key/minLength": {
+        "path": [
+          "value",
+          "allocation",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/physical_key/type": {
+        "path": [
+          "value",
+          "allocation",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/physical_sha256/pattern": {
+        "path": [
+          "value",
+          "allocation",
+          "physical_sha256"
+        ],
+        "value": "58122bb1bea2dc17dd223a1121514f4f9ca24938853e4598a811b7470bf2c881\n"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/physical_sha256/type": {
+        "path": [
+          "value",
+          "allocation",
+          "physical_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/schema_id/minLength": {
+        "path": [
+          "value",
+          "allocation",
+          "schema_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/schema_id/type": {
+        "path": [
+          "value",
+          "allocation",
+          "schema_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/schema_version/minLength": {
+        "path": [
+          "value",
+          "allocation",
+          "schema_version"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/schema_version/type": {
+        "path": [
+          "value",
+          "allocation",
+          "schema_version"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/storage_instance_id/minLength": {
+        "path": [
+          "value",
+          "allocation",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/storage_instance_id/type": {
+        "path": [
+          "value",
+          "allocation",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "value",
+          "allocation"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/type": {
+        "path": [
+          "value",
+          "allocation"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoin/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoin/properties/operation_id/minLength": {
+        "path": [
+          "value",
+          "operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoin/properties/operation_id/type": {
+        "path": [
+          "value",
+          "operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoin/required": {
+        "member": [
+          "remove",
+          "scope"
+        ],
+        "path": [
+          "value"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoin/type": {
+        "path": [
+          "value"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoinPhysical/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoinPhysical/properties/family_id/const": {
+        "path": [
+          "family_id"
+        ],
+        "value": "executor_safestop_workflow_joinx"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoinPhysical/properties/physical_key/minLength": {
+        "path": [
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoinPhysical/properties/physical_key/type": {
+        "path": [
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoinPhysical/properties/schema_id/const": {
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_safestop_workflow_join.v2x"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoinPhysical/properties/schema_version/const": {
+        "path": [
+          "schema_version"
+        ],
+        "value": "2.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoinPhysical/properties/storage_instance_id/minLength": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoinPhysical/properties/storage_instance_id/type": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoinPhysical/required": {
+        "member": [
+          "remove",
+          "family_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoinPhysical/type": {
+        "path": [],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "reservation"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/activation_id/minLength": {
+        "path": [
+          "value",
+          "reservation",
+          "activation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/activation_id/type": {
+        "path": [
+          "value",
+          "reservation",
+          "activation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/execution_owner_epoch/minimum": {
+        "path": [
+          "value",
+          "reservation",
+          "execution_owner_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/execution_owner_epoch/type": {
+        "path": [
+          "value",
+          "reservation",
+          "execution_owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/execution_owner_ref/minLength": {
+        "path": [
+          "value",
+          "reservation",
+          "execution_owner_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/execution_owner_ref/type": {
+        "path": [
+          "value",
+          "reservation",
+          "execution_owner_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/goal_id/minLength": {
+        "path": [
+          "value",
+          "reservation",
+          "goal_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/goal_id/type": {
+        "path": [
+          "value",
+          "reservation",
+          "goal_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/goal_run_id/minLength": {
+        "path": [
+          "value",
+          "reservation",
+          "goal_run_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/goal_run_id/type": {
+        "path": [
+          "value",
+          "reservation",
+          "goal_run_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/idempotency_key/minLength": {
+        "path": [
+          "value",
+          "reservation",
+          "idempotency_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/idempotency_key/type": {
+        "path": [
+          "value",
+          "reservation",
+          "idempotency_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/plan_compile_run_id/minLength": {
+        "path": [
+          "value",
+          "reservation",
+          "plan_compile_run_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/plan_compile_run_id/type": {
+        "path": [
+          "value",
+          "reservation",
+          "plan_compile_run_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/project_id/minLength": {
+        "path": [
+          "value",
+          "reservation",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/project_id/type": {
+        "path": [
+          "value",
+          "reservation",
+          "project_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/required": {
+        "member": [
+          "remove",
+          "project_id"
+        ],
+        "path": [
+          "value",
+          "reservation"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/type": {
+        "path": [
+          "value",
+          "reservation"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/family_id/minLength": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body",
+          "family_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/family_id/type": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body",
+          "family_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_key/minLength": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_key/type": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/pattern": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body",
+          "physical_value_sha256"
+        ],
+        "value": "804780057b0694da873b1633d36a801d1c86a9698dcfcc65dc33919fff56c2ad\n"
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/type": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body",
+          "physical_value_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_id/minLength": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body",
+          "schema_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_id/type": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body",
+          "schema_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_version/minLength": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body",
+          "schema_version"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_version/type": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body",
+          "schema_version"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/storage_instance_id/minLength": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/storage_instance_id/type": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/type": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body"
+        ],
+        "value": null
+      }
+    },
+    "dg5:c1691297d70efd0c": {
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "workflow_birth"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/family_id/minLength": {
+        "path": [
+          "value",
+          "workflow_birth",
+          "family_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/family_id/type": {
+        "path": [
+          "value",
+          "workflow_birth",
+          "family_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/physical_key/minLength": {
+        "path": [
+          "value",
+          "workflow_birth",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/physical_key/type": {
+        "path": [
+          "value",
+          "workflow_birth",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/pattern": {
+        "path": [
+          "value",
+          "workflow_birth",
+          "physical_value_sha256"
+        ],
+        "value": "fac61bc85d2bce3ed444cf8cfe78fc73653a404393300071367244ebf4786ab5\n"
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/type": {
+        "path": [
+          "value",
+          "workflow_birth",
+          "physical_value_sha256"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/schema_id/minLength": {
+        "path": [
+          "value",
+          "workflow_birth",
+          "schema_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/schema_id/type": {
+        "path": [
+          "value",
+          "workflow_birth",
+          "schema_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/schema_version/minLength": {
+        "path": [
+          "value",
+          "workflow_birth",
+          "schema_version"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/schema_version/type": {
+        "path": [
+          "value",
+          "workflow_birth",
+          "schema_version"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/storage_instance_id/minLength": {
+        "path": [
+          "value",
+          "workflow_birth",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/properties/storage_instance_id/type": {
+        "path": [
+          "value",
+          "workflow_birth",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "value",
+          "workflow_birth"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/activation/activation-source.schema.json#/$defs/SourceSelector/type": {
+        "path": [
+          "value",
+          "workflow_birth"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "scope"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/properties/goal_id/minLength": {
+        "path": [
+          "value",
+          "scope",
+          "goal_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/properties/goal_id/type": {
+        "path": [
+          "value",
+          "scope",
+          "goal_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/properties/goal_run_id/minLength": {
+        "path": [
+          "value",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/properties/goal_run_id/type": {
+        "path": [
+          "value",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/properties/project_id/minLength": {
+        "path": [
+          "value",
+          "scope",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/properties/project_id/type": {
+        "path": [
+          "value",
+          "scope",
+          "project_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/properties/storage_instance_id/minLength": {
+        "path": [
+          "value",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/properties/storage_instance_id/type": {
+        "path": [
+          "value",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "value",
+          "scope"
+        ]
+      },
+      "file:///home/sittingmongoose/PM-Experiments/goal-completed-sixteen-input-composition-20260913/v6/frozen/completion-v5/frozen/completion-v4/native-worknode.schema.json#/$defs/RunScope/type": {
+        "path": [
+          "value",
+          "scope"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "origin"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/codec/const": {
+        "path": [
+          "value",
+          "origin",
+          "codec"
+        ],
+        "value": "messagepack_canonicalx"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/family_id/const": {
+        "path": [
+          "value",
+          "origin",
+          "family_id"
+        ],
+        "value": "executor_safestop_originx"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/operation_id/minLength": {
+        "path": [
+          "value",
+          "origin",
+          "operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/operation_id/type": {
+        "path": [
+          "value",
+          "origin",
+          "operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/physical_key/minLength": {
+        "path": [
+          "value",
+          "origin",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/physical_key/type": {
+        "path": [
+          "value",
+          "origin",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/schema_id/const": {
+        "path": [
+          "value",
+          "origin",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_safestop_origin.v2x"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/schema_version/const": {
+        "path": [
+          "value",
+          "origin",
+          "schema_version"
+        ],
+        "value": "2.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/storage_instance_id/minLength": {
+        "path": [
+          "value",
+          "origin",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/properties/storage_instance_id/type": {
+        "path": [
+          "value",
+          "origin",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "value",
+          "origin"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginLocator/type": {
+        "path": [
+          "value",
+          "origin"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "original_boundary"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/native_capability_fence_ref/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "native_capability_fence_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/native_capability_fence_ref/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "native_capability_fence_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/native_operation_handle_ref/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "native_operation_handle_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/native_operation_handle_ref/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "native_operation_handle_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/native_writer_lease_ref/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "native_writer_lease_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/native_writer_lease_ref/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "native_writer_lease_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/observed_at_utc/format": {
+        "path": [
+          "value",
+          "original_boundary",
+          "observed_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/observed_at_utc/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "observed_at_utc"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/operation_id/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/operation_id/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/transaction_id/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "transaction_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/properties/transaction_id/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "transaction_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/required": {
+        "member": [
+          "remove",
+          "principal"
+        ],
+        "path": [
+          "value",
+          "original_boundary"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/OriginalBoundary/type": {
+        "path": [
+          "value",
+          "original_boundary"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "original_boundary",
+          "principal"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/execution_host_ref/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "execution_host_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/execution_host_ref/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "execution_host_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/native_host_boot_ref/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "native_host_boot_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/native_host_boot_ref/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "native_host_boot_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/native_root_generation/minimum": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "native_root_generation"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/native_root_generation/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "native_root_generation"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/native_root_ref/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "native_root_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/native_root_ref/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "native_root_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/owner_epoch/minimum": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "owner_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/owner_epoch/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/owner_ref/minLength": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "owner_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/properties/owner_ref/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal",
+          "owner_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/required": {
+        "member": [
+          "remove",
+          "owner_ref"
+        ],
+        "path": [
+          "value",
+          "original_boundary",
+          "principal"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Principal/type": {
+        "path": [
+          "value",
+          "original_boundary",
+          "principal"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "allocation"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/codec/const": {
+        "path": [
+          "value",
+          "allocation",
+          "codec"
+        ],
+        "value": "messagepack_canonicalx"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/family_id/minLength": {
+        "path": [
+          "value",
+          "allocation",
+          "family_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/family_id/type": {
+        "path": [
+          "value",
+          "allocation",
+          "family_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/physical_key/minLength": {
+        "path": [
+          "value",
+          "allocation",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/physical_key/type": {
+        "path": [
+          "value",
+          "allocation",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/physical_sha256/pattern": {
+        "path": [
+          "value",
+          "allocation",
+          "physical_sha256"
+        ],
+        "value": "7ccc91965ec8ffaefd563e043aa5465d0295f63cf9ba3dcf9fda220534abae0b\n"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/physical_sha256/type": {
+        "path": [
+          "value",
+          "allocation",
+          "physical_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/schema_id/minLength": {
+        "path": [
+          "value",
+          "allocation",
+          "schema_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/schema_id/type": {
+        "path": [
+          "value",
+          "allocation",
+          "schema_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/schema_version/minLength": {
+        "path": [
+          "value",
+          "allocation",
+          "schema_version"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/schema_version/type": {
+        "path": [
+          "value",
+          "allocation",
+          "schema_version"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/storage_instance_id/minLength": {
+        "path": [
+          "value",
+          "allocation",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/properties/storage_instance_id/type": {
+        "path": [
+          "value",
+          "allocation",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "value",
+          "allocation"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/Selector/type": {
+        "path": [
+          "value",
+          "allocation"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoin/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoin/properties/operation_id/minLength": {
+        "path": [
+          "value",
+          "operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoin/properties/operation_id/type": {
+        "path": [
+          "value",
+          "operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoin/required": {
+        "member": [
+          "remove",
+          "scope"
+        ],
+        "path": [
+          "value"
+        ]
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoin/type": {
+        "path": [
+          "value"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoinPhysical/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoinPhysical/properties/family_id/const": {
+        "path": [
+          "family_id"
+        ],
+        "value": "executor_safestop_workflow_joinx"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoinPhysical/properties/physical_key/minLength": {
+        "path": [
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoinPhysical/properties/physical_key/type": {
+        "path": [
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoinPhysical/properties/schema_id/const": {
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.storage_value.executor_safestop_workflow_join.v2x"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoinPhysical/properties/schema_version/const": {
+        "path": [
+          "schema_version"
+        ],
+        "value": "2.0.0x"
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoinPhysical/properties/storage_instance_id/minLength": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoinPhysical/properties/storage_instance_id/type": {
+        "path": [
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoinPhysical/required": {
+        "member": [
+          "remove",
+          "family_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/executor_safestop_original_start_source.v1.schema.json#/$defs/WorkflowReservationJoinPhysical/type": {
+        "path": [],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "reservation"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/activation_id/minLength": {
+        "path": [
+          "value",
+          "reservation",
+          "activation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/activation_id/type": {
+        "path": [
+          "value",
+          "reservation",
+          "activation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/execution_owner_epoch/minimum": {
+        "path": [
+          "value",
+          "reservation",
+          "execution_owner_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/execution_owner_epoch/type": {
+        "path": [
+          "value",
+          "reservation",
+          "execution_owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/execution_owner_ref/minLength": {
+        "path": [
+          "value",
+          "reservation",
+          "execution_owner_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/execution_owner_ref/type": {
+        "path": [
+          "value",
+          "reservation",
+          "execution_owner_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/goal_id/minLength": {
+        "path": [
+          "value",
+          "reservation",
+          "goal_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/goal_id/type": {
+        "path": [
+          "value",
+          "reservation",
+          "goal_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/goal_run_id/minLength": {
+        "path": [
+          "value",
+          "reservation",
+          "goal_run_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/goal_run_id/type": {
+        "path": [
+          "value",
+          "reservation",
+          "goal_run_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/idempotency_key/minLength": {
+        "path": [
+          "value",
+          "reservation",
+          "idempotency_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/idempotency_key/type": {
+        "path": [
+          "value",
+          "reservation",
+          "idempotency_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/plan_compile_run_id/minLength": {
+        "path": [
+          "value",
+          "reservation",
+          "plan_compile_run_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/plan_compile_run_id/type": {
+        "path": [
+          "value",
+          "reservation",
+          "plan_compile_run_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/project_id/minLength": {
+        "path": [
+          "value",
+          "reservation",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/properties/project_id/type": {
+        "path": [
+          "value",
+          "reservation",
+          "project_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/required": {
+        "member": [
+          "remove",
+          "project_id"
+        ],
+        "path": [
+          "value",
+          "reservation"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/LaunchIdentityReservation/type": {
+        "path": [
+          "value",
+          "reservation"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/family_id/minLength": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body",
+          "family_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/family_id/type": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body",
+          "family_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_key/minLength": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_key/type": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/pattern": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body",
+          "physical_value_sha256"
+        ],
+        "value": "804780057b0694da873b1633d36a801d1c86a9698dcfcc65dc33919fff56c2ad\n"
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/type": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body",
+          "physical_value_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_id/minLength": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body",
+          "schema_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_id/type": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body",
+          "schema_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_version/minLength": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body",
+          "schema_version"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_version/type": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body",
+          "schema_version"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/storage_instance_id/minLength": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/storage_instance_id/type": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/type": {
+        "path": [
+          "value",
+          "reservation",
+          "original_goal_body"
+        ],
+        "value": null
+      }
+    }
+  },
+  "family": "goal_run.cancelled",
+  "routes": [
+    {
+      "call": "issue_physical",
+      "detail": [
+        "Additional properties are not allowed ('methodb_extra' was unexpected)"
+      ],
+      "edition": "original_profile",
+      "mutation": false,
+      "refusal": "issue/executor_safestop_workflow_join/schema/",
+      "root": "dg5:c1691297d70efd0c",
+      "site": [
+        "scripts/pm_goal_dg_r_world.py",
+        446
+      ],
+      "start": "started"
+    },
+    {
+      "call": "issue_physical",
+      "detail": [
+        "Additional properties are not allowed ('methodb_extra' was unexpected)"
+      ],
+      "edition": "native_v7",
+      "mutation": false,
+      "refusal": "issue/executor_safestop_workflow_join/schema/",
+      "root": "dg5:3be787c243fe755a",
+      "site": [
+        "scripts/pm_goal_dg_r_world.py",
+        446
+      ],
+      "start": "started"
+    }
+  ],
+  "row": "dg5/issue/executor_safestop_workflow_join/schema",
+  "sites": [
+    [
+      "scripts/pm_goal_dg_r_world.py",
+      446
+    ]
+  ],
+  "source": "34f212d3fbcc8051ce2922d1de9dd75714ae361a"
+}

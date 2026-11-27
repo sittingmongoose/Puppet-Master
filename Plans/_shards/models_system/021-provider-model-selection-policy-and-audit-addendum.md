@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L1327-L1392
+Source lines: L1327-L1393
 
-Source SHA256: `99790d28be8c08ef2ec3e967c4ccdd37229d8184ca708b86330c73bd6071f5b1`
+Source SHA256: `c4e0c6fb1ec69e4f5db3fb393db554fab570c6b49f5153d770afe9f052e413d1`
 
 ---
 
@@ -31,7 +31,7 @@ Resolve through §2 and MS-005/MS-099 only. The order is explicit run, scoped ow
 
 - **Capability check**: Before selecting a provider, verify it supports the required model and inference parameters (context length, output length, reasoning mode, etc.).
 - **Multi-account capability check**: Provider capability modeling MUST include multi-account-related behavior before any provider/account pool can be selected or switched. Required capability facts include `supports_multi_account`, signal sources/confidence, cooldown/retry-budget support, reset countdown support, and provider-specific limits that change account pressure interpretation or rotation safety.
-- **Cost gating**: If a model exceeds the active Persona's cost budget, skip it and move to the next in the precedence chain.
+- **Cost gating**: If a model exceeds the active Persona's cost budget, skip it and move to the next in the precedence chain. Only a model whose known cost is above the budget is skipped. A model whose price is unknown is not skipped by this gate and stays pickable; wherever that choice is shown (the resolver record's `selection_reason.alternatives[]`, the model picker and any settlement or receipt text) its price is shown as unknown (`cost_status` `unknown`), never as `$0.00` or as within budget (MS-135 `cost_budget` gate; DL-2604).
 - **Fallback**: If all preferred models exceed budget or are unavailable, emit a concern (not a silent failure) and suggest cheaper alternatives or escalation.
 
 Clamp/substitution decisions use the `clamp/substitution` reason-code family when the requested provider, model, effort, capability, instruction projection, or skill projection cannot be applied exactly.
@@ -65,9 +65,10 @@ selection_reason {
   selected_model: string,              // e.g., 'gpt-4', 'claude-3-opus'
   precedence_tier: number,             // 1–6, using the versioned MS-005/099 source order
   fallback_reason?: string,            // If a fallback was triggered (capability, cost, unavailability)
-  alternatives: Array,                 // Other models that were considered and why they were skipped
+  alternatives: Array,                 // Other models that were considered and why they were skipped; a ModelSelectionRouter result lists every candidate, the winner included (MS-135)
   selection_time_utc: string,          // When the decision was made
   execution_unit_id: string,           // Tied to the unit making the selection
+  router_input_ref?: string,           // MS-135: present exactly when resolver_matrix_entry is "model_selection_router"
 }
 ```
 

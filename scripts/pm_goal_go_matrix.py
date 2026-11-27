@@ -139,12 +139,13 @@ def main():
             kills = collections.Counter(r.get('kill') for r in tries if r.get('kill'))
             exact = [r for r in tries if r.get('outcome') == 'exact_expected']
             best = None
-            for preference in ('KILLED', 'DUPLICATE_SET_KILLED', 'COVERED_LATER', 'CUT_EXCEPTION', 'NOT_REPLAYED_CAP'):
+            for preference in ('KILLED', 'DUPLICATE_SET_KILLED', 'KILLED_CODE', 'COVERED_LATER', 'CANNOT_DECIDE',
+                               'CUT_EXCEPTION', 'NOT_REPLAYED_CAP'):
                 best = next((r for r in exact if r.get('kill') == preference), None)
                 if best:
                     break
             gated = row.get('status')
-            killed = any(r.get('kill') in ('KILLED', 'DUPLICATE_SET_KILLED') for r in exact)
+            killed = any(r.get('kill') in ('KILLED', 'DUPLICATE_SET_KILLED', 'KILLED_CODE') for r in exact)
             justified = declarations.JUSTIFIED.get(name)
             if justified and family not in justified.get('families', []):
                 justified = None  # a justification closes a row only for the family whose witness confirmed it

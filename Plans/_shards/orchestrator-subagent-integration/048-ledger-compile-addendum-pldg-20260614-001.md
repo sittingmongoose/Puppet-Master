@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L31290-L31384
+Source lines: L31426-L31520
 
-Source SHA256: `aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26`
+Source SHA256: `97b1d391be028a118aa9ee837749dc861f7f51b6c37f2de93f71048ddf325371`
 
 ---
 
@@ -96,7 +96,7 @@ source_lineage:
   - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0024
   - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0034
   - source_ref:chat:subagent-registry-list-recovery-accepted
-  - source_ref:Plans/orchestrator-subagent-integration.md:962
+  - "source_ref:Plans/orchestrator-subagent-integration.md#section=4. Canonical list of subagent names"
 preserved_exact_tokens: ["Canonical list of subagent names", "subagent_registry", "persona_registry", "42 subagent types", "provider-native", "/subagent", "/agent", "/fleet", "/delegate"]
 negative_constraints:
   - Do not promote a stale inline subagent-name list or count as the registry SSOT.

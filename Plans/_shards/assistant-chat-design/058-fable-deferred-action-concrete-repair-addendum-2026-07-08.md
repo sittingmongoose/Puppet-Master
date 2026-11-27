@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L24732-L24776
+Source lines: L24732-L24781
 
-Source SHA256: `a4006bbd758701e8fe0da40c6c84e155f53a5dc392956036ae9ab885c97e7fe9`
+Source SHA256: `20c96bdb26c9ac5f88361328754920e6154f7f8cce5011645b7f670a9fa2e7c3`
 
 ---
 
@@ -39,7 +39,9 @@ Command IDs:
 - `cmd.investigation_context.revoke_item`
 - `cmd.terminal.open`
 
-Operation card state transitions:
+Amended 2026-11-25: the command catalog and the wiring bind Export bundle and Revoke item to the `cmd.chat.*` ids, and those ids are canonical here too. Export bundle is `cmd.chat.export_investigation_bundle`. In Project scope it writes the bundle manifest, and the Runtime Artifacts exporter emits `debug.investigation.exported` only after the manifest commits and its counts are verified (`Plans/Contracts_V0.md#CV-572`, Project edition only). The current production row `catalog.chat_export_investigation_bundle` and its `no_project` binding in `Plans/projects_refresh_command_bindings.json` declare no persisted event: in application scope dispatch records a no-persist command receipt or route/open disposition and claims no export event. Revoke item is `cmd.chat.revoke_investigation_item`: it marks the item revoked and keeps it out of future prompt injection (`Plans/UI_Command_Catalog.md#section=PMConcept command aliases and retirements`, `Plans/Wiring_Matrix.md#section=Debug investigation minimum rows`). `cmd.investigation_context.export_bundle` and `cmd.investigation_context.revoke_item` are retired source spellings: they are not commands, aliases or wiring rows, and nothing dispatches them. Open in Terminal is `cmd.terminal.open` (`Plans/UI_Command_Catalog.md`, Open in Terminal row), revealing the existing terminal session. Open target is `cmd.chat.open_investigation_target` (cataloged and wired 2026-11-25, `Plans/UI_Command_Catalog.md#section=PMConcept command aliases and retirements`, `Plans/Wiring_Matrix.md#section=Debug investigation minimum rows`, production row `catalog.chat_open_investigation_target`): a no-persist route/open command with `thread_id` and `investigation_id` that opens the investigation's `effective_target` (else `target`) in the surface that owns it, disabled with `stale_projection` when the target no longer resolves (rebind it through the Debug target picker, `cmd.chat.open_debug_target_picker`, production row `catalog.chat_open_debug_target_picker`; `Revalidate target` is offered only where supported, as ACD-100 says) or `unreachable` when that surface cannot open it, and emitting no event. `cmd.investigation_context.open_target` is now a retired source spelling like the other two.
+
+Operation card state transitions for Investigation Context lifecycle-bearing operations, with the ACD-104 blocked recovery path:
 
 | From | Event | To |
 | --- | --- | --- |
@@ -48,8 +50,11 @@ Operation card state transitions:
 | `paused` | `resume` | `running` |
 | `running` | `needs_attention` | `blocked` |
 | `blocked` | `user_action_completed` | `running` |
+| `blocked` | `cancel` | `cancelled` |
 | `running` | `complete` | `completed` |
 | `running` | `fail` | `failed` |
 | `running` | `cancel` | `cancelled` |
 
-Each transition record carries `operation_id`, `from_state`, `to_state`, `event_id`, `actor_ref`, and `created_at_utc`.
+`cancel` from `blocked` records the owner's accepted cancellation. It must be a permitted action from `allowed_action_ids[]` on the current blocked episode and does not resume the operation. Each transition record carries `operation_id`, `from_state`, `to_state`, `event_id`, `actor_ref`, and `created_at_utc`. These are transition triggers, with persisted events governed by the operation's owner.
+
+For a task or subagent operation card covered by §13.1 `Operation-card family`, the child owner's states apply instead of `created`: `pending` → `running` on admission, then `running` → `completed` (completion), `failed` (failure), `cancelled` (accepted cancellation) or `timed_out` (the child deadline expires), plus the two blocked recovery rows above (`running` → `blocked` on a recoverable wait, `blocked` → `running` or `cancelled`). Child deadlines default to `120s` for regular and `300s` for long-running child operations, and retries stay parent-owned (§13.1). `task.failed` is the existing presentation notification over canonical child records. Delegated-task and subagent disclosure blocks remain separate widget families. Terminal command cards take their states from `#section=Status, degradation, and linked-surface behavior` (`starting`, `running`, `exited`, `failed`, `terminated`, `disconnected`, `restoring`, `attention_required`) under §13.3 `Bash and terminal ownership`, so a terminal reveal does not create an Investigation Context operation.

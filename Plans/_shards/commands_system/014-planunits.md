@@ -4,7 +4,7 @@ Source: `Plans/Commands_System.md`
 
 Source lines: L788-L3547
 
-Source SHA256: `967f23cf3fa0b7747ebae49b3c8636472572e8f842698d6f75c0de31f0348f7b`
+Source SHA256: `61d56fe56fdab83a1298add2cc321e8a9992bfe6ed9f0c94345e493e8775976d`
 
 ---
 
@@ -1590,10 +1590,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
-  New Command opens an editor form for name, description, Persona, mode, subtask, permissions profile
-  override, override built-in, template body and project-local/global save scope, with existing
-  validation and syntax highlighting. There is no saved model or depth field under MD2 NEITHER; old
-  model_override data remains inspection-only through compatibility reads.
+  New Command opens an editor form for name, description, Arguments hint, Persona, mode, subtask, permissions profile override, override built-in, template body and project-local/global save scope, with existing validation and syntax highlighting.
+  There is no saved model or depth field under MD2 NEITHER; old model_override data remains inspection-only through compatibility reads.
 gui_related: true
 gui_classification_reason: The create editor form is a visible command authoring UI.
 split_recommended: true
@@ -1604,6 +1602,7 @@ acceptance_criteria:
   - New Command opens an editor form.
   - Name is validated per section 2.5 and collision-checked per section 2.4.
   - Description is required and has max 200 chars.
+  - Arguments hint is optional, has max 200 chars, and writes `arguments[0].hint` through the section 3.2 mapping; other `arguments` items and keys are file-authored and preserved.
   - Persona, Mode, Subtask, Permissions profile override and Override built-in controls are present; no command model field is offered.
   - Override built-in is visible only in Expert mode.
   - Reserved Assistant Chat slash commands fail validation even if Override built-in is enabled.
@@ -1632,6 +1631,7 @@ preserved_exact_tokens:
   - "!`cmd`"
 negative_constraints:
   - "Reserved Assistant Chat slash commands fail validation even if override_builtin is enabled."
+  - "No GUI list editor for `arguments` is offered; Arguments hint is the only argument control (DL-2604 retires the list-editor request of registry line 1377)."
 owner_hints:
   - Plans/Commands_System.md
 ```

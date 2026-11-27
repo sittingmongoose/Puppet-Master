@@ -74,14 +74,16 @@ Exit codes: 0 nothing to report, and every subcheck finished; 1 nothing it repor
 landing, meaning governance staleness on files the branch edited, pre-existing or
 `unknown-pre-existing` failures whose count has not risen against a current baseline (see "Only
 against a current baseline" and "Pre-existing and improved failures" below), failures
-that are new but name none of the branch's files, or a subcheck that timed out, so that the run was
+that are new but name none of the branch's files, or a subcheck that did not finish (it timed out, or
+a validator was killed by a signal - an OOM kill or a watchdog), so that the run was
 not fully verified; 2 something it reports does stop the landing, meaning a failure on the branch's
 files that is neither staleness nor pre-existing, non-stale bucket growth, or a rise in a subcheck
 whose failures are truncated, other than the readiness growth
 counter; 3 the check could not run, readiness audit input identity could not be established or matched,
-or a subcheck timed out while recording a baseline. A subcheck
-that timed out in a landing run lifts an exit 0 to 1 and changes no other exit code. A subcheck keyed
-from its export is not truncated; one whose export falls back is, and the summary says why.
+or a subcheck timed out or a validator was killed while recording a
+baseline. A subcheck
+that did not finish in a landing run lifts an exit 0 to 1 and changes no other exit code. A subcheck
+keyed from its export is not truncated; one whose export falls back is, and the summary says why.
 
 **It refuses a sparse worktree**, with exit 3, in both modes. The three checks read the whole
 repository, so every file outside a sparse cone reads as missing: a dry run at `ecb77f4e6c` on a
@@ -99,6 +101,32 @@ that recorded it; the rebase at landing left that commit off `main` (it landed a
 against that baseline rule 2 would be off. The baseline recorded at `main` `75bcda93bc` on
 2026-09-23 replaced it.
 
+## Parallel checks and one worker budget
+
+On compatible targets, the three checks can overlap. `--jobs N` caps the aggregate subprocess
+validators at N across both aggregates. Each validator or export holds a slot in one shared scratch
+directory while it runs. The standalone plan-migration check and the in-process Spec Lock check run
+outside this budget. `--jobs` is capped at 8. `--jobs 1` runs the checks and validators serially.
+
+The memory floor limits concurrency. The first slot holder can always start. Each additional slot
+holder needs `MemAvailable` of at least `--memory-floor-gb` (6 GiB by default) plus
+`--memory-headroom-gb` (2 GiB) for each occupied slot. The start lock waits
+`--start-settle-seconds` (10 s by default) after the last start so the reading includes that process.
+A held-back start reports to stderr once a minute. The subcheck timeout starts when the validator
+runs. When `MemAvailable` is unavailable, the slot count still applies.
+
+The checker reads `--jobs`, `landing-budget-v1` and `landing-readiness-snapshot-v1` support from the
+target verifier's help. A target with snapshot support reads one private, read-only readiness
+snapshot for the whole run. A target without it (a historical verifier) runs its aggregates and
+exports serially against the live edition, with the end-of-run check below, and the report says
+`historical target: serial with end-of-run check`. With snapshot support, missing worker options or a
+host that cannot set up the shared slots also cause the aggregates to run serially. A verifier that
+accepts `--jobs` receives `--jobs 1` in that case.
+
+Both copies of a validator that `run-gates` and `audit-governance` share run on their own, once in
+each aggregate, as they always have: the pairing rule below judges them by what they report, not by
+sharing a run.
+
 ## Readiness audit input identity
 
 The tracked checkout alone does not determine `implementation_readiness`. Its PNC-019 helper reads
@@ -110,9 +138,10 @@ though their failure counts describe a regression or an improvement.
 Both modes use one `--readiness-audit-root DIR` option, naming that currentness directory. By default
 they select `/mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness` when it is
 present, otherwise the checked tree's directory. A clean worktree temporarily links its missing
-ignored directory to the selected source for the aggregates and exports, then removes its own link
-on success or failure. The source is read, never copied, regenerated or written. Canonical sources
-are still read from the checked worktree. An existing local directory is never replaced: select it
+ignored directory to the selected source and removes its own link on success or failure.
+The aggregates, validators and exports read the selected edition from one private, read-only copy
+under the run's temporary directory, including files examined by the Plan scans. Canonical sources
+are read from the checked worktree. An existing local directory is never replaced: select it
 explicitly with `--readiness-audit-root`, or use a clean worktree. An explicit nonexistent source is
 an error; default local absence is recorded as absence and the validator still reports its failures.
 
@@ -126,16 +155,21 @@ or `null` when missing. It covers these five direct inputs plus every artifact n
 - `adjudication/GROUP_ARTIFACT_MANIFEST.json`
 - `adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl`
 
-Receipt hashes are expectations to validate, not trusted substitutes for hashing the artifact bytes.
+For a snapshot-capable target the report and baseline use SHA-256s computed from the snapshot's own
+bytes; for a historical target they use the live edition's bytes, re-verified at the end of the run. Receipt hashes
+are expectations to validate. The receipt's artifact paths must belong to the currentness edition.
 Canonical sources listed in the inventory and the validator script are deliberately outside this
 binding: edits to those remain readiness findings. Unreferenced audit outputs are outside it too.
 The source's absolute location is printed in the run report, but is not part of the baseline identity,
 so moving the same evidence does not change the comparison.
 
 Comparison refuses with exit 3 before running the checks if the binding is absent or invalid, or
-the path set, file presence or bytes differ. Inputs are rehashed after each aggregate and after
-exports; changes stop the run before failures are classified or a baseline is written. Unreadable
-inputs also stop it. Malformed audit JSON remains a validator finding while its bytes are bound.
+the path set, file presence or bytes differ. The checker verifies the snapshot against the live
+edition at capture and rehashes the snapshot after the readers finish (snapshot-capable targets). It rehashes the bound live
+inputs after each aggregate and after exports. It also checks live file and directory identities
+and change times for a publication or rewrite that was reverted before the final hash.
+A changed edition or unreadable input stops the run before it issues a comparison or writes a
+baseline. Malformed audit JSON remains a validator finding while its bytes are bound.
 There is no staleness exception or pre-existing classification for an input mismatch. Restore the
 recorded input edition; never re-record a baseline to make a pending landing pass.
 
@@ -156,9 +190,11 @@ that document is edited, and a line that shifted is still the same finding.
 
 Failures are grouped into buckets of `check | subcheck | error | path`. A bucket up to
 `max_fingerprints_per_bucket` entries lists every fingerprint, so a genuinely new failure inside it
-is named. A larger bucket lists none and is matched by its count instead, because the three largest
-buckets hold 27,700 of the 28,128 plan-migration findings and writing them all out would make a file
+is named. A larger bucket in `buckets` lists none and is matched by its count instead, because the three largest
+plan-migration buckets hold 27,700 of the 28,128 plan-migration findings and writing them all out would make a file
 that is refreshed after Plans landings megabytes long. `fingerprints: null` in a bucket means count-only.
+Complete-export buckets in `export_buckets` record fingerprints for every row regardless of
+`max_fingerprints_per_bucket`, so exported subchecks over 200 rows (such as audit closure) stay keyed row by row.
 
 ## What the match can and cannot see
 
@@ -244,17 +280,18 @@ So when the landing check runs a subcheck's command line again, with the argumen
 `_aggregate_subcheck_cli_args`), the report that run writes is the complete list of what the subcheck
 counted: its export (the exports brief of 2026-09-24).
 
-**Which subchecks have one.** It was read in `scripts/pm-plans-verify.py` at `bc1d99c11e`, and in
-every validator it calls. The two aggregates run 36 commands: 36 subchecks in `run-gates` and 33 in
-`audit-governance`, with both copies of a validator running one command line. None of the commands
-drops rows before it reports them, but one: `validate-audit-closure`, whose
-`cmd_validate_audit_closure` keeps only the first 200 of `pm-audit-closure.py`'s errors, so its own
-report is a sample whenever there are more. That pair, `validate_audit_closure` and `audit_closure`,
-has no complete export and keeps the truncated rule. Two commands keep 50 entries of a list nested
-inside one row (`gui_asset_policy_failed.failures` and `audit_closure_reopened_rows_present.rows`).
+**Which subchecks have one.** It was read in `scripts/pm-plans-verify.py` (originally at `bc1d99c11e`,
+and updated as new commands landed), and in every validator it calls. None of the aggregate commands
+drops rows before it reports them on capable targets (verifiers advertising `landing_closure_export_v1`
+in `run-gates`/`audit-governance` `--help`): `cmd_validate_audit_closure` no longer truncates
+`pm-audit-closure.py`'s errors at 200, so `validate-audit-closure` (`validate_audit_closure` and
+`audit_closure`) now writes a complete export and is keyed from it. Historical targets without
+`landing_closure_export_v1` still slice at 200 errors, keep `validate-audit-closure` in
+`no_complete_export`, and fall back to the truncated total-only rule. Two commands keep 50 entries of a
+list nested inside one row (`gui_asset_policy_failed.failures` and `audit_closure_reopened_rows_present.rows`).
 That changes what the row says, not how many rows there are. The list is `EXPORT_COMMANDS` in the
 script, and the run header prints it. A command added to the aggregates later has no export until
-someone reads it, and `test_the_real_map_reads_every_aggregate_command_as_a_complete_export_but_audit_closure`
+someone reads it, and `test_the_real_map_reads_every_aggregate_command_as_a_complete_export`
 fails until then.
 
 | Command | `run-gates` subcheck | `audit-governance` subcheck |
@@ -265,7 +302,7 @@ fails until then.
 | `lint-banned-phrases` | `lint_banned_phrases` | (not run) |
 | `lint-contractrefs` | `lint_contractrefs` | `support_refs` |
 | `lint-path-refs` | `lint_path_refs` | `path_refs` |
-| `validate-audit-closure` (no complete export) | `validate_audit_closure` | `audit_closure` |
+| `validate-audit-closure` (complete export on capable targets; total-only on historical targets without `landing_closure_export_v1`) | `validate_audit_closure` | `audit_closure` |
 | `validate-audit-status-index` | `validate_audit_status_index` | `audit_status_index` |
 | `validate-auto-decisions` | `validate_auto_decisions` | `auto_decisions` |
 | `validate-browser-event-admission` | `validate_browser_event_admission` | `browser_event_admission` |
@@ -317,7 +354,8 @@ all 133 rows, the printed total: 132 staleness, 1 pre-existing`.
 **When it falls back.** Otherwise the truncated rule applies as before, and the summary says which case
 and why, ending "the truncated rule applies":
 
-- *no complete export*: the audit-closure pair, a command the list does not name, or a
+- *no complete export*: a command in `no_complete_export` (such as `validate-audit-closure` on a
+  historical target without `landing_closure_export_v1`), a command the list does not name, or a
   `pm-plans-verify.py` whose map of subchecks to commands cannot be read;
 - *baseline sample*: the baseline printed only part of the subcheck's rows and recorded no export.
   Complete rows now against a sample then cannot be judged by the kind rules: a pre-existing failure
@@ -346,10 +384,12 @@ records `exported` beside `reported` and `sampled`, and the complete rows as `ex
 `buckets`, which still holds the printed rows of every subcheck. A landing that keys the subcheck from
 its own export, or in which it prints every failure, compares with `export_buckets`. A landing whose
 export falls back compares its printed sample with the printed `buckets`, sample with sample, exactly
-as before. The baseline recorded at `792d2fb8b1` has no exports. Until the next refresh after a Plans landing, the
-PRD contracts (1,240), which it holds only a sample of, keep the truncated rule as a baseline sample;
-audit-closure (201) keeps it after the refresh too, because it has no complete export. The refresh
-records the PRD contracts from their export.
+as before. The baseline recorded at `792d2fb8b1` has no exports. Until a refresh after a Plans landing,
+any subcheck the baseline holds only as a sample keeps the truncated rule as a baseline sample; on
+capable targets (`landing_closure_export_v1`), `validate-audit-closure` now writes a complete export and
+a refresh records all of its rows in `export_buckets` with full fingerprints, while historical targets
+without `landing_closure_export_v1` keep `validate-audit-closure` total-only. The refresh also records
+the PRD contracts from their export.
 Evidence and plan-graph are complete in that baseline (0 each), so a landing keys them already.
 
 In `--json`, `exports` carries `complete_export_commands` and `no_complete_export`, and under
@@ -367,9 +407,10 @@ evidence bundle, plus `main`'s one `missing_ref`. That was a truncated rise past
 so the check exited 2 on staleness the rule says never stops a landing. Keyed from its export, the
 same run exits 1: the 132 rows are staleness and the `missing_ref` is pre-existing.
 
-What this leaves open: audit-closure stays sampled, and its validator's errors past the first 200
-are seen by nothing. The export is a second run of the same validator. The equal total and every printed row
-being among its rows are the evidence that it saw what the aggregate saw.
+What this leaves open: historical targets without `landing_closure_export_v1` keep the 200-error cap and
+total-only rule for audit-closure. On capable targets, the export is a second run of the same validator.
+The equal total and every printed row being among its rows are the evidence that it saw what the
+aggregate saw.
 
 ## What counts as governance staleness
 
@@ -382,18 +423,23 @@ them by error kind.
 | What AGENTS.md names | Error kinds |
 |---|---|
 | Spec Lock `stale_hash` | `stale_hash`, and every kind ending `_spec_lock_hash_stale`: the readiness validator's Spec Lock check for each family it certifies, today `event_record_`, `execution_unit_context_`, `non_executable_closure_` and `storage_value_registry_spec_lock_hash_stale` |
-| stale owner or artifact evidence hashes | `artifact_hash_stale`, `stale_audit_status_index`, `event_authority_currentness_source_drift` (the Event Authority currentness inventory's stored hash of an edited source), `event_authority_currentness_validator_drift` (the currentness receipt's stored hash of `scripts/pm-event-authority-currentness.py`: a canon edit cannot cause it, an edit of that script does, and its reseal is a currentness edition that refreshes the gitignored receipt), and an audit-closure failure whose detail says a stored hash "is stale" |
+| stale owner or artifact evidence hashes | `artifact_hash_stale`, `stale_audit_status_index`, `event_authority_currentness_source_drift` (the Event Authority currentness inventory's stored hash of an edited source), `event_authority_currentness_validator_drift` (the currentness receipt's stored hash of `scripts/pm-event-authority-currentness.py`: a canon edit cannot cause it, an edit of that script does, and its reseal is a currentness edition that refreshes the gitignored receipt), and an `audit_closure_validator_error` whose detail ends with ` is stale (stored <64-hex>, current <64-hex>)` |
 | a stale readiness report | `pnc019_source_hash_stale`, `buildability_gate_report_stale_or_not_canonical`, `buildability_passed_with_stale_source_hashes`, the `_spec_lock_hash_stale` kinds above, and the readiness growth counter below |
 | the stale plan-migration snapshot | every `current_snapshot_*` kind, `stale_batch_report_sha256_after`, `complete_final_summary_live_plan_unit_count_stale`, `doc_count_mismatch`, `inventory_doc_set_mismatch`, `superseded_run_final_summary_missing` |
 
 A bucket of one of these kinds that grew is staleness too, so it does not stop the landing either.
 
 Audit closure reports stale hashes and other findings under `audit_closure_validator_error`.
-When both sides of the subcheck are complete and the bucket's baseline fingerprints are available,
-its growth is staleness if each current non-stale row matches a distinct recorded fingerprint.
-Each recorded fingerprint proves one occurrence. A new non-stale fingerprint, an unaccounted repeat
-of one, or a count-only baseline bucket leaves the growth blocking. The bucket key and fingerprints
-stay as recorded. Sampled audit-closure subchecks still use total-only growth.
+On capable targets (`landing_closure_export_v1`), `validate-audit-closure` writes a complete export and
+is keyed from it; baseline recording stores all export fingerprints plus `nonstale_count` and
+`nonstale_fingerprints` on closure buckets. When both sides of the subcheck are complete and the
+bucket's baseline fingerprints are available, its growth is staleness if no new non-stale row was
+introduced and each current non-stale row matches a distinct recorded non-stale fingerprint (falling
+back to `fingerprints` on older baselines). Each recorded fingerprint proves one occurrence. A new
+non-stale fingerprint, an unaccounted repeat of one, a stale-for-non-stale swap that raises
+`nonstale_count`, or a count-only baseline bucket leaves the growth blocking. The bucket key and
+fingerprints stay as recorded. Historical targets without `landing_closure_export_v1` and sampled
+audit-closure subchecks still use total-only growth.
 
 **A renamed line-range shard (T32).** A `missing_ref` is a stale artifact evidence hash in another form,
 and counts as staleness, when all of these hold, read from the checkout: the reference comes from sealed

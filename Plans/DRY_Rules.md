@@ -201,6 +201,45 @@ Required matching order:
 5. Collapse 3+ blank lines to 2 blank lines.
 6. Perform substring matching on the normalized texts.
 
+Exact definition of the six steps (2026-11-25). `normalize(text)` and `matches(packet, file)` are defined by this code; an implementation must give the same result on every input and must pass every vector below.
+
+```python
+import re
+
+def normalize(text: str) -> str:
+    # step 1: drop each line whose text, after stripping leading/trailing whitespace, starts with "ContractRef:"
+    # step 2: CR LF, lone CR and LF all end a line; lines are re-joined with LF
+    lines = [ln for ln in re.split(r"\r\n|\n|\r", text) if not ln.strip().startswith("ContractRef:")]
+    out = []
+    for ln in lines:
+        ln = ln.rstrip(" \t")             # step 3: trim trailing spaces and tabs
+        ln = re.sub(r"[ \t]+", " ", ln)    # step 4: any run of spaces/tabs, leading runs included, becomes one space
+        out.append(ln)
+    return re.sub(r"\n{4,}", "\n\n\n", "\n".join(out))  # step 5: 3 or more blank lines become exactly 2
+
+def matches(packet: str, file: str) -> bool:
+    p = normalize(packet)
+    if p.strip() == "":
+        return False                      # a packet that normalizes to nothing never matches
+    return p in normalize(file)           # step 6: plain substring test, case-sensitive
+```
+
+| # | Packet text | File text | Result |
+|---|---|---|---|
+| 1 | `a␠␠b`, `c` (CR LF line end) | `x`, `a b`, `c`, `y` (LF line ends) | match |
+| 2 | `a b`, `ContractRef: X`, `c` | `a b`, `c` | match |
+| 3 | `a b`, `c` | `a b`, `␠␠ContractRef: Y`, `c` | match |
+| 4 | `a`, four blank lines, `b` | `a`, two blank lines, `b` | match |
+| 5 | `a`, two blank lines, `b` | `a`, one blank line, `b` | no match |
+| 6 | `a⇥⇥b␠␠␠` | `a b` | match |
+| 7 | `x ContractRef: Z` (not standalone, kept) | `x` | no match |
+| 8 | `ContractRef: only` | any text | no match (empty after step 1) |
+| 9 | `a b` | `a`, `b` (two lines) | no match (line breaks are not whitespace runs) |
+
+(`␠` is a space and `⇥` a tab; comma-separated items are separate lines.)
+
+`scripts/pm-packet-fidelity-match.py` implements this comparison (`PACKET_FILE TARGET_FILE`: exit 0 match, 1 no match, 2 usage or read error; `--self-test` runs the nine vectors). `scripts/pm-plans-verify.py lint-contractrefs` checks ContractRef spelling and paths only and is not its implementation (see the corrected 2026-07-08 addendum bullet at the end of this document).
+
 This semantic matching rule exists only for packet-fidelity/self-check comparisons and MUST NOT weaken ContractRef enforcement in run-gates or any other plan-quality gate.
 
 ContractRef: Primitive:DRYRules, Gate:GATE-009, PolicyRule:Decision_Policy.md§2
@@ -2173,6 +2212,7 @@ owner_hints:
 This addendum repairs non-runtime DRY rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
 - Repairs `sfk-f265ed0e6287bed7e8ddb7cc`: the reference implementation path for text-normalization checks is `scripts/pm-plans-verify.py lint-contractrefs` for owner/ContractRef integrity and the DRY normalization algorithm embedded in `Plans/DRY_Rules.md` Section 7.1. CI/local enforcement is through `python3 scripts/pm-plans-verify.py run-gates`; future extraction to a dedicated script must preserve the same six-step algorithm.
+  - Corrected 2026-11-25: `lint-contractrefs` (and therefore `run-gates`) checks ContractRef reference spelling and paths; it does not run the section 7.1 packet-text versus file-text comparison, so it is not that algorithm's implementation. The normative definition is the code and the nine vectors in section 7.1. `scripts/pm-packet-fidelity-match.py` is that script: it reproduces that code's result on every input and passes all nine vectors (`--self-test`), and any replacement must do the same before VERIFIER packet preflight or SCRIBE self-check may rely on it.
 
 ## PMConcept7 Home Workspace owner boundary — 2026-08-04
 

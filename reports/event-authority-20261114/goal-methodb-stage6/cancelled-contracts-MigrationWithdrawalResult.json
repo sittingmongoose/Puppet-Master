@@ -1,0 +1,375 @@
+{
+  "accepted_branches": {
+    "0": {
+      "disposition": "withdrawn",
+      "fenced_writer_domain": {
+        "owner": "TEST_ONLY:owner:native_registration:963d5fe9-24b2-413b-90be-2f42358bc9e6",
+        "physical_key": "TEST_ONLY:native_dispatch_state|native_dispatch:30656630356436392d653632652d346130322d626231302d616164616461663434306563",
+        "schema_ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/DispatchCommitmentInput",
+        "sha256": "c0d9667427f3576c22a8a27ae03c6e4d4e94d5b33a91a15810488e3f3b88e760"
+      },
+      "migration_id": "TEST_ONLY:migration:f67ec044-90e5-450f-b24a-f8854abf1988",
+      "original_result": null,
+      "preserved_pending_operation_ids": [],
+      "scope": {
+        "goal_id": "TO-goal-b6057e5f4d7b49ca8fdd",
+        "project_id": "TO-proj-5742725cce2945a2a273",
+        "storage_instance_id": "0ef05d69-e62e-4a02-bb10-aadadaf440ec",
+        "thread_id": "TO-thr-28cdde6452e24d97bf58"
+      },
+      "withdrawal_id": "TEST_ONLY:withdrawal:0024110e-bb98-4208-a3e1-d55c3c48b5af"
+    },
+    "1": {
+      "disposition": "withdrawn",
+      "fenced_writer_domain": {
+        "owner": "TEST_ONLY:owner:goal_binding:e966aa9e-fa05-4216-a966-f0e464fcffd4",
+        "physical_key": "goal_execution_writer_domain|goal_execution_writer_domain.v1:64643133656164662d646239652d343839362d616363322d356635386638366532306437:epoch:1",
+        "schema_ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/StorageWriterDomain",
+        "sha256": "237585ca611b4647f91732285c7e73f978c6295601107d86b16bce34e12ec109"
+      },
+      "migration_id": "TEST_ONLY:migration:1f300bc3-4d21-4c1d-9f79-3c137a523ce2",
+      "original_result": {
+        "owner": "TEST_ONLY:owner:storage_migration:84a7e9cb-359b-4b1e-bd97-6f19de014309",
+        "physical_key": "goal_binding_migration_result|goal_binding_migration_result.v1:64643133656164662d646239652d343839362d616363322d356635386638366532306437:544f2d70726f6a2d3537383735623964343361333464623638393166:544f2d7468722d3836653862656332306238353439343638643930:544f2d676f616c2d6535646339306366373130663465346361333761:544553545f4f4e4c593a6d6967726174696f6e3a31663330306263332d346432312d346331642d396637392d336331333761353233636532",
+        "schema_ref": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationResult",
+        "sha256": "70e7e10d6e13793246aca2b064a88e619dfd2bdf8aec4c905d7ccbfc3bfa4949"
+      },
+      "preserved_pending_operation_ids": [],
+      "scope": {
+        "goal_id": "TO-goal-e5dc90cf710f4e4ca37a",
+        "project_id": "TO-proj-57875b9d43a34db6891f",
+        "storage_instance_id": "dd13eadf-db9e-4896-acc2-5f58f86e20d7",
+        "thread_id": "TO-thr-86e8bec20b8549468d90"
+      },
+      "withdrawal_id": "TEST_ONLY:withdrawal:3181ef41-9336-4c73-8aca-7fbafb5c6c19"
+    },
+    "2": {
+      "disposition": "withdrawn",
+      "fenced_writer_domain": {
+        "owner": "TEST_ONLY:owner:native_registration:963d5fe9-24b2-413b-90be-2f42358bc9e6",
+        "physical_key": "TEST_ONLY:native_dispatch_state|native_dispatch:30656630356436392d653632652d346130322d626231302d616164616461663434306563",
+        "schema_ref": "https://puppetmaster.local/schemas/goal_execution_binding_custody/1.0.0/schema.json#/$defs/DispatchCommitmentInput",
+        "sha256": "c0d9667427f3576c22a8a27ae03c6e4d4e94d5b33a91a15810488e3f3b88e760"
+      },
+      "migration_id": "TEST_ONLY:migration:f67ec044-90e5-450f-b24a-f8854abf1988",
+      "original_result": null,
+      "preserved_pending_operation_ids": [
+        "TEST_ONLY:pending-operation"
+      ],
+      "scope": {
+        "goal_id": "TO-goal-b6057e5f4d7b49ca8fdd",
+        "project_id": "TO-proj-5742725cce2945a2a273",
+        "storage_instance_id": "0ef05d69-e62e-4a02-bb10-aadadaf440ec",
+        "thread_id": "TO-thr-28cdde6452e24d97bf58"
+      },
+      "withdrawal_id": "TEST_ONLY:withdrawal:0024110e-bb98-4208-a3e1-d55c3c48b5af"
+    }
+  },
+  "census_sha256": "89de308f5aaaa64cd0f14bc0a0be93363ee9156ef586d70197dca3f3ec620677",
+  "examples": {
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalResult/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalResult/properties/disposition/const": {
+      "control_name": "0",
+      "path": [
+        "disposition"
+      ],
+      "value": "withdrawnx"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalResult/properties/migration_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "migration_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalResult/properties/migration_id/type": {
+      "control_name": "0",
+      "path": [
+        "migration_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalResult/properties/original_result/oneOf": {
+      "control_name": "0",
+      "path": [
+        "original_result"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalResult/properties/original_result/oneOf/1/type": {
+      "control_name": "0",
+      "path": [
+        "original_result"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalResult/properties/preserved_pending_operation_ids/items/minLength": {
+      "control_name": "2",
+      "path": [
+        "preserved_pending_operation_ids",
+        0
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalResult/properties/preserved_pending_operation_ids/items/type": {
+      "control_name": "2",
+      "path": [
+        "preserved_pending_operation_ids",
+        0
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalResult/properties/preserved_pending_operation_ids/type": {
+      "control_name": "0",
+      "path": [
+        "preserved_pending_operation_ids"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalResult/properties/withdrawal_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "withdrawal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalResult/properties/withdrawal_id/type": {
+      "control_name": "0",
+      "path": [
+        "withdrawal_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalResult/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "scope"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalResult/type": {
+      "control_name": "0",
+      "path": [],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "scope"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/goal_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "goal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/goal_id/type": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "goal_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/project_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "project_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/project_id/type": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "project_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/storage_instance_id/format": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "storage_instance_id"
+      ],
+      "value": "not-a-uuid"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/storage_instance_id/type": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "storage_instance_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/thread_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "thread_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/properties/thread_id/type": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "thread_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "storage_instance_id"
+      ],
+      "path": [
+        "scope"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Scope/type": {
+      "control_name": "0",
+      "path": [
+        "scope"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "fenced_writer_domain"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/owner/minLength": {
+      "control_name": "0",
+      "path": [
+        "fenced_writer_domain",
+        "owner"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/owner/type": {
+      "control_name": "0",
+      "path": [
+        "fenced_writer_domain",
+        "owner"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/physical_key/minLength": {
+      "control_name": "0",
+      "path": [
+        "fenced_writer_domain",
+        "physical_key"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/physical_key/type": {
+      "control_name": "0",
+      "path": [
+        "fenced_writer_domain",
+        "physical_key"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/schema_ref/minLength": {
+      "control_name": "0",
+      "path": [
+        "fenced_writer_domain",
+        "schema_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/schema_ref/type": {
+      "control_name": "0",
+      "path": [
+        "fenced_writer_domain",
+        "schema_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/sha256/maxLength": {
+      "control_name": "2",
+      "length_pattern": true,
+      "path": [
+        "fenced_writer_domain",
+        "sha256"
+      ],
+      "value": "c0d9667427f3576c22a8a27ae03c6e4d4e94d5b33a91a15810488e3f3b88e760c"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/sha256/minLength": {
+      "control_name": "2",
+      "length_pattern": true,
+      "path": [
+        "fenced_writer_domain",
+        "sha256"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/sha256/pattern": {
+      "control_name": "0",
+      "path": [
+        "fenced_writer_domain",
+        "sha256"
+      ],
+      "value": "c0d9667427f3576c22a8a27ae03c6e4d4e94d5b33a91a15810488e3f3b88e76!"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/properties/sha256/type": {
+      "control_name": "0",
+      "path": [
+        "fenced_writer_domain",
+        "sha256"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "owner"
+      ],
+      "path": [
+        "fenced_writer_domain"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/Selection/type": {
+      "control_name": "0",
+      "path": [
+        "original_result"
+      ],
+      "value": true
+    }
+  },
+  "family": "goal.cancelled",
+  "reference": "https://puppetmaster.local/schemas/goal_own_c/1.0.0/contracts.schema.json#/$defs/MigrationWithdrawalResult",
+  "root": "dg5:e2cf32002a40604e",
+  "route": "contracts/MigrationWithdrawalResult",
+  "row": "dg5/contracts/MigrationWithdrawalResult/schema",
+  "site": [
+    "scripts/pm_goal_dg_cb_owners.py",
+    1792
+  ],
+  "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0",
+  "transaction": true
+}

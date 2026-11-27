@@ -624,6 +624,7 @@ status: accepted
 owner_doc: Plans/PRD_Builder.md
 canonical_text: |-
   - `revision_running` (`Resubmit with Annotations` targeted revision pass)
+  - The pass is dispatched by `cmd.prd_builder.revision.resubmit` (UI_Command_Catalog, wiring row `catalog.prd_builder_revision_resubmit`; DL-2602, 2026-11-24) with `bundle_id`, optional `annotation_ids[]` (absent means every open durable annotation in the deterministic order below) and `expected_bundle_revision`; its result is one outcome record per input annotation plus the effective revision capability. FinalGUISpec §7.19.2 bundle `Resubmit` (F3-150) and Deep Plan `Resubmit with Annotations` (F3-322) dispatch the same command.
 
   **Doc-level states (canonical):**
   - `writing…` -> `draft` -> `approved`
@@ -638,6 +639,7 @@ canonical_text: |-
   - Minimal context: document registry, per-doc approval state, requested/effective revision capability, and bounded provenance
   - Each annotation input record includes `annotation_id`, `operation = comment | replace | insert_after | remove`, `intent_kind = question | change_request | both`, selected anchor context, and `operation_payload`.
   - `operation_payload` uses the canonical shapes `{ body }`, `{ replacement_text, rationale? }`, `{ insert_text, rationale? }`, or `{ rationale? }`.
+  - The per-operation JSON Schemas for these shapes, the input record and the result record are in section 3, "TargetedRevisionPass annotation schemas (PRDB-014, 2026-11-25)".
   - Structured revision input is source-of-truth anchored to source text, not the rendered visual tree: preview-mode selections must map back to source offsets when deterministic, and when deterministic mapping is unavailable, `Send selection to chat` may use quote/provenance while durable structured change-request annotations are disabled or downgraded to comment-only.
   - Revision input records also preserve `anchor.text_position`, `anchor.text_quote`, bounded `selected_text`, `provenance` (`path`, `source_surface`, bounded excerpt), `conflict_state`, and `staleness_state`.
 
@@ -835,6 +837,381 @@ ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/B
 
 The core data shapes are PRD ledger records, source manifests, deterministic source projections, source security preflight records, source resource limit profiles, source intake terminal receipts, conflict records, annotation records, primary PRD projection sections, stable requirement/acceptance identifiers such as `FR-001` and `AC-001`, and immutable Approved PRD Pack snapshots.
 
+
+### TargetedRevisionPass annotation schemas (PRDB-014, 2026-11-25)
+
+Per-operation JSON Schemas for the PRDB-014 revision input and result records (the targeted-revision contract DL-472 moved here from the retired Chain Wizard document). `annotation_input` is one record of the ordered input list and `annotation_result` one record of the ordered output list; `operation` selects exactly one payload schema. A `comment` may carry any `intent_kind`; `replace`, `insert_after` and `remove` change the document, so they require `intent_kind` `change_request` or `both`. A `remove` payload may be `{}`. `anchor.text_position` is present when deterministic source offsets exist and must satisfy `start <= end`; `anchor.text_quote` is always present. Storage keeps `operation_payload` optional on `note_record.v1` (`Plans/storage-plan.md`), but an annotation enters a revision pass only with a payload that validates here; one that does not gets `outcome = cannot_apply` with `failure_code = payload_invalid` and is not sent to the model.
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.prd_builder.targeted_revision_annotation.v1",
+  "$defs": {
+    "comment_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "body"
+      ],
+      "properties": {
+        "body": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 8000
+        }
+      }
+    },
+    "replace_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "replacement_text"
+      ],
+      "properties": {
+        "replacement_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      }
+    },
+    "insert_after_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "insert_text"
+      ],
+      "properties": {
+        "insert_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      }
+    },
+    "remove_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      }
+    },
+    "text_position": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "start",
+        "end"
+      ],
+      "properties": {
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "text_quote": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "exact",
+        "prefix",
+        "suffix"
+      ],
+      "properties": {
+        "exact": {
+          "type": "string",
+          "minLength": 1
+        },
+        "prefix": {
+          "type": "string"
+        },
+        "suffix": {
+          "type": "string"
+        }
+      }
+    },
+    "anchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text_quote"
+      ],
+      "properties": {
+        "text_position": {
+          "$ref": "#/$defs/text_position"
+        },
+        "text_quote": {
+          "$ref": "#/$defs/text_quote"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "source_surface",
+        "excerpt"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_surface": {
+          "type": "string",
+          "minLength": 1
+        },
+        "excerpt": {
+          "type": "string",
+          "maxLength": 2000
+        }
+      }
+    },
+    "annotation_input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "annotation_id",
+        "doc_id",
+        "operation",
+        "intent_kind",
+        "anchor",
+        "selected_text",
+        "provenance",
+        "conflict_state",
+        "staleness_state",
+        "operation_payload"
+      ],
+      "properties": {
+        "annotation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "doc_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation": {
+          "enum": [
+            "comment",
+            "replace",
+            "insert_after",
+            "remove"
+          ]
+        },
+        "intent_kind": {
+          "enum": [
+            "question",
+            "change_request",
+            "both"
+          ]
+        },
+        "anchor": {
+          "$ref": "#/$defs/anchor"
+        },
+        "selected_text": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        },
+        "conflict_state": {
+          "enum": [
+            "none",
+            "conflicting"
+          ]
+        },
+        "staleness_state": {
+          "enum": [
+            "current",
+            "stale"
+          ]
+        },
+        "operation_payload": {
+          "type": "object"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "comment"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation_payload": {
+                "$ref": "#/$defs/comment_payload"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "replace"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation_payload": {
+                "$ref": "#/$defs/replace_payload"
+              },
+              "intent_kind": {
+                "enum": [
+                  "change_request",
+                  "both"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "insert_after"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation_payload": {
+                "$ref": "#/$defs/insert_after_payload"
+              },
+              "intent_kind": {
+                "enum": [
+                  "change_request",
+                  "both"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "remove"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "operation_payload": {
+                "$ref": "#/$defs/remove_payload"
+              },
+              "intent_kind": {
+                "enum": [
+                  "change_request",
+                  "both"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "annotation_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "annotation_id",
+        "outcome",
+        "addressed_explanation"
+      ],
+      "properties": {
+        "annotation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "outcome": {
+          "enum": [
+            "addressed",
+            "still_open",
+            "cannot_apply"
+          ]
+        },
+        "addressed_explanation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000
+        },
+        "updated_anchor": {
+          "$ref": "#/$defs/anchor"
+        },
+        "failure_code": {
+          "enum": [
+            "anchor_not_found",
+            "annotation_conflicting",
+            "annotation_stale",
+            "payload_invalid",
+            "structured_output_invalid",
+            "capability_chat_handoff_only"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "cannot_apply"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "failure_code"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "addressed"
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "required": [
+                "failure_code"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+Failure codes of `annotation_result.failure_code`: `anchor_not_found` (position and quote re-anchoring both failed, in the order `Plans/Crosswalk.md` section 3.14 sets); `annotation_conflicting` (`conflict_state = conflicting`, excluded from automatic revision); `annotation_stale` (`staleness_state = stale`, excluded); `payload_invalid` (input payload failed its schema); `structured_output_invalid` (model output failed validation after the one automatic retry); `capability_chat_handoff_only` (effective capability is `chat_handoff_only`, so the mutation was forwarded to chat). `cannot_apply` requires a `failure_code`; `still_open` may carry one; `addressed` never does. The runtime validates every result against `annotation_result`, checks that the results are one per input in input order, and only then moves annotation or document state.
 
 ## 4. Integration Surfaces
 
@@ -1245,8 +1622,9 @@ unit_type: command_contract
 status: accepted
 owner_doc: Plans/PRD_Builder.md
 canonical_text: >-
-  Typed payload definitions for the seven cmd.prd_builder.* commands that UI_Command_Catalog UCC-098
-  registers and UCC-230 routes to this doc (DL-333). Each command's field list is the runtime contract
+  Typed payload definitions for the eight cmd.prd_builder.* commands that UI_Command_Catalog UCC-098
+  registers and UCC-230 routes to this doc (DL-333; seven until cmd.prd_builder.revision.resubmit joined
+  on 2026-11-24 under DL-2602). Each command's field list is the runtime contract
   row keyed by its catalog id in Plans/prd_planning_runtime_contracts.json ui_command_contracts
   (DL-333 coordinator resolution 1); that file's former ids are recorded compatibility aliases, and the
   catalog row's payload summary column is history. The definitions block below gives each command its
@@ -1276,7 +1654,7 @@ source_lineage:
   - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to Q5"
   - "Plans/prd_planning_runtime_contracts.json ui_command_contracts (field lists under the catalog ids; DL-333 resolution 1)"
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/inventory.jsonl"
-preserved_exact_tokens: [cmd.prd_builder.source.import, cmd.prd_builder.answer.upsert, cmd.prd_builder.annotation.upsert, cmd.prd_builder.annotation.resolve, cmd.prd_builder.conflict.resolve, cmd.prd_builder.approve_for_planning_wizard, cmd.prd_builder.pack.reopen]
+preserved_exact_tokens: [cmd.prd_builder.source.import, cmd.prd_builder.answer.upsert, cmd.prd_builder.annotation.upsert, cmd.prd_builder.annotation.resolve, cmd.prd_builder.conflict.resolve, cmd.prd_builder.approve_for_planning_wizard, cmd.prd_builder.pack.reopen, cmd.prd_builder.revision.resubmit]
 negative_constraints:
   - Do not add payload fields to UI_Command_Catalog command rows.
   - Do not define a payload for an alias, retired, non-alias or source-lineage token; the runtime contract file's former ids are compatibility aliases and never dispatch.
@@ -1632,6 +2010,41 @@ command_payload_definitions:
       aliases:
         - {command_id: cmd.prd_builder.reopen_pack, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
+    - command_id: cmd.prd_builder.revision.resubmit
+      ucc_units: [UCC-098, UCC-097]
+      command_kind: domain_action
+      response_kind: owner_operation
+      args:
+        bundle_id:
+          type: id
+          required: true
+          default: none
+          provenance: canon
+          source: "Decision_Log DL-2602 (C-FIX79, 2026-11-24); runtime contract payload_contract cmd.prd_builder.revision.resubmit; FinalGUISpec 7.19.2 bundle_registry.v1:{project_id}:{bundle_id}"
+        annotation_ids:
+          type: list
+          required: false
+          default: none
+          item: {type: id}
+          provenance: canon
+          source: "runtime contract payload_contract cmd.prd_builder.revision.resubmit; PRDB-014 Input: all open durable annotations in deterministic order by doc_id, source start offset and annotation_id, or a user-selected subset; absent means every open annotation"
+        expected_bundle_revision:
+          type: integer
+          required: true
+          default: none
+          provenance: canon
+          source: "runtime contract payload_contract cmd.prd_builder.revision.resubmit and guard bundle_revision_current (DL-2602)"
+      owner_request: none
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:PrdRevisionResubmitResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
+      disabled_reason_codes: [blocked_state_required, stale_projection]
+      owner_state_codes:
+        - {owner_state: no_open_annotations, code: blocked_state_required}
+        - {owner_state: stale_bundle_revision, code: stale_projection}
+        - {owner_state: revision_running, code: blocked_state_required}
+      aliases: []
   results:
     PrdSourceImportResultV1:
       fields:
@@ -1661,4 +2074,21 @@ command_payload_definitions:
     PrdPackReopenResultV1:
       fields:
         draft_version_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "result_contract token of the runtime row; the new draft identity the history column names; no typed result contract"}
+    PrdRevisionResubmitResultV1:
+      fields:
+        targeted_revision_receipt_ref: {type: ref, required: true, default: none, provenance: canon, source: "runtime contract result_contract cmd.prd_builder.revision.resubmit (DL-2602)"}
+        annotation_result_refs:
+          type: list
+          required: true
+          default: none
+          item: {type: ref}
+          provenance: canon
+          source: "PRDB-014 Output: one result record per input annotation in input order, outcome = addressed | still_open | cannot_apply; each ref names one annotation_result record (section 3, TargetedRevisionPass annotation schemas)"
+        effective_revision_capability:
+          type: enum
+          values: [schema_enforced_structured_revision, validated_structured_revision, chat_handoff_only]
+          required: true
+          default: none
+          provenance: canon
+          source: "PRDB-014 Hard rules: the effective capability is schema_enforced_structured_revision, validated_structured_revision, or chat_handoff_only"
 ```

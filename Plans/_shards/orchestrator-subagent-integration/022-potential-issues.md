@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L1311-L1400
+Source lines: L1315-L1404
 
-Source SHA256: `aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26`
+Source SHA256: `97b1d391be028a118aa9ee837749dc861f7f51b6c37f2de93f71048ddf325371`
 
 ---
 
@@ -75,7 +75,7 @@ Risks, edge cases, and failure modes to watch during implementation and testing.
 ### 10. Meaning of empty override list
 
 - **Issue:** If `tier_overrides.phase = []`, does that mean "no subagents for phase" or "no override; use auto-selected list"?
-- **Mitigation:** **Rule: missing or empty override = use auto-selection.** Only a non-empty override list for a tier replaces the selector output. To force no subagents for a tier, the user sets `enable_tier_subagents` false (global) or we add a per-tier "use no subagents" option in a later version. **Implement:** In the orchestrator, if `tier_overrides.get(tier)` is `None` or `Some([])`, use the list from `SubagentSelector::select_for_tier`; otherwise use the override list. Document in code and in the Config tooltip for tier overrides.
+- **Mitigation:** **Rule: missing or empty override = use auto-selection.** This rule governs how imported `tier_overrides` normalize into SubagentPolicy (OSI-425, OSI-081); runtime selection reads the normalized SubagentPolicy, never `tier_overrides`. Only a non-empty imported override list becomes a SubagentPolicy override that replaces the selector output. To force no subagents, the user turns subagents off in SubagentPolicy (`enabled: false`; an imported `enable_tier_subagents: false` normalizes to it), or a later version adds a per-scope "use no subagents" option. **Implement:** In the import that normalizes legacy config into SubagentPolicy, a `tier_overrides` entry that is missing or `[]` writes no override for that scope, and a non-empty list is written as that scope's `scope_overrides` entry (the compatibility alias map under SubagentPolicy runtime defaults and compatibility aliases). At runtime the orchestrator uses the SubagentPolicy override for the unit's scope when one exists and otherwise the list from `SubagentSelector::select_for_tier` (OSI-213); it never reads `tier_overrides.get(tier)`. Document in code and in the Config tooltip for tier overrides.
 
 ### 11. Persistence and dirty state
 
@@ -85,12 +85,12 @@ Risks, edge cases, and failure modes to watch during implementation and testing.
 ### 12. Start/end verification overhead and quality definition
 
 - **Issue:** Start and end verification at every Phase/Task/Subtask (wiring, readiness, acceptance, quality) adds latency and requires a clear definition of "quality" and who addresses unrelated failures.
-- **Mitigation:** (1) Quality over performance: run full checks; do not skip or weaken for speed. Scope quality checks to changed files or this tier's artifacts to stay practical. (2) Define a small canonical quality checklist per tier (e.g. in this plan or verification config): reviewer subagent (required) plus gate criteria (clippy, tests, etc.). (3) Reviewer subagent runs in all three cases: always at end-of-tier, on retry, and when quality gate fails. (4) Unrelated failures (e.g. pre-existing tech debt) are addressed by the parent-tier orchestrator (retry, different subagent, escalate). Reuse existing gates where possible; end verification should call into current gate logic rather than duplicate it.
+- **Mitigation:** (1) Quality over performance: run full checks; do not skip or weaken for speed. Scope quality checks to changed files or this tier's artifacts to stay practical. (2) Define a small canonical quality checklist per tier (e.g. in this plan or verification config): reviewer subagent (required) plus gate criteria (clippy, tests, etc.). (3) Reviewer subagent runs in all three cases: always at end-of-tier, on retry, and when quality gate fails. (4) The parent-tier orchestrator handles unrelated failures (e.g. pre-existing tech debt) using the classifier policy and the Unrelated-failure escalation transition below. Reuse existing gates where possible; end verification should call into current gate logic rather than duplicate it.
 
 ### 13. Platform-specific hook integration and parser reliability
 
 - **Issue:** Lifecycle hooks and structured handoff validation require platform-specific implementations (native hooks vs orchestrator middleware, JSON vs JSONL vs text parsing). Parsers may fail on edge cases (malformed JSON, missing sections in text, JSONL aggregation errors).
-- **Mitigation:** (1) **Hooks:** For platforms with native hooks (Cursor, Claude, Gemini), register Puppet Master hooks that delegate to platform hooks where possible; for others (Codex, Copilot), use orchestrator-level middleware. Document which platforms use which approach. (2) **Parsers:** Implement robust parsers with fallback behavior: JSON parsers handle missing fields gracefully; JSONL parser aggregates events safely (last event wins, accumulate findings); text parser uses multiple patterns and validates extracted sections. (3) **Fail-safe:** If parsing fails after retry, create partial `SubagentOutput` and mark tier as "complete with warnings" rather than crashing. (4) **Testing:** Add integration tests for each platform's parser with malformed input, missing fields, and edge cases to ensure reliability.
+- **Mitigation:** (1) **Hooks:** For the CliBridge providers with native hooks (Cursor, Claude Code), register Puppet Master hooks that delegate to platform hooks where possible; for the DirectApi providers (Codex, Copilot, Gemini) and the ServerBridge provider (OpenCode), use orchestrator-level middleware (OSI-004, OSI-139). Document which platforms use which approach. (2) **Parsers:** Implement robust parsers with fallback behavior, scoped by transport as OSI-093 says: JSON parsers handle missing fields gracefully for CliBridge CLI output and for the DirectApi final assistant content; the JSONL parser (last event wins, accumulate findings) and the multi-pattern text parser describe CLI-era Codex and Copilot output and are historical context only, not implementation targets. (3) **Fail-safe:** If output remains invalid after fallback and the Handoff Retry Ceiling budget is exhausted, build the partial `SubagentOutput` rather than crashing, keep it on the failed attempt for review only, and raise the `needs_review` recovery point (the Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25)); the earlier "mark tier as "complete with warnings"" is superseded source lineage. (4) **Testing:** Add integration tests for each platform's parser with malformed input, missing fields, and edge cases to ensure reliability.
 
 ### 14. Subagent persona overrides (token budget and scope)
 

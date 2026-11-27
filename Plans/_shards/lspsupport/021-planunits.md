@@ -2,9 +2,9 @@
 
 Source: `Plans/LSPSupport.md`
 
-Source lines: L1085-L7029
+Source lines: L1094-L7038
 
-Source SHA256: `4388bf6474d72972430585ce6247e01e8bfe6b8abc084866d6151fc0a7febf1f`
+Source SHA256: `9ee0be1ab7c3613eb1faac3ea42499d9852a3bf52fa4cbddc1a3b610edf6b39f`
 
 ---
 
@@ -4068,7 +4068,7 @@ plan_unit_id: LSPS-075
 unit_type: requirement
 status: accepted
 owner_doc: Plans/LSPSupport.md
-canonical_text: Prerequisites require choosing a Rust stdio-capable LSP client, adding it to Cargo.toml, defining OpenCode-aligned LSP config schema, storing it in redb, and adding debounce/timeout config keys.
+canonical_text: Prerequisites require building Puppet Master's own Rust stdio-capable LSP client on the §3.6.1 baseline stack (lsp-types, tokio, tokio-util, serde_json, tracing; async-lsp only as an optional internal wire helper; lsp-client and async_lsp_client are rejected alternatives per DL-2602), adding those crates to Cargo.toml, defining OpenCode-aligned LSP config schema, storing it in redb, and adding debounce/timeout config keys.
 gui_related: false
 gui_classification_reason: The unit defines LSP runtime, protocol, registry, verification, evidence, or implementation constraints rather than direct GUI presentation.
 split_recommended: false

@@ -63073,6 +63073,51 @@ negative_constraints:
 - No new admission, producer adoption, native execution claim or governance seal.
 ```
 
+### DL-2596: Event Authority corrects the retained Goal created coverage citation
+
+```yaml
+plan_unit_id: DL-2596
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |
+  This entry records an evidence correction for goal.created criterion 12. The original GO citation used
+  closed_members for additionalProperties and unevaluatedProperties at one location in the retained v2 schema.
+  The replay at 3af916f4b663aced600d1929b8d9195035c97114, from pilot ff51a4257a5640e5002752baf4a1b7489b810fd2, used the same invalid document
+  as GO. Suppressing either keyword removed its own refusal and preserved the other keyword's refusal.
+  Restoring the keyword restored both original messages. The retained reader continued to refuse that input.
+  The correction record is reports/event-authority-20261116/admission-merge-3/evidence-corrections/goal.created.json with SHA-256 b756947d2b2cea7de44c6b56d6cbebf76a0e1ef4aca66b902d68b51bedd79e43.
+  The registered 3.0.0 family row, predecessor assessments and all twelve verdicts are preserved.
+  This evidence correction makes no policy decision. The selected assessment can cite the replay during P's reseal.
+gui_related: false
+gui_classification_reason: Corrects recorded test evidence for an existing event family.
+depends_on: [DL-078]
+unblocks: []
+acceptance_criteria:
+- The unchanged GO input reproduces each of the two keyword refusals and both restorations.
+- The correction record pins the existing grade, registry row and independent replay.
+validation_surfaces:
+- scripts/pm_goal_created_retained_closure_test.py
+risk_class: event_authority_evidence_maintenance
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3
+implementation_surfaces: []
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/event-authority-20261115/PNC019-C12-GO2-grades.json
+- reports/event-authority-20261116/admission-merge-3/evidence-corrections/goal.created.json
+preserved_exact_tokens:
+- goal.created
+- closed_members
+- additionalProperties
+- unevaluatedProperties
+negative_constraints:
+- Preserve the registered row and predecessor assessments. Native execution remains NOT_RUN.
+```
+
 ### DL-2597: Queue and tool histories outside a Project have separate Application counts
 
 ```yaml
@@ -63242,6 +63287,71 @@ negative_constraints:
 - No new admission, policy decision, verdict change, producer adoption or governance seal.
 ```
 
+### DL-2600: Event Authority records a documented gap for goal.cancelled's schema-roots row
+
+```yaml
+plan_unit_id: DL-2600
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  On 2026-11-22 at 2:56 PM EST (19:56Z), Jared answered card E-GC-GAP ("How should we finish the last Goal Cancelled checks?") in chat with "this is ok", quoting option B, "Record the gap now, finish the slow root later". pm7-build relayed the answer in pm-mail 1122195635-0112, and the card was withdrawn at agent-report seq 1794501342233. The answer is recorded in ANSWERS_E-GC-GAP_20261122.md, with the card as presented in E-GC-GAP.as-presented-5c0d74a7.md.
+
+  The decision covers exactly one row of one family: row dg5/roots/schema of goal.cancelled, the whole-root schema row of its criterion-12 coverage matrix. The coordinator's reading, attributed to pm-ea-lead rather than quoted as Jared's words, is that the gap is the clauses exhausted under the pinned route on a completed walk of a root on that row, plus the named unsearched remainder of the slow root ca-root-109; that it does not cover roots that were never walked, and any root still unwalked at merge time comes back to Jared before it is listed; and that it does not loosen any other row, family or criterion.
+
+  GAP-LIST v1.1, /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/gap-list-v1.1-20261122/GAP-LIST-v1.1.json (SHA256SUMS SHA-256 3080977bf01fc59d2f4be272f773c9171e4b9528e76d0442b847061fbac8f8fd), names those clauses by canonical id, each on its own root. Its definition, word for word: "The gap is (A) clauses left UNCOVERED by a completed, search-exhausted walk on this row, and (B) the named slow-root remainder: root 109 (dg5:87291d8293370997) clauses not yet closed by a published, verified 109 report. Nothing else is in the gap. Roots never walked are not in it (they are tracked in NOT-WALKED-v1.1, unsigned) and join A only when their walks complete and exhaust them." Section A holds 2,080 entries and section B 3,309, all on root 109 (dg5:87291d8293370997). Section T371 carries 79 credited structural closures provisionally until the T371 audit clears them. Entries marked T360 re-run pending, M proof pending review, carry pending review or T371 audit pending stay on the list with their mark until it clears.
+
+  scripts/pm_goal_dg5_matrix_gap_v1.py reports goal.cancelled's dg5/roots/schema row as DOCUMENTED_GAP only when its checker verdict is closed, every root of the signed list's census except root 109 has a completed walk (a clause-closure report) with no root error, and every UNCOVERED clause is on the list under its own root; root 109's unsearched remainder is section B. A census root other than root 109 that the matrix leaves out, a root outside the census, a clause or root the list does not record, a root error or an open checker verdict keeps the row OPEN. The edition runs last, on the final family matrix after the builder and any admission or intake tool, and the goal.cancelled admission tool must not run on its output. goal.cancelled's criterion-12 cell may then be graded PASS citing this entry and the signed list as a documented partial, once every other criterion-12 requirement holds. That PASS rests on a named, reopenable gap: the listed clauses have no test or proof, and the cell does not claim full coverage. The frozen validator, its specification and the seal rule are unchanged; the seal no longer waits on the listed clauses.
+
+  The list's reopen rule, word for word: "Any new search tool, search-tool edition or authored-case batch that could reach a listed clause re-searches the list. Each verified kill, each accepted proof, and each pending mark that clears removes its entry in the next edition. An entry leaves the list only by such a published, verified result. The list never grows except by a reviewed correction." Root 109 keeps running, and the next edition follows when it finishes. A later edition takes effect only through its own reviewed pin in the edition script.
+
+  Nothing else is relaxed. No other row of goal.cancelled, other family, other criterion, seal condition or clause outside the list changes. Full inherited-root instantiation stays required everywhere else (ATS-1117). This entry grants no admission, registry change, producer adoption, native execution claim, readiness clearance or governance seal. Native execution stays NOT_RUN.
+gui_related: false
+gui_classification_reason: Records how one test-coverage row of one event family is judged; no visual presentation changes.
+depends_on: [DL-039, DL-045, DL-400]
+unblocks: []
+acceptance_criteria:
+- "scripts/pm_goal_dg5_matrix_gap_v1.py marks goal.cancelled dg5/roots/schema DOCUMENTED_GAP only when its checker verdict is closed, every root of the signed list's census except root 109 has a completed walk (a clause-closure report) with no root error, and every UNCOVERED clause of that row is on GAP-LIST v1.1 under its own root, and leaves every other row and family unchanged."
+- "A census root other than root 109 that the matrix leaves out, a root outside the census, a clause not on the list under its own root, a root error, an open checker verdict or a gap list whose SHA256SUMS does not match the pinned SHA-256 keeps the row OPEN or refuses."
+- "goal.cancelled's criterion-12 PASS cites this entry and the list as a documented partial, never as full coverage; an entry leaves the list only by a published, verified result."
+validation_surfaces:
+- python3 -B scripts/pm_goal_dg5_matrix_gap_v1_selftest.py
+- python3 scripts/pm_goal_dg5_matrix_gap_v1.py apply --matrix <goal.cancelled matrix> --out <matrix.json>
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/gap-list-v1.1-20261122/GAP-LIST-v1.1.json
+risk_class: event_authority_documented_gap
+reasoning_tier: high
+context_scope: event_authority_pnc019_goal_five_merge
+implementation_surfaces:
+- scripts/pm_goal_dg5_matrix_gap_v1.py
+- scripts/pm_goal_dg5_matrix_gap_v1_selftest.py
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-GC-GAP_20261122.md (SHA-256 904c6e3c7d705f7cec180e662c8d04ff31e378a56a7e8b376cc18378df86ef16)"
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-GC-GAP.as-presented-5c0d74a7.md (SHA-256 5c0d74a72795dbfe9b6b1a5309974d6ecdd66408f623fb98e5b6d553dd35a90d)"
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/gap-list-v1.1-20261122/SHA256SUMS (SHA-256 3080977bf01fc59d2f4be272f773c9171e4b9528e76d0442b847061fbac8f8fd)"
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/gap-list-v1.1-20261122/GAP-LIST-v1.1.json (SHA-256 059dd2c04e2fc05261a217ba8791fe5f1523635171b7c7bd5038ecf56218f2cf)"
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/ESTIMATE-20261122-v2.md (SHA-256 546b26aabe8dd770f75986093181d99239ac13e602db49a88436251d3f934150)"
+preserved_exact_tokens:
+- E-GC-GAP
+- this is ok
+- Record the gap now, finish the slow root later
+- 1122195635-0112
+- goal.cancelled
+- dg5/roots/schema
+- DOCUMENTED_GAP
+- GAP-LIST v1.1
+- dg5:87291d8293370997
+- 3080977bf01fc59d2f4be272f773c9171e4b9528e76d0442b847061fbac8f8fd
+negative_constraints:
+- No other row, family, criterion, seal condition or clause outside the list is relaxed.
+- The criterion-12 PASS is a documented partial resting on a named, reopenable gap, never a claim of full coverage.
+- No admission, registry change, producer adoption, native execution claim, readiness clearance or governance seal.
+```
+
 ### DL-2601 - Rust Markdown Pipeline, Streaming Correctness, Sanitization, Math, Previews, And Testing Gates
 
 ```yaml
@@ -63361,3 +63471,208 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/DRY_Rules.md#DR-093, ContractName:Plans/UI_Command_Catalog.md#UCC-074, ContractName:Plans/assistant-chat-design.md#ACD-641, ContractName:Plans/assistant-chat-design.md#ACD-642, ContractName:Plans/assistant-chat-design.md#ACD-643, ContractName:Plans/FileManager.md#F-162, ContractName:Plans/Automated_Testing_System.md#ATS-086
+
+### DL-2602 - C-FIX79: Jared takes the recommended answers to eleven closure plan questions
+
+```yaml
+plan_unit_id: DL-2602
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  On 2026-11-24 at about 10:40 PM EST, Jared answered card C-FIX79 ("Take the recommended answers to 11 small plan questions?") with "A take all the recommended answers." The answer was relayed to the stream C lead pm-closure-lead (pm-mail 1125033823-33e4). Each answer below is the card's recommended option, and the registry lines are rows of Plans/.audits/_semantic_closure_registry.jsonl.
+
+  1. Lines 1470 and 1477, concern labels: the closed sets are the union of values already in use. visibility_level is user_visible | project | restricted; attention_level is info | warning | needs_action; concern_category is coverage_blocker | projection_trust | risk | weak_integration. The concern record and concern.created operation schemas and their storage value registry copies carry these enums, and the Contracts_V0 minimum concern example uses severity error instead of high. Orchestrator_Page OP-004 stays the semantic owner of the concern family.
+  2. Line 1785, opening DevTools: cmd.browser.open_devtools is a navigation wrapper. Its request is BrowserDevToolsOpenRequest {browser_session_id, mode?: docked_bottom | docked_right | undocked} and its typed route result is BrowserDevToolsOpenResultV1 {devtools_session_id, boundary_ref, opened_at_utc}, both in Plans/section15_browser_program_contracts.schema.json. The wiring rows name them, BrowserActionRequestV2 no longer lists the command, and the DL-341 handler_unavailable refusal for its unsettled request ends.
+  3. Line 1546, Tools.md duplicate chapters 10 to 13: the physical numbers stay. Chapters of the second block (the second ## 10. Firecrawl provider integration through ## 15.) are cited by heading name and their numbers are not authoritative; the 2026-07-08 supersession's ## 11. target is withdrawn. Permissions PS-058's pinned Tools.md §10.1 citation names its heading. No heading is renamed.
+  4. Line 1343, LSP client foundation: Puppet Master builds its own client on the LSPSupport §3.6.1 stack (lsp-types, tokio, tokio-util, serde_json, tracing). async-lsp may be used only as an optional internal wire helper. lsp-client and async_lsp_client are rejected alternatives, not dependencies.
+  5. Line 1381, persona disable and restore: both are typed operations of cmd.persona.update, set_enabled and restore_shipped_default, under the existing expected_owner_revision compare-and-swap and full PERSONA.md validation, and their success is the existing persona.updated. The Personas addendum's cmd.persona.edit, cmd.persona.disable, cmd.persona.restore and cmd.persona.validate_schema spellings are retired.
+  6. Line 1382, crew roles: crew.roles is the role record map {display_name, description, required_capabilities[], default_persona_id?, allowed_persona_ids[]} keyed by the closed role_id set planner, implementer, reviewer, tester, designer, security, release, governance. owner_hint matches a role_id exactly, the Persona comes from allowed_persona_ids[] or default_persona_id, and provider and model come only from the Models_System selection order. The provider/model/persona tuple form is retired source lineage.
+  7. Line 1467, Resubmit: the PRDB-014 targeted revision pass is the new command cmd.prd_builder.revision.resubmit, with a UI_Command_Catalog row, a payload definition under PRDB-024, a prd_planning_runtime_contracts entry and the production wiring row catalog.prd_builder_revision_resubmit. FinalGUISpec 7.19.2 bundle Resubmit, F3-150, F3-322 and PRD Builder bind to it. The canonical PRD Builder, Planning Wizard and Plan Compile command set of DL-333 grows from 28 to 29 ids; DL-333's own text is unchanged.
+  8. Line 1468, persona mapping editors: FinalGUISpec 19.8 and F3-296 narrow to the planning.interview.builder-* settings, saved through the Settings transaction, plus the existing crew and overseer Persona selections. The Interview-stage, Orchestrator node/package/lane/seam and Multi-Pass mapping editors and every per-mapping platform/model choice are retired. Provider-gap disclosures travel in the resolver's skipped_persona_controls[].
+  9. Line 1469, Free Models: the top-10 is the model defaults list (Settings transaction on ai.models.default-model and its layers), not a second list. Retry check is cmd.model.refresh with refresh_reason free_models_update_retry, and View details is a no-persist disclosure of the failed update's activation, quarantine and rollback records.
+  10. Line 1533, FinalGUISpec duplicate ## 15 and #### 7.4.2: F3-389 is amended so both pairs stay as declared aliases and citations use the full heading name. Renumbering is left to a scheduled structural cleanup; no heading is renamed.
+  11. Line 1605, Decisions page: Puppet Master shows no Decisions GUI. The sentence "GUI visibility is through Settings > Governance > Decisions when surfaced by FinalGUISpec" in the 2026-07-08 FABLE Deferred Action Concrete Repair Addendum of this log is retired by this entry, and DecisionRecord gui_surface_ref is always absent. DecisionRecord is the planning-canon shape of a Decision_Log entry. The old entry's text is not rewritten.
+
+  The card also listed four choices that agents had already made, and Jared left them as they were: the user confirms the technology choices at the end of the architecture step (line 1521); a checked image-generation route stays trusted for 7 days and is re-checked only when the user asks (K4, line 1345); conflict worktrees are durable records (line 1365); and the FileSafe trace defaults are 8 MiB per trace and 256 MiB per run (line 1330).
+gui_related: true
+gui_classification_reason: Several answers change visible controls (Resubmit, persona editors, Free Models top-10, DevTools) or retire GUI surfaces.
+split_recommended: false
+depends_on: [DL-333, DL-341, OP-004, SMPFS-328, PRDB-014, PRDB-024, F3-296, F3-389, P-030, LSPS-075]
+unblocks: []
+acceptance_criteria:
+- Each of the eleven answers is written into its owner text, and that text cites DL-2602.
+- cmd.prd_builder.revision.resubmit has a catalog row, a payload definition and a production wiring row.
+- No heading is renamed for answers 3 and 10, and no earlier Decision_Log entry is rewritten.
+validation_surfaces:
+- python3 scripts/pm-command-payload-defs-check.py
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-concern-created-contracts-check.py
+risk_class: owner_choice_drift
+reasoning_tier: high
+context_scope: closure_reaudit_fix79_owner_answers
+implementation_surfaces:
+- Plans/Contracts_V0.md
+- Plans/concern_created_contracts/concern_record.schema.json
+- Plans/concern_created_contracts/concern_created_operation.schema.json
+- Plans/storage_value_registry.json
+- Plans/section15_browser_program_contracts.schema.json
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Wiring_Matrix.production.json
+- Plans/Commands_System.md
+- Plans/Tools.md
+- Plans/Permissions_System.md
+- Plans/LSPSupport.md
+- Plans/Personas.md
+- Plans/UI_Command_Catalog.md
+- Plans/PRD_Builder.md
+- Plans/prd_planning_runtime_contracts.json
+- Plans/FinalGUISpec.md
+- Plans/Models_System.md
+node_compile_hint:
+  mode: owner_decision_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/fix79/card/card.json, SHA-256 3a162d33d7abf99fb902715a717b7a7afcb653f673972633da0c83121504acdf"
+- "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/fix79/K1-mvp-contracts/FIX-NOTES.md, K3-tools-lsp-files/FIX-NOTES.md, K4-media-models/FIX-NOTES.md, K5-gui-commands/FIX-NOTES.md (OWNER-CHOICE sections)"
+- "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/LEAD-STATE.md (2026-11-24 10:40 PM EST entry)"
+preserved_exact_tokens:
+- DL-2602
+- C-FIX79
+- "A take all the recommended answers."
+- cmd.prd_builder.revision.resubmit
+- BrowserDevToolsOpenRequest
+- BrowserDevToolsOpenResultV1
+- set_enabled
+- restore_shipped_default
+- free_models_update_retry
+- "Settings > Governance > Decisions when surfaced by FinalGUISpec"
+negative_constraints:
+- Do not rename Tools.md or FinalGUISpec headings under this decision.
+- Do not rewrite DL-333 or the 2026-07-08 FABLE addendum text; this entry records the changes.
+- Do not reseal governance artifacts or claim native execution proof from these Plan edits.
+owner_hints:
+- Plans/Decision_Log.md
+- Plans/Contracts_V0.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/LSPSupport.md
+- Plans/Personas.md
+- Plans/UI_Command_Catalog.md
+- Plans/PRD_Builder.md
+- Plans/FinalGUISpec.md
+- Plans/Models_System.md
+- Plans/Tools.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-333, ContractName:Plans/Decision_Log.md#DL-341, ContractName:Plans/PRD_Builder.md#PRDB-014, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-328, ContractName:Plans/FinalGUISpec.md#F3-389
+
+### DL-2603 - C-FIX79: how DL-2602 answer 9 (Free Models top-10) is applied
+
+```yaml
+plan_unit_id: DL-2603
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  DL-2602 answer 9 records Jared's answer that the Free Models top-10 is the model defaults list in Settings, not a second list. Each model default in Settings is one job row holding one model (Models_System 7.2, settings_inventory model_defaults.list_setting_ids), so no ranked ten-model list can be the same thing as ai.models.default-model. Applied on 2026-11-25 under Jared's standing rule of one defaults list in Settings: free models are picked per job row of the Settings > Models Default models list, saved by the Settings transaction; there is no ranked top-10 store or editor anywhere. The Free Models screen keeps availability rows, Retry check (cmd.model.refresh with refresh_reason free_models_update_retry), View details, and one per-model action, Use for a job, which writes one job row through the same Settings transaction. Older passages that say "top-10" are read by the rule in MS-120. This entry clarifies how DL-2602 answer 9 is written into the plans; it changes no other answer and does not rewrite DL-2602.
+gui_related: true
+gui_classification_reason: It decides which control the Free Models screen shows and that the ranked editor is retired.
+split_recommended: false
+depends_on: [DL-2602, MS-120, F3-408, F3-409]
+unblocks: []
+acceptance_criteria:
+- MS-120, F3-408 and F3-409 state that free models are chosen on Default models job rows and that no ranked top-10 store or editor exists.
+- The Free Models screen's only write path is the Settings transaction on one job row.
+validation_surfaces:
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-plan-index.py validate
+risk_class: owner_choice_drift
+reasoning_tier: medium
+context_scope: closure_reaudit_fix79_owner_answers
+implementation_surfaces:
+- Plans/Models_System.md
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- "Plans/Decision_Log.md#DL-2602 answer 9"
+- "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/fix79/K5-gui-commands/review-neon.jsonl (row 1469 and regression 4) and FIXR1-NOTES.md (1469)"
+preserved_exact_tokens:
+- DL-2603
+- DL-2602
+- free_models_update_retry
+- Use for a job
+negative_constraints:
+- Do not rewrite DL-2602; this entry records how answer 9 is applied.
+- Do not add a second model list outside Settings.
+owner_hints:
+- Plans/Decision_Log.md
+- Plans/Models_System.md
+- Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-2602, ContractName:Plans/Models_System.md#MS-120, ContractName:Plans/FinalGUISpec.md#F3-409, ContractName:Plans/FinalGUISpec.md#F3-408
+
+### DL-2604 - C-FIX79B: Jared takes the recommended answers to three more closure plan questions
+
+```yaml
+plan_unit_id: DL-2604
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  On 2026-11-25 at about 9:39 PM EST, Jared answered card C-FIX79B ("Take the recommended answers to 3 more small plan questions?") with "A", take all three recommended answers. The answer was relayed to the stream C lead pm-closure-lead (pm-mail 1126024113) and also signed on the card. Each answer below is the card's recommended option, and the registry lines are rows of Plans/.audits/_semantic_closure_registry.jsonl.
+
+  1. Line 1377, command arguments: the Commands manager keeps the single Arguments hint field (arguments[0].hint) of the selected design (Concepts/PMConcept7.html; Commands_System 3.2 and CS-030). Argument names, required flags and later arguments are authored in the command file and preserved by every GUI edit. The finding's request for a GUI list editor for arguments is retired by this decision.
+  2. Line 1549, browser command tiers: one tier rule under Section 15 "Browser Action Table And Timeouts" gives every cmd.browser.* command exactly one effect level by what it does, highest first runs_code_or_debugs (advanced_debug_testing), sends_data_out, changes_page_or_session and reads_page_only (each guaranteed_everyday). Rows already in the action table keep their explicit tier, which agrees with the rule. cmd.browser.program.pause, cmd.browser.program.cancel and cmd.browser.program.inspect are named as advanced_debug_testing because they act only on a Browser Program.
+  3. Line 1281, Persona cost budget: in the Models_System MS-135 router the cost_budget gate skips only a model whose known cost exceeds the active Persona cost budget. A model with an unknown price stays pickable, and wherever the choice is shown (the resolver record's selection_reason.alternatives[] entry, the model picker and settlement or receipt text) its price is shown as unknown, never as zero or as within budget.
+gui_related: true
+gui_classification_reason: It keeps the Commands manager's argument control, sets which feature tier each browser command belongs to, and decides how an unknown model price is shown.
+split_recommended: false
+depends_on: [DL-2602, CS-030, SMPFS-100, MS-102, MS-135]
+unblocks: []
+acceptance_criteria:
+- Commands_System 3.2 and CS-030 keep Arguments hint as the only argument control and cite DL-2604 for the retired list editor.
+- Every catalogued cmd.browser.* command appears at exactly one effect level of the Section 15 tier rule, and every explicit tier in the action table agrees with it.
+- Every Models_System passage that describes the Persona cost-budget gate says an unknown price stays pickable and is shown as unknown.
+- No earlier Decision_Log entry is rewritten.
+validation_surfaces:
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-plan-index.py validate
+risk_class: owner_choice_drift
+reasoning_tier: medium
+context_scope: closure_reaudit_fix79_owner_answers
+implementation_surfaces:
+- Plans/Commands_System.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Models_System.md
+node_compile_hint:
+  mode: owner_decision_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/fix79/card2/card.json, SHA-256 37d56a96f46133305cdeefd6729a6853d90b75d7d052ba97283fab29017c2371"
+- "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/fix79/DEEP/half-B/DFX-B2o-NOTES.md (1377), half-A/DFX-A1-NOTES.md (1549), half-B/DFX-B1-NOTES.md (1281)"
+- "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/LEAD-STATE.md (2026-11-25 9:42 PM EST entry)"
+preserved_exact_tokens:
+- DL-2604
+- C-FIX79B
+- Arguments hint
+- guaranteed_everyday
+- advanced_debug_testing
+- cost_budget
+negative_constraints:
+- Do not add a GUI list editor for command arguments under this decision.
+- Do not rewrite DL-2602, DL-2603 or any earlier entry; this entry records the three answers.
+- Do not reseal governance artifacts or claim native execution proof from these Plan edits.
+owner_hints:
+- Plans/Decision_Log.md
+- Plans/Commands_System.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Models_System.md
+```
+
+ContractRef: ContractName:Plans/Commands_System.md#CS-030, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-100, ContractName:Plans/Models_System.md#MS-102, ContractName:Plans/Models_System.md#MS-135

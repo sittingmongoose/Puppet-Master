@@ -2,9 +2,9 @@
 
 Source: `Plans/WorktreeGitImprovement.md`
 
-Source lines: L924-L4912
+Source lines: L940-L4932
 
-Source SHA256: `ab3eeeeef09ddea12414c865b3d3b853617aa80fcac2a918c67408603f34a6e4`
+Source SHA256: `c2ddab928a242660ba6faa69d6e17ad63fd87a678f5114d0f0d903019c2a5798`
 
 ---
 
@@ -365,7 +365,7 @@ plan_unit_id: W-008
 unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
-canonical_text: After restart, worktree resolution and PR head branch resolution recover from durable or listed worktrees instead of falling back to the main repo path or main repo branch.
+canonical_text: After restart, worktree resolution and PR head branch resolution recover from durable or listed worktrees that the section 2.7 worktree_exists check returns exists_valid for, with the node's recorded branch as expected_branch, instead of falling back to the main repo path or main repo branch.
 gui_related: false
 gui_classification_reason: This unit defines backend/runtime, storage, governance, or command policy rather than visual presentation.
 split_recommended: false
@@ -378,6 +378,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - W-008 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage.
+- A non-valid exact binding blocks both iteration and PR creation with the section 2.7 state, including when a cache entry is evicted by section 2.12. The durable binding, unresolved-conflict fence, path and refs remain intact.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
@@ -1028,7 +1029,7 @@ plan_unit_id: W-020
 unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
-canonical_text: Worktree state files are documented, Doctor adds worktree checks and orphan detection, and optional path/list revalidation can remove stale active_worktrees before use.
+canonical_text: Worktree state files are documented, Doctor adds worktree checks and orphan detection, and optional path/list revalidation can evict a stale active_worktrees projection entry before use. Section 2.7 governs the resulting block on the exact durable binding.
 gui_related: false
 gui_classification_reason: This unit defines backend/runtime, storage, governance, or command policy rather than visual presentation.
 split_recommended: false
@@ -2720,7 +2721,7 @@ plan_unit_id: W-050
 unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
-canonical_text: "Conflict worktree persistence may be in-memory for the initial release, while longer-lived conflict state records use typed rows in the canonical redb family (SP-340) with no JSON state file (SP-339), without conflating conflict cleanup with normal worktree cleanup."
+canonical_text: "Conflict worktree persistence is durable from the initial release: each unresolved merge conflict requires a typed worktree_conflict_state.v1:{project_id}:{worktree_id} row. Registration in the canonical redb family (SP-340 and storage-plan section 2.3.1) is an outstanding release prerequisite specified in section 7.4. There is no JSON state file (SP-339). Clear the row only on verified resolution or explicit discard. An in-memory HashSet<node_id> is a per-session projection of those rows and never the authority. The former in-memory-only initial release option is retired, and conflict cleanup is never conflated with normal worktree cleanup."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
 split_recommended: false
@@ -2735,6 +2736,9 @@ depends_on:
 - W-033
 unblocks: []
 acceptance_criteria:
+- "After a merge conflict on node N, restarting the app and re-running N does not remove or recreate N's worktree: the worktree_conflict_state.v1 row is read at startup or project open and reuse stays blocked until resolve or explicit discard deletes the row."
+- "Clearing the in-memory projection (new session) without deleting the worktree_conflict_state.v1 row leaves the conflict visible and reuse blocked; ordinary worktree cleanup never deletes a worktree whose row exists."
+- "A missing path or gitdir and an unavailable durable conflict lookup each leave reuse blocked until the owner verifies that no unresolved conflict remains."
 - "W-050 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
 - "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
@@ -2825,7 +2829,7 @@ plan_unit_id: W-052
 unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
-canonical_text: "active_worktrees is repopulated from listed worktree paths by extracting node identity and inserting canonical entries rather than relying on stale in-memory state."
+canonical_text: "active_worktrees is repopulated from listed worktree paths by extracting node identity and inserting canonical entries only for worktrees whose section 2.7 worktree_exists check, with the recorded expected branch when known, returns exists_valid, rather than relying on stale in-memory state."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
 split_recommended: false
@@ -3035,7 +3039,7 @@ plan_unit_id: W-056
 unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
-canonical_text: "Resolved worktree decisions require HashSet<node_id> active tracking, detached HEAD merge handling, recovery timing, and Windows-safe path behavior for worktree lifecycle implementation."
+canonical_text: "Resolved worktree decisions require durable conflict persistence as typed worktree_conflict_state.v1:{project_id}:{worktree_id} rows in the canonical redb family (SP-340), with the HashSet<node_id> active tracking of conflict worktrees kept only as a per-session projection rebuilt from those rows and never the authority (section 7.14 Worktree item 3, section 7.4), plus detached HEAD merge handling, recovery timing, and Windows-safe path behavior for worktree lifecycle implementation. Registering that key and value shape in Plans/storage_value_registry.json is an outstanding prerequisite (section 7.4) before the initial release enables the path."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
 split_recommended: false

@@ -2,9 +2,9 @@
 
 Source: `Plans/Media_Generation_and_Capabilities.md`
 
-Source lines: L6463-L6633
+Source lines: L6494-L6666
 
-Source SHA256: `847fc414c8756dcf511b1cdd79bca4551a6915978b6dccf524d46258f128e492`
+Source SHA256: `59866e6dec8c7d4ecf7e2ec6a8bef3b056fd55803ee6c8d5ba7e4e1ea4413904`
 
 ---
 
@@ -119,14 +119,16 @@ unblocks: []
 acceptance_criteria:
 - "Non-vision model with image shows \u201Ccaption fallback used,\u201D with caption artifact and cost."
 - User can disable fallback.
-- Provider request receipt says selected model saw text caption only.
+- The receipt says the selected model received only the caption for that input when delivery evidence confirms it. A proven refusal says the input did not reach the model. A timeout without delivery evidence says delivery is unknown.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
 - "Non-vision model with image shows \u201Ccaption fallback used,\u201D with caption artifact and cost."
 - User can disable fallback.
-- Provider request receipt says selected model saw text caption only.
+- Replay confirmed caption delivery, pre-model refusal and timeout without delivery evidence. Check the per-input disclosure against the delivery evidence in both the response and the durable result record.
+- Replay an unresolved policy ID with valid inputs and no requested or effective route. Both the failure response and the durable result record carry a null engine and the same failed input_settlement with null route IDs and a not_evaluated disposition for each input. For a pre-route failure with a resolved requested route, check that requested_route_id records that route while selected_route_id and engine remain null. With absent or empty inputs or a structurally invalid input list or source surfaces, both objects carry null input_settlement.
+- Replay a caption budget stop with two candidates. Check that each input has a terminal disposition and that the receipt resolves billed or unknown caption cost from the caption call's UsageRecord on success and failure.
 risk_class: p1_security_release_supply_chain_hardening
 reasoning_tier: standard
 context_scope: security_release_supply_chain

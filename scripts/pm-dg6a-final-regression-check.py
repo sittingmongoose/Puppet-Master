@@ -19,6 +19,25 @@ REVIEWED = 'ab06fd3d6873e6f42fd0873b8edebfe6147f1c3f'
 GRADE = 'reports/event-authority-20261104/DG6A.self-grade.json'
 # C12-DG6A (PNC-019 S4): criterion 12 is PASS only with the closure report cited at an exact line.
 C12_REPORT = 'reports/event-authority-20261114/C12-DG6A.md'
+# C12-DG6A regrade (r3): the expected grade of the two criteria the plans moved on, per family; every other criterion expects PASS.
+EXPECTED_CELL_GRADES = {
+    'alert.acknowledged': {'membership_version': 'PASS', 'retention': 'PASS'},
+    'alert.dismissed': {'membership_version': 'PASS', 'retention': 'PASS'},
+    'alert.rule_muted': {'membership_version': 'PASS', 'retention': 'PASS'},
+    'alert.snoozed': {'membership_version': 'PASS', 'retention': 'PASS'},
+    'bundle.annotation_state_changed': {'membership_version': 'PASS', 'retention': 'PASS'},
+    'bundle.note_created': {'membership_version': 'PASS', 'retention': 'PASS'},
+    'bundle.note_status_changed': {'membership_version': 'PASS', 'retention': 'PASS'},
+    'concern.assigned': {'membership_version': 'PASS', 'retention': 'PASS'},
+    'concern.created': {'membership_version': 'PASS', 'retention': 'PASS'},
+    'concern.evidence_linked': {'membership_version': 'PASS', 'retention': 'PASS'},
+    'concern.promoted': {'membership_version': 'PASS', 'retention': 'PASS'},
+    'concern.reopened': {'membership_version': 'PASS', 'retention': 'PASS'},
+    'concern.resolved': {'membership_version': 'PASS', 'retention': 'PASS'},
+    'concern.updated': {'membership_version': 'PASS', 'retention': 'PASS'},
+    'panel.redocked': {'membership_version': 'PASS', 'retention': 'PASS'},
+    'panel.undocked': {'membership_version': 'PASS', 'retention': 'PASS'},
+}
 
 
 def load(path):
@@ -43,7 +62,7 @@ def audit_grade():
             assert row == old[row['event_type']], ('stopped family changed', row['event_type'])
         else:
             for criterion, cell in row['cells'].items():
-                expected = {'membership_version': 'ABSENT', 'retention': 'PARTIAL'}.get(criterion, 'PASS')
+                expected = EXPECTED_CELL_GRADES[row['event_type']].get(criterion, 'PASS')
                 assert cell['status'] == expected, (row['event_type'], criterion, cell['status'])
                 if criterion == 'positive_negative_oracles':
                     assert any(ref['path'] == C12_REPORT for ref in cell['evidence']), (

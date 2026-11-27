@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L379-L491
+Source lines: L379-L492
 
-Source SHA256: `b7ed4b1c3437a68b97a5ec79bce60e0c2d172b0d1c6821dffad8113ff6f382e2`
+Source SHA256: `4b986f0a014ca1916348e5d2ed7cf5f5ddd3a0f018c2b2f8354558f1d1c73d61`
 
 ---
 
@@ -111,6 +111,7 @@ The following rows are additionally required for Debug Mode and Investigation Co
 | Assistant mode strip `Debug` | `cmd.chat.mode` | chat header mode strip | session mode controller | switch the thread into Debug overlay and focus the active investigation or target picker |
 | Slash command `/mode debug` | `cmd.chat.mode` | slash-command dispatcher | session mode controller | same canonical mode-switch behavior as the visible mode strip |
 | Debug target picker button | `cmd.chat.open_debug_target_picker` | thread header / command palette | debug investigation controller | reveal canonical target discovery / rebinding flow |
+| Investigation header `Open target` | `cmd.chat.open_investigation_target` | Investigation Context card / Context Detail Pane | debug investigation controller | open the investigation's effective target in its owning surface; no-persist route/open disposition, no event |
 | Investigation header `Export Bundle` | `cmd.chat.export_investigation_bundle` | Investigation Context card / Context Detail Pane | debug investigation controller / runtime-artifact controller | write bundle manifest and emit export event |
 | Investigation item `Revoke` | `cmd.chat.revoke_investigation_item` | Investigation Context card / Context Detail Pane | debug investigation controller | mark the item revoked and exclude it from future prompt injection |
 | Debug Automation banner `Approve` | `cmd.runtime.approve` | investigation banner / attention surface | runtime controller / permission controller | activate the requested run-scoped Debug Automation Profile |

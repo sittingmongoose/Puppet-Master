@@ -1,0 +1,1931 @@
+{
+  "census_sha256": "e90632b6aac7410726c18e710e5c49e1b23aac41cdaa5b785df9dc5bf7881c6c",
+  "examples": {
+    "dg5:93c18ac1da07b989": {
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "scope"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "goal_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "goal_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_run_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/goal_run_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "goal_run_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/project_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "project_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/project_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "project_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/storage_instance_id/minLength": {
+        "path": [
+          "record",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/properties/storage_instance_id/type": {
+        "path": [
+          "record",
+          "scope",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "scope"
+        ]
+      },
+      "https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json#/$defs/RunScope/type": {
+        "path": [
+          "record",
+          "scope"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "causation"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/family_id/minLength": {
+        "path": [
+          "record",
+          "causation",
+          "family_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/family_id/type": {
+        "path": [
+          "record",
+          "causation",
+          "family_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_key/minLength": {
+        "path": [
+          "record",
+          "causation",
+          "physical_key"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_key/type": {
+        "path": [
+          "record",
+          "causation",
+          "physical_key"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/pattern": {
+        "path": [
+          "record",
+          "causation",
+          "physical_value_sha256"
+        ],
+        "value": "92299e6fbe40ed87328dba79832a329a1723d0e93a507179cf09fee7ae9d67fb\n"
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/physical_value_sha256/type": {
+        "path": [
+          "record",
+          "causation",
+          "physical_value_sha256"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_id/minLength": {
+        "path": [
+          "record",
+          "causation",
+          "schema_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_id/type": {
+        "path": [
+          "record",
+          "causation",
+          "schema_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_version/minLength": {
+        "path": [
+          "record",
+          "causation",
+          "schema_version"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/schema_version/type": {
+        "path": [
+          "record",
+          "causation",
+          "schema_version"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/storage_instance_id/minLength": {
+        "path": [
+          "record",
+          "causation",
+          "storage_instance_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/properties/storage_instance_id/type": {
+        "path": [
+          "record",
+          "causation",
+          "storage_instance_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/required": {
+        "member": [
+          "remove",
+          "storage_instance_id"
+        ],
+        "path": [
+          "record",
+          "causation"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/SourceSelector/type": {
+        "path": [
+          "record",
+          "causation"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/EventCandidateSelection/allOf/1/properties/family_id/const": {
+        "path": [
+          "record",
+          "afterimages",
+          "event_candidate",
+          "family_id"
+        ],
+        "value": "workflow_cancel_event_candidatex"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/EventCandidateSelection/allOf/1/properties/schema_id/const": {
+        "path": [
+          "record",
+          "afterimages",
+          "event_candidate",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.workflow_cancel_event_candidate.v3x"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/EventCandidateSelection/allOf/1/properties/schema_version/const": {
+        "path": [
+          "record",
+          "afterimages",
+          "event_candidate",
+          "schema_version"
+        ],
+        "value": "3.0.0x"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Origin/allOf/0/if/properties/issuer_method/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "control": {
+                "family_id": "workflow_cancel_control",
+                "physical_key": "workflow_cancel_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:99aede32192f0e40422a4a7d6740508727e68c8de28421b9fbfb560a8e472690",
+                "physical_value_sha256": "253073d2cb6da621d504b5c648f8e058aee6d6f65aadcd92b9ab1f5fcb105014",
+                "schema_id": "pm.storage_value.workflow_cancel_control.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "kind": "publish",
+              "native_body": {
+                "family_id": "workflow_goal_run_body",
+                "physical_key": "workflow_goal_run_body:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:74c6990e7eefce7e68e36e54b74c3fdabbe23354667322324a9fa7842d92c79c",
+                "physical_value_sha256": "98c12d112e9c5222752cd92f73dc46d22441f44ea3017b1e5bc612bd2dc73379",
+                "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "native_control": {
+                "family_id": "workflow_goal_run_control",
+                "physical_key": "workflow_goal_run_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:ea869b11e75541c0124f4b63b4390d9355f3854d03c90bf48e998ad0bec86f14",
+                "physical_value_sha256": "14d03750bf756dee80d976c5eb1d5a2243d70b9d3f990f0156b77b01419ec8e0",
+                "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "result": {
+                "family_id": "workflow_cancel_result",
+                "physical_key": "workflow_cancel_result:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:922d3ed8466a282b6dd8a0d07c8ae7e72efe520172283fde5219328238dc1658",
+                "physical_value_sha256": "e8af37cc609b0d35a2b91afcca79e3f623517f4dd1139503073990b1885257dc",
+                "schema_id": "pm.storage_value.workflow_cancel_result.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              }
+            },
+            "beforeimages": [],
+            "causation": {
+              "family_id": "workflow_cancel_intent",
+              "physical_key": "workflow_cancel_intent:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:c69f3a715684b55fd7b07cf0429e4a7d2a9627724ad0f71d3140f92c9128cad3",
+              "physical_value_sha256": "8d08aca373f8f6f1ce4cdd455fee387f1d598e202d0f706a8d8608a3940c0068",
+              "schema_id": "pm.storage_value.workflow_cancel_intent.v3",
+              "schema_version": "3.0.0",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "issued_at_utc": "2026-11-20T13:10:21.046Z",
+            "issuer_method": "owner.workflow.executor_cancel.publish_disposition.v3",
+            "operation_id": "TEST_ONLY:op:d06-preserve:bb24e3285551",
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-0e9a9efdea7d",
+              "goal_run_id": "TEST_ONLY-goal-run-0e9a9efdea7d",
+              "project_id": "TEST_ONLY-project-0e9a9efdea7d",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "transaction_id": "TEST_ONLY:d06-transaction:319d05b63ac6",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner:0e9a9efdea7d"
+          }
+        },
+        "path": [
+          "record",
+          "issuer_method"
+        ],
+        "selector_messages": [
+          "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PrepareAfterimages/closed_members",
+          "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PrepareAfterimages/properties/kind/const",
+          "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PrepareAfterimages/required"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Origin/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Origin/properties/afterimages/oneOf": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "control": {
+                "family_id": "workflow_cancel_control",
+                "physical_key": "workflow_cancel_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:99aede32192f0e40422a4a7d6740508727e68c8de28421b9fbfb560a8e472690",
+                "physical_value_sha256": "253073d2cb6da621d504b5c648f8e058aee6d6f65aadcd92b9ab1f5fcb105014",
+                "schema_id": "pm.storage_value.workflow_cancel_control.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "kind": "publish",
+              "native_body": {
+                "family_id": "workflow_goal_run_body",
+                "physical_key": "workflow_goal_run_body:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:74c6990e7eefce7e68e36e54b74c3fdabbe23354667322324a9fa7842d92c79c",
+                "physical_value_sha256": "98c12d112e9c5222752cd92f73dc46d22441f44ea3017b1e5bc612bd2dc73379",
+                "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "native_control": {
+                "family_id": "workflow_goal_run_control",
+                "physical_key": "workflow_goal_run_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:ea869b11e75541c0124f4b63b4390d9355f3854d03c90bf48e998ad0bec86f14",
+                "physical_value_sha256": "14d03750bf756dee80d976c5eb1d5a2243d70b9d3f990f0156b77b01419ec8e0",
+                "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "result": {
+                "family_id": "workflow_cancel_result",
+                "physical_key": "workflow_cancel_result:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:922d3ed8466a282b6dd8a0d07c8ae7e72efe520172283fde5219328238dc1658",
+                "physical_value_sha256": "e8af37cc609b0d35a2b91afcca79e3f623517f4dd1139503073990b1885257dc",
+                "schema_id": "pm.storage_value.workflow_cancel_result.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              }
+            },
+            "beforeimages": [],
+            "causation": {
+              "family_id": "workflow_cancel_intent",
+              "physical_key": "workflow_cancel_intent:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:c69f3a715684b55fd7b07cf0429e4a7d2a9627724ad0f71d3140f92c9128cad3",
+              "physical_value_sha256": "8d08aca373f8f6f1ce4cdd455fee387f1d598e202d0f706a8d8608a3940c0068",
+              "schema_id": "pm.storage_value.workflow_cancel_intent.v3",
+              "schema_version": "3.0.0",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "issued_at_utc": "2026-11-20T13:10:21.046Z",
+            "issuer_method": "owner.workflow.executor_cancel.publish_disposition.v3",
+            "operation_id": "TEST_ONLY:op:d06-preserve:bb24e3285551",
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-0e9a9efdea7d",
+              "goal_run_id": "TEST_ONLY-goal-run-0e9a9efdea7d",
+              "project_id": "TEST_ONLY-project-0e9a9efdea7d",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "transaction_id": "TEST_ONLY:d06-transaction:319d05b63ac6",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner:0e9a9efdea7d"
+          }
+        },
+        "origin_afterimages_implication": true,
+        "path": [
+          "record",
+          "afterimages"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Origin/properties/beforeimages/type": {
+        "path": [
+          "record",
+          "beforeimages"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Origin/properties/issued_at_utc/format": {
+        "path": [
+          "record",
+          "issued_at_utc"
+        ],
+        "value": "not-a-date-time"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Origin/properties/issued_at_utc/type": {
+        "path": [
+          "record",
+          "issued_at_utc"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Origin/properties/issuer_method/enum": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "control": {
+                "family_id": "workflow_cancel_control",
+                "physical_key": "workflow_cancel_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:99aede32192f0e40422a4a7d6740508727e68c8de28421b9fbfb560a8e472690",
+                "physical_value_sha256": "253073d2cb6da621d504b5c648f8e058aee6d6f65aadcd92b9ab1f5fcb105014",
+                "schema_id": "pm.storage_value.workflow_cancel_control.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "kind": "publish",
+              "native_body": {
+                "family_id": "workflow_goal_run_body",
+                "physical_key": "workflow_goal_run_body:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:74c6990e7eefce7e68e36e54b74c3fdabbe23354667322324a9fa7842d92c79c",
+                "physical_value_sha256": "98c12d112e9c5222752cd92f73dc46d22441f44ea3017b1e5bc612bd2dc73379",
+                "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "native_control": {
+                "family_id": "workflow_goal_run_control",
+                "physical_key": "workflow_goal_run_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:ea869b11e75541c0124f4b63b4390d9355f3854d03c90bf48e998ad0bec86f14",
+                "physical_value_sha256": "14d03750bf756dee80d976c5eb1d5a2243d70b9d3f990f0156b77b01419ec8e0",
+                "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "result": {
+                "family_id": "workflow_cancel_result",
+                "physical_key": "workflow_cancel_result:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:922d3ed8466a282b6dd8a0d07c8ae7e72efe520172283fde5219328238dc1658",
+                "physical_value_sha256": "e8af37cc609b0d35a2b91afcca79e3f623517f4dd1139503073990b1885257dc",
+                "schema_id": "pm.storage_value.workflow_cancel_result.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              }
+            },
+            "beforeimages": [],
+            "causation": {
+              "family_id": "workflow_cancel_intent",
+              "physical_key": "workflow_cancel_intent:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:c69f3a715684b55fd7b07cf0429e4a7d2a9627724ad0f71d3140f92c9128cad3",
+              "physical_value_sha256": "8d08aca373f8f6f1ce4cdd455fee387f1d598e202d0f706a8d8608a3940c0068",
+              "schema_id": "pm.storage_value.workflow_cancel_intent.v3",
+              "schema_version": "3.0.0",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "issued_at_utc": "2026-11-20T13:10:21.046Z",
+            "issuer_method": "owner.workflow.executor_cancel.publish_disposition.v3",
+            "operation_id": "TEST_ONLY:op:d06-preserve:bb24e3285551",
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-0e9a9efdea7d",
+              "goal_run_id": "TEST_ONLY-goal-run-0e9a9efdea7d",
+              "project_id": "TEST_ONLY-project-0e9a9efdea7d",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "transaction_id": "TEST_ONLY:d06-transaction:319d05b63ac6",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner:0e9a9efdea7d"
+          }
+        },
+        "path": [
+          "record",
+          "issuer_method"
+        ],
+        "value": "owner.workflow.executor_cancel.prepare_disposition.v3x"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Origin/properties/operation_id/minLength": {
+        "path": [
+          "record",
+          "operation_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Origin/properties/operation_id/type": {
+        "path": [
+          "record",
+          "operation_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Origin/properties/transaction_id/minLength": {
+        "path": [
+          "record",
+          "transaction_id"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Origin/properties/transaction_id/type": {
+        "path": [
+          "record",
+          "transaction_id"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Origin/properties/workflow_owner_epoch/minimum": {
+        "path": [
+          "record",
+          "workflow_owner_epoch"
+        ],
+        "value": -1
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Origin/properties/workflow_owner_epoch/type": {
+        "path": [
+          "record",
+          "workflow_owner_epoch"
+        ],
+        "value": 1.5
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Origin/properties/workflow_owner_ref/minLength": {
+        "path": [
+          "record",
+          "workflow_owner_ref"
+        ],
+        "value": ""
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Origin/properties/workflow_owner_ref/type": {
+        "path": [
+          "record",
+          "workflow_owner_ref"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Origin/required": {
+        "member": [
+          "remove",
+          "scope"
+        ],
+        "path": [
+          "record"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/Origin/type": {
+        "path": [
+          "record"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PrepareAfterimages/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "afterimages"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PrepareAfterimages/properties/control/allOf/1/properties/family_id/const": {
+        "path": [
+          "record",
+          "afterimages",
+          "control",
+          "family_id"
+        ],
+        "value": "workflow_cancel_controlx"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PrepareAfterimages/properties/control/allOf/1/properties/schema_id/const": {
+        "path": [
+          "record",
+          "afterimages",
+          "control",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.workflow_cancel_control.v3x"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PrepareAfterimages/properties/control/allOf/1/properties/schema_version/const": {
+        "path": [
+          "record",
+          "afterimages",
+          "control",
+          "schema_version"
+        ],
+        "value": "3.0.0x"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PrepareAfterimages/properties/event_candidate/anyOf": {
+        "path": [
+          "record",
+          "afterimages",
+          "event_candidate"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PrepareAfterimages/properties/event_candidate/anyOf/1/type": {
+        "path": [
+          "record",
+          "afterimages",
+          "event_candidate"
+        ],
+        "value": true
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PrepareAfterimages/properties/intent/allOf/1/properties/family_id/const": {
+        "path": [
+          "record",
+          "afterimages",
+          "intent",
+          "family_id"
+        ],
+        "value": "workflow_cancel_intentx"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PrepareAfterimages/properties/intent/allOf/1/properties/schema_id/const": {
+        "path": [
+          "record",
+          "afterimages",
+          "intent",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.workflow_cancel_intent.v3x"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PrepareAfterimages/properties/intent/allOf/1/properties/schema_version/const": {
+        "path": [
+          "record",
+          "afterimages",
+          "intent",
+          "schema_version"
+        ],
+        "value": "3.0.0x"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PrepareAfterimages/properties/kind/const": {
+        "path": [
+          "record",
+          "afterimages",
+          "kind"
+        ],
+        "value": "preparex"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PrepareAfterimages/required": {
+        "member": [
+          "remove",
+          "kind"
+        ],
+        "path": [
+          "record",
+          "afterimages"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PrepareAfterimages/type": {
+        "path": [
+          "record",
+          "afterimages"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PublishAfterimages/closed_members": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "control": {
+                "family_id": "workflow_cancel_control",
+                "physical_key": "workflow_cancel_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:99aede32192f0e40422a4a7d6740508727e68c8de28421b9fbfb560a8e472690",
+                "physical_value_sha256": "253073d2cb6da621d504b5c648f8e058aee6d6f65aadcd92b9ab1f5fcb105014",
+                "schema_id": "pm.storage_value.workflow_cancel_control.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "kind": "publish",
+              "native_body": {
+                "family_id": "workflow_goal_run_body",
+                "physical_key": "workflow_goal_run_body:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:74c6990e7eefce7e68e36e54b74c3fdabbe23354667322324a9fa7842d92c79c",
+                "physical_value_sha256": "98c12d112e9c5222752cd92f73dc46d22441f44ea3017b1e5bc612bd2dc73379",
+                "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "native_control": {
+                "family_id": "workflow_goal_run_control",
+                "physical_key": "workflow_goal_run_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:ea869b11e75541c0124f4b63b4390d9355f3854d03c90bf48e998ad0bec86f14",
+                "physical_value_sha256": "14d03750bf756dee80d976c5eb1d5a2243d70b9d3f990f0156b77b01419ec8e0",
+                "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "result": {
+                "family_id": "workflow_cancel_result",
+                "physical_key": "workflow_cancel_result:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:922d3ed8466a282b6dd8a0d07c8ae7e72efe520172283fde5219328238dc1658",
+                "physical_value_sha256": "e8af37cc609b0d35a2b91afcca79e3f623517f4dd1139503073990b1885257dc",
+                "schema_id": "pm.storage_value.workflow_cancel_result.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              }
+            },
+            "beforeimages": [],
+            "causation": {
+              "family_id": "workflow_cancel_intent",
+              "physical_key": "workflow_cancel_intent:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:c69f3a715684b55fd7b07cf0429e4a7d2a9627724ad0f71d3140f92c9128cad3",
+              "physical_value_sha256": "8d08aca373f8f6f1ce4cdd455fee387f1d598e202d0f706a8d8608a3940c0068",
+              "schema_id": "pm.storage_value.workflow_cancel_intent.v3",
+              "schema_version": "3.0.0",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "issued_at_utc": "2026-11-20T13:10:21.046Z",
+            "issuer_method": "owner.workflow.executor_cancel.publish_disposition.v3",
+            "operation_id": "TEST_ONLY:op:d06-preserve:bb24e3285551",
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-0e9a9efdea7d",
+              "goal_run_id": "TEST_ONLY-goal-run-0e9a9efdea7d",
+              "project_id": "TEST_ONLY-project-0e9a9efdea7d",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "transaction_id": "TEST_ONLY:d06-transaction:319d05b63ac6",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner:0e9a9efdea7d"
+          }
+        },
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": [
+          "record",
+          "afterimages"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PublishAfterimages/properties/control/allOf/1/properties/family_id/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "control": {
+                "family_id": "workflow_cancel_control",
+                "physical_key": "workflow_cancel_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:99aede32192f0e40422a4a7d6740508727e68c8de28421b9fbfb560a8e472690",
+                "physical_value_sha256": "253073d2cb6da621d504b5c648f8e058aee6d6f65aadcd92b9ab1f5fcb105014",
+                "schema_id": "pm.storage_value.workflow_cancel_control.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "kind": "publish",
+              "native_body": {
+                "family_id": "workflow_goal_run_body",
+                "physical_key": "workflow_goal_run_body:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:74c6990e7eefce7e68e36e54b74c3fdabbe23354667322324a9fa7842d92c79c",
+                "physical_value_sha256": "98c12d112e9c5222752cd92f73dc46d22441f44ea3017b1e5bc612bd2dc73379",
+                "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "native_control": {
+                "family_id": "workflow_goal_run_control",
+                "physical_key": "workflow_goal_run_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:ea869b11e75541c0124f4b63b4390d9355f3854d03c90bf48e998ad0bec86f14",
+                "physical_value_sha256": "14d03750bf756dee80d976c5eb1d5a2243d70b9d3f990f0156b77b01419ec8e0",
+                "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "result": {
+                "family_id": "workflow_cancel_result",
+                "physical_key": "workflow_cancel_result:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:922d3ed8466a282b6dd8a0d07c8ae7e72efe520172283fde5219328238dc1658",
+                "physical_value_sha256": "e8af37cc609b0d35a2b91afcca79e3f623517f4dd1139503073990b1885257dc",
+                "schema_id": "pm.storage_value.workflow_cancel_result.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              }
+            },
+            "beforeimages": [],
+            "causation": {
+              "family_id": "workflow_cancel_intent",
+              "physical_key": "workflow_cancel_intent:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:c69f3a715684b55fd7b07cf0429e4a7d2a9627724ad0f71d3140f92c9128cad3",
+              "physical_value_sha256": "8d08aca373f8f6f1ce4cdd455fee387f1d598e202d0f706a8d8608a3940c0068",
+              "schema_id": "pm.storage_value.workflow_cancel_intent.v3",
+              "schema_version": "3.0.0",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "issued_at_utc": "2026-11-20T13:10:21.046Z",
+            "issuer_method": "owner.workflow.executor_cancel.publish_disposition.v3",
+            "operation_id": "TEST_ONLY:op:d06-preserve:bb24e3285551",
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-0e9a9efdea7d",
+              "goal_run_id": "TEST_ONLY-goal-run-0e9a9efdea7d",
+              "project_id": "TEST_ONLY-project-0e9a9efdea7d",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "transaction_id": "TEST_ONLY:d06-transaction:319d05b63ac6",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner:0e9a9efdea7d"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "control",
+          "family_id"
+        ],
+        "value": "workflow_cancel_controlx"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PublishAfterimages/properties/control/allOf/1/properties/schema_id/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "control": {
+                "family_id": "workflow_cancel_control",
+                "physical_key": "workflow_cancel_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:99aede32192f0e40422a4a7d6740508727e68c8de28421b9fbfb560a8e472690",
+                "physical_value_sha256": "253073d2cb6da621d504b5c648f8e058aee6d6f65aadcd92b9ab1f5fcb105014",
+                "schema_id": "pm.storage_value.workflow_cancel_control.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "kind": "publish",
+              "native_body": {
+                "family_id": "workflow_goal_run_body",
+                "physical_key": "workflow_goal_run_body:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:74c6990e7eefce7e68e36e54b74c3fdabbe23354667322324a9fa7842d92c79c",
+                "physical_value_sha256": "98c12d112e9c5222752cd92f73dc46d22441f44ea3017b1e5bc612bd2dc73379",
+                "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "native_control": {
+                "family_id": "workflow_goal_run_control",
+                "physical_key": "workflow_goal_run_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:ea869b11e75541c0124f4b63b4390d9355f3854d03c90bf48e998ad0bec86f14",
+                "physical_value_sha256": "14d03750bf756dee80d976c5eb1d5a2243d70b9d3f990f0156b77b01419ec8e0",
+                "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "result": {
+                "family_id": "workflow_cancel_result",
+                "physical_key": "workflow_cancel_result:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:922d3ed8466a282b6dd8a0d07c8ae7e72efe520172283fde5219328238dc1658",
+                "physical_value_sha256": "e8af37cc609b0d35a2b91afcca79e3f623517f4dd1139503073990b1885257dc",
+                "schema_id": "pm.storage_value.workflow_cancel_result.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              }
+            },
+            "beforeimages": [],
+            "causation": {
+              "family_id": "workflow_cancel_intent",
+              "physical_key": "workflow_cancel_intent:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:c69f3a715684b55fd7b07cf0429e4a7d2a9627724ad0f71d3140f92c9128cad3",
+              "physical_value_sha256": "8d08aca373f8f6f1ce4cdd455fee387f1d598e202d0f706a8d8608a3940c0068",
+              "schema_id": "pm.storage_value.workflow_cancel_intent.v3",
+              "schema_version": "3.0.0",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "issued_at_utc": "2026-11-20T13:10:21.046Z",
+            "issuer_method": "owner.workflow.executor_cancel.publish_disposition.v3",
+            "operation_id": "TEST_ONLY:op:d06-preserve:bb24e3285551",
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-0e9a9efdea7d",
+              "goal_run_id": "TEST_ONLY-goal-run-0e9a9efdea7d",
+              "project_id": "TEST_ONLY-project-0e9a9efdea7d",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "transaction_id": "TEST_ONLY:d06-transaction:319d05b63ac6",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner:0e9a9efdea7d"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "control",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.workflow_cancel_control.v3x"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PublishAfterimages/properties/control/allOf/1/properties/schema_version/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "control": {
+                "family_id": "workflow_cancel_control",
+                "physical_key": "workflow_cancel_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:99aede32192f0e40422a4a7d6740508727e68c8de28421b9fbfb560a8e472690",
+                "physical_value_sha256": "253073d2cb6da621d504b5c648f8e058aee6d6f65aadcd92b9ab1f5fcb105014",
+                "schema_id": "pm.storage_value.workflow_cancel_control.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "kind": "publish",
+              "native_body": {
+                "family_id": "workflow_goal_run_body",
+                "physical_key": "workflow_goal_run_body:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:74c6990e7eefce7e68e36e54b74c3fdabbe23354667322324a9fa7842d92c79c",
+                "physical_value_sha256": "98c12d112e9c5222752cd92f73dc46d22441f44ea3017b1e5bc612bd2dc73379",
+                "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "native_control": {
+                "family_id": "workflow_goal_run_control",
+                "physical_key": "workflow_goal_run_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:ea869b11e75541c0124f4b63b4390d9355f3854d03c90bf48e998ad0bec86f14",
+                "physical_value_sha256": "14d03750bf756dee80d976c5eb1d5a2243d70b9d3f990f0156b77b01419ec8e0",
+                "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "result": {
+                "family_id": "workflow_cancel_result",
+                "physical_key": "workflow_cancel_result:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:922d3ed8466a282b6dd8a0d07c8ae7e72efe520172283fde5219328238dc1658",
+                "physical_value_sha256": "e8af37cc609b0d35a2b91afcca79e3f623517f4dd1139503073990b1885257dc",
+                "schema_id": "pm.storage_value.workflow_cancel_result.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              }
+            },
+            "beforeimages": [],
+            "causation": {
+              "family_id": "workflow_cancel_intent",
+              "physical_key": "workflow_cancel_intent:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:c69f3a715684b55fd7b07cf0429e4a7d2a9627724ad0f71d3140f92c9128cad3",
+              "physical_value_sha256": "8d08aca373f8f6f1ce4cdd455fee387f1d598e202d0f706a8d8608a3940c0068",
+              "schema_id": "pm.storage_value.workflow_cancel_intent.v3",
+              "schema_version": "3.0.0",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "issued_at_utc": "2026-11-20T13:10:21.046Z",
+            "issuer_method": "owner.workflow.executor_cancel.publish_disposition.v3",
+            "operation_id": "TEST_ONLY:op:d06-preserve:bb24e3285551",
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-0e9a9efdea7d",
+              "goal_run_id": "TEST_ONLY-goal-run-0e9a9efdea7d",
+              "project_id": "TEST_ONLY-project-0e9a9efdea7d",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "transaction_id": "TEST_ONLY:d06-transaction:319d05b63ac6",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner:0e9a9efdea7d"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "control",
+          "schema_version"
+        ],
+        "value": "3.0.0x"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PublishAfterimages/properties/kind/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "control": {
+                "family_id": "workflow_cancel_control",
+                "physical_key": "workflow_cancel_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:99aede32192f0e40422a4a7d6740508727e68c8de28421b9fbfb560a8e472690",
+                "physical_value_sha256": "253073d2cb6da621d504b5c648f8e058aee6d6f65aadcd92b9ab1f5fcb105014",
+                "schema_id": "pm.storage_value.workflow_cancel_control.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "kind": "publish",
+              "native_body": {
+                "family_id": "workflow_goal_run_body",
+                "physical_key": "workflow_goal_run_body:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:74c6990e7eefce7e68e36e54b74c3fdabbe23354667322324a9fa7842d92c79c",
+                "physical_value_sha256": "98c12d112e9c5222752cd92f73dc46d22441f44ea3017b1e5bc612bd2dc73379",
+                "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "native_control": {
+                "family_id": "workflow_goal_run_control",
+                "physical_key": "workflow_goal_run_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:ea869b11e75541c0124f4b63b4390d9355f3854d03c90bf48e998ad0bec86f14",
+                "physical_value_sha256": "14d03750bf756dee80d976c5eb1d5a2243d70b9d3f990f0156b77b01419ec8e0",
+                "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "result": {
+                "family_id": "workflow_cancel_result",
+                "physical_key": "workflow_cancel_result:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:922d3ed8466a282b6dd8a0d07c8ae7e72efe520172283fde5219328238dc1658",
+                "physical_value_sha256": "e8af37cc609b0d35a2b91afcca79e3f623517f4dd1139503073990b1885257dc",
+                "schema_id": "pm.storage_value.workflow_cancel_result.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              }
+            },
+            "beforeimages": [],
+            "causation": {
+              "family_id": "workflow_cancel_intent",
+              "physical_key": "workflow_cancel_intent:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:c69f3a715684b55fd7b07cf0429e4a7d2a9627724ad0f71d3140f92c9128cad3",
+              "physical_value_sha256": "8d08aca373f8f6f1ce4cdd455fee387f1d598e202d0f706a8d8608a3940c0068",
+              "schema_id": "pm.storage_value.workflow_cancel_intent.v3",
+              "schema_version": "3.0.0",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "issued_at_utc": "2026-11-20T13:10:21.046Z",
+            "issuer_method": "owner.workflow.executor_cancel.publish_disposition.v3",
+            "operation_id": "TEST_ONLY:op:d06-preserve:bb24e3285551",
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-0e9a9efdea7d",
+              "goal_run_id": "TEST_ONLY-goal-run-0e9a9efdea7d",
+              "project_id": "TEST_ONLY-project-0e9a9efdea7d",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "transaction_id": "TEST_ONLY:d06-transaction:319d05b63ac6",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner:0e9a9efdea7d"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "kind"
+        ],
+        "value": "publishx"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PublishAfterimages/properties/native_body/allOf/1/properties/family_id/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "control": {
+                "family_id": "workflow_cancel_control",
+                "physical_key": "workflow_cancel_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:99aede32192f0e40422a4a7d6740508727e68c8de28421b9fbfb560a8e472690",
+                "physical_value_sha256": "253073d2cb6da621d504b5c648f8e058aee6d6f65aadcd92b9ab1f5fcb105014",
+                "schema_id": "pm.storage_value.workflow_cancel_control.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "kind": "publish",
+              "native_body": {
+                "family_id": "workflow_goal_run_body",
+                "physical_key": "workflow_goal_run_body:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:74c6990e7eefce7e68e36e54b74c3fdabbe23354667322324a9fa7842d92c79c",
+                "physical_value_sha256": "98c12d112e9c5222752cd92f73dc46d22441f44ea3017b1e5bc612bd2dc73379",
+                "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "native_control": {
+                "family_id": "workflow_goal_run_control",
+                "physical_key": "workflow_goal_run_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:ea869b11e75541c0124f4b63b4390d9355f3854d03c90bf48e998ad0bec86f14",
+                "physical_value_sha256": "14d03750bf756dee80d976c5eb1d5a2243d70b9d3f990f0156b77b01419ec8e0",
+                "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "result": {
+                "family_id": "workflow_cancel_result",
+                "physical_key": "workflow_cancel_result:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:922d3ed8466a282b6dd8a0d07c8ae7e72efe520172283fde5219328238dc1658",
+                "physical_value_sha256": "e8af37cc609b0d35a2b91afcca79e3f623517f4dd1139503073990b1885257dc",
+                "schema_id": "pm.storage_value.workflow_cancel_result.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              }
+            },
+            "beforeimages": [],
+            "causation": {
+              "family_id": "workflow_cancel_intent",
+              "physical_key": "workflow_cancel_intent:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:c69f3a715684b55fd7b07cf0429e4a7d2a9627724ad0f71d3140f92c9128cad3",
+              "physical_value_sha256": "8d08aca373f8f6f1ce4cdd455fee387f1d598e202d0f706a8d8608a3940c0068",
+              "schema_id": "pm.storage_value.workflow_cancel_intent.v3",
+              "schema_version": "3.0.0",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "issued_at_utc": "2026-11-20T13:10:21.046Z",
+            "issuer_method": "owner.workflow.executor_cancel.publish_disposition.v3",
+            "operation_id": "TEST_ONLY:op:d06-preserve:bb24e3285551",
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-0e9a9efdea7d",
+              "goal_run_id": "TEST_ONLY-goal-run-0e9a9efdea7d",
+              "project_id": "TEST_ONLY-project-0e9a9efdea7d",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "transaction_id": "TEST_ONLY:d06-transaction:319d05b63ac6",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner:0e9a9efdea7d"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "native_body",
+          "family_id"
+        ],
+        "value": "workflow_goal_run_bodyx"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PublishAfterimages/properties/native_body/allOf/1/properties/schema_id/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "control": {
+                "family_id": "workflow_cancel_control",
+                "physical_key": "workflow_cancel_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:99aede32192f0e40422a4a7d6740508727e68c8de28421b9fbfb560a8e472690",
+                "physical_value_sha256": "253073d2cb6da621d504b5c648f8e058aee6d6f65aadcd92b9ab1f5fcb105014",
+                "schema_id": "pm.storage_value.workflow_cancel_control.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "kind": "publish",
+              "native_body": {
+                "family_id": "workflow_goal_run_body",
+                "physical_key": "workflow_goal_run_body:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:74c6990e7eefce7e68e36e54b74c3fdabbe23354667322324a9fa7842d92c79c",
+                "physical_value_sha256": "98c12d112e9c5222752cd92f73dc46d22441f44ea3017b1e5bc612bd2dc73379",
+                "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "native_control": {
+                "family_id": "workflow_goal_run_control",
+                "physical_key": "workflow_goal_run_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:ea869b11e75541c0124f4b63b4390d9355f3854d03c90bf48e998ad0bec86f14",
+                "physical_value_sha256": "14d03750bf756dee80d976c5eb1d5a2243d70b9d3f990f0156b77b01419ec8e0",
+                "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "result": {
+                "family_id": "workflow_cancel_result",
+                "physical_key": "workflow_cancel_result:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:922d3ed8466a282b6dd8a0d07c8ae7e72efe520172283fde5219328238dc1658",
+                "physical_value_sha256": "e8af37cc609b0d35a2b91afcca79e3f623517f4dd1139503073990b1885257dc",
+                "schema_id": "pm.storage_value.workflow_cancel_result.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              }
+            },
+            "beforeimages": [],
+            "causation": {
+              "family_id": "workflow_cancel_intent",
+              "physical_key": "workflow_cancel_intent:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:c69f3a715684b55fd7b07cf0429e4a7d2a9627724ad0f71d3140f92c9128cad3",
+              "physical_value_sha256": "8d08aca373f8f6f1ce4cdd455fee387f1d598e202d0f706a8d8608a3940c0068",
+              "schema_id": "pm.storage_value.workflow_cancel_intent.v3",
+              "schema_version": "3.0.0",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "issued_at_utc": "2026-11-20T13:10:21.046Z",
+            "issuer_method": "owner.workflow.executor_cancel.publish_disposition.v3",
+            "operation_id": "TEST_ONLY:op:d06-preserve:bb24e3285551",
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-0e9a9efdea7d",
+              "goal_run_id": "TEST_ONLY-goal-run-0e9a9efdea7d",
+              "project_id": "TEST_ONLY-project-0e9a9efdea7d",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "transaction_id": "TEST_ONLY:d06-transaction:319d05b63ac6",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner:0e9a9efdea7d"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "native_body",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.workflow_goal_run_body.v1x"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PublishAfterimages/properties/native_body/allOf/1/properties/schema_version/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "control": {
+                "family_id": "workflow_cancel_control",
+                "physical_key": "workflow_cancel_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:99aede32192f0e40422a4a7d6740508727e68c8de28421b9fbfb560a8e472690",
+                "physical_value_sha256": "253073d2cb6da621d504b5c648f8e058aee6d6f65aadcd92b9ab1f5fcb105014",
+                "schema_id": "pm.storage_value.workflow_cancel_control.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "kind": "publish",
+              "native_body": {
+                "family_id": "workflow_goal_run_body",
+                "physical_key": "workflow_goal_run_body:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:74c6990e7eefce7e68e36e54b74c3fdabbe23354667322324a9fa7842d92c79c",
+                "physical_value_sha256": "98c12d112e9c5222752cd92f73dc46d22441f44ea3017b1e5bc612bd2dc73379",
+                "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "native_control": {
+                "family_id": "workflow_goal_run_control",
+                "physical_key": "workflow_goal_run_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:ea869b11e75541c0124f4b63b4390d9355f3854d03c90bf48e998ad0bec86f14",
+                "physical_value_sha256": "14d03750bf756dee80d976c5eb1d5a2243d70b9d3f990f0156b77b01419ec8e0",
+                "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "result": {
+                "family_id": "workflow_cancel_result",
+                "physical_key": "workflow_cancel_result:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:922d3ed8466a282b6dd8a0d07c8ae7e72efe520172283fde5219328238dc1658",
+                "physical_value_sha256": "e8af37cc609b0d35a2b91afcca79e3f623517f4dd1139503073990b1885257dc",
+                "schema_id": "pm.storage_value.workflow_cancel_result.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              }
+            },
+            "beforeimages": [],
+            "causation": {
+              "family_id": "workflow_cancel_intent",
+              "physical_key": "workflow_cancel_intent:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:c69f3a715684b55fd7b07cf0429e4a7d2a9627724ad0f71d3140f92c9128cad3",
+              "physical_value_sha256": "8d08aca373f8f6f1ce4cdd455fee387f1d598e202d0f706a8d8608a3940c0068",
+              "schema_id": "pm.storage_value.workflow_cancel_intent.v3",
+              "schema_version": "3.0.0",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "issued_at_utc": "2026-11-20T13:10:21.046Z",
+            "issuer_method": "owner.workflow.executor_cancel.publish_disposition.v3",
+            "operation_id": "TEST_ONLY:op:d06-preserve:bb24e3285551",
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-0e9a9efdea7d",
+              "goal_run_id": "TEST_ONLY-goal-run-0e9a9efdea7d",
+              "project_id": "TEST_ONLY-project-0e9a9efdea7d",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "transaction_id": "TEST_ONLY:d06-transaction:319d05b63ac6",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner:0e9a9efdea7d"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "native_body",
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PublishAfterimages/properties/native_control/allOf/1/properties/family_id/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "control": {
+                "family_id": "workflow_cancel_control",
+                "physical_key": "workflow_cancel_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:99aede32192f0e40422a4a7d6740508727e68c8de28421b9fbfb560a8e472690",
+                "physical_value_sha256": "253073d2cb6da621d504b5c648f8e058aee6d6f65aadcd92b9ab1f5fcb105014",
+                "schema_id": "pm.storage_value.workflow_cancel_control.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "kind": "publish",
+              "native_body": {
+                "family_id": "workflow_goal_run_body",
+                "physical_key": "workflow_goal_run_body:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:74c6990e7eefce7e68e36e54b74c3fdabbe23354667322324a9fa7842d92c79c",
+                "physical_value_sha256": "98c12d112e9c5222752cd92f73dc46d22441f44ea3017b1e5bc612bd2dc73379",
+                "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "native_control": {
+                "family_id": "workflow_goal_run_control",
+                "physical_key": "workflow_goal_run_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:ea869b11e75541c0124f4b63b4390d9355f3854d03c90bf48e998ad0bec86f14",
+                "physical_value_sha256": "14d03750bf756dee80d976c5eb1d5a2243d70b9d3f990f0156b77b01419ec8e0",
+                "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "result": {
+                "family_id": "workflow_cancel_result",
+                "physical_key": "workflow_cancel_result:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:922d3ed8466a282b6dd8a0d07c8ae7e72efe520172283fde5219328238dc1658",
+                "physical_value_sha256": "e8af37cc609b0d35a2b91afcca79e3f623517f4dd1139503073990b1885257dc",
+                "schema_id": "pm.storage_value.workflow_cancel_result.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              }
+            },
+            "beforeimages": [],
+            "causation": {
+              "family_id": "workflow_cancel_intent",
+              "physical_key": "workflow_cancel_intent:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:c69f3a715684b55fd7b07cf0429e4a7d2a9627724ad0f71d3140f92c9128cad3",
+              "physical_value_sha256": "8d08aca373f8f6f1ce4cdd455fee387f1d598e202d0f706a8d8608a3940c0068",
+              "schema_id": "pm.storage_value.workflow_cancel_intent.v3",
+              "schema_version": "3.0.0",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "issued_at_utc": "2026-11-20T13:10:21.046Z",
+            "issuer_method": "owner.workflow.executor_cancel.publish_disposition.v3",
+            "operation_id": "TEST_ONLY:op:d06-preserve:bb24e3285551",
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-0e9a9efdea7d",
+              "goal_run_id": "TEST_ONLY-goal-run-0e9a9efdea7d",
+              "project_id": "TEST_ONLY-project-0e9a9efdea7d",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "transaction_id": "TEST_ONLY:d06-transaction:319d05b63ac6",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner:0e9a9efdea7d"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "native_control",
+          "family_id"
+        ],
+        "value": "workflow_goal_run_controlx"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PublishAfterimages/properties/native_control/allOf/1/properties/schema_id/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "control": {
+                "family_id": "workflow_cancel_control",
+                "physical_key": "workflow_cancel_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:99aede32192f0e40422a4a7d6740508727e68c8de28421b9fbfb560a8e472690",
+                "physical_value_sha256": "253073d2cb6da621d504b5c648f8e058aee6d6f65aadcd92b9ab1f5fcb105014",
+                "schema_id": "pm.storage_value.workflow_cancel_control.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "kind": "publish",
+              "native_body": {
+                "family_id": "workflow_goal_run_body",
+                "physical_key": "workflow_goal_run_body:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:74c6990e7eefce7e68e36e54b74c3fdabbe23354667322324a9fa7842d92c79c",
+                "physical_value_sha256": "98c12d112e9c5222752cd92f73dc46d22441f44ea3017b1e5bc612bd2dc73379",
+                "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "native_control": {
+                "family_id": "workflow_goal_run_control",
+                "physical_key": "workflow_goal_run_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:ea869b11e75541c0124f4b63b4390d9355f3854d03c90bf48e998ad0bec86f14",
+                "physical_value_sha256": "14d03750bf756dee80d976c5eb1d5a2243d70b9d3f990f0156b77b01419ec8e0",
+                "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "result": {
+                "family_id": "workflow_cancel_result",
+                "physical_key": "workflow_cancel_result:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:922d3ed8466a282b6dd8a0d07c8ae7e72efe520172283fde5219328238dc1658",
+                "physical_value_sha256": "e8af37cc609b0d35a2b91afcca79e3f623517f4dd1139503073990b1885257dc",
+                "schema_id": "pm.storage_value.workflow_cancel_result.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              }
+            },
+            "beforeimages": [],
+            "causation": {
+              "family_id": "workflow_cancel_intent",
+              "physical_key": "workflow_cancel_intent:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:c69f3a715684b55fd7b07cf0429e4a7d2a9627724ad0f71d3140f92c9128cad3",
+              "physical_value_sha256": "8d08aca373f8f6f1ce4cdd455fee387f1d598e202d0f706a8d8608a3940c0068",
+              "schema_id": "pm.storage_value.workflow_cancel_intent.v3",
+              "schema_version": "3.0.0",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "issued_at_utc": "2026-11-20T13:10:21.046Z",
+            "issuer_method": "owner.workflow.executor_cancel.publish_disposition.v3",
+            "operation_id": "TEST_ONLY:op:d06-preserve:bb24e3285551",
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-0e9a9efdea7d",
+              "goal_run_id": "TEST_ONLY-goal-run-0e9a9efdea7d",
+              "project_id": "TEST_ONLY-project-0e9a9efdea7d",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "transaction_id": "TEST_ONLY:d06-transaction:319d05b63ac6",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner:0e9a9efdea7d"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "native_control",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.workflow_goal_run_control.v1x"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PublishAfterimages/properties/native_control/allOf/1/properties/schema_version/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "control": {
+                "family_id": "workflow_cancel_control",
+                "physical_key": "workflow_cancel_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:99aede32192f0e40422a4a7d6740508727e68c8de28421b9fbfb560a8e472690",
+                "physical_value_sha256": "253073d2cb6da621d504b5c648f8e058aee6d6f65aadcd92b9ab1f5fcb105014",
+                "schema_id": "pm.storage_value.workflow_cancel_control.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "kind": "publish",
+              "native_body": {
+                "family_id": "workflow_goal_run_body",
+                "physical_key": "workflow_goal_run_body:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:74c6990e7eefce7e68e36e54b74c3fdabbe23354667322324a9fa7842d92c79c",
+                "physical_value_sha256": "98c12d112e9c5222752cd92f73dc46d22441f44ea3017b1e5bc612bd2dc73379",
+                "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "native_control": {
+                "family_id": "workflow_goal_run_control",
+                "physical_key": "workflow_goal_run_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:ea869b11e75541c0124f4b63b4390d9355f3854d03c90bf48e998ad0bec86f14",
+                "physical_value_sha256": "14d03750bf756dee80d976c5eb1d5a2243d70b9d3f990f0156b77b01419ec8e0",
+                "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "result": {
+                "family_id": "workflow_cancel_result",
+                "physical_key": "workflow_cancel_result:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:922d3ed8466a282b6dd8a0d07c8ae7e72efe520172283fde5219328238dc1658",
+                "physical_value_sha256": "e8af37cc609b0d35a2b91afcca79e3f623517f4dd1139503073990b1885257dc",
+                "schema_id": "pm.storage_value.workflow_cancel_result.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              }
+            },
+            "beforeimages": [],
+            "causation": {
+              "family_id": "workflow_cancel_intent",
+              "physical_key": "workflow_cancel_intent:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:c69f3a715684b55fd7b07cf0429e4a7d2a9627724ad0f71d3140f92c9128cad3",
+              "physical_value_sha256": "8d08aca373f8f6f1ce4cdd455fee387f1d598e202d0f706a8d8608a3940c0068",
+              "schema_id": "pm.storage_value.workflow_cancel_intent.v3",
+              "schema_version": "3.0.0",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "issued_at_utc": "2026-11-20T13:10:21.046Z",
+            "issuer_method": "owner.workflow.executor_cancel.publish_disposition.v3",
+            "operation_id": "TEST_ONLY:op:d06-preserve:bb24e3285551",
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-0e9a9efdea7d",
+              "goal_run_id": "TEST_ONLY-goal-run-0e9a9efdea7d",
+              "project_id": "TEST_ONLY-project-0e9a9efdea7d",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "transaction_id": "TEST_ONLY:d06-transaction:319d05b63ac6",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner:0e9a9efdea7d"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "native_control",
+          "schema_version"
+        ],
+        "value": "1.0.0x"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PublishAfterimages/properties/result/allOf/1/properties/family_id/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "control": {
+                "family_id": "workflow_cancel_control",
+                "physical_key": "workflow_cancel_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:99aede32192f0e40422a4a7d6740508727e68c8de28421b9fbfb560a8e472690",
+                "physical_value_sha256": "253073d2cb6da621d504b5c648f8e058aee6d6f65aadcd92b9ab1f5fcb105014",
+                "schema_id": "pm.storage_value.workflow_cancel_control.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "kind": "publish",
+              "native_body": {
+                "family_id": "workflow_goal_run_body",
+                "physical_key": "workflow_goal_run_body:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:74c6990e7eefce7e68e36e54b74c3fdabbe23354667322324a9fa7842d92c79c",
+                "physical_value_sha256": "98c12d112e9c5222752cd92f73dc46d22441f44ea3017b1e5bc612bd2dc73379",
+                "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "native_control": {
+                "family_id": "workflow_goal_run_control",
+                "physical_key": "workflow_goal_run_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:ea869b11e75541c0124f4b63b4390d9355f3854d03c90bf48e998ad0bec86f14",
+                "physical_value_sha256": "14d03750bf756dee80d976c5eb1d5a2243d70b9d3f990f0156b77b01419ec8e0",
+                "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "result": {
+                "family_id": "workflow_cancel_result",
+                "physical_key": "workflow_cancel_result:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:922d3ed8466a282b6dd8a0d07c8ae7e72efe520172283fde5219328238dc1658",
+                "physical_value_sha256": "e8af37cc609b0d35a2b91afcca79e3f623517f4dd1139503073990b1885257dc",
+                "schema_id": "pm.storage_value.workflow_cancel_result.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              }
+            },
+            "beforeimages": [],
+            "causation": {
+              "family_id": "workflow_cancel_intent",
+              "physical_key": "workflow_cancel_intent:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:c69f3a715684b55fd7b07cf0429e4a7d2a9627724ad0f71d3140f92c9128cad3",
+              "physical_value_sha256": "8d08aca373f8f6f1ce4cdd455fee387f1d598e202d0f706a8d8608a3940c0068",
+              "schema_id": "pm.storage_value.workflow_cancel_intent.v3",
+              "schema_version": "3.0.0",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "issued_at_utc": "2026-11-20T13:10:21.046Z",
+            "issuer_method": "owner.workflow.executor_cancel.publish_disposition.v3",
+            "operation_id": "TEST_ONLY:op:d06-preserve:bb24e3285551",
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-0e9a9efdea7d",
+              "goal_run_id": "TEST_ONLY-goal-run-0e9a9efdea7d",
+              "project_id": "TEST_ONLY-project-0e9a9efdea7d",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "transaction_id": "TEST_ONLY:d06-transaction:319d05b63ac6",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner:0e9a9efdea7d"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "result",
+          "family_id"
+        ],
+        "value": "workflow_cancel_resultx"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PublishAfterimages/properties/result/allOf/1/properties/schema_id/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "control": {
+                "family_id": "workflow_cancel_control",
+                "physical_key": "workflow_cancel_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:99aede32192f0e40422a4a7d6740508727e68c8de28421b9fbfb560a8e472690",
+                "physical_value_sha256": "253073d2cb6da621d504b5c648f8e058aee6d6f65aadcd92b9ab1f5fcb105014",
+                "schema_id": "pm.storage_value.workflow_cancel_control.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "kind": "publish",
+              "native_body": {
+                "family_id": "workflow_goal_run_body",
+                "physical_key": "workflow_goal_run_body:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:74c6990e7eefce7e68e36e54b74c3fdabbe23354667322324a9fa7842d92c79c",
+                "physical_value_sha256": "98c12d112e9c5222752cd92f73dc46d22441f44ea3017b1e5bc612bd2dc73379",
+                "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "native_control": {
+                "family_id": "workflow_goal_run_control",
+                "physical_key": "workflow_goal_run_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:ea869b11e75541c0124f4b63b4390d9355f3854d03c90bf48e998ad0bec86f14",
+                "physical_value_sha256": "14d03750bf756dee80d976c5eb1d5a2243d70b9d3f990f0156b77b01419ec8e0",
+                "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "result": {
+                "family_id": "workflow_cancel_result",
+                "physical_key": "workflow_cancel_result:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:922d3ed8466a282b6dd8a0d07c8ae7e72efe520172283fde5219328238dc1658",
+                "physical_value_sha256": "e8af37cc609b0d35a2b91afcca79e3f623517f4dd1139503073990b1885257dc",
+                "schema_id": "pm.storage_value.workflow_cancel_result.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              }
+            },
+            "beforeimages": [],
+            "causation": {
+              "family_id": "workflow_cancel_intent",
+              "physical_key": "workflow_cancel_intent:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:c69f3a715684b55fd7b07cf0429e4a7d2a9627724ad0f71d3140f92c9128cad3",
+              "physical_value_sha256": "8d08aca373f8f6f1ce4cdd455fee387f1d598e202d0f706a8d8608a3940c0068",
+              "schema_id": "pm.storage_value.workflow_cancel_intent.v3",
+              "schema_version": "3.0.0",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "issued_at_utc": "2026-11-20T13:10:21.046Z",
+            "issuer_method": "owner.workflow.executor_cancel.publish_disposition.v3",
+            "operation_id": "TEST_ONLY:op:d06-preserve:bb24e3285551",
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-0e9a9efdea7d",
+              "goal_run_id": "TEST_ONLY-goal-run-0e9a9efdea7d",
+              "project_id": "TEST_ONLY-project-0e9a9efdea7d",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "transaction_id": "TEST_ONLY:d06-transaction:319d05b63ac6",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner:0e9a9efdea7d"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "result",
+          "schema_id"
+        ],
+        "value": "pm.storage_value.workflow_cancel_result.v3x"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PublishAfterimages/properties/result/allOf/1/properties/schema_version/const": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "control": {
+                "family_id": "workflow_cancel_control",
+                "physical_key": "workflow_cancel_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:99aede32192f0e40422a4a7d6740508727e68c8de28421b9fbfb560a8e472690",
+                "physical_value_sha256": "253073d2cb6da621d504b5c648f8e058aee6d6f65aadcd92b9ab1f5fcb105014",
+                "schema_id": "pm.storage_value.workflow_cancel_control.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "kind": "publish",
+              "native_body": {
+                "family_id": "workflow_goal_run_body",
+                "physical_key": "workflow_goal_run_body:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:74c6990e7eefce7e68e36e54b74c3fdabbe23354667322324a9fa7842d92c79c",
+                "physical_value_sha256": "98c12d112e9c5222752cd92f73dc46d22441f44ea3017b1e5bc612bd2dc73379",
+                "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "native_control": {
+                "family_id": "workflow_goal_run_control",
+                "physical_key": "workflow_goal_run_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:ea869b11e75541c0124f4b63b4390d9355f3854d03c90bf48e998ad0bec86f14",
+                "physical_value_sha256": "14d03750bf756dee80d976c5eb1d5a2243d70b9d3f990f0156b77b01419ec8e0",
+                "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "result": {
+                "family_id": "workflow_cancel_result",
+                "physical_key": "workflow_cancel_result:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:922d3ed8466a282b6dd8a0d07c8ae7e72efe520172283fde5219328238dc1658",
+                "physical_value_sha256": "e8af37cc609b0d35a2b91afcca79e3f623517f4dd1139503073990b1885257dc",
+                "schema_id": "pm.storage_value.workflow_cancel_result.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              }
+            },
+            "beforeimages": [],
+            "causation": {
+              "family_id": "workflow_cancel_intent",
+              "physical_key": "workflow_cancel_intent:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:c69f3a715684b55fd7b07cf0429e4a7d2a9627724ad0f71d3140f92c9128cad3",
+              "physical_value_sha256": "8d08aca373f8f6f1ce4cdd455fee387f1d598e202d0f706a8d8608a3940c0068",
+              "schema_id": "pm.storage_value.workflow_cancel_intent.v3",
+              "schema_version": "3.0.0",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "issued_at_utc": "2026-11-20T13:10:21.046Z",
+            "issuer_method": "owner.workflow.executor_cancel.publish_disposition.v3",
+            "operation_id": "TEST_ONLY:op:d06-preserve:bb24e3285551",
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-0e9a9efdea7d",
+              "goal_run_id": "TEST_ONLY-goal-run-0e9a9efdea7d",
+              "project_id": "TEST_ONLY-project-0e9a9efdea7d",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "transaction_id": "TEST_ONLY:d06-transaction:319d05b63ac6",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner:0e9a9efdea7d"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages",
+          "result",
+          "schema_version"
+        ],
+        "value": "3.0.0x"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PublishAfterimages/required": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "control": {
+                "family_id": "workflow_cancel_control",
+                "physical_key": "workflow_cancel_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:99aede32192f0e40422a4a7d6740508727e68c8de28421b9fbfb560a8e472690",
+                "physical_value_sha256": "253073d2cb6da621d504b5c648f8e058aee6d6f65aadcd92b9ab1f5fcb105014",
+                "schema_id": "pm.storage_value.workflow_cancel_control.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "kind": "publish",
+              "native_body": {
+                "family_id": "workflow_goal_run_body",
+                "physical_key": "workflow_goal_run_body:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:74c6990e7eefce7e68e36e54b74c3fdabbe23354667322324a9fa7842d92c79c",
+                "physical_value_sha256": "98c12d112e9c5222752cd92f73dc46d22441f44ea3017b1e5bc612bd2dc73379",
+                "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "native_control": {
+                "family_id": "workflow_goal_run_control",
+                "physical_key": "workflow_goal_run_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:ea869b11e75541c0124f4b63b4390d9355f3854d03c90bf48e998ad0bec86f14",
+                "physical_value_sha256": "14d03750bf756dee80d976c5eb1d5a2243d70b9d3f990f0156b77b01419ec8e0",
+                "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "result": {
+                "family_id": "workflow_cancel_result",
+                "physical_key": "workflow_cancel_result:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:922d3ed8466a282b6dd8a0d07c8ae7e72efe520172283fde5219328238dc1658",
+                "physical_value_sha256": "e8af37cc609b0d35a2b91afcca79e3f623517f4dd1139503073990b1885257dc",
+                "schema_id": "pm.storage_value.workflow_cancel_result.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              }
+            },
+            "beforeimages": [],
+            "causation": {
+              "family_id": "workflow_cancel_intent",
+              "physical_key": "workflow_cancel_intent:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:c69f3a715684b55fd7b07cf0429e4a7d2a9627724ad0f71d3140f92c9128cad3",
+              "physical_value_sha256": "8d08aca373f8f6f1ce4cdd455fee387f1d598e202d0f706a8d8608a3940c0068",
+              "schema_id": "pm.storage_value.workflow_cancel_intent.v3",
+              "schema_version": "3.0.0",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "issued_at_utc": "2026-11-20T13:10:21.046Z",
+            "issuer_method": "owner.workflow.executor_cancel.publish_disposition.v3",
+            "operation_id": "TEST_ONLY:op:d06-preserve:bb24e3285551",
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-0e9a9efdea7d",
+              "goal_run_id": "TEST_ONLY-goal-run-0e9a9efdea7d",
+              "project_id": "TEST_ONLY-project-0e9a9efdea7d",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "transaction_id": "TEST_ONLY:d06-transaction:319d05b63ac6",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner:0e9a9efdea7d"
+          }
+        },
+        "member": [
+          "remove",
+          "kind"
+        ],
+        "path": [
+          "record",
+          "afterimages"
+        ]
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/PublishAfterimages/type": {
+        "control": {
+          "path": [
+            "record"
+          ],
+          "value": {
+            "afterimages": {
+              "control": {
+                "family_id": "workflow_cancel_control",
+                "physical_key": "workflow_cancel_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:99aede32192f0e40422a4a7d6740508727e68c8de28421b9fbfb560a8e472690",
+                "physical_value_sha256": "253073d2cb6da621d504b5c648f8e058aee6d6f65aadcd92b9ab1f5fcb105014",
+                "schema_id": "pm.storage_value.workflow_cancel_control.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "kind": "publish",
+              "native_body": {
+                "family_id": "workflow_goal_run_body",
+                "physical_key": "workflow_goal_run_body:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:74c6990e7eefce7e68e36e54b74c3fdabbe23354667322324a9fa7842d92c79c",
+                "physical_value_sha256": "98c12d112e9c5222752cd92f73dc46d22441f44ea3017b1e5bc612bd2dc73379",
+                "schema_id": "pm.storage_value.workflow_goal_run_body.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "native_control": {
+                "family_id": "workflow_goal_run_control",
+                "physical_key": "workflow_goal_run_control:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:ea869b11e75541c0124f4b63b4390d9355f3854d03c90bf48e998ad0bec86f14",
+                "physical_value_sha256": "14d03750bf756dee80d976c5eb1d5a2243d70b9d3f990f0156b77b01419ec8e0",
+                "schema_id": "pm.storage_value.workflow_goal_run_control.v1",
+                "schema_version": "1.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              },
+              "result": {
+                "family_id": "workflow_cancel_result",
+                "physical_key": "workflow_cancel_result:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:922d3ed8466a282b6dd8a0d07c8ae7e72efe520172283fde5219328238dc1658",
+                "physical_value_sha256": "e8af37cc609b0d35a2b91afcca79e3f623517f4dd1139503073990b1885257dc",
+                "schema_id": "pm.storage_value.workflow_cancel_result.v3",
+                "schema_version": "3.0.0",
+                "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+              }
+            },
+            "beforeimages": [],
+            "causation": {
+              "family_id": "workflow_cancel_intent",
+              "physical_key": "workflow_cancel_intent:YmUyYmE3MGYtNGJjNC00NTJkLWIzNWItMjcxNmVmYzk2MWU1:c69f3a715684b55fd7b07cf0429e4a7d2a9627724ad0f71d3140f92c9128cad3",
+              "physical_value_sha256": "8d08aca373f8f6f1ce4cdd455fee387f1d598e202d0f706a8d8608a3940c0068",
+              "schema_id": "pm.storage_value.workflow_cancel_intent.v3",
+              "schema_version": "3.0.0",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "issued_at_utc": "2026-11-20T13:10:21.046Z",
+            "issuer_method": "owner.workflow.executor_cancel.publish_disposition.v3",
+            "operation_id": "TEST_ONLY:op:d06-preserve:bb24e3285551",
+            "scope": {
+              "goal_id": "TEST_ONLY-goal-0e9a9efdea7d",
+              "goal_run_id": "TEST_ONLY-goal-run-0e9a9efdea7d",
+              "project_id": "TEST_ONLY-project-0e9a9efdea7d",
+              "storage_instance_id": "be2ba70f-4bc4-452d-b35b-2716efc961e5"
+            },
+            "transaction_id": "TEST_ONLY:d06-transaction:319d05b63ac6",
+            "workflow_owner_epoch": 1,
+            "workflow_owner_ref": "TEST_ONLY:workflow-owner:0e9a9efdea7d"
+          }
+        },
+        "path": [
+          "record",
+          "afterimages"
+        ],
+        "value": null
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/StorageOrigin/closed_members": {
+        "member": [
+          "add",
+          "gc_extra_member"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/StorageOrigin/properties/schema_id/const": {
+        "path": [
+          "schema_id"
+        ],
+        "value": "pm.storage_value.workflow_cancel_origin.v3x"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/StorageOrigin/properties/schema_version/const": {
+        "path": [
+          "schema_version"
+        ],
+        "value": "3.0.0x"
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/StorageOrigin/required": {
+        "member": [
+          "remove",
+          "schema_id"
+        ],
+        "path": []
+      },
+      "https://puppetmaster.local/proposals/workflow_cancel_positive_safestop.v1.schema.json#/$defs/StorageOrigin/type": {
+        "path": [],
+        "value": true
+      }
+    }
+  },
+  "family": "goal_run.cancelled",
+  "routes": [
+    {
+      "call": "read_preserved_issued",
+      "detail": [
+        "Additional properties are not allowed ('methodb_extra' was unexpected)"
+      ],
+      "edition": "original_profile",
+      "refusal": "tuple/preserved/prepare_origin/schema/",
+      "root": "dg5:93c18ac1da07b989",
+      "site": [
+        "scripts/pm_goal_dg_r_readers.py",
+        146
+      ],
+      "terminal": "certified"
+    }
+  ],
+  "row": "dg5/tuple/preserved/prepare_origin/schema",
+  "rule_controls": {
+    "dg5:93c18ac1da07b989": {
+      "record": {
+        "afterimages": {
+          "control": {
+            "family_id": "workflow_cancel_control",
+            "physical_key": "workflow_cancel_control:NDhmMDYwNjAtNzkwMy00MTUxLWJhZmYtMzY1NDUxODU3NjRi:6763b1283a9fc9696c0d3203641899bf15c43274131351200e3a2e181bd3bc5b",
+            "physical_value_sha256": "a78aabdd8781edb4b4603a04e3fa9ce77c407359a78cfe9e6ad3c7b51d6a0cd0",
+            "schema_id": "pm.storage_value.workflow_cancel_control.v3",
+            "schema_version": "3.0.0",
+            "storage_instance_id": "48f06060-7903-4151-baff-36545185764b"
+          },
+          "event_candidate": {
+            "family_id": "workflow_cancel_event_candidate",
+            "physical_key": "workflow_cancel_event_candidate:NDhmMDYwNjAtNzkwMy00MTUxLWJhZmYtMzY1NDUxODU3NjRi:f72c0f9df6c1c780b911ffd7735be0b7e58c17cf0e8c5d75135b9c0ad5733f68",
+            "physical_value_sha256": "7ba88d0d2fa02c8e372a62bc9b7c9017dd5dffe0d5bd52042453ef355ce5d97c",
+            "schema_id": "pm.storage_value.workflow_cancel_event_candidate.v3",
+            "schema_version": "3.0.0",
+            "storage_instance_id": "48f06060-7903-4151-baff-36545185764b"
+          },
+          "intent": {
+            "family_id": "workflow_cancel_intent",
+            "physical_key": "workflow_cancel_intent:NDhmMDYwNjAtNzkwMy00MTUxLWJhZmYtMzY1NDUxODU3NjRi:e0dd3b1b2a531394ec9de9debe1409724819650239c5ae6413fe0e5bfea2ee5f",
+            "physical_value_sha256": "d8f9ef8f4f2a58403263bcc1d23c991a8873d30d460261516364fb451a846408",
+            "schema_id": "pm.storage_value.workflow_cancel_intent.v3",
+            "schema_version": "3.0.0",
+            "storage_instance_id": "48f06060-7903-4151-baff-36545185764b"
+          },
+          "kind": "prepare"
+        },
+        "beforeimages": [],
+        "causation": {
+          "family_id": "goal_cancel_stop_receipt",
+          "physical_key": "goal_cancel_stop_receipt:NDhmMDYwNjAtNzkwMy00MTUxLWJhZmYtMzY1NDUxODU3NjRi:1aa097ae649aed62ca16fa97f6a0ccf091c7a4dd3f354c922af2bb3d21417cb2",
+          "physical_value_sha256": "adefc3ed5c385488d901d5bbca26f48357c2ebce1474fdef0a2d431cc6a4ac19",
+          "schema_id": "pm.storage_value.goal_cancel_stop_receipt.v1",
+          "schema_version": "1.0.0",
+          "storage_instance_id": "48f06060-7903-4151-baff-36545185764b"
+        },
+        "issued_at_utc": "2026-11-20T14:58:15.597Z",
+        "issuer_method": "owner.workflow.executor_cancel.prepare_disposition.v3",
+        "operation_id": "TEST_ONLY:op:d06:c17df681a165",
+        "scope": {
+          "goal_id": "TEST_ONLY-goal-9f86439d1d62",
+          "goal_run_id": "TEST_ONLY-goal-run-9f86439d1d62",
+          "project_id": "TEST_ONLY-project-9f86439d1d62",
+          "storage_instance_id": "48f06060-7903-4151-baff-36545185764b"
+        },
+        "transaction_id": "TEST_ONLY:d06-transaction:ef8360105100",
+        "workflow_owner_epoch": 1,
+        "workflow_owner_ref": "TEST_ONLY:workflow-owner:9f86439d1d62"
+      },
+      "schema_id": "pm.storage_value.workflow_cancel_origin.v3",
+      "schema_version": "3.0.0"
+    }
+  },
+  "sites": [
+    [
+      "scripts/pm_goal_dg_r_readers.py",
+      146
+    ]
+  ],
+  "source": "34f212d3fbcc8051ce2922d1de9dd75714ae361a"
+}

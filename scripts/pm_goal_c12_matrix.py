@@ -123,7 +123,7 @@ def main():
             kills = collections.Counter(r.get('kill') for r in tries if r.get('kill'))
             best = sorted(tries, key=lambda r: (r.get('kill') not in ('KILLED', 'DUPLICATE_SET_KILLED'),
                                                  r.get('outcome') != 'exact_expected', r['id']))[:1]
-            killed = any(r.get('kill') in ('KILLED', 'DUPLICATE_SET_KILLED') for r in tries)
+            killed = any(r.get('kill') in ('KILLED', 'DUPLICATE_SET_KILLED', 'KILLED_CODE') for r in tries)
             gated = row.get('status')
             if gated == 'PASS' and killed:
                 status, reason = 'CLOSED', None

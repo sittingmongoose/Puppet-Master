@@ -1,0 +1,26 @@
+{
+  "row": "dg5/d01/current_source/schema",
+  "fixtures": [
+    {
+      "route": "d01/current_source",
+      "root": "dg5:c5a3e21f071d5db4",
+      "edition": "v3",
+      "bank": "v3",
+      "schema_reference": "https://puppetmaster.local/proposals/executor_workflow_original_start.v2.schema.json#/$defs/CurrentSource",
+      "rule_test_row": "dg5/issue/current_source/schema",
+      "hash_seed": 140,
+      "edit": [
+        0,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "error": [
+        [],
+        "additionalProperties"
+      ]
+    }
+  ]
+}
