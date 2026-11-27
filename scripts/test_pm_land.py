@@ -3109,6 +3109,25 @@ class BatchVerifyTests(unittest.TestCase):
                     with self.assertRaisesRegex(land.Refusal, "empty `batch-"):
                         land.verify_receipt(self.path, None, None)
 
+    def test_plain_verify_refuses_batch_lines_without_batch_start(self):
+        """R9-N1: a holder with batch-landing or batch-first-push but a dropped batch-start must refuse."""
+        member1, head = self.history()
+        self.holder(self.base, [])
+        self.receipt(head, base=member1)
+        path = self.lock / "held" / "holder.txt"
+        cases = (
+            f"batch-landing: {self.row('fix/a', member1)}",
+            f"batch-first-push: {land.iso()}",
+            f"batch-first-push: {land.iso()}\nbatch-first-push: 2026-11-23T00:00:00Z",
+        )
+        for extra in cases:
+            with self.subTest(extra=extra):
+                path.write_text(f"agent: fixture\ntime: {land.iso()}\n{extra}\n", encoding="utf-8")
+                with patch.object(land, "LOCK_DIR", self.lock), \
+                        patch.object(land, "ssh", return_value=subprocess.CompletedProcess([], 0, "", "")):
+                    with self.assertRaisesRegex(land.Refusal, "without a `batch-start:`"):
+                        land.verify_receipt(self.path, None, None)
+
     def follow_up(self, member1, paths=("Plans/.plan_migration/snapshot-1/current_run.json",
                                         "reports/landing-checks/baseline.json")):
         """The batch's closing follow-up: a commit on top of the last landing, changing its own artifacts only."""
@@ -3193,6 +3212,21 @@ class BatchVerifyTests(unittest.TestCase):
         with patch.object(land, "LOCK_DIR", self.lock), patch.object(land, "ssh", side_effect=cleared):
             with self.assertRaisesRegex(land.Refusal, "names no batch-start"):
                 land.verify_receipt(self.path, None, None, None, True)
+
+    def test_batch_close_reports_the_final_reread_batch_start(self):
+        """R9-N2: verify --batch-close preserves require_batch_close's returned start on re-reads."""
+        member1, _head = self.history()
+        self.holder(self.base, [self.row("fix/a", member1)])
+        self.follow_up(member1)
+        reread_start = "1" * 40
+        returns = iter([self.base, self.base, reread_start])
+        output = io.StringIO()
+        with patch.object(land, "LOCK_DIR", self.lock), \
+                patch.object(land, "ssh", return_value=subprocess.CompletedProcess([], 0, "", "")), \
+                patch.object(land, "require_batch_close", side_effect=lambda *a, **k: next(returns)):
+            with redirect_stdout(output):
+                self.assertEqual(land.verify_receipt(self.path, None, None, None, True), 0)
+        self.assertIn(f"closing follow-up of the batch at {reread_start}.", output.getvalue())
 
     def test_batch_close_with_batch_start_is_an_argparse_error(self):
         """R8-N4: a closing follow-up is one landing, never a batch member; argparse refuses the pair."""

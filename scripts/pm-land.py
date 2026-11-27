@@ -2784,6 +2784,10 @@ def verify_receipt(path, commit=None, base=None, batch_start=None, batch_close=F
                 raise Refusal("holder.txt names two batch-starts: " + fields["batch-start-conflict"]
                               + "; rewrite it with the one open batch's")
             start = fields.get("batch-start")
+            if not start and (fields.get("batch-landing") or fields.get("batch-first-push")
+                              or fields.get("batch-first-push-conflict")):
+                raise Refusal("holder.txt carries batch landing/push lines without a `batch-start:` line; "
+                              "rewrite it with the open batch's `batch-start:` before landing")
             if start and not valid_full_sha(start):
                 raise Refusal(f"holder.txt names a batch-start that is not a full 40-character SHA: {start!r}; rewrite "
                               "it with the one open batch's batch-start")
@@ -2842,7 +2846,7 @@ def verify_receipt(path, commit=None, base=None, batch_start=None, batch_close=F
     if closing is not None:
         # R8-N3: the witness runs for a while and the holder can be rewritten under it; the close is bound to the
         # batch it read, so a holder that no longer opens it refuses here rather than after publication.
-        require_batch_close(SHARED, pinned, head)
+        closing = require_batch_close(SHARED, pinned, head)
     if tips[ref] != head:
         raise Refusal(f"published topic {ref} changed from checked commit {head} to {tips[ref]}")
     publication_preflight(SHARED, checked_base, head, record["ignored_inputs"])
@@ -2863,7 +2867,7 @@ def verify_receipt(path, commit=None, base=None, batch_start=None, batch_close=F
             raise Refusal(f"origin/main moved from {pinned} to {moved} during verification")
         if closing is not None:
             # The preflight scans the whole tree, so the holder is read once more after it, as a batch member's is.
-            require_batch_close(SHARED, pinned, head)
+            closing = require_batch_close(SHARED, pinned, head)
             say(f"Verified {head} against {checked_base} on {host} as the closing follow-up of the batch at {closing}. "
                 f"Landing checker exit {record['exit_code']}.")
         else:
