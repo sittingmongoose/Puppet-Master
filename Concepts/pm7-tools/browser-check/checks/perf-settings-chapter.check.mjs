@@ -415,10 +415,13 @@ export function flingVerdict(r, film) {
      in view or the empty-list row fails at once and is never retried. The retry is for lost screencast frames only, so
      those rows cannot be shopped for: they must pass on every attempt made, and they are reported from the attempt that
      decides, with every attempt's state in the pixel row's detail;
-   - three attempts without a resolved one fail ("not judged" never passes).
-   At R141's 23 % unresolved rate three attempts leave about 1 % false failures; a real blank still fails on its first
-   resolved attempt (all four R141 pre-fix cells resolved and failed on the first try). */
-export const FLING_RETRY = { attempts: 3 };
+   - five attempts without a resolved one fail ("not judged" never passes).
+   At R141's 23 % unresolved rate three attempts left about 1 % false failures, and R142 measured 0.6 % of 1,218 cells
+   (4 Alexis cells, every attempt a ~40 ms gap; an unresolved attempt makes the next one likelier to be unresolved), so
+   five attempts (R142 low finding 1); the gate stays at three medians, since the shortest real pre-fix blank was 2
+   frames; a real blank still fails on its first resolved attempt (all four R141 pre-fix cells resolved and failed on
+   the first try). */
+export const FLING_RETRY = { attempts: 5 };
 export function flingAttempt(r, px) {
 	const rows = flingVerdict(r, px), bad = px && Array.isArray(px.bad) ? px.bad.length : 0;
 	const resolved = !!px && px.resolved === true, route = rows.slice(0, 3).every((x) => x.ok);

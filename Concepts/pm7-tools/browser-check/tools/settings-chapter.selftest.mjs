@@ -213,7 +213,7 @@ import { encodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs
 	assert.equal(v(faint).ok, false, 'a band far under a tenth of its settled ink fails');
 	// FO-245 r2 (R141 finding 1): the bounded retry. Each attempt is a reading of a constructed film through the live judge;
 	// retryFling drives them in order and flingRetryVerdict judges the list.
-	assert.equal(FLING_RETRY.attempts, 3, 'at most three attempts per look and surface');
+	assert.equal(FLING_RETRY.attempts, 5, 'at most five attempts per look and surface');
 	const lostBlank = [...at(-83.5, 5, SRC), ...at(100.2, 2, BLANK), ...at(133.6, 20, DST)];
 	assert.equal(run(lostBlank).resolved, false, 'a lost arrival that also shows blank frames is unresolved');
 	const drive = async (seqs, r = () => fling({})) => {
@@ -232,10 +232,14 @@ import { encodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs
 		assert.deepEqual(d.driven, [1, 2, 3]); assert.equal(d.rows[3].ok, true, 'a third attempt that resolves clean passes');
 	}
 	{
-		const d = await drive([lost, lost, lost]);
-		assert.deepEqual(d.driven, [1, 2, 3], 'three attempts at most');
-		assert.equal(d.rows[3].ok, false, 'three unresolved attempts fail: not judged never passes');
-		assert.match(d.rows[3].detail, /3 attempt\(s\), at most 3/);
+		const d = await drive([lost, lost, lost, lost, good]);
+		assert.deepEqual(d.driven, [1, 2, 3, 4, 5]); assert.equal(d.rows[3].ok, true, 'a fifth attempt that resolves clean passes');
+	}
+	{
+		const d = await drive([lost, lost, lost, lost, lost, good]);
+		assert.deepEqual(d.driven, [1, 2, 3, 4, 5], 'five attempts at most');
+		assert.equal(d.rows[3].ok, false, 'five unresolved attempts fail: not judged never passes');
+		assert.match(d.rows[3].detail, /5 attempt\(s\), at most 5/);
 	}
 	for (const [seqs, driven, why] of [[[blank, good, good], [1], 'a resolved bad first attempt'], [[lost, blank, good], [1, 2], 'a resolved bad second attempt'], [[lostBlank, good, good], [1], 'an unresolved attempt with bad frames'], [[lost, lostBlank, good], [1, 2], 'a later unresolved attempt with bad frames'], [[late, good, good], [1], 'a later blank after a good first destination']]) {
 		const d = await drive(seqs);
@@ -254,7 +258,7 @@ import { encodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs
 	}
 	assert.deepEqual(flingRetryVerdict([]).map((x) => x.ok), [false, false, false, false], 'no attempt cannot pass');
 	assert.equal(flingRetryVerdict([{ k: 1, ...flingAttempt(fling({}), run(lostBlank)) }, { k: 2, ...flingAttempt(fling({}), run(good)) }])[3].ok, false, 'a list holding a bad frame in any attempt fails, even when the last attempt is clean');
-	console.log('PASS fling retry: an unresolved clean capture is driven again up to three times; a resolved clean attempt passes, any bad frame or route failure fails at once, three unresolved fail');
+	console.log('PASS fling retry: an unresolved clean capture is driven again, five attempts at most; a resolved clean attempt passes, any bad frame or route failure fails at once, five unresolved fail');
 	// the live recorder: a stand-in CDP session that films the constructed sequence once screencasting starts
 	const recorded = await (async () => {
 		const client = new EventEmitter(), acks = [], calls = [];
