@@ -84,9 +84,14 @@ import pm_guard_isolation as g
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = None
-REPLAY_CAP = 4          # KILLED replays kept per (target, family); every attempt is still listed
-REPLAY_LIMIT = 40       # total cut/restoration replays per (target, family), whatever their result
+REPLAY_CAP = 4          # KILLED replays kept per (target, family, direct); every attempt is still listed
+REPLAY_LIMIT = 40       # total cut/restoration replays per (target, family, direct), whatever their result
 FABRICATED = 'reviewer/fabricated_guard_no_checker_has_this'
+
+
+def replay_key(targets, record):
+    """Cap/limit key: /direct/ records carry their own bucket so they cannot exhaust registered entries."""
+    return (tuple(sorted(set(targets))), record['family'], '/direct/' in (record.get('label') or ''))
 
 
 _FUNCTION_CONTEXTS = {}
@@ -507,7 +512,7 @@ class Collector:
         record['outcome'] = outcome
         if outcome != 'exact_expected' or not self.judge or evaluate is None:
             return
-        key = (tuple(sorted(targets)), record['family'])
+        key = replay_key(targets, record)
         # Kills are capped; a COVERED_LATER replay never uses up a later
         # witness's chance to be judged (only the total bound does).
         if self.replays[key] >= REPLAY_CAP or self.replay_attempts[key] >= REPLAY_LIMIT:

@@ -524,6 +524,141 @@ def check_judge_replay_bound():
             raise AssertionError(f'replay child {pid} was not reaped')
 
 
+def check_direct_replay_cap_isolation():
+    """C9: /direct/ records carry their own REPLAY_CAP/REPLAY_LIMIT key so they cannot exhaust
+    registered entries' cap (or vice versa), across single-target, duplicate-set, and ReplayBound rollback."""
+    from unittest.mock import patch
+
+    import pm_goal_dg5_judge_replay as judge_replay
+    import pm_goal_oracle_common as common
+
+    dg5.install(prove=False)
+    fam = 'goal.updated'
+    row = 'dg5/selftest/c9_first/schema'
+    row_second = 'dg5/selftest/c9_second/schema'
+
+    def killed_code_eval(value):
+        gate = common.Gates()
+        gate.require(row, value['x'])
+        if not gate.errors:
+            gate.require(row_second, value['x'])
+        errors = sorted(gate.errors)
+        which = errors[0].split('/')[-2] if errors else None
+        code = None if not errors else f'selftest/{which}/schema/x'
+        where = ['scripts/selftest_owner.py', 10 if which == 'c9_first' else 20]
+        return dict(errors=errors, refusal_code=code,
+                    refusal_origin=dict(site=where, frames=[where + ['check', False, False]]),
+                    refusing_sites=[(e, where) for e in errors],
+                    store_after_sha256='0' * 64, owner_state_sha256='1' * 64, owner_state=dict(hook='selftest'))
+
+    def single_kill_eval(target_row):
+        def evaluate(value):
+            gate = common.Gates()
+            gate.require(target_row, value['x'])
+            return gate.errors
+        return evaluate
+
+    def dup_eval(value):
+        gate = common.Gates()
+        gate.require('dg5/selftest/c9_dup_a', value['x'])
+        gate.require('dg5/selftest/c9_dup_b', value['x'])
+        return gate.errors
+
+    def cannot_decide_eval(target_row):
+        def evaluate(value):
+            gate = common.Gates()
+            gate.require(target_row, value['x'])
+            if gate.errors:
+                return gate.errors
+            gate.require(target_row + '_late', value['x'])
+            return gate.errors
+        return evaluate
+
+    collector = sweep.Collector(judge=True)
+    with patch.object(tables, 'ACTIVE', True), patch.object(tables, 'DISCOVERY', True), \
+            patch.object(tables, 'COLLECTOR', collector):
+        # 1. REPLAY_CAP direct KILLED_CODE records saturate the direct bucket only; registered entry still gets KILLED.
+        for i in range(sweep.REPLAY_CAP):
+            collector.invoke(f'c9/case_{i}/direct/Cmd.run', killed_code_eval, dict(x=False), False,
+                             target=row, family=fam, generated=True)
+            assert collector.ledger[-1]['kill'] == 'KILLED_CODE', collector.ledger[-1]
+        collector.invoke('c9/case_over/direct/Cmd.run', killed_code_eval, dict(x=False), False,
+                         target=row, family=fam, generated=True)
+        assert collector.ledger[-1]['kill'] == 'NOT_REPLAYED_CAP', collector.ledger[-1]
+
+        # Registered entry on the exact same (row, family) must still be judged KILLED, not NOT_REPLAYED_CAP.
+        collector.invoke('c9/witness/Owner.capture', single_kill_eval(row), dict(x=False), False,
+                         target=row, family=fam, generated=True)
+        assert collector.ledger[-1]['kill'] == 'KILLED', collector.ledger[-1]
+
+        # Registered entries still cap themselves at REPLAY_CAP (3 more kills -> 4 total, 5th caps).
+        for i in range(sweep.REPLAY_CAP - 1):
+            collector.invoke(f'c9/reg_{i}/Owner.capture', single_kill_eval(row), dict(x=False), False,
+                             target=row, family=fam, generated=True)
+            assert collector.ledger[-1]['kill'] == 'KILLED', collector.ledger[-1]
+        collector.invoke('c9/reg_over/Owner.capture', single_kill_eval(row), dict(x=False), False,
+                         target=row, family=fam, generated=True)
+        assert collector.ledger[-1]['kill'] == 'NOT_REPLAYED_CAP', collector.ledger[-1]
+
+        # 2. Symmetric: registered kills cannot exhaust the /direct/ cap on another row.
+        row2 = 'dg5/selftest/c9_row2'
+        for i in range(sweep.REPLAY_CAP):
+            collector.invoke(f'c9/r2_reg_{i}/Owner.op', single_kill_eval(row2), dict(x=False), False,
+                             target=row2, family=fam, generated=True)
+            assert collector.ledger[-1]['kill'] == 'KILLED', collector.ledger[-1]
+        collector.invoke('c9/r2_reg_over/Owner.op', single_kill_eval(row2), dict(x=False), False,
+                         target=row2, family=fam, generated=True)
+        assert collector.ledger[-1]['kill'] == 'NOT_REPLAYED_CAP', collector.ledger[-1]
+        collector.invoke('c9/r2_dir/direct/Cmd.op', single_kill_eval(row2), dict(x=False), False,
+                         target=row2, family=fam, generated=True)
+        assert collector.ledger[-1]['kill'] == 'KILLED', collector.ledger[-1]
+
+        # 3. REPLAY_LIMIT is also partitioned between direct and registered.
+        row3 = 'dg5/selftest/c9_limit'
+        with patch.object(sweep, 'REPLAY_LIMIT', 2):
+            for i in range(2):
+                collector.invoke(f'c9/lim_{i}/direct/Cmd.op', cannot_decide_eval(row3), dict(x=False), False,
+                                 target=row3, family=fam, generated=True)
+                assert collector.ledger[-1]['kill'] == 'CANNOT_DECIDE', collector.ledger[-1]
+            collector.invoke('c9/lim_over/direct/Cmd.op', single_kill_eval(row3), dict(x=False), False,
+                             target=row3, family=fam, generated=True)
+            assert collector.ledger[-1]['kill'] == 'NOT_REPLAYED_CAP', collector.ledger[-1]
+            collector.invoke('c9/lim_reg/Owner.op', single_kill_eval(row3), dict(x=False), False,
+                             target=row3, family=fam, generated=True)
+            assert collector.ledger[-1]['kill'] == 'KILLED', collector.ledger[-1]
+
+        # 4. _site_cuts (duplicate sets) uses the same partitioned key.
+        dup_target = ('dg5/selftest/c9_dup_a', 'dg5/selftest/c9_dup_b')
+        for i in range(sweep.REPLAY_CAP):
+            collector.invoke(f'c9/dup_{i}/direct/Cmd.dup', dup_eval, dict(x=False), False,
+                             target=dup_target, family=fam, generated=True)
+            assert collector.ledger[-1]['kill'] == 'DUPLICATE_SET_KILLED', collector.ledger[-1]
+        collector.invoke('c9/dup_over/direct/Cmd.dup', dup_eval, dict(x=False), False,
+                         target=dup_target, family=fam, generated=True)
+        assert collector.ledger[-1]['kill'] == 'NOT_REPLAYED_CAP', collector.ledger[-1]
+        collector.invoke('c9/dup_reg/Owner.dup', dup_eval, dict(x=False), False,
+                         target=dup_target, family=fam, generated=True)
+        assert collector.ledger[-1]['kill'] == 'DUPLICATE_SET_KILLED', collector.ledger[-1]
+
+    # 5. ReplayBound rollback in pm_goal_dg5_sweep decrements the exact partitioned key (both registered and direct).
+    rb_collector = sweep.Collector(judge=True)
+
+    def bound_on_joint_eval(value):
+        if row in tables.CUT and row_second in tables.CUT:
+            raise judge_replay.ReplayBound(dict(cut=sorted(tables.CUT), wall_limit_seconds=1, elapsed_seconds=1.1))
+        return killed_code_eval(value)
+
+    with patch.object(tables, 'ACTIVE', True), patch.object(tables, 'DISCOVERY', True), \
+            patch.object(tables, 'COLLECTOR', rb_collector):
+        for label in ('c9/rb_reg/Owner.capture', 'c9/rb_dir/direct/Cmd.run'):
+            rb_collector.invoke(label, bound_on_joint_eval, dict(x=False), False,
+                                target=row, family=fam, generated=True)
+            rec = rb_collector.ledger[-1]
+            assert rec['kill'] == 'JUDGE_BOUND', rec
+            assert 'killed_code_check' not in rec, rec
+        assert not rb_collector.replays, dict(rb_collector.replays)
+
+
 def main():
     check_named_context_sentinel()
     check_frame_error_target_mapping()
@@ -540,6 +675,7 @@ def main():
     check_u_bank_validate_routing_guard()
     check_passive_refusal_rule()
     check_judge_replay_bound()
+    check_direct_replay_cap_isolation()
     print('pm_goal_dg5_collector_selftest: PASS')
     return 0
 

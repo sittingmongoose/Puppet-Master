@@ -156,8 +156,11 @@ def install(prove):
                 if record.get('kill') in sweep.KILL_CLASSES:
                     # A bound during the auxiliary joint cut can follow a credited single cut.
                     target = record['target']
-                    targets = (target,) if isinstance(target, str) else tuple(sorted(target))
-                    self.replays[targets, record['family']] -= 1
+                    targets = {target} if isinstance(target, str) else set(target)
+                    key = sweep.replay_key(targets, record)
+                    self.replays[key] -= 1
+                    if self.replays[key] <= 0:
+                        del self.replays[key]
                     record.pop('killed_code_check', None)
                 record['kill'] = judge_replay.OUTCOME
                 record['judge_bound'] = bound.evidence
