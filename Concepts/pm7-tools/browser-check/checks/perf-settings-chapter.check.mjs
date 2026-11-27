@@ -409,6 +409,10 @@ export const FLING_ROUTES = {
 	'wheel-bottom': { input: 'wheel', target: 'the last page (Containers)', pending: 'a single long wheel to the bottom was delivered with the last page (Containers) unmounted',
 		travel: 'the long wheel crossed at least one viewport and brought the last page into view', empty: 'no visible list or unmounted page is empty at the scroll frame' },
 	end: { input: 'End', target: 'the last page (Containers)', pending: 'End was delivered with the last page (Containers) unmounted',
+		travel: 'End crossed at least one viewport and brought the last page into view', empty: 'no visible list or unmounted page is empty at the scroll frame' },
+	/* FO-245 round 4 (R143 high): End after a click on the document's plain text. Focus is then on the page's body, so
+	   only Chrome's last-clicked scroller ties the key to the document; the route needs that focus at the key. */
+	'end-text': { input: 'End', focus: 'body', target: 'the last page (Containers)', pending: 'End after a click on the document\'s plain text was delivered with focus on the page body and the last page (Containers) unmounted',
 		travel: 'End crossed at least one viewport and brought the last page into view', empty: 'no visible list or unmounted page is empty at the scroll frame' }
 };
 export function flingVerdict(r, film, route = 'terminal') {
@@ -416,8 +420,8 @@ export function flingVerdict(r, film, route = 'terminal') {
 	const f = film && film.settled ? film : { frames: film ? film.frames : 0, bad: [], unread: true };
 	const shown = (x) => x ? `frame ${x.i} at ${x.dt} ms [${x.bands.join(', ')}]` : 'none';
 	return [
-		{ name: R.pending, ok: !!r.wheel && r.wheelPending > 0 && r.wheelTargetPending === true,
-			detail: r.wheel ? `at ${input} delivery ${r.wheelPending} ${route === 'terminal' ? 'lists' : 'pages'} pending, ${R.target} pending ${r.wheelTargetPending} (at commit ${r.pending}, ${r.targetPending})` : `no ${input} event was seen after the commit` },
+		{ name: R.pending, ok: !!r.wheel && r.wheelPending > 0 && r.wheelTargetPending === true && (!R.focus || r.wheelFocus === R.focus),
+			detail: r.wheel ? `at ${input} delivery ${r.wheelPending} ${route === 'terminal' ? 'lists' : 'pages'} pending, ${R.target} pending ${r.wheelTargetPending}${R.focus ? `, focus on ${r.wheelFocus || 'unknown'}` : ''} (at commit ${r.pending}, ${r.targetPending})` : `no ${input} event was seen after the commit` },
 		{ name: R.travel, ok: !!r.sampled && r.moved >= r.height && r.targetInView === true,
 			detail: r.sampled ? `moved ${r.moved} px of a ${r.height} px view; ${R.target} in view ${!!r.targetInView}` : `no scroll-frame sample with ${R.target} in view (${r.framesBefore || 0} scroll frames past one viewport without it)` },
 		{ name: R.empty, ok: !!r.sampled && Array.isArray(r.empty) && r.empty.length === 0, detail: (r.empty || []).join(',') || 'no scroll-frame sample' },
@@ -920,6 +924,62 @@ for (const surface of ['normal','sandbox']) {
    `--set flingLooks=a,b` any of them. */
 export const FLING_LOOKS = ['basic-dark', 'nier-light', 'glass-dark', 'glass-light'];
 export const flingLooks = (arg) => !arg ? FLING_LOOKS.slice() : String(arg) === 'all' ? ALL.slice() : String(arg).split(',').map((s) => s.trim()).filter((l) => ALL.includes(l));
+/* FO-245 round 4 (R143 medium 2, exported for tools/settings-chapter.selftest.mjs): End on a focused tab of a fresh
+   AI & Providers belongs to the tab list, as on main: the last tab is selected and focused, still in view, and the
+   document does not move. Round 3's End/Home listener ran in the capture phase before the tab list and jumped the
+   document 2,023 px to the chapter's end. The precondition is the chapter still having unmounted pages at the key, which
+   is when that listener acts. */
+export const TAB_END_TRAVEL = 2;
+export function tabEndVerdict(r) {
+	const ok0 = !!r && !!r.key && r.focusTab === true && r.coldAtKey > 0 && r.tabs > 1 && r.startIndex >= 0 && r.startIndex < r.tabs - 1;
+	return [
+		{ name: 'End reached a focused tab, not the last, while the chapter still had unmounted pages', ok: ok0,
+			detail: !r || !r.key ? 'no trusted End was seen on the tab' : `focus on a tab ${r.focusTab}, tab ${r.startIndex + 1} of ${r.tabs}, ${r.coldAtKey} unmounted page(s) at the key` },
+		{ name: 'End on a focused tab selects and focuses the last tab, which stays in view', ok: ok0 && r.lastSelected === true && r.lastFocused === true && r.lastInView === true,
+			detail: r ? `last tab selected ${r.lastSelected}, focused ${r.lastFocused}, in view ${r.lastInView}; focus after on ${r.focusAfter}` : 'no reading' },
+		{ name: `End on a focused tab leaves the document where it was (within ${TAB_END_TRAVEL} px)`, ok: ok0 && r.maxTravel != null && r.maxTravel <= TAB_END_TRAVEL,
+			detail: r ? `the document moved at most ${r.maxTravel} px (${r.scrolls} scroll events), ended ${r.travel} px from where it was` : 'no reading' }
+	];
+}
+export async function tabEndRoute(t, surface) {
+	if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+	await t.viewport(1920, 1080); await muteSound(t.page);
+	await t.emulate({reducedMotion:t.args.motion === 'reduce' ? 'reduce' : 'no-preference'});
+	const f = await t.app.open({sandbox:surface === 'sandbox'});
+	await t.app.resetLayout().catch(() => {}); await f.locator('#tab-settings').click(); await t.settle();
+	await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click(); await t.page.waitForTimeout(700);
+	await f.locator('#pm-settings-root .domain-link[data-domain="ai"]').first().click();
+	await f.waitForFunction(()=>document.querySelector('#pm-settings-root .domain-link.active')?.dataset.domain==='ai',null,{timeout:5000}).catch(()=>{});
+	await t.page.waitForTimeout(700);
+	const pre = await f.evaluate(() => {
+		const sc=document.querySelector('#pm-settings-root #settings-document'),v=sc.getBoundingClientRect();
+		const tab=[...sc.querySelectorAll('[role="tablist"] [role="tab"]')].find(x=>{const r=x.getBoundingClientRect(),l=[...x.closest('[role="tablist"]').querySelectorAll('[role="tab"]')];return r.height>0&&r.top>=v.top&&r.bottom<=v.bottom&&l.indexOf(x)<l.length-1&&getComputedStyle(x).visibility==='visible';});
+		if(!tab)return {tab:null};
+		tab.focus({preventScroll:true});
+		const list=[...tab.closest('[role="tablist"]').querySelectorAll('[role="tab"]')];
+		const R=window.__pscTab={key:false,start:sc.scrollTop,maxTravel:0,scrolls:0,tabs:list.length,startIndex:list.indexOf(tab),manager:tab.dataset.manager||null};
+		const key=e=>{if(e.key!=='End'||!e.isTrusted||R.key)return;R.key=true;R.focusTab=document.activeElement===tab;R.coldAtKey=sc.querySelectorAll('[data-continuous-workspace-body][data-workspace-mounted="false"]').length;};
+		const scroll=e=>{if(e.target.id!=='settings-document')return;R.scrolls++;R.maxTravel=Math.max(R.maxTravel,Math.round(Math.abs(e.target.scrollTop-R.start)));};
+		window.addEventListener('keydown',key,{capture:true,passive:true});window.addEventListener('scroll',scroll,true);
+		R.stop=()=>{window.removeEventListener('keydown',key,{capture:true,passive:true});window.removeEventListener('scroll',scroll,true);};
+		return {tab:tab.id||tab.textContent.trim(),focused:document.activeElement===tab};
+	});
+	if (!pre.tab) { await t.check(`${surface}: AI & Providers shows a tab list in its first view`, false, 'no tab, other than a last one, in the first view'); return; }
+	await t.page.keyboard.press('End');
+	await f.waitForFunction(()=>new Promise(res=>{const sc=document.querySelector('#pm-settings-root #settings-document');let top=sc&&sc.scrollTop,t0=performance.now();const step=()=>{if(!sc)return res(true);if(sc.scrollTop!==top){top=sc.scrollTop;t0=performance.now();}if(performance.now()-t0>=1000)return res(true);requestAnimationFrame(step);};requestAnimationFrame(step);}),null,{timeout:15000}).catch(()=>{});
+	const r = await f.evaluate(() => {
+		const sc=document.querySelector('#pm-settings-root #settings-document'),R=window.__pscTab;R.stop();
+		const a=document.activeElement,list=a&&a.closest?a.closest('[role="tablist"]'):null,tabs=list?[...list.querySelectorAll('[role="tab"]')]:[];
+		const mgr=R.manager?sc.querySelector(`[data-pm51-manager="${CSS.escape(R.manager)}"]`):null;
+		const all=mgr?[...mgr.querySelectorAll('[role="tablist"] [role="tab"]')]:tabs,last=all[all.length-1];
+		const v=sc.getBoundingClientRect(),b=last?last.getBoundingClientRect():null;
+		const {stop,...out}=R;
+		return {...out,travel:Math.round(sc.scrollTop-R.start),lastSelected:!!last&&last.getAttribute('aria-selected')==='true',lastFocused:!!last&&a===last,
+			lastInView:!!b&&b.height>0&&b.top>=v.top&&b.bottom<=v.bottom,focusAfter:a?a.tagName.toLowerCase()+(a.id?'#'+a.id:''):'none'};
+	});
+	t.log(`${surface} End on a focused tab (${pre.tab}): ${JSON.stringify(r)}`);
+	for (const row of tabEndVerdict(r)) await t.check(`${surface}: ${row.name}`,row.ok,row.detail);
+}
 /* One fling route (FLING_ROUTES) on one surface, in every fling look (exported for the selftest's live pins). */
 export async function flingRoute(t, surface, route) {
 	if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
@@ -986,8 +1046,9 @@ export async function flingRoute(t, surface, route) {
 					R.wheel=performance.now();R.wheelEpoch=performance.timeOrigin+R.wheel;R.wheelPending=pendingNow();
 					R.wheelTargetPending=targetPendingNow();
 					R.wheelTop=root.querySelector('#settings-document')?.scrollTop??null;
+					const ae=document.activeElement;R.wheelFocus=ae===document.body?'body':ae?ae.tagName.toLowerCase()+(ae.id?'#'+ae.id:''):'none';
 				};
-				const kind=route==='end'?'keydown':'wheel';
+				const kind=route==='end'||route==='end-text'?'keydown':'wheel';
 				mo.observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
 				window.addEventListener('scroll',scroll,true);
 				window.addEventListener(kind,wheel,{capture:true,passive:true});
@@ -1008,6 +1069,13 @@ export async function flingRoute(t, surface, route) {
 					   scrolling (A245's route); the key is a trusted press */
 					const focused=await f.evaluate(()=>{const d=document.querySelector('#pm-settings-root #settings-document'),v=d.getBoundingClientRect();const b=[...d.querySelectorAll('button')].find(x=>{const r=x.getBoundingClientRect();return r.height&&r.top>=v.top&&r.bottom<v.bottom&&getComputedStyle(x).visibility==='visible';});b?.focus({preventScroll:true});return !!b&&document.activeElement===b;});
 					if(!focused)t.log(`${look} ${surface} end attempt ${k}: no visible button in the document to focus`);
+					await t.page.keyboard.press('End');
+				}else if(route==='end-text'){
+					/* FO-245 r4 (R143 high): a trusted click on plain text of the first view (a paragraph inside no control),
+					   which leaves focus on the page's body, then a trusted End */
+					const at=await f.evaluate(()=>{const d=document.querySelector('#pm-settings-root #settings-document'),v=d.getBoundingClientRect();const own='button, a, input, select, textarea, label, summary, [tabindex], [contenteditable], [data-action], .is-clickable, [role="button"], [role="link"], [role="tab"], [role="option"], [role="menuitem"], [role="switch"], [role="checkbox"]';const p=[...d.querySelectorAll('p')].find(x=>{const r=x.getBoundingClientRect(),o=x.closest(own);return r.height>8&&r.width>40&&r.top>=v.top+40&&r.bottom<v.bottom-40&&!(o&&d.contains(o))&&x.textContent.trim().length>8&&getComputedStyle(x).visibility==='visible';});if(!p)return null;p.setAttribute('data-psc-text-click','');const r=p.getBoundingClientRect();return {x:Math.min(20,r.width/3),y:r.height/2};});
+					if(at){await f.locator('[data-psc-text-click]').click({position:at});await f.evaluate(()=>document.querySelector('[data-psc-text-click]')?.removeAttribute('data-psc-text-click'));}
+					else t.log(`${look} ${surface} end-text attempt ${k}: no plain text in the document's first view to click`);
 					await t.page.keyboard.press('End');
 				}else{
 					const delta=await f.evaluate(()=>window.__pscFling.delta);
@@ -1036,6 +1104,9 @@ for (const surface of ['normal', 'sandbox']) {
 	/* FO-245 round 3 (A245 high finding 1): the deep routes onto the chapter's unmounted last page */
 	tests[`R93 #4 a single long wheel to the bottom of a fresh Code & Tools paints its last page (${surface})`] = (t) => flingRoute(t, surface, 'wheel-bottom');
 	tests[`R93 #4 End from a fresh Code & Tools paints its last page (${surface})`] = (t) => flingRoute(t, surface, 'end');
+	/* FO-245 round 4 (R143 high and medium 2) */
+	tests[`R93 #4 End after a text click from a fresh Code & Tools paints its last page (${surface})`] = (t) => flingRoute(t, surface, 'end-text');
+	tests[`R93 #4 End on a focused tab keeps the tab's behaviour (${surface})`] = (t) => tabEndRoute(t, surface);
 }
 for (const surface of ['normal', 'sandbox']) {
 	tests[`R93 #3 cross-chapter search does not fill the chapter being discarded (${surface})`] = async (t) => {

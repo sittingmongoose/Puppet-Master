@@ -3,7 +3,7 @@
 // The page probe itself is tested in a browser on a constructed page: diagnostics/settings-chapter-probe.check.mjs.
 import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
-import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT, press, selectAllModifier, flingScrollGate, filmFling, flingFilm, FLING_FILM, FLING_RETRY, flingAttempt, retryFling, flingRetryVerdict, FLING_ROUTES, FLING_LOOKS, flingLooks, flingRoute, filmBands, tests } from '../checks/perf-settings-chapter.check.mjs';
+import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT, press, selectAllModifier, flingScrollGate, filmFling, flingFilm, FLING_FILM, FLING_RETRY, flingAttempt, retryFling, flingRetryVerdict, FLING_ROUTES, FLING_LOOKS, flingLooks, flingRoute, filmBands, tabEndVerdict, tabEndRoute, TAB_END_TRAVEL, tests } from '../checks/perf-settings-chapter.check.mjs';
 import { encodePng, decodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
 const decodeOnce = (png) => decodePng(png);
 /* the round 1 reading, kept here only to show what it counted: the share of a rect's pixels ten or more grey levels from
@@ -328,7 +328,8 @@ const modeSpread = (img, rect) => {
 	for (const surface of ['normal', 'sandbox']) {
 		for (const [name, route] of [[`R93 #4 a fast wheel into lower Code fills visible lists before the frame (${surface})`, 'terminal'],
 			[`R93 #4 a single long wheel to the bottom of a fresh Code & Tools paints its last page (${surface})`, 'wheel-bottom'],
-			[`R93 #4 End from a fresh Code & Tools paints its last page (${surface})`, 'end']]) {
+			[`R93 #4 End from a fresh Code & Tools paints its last page (${surface})`, 'end'],
+			[`R93 #4 End after a text click from a fresh Code & Tools paints its last page (${surface})`, 'end-text']]) {
 			assert.equal(typeof tests[name], 'function', `FO-245 r3: the ${route} route is a live test on the ${surface} surface`);
 			assert.ok(live(String(tests[name]), new RegExp(`flingRoute\\(t, surface, '${route}'\\)`)), `the ${route} test runs the shared runner with its route`);
 		}
@@ -362,9 +363,21 @@ const modeSpread = (img, rect) => {
 	pin(/R\.wheelTargetPending=targetPendingNow\(\);/, 'the target is judged pending at the input');
 	pin(/if\(r\.height>0&&r\.bottom>v\.top&&r\.top<v\.bottom\)R\.empty\.push\('page:'\+p\.dataset\.continuousWorkspaceBody\);/, 'an unmounted page in the sampled view is empty');
 	pin(/if\(e\.type==='keydown'&&\(e\.key!=='End'\|\|!e\.isTrusted\)\)return;/, 'only a trusted End is the End route\'s input');
-	pin(/const kind=route==='end'\?'keydown':'wheel';/, 'the End route listens for the key, the others for the wheel');
+	pin(/const kind=route==='end'\|\|route==='end-text'\?'keydown':'wheel';/, 'the End routes listen for the key, the others for the wheel');
 	pin(/R\.delta=deep\?sc\.scrollHeight-sc\.scrollTop\+sc\.clientHeight:/, 'the long wheel overshoots the bottom by a view');
 	pin(/if\(route==='end'\)\{/, 'the End route presses End');
+	// FO-245 r4 (R143 high): the text-click route clicks plain text of the first view (trusted), then presses End, and
+	// the page recorder notes where focus was at the key
+	pin(/\}else if\(route==='end-text'\)\{/, 'the text-click route has its own input');
+	pin(/if\(at\)\{await f\.locator\('\[data-psc-text-click\]'\)\.click\(\{position:at\}\);/, 'the text-click route clicks the plain text with a trusted click');
+	pin(/const p=\[\.\.\.d\.querySelectorAll\('p'\)\]\.find\(x=>\{const r=x\.getBoundingClientRect\(\),o=x\.closest\(own\);return r\.height>8&&r\.width>40&&r\.top>=v\.top\+40&&r\.bottom<v\.bottom-40&&!\(o&&d\.contains\(o\)\)/, 'the clicked text is a paragraph of the first view inside no control');
+	pin(/R\.wheelFocus=ae===document\.body\?'body':/, 'the page recorder notes the focus at the key');
+	{
+		const tx = src.slice(src.indexOf("}else if(route==='end-text'){"), src.indexOf('}else{', src.indexOf("}else if(route==='end-text'){")));
+		assert.ok(live(tx, /await t\.page\.keyboard\.press\('End'\);/), 'the text-click route presses End');
+		assert.ok(tx.indexOf('.click({position:at})') < tx.indexOf("keyboard.press('End')"), 'the click comes before End');
+		assert.equal(/\.focus\(/.test(tx), false, 'the text-click route focuses no control');
+	}
 	// FO-245 r3: the looks. Glass Dark and Glass Light are fling looks (their wallpaper passed the round 1 reading)
 	for (const look of ['basic-dark', 'nier-light', 'glass-dark', 'glass-light']) assert.ok(FLING_LOOKS.includes(look), `${look} is a fling look`);
 	assert.deepEqual(flingLooks(undefined), FLING_LOOKS, 'the default fling looks');
@@ -382,9 +395,80 @@ const modeSpread = (img, rect) => {
 			assert.equal(flingVerdict(deep({}), run(good), route)[3].ok, true, `${route}: a clean film passes`);
 			assert.equal(flingVerdict(deep({}), run([...at(-83.5, 5, GSRC), ...at(16.7, 4, WALL), ...at(83.5, 20, GDST)]), route)[3].ok, false, `${route}: a wallpaper-only film fails`);
 		}
-		assert.deepEqual(Object.keys(FLING_ROUTES), ['terminal', 'wheel-bottom', 'end']);
+		assert.deepEqual(Object.keys(FLING_ROUTES), ['terminal', 'wheel-bottom', 'end', 'end-text']);
+		// FO-245 r4: the text-click route judges like End, and needs focus on the page body at the key
+		const tx = (o) => deep({ wheelFocus: 'body', ...o });
+		assert.deepEqual(flingVerdict(tx({}), null, 'end-text').slice(0, 3).map((x) => x.ok), [true, true, true], 'end-text: body focus, last page unmounted, crossed, nothing empty');
+		assert.equal(flingVerdict(tx({ wheelFocus: 'button#x' }), null, 'end-text')[0].ok, false, 'end-text: End from a focused control is not the text-click route');
+		assert.equal(flingVerdict(tx({ wheelFocus: undefined }), null, 'end-text')[0].ok, false, 'end-text: an unknown focus is not judged');
+		assert.equal(flingVerdict(tx({ wheelTargetPending: false }), null, 'end-text')[0].ok, false, 'end-text: a mounted last page did not test a cold page');
+		assert.match(flingVerdict(tx({}), null, 'end-text')[0].detail, /focus on body/);
+		assert.equal(flingVerdict(tx({}), run(good), 'end-text')[3].ok, true, 'end-text: a clean film passes');
+		assert.equal(flingVerdict(tx({}), run([...at(-83.5, 5, GSRC), ...at(16.7, 4, WALL), ...at(83.5, 20, GDST)]), 'end-text')[3].ok, false, 'end-text: a wallpaper-only film fails');
+		assert.equal(flingVerdict(deep({}), null, 'end')[0].ok, true, 'end: the focused-control route does not need body focus');
 	}
 	console.log('PASS fling frames: blank, unfilled and wallpaper-only frames on screen fail through the live recorder and judge (edge detail, FO-245 r3), a lost arrival frame is not judged, and the three live routes (Terminal look, a long wheel to the bottom, End) in the Glass looks too use both and the shared retry');
+}
+
+/* FO-245 r4 (R143 medium 2): End on a focused tab belongs to the tab list (main's behaviour) */
+{
+	// the fling block's live(): a match in live code only (not commented out)
+	const live = (src, re) => {
+		for (const m of src.matchAll(new RegExp(re.source, re.flags.replace('g', '') + 'g'))) {
+			const before = src.slice(0, m.index), line = before.slice(before.lastIndexOf('\n') + 1);
+			if (before.lastIndexOf('/*') > before.lastIndexOf('*/') || line.includes('//')) continue;
+			return true;
+		}
+		return false;
+	};
+	const main = { key: true, focusTab: true, coldAtKey: 3, tabs: 4, startIndex: 0, maxTravel: 0, scrolls: 0, travel: 0, lastSelected: true, lastFocused: true, lastInView: true, focusAfter: 'button#pm51-tab-last' };
+	assert.deepEqual(tabEndVerdict(main).map((x) => x.ok), [true, true, true], 'main: the last tab selected and focused, the document still');
+	const r3 = { ...main, maxTravel: 2023, scrolls: 43, travel: 2023, lastInView: false };
+	assert.deepEqual(tabEndVerdict(r3).map((x) => x.ok), [true, false, false], 'r3: the document jumped 2,023 px and the tab went out of view');
+	assert.equal(tabEndVerdict({ ...main, maxTravel: TAB_END_TRAVEL + 1 })[2].ok, false, 'a move past the tolerance fails, even one undone by the end');
+	assert.equal(tabEndVerdict({ ...main, maxTravel: null })[2].ok, false, 'no travel reading cannot pass');
+	assert.equal(tabEndVerdict({ ...main, lastSelected: false })[1].ok, false, 'the last tab not selected fails');
+	assert.equal(tabEndVerdict({ ...main, lastFocused: false })[1].ok, false, 'the last tab not focused fails');
+	for (const [o, why] of [[{ coldAtKey: 0 }, 'no unmounted page at the key'], [{ focusTab: false }, 'focus not on the tab'], [{ key: false }, 'no trusted End'], [{ startIndex: 3 }, 'already on the last tab'], [{ tabs: 1 }, 'a one-tab list']]) {
+		const v = tabEndVerdict({ ...main, ...o });
+		assert.deepEqual(v.map((x) => x.ok), [false, false, false], `not judgeable: ${why}`);
+	}
+	assert.equal(tabEndVerdict(null).every((x) => !x.ok), true, 'no reading fails');
+	for (const surface of ['normal', 'sandbox']) {
+		const name = `R93 #4 End on a focused tab keeps the tab's behaviour (${surface})`;
+		assert.equal(typeof tests[name], 'function', `the tab route is a live test on the ${surface} surface`);
+		assert.ok(live(String(tests[name]), /tabEndRoute\(t, surface\)/), 'the tab test runs tabEndRoute');
+	}
+	const tsrc = String(tabEndRoute);
+	for (const [re, msg] of [[/\.domain-link\[data-domain="ai"\]'\)\.first\(\)\.click\(\)/, 'a fresh AI & Providers'], [/tab\.focus\(\{preventScroll:true\}\);/, 'the tab focused without scrolling'],
+		[/if\(e\.key!=='End'\|\|!e\.isTrusted\|\|R\.key\)return;R\.key=true;R\.focusTab=document\.activeElement===tab;R\.coldAtKey=/, 'the trusted End and its precondition'],
+		[/R\.maxTravel=Math\.max\(R\.maxTravel,Math\.round\(Math\.abs\(e\.target\.scrollTop-R\.start\)\)\);/, 'every scroll of the document is measured'],
+		[/await t\.page\.keyboard\.press\('End'\);/, 'a trusted End'], [/for \(const row of tabEndVerdict\(r\)\) await t\.check\(`\$\{surface\}: \$\{row\.name\}`,row\.ok,row\.detail\);/, 'the live sink records each row']])
+		assert.ok(live(tsrc, re), `the tab route: ${msg}`);
+	console.log('PASS End on a focused tab: the tab list keeps End (last tab selected, focused, in view; the document still), judged only with unmounted pages at the key');
+}
+
+/* FO-245 r4: the product's End/Home jump (46-first-screen.js) runs after the widgets and takes a body-focused key after a
+   click in the document. Reverting either change fails here. */
+{
+	const fs = await import('node:fs');
+	const prod = fs.readFileSync(new URL('../../../onboarding/opus-5.5/src/settings/kit.d/46-first-screen.js', import.meta.url), 'utf8');
+	const code = prod.replace(/\/\*[\s\S]*?\*\//g, '');
+	const at = code.indexOf("if ((e.key !== 'End' && e.key !== 'Home') || e.defaultPrevented");
+	assert.ok(at > 0, 'the End/Home jump listener exists and skips a key a widget took');
+	const head = code.lastIndexOf('addEventListener(', at), line = code.slice(code.lastIndexOf('\n', head) + 1, at);
+	assert.match(line, /^document\.addEventListener\('keydown', e => \{\s*$/, 'the jump listens on document');
+	const end = code.indexOf('\n});', at), body = code.slice(at, end + 4);
+	assert.ok(end > at && /\n\}\);$/.test(body), 'the jump listener is bubble phase (no capture argument): a tab list\'s own End runs first');
+	assert.match(body, /if \(!sc \|\| !o55fsEdgeKeyOwner\(e\.target, sc\)\) return;/, 'the jump asks whose key it is');
+	assert.match(code, /if \(t === document\.body \|\| t === document\.documentElement\) return o55fsDownInDoc && o55fsInteractive\(\);/, 'a body-focused key is the document\'s after a pointer-down in it, while Settings takes input');
+	assert.match(code, /document\.addEventListener\('pointerdown', e => \{\s*const sc = root\.querySelector\('#settings-document'\);\s*o55fsDownInDoc = !!\(sc && e\.target && e\.target\.nodeType === 1 && \(e\.target === sc \|\| sc\.contains\(e\.target\)\)\);\s*\}, \{ capture: true, passive: true \}\);/, 'every pointer-down records whether it landed in the document');
+	const own = /const O55FS_OWN_KEYS = '([^']+)';/.exec(code);
+	assert.ok(own, 'the widgets that own End/Home are listed');
+	for (const w of ['input', 'textarea', 'select', '[role="tablist"]', '[role="tab"]', '[role="listbox"]', '[role="option"]', '[role="menu"]', '[role="slider"]', '[role="spinbutton"]', '[role="combobox"]', '[contenteditable]'])
+		assert.ok(own[1].includes(w), `${w} keeps its own End/Home`);
+	assert.match(code, /const own = t\.closest\(O55FS_OWN_KEYS\);\s*return !\(own && \(own === sc \|\| sc\.contains\(own\)\)\);/, 'a target inside such a widget is skipped');
+	console.log('PASS End/Home jump: bubble phase after the widgets, body focus after a click in the document, widget targets skipped');
 }
 
 /* R97 #6: the wait ends on the fill's own completion, and an unfinished fill is told apart from a missing row */
