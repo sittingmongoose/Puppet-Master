@@ -16,7 +16,10 @@
 // Cells: Glass Light (the bug), Glass Dark and Friendly Light (the ordinary path) at gaps 0, 50, 120 and 220 ms and
 // rate 6, plus Glass Light at gap 0 and rate 14 (the dropped click). --set looks=all runs every one of the ten looks
 // (browser-check.config.mjs LOOKS) at each gap instead; --set looks=glass-light,friendly-dark picks some.
-// --set gaps=0,220, --set cpu=<rate> (the main rate) and --set slow=<rate> (0 drops the slow cell) narrow a run.
+// The other presses a reveal hands on are covered at both rates by default: the window's look menu (its Glass row,
+// then its Light row) and Continue pressed inside Glass's reveal (the look stays Glass Dark and Where opens).
+// --set gaps=0,220, --set cpu=<rate> (the main rate), --set slow=<rate> (0 drops the slow cells) and --set paths=0 (no
+// look menu or Continue cells) narrow a run.
 import { LOOKS } from '../browser-check.config.mjs';
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -27,33 +30,52 @@ export default async function (t) {
   const gaps = String(t.args.gaps || '0,50,120,220').split(',').filter((x) => x !== '').map(Number);
   const looks = !t.args.looks ? ['glass-light', 'glass-dark', 'friendly-light'] : t.args.looks === 'all' ? LOOKS : String(t.args.looks).split(',');
   const cells = [];
-  for (const look of looks) for (const gap of gaps) cells.push({ look, gap, rate });
-  if (!t.args.looks && slow > 0) cells.push({ look: 'glass-light', gap: 0, rate: slow });
+  for (const look of looks) for (const gap of gaps) cells.push({ via: 'tiles', look, gap, rate });
+  if (!t.args.looks && slow > 0) cells.push({ via: 'tiles', look: 'glass-light', gap: 0, rate: slow });
+  /* the other presses the reveal hands on (60-ui-core.js, the document's click handler after a press in a reveal): the
+     window's look menu (its Glass row, then its Light row) and a control that is no look at all (Continue) */
+  if (!t.args.looks && t.args.paths !== '0') for (const r of [rate, slow].filter((x) => x > 0)) {
+    cells.push({ via: 'menu', look: 'glass-light', gap: 0, rate: r });
+    cells.push({ via: 'continue', look: 'glass-dark', gap: 0, rate: r });
+  }
+  const R = '#pm-o55-onboarding';
+  const VIA = {
+    tiles: (fam, mode) => [`${R} ${LAYER} .o55-tile[data-o55-do="pickFamily"][data-arg="${fam}"]`, `${R} ${LAYER} [data-o55-do="pickMode"][data-arg="${mode}"]`],
+    menu: (fam, mode) => [`${R} .o55-lookmenu [data-o55-do="lookFamily"][data-arg="${fam}"]`, `${R} .o55-lookmenu [data-o55-do="lookMode"][data-arg="${mode}"]`],
+    continue: (fam) => [`${R} ${LAYER} .o55-tile[data-o55-do="pickFamily"][data-arg="${fam}"]`, `${R} .o55-foot [data-o55-do="next"]`]
+  };
+  const NAME = { tiles: (fam, mode) => `${fam} then ${mode}`, menu: (fam, mode) => `look menu ${fam} then ${mode}`, continue: (fam) => `${fam} then Continue` };
 
-  for (const { look, gap, rate: r } of cells) {
+  for (const { via, look, gap, rate: r } of cells) {
     const [fam, mode] = look.split('-');
-    await t.step(`${fam} then ${mode}, ${gap} ms apart, CPU ${r}x`, async () => {
+    const [sel1, sel2] = VIA[via](fam, mode), name = NAME[via](fam, mode);
+    await t.step(`${name}, ${gap} ms apart, CPU ${r}x`, async () => {
       const f = await t.app.open({ onboarding: true, query: 'o55=fresh&o55scenario=fresh', settleMs: 1500 });
       await f.waitForFunction(() => window.O55 && O55.S && O55.S.sess && O55.S.sess.screen === 'welcome', null, { timeout: 40000 });
       await f.locator(`${LAYER}:not(.o55-hold) [data-o55-do="start"]`).filter({ visible: true }).first().click({ timeout: 15000 });
       await f.waitForFunction(() => O55.S.sess.screen === 'look' && !document.querySelector('#pm-o55-onboarding .o55-layer.o55-hold')
         && document.querySelectorAll('#pm-o55-onboarding .o55-pane > .o55-layer').length === 1, null, { timeout: 20000 });
       await sleep(600);
-      const tile = f.locator(`${LAYER} .o55-tile[data-o55-do="pickFamily"][data-arg="${fam}"]`).filter({ visible: true }).first();
-      const seg = f.locator(`${LAYER} [data-o55-do="pickMode"][data-arg="${mode}"]`).filter({ visible: true }).first();
-      await tile.scrollIntoViewIfNeeded();
-      const bt = await tile.boundingBox(), bs = await seg.boundingBox();
-      // the frame's offset on the page (0 on the normal page), for the mode button's box read inside the frame
-      const fr = await seg.evaluate((b) => { const r = b.getBoundingClientRect(); return { x: r.x, y: r.y }; });
-      const off = { x: bs.x - fr.x, y: bs.y - fr.y };
-      const modeAt = () => f.evaluate((m) => {
-        const b = document.querySelector(`#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-do="pickMode"][data-arg="${m}"]`);
+      if (via === 'menu') {
+        await f.locator(`${R} .o55-lookslot [data-o55-do="lookMenu"]`).filter({ visible: true }).first().click({ timeout: 10000 });
+        await f.locator(sel1).filter({ visible: true }).first().waitFor({ timeout: 10000 });
+        await sleep(400);
+      }
+      const one = f.locator(sel1).filter({ visible: true }).first();
+      await one.scrollIntoViewIfNeeded();
+      // the frame's offset on the page (0 on the normal page): boxes are read inside the frame, clicks are the page's
+      const bp = await one.boundingBox(), fr = await one.evaluate((b) => { const r = b.getBoundingClientRect(); return { x: r.x, y: r.y }; });
+      const off = { x: bp.x - fr.x, y: bp.y - fr.y };
+      const at = (sel) => f.evaluate((q) => {
+        const b = [...document.querySelectorAll(q)].find((n) => n.getClientRects().length);
         if (!b) return null;
         const r = b.getBoundingClientRect(), x = r.x + r.width / 2, y = r.y + r.height / 2, e = document.elementFromPoint(x, y);
         /* (while a reveal plays the browser gives every hit to the page root, and the page hands the press on to what is
            under it: that is the press under test, not a cover) */
         return { x, y, hit: !!(e && (b.contains(e) || e === document.documentElement)), at: e ? (e.className && e.className.baseVal === undefined ? String(e.className) : e.tagName).slice(0, 40) : null };
-      }, mode);
+      }, sel);
+      const p1 = await at(sel1), p2 = await at(sel2);
+      if (!p1 || !p2) throw new Error(`no control for ${!p1 ? sel1 : sel2}`);
       const start = await f.evaluate(() => O55.theme().slug);
       // the page's main thread, and the sandbox's frame when it is a target of its own
       const cdps = [await t.page.context().newCDPSession(t.page)];
@@ -64,32 +86,35 @@ export default async function (t) {
       let slowed = 0, cover = '';
       try {
         slowed = (await spin()) / Math.max(before, 0.1);
-        await t.page.mouse.click(bt.x + bt.width / 2, bt.y + bt.height / 2);
+        await t.page.mouse.click(p1.x + off.x, p1.y + off.y);
         if (gap) await sleep(gap);
         const t0 = Date.now();
-        let m = await modeAt();
+        let m = await at(sel2);
         const first = m && !m.hit ? m.at : null;
-        while (!(m && m.hit) && Date.now() - t0 < 30000) { await sleep(100); m = await modeAt(); }
-        cover = !(m && m.hit) ? `mode button never clear (under ${m && m.at})` : first ? `mode button under ${first} for ${Date.now() - t0} ms` : 'mode button clear at once';
-        await t.page.mouse.click(m ? m.x + off.x : bs.x + bs.width / 2, m ? m.y + off.y : bs.y + bs.height / 2);
+        while (!(m && m.hit) && Date.now() - t0 < 30000) { await sleep(100); m = await at(sel2); }
+        cover = !(m && m.hit) ? `second control never clear (under ${m && m.at})` : first ? `second control under ${first} for ${Date.now() - t0} ms` : 'second control clear at once';
+        m = m || p2;
+        await t.page.mouse.click(m.x + off.x, m.y + off.y);
       } finally {
         for (const c of cdps) { await c.send('Emulation.setCPUThrottlingRate', { rate: 1 }).catch(() => {}); await c.detach().catch(() => {}); }
       }
-      // settled: no reveal waiting or playing, and the same look for a whole second
-      const read = () => f.evaluate(() => ({ th: O55.theme(), vt: !!O55.S.vt || document.documentElement.hasAttribute('data-o55-vt'),
+      // settled: no reveal waiting or playing, and the same look and screen for a whole second
+      const read = () => f.evaluate(() => ({ th: O55.theme(), vt: !!O55.S.vt || document.documentElement.hasAttribute('data-o55-vt'), screen: O55.S.sess.screen,
         draft: [O55.S.sess.drafts.main.theme_family, O55.S.sess.drafts.main.theme_mode] }));
       let s = await read(), held = 0;
       const until = Date.now() + 90000;
       while (Date.now() < until) {
         await sleep(250);
         const n = await read();
-        held = !n.vt && !s.vt && n.th.slug === s.th.slug && n.th.selectedMode === s.th.selectedMode ? held + 250 : 0;
+        held = !n.vt && !s.vt && n.th.slug === s.th.slug && n.th.selectedMode === s.th.selectedMode && n.screen === s.screen ? held + 250 : 0;
         s = n;
         if (held >= 1000) break;
       }
-      const got = `from ${start}: ${JSON.stringify(s.th)}, draft ${s.draft.join('/')}, settled ${held >= 1000}, ${cover}, CPU slowed ${slowed.toFixed(1)}x on ${cdps.length} target(s)`;
-      t.log(`${look} gap ${gap} rate ${r}: ${got}`);
-      await t.check(`${fam} ${mode} applied (${gap} ms, CPU ${r}x)`, held >= 1000 && s.th.chosen === fam && s.th.selectedMode === mode && s.draft[0] === fam && s.draft[1] === mode, got);
+      const got = `from ${start}: ${JSON.stringify(s.th)}, draft ${s.draft.join('/')}, screen ${s.screen}, settled ${held >= 1000}, ${cover}, CPU slowed ${slowed.toFixed(1)}x on ${cdps.length} target(s)`;
+      t.log(`${via} ${look} gap ${gap} rate ${r}: ${got}`);
+      const looked = held >= 1000 && s.th.chosen === fam && s.th.selectedMode === mode && s.draft[0] === fam && s.draft[1] === mode;
+      if (via === 'continue') await t.check(`${fam} kept and Continue went on (${gap} ms, CPU ${r}x)`, looked && s.screen === 'where', got);
+      else await t.check(`${via === 'menu' ? 'look menu ' : ''}${fam} ${mode} applied (${gap} ms, CPU ${r}x)`, looked, got);
     });
   }
   /* pre-existing on main in T3's sandbox, not FO-243's: a screen the page's own timer settles focuses its heading
