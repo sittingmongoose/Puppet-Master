@@ -356,14 +356,20 @@ export default async function (t) {
 						await new Promise((r) => setTimeout(r, 6));
 					}
 				};
+				// the onboarding stage's own draws over the window (ONB-STEP): full draws (render(), its renderN) and, on a stage
+				// with the 0.1 px step gate, partial draws (gate.part: Pip's sleeping z's or NieR's brackets alone)
+				const stageAt = () => f.evaluate(() => { const st = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage; return st ? { n: st.renderN || 0, part: st.gate ? st.gate.part : null, skip: st.gate ? st.gate.skip : null, at: performance.now() } : null; }).catch(() => null);
+				const s0 = await stageAt();
 				row[w] = await traceWindow(cdp, { ms, during, url, keep });
+				const s1 = s0 && await stageAt();
+				if (s0 && s1 && s1.at > s0.at) { const sec = (s1.at - s0.at) / 1000, per = (a, b) => (a == null || b == null ? null : Math.round((b - a) / sec * 10) / 10); row[w].stage = { full: per(s0.n, s1.n), part: per(s0.part, s1.part), skip: per(s0.skip, s1.skip), gated: s0.part != null }; }
 			}
 			await t.page.mouse.move(W - 6, Math.round(H / 2));
 			await t.page.waitForTimeout(400);
 		}
 		rows.push(row);
 		const n = (v) => Math.round(v || 0);
-		const c = (x) => x ? `main ${n(x.cost.main)} (style ${n(x.split.style)} layout ${n(x.split.layout)} paint ${n((x.split.paint || 0) + (x.split.prepaint || 0))} layerize ${n(x.split.layerize)} PAC ${n(x.split.pac)} script ${n(x.split.script)} hit ${n(x.split.hittest)}) comp ${n(x.cost.compositor)} raster ${n(x.cost.raster)} viz ${n(x.cost.viz)} gpu ${n(x.cost.gpuMain)} | main frames ${x.mainFrames.perSec}/s p50 ${x.mainFrames.p50} p95 ${x.mainFrames.p95} ms | drawn ${x.drawn.perSec}/s gap p95 ${x.drawn.gapP95} dropped ${x.frames.droppedPerSec}/s` : '-';
+		const c = (x) => x ? `main ${n(x.cost.main)} (style ${n(x.split.style)} layout ${n(x.split.layout)} paint ${n((x.split.paint || 0) + (x.split.prepaint || 0))} layerize ${n(x.split.layerize)} PAC ${n(x.split.pac)} script ${n(x.split.script)} hit ${n(x.split.hittest)}) comp ${n(x.cost.compositor)} raster ${n(x.cost.raster)} viz ${n(x.cost.viz)} gpu ${n(x.cost.gpuMain)} | main frames ${x.mainFrames.perSec}/s p50 ${x.mainFrames.p50} p95 ${x.mainFrames.p95} ms | drawn ${x.drawn.perSec}/s gap p95 ${x.drawn.gapP95} dropped ${x.frames.droppedPerSec}/s${x.stage ? ` | stage draws ${x.stage.full}/s full${x.stage.gated ? `, ${x.stage.part}/s partial, ${x.stage.skip}/s skipped` : ' (no step gate)'}` : ''}` : '-';
 		t.log(`${look} ${view}: nodes ${row.census.nodes}/${row.census.rendered} anims ${row.census.anims.shown} (main-thread ${row.census.anims.mainThreadShown}) backdrop ${row.census.backdrop.n} (${row.census.backdrop.areaPct}% of view) filters ${row.census.filters.n} blends ${row.census.blends.n} layers ${row.layers?.drawn ?? '?'} (${row.layers?.megapixels ?? '?'} MP) rAF ${row.callbacks.rafPerSec}/s timers ${row.callbacks.timersPerSec}/s mutations ${row.callbacks.mutationsPerSec}/s`);
 		for (const w of windows) t.log(`  ${w.padEnd(6)} ms/s: ${c(row[w])}`);
 		if (t.args.out) writeFileSync(String(t.args.out), JSON.stringify(rows, null, 1));
