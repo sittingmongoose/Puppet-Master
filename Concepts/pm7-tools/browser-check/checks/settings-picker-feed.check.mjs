@@ -7,8 +7,11 @@ export default async function (t) {
 	const closeDetails = '.detail-inspector[aria-hidden="false"] [data-action="close-details"]';
 	const onlyOpen = t.args.only === 'open-position';
 	const onlyReceiptClose = t.args.only === 'receipt-close';
+	const onlyClickThrough = t.args.only === 'click-through';
+	const onlyExperts = t.args.only === 'experts';
 
 	async function closeDetailsIfOpen(frame) {
+		await frame.evaluate(() => window.PM_TITLEBAR_NOTIFY?.clearAll?.());
 		const isOpen = await frame.evaluate(() => {
 			const insp = document.querySelector('#pm-settings-root .detail-inspector');
 			return !!insp && insp.getAttribute('aria-hidden') === 'false' && insp.style.display !== 'none';
@@ -26,9 +29,10 @@ export default async function (t) {
 		if (!await about.isVisible().catch(() => false)) {
 			await frame.evaluate((sid) => PM51.revealSetting(sid), id);
 			await about.waitFor({ state: 'visible', timeout: 8000 });
-			await t.page.waitForTimeout(200);
+			await t.page.waitForTimeout(250);
 		}
-		await about.scrollIntoViewIfNeeded({ timeout: 8000 });
+		await about.evaluate((el) => el.scrollIntoView({ block: 'center', inline: 'nearest' }));
+		await t.page.waitForTimeout(200);
 		return about;
 	}
 
@@ -158,6 +162,14 @@ export default async function (t) {
 	}
 	if (onlyReceiptClose) {
 		await runReceiptClose();
+		return;
+	}
+	if (onlyClickThrough) {
+		await runClickThrough();
+		return;
+	}
+	if (onlyExperts) {
+		await runExpertsCase();
 		return;
 	}
 
@@ -482,31 +494,12 @@ export default async function (t) {
 		await t.shot('fo158-r4-row-depth', 'Depth-only change from Everyday building row picker and its Details panel');
 	});
 
-	// FO-158 r6: replay the opening click while the save receipt is still visible.
+	// FO-158 r6 / r6g: replay the opening click on Models rows while the save receipt is visible, and check
+	// Details receipt clearance and post-close row clearance (Details scroll keep reverted in r6g -> FO-244).
 	const receiptMatrix = [
 		['basic-dark', 1920, 1080], ['glass-light', 1280, 500],
 		['glass-dark', 1280, 500], ['glass-dark', 740, 900],
 	];
-	function readDetailsPicker(frame, originalPoint = null) {
-		return frame.evaluate(({ detailsBody, detailsPicker, originalPoint }) => {
-			const pane = document.querySelector(detailsBody);
-			const trigger = document.querySelector(detailsPicker);
-			const body = pane.getBoundingClientRect();
-			const picker = trigger.getBoundingClientRect();
-			const top = Math.max(picker.top, body.top), bottom = Math.min(picker.bottom, body.bottom);
-			const point = originalPoint || { x: picker.left + picker.width / 2, y: (top + bottom) / 2 };
-			return {
-				scrollTop: pane.scrollTop, maxScroll: pane.scrollHeight - pane.clientHeight,
-				body: body.toJSON(), picker: picker.toJSON(), point,
-				exposed: Math.max(0, bottom - top), hit: trigger.contains(document.elementFromPoint(point.x, point.y)),
-			};
-		}, { detailsBody, detailsPicker, originalPoint });
-	}
-	function wheelRange({ scrollTop, maxScroll, body, picker }) {
-		const top = scrollTop + picker.top - body.top;
-		const bottom = scrollTop + picker.bottom - body.bottom;
-		return { top, bottom, topClip: maxScroll - top, bottomClip: bottom };
-	}
 	async function checkReceiptBounds(frame, selector, name) {
 		const geometry = await frame.evaluate(({ selector, noteSelector }) => {
 			const note = document.querySelector(noteSelector);
@@ -598,74 +591,6 @@ export default async function (t) {
 		return note;
 	}
 
-	async function sweepDetailsEdges(look, width, height) {
-		const id = 'ai.models.default-model';
-		const open = async () => {
-			const frame = await openReceiptFrame(look, width, height, id, true);
-			await frame.evaluate(() => document.fonts.ready.then(() => null));
-			return frame;
-		};
-		const first = await open();
-		const range = wheelRange(await readDetailsPicker(first));
-		const cases = [{ edge: 'full', fraction: 0 }];
-		// A tall pane can run out of travel before one edge clips. Sweep its reachable range up to a 6 px slice.
-		for (const edge of ['top', 'bottom']) {
-			if (range[`${edge}Clip`] >= 4) {
-				for (const fraction of [0.3, 0.65, 1]) cases.push({ edge, fraction });
-			}
-		}
-		t.log(`Details wheel range ${look} ${width}x${height} ${JSON.stringify({ range, cases })}`);
-		await t.check(`Details wheel ${look} ${width}x${height}: reachable clipping edges are exercised`,
-			cases.length >= (height === 500 ? 7 : 4), JSON.stringify(range));
-		for (const { edge, fraction } of cases) {
-			const who = `Details wheel ${look} ${width}x${height} ${edge} ${fraction}`;
-			await t.step(who, async () => {
-				const frame = edge === 'full' ? first : await open();
-				const start = await readDetailsPicker(frame);
-				const { top, bottom, topClip, bottomClip } = wheelRange(start);
-				const min = Math.max(0, bottom), max = Math.min(start.maxScroll, top);
-				const depth = Math.min(start.picker.height - 6, edge === 'top' ? topClip : bottomClip) * fraction;
-				const target = Math.round(edge === 'full' ? (min + max) / 2 : edge === 'top' ? top + depth : bottom - depth);
-				const pane = await frame.locator(detailsBody).boundingBox();
-				await t.page.mouse.move(pane.x + pane.width / 2, pane.y + pane.height / 2);
-				const wheelTo = async (from, to) => {
-					await t.page.mouse.wheel(0, to - from);
-					await frame.waitForFunction(({ detailsBody, to }) =>
-						Math.abs(document.querySelector(detailsBody).scrollTop - to) < 1,
-					{ detailsBody, to }, { timeout: 2500 });
-				};
-				const origin = target === start.scrollTop ? (target >= 8 ? target - 8 : target + 8) : start.scrollTop;
-				if (origin !== start.scrollTop) await wheelTo(start.scrollTop, origin);
-				await wheelTo(origin, target);
-				const before = await readDetailsPicker(frame);
-				const clipped = Math.max(before.body.top - before.picker.top, 0);
-				const hidden = edge === 'top' ? clipped : Math.max(before.picker.bottom - before.body.bottom, 0);
-				const ready = before.hit && before.exposed > 3 && (edge === 'full' ? before.exposed >= before.picker.height - 1 :
-					hidden > 0 && Math.abs(before.exposed - (before.picker.height - depth)) <= 1.5);
-				await t.check(`${who}: a real wheel leaves the intended slice clickable`, ready, JSON.stringify({ target, before }));
-				if (!ready) return;
-				const trigger = frame.locator(detailsPicker);
-				const box = await trigger.boundingBox();
-				const x = box.x + before.point.x - before.picker.x, y = box.y + before.point.y - before.picker.y;
-				await t.page.mouse.click(x, y);
-				if (!await pressDepth(frame, 'High', who)) return;
-				await waitForSaveReceipt(frame);
-				const actual = await frame.evaluate(() => [document.documentElement.dataset.theme, innerWidth, innerHeight]);
-				await t.equal(`${who}: look and viewport after save`, actual.join(' '), `${look} ${width} ${height}`);
-				const after = await readDetailsPicker(frame, before.point);
-				const movement = after.picker.top - before.picker.top;
-				await t.page.mouse.click(x, y);
-				const opened = await trigger.getAttribute('aria-expanded') === 'true';
-				const saved = await frame.evaluate((id) => PSX.effortOf(PSX.getAt(PSX.W, 'project', 'tastebook', id)), id);
-				const witness = JSON.stringify({ x, y, before, after, movement, opened, saved });
-				t.log(`${who} replay ${witness}`);
-				await t.check(`${who}: the same point reopens the picker with High kept`,
-					after.hit && Math.abs(movement) <= 1 && opened && saved === 'High', witness);
-				if (opened) await t.page.keyboard.press('Escape');
-			});
-		}
-	}
-
 	for (const [look, width, height] of receiptMatrix) {
 		for (const route of ['row', 'Details']) {
 			const who = `receipt ${look} ${width}x${height} (${route})`;
@@ -683,19 +608,17 @@ export default async function (t) {
 				const note = await waitForSaveReceipt(frame);
 				const actual = await frame.evaluate(() => [document.documentElement.dataset.theme, innerWidth, innerHeight]);
 				await t.equal(`${who}: look and viewport after save`, actual.join(' '), `${look} ${width} ${height}`);
-				await checkReceipt(frame, selector, who);
-				if (!details && (width === 1920 || look === 'glass-dark' && width === 1280)) {
-					await t.shot(`fo158-receipt-${look}-${width}x${height}`, 'Save receipt and Everyday building’s High depth');
-				}
-				await t.page.mouse.click(x, y);
-				const opened = await trigger.getAttribute('aria-expanded') === 'true';
-				const st = await readModelState(frame, id);
-				const replay = JSON.stringify({ x, y, opened, saved: st.ownEffort });
-				t.log(`${who} replay ${replay}`);
-				await t.check(`${who}: clicking the original point reopens the picker and keeps High saved`,
-					opened && st.ownEffort === 'High', replay);
-				if (opened) await t.page.keyboard.press('Escape');
 				if (details) {
+					// r6g: Details scroll keep is reverted (FO-244), so scroll the Details picker into view to check
+					// receipt clearance, keyboard reopen, Close clearance, and post-close row clearance.
+					await trigger.scrollIntoViewIfNeeded({ timeout: 8000 });
+					await checkReceipt(frame, selector, who);
+					const curBox = await trigger.boundingBox();
+					await t.page.mouse.click(curBox.x + curBox.width / 2, curBox.y + curBox.height / 2);
+					const reopened = await trigger.getAttribute('aria-expanded') === 'true';
+					const st = await readModelState(frame, id);
+					await t.check(`${who}: Details picker reopens with High kept`, reopened && st.ownEffort === 'High', JSON.stringify({ reopened, saved: st.ownEffort }));
+					if (reopened) await t.page.keyboard.press('Escape');
 					await t.page.keyboard.press('Enter');
 					const keyboardOpen = await trigger.getAttribute('aria-expanded') === 'true';
 					await t.check(`${who}: Enter also reopens the picker`, keyboardOpen);
@@ -708,25 +631,51 @@ export default async function (t) {
 					if (look === 'glass-dark' && width === 1280) {
 						await t.shot('fo158-receipt-glass-dark-1280x500-after-details', 'Save receipt and Everyday model’s High depth after closing Details');
 					}
-				}
-				if (opened && !details) {
-					await note.getByRole('button', { name: 'Undo', exact: true }).click({ timeout: 3000 });
-					await frame.waitForFunction((id) => PSX.effortOf(PSX.getAt(PSX.W, 'project', 'tastebook', id)) !== 'High', id, { timeout: 3000 });
-					await t.check(`${who}: Undo removes the saved High depth`, true);
+				} else {
+					await checkReceipt(frame, selector, who);
+					if (width === 1920 || look === 'glass-dark' && width === 1280) {
+						await t.shot(`fo158-receipt-${look}-${width}x${height}`, 'Save receipt and Everyday building’s High depth');
+					}
+					await t.page.mouse.click(x, y);
+					const opened = await trigger.getAttribute('aria-expanded') === 'true';
+					const st = await readModelState(frame, id);
+					const replay = JSON.stringify({ x, y, opened, saved: st.ownEffort });
+					t.log(`${who} replay ${replay}`);
+					await t.check(`${who}: clicking the original point reopens the picker and keeps High saved`,
+						opened && st.ownEffort === 'High', replay);
+					if (opened) {
+						await t.page.keyboard.press('Escape');
+						await note.getByRole('button', { name: 'Undo', exact: true }).click({ timeout: 3000 });
+						await frame.waitForFunction((id) => PSX.effortOf(PSX.getAt(PSX.W, 'project', 'tastebook', id)) !== 'High', id, { timeout: 3000 });
+						await t.check(`${who}: Undo removes the saved High depth`, true);
+					}
 				}
 			});
 		}
-		await sweepDetailsEdges(look, width, height);
 	}
 	// FO-158 r6f: opening a different setting's Details (or switching Details) dismisses any saved receipt so Close is
 	// never covered; saving inside Details keeps the receipt and its Undo working.
 	async function clickRealCenter(locator) {
-		await locator.scrollIntoViewIfNeeded({ timeout: 8000 });
+		await locator.evaluate((el) => {
+			if (!el.closest('.pm51-popout, .o55-pick-pop, .psx-mpick, .psx-note, .pmr-menu')) {
+				el.scrollIntoView({ block: 'center', inline: 'nearest' });
+			}
+		});
+		await t.page.waitForTimeout(80);
 		const box = await locator.boundingBox();
 		if (!box || box.width <= 0 || box.height <= 0) throw new Error('Target has no bounding box');
 		const x = box.x + box.width / 2, y = box.y + box.height / 2;
 		await t.page.mouse.click(x, y);
 		return { x, y, box };
+	}
+
+	async function clickUntilVisible(triggerLoc, targetLoc) {
+		for (let attempt = 0; attempt < 2; attempt++) {
+			await clickRealCenter(triggerLoc);
+			if (await targetLoc.waitFor({ state: 'visible', timeout: 3000 }).then(() => true, () => false)) return;
+			await t.page.waitForTimeout(350);
+		}
+		await targetLoc.waitFor({ state: 'visible', timeout: 8000 });
 	}
 
 	async function waitForAnySavedReceipt(frame) {
@@ -822,9 +771,8 @@ export default async function (t) {
 				const who = `receipt-close ${look} ${width}x${height} model`;
 				const frame = await openReceiptCloseFrame(look, width, height);
 				if (!frame) return;
-				await clickRealCenter(frame.locator(rowPicker('ai.models.default-model')).first());
-				await frame.locator('.o55-pick-pop.is-open .o55-pick-list [role="option"]').first().waitFor({ state: 'visible', timeout: 8000 });
 				const modelOpt = frame.locator('.o55-pick-pop.is-open .o55-pick-list [role="option"]:not([aria-selected="true"]):not([aria-disabled="true"]):not([data-pre="1"])').first();
+				await clickUntilVisible(frame.locator(rowPicker('ai.models.default-model')).first(), modelOpt);
 				await clickRealCenter(modelOpt);
 				await t.page.waitForTimeout(300);
 				const depthDef = frame.locator('.o55-pick-pop.is-open [role="listbox"][aria-label^="Thinking depth"] [role="option"][data-effort=""]').first();
@@ -840,10 +788,8 @@ export default async function (t) {
 				const who = `receipt-close ${look} ${width}x${height} effort/depth`;
 				const frame = await openReceiptCloseFrame(look, width, height);
 				if (!frame) return;
-				await clickRealCenter(frame.locator(rowPicker('ai.models.worker-model')).first());
-				await t.page.waitForTimeout(350);
 				const depthOpt = frame.locator('.o55-pick-pop.is-open [role="listbox"][aria-label^="Thinking depth"] [role="option"][data-effort="High"]').first();
-				await depthOpt.waitFor({ state: 'visible', timeout: 8000 });
+				await clickUntilVisible(frame.locator(rowPicker('ai.models.worker-model')).first(), depthOpt);
 				await clickRealCenter(depthOpt);
 				await waitForAnySavedReceipt(frame);
 				const otherAbout = await revealRow(frame, 'ai.models.default-model');
@@ -874,9 +820,8 @@ export default async function (t) {
 				if (!frame) return;
 				await revealRow(frame, 'ai.models.default-provider');
 				const dd = frame.locator('#pm-settings-root [id="setting-ai.models.default-provider"] .pm51-dd-trigger').first();
-				await clickRealCenter(dd);
 				const opt = frame.locator('.pm51-popout.pm51-dd-list.is-open [role="option"][aria-selected="false"]:not([aria-disabled="true"])').first();
-				await opt.waitFor({ state: 'visible', timeout: 8000 });
+				await clickUntilVisible(dd, opt);
 				await clickRealCenter(opt);
 				await waitForAnySavedReceipt(frame);
 				const otherAbout = await revealRow(frame, 'ai.models.default-model');
@@ -892,10 +837,8 @@ export default async function (t) {
 					try { localStorage.removeItem('psx.settings-scope.v1'); } catch (e) { /* opaque sandbox */ }
 					if (window.PSX?.S) window.PSX.S.tipShown = false;
 				});
-				await clickRealCenter(frame.locator(detailsPicker).first());
-				await t.page.waitForTimeout(350);
 				const depthOpt = frame.locator('.o55-pick-pop.is-open [role="listbox"][aria-label^="Thinking depth"] [role="option"][data-effort="High"]').first();
-				await depthOpt.waitFor({ state: 'visible', timeout: 8000 });
+				await clickUntilVisible(frame.locator(detailsPicker).first(), depthOpt);
 				await clickRealCenter(depthOpt);
 				await waitForSaveReceipt(frame);
 				const nextBtn = frame.locator('.detail-inspector[aria-hidden="false"] .o55-insp-near [data-action="setting-details"]').first();
@@ -908,10 +851,8 @@ export default async function (t) {
 			await t.step(`receipt-close ${look} ${width}x${height} save inside Details keeps Undo`, async () => {
 				const who = `receipt-close ${look} ${width}x${height} save inside Details keeps Undo`;
 				const frame = await openReceiptFrame(look, width, height, 'ai.models.default-model', true);
-				await clickRealCenter(frame.locator(detailsPicker).first());
-				await t.page.waitForTimeout(350);
 				const depthOpt = frame.locator('.o55-pick-pop.is-open [role="listbox"][aria-label^="Thinking depth"] [role="option"][data-effort="High"]').first();
-				await depthOpt.waitFor({ state: 'visible', timeout: 8000 });
+				await clickUntilVisible(frame.locator(detailsPicker).first(), depthOpt);
 				await clickRealCenter(depthOpt);
 				const note = await waitForSaveReceipt(frame);
 				const hits = await readReceiptHits(frame, detailsPicker);
@@ -936,6 +877,689 @@ export default async function (t) {
 		}
 	}
 
+	// FO-158 r6g: click-through saved receipts across every save path, viewport (740x900, 1280x500, 1920x1080),
+	// and look (Basic light/dark, Glass light/dark), plus Undo and Astra's expanded 'For experts' case.
+	async function resetLookState(frame, look) {
+		await frame.evaluate(async (l) => {
+			try { localStorage.removeItem('psx.settings-scope.v1'); } catch (e) { /* opaque sandbox */ }
+			await window.PSX.command({ cmd: 'reset' });
+			if (window.PSX?.S) window.PSX.S.tipShown = false;
+			window.PSX.hideNote && window.PSX.hideNote({ immediate: true });
+			window.PM_TITLEBAR_NOTIFY?.clearAll?.();
+			window.PSX.setLook(l);
+		}, look);
+		await frame.waitForFunction((l) => document.documentElement.getAttribute('data-theme') === l, look, { timeout: 6000 }).catch(() => {});
+		await t.page.waitForTimeout(350);
+		await frame.evaluate(() => window.PSX.hideNote && window.PSX.hideNote({ immediate: true }));
+		await closeDetailsIfOpen(frame);
+	}
+
+	async function wheelControlUnderReceipt(frame, ctrlSel, scrollerSel) {
+		const plan = await frame.evaluate(({ ctrlSel, scrollerSel, noteSelector }) => {
+			const note = document.querySelector(`${noteSelector}[data-kind="saved"]`);
+			const ctrl = document.querySelector(ctrlSel);
+			const pane = document.querySelector(scrollerSel);
+			if (!note || !ctrl || !pane) return { ok: false, why: 'missing', hasNote: !!note, hasCtrl: !!ctrl, hasPane: !!pane };
+			const nR = note.getBoundingClientRect();
+			const cR = ctrl.getBoundingClientRect();
+			const pR = pane.getBoundingClientRect();
+			const btns = [...note.querySelectorAll('button')].map((b) => b.getBoundingClientRect());
+			const btnTop = btns.length ? Math.min(...btns.map((r) => r.top)) : nR.bottom;
+			const bodyTop = nR.top + 4, bodyBot = Math.max(bodyTop + 6, btnTop - 4);
+			const visTop = Math.max(cR.top, pR.top, 0), visBot = Math.min(cR.bottom, pR.bottom, innerHeight);
+			const ovX = Math.min(cR.right, nR.right) - Math.max(cR.left, nR.left);
+			const ovBodyY = Math.min(visBot, bodyBot) - Math.max(visTop, bodyTop);
+			if (ovX < 4) return { ok: false, why: 'no-x-overlap', cR: cR.toJSON(), nR: nR.toJSON() };
+			if (ovBodyY >= 4) return { ok: true, already: true };
+			const targetY = (bodyTop + bodyBot) / 2;
+			const curY = (cR.top + cR.bottom) / 2;
+			const dy = curY - targetY; // wheel deltaY > 0 moves content UP (decreases cR.top)
+			const maxScroll = pane.scrollHeight - pane.clientHeight;
+			const targetScroll = Math.round(pane.scrollTop + dy);
+			if (targetScroll < 0 || targetScroll > maxScroll) {
+				return { ok: false, why: 'scroll-out-of-range', scrollTop: pane.scrollTop, targetScroll, maxScroll, cR: cR.toJSON(), nR: nR.toJSON() };
+			}
+			return { ok: true, already: false, dy: targetScroll - pane.scrollTop, targetScroll };
+		}, { ctrlSel, scrollerSel, noteSelector });
+		if (!plan.ok || plan.already) return plan;
+		const paneBox = await frame.locator(scrollerSel).first().boundingBox();
+		if (!paneBox) return { ok: false, why: 'no-pane-box' };
+		await t.page.mouse.move(paneBox.x + paneBox.width / 2, paneBox.y + Math.min(paneBox.height / 2, 120));
+		await t.page.mouse.wheel(0, plan.dy);
+		await frame.waitForFunction(({ scrollerSel, target }) => {
+			const p = document.querySelector(scrollerSel);
+			return !!p && Math.abs(p.scrollTop - target) <= 3;
+		}, { scrollerSel, target: plan.targetScroll }, { timeout: 2500 }).catch(() => {});
+		await t.page.waitForTimeout(100);
+		return { ok: true, scrolled: true, dy: plan.dy };
+	}
+
+	async function probeReceiptBodyClick(frame, ctrlSel, scrollerSel = null) {
+		const info = await frame.evaluate(({ ctrlSel, scrollerSel, noteSelector }) => {
+			const note = document.querySelector(`${noteSelector}[data-kind="saved"]`);
+			const ctrl = document.querySelector(ctrlSel);
+			if (!note || !ctrl) return { ok: false, why: 'missing', hasNote: !!note, hasCtrl: !!ctrl };
+			const nR = note.getBoundingClientRect();
+			const cR = ctrl.getBoundingClientRect();
+			const pR = scrollerSel ? document.querySelector(scrollerSel)?.getBoundingClientRect() : null;
+			const clipL = Math.max(0, pR ? pR.left : 0);
+			const clipR = Math.min(innerWidth, pR ? pR.right : innerWidth);
+			const clipT = Math.max(0, pR ? pR.top : 0);
+			const clipB = Math.min(innerHeight, pR ? pR.bottom : innerHeight);
+			const vL = Math.max(cR.left, clipL), vR = Math.min(cR.right, clipR);
+			const vT = Math.max(cR.top, clipT), vB = Math.min(cR.bottom, clipB);
+			const btns = [...note.querySelectorAll('button')].map((b) => ({
+				text: b.textContent.trim(),
+				rect: b.getBoundingClientRect().toJSON(),
+			}));
+			const buttonOverlaps = [];
+			for (const b of btns) {
+				const bw = Math.min(vR, b.rect.right) - Math.max(vL, b.rect.left);
+				const bh = Math.min(vB, b.rect.bottom) - Math.max(vT, b.rect.top);
+				if (bw > 0.5 && bh > 0.5) {
+					buttonOverlaps.push({
+						button: b.text,
+						buttonRect: b.rect,
+						controlRect: cR.toJSON(),
+						overlap: { width: +bw.toFixed(2), height: +bh.toFixed(2) },
+					});
+				}
+			}
+			const oL = Math.max(vL, nR.left), oR = Math.min(vR, nR.right);
+			const oT = Math.max(vT, nR.top), oB = Math.min(vB, nR.bottom);
+			if (oR - oL < 4 || oB - oT < 4) {
+				return { ok: false, why: 'no-overlap', noteRect: nR.toJSON(), ctrlRect: cR.toJSON(), buttonOverlaps };
+			}
+			const inBtn = (x, y) => btns.some((b) =>
+				x >= b.rect.left - 2 && x <= b.rect.right + 2 && y >= b.rect.top - 2 && y <= b.rect.bottom + 2);
+			let chosen = null;
+			// Prefer a point inside the receipt body (not on any receipt button), scanning the overlap rectangle.
+			const padX = Math.min(3, (oR - oL) / 4), padY = Math.min(3, (oB - oT) / 4);
+			const xs = [0.5, 0.25, 0.75, 0.15, 0.85].map((f) => oL + padX + (oR - oL - 2 * padX) * f);
+			const ys = [0.5, 0.25, 0.75, 0.15, 0.85].map((f) => oT + padY + (oB - oT - 2 * padY) * f);
+			for (const y of ys) {
+				for (const x of xs) {
+					if (!inBtn(x, y)) { chosen = { x, y }; break; }
+				}
+				if (chosen) break;
+			}
+			if (!chosen) {
+				return { ok: false, why: 'only-under-receipt-buttons', noteRect: nR.toJSON(), ctrlRect: cR.toJSON(), buttonOverlaps };
+			}
+			const top = document.elementFromPoint(chosen.x, chosen.y);
+			return {
+				ok: true,
+				point: chosen,
+				noteRect: nR.toJSON(),
+				ctrlRect: cR.toJSON(),
+				notePointerEvents: getComputedStyle(note).pointerEvents,
+				buttonOverlaps,
+				hitResolvesToControl: !!top && (top === ctrl || ctrl.contains(top)),
+				hitInReceipt: !!top && !!top.closest?.('.psx-note'),
+				hitTag: top ? top.outerHTML.split('>')[0] : null,
+			};
+		}, { ctrlSel, scrollerSel, noteSelector });
+		if (!info.ok) return info;
+		const box = await frame.locator(ctrlSel).first().boundingBox();
+		if (!box) return { ...info, ok: false, why: 'no-locator-box' };
+		const pageX = box.x + (info.point.x - info.ctrlRect.x);
+		const pageY = box.y + (info.point.y - info.ctrlRect.y);
+		return { ...info, pageX, pageY };
+	}
+
+	async function verifyUndoWorks(frame, verifyReverted, who) {
+		const note = frame.locator(`${noteSelector}[data-kind="saved"]`);
+		const undoBtn = note.getByRole('button', { name: 'Undo', exact: true });
+		const hit = await frame.evaluate((sel) => {
+			const n = document.querySelector(`${sel}[data-kind="saved"]`);
+			const b = [...(n?.querySelectorAll('button') || [])].find((x) => x.textContent.trim() === 'Undo');
+			if (!b) return null;
+			const r = b.getBoundingClientRect();
+			const top = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+			return { rect: r.toJSON(), reaches: !!top && (top === b || b.contains(top)), top: top?.outerHTML.split('>')[0] };
+		}, noteSelector);
+		await t.check(`${who}: receipt Undo button is hit-testable`, Boolean(hit?.reaches), JSON.stringify(hit));
+		if (!hit?.reaches) return;
+		await clickRealCenter(undoBtn);
+		const reverted = await verifyReverted();
+		await t.check(`${who}: clicking Undo restores the previous value`, reverted);
+	}
+
+	async function runClickThrough() {
+		const sizes = [[740, 900], [1280, 500], [1920, 1080]];
+		const looks = ['basic-dark', 'basic-light', 'glass-light', 'glass-dark'];
+		const allButtonOverlaps = [];
+
+		for (const [width, height] of sizes) {
+			await t.viewport(width, height);
+			const frame = await t.app.open();
+			if (!await frame.evaluate(() => document.documentElement.hasAttribute('data-psx-layer'))) {
+				await t.check('settings-picker-feed: not a settings-scope build, skipped (build it with tools/build_standalone.py)', true);
+				return;
+			}
+			await frame.waitForFunction(() => !!window.PSX?.lastReport, null, { timeout: 60000 });
+
+			for (const look of looks) {
+				const tag = `click-through ${look} ${width}x${height}`;
+
+				// 1. Where-it-applies project Change (Astra finding #1: Everyday building -> tastebook -> Change -> High -> Done -> Save)
+				await t.step(`${tag} project-change`, async () => {
+					const who = `${tag} project-change`;
+					await resetLookState(frame, look);
+					const about = await revealRow(frame, 'ai.models.worker-model');
+					await clickRealCenter(about);
+					await waitForDetailsOpen(frame, 'ai.models.worker-model');
+					const chSel = '.detail-inspector[aria-hidden="false"] [data-psx-line="project:tastebook"] [data-psx-key$=":change"]';
+					await clickRealCenter(frame.locator(chSel));
+					await t.page.waitForTimeout(250);
+					if (!await frame.locator('.psx-mpick').isVisible().catch(() => false)) {
+						await clickRealCenter(frame.locator('.detail-inspector [data-psx-block="where"] .o55-pick-trigger'));
+					}
+					await clickRealCenter(frame.locator('.psx-mpick .psx-seg button[data-depth="High"]'));
+					await clickRealCenter(frame.locator('.psx-mpick .psx-mpick-foot button', { hasText: 'Done' }));
+					await clickRealCenter(frame.locator('.detail-inspector [data-psx-key="project:tastebook:save"]'));
+					await waitForAnySavedReceipt(frame);
+
+					// At 740x900 Change is naturally covered; at 1280x500 wheel Details so Change is under the receipt;
+					// at 1920x1080 Change sits above the receipt (scrollTop=0), so wheel Details picker under the receipt.
+					let targetSel = chSel;
+					let expectKind = 'inline-editor';
+					const wRes = await wheelControlUnderReceipt(frame, chSel, detailsBody);
+					if (!wRes.ok) {
+						targetSel = detailsPicker;
+						expectKind = 'details-picker';
+						await wheelControlUnderReceipt(frame, detailsPicker, detailsBody);
+					}
+					const probe = await probeReceiptBodyClick(frame, targetSel, detailsBody);
+					if (probe.buttonOverlaps?.length) allButtonOverlaps.push({ who, target: expectKind, overlaps: probe.buttonOverlaps });
+					if (width === 740 && look === 'glass-dark') {
+						await t.shot('fo158-r6g-project-change-glass-dark-740', 'Where-it-applies Change under saved receipt body');
+					}
+					let acted = false;
+					if (probe.ok) {
+						await t.page.mouse.click(probe.pageX, probe.pageY);
+						await t.page.waitForTimeout(250);
+						if (expectKind === 'inline-editor') {
+							acted = await frame.evaluate(() => !!document.querySelector('.detail-inspector [data-psx-block="where"] .o55-pick-trigger'));
+							if (acted) {
+								await frame.evaluate(() => { window.PSX?.places?.close && window.PSX.places.close(); });
+								const cancelBtn = frame.locator('.detail-inspector [data-psx-key="project:tastebook:cancel"]');
+								if (await cancelBtn.count()) await cancelBtn.click().catch(() => {});
+							}
+						} else {
+							acted = await frame.evaluate(() => !!document.querySelector('.o55-pick-pop.is-open'));
+							if (acted) await t.page.keyboard.press('Escape');
+						}
+					}
+					const witness = JSON.stringify({ expectKind, wRes, probe, acted });
+					t.log(`${who} ${witness}`);
+					await t.check(`${who}: receipt body click-through hits ${expectKind} and activates it`,
+						Boolean(probe.ok && probe.hitResolvesToControl && !probe.hitInReceipt && acted), witness);
+					// Verify Undo after a Details save (for tastebook project Change)
+					if (width === 740 || width === 1920) {
+						await verifyUndoWorks(
+							frame,
+							() => frame.waitForFunction(() => PSX.effortOf(PSX.getAt(PSX.W, 'project', 'tastebook', 'ai.models.worker-model')) !== 'High', null, { timeout: 3000 }).then(() => true, () => false),
+							`${who} Undo`
+						);
+					}
+				});
+
+				// 2. Dropdown/choice: "Service tried first" (Astra finding #2) — plus "Prompt caching" when Service tried first
+				// sits above the bottom receipt band at 740x900 / 1920x1080.
+				await t.step(`${tag} service-dropdown`, async () => {
+					const who = `${tag} service-dropdown`;
+					await resetLookState(frame, look);
+					await revealRow(frame, 'ai.models.default-provider');
+					const beforeProvider = await frame.evaluate(() => PSX.resolve('ai.models.default-provider', PSX.S.ctx).value);
+					const ddSel = '#pm-settings-root [id="setting-ai.models.default-provider"] .pm51-dd-trigger';
+					const opt = frame.locator('.pm51-popout.pm51-dd-list.is-open [role="option"][aria-selected="false"]:not([aria-disabled="true"])').first();
+					for (let attempt = 0; attempt < 2; attempt++) {
+						await clickRealCenter(frame.locator(ddSel).first());
+						if (await opt.waitFor({ state: 'visible', timeout: 3000 }).then(() => true, () => false)) break;
+						await t.page.waitForTimeout(350);
+					}
+					await opt.waitFor({ state: 'visible', timeout: 8000 });
+					await clickRealCenter(opt);
+					await waitForAnySavedReceipt(frame);
+
+					const scrollerSel = '#pm-settings-root .document-scroll';
+					const wRes = await wheelControlUnderReceipt(frame, ddSel, scrollerSel);
+					if (wRes.ok) {
+						// Direct overlap on Service tried first (1280x500): click through receipt body onto dropdown
+						const probe = await probeReceiptBodyClick(frame, ddSel, scrollerSel);
+						if (probe.buttonOverlaps?.length) allButtonOverlaps.push({ who, target: 'service-dd', overlaps: probe.buttonOverlaps });
+						if (width === 1280 && look === 'glass-dark') {
+							await t.shot('fo158-r6g-service-dd-glass-dark-1280', 'Service tried first under saved receipt body');
+						}
+						let opened = false;
+						if (probe.ok) {
+							await t.page.mouse.click(probe.pageX, probe.pageY);
+							opened = await frame.locator('.pm51-popout.pm51-dd-list.is-open').waitFor({ state: 'visible', timeout: 2000 }).then(() => true, () => false);
+							if (opened) await t.page.keyboard.press('Escape');
+						}
+						const witness = JSON.stringify({ wRes, probe, opened });
+						t.log(`${who} ${witness}`);
+						await t.check(`${who}: receipt body click-through hits Service tried first and opens its menu`,
+							Boolean(probe.ok && probe.hitResolvesToControl && !probe.hitInReceipt && opened), witness);
+
+						// Also explicitly hit-test and click the chevron SVG region under the receipt (Astra finding #2)
+						const chevInfo = await frame.evaluate(({ ddSel, noteSelector }) => {
+							const note = document.querySelector(`${noteSelector}[data-kind="saved"]`);
+							const dd = document.querySelector(ddSel);
+							const chev = dd?.querySelector('svg, .pm51-dd-chev, .chev');
+							if (!note || !dd || !chev) return null;
+							const nR = note.getBoundingClientRect(), cR = chev.getBoundingClientRect(), dR = dd.getBoundingClientRect();
+							const cx = cR.left + cR.width / 2, cy = cR.top + cR.height / 2;
+							const insideNote = cx >= nR.left && cx <= nR.right && cy >= nR.top && cy <= nR.bottom;
+							const btns = [...note.querySelectorAll('button')].map((b) => b.getBoundingClientRect());
+							const onBtn = btns.some((b) => cx >= b.left && cx <= b.right && cy >= b.top && cy <= b.bottom);
+							const top = document.elementFromPoint(cx, cy);
+							return { cx, cy, insideNote, onBtn, dR: dR.toJSON(), reaches: !!top && (top === dd || dd.contains(top)), inReceipt: !!top?.closest?.('.psx-note'), top: top?.outerHTML.split('>')[0] };
+						}, { ddSel, noteSelector });
+						if (chevInfo?.insideNote && !chevInfo.onBtn) {
+							const ddBox = await frame.locator(ddSel).first().boundingBox();
+							const px = ddBox.x + (chevInfo.cx - chevInfo.dR.x), py = ddBox.y + (chevInfo.cy - chevInfo.dR.y);
+							await t.page.mouse.click(px, py);
+							const chevOpened = await frame.locator('.pm51-popout.pm51-dd-list.is-open').waitFor({ state: 'visible', timeout: 2000 }).then(() => true, () => false);
+							if (chevOpened) await t.page.keyboard.press('Escape');
+							await t.check(`${who}: chevron under receipt resolves to dropdown and opens menu`,
+								Boolean(chevInfo.reaches && !chevInfo.inReceipt && chevOpened), JSON.stringify({ chevInfo, chevOpened }));
+						}
+					} else {
+						// Tall viewport (740x900, 1920x1080): Service tried first sits at top above bottom receipt.
+						// Try a non-advanced dropdown lower in Providers (ai.usage.chart-type) then Prompt caching (ai.models.cache-strategy).
+						let chosenId = null, w2 = null, probe = null, ddTarget = null;
+						for (const candId of ['ai.usage.chart-type', 'ai.models.cache-strategy']) {
+							await resetLookState(frame, look);
+							await revealRow(frame, candId);
+							const candSel = `#pm-settings-root [id="setting-${candId}"] .pm51-dd-trigger`;
+							const opt2 = frame.locator('.pm51-popout.pm51-dd-list.is-open [role="option"][aria-selected="false"]:not([aria-disabled="true"])').first();
+							for (let attempt = 0; attempt < 2; attempt++) {
+								await clickRealCenter(frame.locator(candSel).first());
+								if (await opt2.waitFor({ state: 'visible', timeout: 3000 }).then(() => true, () => false)) break;
+								await t.page.waitForTimeout(350);
+							}
+							await opt2.waitFor({ state: 'visible', timeout: 8000 });
+							await clickRealCenter(opt2);
+							await waitForAnySavedReceipt(frame);
+							w2 = await wheelControlUnderReceipt(frame, candSel, scrollerSel);
+							if (w2.ok) {
+								chosenId = candId;
+								ddTarget = candSel;
+								probe = await probeReceiptBodyClick(frame, candSel, scrollerSel);
+								break;
+							}
+						}
+						if (!probe) {
+							// Fallback if neither dropdown overlaps receipt X: test the active row's Details trigger under the receipt.
+							chosenId = 'ai.models.cache-strategy (details)';
+							ddTarget = '#pm-settings-root [id="setting-ai.models.cache-strategy"] > .o55-about';
+							w2 = await wheelControlUnderReceipt(frame, ddTarget, scrollerSel);
+							probe = await probeReceiptBodyClick(frame, ddTarget, scrollerSel);
+						}
+						if (probe.buttonOverlaps?.length) allButtonOverlaps.push({ who, target: chosenId, overlaps: probe.buttonOverlaps });
+						let opened = false;
+						if (probe.ok) {
+							await t.page.mouse.click(probe.pageX, probe.pageY);
+							if (chosenId.endsWith('(details)')) {
+								opened = await frame.waitForFunction(() => {
+									const insp = document.querySelector('#pm-settings-root .detail-inspector[aria-hidden="false"]');
+									return !!insp && insp.style.display !== 'none';
+								}, null, { timeout: 2000 }).then(() => true, () => false);
+							} else {
+								opened = await frame.locator('.pm51-popout.pm51-dd-list.is-open').waitFor({ state: 'visible', timeout: 2000 }).then(() => true, () => false);
+								if (opened) await t.page.keyboard.press('Escape');
+							}
+						}
+						const witness = JSON.stringify({ chosenId, w2, probe, opened });
+						t.log(`${who} (${chosenId}) ${witness}`);
+						await t.check(`${who}: receipt body click-through hits edited dropdown and opens its menu`,
+							Boolean(probe.ok && probe.hitResolvesToControl && !probe.hitInReceipt && opened), witness);
+					}
+					// Verify Undo after row dropdown save on representative size
+					if (width === 1280 && wRes.ok) {
+						await verifyUndoWorks(
+							frame,
+							() => frame.waitForFunction((prev) => PSX.resolve('ai.models.default-provider', PSX.S.ctx).value === prev, beforeProvider, { timeout: 3000 }).then(() => true, () => false),
+							`${who} Undo`
+						);
+					}
+				});
+
+				// 3. List setting: "Service try order" (ai.models.provider-priority)
+				await t.step(`${tag} list`, async () => {
+					const who = `${tag} list`;
+					await resetLookState(frame, look);
+					await revealRow(frame, 'ai.models.provider-priority');
+					const listSel = '#pm-settings-root [id="setting-ai.models.provider-priority"] .o55-struct';
+					const addBtn = frame.locator('.o55-le [data-o55-le="add"]').first();
+					await clickUntilVisible(frame.locator(listSel).first(), addBtn);
+					await t.page.waitForTimeout(250);
+					await clickRealCenter(addBtn);
+					await t.page.waitForTimeout(150);
+					await clickRealCenter(frame.locator('.pm51-panel-foot .btn.primary, [data-action="panel-primary"]').first());
+					await waitForAnySavedReceipt(frame);
+					const scrollerSel = '#pm-settings-root .document-scroll';
+					const wRes = await wheelControlUnderReceipt(frame, listSel, scrollerSel);
+					const probe = await probeReceiptBodyClick(frame, listSel, scrollerSel);
+					if (probe.buttonOverlaps?.length) allButtonOverlaps.push({ who, target: 'list-struct', overlaps: probe.buttonOverlaps });
+					let opened = false;
+					if (probe.ok) {
+						await t.page.mouse.click(probe.pageX, probe.pageY);
+						opened = await frame.locator('.o55-le').first().waitFor({ state: 'visible', timeout: 2000 }).then(() => true, () => false);
+						if (opened) await t.page.keyboard.press('Escape');
+					}
+					const witness = JSON.stringify({ wRes, probe, opened });
+					t.log(`${who} ${witness}`);
+					await t.check(`${who}: receipt body click-through hits edited list button and opens list editor`,
+						Boolean(probe.ok && probe.hitResolvesToControl && !probe.hitInReceipt && opened), witness);
+				});
+
+				// 4. Toggle setting: "Move to another service when one is down" (ai.models.provider-fallback)
+				await t.step(`${tag} toggle`, async () => {
+					const who = `${tag} toggle`;
+					await resetLookState(frame, look);
+					await revealRow(frame, 'ai.models.provider-fallback');
+					const swSel = '#pm-settings-root [id="setting-ai.models.provider-fallback"] [role="switch"]';
+					const aboutSel = '#pm-settings-root [id="setting-ai.models.provider-fallback"] > .o55-about';
+					await clickRealCenter(frame.locator(swSel).first());
+					await waitForAnySavedReceipt(frame);
+					const afterFirst = await frame.locator(swSel).first().getAttribute('aria-checked');
+					const scrollerSel = '#pm-settings-root .document-scroll';
+					// In 2-column Basic 1920x1080 the switch itself overlaps receipt X; in narrow/Glass stacked rows the switch
+					// sits left of the receipt so test that row's Details button (.o55-about) directly under the receipt body.
+					const wSw = await wheelControlUnderReceipt(frame, swSel, scrollerSel);
+					let targetSel = swSel, expectKind = 'switch';
+					if (!wSw.ok) {
+						targetSel = aboutSel;
+						expectKind = 'row-details';
+						await wheelControlUnderReceipt(frame, aboutSel, scrollerSel);
+					}
+					const probe = await probeReceiptBodyClick(frame, targetSel, scrollerSel);
+					if (probe.buttonOverlaps?.length) allButtonOverlaps.push({ who, target: expectKind, overlaps: probe.buttonOverlaps });
+					let acted = false;
+					if (probe.ok) {
+						await t.page.mouse.click(probe.pageX, probe.pageY);
+						await t.page.waitForTimeout(250);
+						if (expectKind === 'switch') {
+							const afterSecond = await frame.locator(swSel).first().getAttribute('aria-checked');
+							acted = afterSecond !== afterFirst;
+						} else {
+							acted = await frame.waitForFunction(() => {
+								const insp = document.querySelector('#pm-settings-root .detail-inspector[aria-hidden="false"]');
+								return !!insp && insp.style.display !== 'none';
+							}, null, { timeout: 2000 }).then(() => true, () => false);
+						}
+					}
+					const witness = JSON.stringify({ expectKind, wSw, probe, acted });
+					t.log(`${who} ${witness}`);
+					await t.check(`${who}: receipt body click-through hits ${expectKind} and activates it`,
+						Boolean(probe.ok && probe.hitResolvesToControl && !probe.hitInReceipt && acted), witness);
+				});
+
+				// 5. Model row picker (ai.models.default-model): receipt placed at top under bell; verify click-through on
+				// a live control covered by the receipt body (Media & Output workspace tab) activates it.
+				await t.step(`${tag} model-row`, async () => {
+					const who = `${tag} model-row`;
+					await resetLookState(frame, look);
+					await revealRow(frame, 'ai.models.default-model');
+					const mpSel = rowPicker('ai.models.default-model');
+					const mOpt = frame.locator('.o55-pick-pop.is-open .o55-pick-list [role="option"]:not([aria-selected="true"]):not([aria-disabled="true"]):not([data-pre="1"])').first();
+					await clickUntilVisible(frame.locator(mpSel).first(), mOpt);
+					await clickRealCenter(mOpt);
+					await t.page.waitForTimeout(250);
+					const dDef = frame.locator('.o55-pick-pop.is-open [role="listbox"][aria-label^="Thinking depth"] [role="option"][data-effort=""]').first();
+					if (await dDef.count()) await clickRealCenter(dDef);
+					await waitForAnySavedReceipt(frame);
+					await frame.evaluate(() => window.PM_TITLEBAR_NOTIFY?.clearAll?.());
+					// Find an inactive workspace tab covered by the model receipt's non-button body
+					const tabSel = '#pm-settings-root button.workspace-tab[data-action="jump-workspace"][data-workspace="media"]';
+					const probe = await probeReceiptBodyClick(frame, tabSel, null);
+					if (probe.buttonOverlaps?.length) allButtonOverlaps.push({ who, target: 'workspace-tab-media', overlaps: probe.buttonOverlaps });
+					let switched = false;
+					if (probe.ok) {
+						await t.page.mouse.click(probe.pageX, probe.pageY);
+						switched = await frame.waitForFunction(() => {
+							const b = document.querySelector('#pm-settings-root button.workspace-tab[data-workspace="media"]');
+							return !!b && (b.classList.contains('active') || b.classList.contains('is-current'));
+						}, null, { timeout: 2000 }).then(() => true, () => false);
+					}
+					const witness = JSON.stringify({ probe, switched });
+					t.log(`${who} ${witness}`);
+					await t.check(`${who}: model receipt body click-through hits covered tab and activates it`,
+						Boolean(probe.ok && probe.hitResolvesToControl && !probe.hitInReceipt && switched), witness);
+				});
+
+				// 6. Effort/depth save (ai.models.worker-model High): receipt placed at top under bell; verify click-through
+				// hits covered tab AND Undo still works on row effort save.
+				await t.step(`${tag} effort-depth`, async () => {
+					const who = `${tag} effort-depth`;
+					await resetLookState(frame, look);
+					await revealRow(frame, 'ai.models.worker-model');
+					const efSel = rowPicker('ai.models.worker-model');
+					const hOpt = frame.locator('.o55-pick-pop.is-open [role="listbox"][aria-label^="Thinking depth"] [role="option"][data-effort="High"]').first();
+					await clickUntilVisible(frame.locator(efSel).first(), hOpt);
+					await clickRealCenter(hOpt);
+					await waitForAnySavedReceipt(frame);
+					await frame.evaluate(() => window.PM_TITLEBAR_NOTIFY?.clearAll?.());
+					const tabSel = '#pm-settings-root button.workspace-tab[data-action="jump-workspace"][data-workspace="media"]';
+					const probe = await probeReceiptBodyClick(frame, tabSel, null);
+					if (probe.buttonOverlaps?.length) allButtonOverlaps.push({ who, target: 'workspace-tab-media', overlaps: probe.buttonOverlaps });
+					let switched = false;
+					if (probe.ok) {
+						await t.page.mouse.click(probe.pageX, probe.pageY);
+						switched = await frame.waitForFunction(() => {
+							const b = document.querySelector('#pm-settings-root button.workspace-tab[data-workspace="media"]');
+							return !!b && (b.classList.contains('active') || b.classList.contains('is-current'));
+						}, null, { timeout: 2000 }).then(() => true, () => false);
+					}
+					const witness = JSON.stringify({ probe, switched });
+					t.log(`${who} ${witness}`);
+					await t.check(`${who}: effort/depth receipt body click-through hits covered tab and activates it`,
+						Boolean(probe.ok && probe.hitResolvesToControl && !probe.hitInReceipt && switched), witness);
+					if (width === 740 || width === 1920) {
+						await verifyUndoWorks(
+							frame,
+							() => frame.waitForFunction(() => PSX.effortOf(PSX.getAt(PSX.W, 'project', 'tastebook', 'ai.models.worker-model')) !== 'High', null, { timeout: 3000 }).then(() => true, () => false),
+							`${who} Undo`
+						);
+					}
+				});
+
+				// 7. Settings header project Change button during project switching (Astra 6f final report):
+				// save, click header Change (through receipt where covered) to switch project to harbor, then immediately
+				// click header Change through the still-visible receipt at once.
+				await t.step(`${tag} header-change`, async () => {
+					const who = `${tag} header-change`;
+					await resetLookState(frame, look);
+					await revealRow(frame, 'ai.models.worker-model');
+					const efSel = rowPicker('ai.models.worker-model');
+					const hOpt = frame.locator('.o55-pick-pop.is-open [role="listbox"][aria-label^="Thinking depth"] [role="option"][data-effort="High"]').first();
+					await clickUntilVisible(frame.locator(efSel).first(), hOpt);
+					await clickRealCenter(hOpt);
+					await waitForAnySavedReceipt(frame);
+					await frame.evaluate(() => window.PM_TITLEBAR_NOTIFY?.clearAll?.());
+
+					const headSel = '#pm-settings-root .document-toolbar > .psx-head button[data-psx-head="view"]';
+					const menuLoc = frame.locator('[role="menu"][aria-label="Change"]').first();
+					const probe1 = await probeReceiptBodyClick(frame, headSel, null);
+					if (probe1.buttonOverlaps?.length) allButtonOverlaps.push({ who, target: 'header-change-before-switch', overlaps: probe1.buttonOverlaps });
+
+					let opened1 = false, switchedHarbor = false, receiptStillOpen = false, probe2 = null, opened2 = false;
+					if (probe1.ok) {
+						await t.page.mouse.click(probe1.pageX, probe1.pageY);
+					} else {
+						await clickRealCenter(frame.locator(headSel).first());
+					}
+					opened1 = await menuLoc.waitFor({ state: 'visible', timeout: 2000 }).then(() => true, () => false);
+					if (opened1) {
+						const harborOpt = menuLoc.locator('[role="menuitem"]').filter({ hasText: 'harbor' }).first();
+						await harborOpt.waitFor({ state: 'visible', timeout: 2500 });
+						await clickRealCenter(harborOpt);
+						switchedHarbor = await frame.waitForFunction(() => window.PSX?.S?.ctx?.project === 'harbor', null, { timeout: 3000 }).then(() => true, () => false);
+						await t.page.waitForTimeout(150);
+						receiptStillOpen = await frame.locator(`${noteSelector}[data-kind="saved"]`).isVisible().catch(() => false);
+						if (width === 1920 && look === 'glass-dark') {
+							await t.shot('fo158-r6g-header-change-glass-dark-1920', 'Settings header Change under saved receipt right after switching project');
+						}
+						probe2 = await probeReceiptBodyClick(frame, headSel, null);
+						if (probe2.buttonOverlaps?.length) allButtonOverlaps.push({ who, target: 'header-change-after-switch', overlaps: probe2.buttonOverlaps });
+						if (probe2.ok) {
+							await t.page.mouse.click(probe2.pageX, probe2.pageY);
+						} else {
+							await clickRealCenter(frame.locator(headSel).first());
+						}
+						opened2 = await menuLoc.waitFor({ state: 'visible', timeout: 2000 }).then(() => true, () => false);
+						if (opened2) await t.page.keyboard.press('Escape');
+					}
+					const witness = JSON.stringify({ probe1, opened1, switchedHarbor, receiptStillOpen, probe2, opened2 });
+					t.log(`${who} ${witness}`);
+					const mustOverlap = width === 1920;
+					const firstOk = probe1.ok ? (probe1.hitResolvesToControl && !probe1.hitInReceipt && opened1) : (!mustOverlap && opened1);
+					const secondOk = probe2?.ok ? (probe2.hitResolvesToControl && !probe2.hitInReceipt && opened2) : (!mustOverlap && opened2);
+					await t.check(`${who}: header Change works through saved receipt during and right after project switch`,
+						Boolean(firstOk && switchedHarbor && receiptStillOpen && secondOk), witness);
+				});
+			}
+		}
+		t.log(`BUTTON_OVERLAPS_SUMMARY ${JSON.stringify(allButtonOverlaps)}`);
+	}
+
+	// FO-158 r6g: Astra's expanded 'For experts' case in Glass dark 740x900.
+	// With round 6's Details scroll keep reverted, saving High from a ~5 px top sliver must behave as round 5 does
+	// and must not shift the destination button under the repeat click or open the destination menu by surprise.
+	async function runExpertsCase() {
+		const who = 'experts glass-dark 740x900 (ai.models.worker-model)';
+		await t.step(who, async () => {
+			await t.viewport(740, 900);
+			const frame = await t.app.open();
+			if (!await frame.evaluate(() => document.documentElement.hasAttribute('data-psx-layer'))) {
+				await t.check('settings-picker-feed: not a settings-scope build, skipped (build it with tools/build_standalone.py)', true);
+				return;
+			}
+			await frame.waitForFunction(() => !!window.PSX?.lastReport, null, { timeout: 60000 });
+			await resetLookState(frame, 'glass-dark');
+			const id = 'ai.models.worker-model';
+			const about = await revealRow(frame, id);
+			await clickRealCenter(about);
+			await waitForDetailsOpen(frame, id);
+
+			// Three ordinary prior project edits (matches Astra's repro so Recent changes has 3 rows)
+			for (const eff of ['High', 'Low', '']) {
+				const ch = frame.locator('.detail-inspector[aria-hidden="false"] [data-psx-line="project:tastebook"] [data-psx-key$=":change"]');
+				await clickRealCenter(ch);
+				await t.page.waitForTimeout(250);
+				if (!await frame.locator('.psx-mpick').isVisible().catch(() => false)) {
+					await clickRealCenter(frame.locator('.detail-inspector [data-psx-block="where"] .o55-pick-trigger'));
+				}
+				await clickRealCenter(frame.locator(`.psx-mpick .psx-seg button[data-depth="${eff}"]`));
+				await clickRealCenter(frame.locator('.psx-mpick .psx-mpick-foot button', { hasText: 'Done' }));
+				await clickRealCenter(frame.locator('.detail-inspector [data-psx-key="project:tastebook:save"]'));
+				const n = await waitForAnySavedReceipt(frame);
+				await clickRealCenter(n.locator('[data-close]'));
+				await t.page.waitForTimeout(250);
+			}
+
+			// Expand 'For experts'
+			const expSummary = frame.locator('.detail-inspector[aria-hidden="false"] details.o55-insp-tech > summary');
+			await clickRealCenter(expSummary);
+			await t.page.waitForTimeout(250);
+
+			// Wheel until about 5 px of the Details model picker shows at the top of .detail-body
+			const beforeWheel = await frame.evaluate(({ detailsBody, detailsPicker }) => {
+				const pane = document.querySelector(detailsBody);
+				const trig = document.querySelector(detailsPicker);
+				const b = pane.getBoundingClientRect();
+				const p = trig.getBoundingClientRect();
+				const targetScroll = Math.min(
+					pane.scrollHeight - pane.clientHeight,
+					Math.round(pane.scrollTop + (p.bottom - b.top) - 5)
+				);
+				return { scrollTop: pane.scrollTop, maxScroll: pane.scrollHeight - pane.clientHeight, targetScroll, expertOpen: !!document.querySelector('.detail-inspector details.o55-insp-tech')?.open };
+			}, { detailsBody, detailsPicker });
+			const paneBox = await frame.locator(detailsBody).boundingBox();
+			await t.page.mouse.move(paneBox.x + paneBox.width / 2, paneBox.y + paneBox.height / 2);
+			await t.page.mouse.wheel(0, beforeWheel.targetScroll - beforeWheel.scrollTop);
+			await frame.waitForFunction(({ detailsBody, target }) =>
+				Math.abs(document.querySelector(detailsBody).scrollTop - target) <= 2,
+			{ detailsBody, target: beforeWheel.targetScroll }, { timeout: 3000 }).catch(() => {});
+			await t.page.waitForTimeout(150);
+
+			const placed = await frame.evaluate(({ detailsBody, detailsPicker }) => {
+				const pane = document.querySelector(detailsBody);
+				const trig = document.querySelector(detailsPicker);
+				const b = pane.getBoundingClientRect();
+				const p = trig.getBoundingClientRect();
+				const top = Math.max(p.top, b.top), bottom = Math.min(p.bottom, b.bottom);
+				const pt = { x: p.left + p.width / 2, y: (top + bottom) / 2 };
+				const hit = document.elementFromPoint(pt.x, pt.y);
+				return {
+					scrollTop: pane.scrollTop, maxScroll: pane.scrollHeight - pane.clientHeight,
+					exposed: bottom - top, pt, hitSelf: trig.contains(hit),
+					picker: p.toJSON(), pane: b.toJSON(),
+					expertOpen: !!document.querySelector('.detail-inspector details.o55-insp-tech')?.open,
+					historyRows: document.querySelectorAll('.detail-inspector .psx-rline').length,
+				};
+			}, { detailsBody, detailsPicker });
+
+			const trigBox = await frame.locator(detailsPicker).boundingBox();
+			const clickX = trigBox.x + (placed.pt.x - placed.picker.x);
+			const clickY = trigBox.y + (placed.pt.y - placed.picker.y);
+			await t.check(`${who}: ~5 px top sliver is clickable with For experts open`,
+				Boolean(placed.hitSelf && placed.expertOpen && placed.exposed >= 3 && placed.exposed <= 8),
+				JSON.stringify(placed));
+			if (!placed.hitSelf) return;
+
+			await t.page.mouse.click(clickX, clickY);
+			if (!await pressDepth(frame, 'High', who)) return;
+			await waitForAnySavedReceipt(frame);
+			await t.page.waitForTimeout(250);
+
+			const afterSave = await frame.evaluate(({ detailsBody, detailsPicker, pt }) => {
+				const pane = document.querySelector(detailsBody);
+				const trig = document.querySelector(detailsPicker);
+				const top = document.elementFromPoint(pt.x, pt.y);
+				return {
+					scrollTop: pane.scrollTop, maxScroll: pane.scrollHeight - pane.clientHeight,
+					picker: trig?.getBoundingClientRect().toJSON() || null,
+					expertOpen: !!document.querySelector('.detail-inspector details.o55-insp-tech')?.open,
+					hitAtPoint: top ? {
+						tag: top.tagName, cls: top.className,
+						text: (top.innerText || top.textContent || '').trim().slice(0, 60),
+						isTargetBtn: !!top.closest?.('.psx-target-btn'),
+						isPicker: !!top.closest?.(detailsPicker),
+						inReceipt: !!top.closest?.('.psx-note'),
+						outer: top.outerHTML.split('>')[0],
+					} : null,
+					savedEffort: PSX.effortOf(PSX.getAt(PSX.W, 'project', 'tastebook', 'ai.models.worker-model')),
+				};
+			}, { detailsBody, detailsPicker, pt: placed.pt });
+
+			// Repeat press at exact same point
+			await t.page.mouse.click(clickX, clickY);
+			await t.page.waitForTimeout(250);
+			const afterRepeat = await frame.evaluate(() => {
+				const destMenu = document.querySelector('.pmr-menu-list, .pm51-popout.pm51-menu.is-open, [role="menu"][aria-label="Choosing here changes"]');
+				const targetExpanded = document.querySelector('.psx-target-btn')?.getAttribute('aria-expanded') || null;
+				const menuVisible = !!destMenu && getComputedStyle(destMenu).display !== 'none';
+				return {
+					menuVisible, targetExpanded,
+					menuLabel: destMenu?.getAttribute('aria-label') || null,
+					savedEffort: PSX.effortOf(PSX.getAt(PSX.W, 'project', 'tastebook', 'ai.models.worker-model')),
+				};
+			});
+			const witness = JSON.stringify({ beforeWheel, placed, clickX, clickY, afterSave, afterRepeat });
+			t.log(`EXPERTS_CASE ${witness}`);
+			await t.check(`${who}: repeat press does not hit destination button or open destination menu`,
+				Boolean(afterSave.savedEffort === 'High' && afterRepeat.savedEffort === 'High' &&
+					!afterSave.hitAtPoint?.isTargetBtn && !afterRepeat.menuVisible && afterRepeat.targetExpanded !== 'true'),
+				witness);
+		});
+	}
+
 	await runOpenPosition();
 	await runReceiptClose();
+	await runClickThrough();
+	await runExpertsCase();
 }

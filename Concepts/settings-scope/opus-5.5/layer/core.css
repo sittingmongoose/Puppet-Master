@@ -31,12 +31,12 @@ html[data-theme^="retro"] #panel-settings .psx-tb, html[data-o55-nier="on"] #pan
 #panel-settings .psx-grow { flex: 1 1 auto; }
 #panel-settings .psx-muted { color: var(--k3-text-3); }
 
-/* ---- the note after a change (6.4): model receipts start under the bell, clear of the edited control ------------ */
+/* ---- the note after a change (6.4): model receipts start under the bell; receipt body is click-through ------------ */
 #panel-settings > #pm-settings-portals > .psx-note {
   position: absolute; right: 18px; bottom: 18px; z-index: 130; width: min(400px, calc(100% - 36px)); box-sizing: border-box;
   display: flex; flex-direction: column; gap: 8px; padding: 12px 12px 10px 14px;
   border: 1px solid color-mix(in srgb, var(--k3-accent) 26%, var(--k3-line)); border-radius: 11px; background: var(--k3-surface-1); box-shadow: var(--k3-shadow-md);
-  color: var(--k3-text-2); opacity: 0; transition: opacity 180ms var(--k3-ease-out, ease);
+  color: var(--k3-text-2); opacity: 0; transition: opacity 180ms var(--k3-ease-out, ease); pointer-events: none;
 }
 #panel-settings > #pm-settings-portals > .psx-note[data-model-setting] {
   inset: var(--psx-note-top, 8px) auto auto var(--psx-note-left, 8px);
@@ -44,6 +44,7 @@ html[data-theme^="retro"] #panel-settings .psx-tb, html[data-o55-nier="on"] #pan
 }
 #panel-settings > #pm-settings-portals > .psx-note[data-open] { opacity: 1; }
 #panel-settings > #pm-settings-portals > .psx-note[data-leaving] { opacity: 0; }
+#panel-settings > #pm-settings-portals > .psx-note[data-open]:not([data-leaving]) button { pointer-events: auto; }
 #panel-settings .psx-note-tip { display: flex; gap: 8px; align-items: flex-start; padding: 0 0 8px; border-bottom: 1px solid var(--k3-line); font-size: 12px; line-height: 17px; color: var(--k3-text-1); }
 #panel-settings .psx-note-tip > .pm-status-mark { margin-top: 3px; }
 #panel-settings .psx-note-main { display: flex; gap: 9px; align-items: flex-start; }
