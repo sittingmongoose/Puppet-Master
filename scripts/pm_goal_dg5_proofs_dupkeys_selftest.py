@@ -13,7 +13,7 @@ returned. Both forms the real duplicates take are covered: a repeated key within
 comprehension form (pm_goal_dg5_proofs_r.py over RETAINED.items()) is expanded, not refused: a control
 loads it, a repeated source key is refused, and an unsupported comprehension source fails closed.
 Controls: a duplicate-free folded-key module loads with the exact table, and the branch's real proof
-table loads unchanged (82 keys).
+table loads unchanged (174 keys).
 """
 import argparse
 import importlib
@@ -119,10 +119,10 @@ def trials():
     try:
         table = justified.written_proofs()
         result = dict(refused=False, error=None, key_count=len(table))
-        ok = len(table) == 82
+        ok = len(table) == 174
     except ValueError as error:
         result, ok = dict(refused=True, error=str(error), key_count=None), False
-    rows.append(dict(case='real_table_loads', expected='loaded, 82 keys (the bc0d88706f table)',
+    rows.append(dict(case='real_table_loads', expected="loaded, 174 keys (the merge's table)",
                      result=result, passed=bool(ok)))
     return rows
 

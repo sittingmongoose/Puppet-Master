@@ -34,7 +34,7 @@ import tarfile
 import tempfile
 
 HERE = Path(__file__).resolve().parent
-BASE = '0dc66db2c94ae159c5d0b62e61c4c00c9e51ee20'   # the stock judge head this branch deduplicates
+BASE = '140f3aab7dc3210b317bbbe09d080de9dce72a81'   # the pre-dedup source: its seven proof files equal this table
 GATE_DEFAULT = '/home/sittingmongoose/pm-scratch/ea-c12-dg5/admission-gate/gate-e2'
 DUMP = ('import json, sys; sys.path.insert(0, %r); import pm_goal_dg5_justified as j; '
         'print(json.dumps(j.written_proofs(), sort_keys=True, default=str))')

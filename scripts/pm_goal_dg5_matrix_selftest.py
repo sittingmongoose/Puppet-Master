@@ -200,7 +200,9 @@ def check_matrix():
         assert patched[ok]['justification']['replay'] == original[ok]['justification']['replay']
         assert patched[normal]['negative']['declared_attempts'] == original[normal]['negative']['declared_attempts'] + 1
     m = {x['row']: x for x in fam['matrix']}
-    assert m[ok]['status'] == 'CLOSED_BY_PROOF' and m[ok]['reason'] == 'witness_bound_not_run', m[ok]
+    # G1 (WRONGFAM-GUARDS): a witness-bound-not-run row has no written entry text, so the
+    # builder no longer self-marks it; it is PENDING_READ and only a review registry can close it.
+    assert m[ok]['status'] == 'PENDING_READ' and m[ok]['reason'] == 'witness_bound_not_run: no written proof entry to read', m[ok]
     just = m[ok]['justification']
     assert just['kind'] == 'witness_bound_not_run'
     assert just['table_reasons'][0]['reason'] == 'no control vector'          # verbatim (ruling 3)
@@ -261,7 +263,7 @@ def check_amendment1():
         fam, row = trial(td, 'amend1-ok', name,
                          [_rec(0, 'case/control', 'control'), witness(name)],
                          [failure([declared[0]])], declared)
-        assert row['status'] == 'CLOSED_BY_PROOF' and row['reason'] == 'witness_bound_not_run', row
+        assert row['status'] == 'PENDING_READ' and row['reason'] == 'witness_bound_not_run: no written proof entry to read', row
         just = row['justification']
         assert just['kind'] == 'witness_bound_not_run', just
         assert just['witness']['kill'] == 'KILLED_CODE', just['witness']

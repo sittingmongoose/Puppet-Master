@@ -83,6 +83,7 @@ import collections
 import gzip
 import hashlib
 import json
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -377,6 +378,29 @@ def _exact_witness(records, name, allow_killed_code=True):
         good.append((record, codes))
     good.sort(key=lambda pair: (pair[0].get('_dg5_proof_index', 0), str(pair[0].get('id'))))
     return good[0] if good else None
+
+
+def _closure_source(name, family, killed, witness, shared_killed, shared_witness, specs, shared,
+                    proof_reviews, review_registry, closed_rows):
+    """G3 (pm-ea-lead 1124043618): the id of the record that closes a CLOSED row.
+
+    A credited kill record of the row's own family (its witness trial), an own probe table with a
+    recorded vector and a PASS, or two SOUND same-family live review ids. A shared-adapter citation
+    alone is not a source: it is another family's record, and it is what closed the gate-path rows.
+    """
+    if killed and isinstance(witness, dict) and witness.get('label'):
+        return dict(kind='kill-trial', id=witness.get('label'), path=witness.get('proof_dir'),
+                    outcome=witness.get('outcome'), input_sha256=witness.get('input_sha256'))
+    for spec in specs:
+        if spec.get('status') == 'PASS' and spec.get('table_status') == 'PASS' \
+                and (spec.get('table_rows') or 0) >= 1:
+            return dict(kind='probe-table', id=spec.get('table'), path=spec.get('proof_dir'),
+                        table_status=spec.get('table_status'), table_rows=spec.get('table_rows'))
+    credit = proof_reviews.row_credit(family, name, review_registry, closed_rows)
+    if credit is not None:
+        return dict(kind='two-sound-reads', id=credit.get('entry'),
+                    readings=credit.get('credit_readings'))
+    return None
 
 
 def _label_parts(label):
@@ -687,9 +711,16 @@ def main():
     parser.add_argument('--known-failure', action='append', type=Path, default=[],
                         help='JSON list of declared [source, case id, refusal code] failures a '
                              'family replay may carry (Amendment 1, condition 4)')
+    parser.add_argument('--check', action='store_true',
+                        help='exit 3 when any row is PENDING_READ (G1: no CLOSED_BY_PROOF without '
+                             'two SOUND readings; G2: a proof credits only its own family)')
+    parser.add_argument('--review-registry', type=Path, default=None,
+                        help='review-id registry (default scripts/dg5_proof_reviews/registry.json)')
     parser.add_argument('--out', type=Path, required=True)
     args = parser.parse_args()
     import pm_goal_dg5_justified as justified
+    import pm_goal_dg5_proof_reviews as proof_reviews
+    review_registry = proof_reviews.load(args.review_registry)
     declared = load_known_failures(args.known_failure)
     family_proofs = [load_proof(path, index) for index, path in enumerate(args.proof)]
     proofs = family_proofs + [load_proof(path, index)
@@ -724,6 +755,10 @@ def main():
                 attempts[name].append(record)
         owners = justified.owner_clauses(family)
         matrix = []
+        pending_reads = []
+        credited_reads = {}
+        closure_sources = {}
+        deferred = []
         for name in names:
             specs = []
             for proof in proofs:
@@ -770,9 +805,33 @@ def main():
             if site_conflict:
                 status, reason = 'OPEN', 'conflicting collection sites across proof directories'
             elif effective_gated == 'PASS' and (killed or shared_killed):
-                status, reason = 'CLOSED', None
-                credited = {r.get('kill') for r in list(tries) + list(shared_tries)} & set(KILL_CLASSES)
-                closed_by = 'KILLED_CODE' if credited == {'KILLED_CODE'} else 'KILLED'
+                # G3: a CLOSED row needs a source id. `killed` is an own-family trial; when only
+                # `shared_killed` holds, the gate came from another family's proof directory and the
+                # row has no record of its own (the gate-path closure). No id -> PENDING_READ.
+                source = _closure_source(name, family, killed, witness, shared_killed, shared_witness,
+                                         specs, shared, proof_reviews, review_registry,
+                                         {m['row'] for m in matrix if m['status'] == 'CLOSED'})
+                if source is None:
+                    status, reason = 'PENDING_READ', (
+                        'no_closure_source: no own-family kill record id, no own PASS table vector, '
+                        'no two SOUND review ids (shared kill only: %s)' % bool(shared_killed))
+                    pending_reads.append(dict(row=name, family=family, module=None, reason=reason,
+                                              details=dict(killed=bool(killed), shared_killed=bool(shared_killed),
+                                                           gated=gated, effective_gated=effective_gated,
+                                                           table_status=(specs[0].get('table_status') if specs else None),
+                                                           shared_gated=shared.get('gated'))))
+                else:
+                    closure_sources[name] = source
+                    if source.get('kind') == 'two-sound-reads':
+                        # (b) v9.1: a row whose closure source is two SOUND reads is a proof
+                        # closure, not a kill: CLOSED_BY_PROOF, kind two-sound-reads, review_ids.
+                        status, reason = 'CLOSED_BY_PROOF', None
+                        closed_by = None
+                        credited_reads[name] = source.get('readings')
+                    else:
+                        status, reason = 'CLOSED', None
+                        credited = {r.get('kill') for r in list(tries) + list(shared_tries)} & set(KILL_CLASSES)
+                        closed_by = 'KILLED_CODE' if credited == {'KILLED_CODE'} else 'KILLED'
 
             elif proof_record and (effective_gated in ('PASS', 'NOT_RUN') or
                                    (effective_gated == 'UNPROVED' and specs and
@@ -781,9 +840,40 @@ def main():
                 # run on (single-outcome sites), not a disagreement; GH1 rows.json maps it
                 # to row status UNPROVED with table_status NOT_RUN. Proofs close such rows
                 # as in pm_goal_c12_matrix and pm_goal_go_matrix; FAIL tables never close.
-                status, reason = 'CLOSED_BY_PROOF', proof_record['kind']
+                #
+                # G1/G2 (WRONGFAM-GUARDS, 2026-11-24): never self-mark. Credit needs two SOUND
+                # readings of THIS entry's live text (rule 1) and those readings must have judged
+                # THIS row's family (a proof credits only the family it was written for).
+                # B2 (v9): the deferral gate uses the union of the head module list and the
+                # registry entry's full depends_on (errata + lead additions + packet additions),
+                # the same list credit_decision decides on.
+                entry = review_registry['entries'].get(
+                    proof_reviews.key(proof_record.get('module'), name)) if proof_record.get('module') else None
+                deps = list(dict.fromkeys(list(proof_record.get('depends_on') or []) +
+                                          list((entry or {}).get('depends_on') or [])))
+                if deps:
+                    # Rule 4: decided after the family fixpoint has the final CLOSED set.
+                    deferred.append(dict(name=name, proof=proof_record, deps=deps))
+                    status, reason = 'PENDING_READ', 'dependency_pending: ' + ', '.join(deps)
+                    pending_reads.append(dict(row=name, family=family, module=proof_record.get('module'),
+                                              reason=reason, details=dict(depends_on=deps)))
+                else:
+                    decision = proof_reviews.credit_decision(family, name, proof_record, review_registry,
+                                                             closed_rows=set())
+                    if decision['credit']:
+                        status, reason = 'CLOSED_BY_PROOF', proof_record['kind']
+                        credited_reads[name] = decision['details'].get('credit_readings')
+                    else:
+                        status, reason = 'PENDING_READ', decision['reason']
+                        pending_reads.append(dict(row=name, family=family, module=proof_record.get('module'),
+                                                  reason=decision['reason'], details=decision['details']))
             elif bound is not None:
-                status, reason = 'CLOSED_BY_PROOF', 'witness_bound_not_run'
+                # A witness-bound-not-run row has no written proof entry, so no entry text can
+                # carry two SOUND readings: G1 refuses the self-mark. Addendum 8 already says
+                # this class is not credit.
+                status, reason = 'PENDING_READ', 'witness_bound_not_run: no written proof entry to read'
+                pending_reads.append(dict(row=name, family=family, module=None,
+                                          reason=reason, details=dict(bound=bool(bound))))
             elif effective_gated != 'PASS':
                 status, reason = 'OPEN', 'gated ' + str(effective_gated)
             elif not tries and not shared_tries:
@@ -824,7 +914,9 @@ def main():
                 cut=_cut(witness), restoration=_restoration(witness),
                 justification=proof_record if proof_record is not None else bound,
                 schema_closure=schema, kills=dict(kills),
-                closed_by=closed_by if status == 'CLOSED' else None)
+                closed_by=closed_by if status == 'CLOSED' else None,
+                closure_source=closure_sources.get(name) if status in ('CLOSED', 'CLOSED_BY_PROOF') else None,
+                review_ids=credited_reads.get(name) if status == 'CLOSED_BY_PROOF' else None)
             if shared_proofs:
                 entry['shared_negative'] = dict(
                     valid_citation=shared['valid'], rejected_reason=shared['reason'],
@@ -851,19 +943,95 @@ def main():
             if m['row'] not in closed:
                 pending = [d for d in (m['justification'] or {}).get('depends_on', []) if d not in closed]
                 m['status'], m['reason'] = 'OPEN', 'justification dependency not closed (or cyclic): ' + ', '.join(pending)
+        # Rule 4 for proof rows: every dependency must be CLOSED in the family. The deferred rows
+        # are decided here, where the family's final CLOSED set is known.
+        by_row = {m['row']: m for m in matrix}
+        for item in deferred:
+            decision = proof_reviews.credit_decision(family, item['name'], item['proof'], review_registry,
+                                                     closed_rows=closed)
+            row_record = by_row[item['name']]
+            entry = next((p for p in pending_reads if p['row'] == item['name']), None)
+            if decision['credit']:
+                # (a) v9.1: re-apply the schema clause-closure check before promoting ANY deferred
+                # row. The per-row check ran before the rule-4 decision; a deferred promotion must
+                # not skip it (a schema row with uncovered clauses or root errors stays OPEN).
+                blocked = None
+                if item['name'].endswith('/schema'):
+                    sc = row_record.get('schema_closure') or dict(roots=[], errors=[], uncovered=0)
+                    if not sc['roots']:
+                        blocked = 'no clause-closure report for its roots'
+                    elif sc['errors']:
+                        blocked = 'clause closure reports have root errors'
+                    elif sc['uncovered']:
+                        blocked = 'clause closure leaves %d uncovered' % sc['uncovered']
+                if blocked is not None:
+                    row_record['status'], row_record['reason'] = 'OPEN', blocked
+                else:
+                    row_record['status'], row_record['reason'] = 'CLOSED_BY_PROOF', item['proof']['kind']
+                    credited_reads[item['name']] = decision['details'].get('credit_readings')
+                    row_record['review_ids'] = credited_reads[item['name']]
+                if entry is not None:
+                    pending_reads.remove(entry)
+            elif str(decision['reason']).startswith('dependency_'):
+                # Rule 4 with an unc losed dependency is the edition's OPEN state, not a pending read
+                # (head's fixpoint uses the same wording for its candidates).
+                row_record['status'] = 'OPEN'
+                row_record['reason'] = 'justification dependency not closed: ' + ', '.join(
+                    [d for d in item['deps'] if d not in closed])
+                if entry is not None:
+                    pending_reads.remove(entry)
+            else:
+                row_record['status'] = 'PENDING_READ'
+                row_record['reason'] = decision['reason']
+                if entry is not None:
+                    entry['reason'] = decision['reason']
+                    entry['details'] = decision['details']
+        # Rule 4 for G3's two-sound-reads source: re-check with the final CLOSED set.
+        for row_name, source in list(closure_sources.items()):
+            if source.get('kind') != 'two-sound-reads':
+                continue
+            credit = proof_reviews.row_credit(family, row_name, review_registry, closed)
+            if credit is None:
+                row_record = by_row[row_name]
+                row_record['status'] = 'PENDING_READ'
+                row_record['review_ids'] = None
+                row_record['reason'] = 'dependency_not_closed_or_unknown: the two-sound-reads source ' \
+                                       'does not hold with the final CLOSED set'
+                row_record['closure_source'] = None
+                closure_sources.pop(row_name, None)
+                pending_reads.append(dict(row=row_name, family=family, module=None,
+                                          reason=row_record['reason'], details={}))
+            else:
+                source = dict(by_row[row_name].get('closure_source') or {})
+                source.update(kind='two-sound-reads')
+                source['id'] = source.get('id') or credit.get('entry')
+                source['readings'] = credit.get('credit_readings')
+                by_row[row_name]['closure_source'] = source
         summary = collections.Counter(m['status'] for m in matrix)
         closed_by_tally = dict(collections.Counter(m['closed_by'] for m in matrix if m['status'] == 'CLOSED'))
         out['families'][family] = dict(rows=len(matrix), status=dict(summary), closed_by=closed_by_tally,
-            witness_bound_not_run=sum(1 for m in matrix if m['status'] == 'CLOSED_BY_PROOF'
-                                      and (m['justification'] or {}).get('kind') == 'witness_bound_not_run'),
+            witness_bound_not_run=sum(1 for m in matrix
+                                      if (m['justification'] or {}).get('kind') == 'witness_bound_not_run'),
+            pending_reads=pending_reads,
             schema_rows=sum(1 for m in matrix if m['row'].endswith('/schema')),
             checker_rows=sum(1 for m in matrix if not m['row'].endswith('/schema')),
             open=[dict(row=m['row'], reason=m['reason']) for m in matrix if m['status'] == 'OPEN'],
             matrix=matrix)
     args.out.write_text(json.dumps(out, indent=1, default=list) + '\n')
     print(json.dumps({f: dict(rows=v['rows'], status=v['status'], closed_by=v['closed_by'], open=len(v['open']),
-                              witness_bound_not_run=v['witness_bound_not_run'])
+                              witness_bound_not_run=v['witness_bound_not_run'],
+                              pending_read=len(v['pending_reads']))
                       for f, v in out['families'].items()}, indent=1))
+    pending = [(family, item) for family, v in out['families'].items() for item in v['pending_reads']]
+    if pending:
+        for family, item in pending:
+            print('PENDING_READ %s %s: %s' % (family, item['row'], item['reason']), file=sys.stderr)
+    if args.check and pending:
+        print('%d row(s) PENDING_READ: no CLOSED_BY_PROOF without two SOUND readings of the live entry '
+              'text in the row family (G1) and a proof family that is the row family (G2); no CLOSED '
+              'without a source id — own kill record, own PASS table vector, or two SOUND review ids (G3).'
+              % len(pending), file=sys.stderr)
+        return 3
     return 0
 
 

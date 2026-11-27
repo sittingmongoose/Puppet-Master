@@ -1,0 +1,2602 @@
+[
+ {
+  "event_type": "bundle.annotation_state_changed",
+  "where": "disposition_evidence",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-708",
+  "line_start": 52997,
+  "line_end": 52997,
+  "quote": "Newly authored owner contract for ",
+  "now_at": [
+   52512,
+   52772,
+   53033,
+   53285,
+   53555,
+   53816,
+   54080,
+   54341,
+   54613
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "bundle.annotation_state_changed",
+  "where": "membership_version",
+  "index": 4,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-708",
+  "line_start": 53186,
+  "line_end": 53186,
+  "quote": "bundle.annotation_state_changed@1.0.0 is individually registered in Plans/event_family_registry.json",
+  "now_at": [
+   53222
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "bundle.annotation_state_changed",
+  "where": "owner_doc",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-708",
+  "line_start": 52997,
+  "line_end": 52997,
+  "quote": "Newly authored owner contract for ",
+  "now_at": [
+   52512,
+   52772,
+   53033,
+   53285,
+   53555,
+   53816,
+   54080,
+   54341,
+   54613
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "bundle.annotation_state_changed",
+  "where": "producer",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-708",
+  "line_start": 53032,
+  "line_end": 53032,
+  "quote": "Producer and transitions: there is no current producer",
+  "now_at": [
+   53068
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "bundle.annotation_state_changed",
+  "where": "closed_payload_schema",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-708",
+  "line_start": 53020,
+  "line_end": 53020,
+  "quote": "Payload and scope: the exact closed schema is ",
+  "now_at": [
+   52535,
+   52795,
+   53056,
+   53314,
+   53577,
+   53840,
+   54102,
+   54371,
+   54641
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "bundle.annotation_state_changed",
+  "where": "scope_identity",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-708",
+  "line_start": 53023,
+  "line_end": 53023,
+  "quote": "scope_partition is project~base64url_no_pad(UTF8(project_id))",
+  "now_at": [
+   53059
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "bundle.annotation_state_changed",
+  "where": "replay_idempotency",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-708",
+  "line_start": 53040,
+  "line_end": 53041,
+  "quote": "No timestamp guess, identifier\n  similarity, replay of note commands",
+  "now_at": [
+   53076
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "bundle.annotation_state_changed",
+  "where": "retention",
+  "index": 1,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-708",
+  "line_start": 53132,
+  "line_end": 53132,
+  "quote": "Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.",
+  "now_at": [
+   52683,
+   52944,
+   53168,
+   53466,
+   53727,
+   53991,
+   54252,
+   54524,
+   54792
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "bundle.annotation_state_changed",
+  "where": "retention",
+  "index": 2,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-708",
+  "line_start": 53139,
+  "line_end": 53139,
+  "quote": "Exact stored value `bundle_annotation_state_changed_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0` under DL-500;",
+  "now_at": [
+   53175
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "bundle.annotation_state_changed",
+  "where": "retention",
+  "index": 3,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-708",
+  "line_start": 53163,
+  "line_end": 53164,
+  "quote": "Signed E8-3 option A assigns the existing `bundle.annotation_state_changed` compatibility mapping custody the\n  same `RP-AUTHORITY-INDEFINITE@1.0.0` policy",
+  "now_at": [
+   53199
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "bundle.annotation_state_changed",
+  "where": "retention",
+  "index": 4,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-708",
+  "line_start": 53171,
+  "line_end": 53171,
+  "quote": "The mapping retention question is resolved;",
+  "now_at": [
+   53207
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "bundle.annotation_state_changed",
+  "where": "redaction_custody",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-708",
+  "line_start": 53080,
+  "line_end": 53080,
+  "quote": "Mandatory coherent backup/restore preserves them together",
+  "now_at": [
+   52629,
+   52890,
+   53116,
+   53412,
+   53672,
+   53937,
+   54198,
+   54470,
+   54738
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "bundle.annotation_state_changed",
+  "where": "transitions",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-708",
+  "line_start": 53032,
+  "line_end": 53032,
+  "quote": "Producer and transitions:",
+  "now_at": [
+   53068
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "bundle.annotation_state_changed",
+  "where": "consumers_checkpoints",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-708",
+  "line_start": 53053,
+  "line_end": 53054,
+  "quote": "Explicitly adopt\n  SP-278/DL-076:",
+  "now_at": [
+   52603,
+   52864,
+   53089
+  ],
+  "n_hits": 3
+ },
+ {
+  "event_type": "bundle.annotation_state_changed",
+  "where": "compatibility_withdrawal",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-708",
+  "line_start": 53109,
+  "line_end": 53110,
+  "quote": "Close exact-family writer admission\n  first",
+  "now_at": [
+   53145,
+   53443,
+   53968,
+   54229,
+   54501,
+   54769
+  ],
+  "n_hits": 6
+ },
+ {
+  "event_type": "bundle.annotation_state_changed",
+  "where": "positive_negative_oracles",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-708",
+  "line_start": 53122,
+  "line_end": 53122,
+  "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,",
+  "now_at": [
+   52673,
+   52934,
+   53158,
+   53456,
+   53717,
+   53981,
+   54242,
+   54514,
+   54782
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "bundle.note_created",
+  "where": "disposition_evidence",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-706",
+  "line_start": 52476,
+  "line_end": 52476,
+  "quote": "Newly authored owner contract for ",
+  "now_at": [
+   52512,
+   52772,
+   53033,
+   53285,
+   53555,
+   53816,
+   54080,
+   54341,
+   54613
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "bundle.note_created",
+  "where": "membership_version",
+  "index": 4,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-706",
+  "line_start": 52674,
+  "line_end": 52674,
+  "quote": "bundle.note_created@1.0.0 is individually registered in Plans/event_family_registry.json",
+  "now_at": [
+   52710
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "bundle.note_created",
+  "where": "owner_doc",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-706",
+  "line_start": 52476,
+  "line_end": 52476,
+  "quote": "Newly authored owner contract for ",
+  "now_at": [
+   52512,
+   52772,
+   53033,
+   53285,
+   53555,
+   53816,
+   54080,
+   54341,
+   54613
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "bundle.note_created",
+  "where": "producer",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-706",
+  "line_start": 52544,
+  "line_end": 52544,
+  "quote": "Explicitly adopt SP-286/CV-339",
+  "now_at": [
+   52580,
+   52840,
+   53358,
+   53621,
+   53884,
+   54146,
+   54415,
+   54685
+  ],
+  "n_hits": 8
+ },
+ {
+  "event_type": "bundle.note_created",
+  "where": "closed_payload_schema",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-706",
+  "line_start": 52499,
+  "line_end": 52499,
+  "quote": "Payload and scope: the exact closed schema is ",
+  "now_at": [
+   52535,
+   52795,
+   53056,
+   53314,
+   53577,
+   53840,
+   54102,
+   54371,
+   54641
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "bundle.note_created",
+  "where": "scope_identity",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-706",
+  "line_start": 52501,
+  "line_end": 52502,
+  "quote": "scope_partition is\n  project~base64url_no_pad(UTF8(project_id))",
+  "now_at": [
+   52537,
+   52797,
+   53316,
+   53579,
+   53842,
+   54104,
+   54373,
+   54643
+  ],
+  "n_hits": 8
+ },
+ {
+  "event_type": "bundle.note_created",
+  "where": "replay_idempotency",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-706",
+  "line_start": 52550,
+  "line_end": 52551,
+  "quote": "Same scoped key with changed caller\n  semantic body is idempotency_conflict",
+  "now_at": [
+   52586,
+   52846,
+   53364,
+   53627,
+   53890,
+   54152,
+   54421,
+   54691
+  ],
+  "n_hits": 8
+ },
+ {
+  "event_type": "bundle.note_created",
+  "where": "retention",
+  "index": 1,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-706",
+  "line_start": 52647,
+  "line_end": 52647,
+  "quote": "Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.",
+  "now_at": [
+   52683,
+   52944,
+   53168,
+   53466,
+   53727,
+   53991,
+   54252,
+   54524,
+   54792
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "bundle.note_created",
+  "where": "retention",
+  "index": 2,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-706",
+  "line_start": 52654,
+  "line_end": 52654,
+  "quote": "Exact stored value `bundle_note_created_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0` under DL-500;",
+  "now_at": [
+   52690
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "bundle.note_created",
+  "where": "retention",
+  "index": 3,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-706",
+  "line_start": 52658,
+  "line_end": 52658,
+  "quote": "Exact stored value `bundle_note_created_operation` retains `RP-OPERATIONAL-2555D@1.0.0` under DL-501;",
+  "now_at": [
+   52694
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "bundle.note_created",
+  "where": "redaction_custody",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-706",
+  "line_start": 52593,
+  "line_end": 52593,
+  "quote": "Mandatory coherent backup/restore preserves them together",
+  "now_at": [
+   52629,
+   52890,
+   53116,
+   53412,
+   53672,
+   53937,
+   54198,
+   54470,
+   54738
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "bundle.note_created",
+  "where": "transitions",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-706",
+  "line_start": 52558,
+  "line_end": 52558,
+  "quote": "Exact transition:",
+  "now_at": [
+   52594,
+   52854,
+   54160,
+   54429
+  ],
+  "n_hits": 4
+ },
+ {
+  "event_type": "bundle.note_created",
+  "where": "consumers_checkpoints",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-706",
+  "line_start": 52567,
+  "line_end": 52568,
+  "quote": "Explicitly adopt\n  SP-278/DL-076:",
+  "now_at": [
+   52603,
+   52864,
+   53089
+  ],
+  "n_hits": 3
+ },
+ {
+  "event_type": "bundle.note_created",
+  "where": "compatibility_withdrawal",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-706",
+  "line_start": 52624,
+  "line_end": 52624,
+  "quote": "Close exact-family writer admission first",
+  "now_at": [
+   52660,
+   52921,
+   53704
+  ],
+  "n_hits": 3
+ },
+ {
+  "event_type": "bundle.note_created",
+  "where": "positive_negative_oracles",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-706",
+  "line_start": 52637,
+  "line_end": 52637,
+  "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,",
+  "now_at": [
+   52673,
+   52934,
+   53158,
+   53456,
+   53717,
+   53981,
+   54242,
+   54514,
+   54782
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "bundle.note_status_changed",
+  "where": "disposition_evidence",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-707",
+  "line_start": 52736,
+  "line_end": 52736,
+  "quote": "Newly authored owner contract for ",
+  "now_at": [
+   52512,
+   52772,
+   53033,
+   53285,
+   53555,
+   53816,
+   54080,
+   54341,
+   54613
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "bundle.note_status_changed",
+  "where": "membership_version",
+  "index": 4,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-707",
+  "line_start": 52935,
+  "line_end": 52935,
+  "quote": "bundle.note_status_changed@1.0.0 is individually registered in Plans/event_family_registry.json",
+  "now_at": [
+   52971
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "bundle.note_status_changed",
+  "where": "owner_doc",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-707",
+  "line_start": 52736,
+  "line_end": 52736,
+  "quote": "Newly authored owner contract for ",
+  "now_at": [
+   52512,
+   52772,
+   53033,
+   53285,
+   53555,
+   53816,
+   54080,
+   54341,
+   54613
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "bundle.note_status_changed",
+  "where": "producer",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-707",
+  "line_start": 52804,
+  "line_end": 52804,
+  "quote": "Explicitly adopt SP-286/CV-339",
+  "now_at": [
+   52580,
+   52840,
+   53358,
+   53621,
+   53884,
+   54146,
+   54415,
+   54685
+  ],
+  "n_hits": 8
+ },
+ {
+  "event_type": "bundle.note_status_changed",
+  "where": "closed_payload_schema",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-707",
+  "line_start": 52759,
+  "line_end": 52759,
+  "quote": "Payload and scope: the exact closed schema is ",
+  "now_at": [
+   52535,
+   52795,
+   53056,
+   53314,
+   53577,
+   53840,
+   54102,
+   54371,
+   54641
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "bundle.note_status_changed",
+  "where": "scope_identity",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-707",
+  "line_start": 52761,
+  "line_end": 52762,
+  "quote": "scope_partition is\n  project~base64url_no_pad(UTF8(project_id))",
+  "now_at": [
+   52537,
+   52797,
+   53316,
+   53579,
+   53842,
+   54104,
+   54373,
+   54643
+  ],
+  "n_hits": 8
+ },
+ {
+  "event_type": "bundle.note_status_changed",
+  "where": "replay_idempotency",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-707",
+  "line_start": 52810,
+  "line_end": 52811,
+  "quote": "Same scoped key with changed caller\n  semantic body is idempotency_conflict",
+  "now_at": [
+   52586,
+   52846,
+   53364,
+   53627,
+   53890,
+   54152,
+   54421,
+   54691
+  ],
+  "n_hits": 8
+ },
+ {
+  "event_type": "bundle.note_status_changed",
+  "where": "retention",
+  "index": 1,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-707",
+  "line_start": 52908,
+  "line_end": 52908,
+  "quote": "Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.",
+  "now_at": [
+   52683,
+   52944,
+   53168,
+   53466,
+   53727,
+   53991,
+   54252,
+   54524,
+   54792
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "bundle.note_status_changed",
+  "where": "retention",
+  "index": 2,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-707",
+  "line_start": 52915,
+  "line_end": 52915,
+  "quote": "Exact stored value `bundle_note_status_changed_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0` under DL-500;",
+  "now_at": [
+   52951
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "bundle.note_status_changed",
+  "where": "retention",
+  "index": 3,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-707",
+  "line_start": 52919,
+  "line_end": 52919,
+  "quote": "Exact stored value `bundle_note_status_changed_operation` retains `RP-OPERATIONAL-2555D@1.0.0` under DL-501;",
+  "now_at": [
+   52955
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "bundle.note_status_changed",
+  "where": "redaction_custody",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-707",
+  "line_start": 52854,
+  "line_end": 52854,
+  "quote": "Mandatory coherent backup/restore preserves them together",
+  "now_at": [
+   52629,
+   52890,
+   53116,
+   53412,
+   53672,
+   53937,
+   54198,
+   54470,
+   54738
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "bundle.note_status_changed",
+  "where": "transitions",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-707",
+  "line_start": 52818,
+  "line_end": 52818,
+  "quote": "Exact transition:",
+  "now_at": [
+   52594,
+   52854,
+   54160,
+   54429
+  ],
+  "n_hits": 4
+ },
+ {
+  "event_type": "bundle.note_status_changed",
+  "where": "consumers_checkpoints",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-707",
+  "line_start": 52828,
+  "line_end": 52829,
+  "quote": "Explicitly adopt\n  SP-278/DL-076:",
+  "now_at": [
+   52603,
+   52864,
+   53089
+  ],
+  "n_hits": 3
+ },
+ {
+  "event_type": "bundle.note_status_changed",
+  "where": "compatibility_withdrawal",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-707",
+  "line_start": 52885,
+  "line_end": 52885,
+  "quote": "Close exact-family writer admission first",
+  "now_at": [
+   52660,
+   52921,
+   53704
+  ],
+  "n_hits": 3
+ },
+ {
+  "event_type": "bundle.note_status_changed",
+  "where": "positive_negative_oracles",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-707",
+  "line_start": 52898,
+  "line_end": 52898,
+  "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,",
+  "now_at": [
+   52673,
+   52934,
+   53158,
+   53456,
+   53717,
+   53981,
+   54242,
+   54514,
+   54782
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.assigned",
+  "where": "disposition_evidence",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-709",
+  "line_start": 53249,
+  "line_end": 53249,
+  "quote": "Newly authored owner contract for ",
+  "now_at": [
+   52512,
+   52772,
+   53033,
+   53285,
+   53555,
+   53816,
+   54080,
+   54341,
+   54613
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.assigned",
+  "where": "membership_version",
+  "index": 4,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-709",
+  "line_start": 53457,
+  "line_end": 53457,
+  "quote": "concern.assigned@2.0.0 is individually registered in Plans/event_family_registry.json",
+  "now_at": [
+   53493
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "concern.assigned",
+  "where": "owner_doc",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-709",
+  "line_start": 53249,
+  "line_end": 53249,
+  "quote": "Newly authored owner contract for ",
+  "now_at": [
+   52512,
+   52772,
+   53033,
+   53285,
+   53555,
+   53816,
+   54080,
+   54341,
+   54613
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.assigned",
+  "where": "producer",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-709",
+  "line_start": 53322,
+  "line_end": 53322,
+  "quote": "Explicitly adopt SP-286/CV-339",
+  "now_at": [
+   52580,
+   52840,
+   53358,
+   53621,
+   53884,
+   54146,
+   54415,
+   54685
+  ],
+  "n_hits": 8
+ },
+ {
+  "event_type": "concern.assigned",
+  "where": "closed_payload_schema",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-709",
+  "line_start": 53278,
+  "line_end": 53278,
+  "quote": "Payload and scope: the exact closed schema is",
+  "now_at": [
+   52535,
+   52795,
+   53056,
+   53314,
+   53577,
+   53840,
+   54102,
+   54371,
+   54641
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.assigned",
+  "where": "scope_identity",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-709",
+  "line_start": 53280,
+  "line_end": 53281,
+  "quote": "scope_partition is\n  project~base64url_no_pad(UTF8(project_id))",
+  "now_at": [
+   52537,
+   52797,
+   53316,
+   53579,
+   53842,
+   54104,
+   54373,
+   54643
+  ],
+  "n_hits": 8
+ },
+ {
+  "event_type": "concern.assigned",
+  "where": "replay_idempotency",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-709",
+  "line_start": 53328,
+  "line_end": 53329,
+  "quote": "Same scoped key with changed caller\n  semantic body is idempotency_conflict",
+  "now_at": [
+   52586,
+   52846,
+   53364,
+   53627,
+   53890,
+   54152,
+   54421,
+   54691
+  ],
+  "n_hits": 8
+ },
+ {
+  "event_type": "concern.assigned",
+  "where": "retention",
+  "index": 1,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-709",
+  "line_start": 53430,
+  "line_end": 53430,
+  "quote": "Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.",
+  "now_at": [
+   52683,
+   52944,
+   53168,
+   53466,
+   53727,
+   53991,
+   54252,
+   54524,
+   54792
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.assigned",
+  "where": "retention",
+  "index": 2,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-709",
+  "line_start": 53437,
+  "line_end": 53437,
+  "quote": "Exact stored value `concern_assigned_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0` under DL-500;",
+  "now_at": [
+   53473
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "concern.assigned",
+  "where": "retention",
+  "index": 3,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-709",
+  "line_start": 53441,
+  "line_end": 53441,
+  "quote": "Exact stored value `concern_assigned_operation` retains `RP-OPERATIONAL-2555D@1.0.0` under DL-501;",
+  "now_at": [
+   53477
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "concern.assigned",
+  "where": "redaction_custody",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-709",
+  "line_start": 53376,
+  "line_end": 53376,
+  "quote": "Mandatory coherent backup/restore preserves them together",
+  "now_at": [
+   52629,
+   52890,
+   53116,
+   53412,
+   53672,
+   53937,
+   54198,
+   54470,
+   54738
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.assigned",
+  "where": "transitions",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-709",
+  "line_start": 53336,
+  "line_end": 53336,
+  "quote": "Exact effect:",
+  "now_at": [
+   53372,
+   53635,
+   53898,
+   54699
+  ],
+  "n_hits": 4
+ },
+ {
+  "event_type": "concern.assigned",
+  "where": "consumers_checkpoints",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-709",
+  "line_start": 53350,
+  "line_end": 53350,
+  "quote": "Explicitly adopt SP-278/DL-076:",
+  "now_at": [
+   53386,
+   53646,
+   53911,
+   54172,
+   54444,
+   54712
+  ],
+  "n_hits": 6
+ },
+ {
+  "event_type": "concern.assigned",
+  "where": "compatibility_withdrawal",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-709",
+  "line_start": 53407,
+  "line_end": 53408,
+  "quote": "Close exact-family writer admission\n  first",
+  "now_at": [
+   53145,
+   53443,
+   53968,
+   54229,
+   54501,
+   54769
+  ],
+  "n_hits": 6
+ },
+ {
+  "event_type": "concern.assigned",
+  "where": "positive_negative_oracles",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-709",
+  "line_start": 53420,
+  "line_end": 53420,
+  "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,",
+  "now_at": [
+   52673,
+   52934,
+   53158,
+   53456,
+   53717,
+   53981,
+   54242,
+   54514,
+   54782
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.evidence_linked",
+  "where": "disposition_evidence",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-710",
+  "line_start": 53519,
+  "line_end": 53519,
+  "quote": "Newly authored owner contract for ",
+  "now_at": [
+   52512,
+   52772,
+   53033,
+   53285,
+   53555,
+   53816,
+   54080,
+   54341,
+   54613
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.evidence_linked",
+  "where": "membership_version",
+  "index": 4,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-710",
+  "line_start": 53718,
+  "line_end": 53718,
+  "quote": "concern.evidence_linked@2.0.0 is individually registered in Plans/event_family_registry.json",
+  "now_at": [
+   53754
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "concern.evidence_linked",
+  "where": "owner_doc",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-710",
+  "line_start": 53519,
+  "line_end": 53519,
+  "quote": "Newly authored owner contract for ",
+  "now_at": [
+   52512,
+   52772,
+   53033,
+   53285,
+   53555,
+   53816,
+   54080,
+   54341,
+   54613
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.evidence_linked",
+  "where": "producer",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-710",
+  "line_start": 53585,
+  "line_end": 53585,
+  "quote": "Explicitly adopt SP-286/CV-339",
+  "now_at": [
+   52580,
+   52840,
+   53358,
+   53621,
+   53884,
+   54146,
+   54415,
+   54685
+  ],
+  "n_hits": 8
+ },
+ {
+  "event_type": "concern.evidence_linked",
+  "where": "closed_payload_schema",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-710",
+  "line_start": 53541,
+  "line_end": 53541,
+  "quote": "Payload and scope: the exact closed schema is",
+  "now_at": [
+   52535,
+   52795,
+   53056,
+   53314,
+   53577,
+   53840,
+   54102,
+   54371,
+   54641
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.evidence_linked",
+  "where": "scope_identity",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-710",
+  "line_start": 53543,
+  "line_end": 53544,
+  "quote": "scope_partition is\n  project~base64url_no_pad(UTF8(project_id))",
+  "now_at": [
+   52537,
+   52797,
+   53316,
+   53579,
+   53842,
+   54104,
+   54373,
+   54643
+  ],
+  "n_hits": 8
+ },
+ {
+  "event_type": "concern.evidence_linked",
+  "where": "replay_idempotency",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-710",
+  "line_start": 53591,
+  "line_end": 53592,
+  "quote": "Same scoped key with changed caller\n  semantic body is idempotency_conflict",
+  "now_at": [
+   52586,
+   52846,
+   53364,
+   53627,
+   53890,
+   54152,
+   54421,
+   54691
+  ],
+  "n_hits": 8
+ },
+ {
+  "event_type": "concern.evidence_linked",
+  "where": "retention",
+  "index": 1,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-710",
+  "line_start": 53691,
+  "line_end": 53691,
+  "quote": "Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.",
+  "now_at": [
+   52683,
+   52944,
+   53168,
+   53466,
+   53727,
+   53991,
+   54252,
+   54524,
+   54792
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.evidence_linked",
+  "where": "retention",
+  "index": 2,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-710",
+  "line_start": 53698,
+  "line_end": 53698,
+  "quote": "Exact stored value `concern_evidence_linked_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0` under DL-500;",
+  "now_at": [
+   53734
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "concern.evidence_linked",
+  "where": "retention",
+  "index": 3,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-710",
+  "line_start": 53702,
+  "line_end": 53702,
+  "quote": "Exact stored value `concern_evidence_linked_operation` retains `RP-OPERATIONAL-2555D@1.0.0` under DL-501;",
+  "now_at": [
+   53738
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "concern.evidence_linked",
+  "where": "redaction_custody",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-710",
+  "line_start": 53636,
+  "line_end": 53636,
+  "quote": "Mandatory coherent backup/restore preserves them together",
+  "now_at": [
+   52629,
+   52890,
+   53116,
+   53412,
+   53672,
+   53937,
+   54198,
+   54470,
+   54738
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.evidence_linked",
+  "where": "transitions",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-710",
+  "line_start": 53599,
+  "line_end": 53599,
+  "quote": "Exact effect:",
+  "now_at": [
+   53372,
+   53635,
+   53898,
+   54699
+  ],
+  "n_hits": 4
+ },
+ {
+  "event_type": "concern.evidence_linked",
+  "where": "consumers_checkpoints",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-710",
+  "line_start": 53610,
+  "line_end": 53610,
+  "quote": "Explicitly adopt SP-278/DL-076:",
+  "now_at": [
+   53386,
+   53646,
+   53911,
+   54172,
+   54444,
+   54712
+  ],
+  "n_hits": 6
+ },
+ {
+  "event_type": "concern.evidence_linked",
+  "where": "compatibility_withdrawal",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-710",
+  "line_start": 53668,
+  "line_end": 53668,
+  "quote": "Close exact-family writer admission first",
+  "now_at": [
+   52660,
+   52921,
+   53704
+  ],
+  "n_hits": 3
+ },
+ {
+  "event_type": "concern.evidence_linked",
+  "where": "positive_negative_oracles",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-710",
+  "line_start": 53681,
+  "line_end": 53681,
+  "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,",
+  "now_at": [
+   52673,
+   52934,
+   53158,
+   53456,
+   53717,
+   53981,
+   54242,
+   54514,
+   54782
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.promoted",
+  "where": "disposition_evidence",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-711",
+  "line_start": 53780,
+  "line_end": 53780,
+  "quote": "Newly authored owner contract for ",
+  "now_at": [
+   52512,
+   52772,
+   53033,
+   53285,
+   53555,
+   53816,
+   54080,
+   54341,
+   54613
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.promoted",
+  "where": "membership_version",
+  "index": 4,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-711",
+  "line_start": 53982,
+  "line_end": 53982,
+  "quote": "concern.promoted@2.0.0 is individually registered in Plans/event_family_registry.json",
+  "now_at": [
+   54018
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "concern.promoted",
+  "where": "owner_doc",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-711",
+  "line_start": 53780,
+  "line_end": 53780,
+  "quote": "Newly authored owner contract for ",
+  "now_at": [
+   52512,
+   52772,
+   53033,
+   53285,
+   53555,
+   53816,
+   54080,
+   54341,
+   54613
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.promoted",
+  "where": "producer",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-711",
+  "line_start": 53848,
+  "line_end": 53848,
+  "quote": "Explicitly adopt SP-286/CV-339",
+  "now_at": [
+   52580,
+   52840,
+   53358,
+   53621,
+   53884,
+   54146,
+   54415,
+   54685
+  ],
+  "n_hits": 8
+ },
+ {
+  "event_type": "concern.promoted",
+  "where": "closed_payload_schema",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-711",
+  "line_start": 53804,
+  "line_end": 53804,
+  "quote": "Payload and scope: the exact closed schema is",
+  "now_at": [
+   52535,
+   52795,
+   53056,
+   53314,
+   53577,
+   53840,
+   54102,
+   54371,
+   54641
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.promoted",
+  "where": "scope_identity",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-711",
+  "line_start": 53806,
+  "line_end": 53807,
+  "quote": "scope_partition is\n  project~base64url_no_pad(UTF8(project_id))",
+  "now_at": [
+   52537,
+   52797,
+   53316,
+   53579,
+   53842,
+   54104,
+   54373,
+   54643
+  ],
+  "n_hits": 8
+ },
+ {
+  "event_type": "concern.promoted",
+  "where": "replay_idempotency",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-711",
+  "line_start": 53854,
+  "line_end": 53855,
+  "quote": "Same scoped key with changed caller\n  semantic body is idempotency_conflict",
+  "now_at": [
+   52586,
+   52846,
+   53364,
+   53627,
+   53890,
+   54152,
+   54421,
+   54691
+  ],
+  "n_hits": 8
+ },
+ {
+  "event_type": "concern.promoted",
+  "where": "retention",
+  "index": 1,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-711",
+  "line_start": 53955,
+  "line_end": 53955,
+  "quote": "Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.",
+  "now_at": [
+   52683,
+   52944,
+   53168,
+   53466,
+   53727,
+   53991,
+   54252,
+   54524,
+   54792
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.promoted",
+  "where": "retention",
+  "index": 2,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-711",
+  "line_start": 53962,
+  "line_end": 53962,
+  "quote": "Exact stored value `concern_promoted_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0` under DL-500;",
+  "now_at": [
+   53998
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "concern.promoted",
+  "where": "retention",
+  "index": 3,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-711",
+  "line_start": 53966,
+  "line_end": 53966,
+  "quote": "Exact stored value `concern_promoted_operation` retains `RP-OPERATIONAL-2555D@1.0.0` under DL-501;",
+  "now_at": [
+   54002
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "concern.promoted",
+  "where": "redaction_custody",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-711",
+  "line_start": 53901,
+  "line_end": 53901,
+  "quote": "Mandatory coherent backup/restore preserves them together",
+  "now_at": [
+   52629,
+   52890,
+   53116,
+   53412,
+   53672,
+   53937,
+   54198,
+   54470,
+   54738
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.promoted",
+  "where": "transitions",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-711",
+  "line_start": 53862,
+  "line_end": 53862,
+  "quote": "Exact effect:",
+  "now_at": [
+   53372,
+   53635,
+   53898,
+   54699
+  ],
+  "n_hits": 4
+ },
+ {
+  "event_type": "concern.promoted",
+  "where": "consumers_checkpoints",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-711",
+  "line_start": 53875,
+  "line_end": 53875,
+  "quote": "Explicitly adopt SP-278/DL-076:",
+  "now_at": [
+   53386,
+   53646,
+   53911,
+   54172,
+   54444,
+   54712
+  ],
+  "n_hits": 6
+ },
+ {
+  "event_type": "concern.promoted",
+  "where": "compatibility_withdrawal",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-711",
+  "line_start": 53932,
+  "line_end": 53933,
+  "quote": "Close exact-family writer admission\n  first",
+  "now_at": [
+   53145,
+   53443,
+   53968,
+   54229,
+   54501,
+   54769
+  ],
+  "n_hits": 6
+ },
+ {
+  "event_type": "concern.promoted",
+  "where": "positive_negative_oracles",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-711",
+  "line_start": 53945,
+  "line_end": 53945,
+  "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,",
+  "now_at": [
+   52673,
+   52934,
+   53158,
+   53456,
+   53717,
+   53981,
+   54242,
+   54514,
+   54782
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.reopened",
+  "where": "disposition_evidence",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-712",
+  "line_start": 54044,
+  "line_end": 54044,
+  "quote": "Newly authored owner contract for ",
+  "now_at": [
+   52512,
+   52772,
+   53033,
+   53285,
+   53555,
+   53816,
+   54080,
+   54341,
+   54613
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.reopened",
+  "where": "membership_version",
+  "index": 4,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-712",
+  "line_start": 54243,
+  "line_end": 54243,
+  "quote": "concern.reopened@2.0.0 is individually registered in Plans/event_family_registry.json",
+  "now_at": [
+   54279
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "concern.reopened",
+  "where": "owner_doc",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-712",
+  "line_start": 54044,
+  "line_end": 54044,
+  "quote": "Newly authored owner contract for ",
+  "now_at": [
+   52512,
+   52772,
+   53033,
+   53285,
+   53555,
+   53816,
+   54080,
+   54341,
+   54613
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.reopened",
+  "where": "producer",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-712",
+  "line_start": 54110,
+  "line_end": 54110,
+  "quote": "Explicitly adopt SP-286/CV-339",
+  "now_at": [
+   52580,
+   52840,
+   53358,
+   53621,
+   53884,
+   54146,
+   54415,
+   54685
+  ],
+  "n_hits": 8
+ },
+ {
+  "event_type": "concern.reopened",
+  "where": "closed_payload_schema",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-712",
+  "line_start": 54066,
+  "line_end": 54066,
+  "quote": "Payload and scope: the exact closed schema is",
+  "now_at": [
+   52535,
+   52795,
+   53056,
+   53314,
+   53577,
+   53840,
+   54102,
+   54371,
+   54641
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.reopened",
+  "where": "scope_identity",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-712",
+  "line_start": 54068,
+  "line_end": 54069,
+  "quote": "scope_partition is\n  project~base64url_no_pad(UTF8(project_id))",
+  "now_at": [
+   52537,
+   52797,
+   53316,
+   53579,
+   53842,
+   54104,
+   54373,
+   54643
+  ],
+  "n_hits": 8
+ },
+ {
+  "event_type": "concern.reopened",
+  "where": "replay_idempotency",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-712",
+  "line_start": 54116,
+  "line_end": 54117,
+  "quote": "Same scoped key with changed caller\n  semantic body is idempotency_conflict",
+  "now_at": [
+   52586,
+   52846,
+   53364,
+   53627,
+   53890,
+   54152,
+   54421,
+   54691
+  ],
+  "n_hits": 8
+ },
+ {
+  "event_type": "concern.reopened",
+  "where": "retention",
+  "index": 1,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-712",
+  "line_start": 54216,
+  "line_end": 54216,
+  "quote": "Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.",
+  "now_at": [
+   52683,
+   52944,
+   53168,
+   53466,
+   53727,
+   53991,
+   54252,
+   54524,
+   54792
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.reopened",
+  "where": "retention",
+  "index": 2,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-712",
+  "line_start": 54223,
+  "line_end": 54223,
+  "quote": "Exact stored value `concern_reopened_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0` under DL-500;",
+  "now_at": [
+   54259
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "concern.reopened",
+  "where": "retention",
+  "index": 3,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-712",
+  "line_start": 54227,
+  "line_end": 54227,
+  "quote": "Exact stored value `concern_reopened_operation` retains `RP-OPERATIONAL-2555D@1.0.0` under DL-501;",
+  "now_at": [
+   54263
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "concern.reopened",
+  "where": "redaction_custody",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-712",
+  "line_start": 54162,
+  "line_end": 54162,
+  "quote": "Mandatory coherent backup/restore preserves them together",
+  "now_at": [
+   52629,
+   52890,
+   53116,
+   53412,
+   53672,
+   53937,
+   54198,
+   54470,
+   54738
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.reopened",
+  "where": "transitions",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-712",
+  "line_start": 54124,
+  "line_end": 54124,
+  "quote": "Exact transition:",
+  "now_at": [
+   52594,
+   52854,
+   54160,
+   54429
+  ],
+  "n_hits": 4
+ },
+ {
+  "event_type": "concern.reopened",
+  "where": "consumers_checkpoints",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-712",
+  "line_start": 54136,
+  "line_end": 54136,
+  "quote": "Explicitly adopt SP-278/DL-076:",
+  "now_at": [
+   53386,
+   53646,
+   53911,
+   54172,
+   54444,
+   54712
+  ],
+  "n_hits": 6
+ },
+ {
+  "event_type": "concern.reopened",
+  "where": "compatibility_withdrawal",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-712",
+  "line_start": 54193,
+  "line_end": 54194,
+  "quote": "Close exact-family writer admission\n  first",
+  "now_at": [
+   53145,
+   53443,
+   53968,
+   54229,
+   54501,
+   54769
+  ],
+  "n_hits": 6
+ },
+ {
+  "event_type": "concern.reopened",
+  "where": "positive_negative_oracles",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-712",
+  "line_start": 54206,
+  "line_end": 54206,
+  "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,",
+  "now_at": [
+   52673,
+   52934,
+   53158,
+   53456,
+   53717,
+   53981,
+   54242,
+   54514,
+   54782
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.resolved",
+  "where": "disposition_evidence",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-713",
+  "line_start": 54305,
+  "line_end": 54305,
+  "quote": "Newly authored owner contract for ",
+  "now_at": [
+   52512,
+   52772,
+   53033,
+   53285,
+   53555,
+   53816,
+   54080,
+   54341,
+   54613
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.resolved",
+  "where": "membership_version",
+  "index": 4,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-713",
+  "line_start": 54515,
+  "line_end": 54515,
+  "quote": "concern.resolved@2.0.0 is individually registered in Plans/event_family_registry.json",
+  "now_at": [
+   54551
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "concern.resolved",
+  "where": "owner_doc",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-713",
+  "line_start": 54305,
+  "line_end": 54305,
+  "quote": "Newly authored owner contract for ",
+  "now_at": [
+   52512,
+   52772,
+   53033,
+   53285,
+   53555,
+   53816,
+   54080,
+   54341,
+   54613
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.resolved",
+  "where": "producer",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-713",
+  "line_start": 54379,
+  "line_end": 54379,
+  "quote": "Explicitly adopt SP-286/CV-339",
+  "now_at": [
+   52580,
+   52840,
+   53358,
+   53621,
+   53884,
+   54146,
+   54415,
+   54685
+  ],
+  "n_hits": 8
+ },
+ {
+  "event_type": "concern.resolved",
+  "where": "closed_payload_schema",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-713",
+  "line_start": 54335,
+  "line_end": 54335,
+  "quote": "Payload and scope: the exact closed schema is",
+  "now_at": [
+   52535,
+   52795,
+   53056,
+   53314,
+   53577,
+   53840,
+   54102,
+   54371,
+   54641
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.resolved",
+  "where": "scope_identity",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-713",
+  "line_start": 54337,
+  "line_end": 54338,
+  "quote": "scope_partition is\n  project~base64url_no_pad(UTF8(project_id))",
+  "now_at": [
+   52537,
+   52797,
+   53316,
+   53579,
+   53842,
+   54104,
+   54373,
+   54643
+  ],
+  "n_hits": 8
+ },
+ {
+  "event_type": "concern.resolved",
+  "where": "replay_idempotency",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-713",
+  "line_start": 54385,
+  "line_end": 54386,
+  "quote": "Same scoped key with changed caller\n  semantic body is idempotency_conflict",
+  "now_at": [
+   52586,
+   52846,
+   53364,
+   53627,
+   53890,
+   54152,
+   54421,
+   54691
+  ],
+  "n_hits": 8
+ },
+ {
+  "event_type": "concern.resolved",
+  "where": "retention",
+  "index": 1,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-713",
+  "line_start": 54488,
+  "line_end": 54488,
+  "quote": "Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.",
+  "now_at": [
+   52683,
+   52944,
+   53168,
+   53466,
+   53727,
+   53991,
+   54252,
+   54524,
+   54792
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.resolved",
+  "where": "retention",
+  "index": 2,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-713",
+  "line_start": 54495,
+  "line_end": 54495,
+  "quote": "Exact stored value `concern_resolved_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0` under DL-500;",
+  "now_at": [
+   54531
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "concern.resolved",
+  "where": "retention",
+  "index": 3,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-713",
+  "line_start": 54499,
+  "line_end": 54499,
+  "quote": "Exact stored value `concern_resolved_operation` retains `RP-OPERATIONAL-2555D@1.0.0` under DL-501;",
+  "now_at": [
+   54535
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "concern.resolved",
+  "where": "redaction_custody",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-713",
+  "line_start": 54434,
+  "line_end": 54434,
+  "quote": "Mandatory coherent backup/restore preserves them together",
+  "now_at": [
+   52629,
+   52890,
+   53116,
+   53412,
+   53672,
+   53937,
+   54198,
+   54470,
+   54738
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.resolved",
+  "where": "transitions",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-713",
+  "line_start": 54393,
+  "line_end": 54393,
+  "quote": "Exact transition:",
+  "now_at": [
+   52594,
+   52854,
+   54160,
+   54429
+  ],
+  "n_hits": 4
+ },
+ {
+  "event_type": "concern.resolved",
+  "where": "consumers_checkpoints",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-713",
+  "line_start": 54408,
+  "line_end": 54408,
+  "quote": "Explicitly adopt SP-278/DL-076:",
+  "now_at": [
+   53386,
+   53646,
+   53911,
+   54172,
+   54444,
+   54712
+  ],
+  "n_hits": 6
+ },
+ {
+  "event_type": "concern.resolved",
+  "where": "compatibility_withdrawal",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-713",
+  "line_start": 54465,
+  "line_end": 54466,
+  "quote": "Close exact-family writer admission\n  first",
+  "now_at": [
+   53145,
+   53443,
+   53968,
+   54229,
+   54501,
+   54769
+  ],
+  "n_hits": 6
+ },
+ {
+  "event_type": "concern.resolved",
+  "where": "positive_negative_oracles",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-713",
+  "line_start": 54478,
+  "line_end": 54478,
+  "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,",
+  "now_at": [
+   52673,
+   52934,
+   53158,
+   53456,
+   53717,
+   53981,
+   54242,
+   54514,
+   54782
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.updated",
+  "where": "disposition_evidence",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-714",
+  "line_start": 54577,
+  "line_end": 54577,
+  "quote": "Newly authored owner contract for ",
+  "now_at": [
+   52512,
+   52772,
+   53033,
+   53285,
+   53555,
+   53816,
+   54080,
+   54341,
+   54613
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.updated",
+  "where": "membership_version",
+  "index": 4,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-714",
+  "line_start": 54782,
+  "line_end": 54782,
+  "quote": "concern.updated@2.0.0 is individually registered in Plans/event_family_registry.json",
+  "now_at": [
+   54818
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "concern.updated",
+  "where": "owner_doc",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-714",
+  "line_start": 54577,
+  "line_end": 54577,
+  "quote": "Newly authored owner contract for ",
+  "now_at": [
+   52512,
+   52772,
+   53033,
+   53285,
+   53555,
+   53816,
+   54080,
+   54341,
+   54613
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.updated",
+  "where": "producer",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-714",
+  "line_start": 54649,
+  "line_end": 54649,
+  "quote": "Explicitly adopt SP-286/CV-339",
+  "now_at": [
+   52580,
+   52840,
+   53358,
+   53621,
+   53884,
+   54146,
+   54415,
+   54685
+  ],
+  "n_hits": 8
+ },
+ {
+  "event_type": "concern.updated",
+  "where": "closed_payload_schema",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-714",
+  "line_start": 54605,
+  "line_end": 54605,
+  "quote": "Payload and scope: the exact closed schema is",
+  "now_at": [
+   52535,
+   52795,
+   53056,
+   53314,
+   53577,
+   53840,
+   54102,
+   54371,
+   54641
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.updated",
+  "where": "scope_identity",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-714",
+  "line_start": 54607,
+  "line_end": 54608,
+  "quote": "scope_partition is\n  project~base64url_no_pad(UTF8(project_id))",
+  "now_at": [
+   52537,
+   52797,
+   53316,
+   53579,
+   53842,
+   54104,
+   54373,
+   54643
+  ],
+  "n_hits": 8
+ },
+ {
+  "event_type": "concern.updated",
+  "where": "replay_idempotency",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-714",
+  "line_start": 54655,
+  "line_end": 54656,
+  "quote": "Same scoped key with changed caller\n  semantic body is idempotency_conflict",
+  "now_at": [
+   52586,
+   52846,
+   53364,
+   53627,
+   53890,
+   54152,
+   54421,
+   54691
+  ],
+  "n_hits": 8
+ },
+ {
+  "event_type": "concern.updated",
+  "where": "retention",
+  "index": 1,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-714",
+  "line_start": 54756,
+  "line_end": 54756,
+  "quote": "Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.",
+  "now_at": [
+   52683,
+   52944,
+   53168,
+   53466,
+   53727,
+   53991,
+   54252,
+   54524,
+   54792
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.updated",
+  "where": "retention",
+  "index": 2,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-714",
+  "line_start": 54763,
+  "line_end": 54763,
+  "quote": "Exact stored value `concern_updated_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0` under DL-500;",
+  "now_at": [
+   54799
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "concern.updated",
+  "where": "retention",
+  "index": 3,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-714",
+  "line_start": 54767,
+  "line_end": 54767,
+  "quote": "Exact stored value `concern_updated_operation` retains `RP-OPERATIONAL-2555D@1.0.0` under DL-501;",
+  "now_at": [
+   54803
+  ],
+  "n_hits": 1
+ },
+ {
+  "event_type": "concern.updated",
+  "where": "redaction_custody",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-714",
+  "line_start": 54702,
+  "line_end": 54702,
+  "quote": "Mandatory coherent backup/restore preserves them together",
+  "now_at": [
+   52629,
+   52890,
+   53116,
+   53412,
+   53672,
+   53937,
+   54198,
+   54470,
+   54738
+  ],
+  "n_hits": 9
+ },
+ {
+  "event_type": "concern.updated",
+  "where": "transitions",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-714",
+  "line_start": 54663,
+  "line_end": 54663,
+  "quote": "Exact effect:",
+  "now_at": [
+   53372,
+   53635,
+   53898,
+   54699
+  ],
+  "n_hits": 4
+ },
+ {
+  "event_type": "concern.updated",
+  "where": "consumers_checkpoints",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-714",
+  "line_start": 54676,
+  "line_end": 54676,
+  "quote": "Explicitly adopt SP-278/DL-076:",
+  "now_at": [
+   53386,
+   53646,
+   53911,
+   54172,
+   54444,
+   54712
+  ],
+  "n_hits": 6
+ },
+ {
+  "event_type": "concern.updated",
+  "where": "compatibility_withdrawal",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-714",
+  "line_start": 54733,
+  "line_end": 54734,
+  "quote": "Close exact-family writer admission\n  first",
+  "now_at": [
+   53145,
+   53443,
+   53968,
+   54229,
+   54501,
+   54769
+  ],
+  "n_hits": 6
+ },
+ {
+  "event_type": "concern.updated",
+  "where": "positive_negative_oracles",
+  "index": 0,
+  "path": "Plans/FinalGUISpec.md",
+  "unit": "F3-714",
+  "line_start": 54746,
+  "line_end": 54746,
+  "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,",
+  "now_at": [
+   52673,
+   52934,
+   53158,
+   53456,
+   53717,
+   53981,
+   54242,
+   54514,
+   54782
+  ],
+  "n_hits": 9
+ }
+]
