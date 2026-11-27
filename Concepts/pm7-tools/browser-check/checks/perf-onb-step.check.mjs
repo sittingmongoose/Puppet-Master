@@ -8,8 +8,8 @@
 // NieR's target brackets (their breath and turning diamond) moved draws only them (render(true): a partial draw). Retro keeps its own stepped draw (10 or 20 a second) and Reduced Motion its still stage.
 //
 // Per look and screen, at rest (as perf-onb-rest.check.mjs gets there: a pointer journey wakes Pip past Welcome, then
-// the cell must be at rest by its POSE gate; on Welcome Pip asleep; Pip's idle life held off from 2.5 s before the
-// window to its end, so its swings, judged below, are not read as drift), for --set ms (default 3000) ms the stage's render()
+// the cell must be at rest by its POSE gate; on Welcome Pip asleep; Pip's idle life held off from the screen's opening
+// to the window's end, so its swings, judged below, are not read as drift), for --set ms (default 3000) ms the stage's render()
 // calls are counted (full draws, and partial draws: render(true)) against the page's own frames. Judged:
 //   rest     on a display of 90 Hz or more: full draws a second at most --set restMax (default 60) and at most
 //            --set restShare (default 0.5) of the frames, outside Retro (Friendly's sway, the fastest, steps about 50
@@ -141,18 +141,19 @@ export default async function (t) {
 			const at = await f.evaluate((id) => { try { window.O55.ui.go(id, { noHistory: true }); } catch (e) { return String(e); } return window.O55.S.sess.screen; }, screen);
 			if (at !== screen) { await t.check(`${look} ${screen}: the screen opened`, false, String(at)); continue; }
 			const want = screen === 'welcome' ? 'asleep' : 'awake';
+			/* Pip's idle life (a swing or wiggle every 7 to 13 s, drawn in every frame as a swing is: Glass's, damped least,
+			   takes about 8 s to slow under 12 px/s) is held off from the screen's opening to the window's end, so the row
+			   reads the drift alone; the swing window below judges swings */
+			const holdLife = (on) => f.evaluate((h) => { const st = document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage; st.idleNext = h ? st.t + 600 : st.t + 7 + Math.random() * 6; }, on);
+			await holdLife(true);
 			if (want === 'awake') await journey();
 			await t.page.waitForTimeout(Number(t.args.viewSettle ?? 6000));
 			const cell = `${look} ${screen}`;
 			const pre = await restWait(f, want, 10000);
 			t.log(`${cell}: before the window: ${pre.why}`);
 			if (!pre.ok) { await t.check(`${cell}: Pip ${want} and at rest before the window`, false, `${pre.why}: could not judge`); continue; }
-			/* Pip's idle life (a swing or wiggle every 7 to 13 s, drawn in every frame as a swing is) is held off for the
-			   window and 2.5 s before it, so the row reads the drift alone; the swing window below judges swings */
-			await f.evaluate(() => { const st = document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage; st.idleNext = st.t + 600; });
-			await t.page.waitForTimeout(2500);
 			const r = await f.evaluate(WATCH, ['rest', ms]);
-			await f.evaluate(() => { const st = document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage; st.idleNext = st.t + 7 + Math.random() * 6; });
+			await holdLife(false);
 			t.log(`${cell}: at rest: ${line(r)}`);
 			const v = restStepVerdict(r, o);
 			if (v.slow) { slow.push(v.share); t.log(`${cell}: ${v.why}`); }
