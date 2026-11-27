@@ -692,7 +692,11 @@ copy can include tens of gigabytes of unrelated capture data.
 `python3 -B scripts/pm-land.py copy-inputs` does this for a local worktree: run from it (or pass
 `--worktree DIR`), it copies every selected input the worktree lacks, links the raw-evidence
 symlink, keeps the ones that already hold the shared checkout's bytes, refuses without copying
-anything when one differs, and then re-hashes each against the shared checkout. It is the same
+anything when one differs, and then re-hashes each against the shared checkout. It checks every
+destination's folders before the first write and refuses a symlinked one, creates each file
+exclusively, writes the raw-evidence link as an absolute link (replacing one that dangles, such as a
+verbatim copy of the shared checkout's relative link), and resolves it again afterwards.
+`--worktree` must name a worktree's root. It is the same
 selection `pm-land.py check` copies into its remote checkout (`copy_inputs`), so there is one list.
 On 2026-11-27 it was 3,428 entries, about 1.8 GB, and took 50 seconds on the VM.
 
@@ -706,6 +710,10 @@ Two writers refuse with exit 2 when that list names files the tree lacks, and na
   `--readiness-audit-root` binds on its own. `copy-inputs` copies the edition too, so record with
   `--readiness-audit-root Plans/.audits/event-authority-2026-08-13-currentness` afterwards, as
   above.
+
+The raw-evidence link counts as present only when it resolves from the tree to the evidence share
+and every capture the tracked raw-capture manifest names is a file behind it. A sparse tree still
+gets the recorder's own exit-3 sparse refusal first.
 
 `--allow-missing-inputs` lets either go on anyway and prints a warning that names what is missing;
 what it writes is not what the shared checkout writes and is never landed or committed as a
@@ -888,13 +896,13 @@ summary. `git add Plans/.plan_migration` below stages both changes. Git history 
     git fetch origin
     git checkout -B plans/snapshot-$(date -u +%Y%m%d) origin/main
     git sparse-checkout disable
-    ln -sfn /mnt/Cursor/PuppetMaster-Evidence/tests/agent_packet_restrictions \
-            tests/agent_packet_restrictions
+    python3 -B scripts/pm-land.py copy-inputs
     python3 scripts/pm-plan-migration.py snapshot-current \
         --run-id pds-$(date -u +%Y%m%d)-001-current-planunit-snapshot \
         --expected-doc-count "$(ls Plans/*.md | wc -l)" \
         --supersedes-run-id "$(python3 -c "import json;print(json.load(open('Plans/.plan_migration/current_run.json'))['run_id'])")"
-    python3 scripts/pm-landing-check.py --record-baseline
+    python3 scripts/pm-landing-check.py --record-baseline \
+        --readiness-audit-root Plans/.audits/event-authority-2026-08-13-currentness
     git add Plans/.plan_migration reports/landing-checks/baseline.json
     git commit -m "plans: refresh the plan-migration snapshot and the landing-check baseline"
     git push -u origin HEAD
@@ -906,8 +914,12 @@ Six things that make the difference between a good baseline and a misleading one
 
 - `git sparse-checkout disable`, because a sparse tree is missing inputs the checks read and records
   failures no landing ever sees.
-- The symlink, because `json_syntax` reads 16 raw captures underneath it. It is the one check input
-  under `tests/` that stays untracked: it points at raw evidence, which is never committed here.
+- `copy-inputs`, for the ignored inputs, among them the raw-evidence symlink, because `json_syntax`
+  reads 16 raw captures underneath it. It is the one check input under `tests/` that stays
+  untracked: it points at raw evidence, which is never committed here. The shared checkout's link
+  is relative, so a verbatim copy dangles in a tree at another depth and hides all 16;
+  `copy-inputs` writes an absolute link and replaces a dangling one, and `--record-baseline`
+  refuses until the link resolves to the evidence share and every capture is a file behind it.
 - The readiness audit source: both modes select it mechanically and the baseline binds its actual
   ignored inputs. Use `--readiness-audit-root DIR` for another evidence location; no manual audit copy
   is needed. A later comparison must use the same input bytes.

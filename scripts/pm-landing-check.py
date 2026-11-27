@@ -2483,7 +2483,12 @@ def main() -> int:
             parser.error(f"{option} must not be negative")
 
     root = Path(args.root).resolve()
-    if args.record_baseline:
+    # A sparse tree keeps its own exit-3 diagnostic below, which says what is actually wrong.
+    try:
+        sparse_first = bool(sparse_paths(root)) and not args.allow_sparse
+    except OSError:
+        sparse_first = False
+    if args.record_baseline and not sparse_first:
         refused = ignored_input_guard(root, args.allow_missing_inputs)
         if refused is not None:
             return refused

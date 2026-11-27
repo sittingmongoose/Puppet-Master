@@ -1409,10 +1409,11 @@ print(json.dumps({{"schema_id": "pm.landing_check.report.v1", "commit": {self.he
         fresh = self.fresh_worktree()
         code, text = self.guard(fresh, allow_missing=False)
         self.assertEqual(code, 2)
-        self.assertIn("tool: refusing to build: 3 gitignored input(s)", text)
+        self.assertIn("tool: refusing to build: 4 gitignored input(s)", text)
         lines = [line.strip() for line in text.splitlines() if line.startswith("  ")]
-        self.assertEqual(lines, ["Plans/.audits/ignored.txt", "Plans/.audits/whole/ (all 1 inputs in it)",
-                                 land.RAW_LINK])
+        self.assertEqual(lines, [f"{land.RAW_LINK} (missing, or a link that does not resolve from this tree to "
+                                 "the evidence share; all 1 captures behind it)",
+                                 "Plans/.audits/ignored.txt", "Plans/.audits/whole/ (all 1 inputs in it)"])
         self.assertIn(land.COPY_INPUTS_COMMAND, text)
         self.assertIn("--allow-missing-inputs", text)
 
@@ -1450,7 +1451,8 @@ print(json.dumps({{"schema_id": "pm.landing_check.report.v1", "commit": {self.he
         self.assertEqual(missing, selected)
         manifest = land.input_manifest(self.shared, fresh, land.tracklist(fresh))
         everything, _ = land.missing_ignored_inputs(fresh)
-        self.assertEqual(set(everything), {name for name in manifest if not name.startswith(land.RAW_LINK + "/")})
+        # The guard's list is the copy manifest's, raw captures behind the link included.
+        self.assertEqual(set(everything), set(manifest))
 
     def test_guard_refuses_when_the_shared_checkout_is_unreadable(self):
         fresh = self.fresh_worktree()
@@ -1480,6 +1482,116 @@ print(json.dumps({{"schema_id": "pm.landing_check.report.v1", "commit": {self.he
         self.assertIn(self.ignore_file, stderr.getvalue())
         self.assertFalse((other / "Plans/.audits/whole/included.json").exists())
         self.assertEqual((other / self.ignore_file).read_text(), "local edits\n")
+
+    def relative_raw_link(self, root):
+        """Give root/tests the shared checkout's link as relative text, as in the Astra deep review."""
+        link = root / land.RAW_LINK
+        if link.is_symlink():
+            link.unlink()
+        link.symlink_to(os.path.relpath(self.evidence / "raw", self.shared / "tests"), target_is_directory=True)
+        return link
+
+    def test_guard_refuses_a_verbatim_relative_raw_link_that_dangles_here(self):
+        # The reviewer's case: the shared checkout's relative link copied into a tree at another depth.
+        self.relative_raw_link(self.shared)
+        fresh = self.fresh_worktree("deeper/fresh")
+        land.copy_inputs(self.shared, fresh, keep_present=True)
+        link = self.relative_raw_link(fresh)
+        self.assertTrue(link.is_symlink())
+        self.assertFalse(link.exists())
+        code, text = self.guard(fresh, allow_missing=False)
+        self.assertEqual(code, 2)
+        self.assertIn(f"{land.RAW_LINK} (missing, or a link that does not resolve", text)
+        self.assertIn("all 1 captures behind it", text)
+        # copy-inputs recreates it so it resolves from this tree, and the guard then passes.
+        with redirect_stdout(io.StringIO()):
+            self.assertEqual(land.main(["copy-inputs", "--worktree", str(fresh)]), 0)
+        self.assertEqual(link.resolve(strict=True), (self.evidence / "raw").resolve())
+        self.assertTrue(Path(os.readlink(link)).is_absolute())
+        self.assertEqual(self.guard(fresh, allow_missing=False), (None, ""))
+
+    def test_guard_passes_a_relative_raw_link_that_resolves_here(self):
+        self.relative_raw_link(self.shared)
+        fresh = self.fresh_worktree()  # same depth as the shared checkout, so the same text resolves
+        land.copy_inputs(self.shared, fresh, keep_present=True)
+        self.relative_raw_link(fresh)
+        self.assertEqual((fresh / land.RAW_LINK).resolve(strict=True), (self.evidence / "raw").resolve())
+        self.assertEqual(self.guard(fresh, allow_missing=False), (None, ""))
+        with redirect_stdout(io.StringIO()):
+            self.assertEqual(land.main(["copy-inputs", "--worktree", str(fresh)]), 0)
+        self.assertFalse(Path(os.readlink(fresh / land.RAW_LINK)).is_absolute())  # kept as it was
+
+    def test_guard_names_a_capture_missing_behind_a_resolving_link(self):
+        fresh = self.fresh_worktree()
+        land.copy_inputs(self.shared, fresh, keep_present=True)
+        (self.evidence / "empty").mkdir()
+        (fresh / land.RAW_LINK).unlink()
+        (fresh / land.RAW_LINK).symlink_to(self.evidence / "empty", target_is_directory=True)
+        code, text = self.guard(fresh, allow_missing=False)
+        self.assertEqual(code, 2)
+        self.assertEqual([line.strip() for line in text.splitlines() if line.startswith("  ")], [self.raw_capture])
+
+    def test_guard_refuses_a_raw_link_outside_the_evidence_share(self):
+        fresh = self.fresh_worktree()
+        land.copy_inputs(self.shared, fresh, keep_present=True)
+        outside = self.root / "elsewhere"
+        self.put(outside, "capture.jsonl", "{}\n")
+        (fresh / land.RAW_LINK).unlink()
+        (fresh / land.RAW_LINK).symlink_to(outside, target_is_directory=True)
+        code, text = self.guard(fresh, allow_missing=False)
+        self.assertEqual(code, 2)
+        self.assertIn(f"{land.RAW_LINK} (missing, or a link that does not resolve", text)
+
+    def test_record_baseline_refuses_the_reviewers_case_and_writes_no_baseline(self):
+        spec = importlib.util.spec_from_file_location("pm_landing_check_guard",
+                                                      Path(__file__).with_name("pm-landing-check.py"))
+        check = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(check)
+        self.relative_raw_link(self.shared)
+        fresh = self.fresh_worktree("deeper/fresh")
+        land.copy_inputs(self.shared, fresh, keep_present=True)
+        self.relative_raw_link(fresh)
+        baseline = fresh / "baseline.json"
+        stderr = io.StringIO()
+        with patch.object(check, "SHARED_CHECKOUT", self.shared), patch.object(check, "_load_pm_land", return_value=land), \
+             patch.object(sys, "argv", ["pm-landing-check.py", "--root", str(fresh), "--record-baseline",
+                                        "--baseline", str(baseline)]), \
+             patch.object(check, "readiness_source_identity", side_effect=AssertionError("ran past the guard")), \
+             redirect_stderr(stderr), redirect_stdout(io.StringIO()):
+            self.assertEqual(check.main(), 2)
+        self.assertIn("refusing to record a baseline", stderr.getvalue())
+        self.assertIn(land.RAW_LINK, stderr.getvalue())
+        self.assertFalse(baseline.exists())
+
+    def test_copy_inputs_refuses_a_symlinked_folder_before_any_write(self):
+        fresh = self.fresh_worktree()
+        outside = self.root / "outside"
+        outside.mkdir()
+        (fresh / "Plans/.audits").mkdir(parents=True)
+        (fresh / "Plans/.audits/whole").symlink_to(outside, target_is_directory=True)
+        stderr = io.StringIO()
+        with redirect_stderr(stderr):
+            self.assertEqual(land.main(["copy-inputs", "--worktree", str(fresh)]), 3)
+        self.assertIn("Plans/.audits/whole is a symlink or a file", stderr.getvalue())
+        self.assertEqual(list(outside.iterdir()), [])
+        self.assertFalse((fresh / self.ignore_file).exists())
+        self.assertFalse((fresh / land.RAW_LINK).is_symlink())
+
+    def test_copy_inputs_command_refuses_a_subdirectory_and_names_the_root(self):
+        fresh = self.fresh_worktree()
+        stderr = io.StringIO()
+        with redirect_stderr(stderr):
+            self.assertEqual(land.main(["copy-inputs", "--worktree", str(fresh / "Plans")]), 3)
+        self.assertIn("must name a worktree's root", stderr.getvalue())
+        self.assertIn(f"its worktree root is {fresh.resolve()}", stderr.getvalue())
+        self.assertFalse((fresh / self.ignore_file).exists())
+
+    def test_exclusive_copy_never_replaces_a_file(self):
+        source = self.put(self.root, "source.txt", "new\n")
+        target = self.put(self.root, "target.txt", "kept\n")
+        with self.assertRaises(FileExistsError):
+            land.exclusive_copy(source, target)
+        self.assertEqual(target.read_text(), "kept\n")
 
     def test_copy_inputs_command_refuses_the_shared_checkout(self):
         stderr = io.StringIO()

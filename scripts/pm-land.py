@@ -361,28 +361,65 @@ def require_same_inputs(expected, actual, label):
         raise Refusal(f"{label} ignored input mismatch: " + ", ".join(changed))
 
 
+def symlinked_ancestor(worktree, name):
+    """The first ancestor of worktree/name, below worktree, that is a symlink or not a directory."""
+    current = worktree
+    for part in PurePosixPath(name).parts[:-1]:
+        current = current / part
+        if current.is_symlink() or (current.exists() and not current.is_dir()):
+            return current
+    return None
+
+
+def raw_link_resolves(worktree, target):
+    """The raw-evidence link resolves, from worktree itself, to target."""
+    link = worktree / RAW_LINK
+    try:
+        return link.is_symlink() and link.is_dir() and link.resolve(strict=True) == target
+    except (OSError, RuntimeError):
+        return False
+
+
+def exclusive_copy(source, destination):
+    """copy2 that never replaces a file created after the pre-scan."""
+    with source.open("rb") as reader, destination.open("xb") as writer:
+        shutil.copyfileobj(reader, writer)
+    shutil.copystat(source, destination)
+
+
 def copy_inputs(shared, worktree, *, keep_present=False):
     """Copy every ignored input the checks read from the shared checkout into worktree.
 
     A remote checkout is fresh, so any existing path is refused. With keep_present (the
     copy-inputs command, for a local worktree that may already hold some of them), a path that
-    already holds the shared checkout's exact bytes, or the same raw-evidence link, is kept, and
-    one that differs is refused without changing anything.
+    already holds the shared checkout's exact bytes, or a raw-evidence link that resolves to the
+    same evidence directory, is kept; a raw-evidence link that does not resolve from the worktree
+    (such as a verbatim copy of the shared checkout's relative link) is recreated as an absolute
+    link; anything else that differs is refused without changing anything. Every destination's
+    ancestors are checked before the first write, so nothing is written through a symlinked folder.
     """
     tracked = tracklist(worktree)
     expected = input_manifest(shared, worktree, tracked)
     raw_target = (shared / RAW_LINK).resolve(strict=True)
-    pending, differing = [], []
+    pending, differing, dangling = [], [], False
     for name in expected:
         if name.startswith(RAW_LINK + "/"):
             continue
         destination = worktree / name
-        if not (destination.exists() or destination.is_symlink()):
+        ancestor = symlinked_ancestor(worktree, name)
+        if ancestor is not None:
+            differing.append(f"{name} (its folder {ancestor.relative_to(worktree)} is a symlink or a file)")
+        elif not (destination.exists() or destination.is_symlink()):
             pending.append(name)
         elif not keep_present:
             raise Refusal(f"refusing to overwrite an existing checkout path: {destination}")
         elif name == RAW_LINK:
-            if not destination.is_symlink() or destination.resolve() != raw_target:
+            if raw_link_resolves(worktree, raw_target):
+                continue
+            if destination.is_symlink() and not destination.exists():
+                dangling = True  # a link that leads nowhere holds nothing to keep
+                pending.append(name)
+            else:
                 differing.append(name)
         elif destination.is_symlink() or not destination.is_file() or file_hash(destination) != expected[name]:
             differing.append(name)
@@ -393,12 +430,16 @@ def copy_inputs(shared, worktree, *, keep_present=False):
         destination = worktree / name
         destination.parent.mkdir(parents=True, exist_ok=True)
         if name == RAW_LINK:
+            if dangling:
+                destination.unlink()
             destination.symlink_to(raw_target, target_is_directory=True)
         else:
-            shutil.copy2(shared / name, destination)
+            exclusive_copy(shared / name, destination)
+    if not raw_link_resolves(worktree, raw_target):
+        raise Refusal(f"the raw-evidence link {worktree / RAW_LINK} does not resolve to {raw_target} after the copy")
     if keep_present:
         # The worktree may hold other ignored files of its own; compare only what was expected.
-        copied = {name: (f"symlink:{(worktree / name).resolve()}" if name == RAW_LINK
+        copied = {name: (f"symlink:{(worktree / name).resolve(strict=True)}" if name == RAW_LINK
                          else regular_hash(worktree, name, through_raw_link=within(name, RAW_LINK)))
                   for name in expected}
         require_same_inputs(expected, copied, "copied")
@@ -434,9 +475,20 @@ def missing_ignored_inputs(worktree, shared=None, *, prefixes=None, exclude=()):
     selected = sorted(name for name in copies(shared, worktree, tracked, None) if wanted(name))
     missing = [name for name in selected if not (worktree / name).is_file()]
     if wanted(RAW_LINK) and (shared / RAW_LINK).is_symlink():
-        selected.append(RAW_LINK)
-        if not (worktree / RAW_LINK).is_symlink():
-            missing.append(RAW_LINK)
+        # The link counts only when it resolves, from this tree, to the evidence share, and every
+        # capture the tracked manifest names is a file behind it. A verbatim copy of the shared
+        # checkout's relative link dangles here and hides all of them (Astra deep review, r0).
+        captures = sorted(raw_paths(worktree, tracked, None))
+        selected.extend([RAW_LINK, *captures])
+        link = worktree / RAW_LINK
+        try:
+            target = link.resolve(strict=True) if link.is_symlink() and link.is_dir() else None
+        except (OSError, RuntimeError):
+            target = None
+        if target is None or not target.is_relative_to(EVIDENCE.resolve()):
+            missing.extend([RAW_LINK, *captures])
+        else:
+            missing.extend(name for name in captures if not (worktree / name).is_file())
     return selected, missing
 
 
@@ -449,6 +501,11 @@ def describe_missing(selected, missing):
             for depth in range(COLLAPSE_DEPTH, len(parts)):
                 counter["/".join(parts[:depth])] += 1
     lines = []
+    if RAW_LINK in missing:
+        captures = sum(within(name, RAW_LINK) and name != RAW_LINK for name in missing)
+        lines.append(f"{RAW_LINK} (missing, or a link that does not resolve from this tree to the evidence "
+                     f"share; all {captures} captures behind it)")
+        missing = [name for name in missing if not within(name, RAW_LINK)]
     for name in missing:
         parts = PurePosixPath(name).parts
         directory = next(("/".join(parts[:depth]) for depth in range(COLLAPSE_DEPTH, len(parts))
@@ -507,6 +564,10 @@ def ignored_input_guard(tool, action, worktree, *, allow_missing, prefixes=None,
 
 def copy_inputs_command(worktree):
     worktree = Path(worktree).resolve()
+    top = git(worktree, "rev-parse", "--show-toplevel", check=False)
+    if top.returncode or Path(top.stdout.strip()).resolve() != worktree:
+        named = f"; its worktree root is {top.stdout.strip()}" if not top.returncode else ""
+        raise Refusal(f"--worktree must name a worktree's root, not {worktree}{named}")
     if worktree == SHARED.resolve():
         raise Refusal("this is the shared checkout; it already holds its own inputs")
     manifest = copy_inputs(SHARED, worktree, keep_present=True)

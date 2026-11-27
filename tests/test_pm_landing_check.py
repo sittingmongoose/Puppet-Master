@@ -4124,6 +4124,15 @@ class RecordBaselineIgnoredInputGuard(unittest.TestCase):
         self.assertEqual(code, 3)
         self.assertIs(land.ignored_input_guard.call_args.kwargs["allow_missing"], True)
 
+    def test_a_sparse_tree_keeps_its_own_refusal_first(self):
+        with patch.object(M, "sparse_paths", return_value=["Plans"]), patch("sys.stderr"):
+            code, land = self.run_main(["--record-baseline", "--root", str(ROOT)], 2)
+        self.assertEqual(code, 3)
+        land.ignored_input_guard.assert_not_called()
+        with patch.object(M, "sparse_paths", return_value=["Plans"]):
+            code, land = self.run_main(["--record-baseline", "--allow-sparse", "--root", str(ROOT)], 2)
+        self.assertEqual(code, 2)
+
     def test_a_comparison_run_takes_no_guard_and_no_override(self):
         with patch("sys.stderr"):
             code, land = self.run_main(["--root", str(ROOT)], None)
