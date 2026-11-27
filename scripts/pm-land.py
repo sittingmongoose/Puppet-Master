@@ -396,13 +396,15 @@ def copy_inputs(shared, worktree, *, keep_present=False):
     already holds the shared checkout's exact bytes, or a raw-evidence link that resolves to the
     same evidence directory, is kept; a raw-evidence link that does not resolve from the worktree
     (such as a verbatim copy of the shared checkout's relative link) is recreated as an absolute
-    link; anything else that differs is refused without changing anything. Every destination's
-    ancestors are checked before the first write, so nothing is written through a symlinked folder.
+    link; any other input that is a link is replaced by a regular copy (the link itself is removed,
+    its target is never written); anything else that differs is refused without changing anything.
+    Every destination's ancestors are checked before the first write, so nothing is written through
+    a symlinked folder.
     """
     tracked = tracklist(worktree)
     expected = input_manifest(shared, worktree, tracked)
     raw_target = (shared / RAW_LINK).resolve(strict=True)
-    pending, differing, dangling = [], [], False
+    pending, differing, dangling, relink = [], [], False, []
     for name in expected:
         if name.startswith(RAW_LINK + "/"):
             continue
@@ -410,6 +412,8 @@ def copy_inputs(shared, worktree, *, keep_present=False):
         ancestor = symlinked_ancestor(worktree, name)
         if ancestor is not None:
             differing.append(f"{name} (its folder {ancestor.relative_to(worktree)} is a symlink or a file)")
+        elif keep_present and name != RAW_LINK and destination.is_symlink():
+            relink.append(name)  # a linked input is never a real file of this tree: replace the link
         elif not (destination.exists() or destination.is_symlink()):
             pending.append(name)
         elif not keep_present:
@@ -427,6 +431,11 @@ def copy_inputs(shared, worktree, *, keep_present=False):
     if differing:
         raise Refusal("refusing to overwrite checkout paths that differ from the shared checkout's "
                       f"(move them aside first; nothing was copied): {', '.join(differing)}")
+    for name in relink:
+        destination = worktree / name
+        if destination.is_symlink():
+            destination.unlink()  # removes the link only; its target is untouched
+        exclusive_copy(shared / name, destination)  # O_EXCL: never follows a link recreated meanwhile
     for name in pending:
         destination = worktree / name
         destination.parent.mkdir(parents=True, exist_ok=True)
@@ -474,7 +483,11 @@ def missing_ignored_inputs(worktree, shared=None, *, prefixes=None, exclude=()):
                 and not any(within(name, prefix) for prefix in exclude))
 
     selected = sorted(name for name in copies(shared, worktree, tracked, None) if wanted(name))
-    missing = [name for name in selected if not (worktree / name).is_file()]
+    # Every input but the raw-evidence link must be a regular file reached through real folders:
+    # a validator that resolves a linked input can land outside the tree (the widget audit report
+    # linked to its archived copy made the web validator crash; Astra r2 deep review).
+    missing = [name for name in selected if input_link(worktree, name) is not None
+               or not (worktree / name).is_file()]
     if wanted(RAW_LINK) and (shared / RAW_LINK).is_symlink():
         # The link counts only when it resolves, from this tree, to the evidence share, and every
         # capture the tracked manifest names is a file behind it. A verbatim copy of the shared
@@ -492,6 +505,15 @@ def missing_ignored_inputs(worktree, shared=None, *, prefixes=None, exclude=()):
                         for path in verifier.admitted_raw_captures(worktree, captures, evidence)}
             missing.extend(name for name in captures if name not in readable)
     return selected, missing
+
+
+def input_link(worktree, name):
+    """The link that stands in for this input in worktree: the input itself, or a folder above it
+    (a file where a folder belongs counts too); None when the path is reached without links."""
+    ancestor = symlinked_ancestor(worktree, name)
+    if ancestor is not None:
+        return ancestor.relative_to(worktree).as_posix()
+    return name if (worktree / name).is_symlink() else None
 
 
 _VERIFIER = []
@@ -514,15 +536,28 @@ def raw_capture_verifier():
     return _VERIFIER[0]
 
 
-def describe_missing(selected, missing):
-    """One line per missing input, naming a directory once when every input below it is missing."""
+def describe_missing(selected, missing, links=None):
+    """One line per missing input, naming a directory once when every input below it is missing.
+
+    links maps an input that is present only through a link to that link (input_link)."""
+    links = links or {}
+    lines = []
+    for name in missing:
+        link = links.get(name)
+        if link is None:
+            continue
+        line = (f"{name} is a link; run {COPY_INPUTS_COMMAND} to replace links with real files" if link == name
+                else f"{link}/ is a linked folder (or a file where a folder belongs); move it aside, then run "
+                     f"{COPY_INPUTS_COMMAND}")
+        if line not in lines:
+            lines.append(line)
+    missing = [name for name in missing if name not in links]
     totals, absent = Counter(), Counter()
     for counter, names in ((totals, selected), (absent, missing)):
         for name in names:
             parts = PurePosixPath(name).parts
             for depth in range(COLLAPSE_DEPTH, len(parts)):
                 counter["/".join(parts[:depth])] += 1
-    lines = []
     if RAW_LINK in missing:
         captures = sum(within(name, RAW_LINK) and name != RAW_LINK for name in missing)
         lines.append(f"{RAW_LINK} (missing, or a link that does not resolve from this tree to the evidence "
@@ -563,11 +598,13 @@ def ignored_input_guard(tool, action, worktree, *, allow_missing, prefixes=None,
         return None
     if not missing:
         return None
-    lines = describe_missing(selected, missing)
+    links = {name: link for name in missing if not within(name, RAW_LINK)
+             for link in [input_link(Path(worktree).resolve(), name)] if link is not None}
+    lines = describe_missing(selected, missing, links)
     if not allow_missing:
         print(f"{tool}: refusing to {action}: {len(missing)} gitignored input(s) that the shared checkout "
-              f"{shared} has are missing from {worktree}, so the result would differ from one built "
-              "with them:", file=stream)
+              f"{shared} has are missing from {worktree}, or reach it only through a link, so the result "
+              "would differ from one built with them:", file=stream)
         for line in lines:
             print(f"  {line}", file=stream)
         print(f"{tool}: copy them in from this worktree with: {COPY_INPUTS_COMMAND}", file=stream)

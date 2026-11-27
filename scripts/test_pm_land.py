@@ -1596,6 +1596,96 @@ print(json.dumps({{"schema_id": "pm.landing_check.report.v1", "commit": {self.he
             code = check.main()
         return code, stderr.getvalue(), baseline
 
+    def linked_widget_report(self, target_text=None):
+        """The Astra r2 deep review's case: an audit report that is a link to its archived copy.
+        The bytes behind the link equal the shared checkout's; a validator that resolves the
+        link lands outside the tree and crashes."""
+        fresh = self.fresh_worktree()
+        land.copy_inputs(self.shared, fresh, keep_present=True)
+        name = "Plans/.audits/whole/included.json"
+        archive = self.put(self.root / "archive", name, target_text or (self.shared / name).read_text())
+        (fresh / name).unlink()
+        (fresh / name).symlink_to(archive)
+        self.assertTrue((fresh / name).is_file())  # is_file() alone would pass it
+        return fresh, name, archive
+
+    def test_guard_refuses_a_linked_input_and_names_it(self):
+        fresh, name, _ = self.linked_widget_report()
+        for kwargs in ({}, {"prefixes": ("Plans",)}):  # --record-baseline's list and generate's
+            with self.subTest(**kwargs):
+                code, text = self.guard(fresh, allow_missing=False, **kwargs)
+                self.assertEqual(code, 2)
+                self.assertIn("refusing to build: 1 gitignored input(s)", text)
+                self.assertEqual([line.strip() for line in text.splitlines() if line.startswith("  ")],
+                                 [f"{name} is a link; run {land.COPY_INPUTS_COMMAND} to replace links with "
+                                  "real files"])
+
+    def test_record_baseline_refuses_a_linked_input_and_writes_no_baseline(self):
+        fresh, name, _ = self.linked_widget_report()
+        code, stderr, baseline = self.record_baseline(fresh)
+        self.assertEqual(code, 2)
+        self.assertIn(f"{name} is a link", stderr)
+        self.assertFalse(baseline.exists())
+
+    def test_generate_refuses_a_linked_input(self):
+        spec = importlib.util.spec_from_file_location("pm_plan_index_guard", Path(__file__).with_name("pm-plan-index.py"))
+        index = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = index  # its dataclasses look their module up by name
+        self.addCleanup(sys.modules.pop, spec.name, None)
+        try:
+            spec.loader.exec_module(index)
+        except ModuleNotFoundError as exc:
+            if exc.name != "yaml":
+                raise
+            self.skipTest("PyYAML is unavailable to this Python interpreter")
+        fresh, name, _ = self.linked_widget_report()
+        stderr = io.StringIO()
+        with patch.object(index, "ROOT", fresh), patch.object(index, "_load_pm_land", return_value=land), \
+             patch.object(index, "generate", side_effect=AssertionError("generated past the guard")), \
+             patch.object(sys, "argv", ["pm-plan-index.py", "generate"]), redirect_stderr(stderr):
+            self.assertEqual(index.main(), 2)
+        self.assertIn("refusing to generate the plan index", stderr.getvalue())
+        self.assertIn(f"{name} is a link", stderr.getvalue())
+
+    def test_copy_inputs_replaces_a_linked_input_without_writing_its_target(self):
+        for target_text in (None, "older archived bytes\n"):
+            with self.subTest(target_text=target_text):
+                fresh, name, archive = self.linked_widget_report(target_text)
+                before = archive.read_bytes()
+                with redirect_stdout(io.StringIO()):
+                    self.assertEqual(land.main(["copy-inputs", "--worktree", str(fresh)]), 0)
+                self.assertFalse((fresh / name).is_symlink())
+                self.assertEqual(land.file_hash(fresh / name), land.file_hash(self.shared / name))
+                self.assertEqual(archive.read_bytes(), before)  # the link's target is never written
+                self.assertEqual(self.guard(fresh, allow_missing=False), (None, ""))
+                self.git(self.shared, "worktree", "remove", "--force", str(fresh))
+                shutil.rmtree(self.root / "archive")
+
+    def test_copy_inputs_replaces_a_dangling_input_link(self):
+        fresh = self.fresh_worktree()
+        (fresh / "Plans/.audits").mkdir(parents=True)
+        (fresh / self.ignore_file).symlink_to(self.root / "nowhere.txt")
+        code, text = self.guard(fresh, allow_missing=False)
+        self.assertIn(f"{self.ignore_file} is a link", text)
+        with redirect_stdout(io.StringIO()):
+            self.assertEqual(land.main(["copy-inputs", "--worktree", str(fresh)]), 0)
+        self.assertFalse((fresh / self.ignore_file).is_symlink())
+        self.assertFalse((self.root / "nowhere.txt").exists())
+        self.assertEqual((fresh / self.ignore_file).read_text(), "audit notes\n")
+
+    def test_guard_names_a_linked_folder_once_and_says_to_move_it_aside(self):
+        fresh = self.fresh_worktree()
+        land.copy_inputs(self.shared, fresh, keep_present=True)
+        archive = self.root / "archive-whole"
+        shutil.copytree(fresh / "Plans/.audits/whole", archive)
+        shutil.rmtree(fresh / "Plans/.audits/whole")
+        (fresh / "Plans/.audits/whole").symlink_to(archive, target_is_directory=True)
+        code, text = self.guard(fresh, allow_missing=False)
+        self.assertEqual(code, 2)
+        self.assertEqual([line.strip() for line in text.splitlines() if line.startswith("  ")],
+                         ["Plans/.audits/whole/ is a linked folder (or a file where a folder belongs); move it "
+                          f"aside, then run {land.COPY_INPUTS_COMMAND}"])
+
     def test_guard_refuses_a_raw_link_outside_the_evidence_share(self):
         fresh = self.fresh_worktree()
         land.copy_inputs(self.shared, fresh, keep_present=True)

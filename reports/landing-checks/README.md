@@ -711,6 +711,12 @@ Two writers refuse with exit 2 when that list names files the tree lacks, and na
   `--readiness-audit-root Plans/.audits/event-authority-2026-08-13-currentness` afterwards, as
   above.
 
+Every other input counts as present only as a regular file reached through real folders: a link,
+or a linked folder above it, counts as missing, because a validator that resolves it lands outside
+the tree (on 2026-09-21 the widget audit report linked to its archived copy made the web validator
+emit no output in both aggregates). `copy-inputs` replaces a linked file with a regular copy; it
+removes only the link and never writes its target. A linked folder is refused; move it aside first.
+
 The raw-evidence link counts as present only when it resolves from the tree to the evidence share,
 and a capture only when `json_syntax` itself would read it: the guard calls the verifier's own
 `raw_capture_link_admitted` and `admitted_raw_captures` (`scripts/pm-plans-verify.py`), so a capture
