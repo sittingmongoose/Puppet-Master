@@ -411,7 +411,8 @@ export const FLING_ROUTES = {
 	end: { input: 'End', target: 'the last page (Containers)', pending: 'End was delivered with the last page (Containers) unmounted',
 		travel: 'End crossed at least one viewport and brought the last page into view', empty: 'no visible list or unmounted page is empty at the scroll frame' },
 	/* FO-245 round 4 (R143 high): End after a click on the document's plain text. Focus is then on the page's body, so
-	   only Chrome's last-clicked scroller ties the key to the document; the route needs that focus at the key. */
+	   only Chrome's last-clicked scroller ties the key to the document; the route needs that focus at the key.
+	   FO-245 round 5: 'end' and 'end-text' are kept for FO-248 but not registered as tests (see the test list). */
 	'end-text': { input: 'End', focus: 'body', target: 'the last page (Containers)', pending: 'End after a click on the document\'s plain text was delivered with focus on the page body and the last page (Containers) unmounted',
 		travel: 'End crossed at least one viewport and brought the last page into view', empty: 'no visible list or unmounted page is empty at the scroll frame' }
 };
@@ -980,6 +981,119 @@ export async function tabEndRoute(t, surface) {
 	t.log(`${surface} End on a focused tab (${pre.tab}): ${JSON.stringify(r)}`);
 	for (const row of tabEndVerdict(r)) await t.check(`${surface}: ${row.name}`,row.ok,row.detail);
 }
+/* FO-245 round 5 (R144, exported for tools/settings-chapter.selftest.mjs): two more widgets whose own End/Home round
+   4's listener overrode. Main is the reference for both; the precondition is the chapter still having unmounted pages at
+   the key, which is when that listener acted.
+   - The AI & Providers roster (.roster-list) is its own scroller. End after a click on a provider row scrolls the roster
+     to its end (main: 487 px) and leaves the document where it was; r4 jumped the document 5,169-5,235 px to the
+     chapter's end and left the roster where it was.
+   - The General wallpaper picker's tiles (.wpk-row .wpk-tile, radios) take Home in a delegated keydown listener on
+     document, which ran after r4's. After a real wheel down to the picker and a click on its first tile, Home keeps the
+     focus on that tile and the document where it was (main: still at about 480 px); r4 jumped it to the chapter's top. */
+export const GUARD_TRAVEL = 2;
+export const ROSTER_MIN_ROOM = 40;
+export const WPK_MIN_TOP = 100;
+export function rosterEndVerdict(r) {
+	const ok0 = !!r && !!r.key && r.focusRoster === true && r.coldAtKey > 0 && r.rosterRoom > ROSTER_MIN_ROOM;
+	return [
+		{ name: 'End reached a focused provider row of the roster, with room to scroll the roster and unmounted pages in the chapter', ok: ok0,
+			detail: !r || !r.key ? 'no trusted End was seen on the roster' : `focus in the roster ${r.focusRoster} (${r.focusAtKey}), the roster could scroll ${r.rosterRoom} px more, ${r.coldAtKey} unmounted page(s) at the key` },
+		{ name: `End on a provider row scrolls the roster to its end (within ${GUARD_TRAVEL} px)`, ok: ok0 && r.rosterEnd != null && r.rosterMax != null && r.rosterEnd > r.rosterStart && r.rosterMax - r.rosterEnd <= GUARD_TRAVEL,
+			detail: r ? `the roster went from ${r.rosterStart} to ${r.rosterEnd} px of ${r.rosterMax}` : 'no reading' },
+		{ name: `End on a provider row leaves the document where it was (within ${GUARD_TRAVEL} px)`, ok: ok0 && r.maxTravel != null && r.maxTravel <= GUARD_TRAVEL,
+			detail: r ? `the document moved at most ${r.maxTravel} px (${r.scrolls} scroll events), ended ${r.travel} px from where it was` : 'no reading' }
+	];
+}
+export function wpkHomeVerdict(r) {
+	const ok0 = !!r && !!r.key && r.focusFirst === true && r.coldAtKey > 0 && r.startTop >= WPK_MIN_TOP && r.wheels > 0;
+	return [
+		{ name: 'Home reached the wallpaper picker\'s focused first tile after a real wheel, with the document scrolled and unmounted pages in the chapter', ok: ok0,
+			detail: !r || !r.key ? 'no trusted Home was seen on the picker' : `focus on the first tile ${r.focusFirst}, the document at ${r.startTop} px after ${r.wheels} wheel step(s), ${r.coldAtKey} unmounted page(s) at the key` },
+		{ name: 'Home on the first tile keeps the focus on it, chosen', ok: ok0 && r.firstFocused === true && r.firstChecked === true,
+			detail: r ? `the first tile focused ${r.firstFocused}, checked ${r.firstChecked}; focus after on ${r.focusAfter}` : 'no reading' },
+		{ name: `Home on the wallpaper picker leaves the document where it was (within ${GUARD_TRAVEL} px)`, ok: ok0 && r.maxTravel != null && r.maxTravel <= GUARD_TRAVEL,
+			detail: r ? `the document moved at most ${r.maxTravel} px (${r.scrolls} scroll events), ended ${r.travel} px from where it was` : 'no reading' }
+	];
+}
+/* one guard's page: the chapter fresh (entered from another one), at 1920x1080, with the run's motion */
+async function guardPage(t, surface, from, to) {
+	await t.viewport(1920, 1080); await muteSound(t.page);
+	await t.emulate({reducedMotion:t.args.motion === 'reduce' ? 'reduce' : 'no-preference'});
+	const f = await t.app.open({sandbox:surface === 'sandbox'});
+	await t.app.resetLayout().catch(() => {}); await f.locator('#tab-settings').click(); await t.settle();
+	await f.locator(`#pm-settings-root .domain-link[data-domain="${from}"]`).first().click(); await t.page.waitForTimeout(700);
+	await f.locator(`#pm-settings-root .domain-link[data-domain="${to}"]`).first().click();
+	await f.waitForFunction((to)=>document.querySelector('#pm-settings-root .domain-link.active')?.dataset.domain===to,to,{timeout:5000}).catch(()=>{});
+	await t.page.waitForTimeout(700);
+	return f;
+}
+/* the document and the roster have both held still for a second of animation frames (a smooth End animates either) */
+const guardSettle = (f) => f.waitForFunction(()=>new Promise(res=>{const sc=document.querySelector('#pm-settings-root #settings-document'),rl=sc&&sc.querySelector('.roster-list');const at=()=>`${sc&&sc.scrollTop}/${rl&&rl.scrollTop}`;let top=at(),t0=performance.now();const step=()=>{if(!sc)return res(true);if(at()!==top){top=at();t0=performance.now();}if(performance.now()-t0>=1000)return res(true);requestAnimationFrame(step);};requestAnimationFrame(step);}),null,{timeout:15000}).catch(()=>{});
+export async function rosterEndRoute(t, surface) {
+	if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+	const f = await guardPage(t, surface, 'general', 'ai');
+	/* a provider row of the roster in view (in the roster's and the document's view), but not its last */
+	const found = await f.evaluate(() => {
+		const sc=document.querySelector('#pm-settings-root #settings-document'),rl=sc&&sc.querySelector('.roster-list');
+		if(!rl)return null;
+		const v=sc.getBoundingClientRect(),w=rl.getBoundingClientRect(),rows=[...rl.querySelectorAll('.resource-row')];
+		const row=rows.slice(0,-1).find(x=>{const r=x.getBoundingClientRect();return r.height>8&&r.top>=Math.max(v.top,w.top)&&r.bottom<=Math.min(v.bottom,w.bottom)&&getComputedStyle(x).visibility==='visible';});
+		if(!row)return {rows:rows.length};
+		row.setAttribute('data-psc-guard','');return {rows:rows.length};
+	});
+	if (!found || !(await f.locator('[data-psc-guard]').count())) { await t.check(`${surface}: AI & Providers shows a roster with a provider row in view`, false, found ? `${found.rows} provider rows, none but the last wholly in view` : 'no roster'); return; }
+	await f.locator('[data-psc-guard]').click({position:{x:12,y:8}});
+	await f.evaluate(()=>document.querySelector('[data-psc-guard]')?.removeAttribute('data-psc-guard'));
+	await t.page.waitForTimeout(500);
+	await f.evaluate(() => {
+		const sc=document.querySelector('#pm-settings-root #settings-document'),rl=sc.querySelector('.roster-list');
+		const R=window.__pscGuard={key:false,start:sc.scrollTop,maxTravel:0,scrolls:0};
+		const key=e=>{if(e.key!=='End'||!e.isTrusted||R.key)return;R.key=true;const a=document.activeElement;R.focusRoster=!!a&&rl.contains(a);R.focusAtKey=a?a.tagName.toLowerCase()+'.'+String(a.className).split(' ')[0]:'none';R.coldAtKey=sc.querySelectorAll('[data-continuous-workspace-body][data-workspace-mounted="false"]').length;R.rosterStart=Math.round(rl.scrollTop);R.rosterRoom=Math.round(rl.scrollHeight-rl.clientHeight-rl.scrollTop);R.start=sc.scrollTop;};
+		const scroll=e=>{if(e.target.id!=='settings-document')return;R.scrolls++;R.maxTravel=Math.max(R.maxTravel,Math.round(Math.abs(e.target.scrollTop-R.start)));};
+		window.addEventListener('keydown',key,{capture:true,passive:true});window.addEventListener('scroll',scroll,true);
+		R.stop=()=>{window.removeEventListener('keydown',key,{capture:true,passive:true});window.removeEventListener('scroll',scroll,true);};
+	});
+	await t.page.keyboard.press('End');
+	await guardSettle(f);
+	const r = await f.evaluate(() => {
+		const sc=document.querySelector('#pm-settings-root #settings-document'),rl=sc.querySelector('.roster-list'),R=window.__pscGuard;R.stop();
+		const {stop,...out}=R;
+		return {...out,travel:Math.round(sc.scrollTop-R.start),rosterEnd:rl?Math.round(rl.scrollTop):null,rosterMax:rl?Math.round(rl.scrollHeight-rl.clientHeight):null};
+	});
+	t.log(`${surface} End on the roster: ${JSON.stringify(r)}`);
+	for (const row of rosterEndVerdict(r)) await t.check(`${surface}: ${row.name}`,row.ok,row.detail);
+}
+export async function wpkHomeRoute(t, surface) {
+	if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+	const f = await guardPage(t, surface, 'code', 'general');
+	if (!(await f.locator('#pm-settings-root #settings-document .wpk-row .wpk-tile').count())) { await t.check(`${surface}: General shows the wallpaper picker`, false, 'no .wpk-row .wpk-tile in the document'); return; }
+	/* a real wheel over the document, a notch at a time, until the picker's first tile is in view away from the edges */
+	const box = await f.locator('#settings-document').boundingBox();
+	await t.page.mouse.move(box.x+box.width*.6,box.y+box.height*.5);
+	const inView = () => f.evaluate(() => {const d=document.querySelector('#pm-settings-root #settings-document'),v=d.getBoundingClientRect(),e=d.querySelector('.wpk-row .wpk-tile'),r=e&&e.getBoundingClientRect();return !!r&&r.height>4&&r.top>=v.top+80&&r.bottom<=v.bottom-80;});
+	let wheels = 0;
+	for (; wheels < 40 && !(await inView()); wheels++) { await t.page.mouse.wheel(0,120); await guardSettle(f); }
+	if (!(await inView())) { await t.check(`${surface}: a real wheel brought the wallpaper picker's first tile into view`, false, `${wheels} wheel steps`); return; }
+	await f.locator('#pm-settings-root #settings-document .wpk-row .wpk-tile').first().click({position:{x:12,y:12}});
+	await t.page.waitForTimeout(500);
+	await f.evaluate((wheels) => {
+		const sc=document.querySelector('#pm-settings-root #settings-document'),first=sc.querySelector('.wpk-row .wpk-tile');
+		const R=window.__pscGuard={key:false,wheels,start:sc.scrollTop,maxTravel:0,scrolls:0};
+		const key=e=>{if(e.key!=='Home'||!e.isTrusted||R.key)return;R.key=true;R.focusFirst=document.activeElement===first;R.coldAtKey=sc.querySelectorAll('[data-continuous-workspace-body][data-workspace-mounted="false"]').length;R.start=sc.scrollTop;R.startTop=Math.round(sc.scrollTop);};
+		const scroll=e=>{if(e.target.id!=='settings-document')return;R.scrolls++;R.maxTravel=Math.max(R.maxTravel,Math.round(Math.abs(e.target.scrollTop-R.start)));};
+		window.addEventListener('keydown',key,{capture:true,passive:true});window.addEventListener('scroll',scroll,true);
+		R.stop=()=>{window.removeEventListener('keydown',key,{capture:true,passive:true});window.removeEventListener('scroll',scroll,true);};
+	}, wheels);
+	await t.page.keyboard.press('Home');
+	await guardSettle(f);
+	const r = await f.evaluate(() => {
+		const sc=document.querySelector('#pm-settings-root #settings-document'),first=sc.querySelector('.wpk-row .wpk-tile'),R=window.__pscGuard;R.stop();
+		const a=document.activeElement,{stop,...out}=R;
+		return {...out,travel:Math.round(sc.scrollTop-R.start),firstFocused:!!first&&a===first,firstChecked:!!first&&first.getAttribute('aria-checked')==='true',focusAfter:a?a.tagName.toLowerCase()+'.'+String(a.className).split(' ')[0]:'none'};
+	});
+	t.log(`${surface} Home on the wallpaper picker: ${JSON.stringify(r)}`);
+	for (const row of wpkHomeVerdict(r)) await t.check(`${surface}: ${row.name}`,row.ok,row.detail);
+}
 /* One fling route (FLING_ROUTES) on one surface, in every fling look (exported for the selftest's live pins). */
 export async function flingRoute(t, surface, route) {
 	if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
@@ -1103,10 +1217,14 @@ for (const surface of ['normal', 'sandbox']) {
 	tests[`R93 #4 a fast wheel into lower Code fills visible lists before the frame (${surface})`] = (t) => flingRoute(t, surface, 'terminal');
 	/* FO-245 round 3 (A245 high finding 1): the deep routes onto the chapter's unmounted last page */
 	tests[`R93 #4 a single long wheel to the bottom of a fresh Code & Tools paints its last page (${surface})`] = (t) => flingRoute(t, surface, 'wheel-bottom');
-	tests[`R93 #4 End from a fresh Code & Tools paints its last page (${surface})`] = (t) => flingRoute(t, surface, 'end');
-	/* FO-245 round 4 (R143 high and medium 2) */
-	tests[`R93 #4 End after a text click from a fresh Code & Tools paints its last page (${surface})`] = (t) => flingRoute(t, surface, 'end-text');
+	/* FO-245 round 5 (option C): the End/Home key listener was reverted, so End smooth-scrolls through unmounted pages
+	   again, as on main. The two End fling routes ('end', 'end-text': FLING_ROUTES and flingRoute keep their code) are
+	   not registered until FO-248 lands a fix for those blanks; registered now they would be red, as they are on main. */
+	/* FO-245 round 4 (R143 medium 2) and round 5 (R144): guards that main's widget End/Home behaviour is back. Main is
+	   the reference; each is red on r4 (0f771f44a3, whose listener overrode the widget) and green on main. */
 	tests[`R93 #4 End on a focused tab keeps the tab's behaviour (${surface})`] = (t) => tabEndRoute(t, surface);
+	tests[`R93 #4 End on the AI & Providers roster scrolls the roster (${surface})`] = (t) => rosterEndRoute(t, surface);
+	tests[`R93 #4 Home on the General wallpaper picker keeps the document still (${surface})`] = (t) => wpkHomeRoute(t, surface);
 }
 for (const surface of ['normal', 'sandbox']) {
 	tests[`R93 #3 cross-chapter search does not fill the chapter being discarded (${surface})`] = async (t) => {

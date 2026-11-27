@@ -3,7 +3,7 @@
 // The page probe itself is tested in a browser on a constructed page: diagnostics/settings-chapter-probe.check.mjs.
 import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
-import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT, press, selectAllModifier, flingScrollGate, filmFling, flingFilm, FLING_FILM, FLING_RETRY, flingAttempt, retryFling, flingRetryVerdict, FLING_ROUTES, FLING_LOOKS, flingLooks, flingRoute, filmBands, tabEndVerdict, tabEndRoute, TAB_END_TRAVEL, tests } from '../checks/perf-settings-chapter.check.mjs';
+import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT, press, selectAllModifier, flingScrollGate, filmFling, flingFilm, FLING_FILM, FLING_RETRY, flingAttempt, retryFling, flingRetryVerdict, FLING_ROUTES, FLING_LOOKS, flingLooks, flingRoute, filmBands, tabEndVerdict, tabEndRoute, TAB_END_TRAVEL, rosterEndVerdict, rosterEndRoute, wpkHomeVerdict, wpkHomeRoute, GUARD_TRAVEL, ROSTER_MIN_ROOM, WPK_MIN_TOP, tests } from '../checks/perf-settings-chapter.check.mjs';
 import { encodePng, decodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
 const decodeOnce = (png) => decodePng(png);
 /* the round 1 reading, kept here only to show what it counted: the share of a rect's pixels ten or more grey levels from
@@ -324,15 +324,18 @@ const modeSpread = (img, rect) => {
 	assert.equal(live('a();\n//b();\n/* c();\n*/ d();', /b\(\);/), false, 'live(): a line comment is not live code');
 	assert.equal(live('a();\n/* c();\n*/ d();', /c\(\);/), false, 'live(): a block comment is not live code');
 	assert.equal(live('a();\n/* c();\n*/ d();', /d\(\);/), true, 'live(): code after a block comment is live');
-	// FO-245 r3: the three routes share one live runner, flingRoute; each surface's test runs it with its route
+	// FO-245 r3: the fling routes share one live runner, flingRoute; each surface's test runs it with its route
 	for (const surface of ['normal', 'sandbox']) {
 		for (const [name, route] of [[`R93 #4 a fast wheel into lower Code fills visible lists before the frame (${surface})`, 'terminal'],
-			[`R93 #4 a single long wheel to the bottom of a fresh Code & Tools paints its last page (${surface})`, 'wheel-bottom'],
-			[`R93 #4 End from a fresh Code & Tools paints its last page (${surface})`, 'end'],
-			[`R93 #4 End after a text click from a fresh Code & Tools paints its last page (${surface})`, 'end-text']]) {
+			[`R93 #4 a single long wheel to the bottom of a fresh Code & Tools paints its last page (${surface})`, 'wheel-bottom']]) {
 			assert.equal(typeof tests[name], 'function', `FO-245 r3: the ${route} route is a live test on the ${surface} surface`);
 			assert.ok(live(String(tests[name]), new RegExp(`flingRoute\\(t, surface, '${route}'\\)`)), `the ${route} test runs the shared runner with its route`);
 		}
+		// FO-245 r5 (option C): the End/Home listener is reverted, so the End fling routes are deferred to FO-248. Registered
+		// now they would be red, as on main; registering one again is FO-248's change and must update this pin.
+		for (const name of [`R93 #4 End from a fresh Code & Tools paints its last page (${surface})`, `R93 #4 End after a text click from a fresh Code & Tools paints its last page (${surface})`])
+			assert.equal(tests[name], undefined, `FO-245 r5: "${name}" is not registered until FO-248`);
+		assert.equal(Object.keys(tests).some((k) => k.includes(`(${surface})`) && /flingRoute\(t, surface, 'end(-text)?'\)/.test(String(tests[k]))), false, `FO-245 r5: no ${surface} test runs an End fling route`);
 	}
 	const src = String(flingRoute);
 	const pin = (re, msg) => assert.ok(live(src, re), msg);
@@ -352,32 +355,19 @@ const modeSpread = (img, rect) => {
 	const a0 = src.indexOf('const attempt=async(k)=>{'), a1 = src.indexOf('const attempts=await retryFling(attempt,');
 	assert.ok(a0 >= 0 && a1 > a0, 'the attempt is defined before the retry');
 	const body = src.slice(a0, a1);
-	for (const [re, msg] of [[/\.domain-link\[data-domain="general"\]'\)\.first\(\)\.click\(\)/, 'General'], [/window\.__pscFling=\{route,committed:false/, 'a fresh page recorder'], [/film=await filmFling\(client\)/, 'a fresh film'], [/\.domain-link\[data-domain="code"\]'\)\.first\(\)\.click\(\)/, 'Code'], [/await t\.page\.mouse\.wheel\(0,Math\.ceil\(delta\)\);/, 'the wheel'], [/await t\.page\.keyboard\.press\('End'\);/, 'End'], [/return \{r,px\};/, 'its reading']])
+	for (const [re, msg] of [[/\.domain-link\[data-domain="general"\]'\)\.first\(\)\.click\(\)/, 'General'], [/window\.__pscFling=\{route,committed:false/, 'a fresh page recorder'], [/film=await filmFling\(client\)/, 'a fresh film'], [/\.domain-link\[data-domain="code"\]'\)\.first\(\)\.click\(\)/, 'Code'], [/await t\.page\.mouse\.wheel\(0,Math\.ceil\(delta\)\);/, 'the wheel'], [/return \{r,px\};/, 'its reading']])
 		assert.ok(live(body, re), `each attempt drives the whole route: ${msg}`);
 	assert.match(src, /if\(sc\.id!=='settings-document'\|\|!R\.committed\|\|!R\.wheel\|\|R\.sampled\|\|R\.armed\|\|Math\.abs\(sc\.scrollTop-R\.start\)<R\.height\)return;/, 'the live scroll gate arms only after the delivered input (flingScrollGate)');
 	assert.match(src, /R\.moved=R\.wheelTop==null\?null:R\.top-R\.wheelTop/, 'the live travel is measured from the input delivery position (flingScrollGate)');
 	// FO-245 r3: the deep routes' page recorder: the last page is the target, judged unmounted at the input, an unmounted
-	// page in view is empty, the End key (trusted) is the End route's input, and the long wheel overshoots the bottom
+	// page in view is empty, and the long wheel overshoots the bottom
 	pin(/const target=\(\)=>deep\?lastBody\(\)\?\.closest\('\[data-workspace-block\]'\):root\.querySelector\('#section-editor-terminal-look'\);/, 'the deep routes aim at the chapter\'s last page');
 	pin(/const targetPendingNow=\(\)=>deep\?lastBody\(\)\?\.dataset\.workspaceMounted==='false':/, 'the deep routes need the last page unmounted at the input');
 	pin(/R\.wheelTargetPending=targetPendingNow\(\);/, 'the target is judged pending at the input');
 	pin(/if\(r\.height>0&&r\.bottom>v\.top&&r\.top<v\.bottom\)R\.empty\.push\('page:'\+p\.dataset\.continuousWorkspaceBody\);/, 'an unmounted page in the sampled view is empty');
-	pin(/if\(e\.type==='keydown'&&\(e\.key!=='End'\|\|!e\.isTrusted\)\)return;/, 'only a trusted End is the End route\'s input');
-	pin(/const kind=route==='end'\|\|route==='end-text'\?'keydown':'wheel';/, 'the End routes listen for the key, the others for the wheel');
+	// FO-245 r5: the End branches of flingRoute ('end', 'end-text') are kept for FO-248 but run by no test, so their
+	// source is not pinned here; their verdict rows still are (below)
 	pin(/R\.delta=deep\?sc\.scrollHeight-sc\.scrollTop\+sc\.clientHeight:/, 'the long wheel overshoots the bottom by a view');
-	pin(/if\(route==='end'\)\{/, 'the End route presses End');
-	// FO-245 r4 (R143 high): the text-click route clicks plain text of the first view (trusted), then presses End, and
-	// the page recorder notes where focus was at the key
-	pin(/\}else if\(route==='end-text'\)\{/, 'the text-click route has its own input');
-	pin(/if\(at\)\{await f\.locator\('\[data-psc-text-click\]'\)\.click\(\{position:at\}\);/, 'the text-click route clicks the plain text with a trusted click');
-	pin(/const p=\[\.\.\.d\.querySelectorAll\('p'\)\]\.find\(x=>\{const r=x\.getBoundingClientRect\(\),o=x\.closest\(own\);return r\.height>8&&r\.width>40&&r\.top>=v\.top\+40&&r\.bottom<v\.bottom-40&&!\(o&&d\.contains\(o\)\)/, 'the clicked text is a paragraph of the first view inside no control');
-	pin(/R\.wheelFocus=ae===document\.body\?'body':/, 'the page recorder notes the focus at the key');
-	{
-		const tx = src.slice(src.indexOf("}else if(route==='end-text'){"), src.indexOf('}else{', src.indexOf("}else if(route==='end-text'){")));
-		assert.ok(live(tx, /await t\.page\.keyboard\.press\('End'\);/), 'the text-click route presses End');
-		assert.ok(tx.indexOf('.click({position:at})') < tx.indexOf("keyboard.press('End')"), 'the click comes before End');
-		assert.equal(/\.focus\(/.test(tx), false, 'the text-click route focuses no control');
-	}
 	// FO-245 r3: the looks. Glass Dark and Glass Light are fling looks (their wallpaper passed the round 1 reading)
 	for (const look of ['basic-dark', 'nier-light', 'glass-dark', 'glass-light']) assert.ok(FLING_LOOKS.includes(look), `${look} is a fling look`);
 	assert.deepEqual(flingLooks(undefined), FLING_LOOKS, 'the default fling looks');
@@ -407,7 +397,7 @@ const modeSpread = (img, rect) => {
 		assert.equal(flingVerdict(tx({}), run([...at(-83.5, 5, GSRC), ...at(16.7, 4, WALL), ...at(83.5, 20, GDST)]), 'end-text')[3].ok, false, 'end-text: a wallpaper-only film fails');
 		assert.equal(flingVerdict(deep({}), null, 'end')[0].ok, true, 'end: the focused-control route does not need body focus');
 	}
-	console.log('PASS fling frames: blank, unfilled and wallpaper-only frames on screen fail through the live recorder and judge (edge detail, FO-245 r3), a lost arrival frame is not judged, and the three live routes (Terminal look, a long wheel to the bottom, End) in the Glass looks too use both and the shared retry');
+	console.log('PASS fling frames: blank, unfilled and wallpaper-only frames on screen fail through the live recorder and judge (edge detail, FO-245 r3), a lost arrival frame is not judged, and the two live routes (Terminal look, a long wheel to the bottom; the End routes wait for FO-248) in the Glass looks too use both and the shared retry');
 }
 
 /* FO-245 r4 (R143 medium 2): End on a focused tab belongs to the tab list (main's behaviour) */
@@ -448,35 +438,96 @@ const modeSpread = (img, rect) => {
 	console.log('PASS End on a focused tab: the tab list keeps End (last tab selected, focused, in view; the document still), judged only with unmounted pages at the key');
 }
 
-/* FO-245 r4: the product's End/Home jump (46-first-screen.js) runs after the widgets and takes a body-focused key after a
-   click in the document. Reverting either change fails here. */
+/* FO-245 r5 (R144): two more widgets keep their own End/Home (main's behaviour): the AI & Providers roster scrolls
+   itself on End, and the General wallpaper picker takes Home without moving the document */
+{
+	const live = (src, re) => {
+		for (const m of src.matchAll(new RegExp(re.source, re.flags.replace('g', '') + 'g'))) {
+			const before = src.slice(0, m.index), line = before.slice(before.lastIndexOf('\n') + 1);
+			if (before.lastIndexOf('/*') > before.lastIndexOf('*/') || line.includes('//')) continue;
+			return true;
+		}
+		return false;
+	};
+	// the roster: main scrolls the roster 487 px to its end and leaves the document; r4 jumped the document to the chapter end
+	const main = { key: true, focusRoster: true, focusAtKey: 'button.resource-row', coldAtKey: 3, rosterStart: 0, rosterRoom: 487, maxTravel: 0, scrolls: 0, travel: 0, rosterEnd: 487, rosterMax: 487 };
+	assert.deepEqual(rosterEndVerdict(main).map((x) => x.ok), [true, true, true], 'main: the roster scrolls to its end, the document stays');
+	const r4 = { ...main, maxTravel: 5231, scrolls: 2, travel: 5231, rosterEnd: 0 };
+	assert.deepEqual(rosterEndVerdict(r4).map((x) => x.ok), [true, false, false], 'r4: the document jumped 5,231 px and the roster stayed');
+	assert.equal(rosterEndVerdict({ ...main, maxTravel: GUARD_TRAVEL + 1 })[2].ok, false, 'a document move past the tolerance fails, even one undone by the end');
+	assert.equal(rosterEndVerdict({ ...main, maxTravel: null })[2].ok, false, 'no travel reading cannot pass');
+	assert.equal(rosterEndVerdict({ ...main, rosterEnd: 200 })[1].ok, false, 'a roster that stops short of its end fails');
+	assert.equal(rosterEndVerdict({ ...main, rosterEnd: null })[1].ok, false, 'no roster reading cannot pass');
+	for (const [o, why] of [[{ coldAtKey: 0 }, 'no unmounted page at the key'], [{ focusRoster: false }, 'focus not in the roster'], [{ key: false }, 'no trusted End'], [{ rosterRoom: ROSTER_MIN_ROOM }, 'a roster with no room to scroll']])
+		assert.deepEqual(rosterEndVerdict({ ...main, ...o }).map((x) => x.ok), [false, false, false], `roster not judgeable: ${why}`);
+	assert.equal(rosterEndVerdict(null).every((x) => !x.ok), true, 'no roster reading fails');
+	// the wallpaper picker: main keeps the document at its place (about 480 px); r4 jumped it to 0
+	const wm = { key: true, wheels: 4, focusFirst: true, coldAtKey: 1, start: 480, startTop: 480, maxTravel: 0, scrolls: 0, travel: 0, firstFocused: true, firstChecked: true, focusAfter: 'button.wpk-tile' };
+	assert.deepEqual(wpkHomeVerdict(wm).map((x) => x.ok), [true, true, true], 'main: the first tile keeps focus, the document stays');
+	assert.deepEqual(wpkHomeVerdict({ ...wm, maxTravel: 480, scrolls: 1, travel: -480 }).map((x) => x.ok), [true, true, false], 'r4: the document jumped to the chapter top');
+	assert.equal(wpkHomeVerdict({ ...wm, maxTravel: GUARD_TRAVEL + 1 })[2].ok, false, 'a document move past the tolerance fails');
+	assert.equal(wpkHomeVerdict({ ...wm, maxTravel: null })[2].ok, false, 'no travel reading cannot pass');
+	assert.equal(wpkHomeVerdict({ ...wm, firstFocused: false })[1].ok, false, 'focus off the first tile fails');
+	assert.equal(wpkHomeVerdict({ ...wm, firstChecked: false })[1].ok, false, 'the first tile not chosen fails');
+	for (const [o, why] of [[{ coldAtKey: 0 }, 'no unmounted page at the key'], [{ focusFirst: false }, 'focus not on the first tile'], [{ key: false }, 'no trusted Home'], [{ startTop: WPK_MIN_TOP - 1 }, 'a document near its top (Home would not move it)'], [{ wheels: 0 }, 'no real wheel']])
+		assert.deepEqual(wpkHomeVerdict({ ...wm, ...o }).map((x) => x.ok), [false, false, false], `picker not judgeable: ${why}`);
+	assert.equal(wpkHomeVerdict(null).every((x) => !x.ok), true, 'no picker reading fails');
+	// both guards are live tests on both surfaces, through their routes
+	for (const surface of ['normal', 'sandbox']) {
+		const rn = `R93 #4 End on the AI & Providers roster scrolls the roster (${surface})`, wn = `R93 #4 Home on the General wallpaper picker keeps the document still (${surface})`;
+		assert.equal(typeof tests[rn], 'function', `the roster guard is a live test on the ${surface} surface`);
+		assert.ok(live(String(tests[rn]), /rosterEndRoute\(t, surface\)/), 'the roster test runs rosterEndRoute');
+		assert.equal(typeof tests[wn], 'function', `the wallpaper picker guard is a live test on the ${surface} surface`);
+		assert.ok(live(String(tests[wn]), /wpkHomeRoute\(t, surface\)/), 'the wallpaper picker test runs wpkHomeRoute');
+	}
+	const rsrc = String(rosterEndRoute), wsrc = String(wpkHomeRoute);
+	for (const [re, msg] of [[/guardPage\(t, surface, 'general', 'ai'\)/, 'a fresh AI & Providers'], [/rl\.querySelectorAll\('\.resource-row'\)/, 'a provider row of the roster'],
+		[/await f\.locator\('\[data-psc-guard\]'\)\.click\(/, 'a trusted click on the row'],
+		[/if\(e\.key!=='End'\|\|!e\.isTrusted\|\|R\.key\)return;R\.key=true;const a=document\.activeElement;R\.focusRoster=!!a&&rl\.contains\(a\);/, 'the trusted End and the focus in the roster at the key'],
+		[/R\.coldAtKey=sc\.querySelectorAll\('\[data-continuous-workspace-body\]\[data-workspace-mounted="false"\]'\)\.length;R\.rosterStart=/, 'the cold pages and the roster at the key'],
+		[/R\.maxTravel=Math\.max\(R\.maxTravel,Math\.round\(Math\.abs\(e\.target\.scrollTop-R\.start\)\)\);/, 'every scroll of the document is measured'],
+		[/await t\.page\.keyboard\.press\('End'\);/, 'a trusted End'], [/rosterEnd:rl\?Math\.round\(rl\.scrollTop\):null/, 'the roster read after the key'],
+		[/for \(const row of rosterEndVerdict\(r\)\) await t\.check\(`\$\{surface\}: \$\{row\.name\}`,row\.ok,row\.detail\);/, 'the live sink records each row']])
+		assert.ok(live(rsrc, re), `the roster route: ${msg}`);
+	for (const [re, msg] of [[/guardPage\(t, surface, 'code', 'general'\)/, 'a fresh General'], [/await t\.page\.mouse\.wheel\(0,120\);/, 'a real wheel'],
+		[/await f\.locator\('#pm-settings-root #settings-document \.wpk-row \.wpk-tile'\)\.first\(\)\.click\(/, 'a trusted click on the first tile'],
+		[/if\(e\.key!=='Home'\|\|!e\.isTrusted\|\|R\.key\)return;R\.key=true;R\.focusFirst=document\.activeElement===first;R\.coldAtKey=/, 'the trusted Home and the focus on the first tile at the key'],
+		[/R\.start=sc\.scrollTop;R\.startTop=Math\.round\(sc\.scrollTop\);/, 'the document position at the key'],
+		[/R\.maxTravel=Math\.max\(R\.maxTravel,Math\.round\(Math\.abs\(e\.target\.scrollTop-R\.start\)\)\);/, 'every scroll of the document is measured'],
+		[/await t\.page\.keyboard\.press\('Home'\);/, 'a trusted Home'],
+		[/for \(const row of wpkHomeVerdict\(r\)\) await t\.check\(`\$\{surface\}: \$\{row\.name\}`,row\.ok,row\.detail\);/, 'the live sink records each row']])
+		assert.ok(live(wsrc, re), `the wallpaper picker route: ${msg}`);
+	assert.ok(wsrc.indexOf('mouse.wheel(0,120)') < wsrc.indexOf('.wpk-tile\').first().click(') && wsrc.indexOf('.wpk-tile\').first().click(') < wsrc.indexOf("keyboard.press('Home')"), 'the wheel, then the click, then Home');
+	console.log('PASS widget guards: End on the roster scrolls the roster and Home on the wallpaper picker keeps the document still (main\'s behaviour), judged only with unmounted pages at the key');
+}
+
+/* FO-245 r5 (option C): the product has no End/Home key listener of its own (rounds 3 and 4 had one; it overrode the
+   tab list, the roster and the wallpaper picker, R143 and R144). End/Home blanks are FO-248's; a listener that comes
+   back fails here until FO-248 changes this pin. The cold-page mount and the content-visibility show stay. */
 {
 	const fs = await import('node:fs');
 	const prod = fs.readFileSync(new URL('../../../onboarding/opus-5.5/src/settings/kit.d/46-first-screen.js', import.meta.url), 'utf8');
-	const code = prod.replace(/\/\*[\s\S]*?\*\//g, '');
-	const at = code.indexOf("if ((e.key !== 'End' && e.key !== 'Home') || e.defaultPrevented");
-	assert.ok(at > 0, 'the End/Home jump listener exists and skips a key a widget took');
-	const head = code.lastIndexOf('addEventListener(', at), line = code.slice(code.lastIndexOf('\n', head) + 1, at);
-	assert.match(line, /^document\.addEventListener\('keydown', e => \{\s*$/, 'the jump listens on document');
-	const end = code.indexOf('\n});', at), body = code.slice(at, end + 4);
-	assert.ok(end > at && /\n\}\);$/.test(body), 'the jump listener is bubble phase (no capture argument): a tab list\'s own End runs first');
-	assert.match(body, /if \(!sc \|\| !o55fsEdgeKeyOwner\(e\.target, sc\)\) return;/, 'the jump asks whose key it is');
-	assert.match(code, /if \(t === document\.body \|\| t === document\.documentElement\) return o55fsDownInDoc && o55fsInteractive\(\);/, 'a body-focused key is the document\'s after a pointer-down in it, while Settings takes input');
-	assert.match(code, /document\.addEventListener\('pointerdown', e => \{\s*const sc = root\.querySelector\('#settings-document'\);\s*o55fsDownInDoc = !!\(sc && e\.target && e\.target\.nodeType === 1 && \(e\.target === sc \|\| sc\.contains\(e\.target\)\)\);\s*\}, \{ capture: true, passive: true \}\);/, 'every pointer-down records whether it landed in the document');
-	const own = /const O55FS_OWN_KEYS = '([^']+)';/.exec(code);
-	assert.ok(own, 'the widgets that own End/Home are listed');
-	const owners = own[1].split(/,\s*/);
-	for (const w of ['textarea', 'select', '[role="tablist"]', '[role="tab"]', '[role="listbox"]', '[role="option"]', '[role="menu"]', '[role="slider"]', '[role="spinbutton"]', '[role="combobox"]:not(button)', '[role="combobox"][aria-expanded="true"]', '[contenteditable]:not([contenteditable="false"])'])
-		assert.ok(owners.includes(w), `${w} keeps its own End/Home`);
-	// r4b: the round's first build skipped every combobox and input, so End from Code & Tools' first button (a closed
-	// drop-down, button role=combobox) smooth-scrolled through the unbuilt pages again; a closed drop-down, a switch and a
-	// checkbox do not own End/Home
-	assert.equal(owners.includes('[role="combobox"]'), false, 'a closed drop-down button is the document\'s End');
-	assert.equal(owners.includes('input'), false, 'a checkbox or switch input is the document\'s End');
-	const textInput = owners.find((w) => w.startsWith('input'));
-	assert.ok(textInput && ['checkbox', 'radio', 'button'].every((ty) => textInput.includes(`:not([type="${ty}"])`)) && !textInput.includes('"range"') && !textInput.includes('"text"'), 'text fields and range keep their own End/Home; checkbox, radio and button inputs do not');
-	assert.match(code, /const own = t\.closest\(O55FS_OWN_KEYS\);\s*return !\(own && \(own === sc \|\| sc\.contains\(own\)\)\);/, 'a target inside such a widget is skipped');
-	console.log('PASS End/Home jump: bubble phase after the widgets, body focus after a click in the document, widget targets skipped');
+	const code = prod.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+	// End and Home are named once, in main's fill-before-the-key set; that listener only fills, as on main
+	assert.equal((code.match(/['"`]End['"`]/g) || []).length, 1, 'End is named once in the product code (main\'s fill set)');
+	assert.equal((code.match(/['"`]Home['"`]/g) || []).length, 1, 'Home is named once in the product code (main\'s fill set)');
+	assert.match(code, /const O55FS_KEYS = new Set\(\['End', 'Home'\]\);\nroot\.addEventListener\('keydown', e => \{\n  if \(!o55fs\.pending\.size\) return;\n  const sc = root\.querySelector\('#settings-document'\);\n  if \(O55FS_KEYS\.has\(e\.key\) && sc && \(e\.target === sc \|\| sc\.contains\(e\.target\)\) && !\(e\.target\.matches && e\.target\.matches\('input, textarea, select, \[contenteditable=""\], \[contenteditable="true"\]'\)\)\) o55fsFillAll\(\);\n\}, true\);/, 'main\'s End/Home listener only fills the pending rows, unchanged');
+	assert.equal((code.match(/O55FS_KEYS/g) || []).length, 2, 'the fill set is used by that listener only');
+	for (const gone of ['o55fsMountEnd', 'o55fsEdgeKeyOwner', 'O55FS_OWN_KEYS', 'o55fsDownInDoc'])
+		assert.equal(code.includes(gone), false, `${gone} (rounds 3-4's End/Home jump) is gone`);
+	// no keydown listener scrolls or prevents a key's default, except main's own Tab, Find, F3 and Select All fills
+	for (const m of code.matchAll(/addEventListener\('keydown',/g)) {
+		let i = code.indexOf('{', m.index), depth = 0, j = i;
+		for (; j < code.length; j++) { if (code[j] === '{') depth++; else if (code[j] === '}' && --depth === 0) break; }
+		const body = code.slice(m.index, j + 1);
+		assert.equal(/preventDefault|scrollTo|scrollBy|scrollTop\s*=|scrollIntoView/.test(body), false, `a keydown listener neither scrolls nor takes a key's default: ${body.split('\n')[0]}`);
+	}
+	assert.equal(/document\.addEventListener\('pointerdown'/.test(code), false, 'no pointer-down memory on document (round 4\'s text-click route)');
+	// kept: the scroll handler mounts a cold page, fills and shows skipped sections before the frame
+	assert.match(code, /root\.addEventListener\('scroll', e => \{ if \(e\.target\.id === 'settings-document'\) \{ o55fsMountNear\(e\.target\); o55fsFillNear\(e\.target\); o55fsShowNear\(e\.target\); \} \}, true\);/, 'the scroll handler mounts the cold page, fills and shows before the frame (FO-245 r1/r3 kept)');
+	for (const kept of ['function o55fsMountNear(sc)', 'function o55fsShowNear(sc)', 'function o55fsShowFor(shown)', 'const o55fsFresh = new Set();', 'mountContinuousWorkspace = function (id)', "root.addEventListener('contentvisibilityautostatechange'"])
+		assert.ok(code.includes(kept), `kept: ${kept}`);
+	console.log('PASS End/Home: the product has no End/Home key listener of its own (FO-248); the cold-page mount and the content-visibility show are kept');
 }
 
 /* R97 #6: the wait ends on the fill's own completion, and an unfinished fill is told apart from a missing row */
