@@ -1207,15 +1207,20 @@ def unknown_pre_existing_subchecks(
                 continue  # the baseline printed every row, so absence from it means new
             if compared[check][name]["reported"] > reported:
                 continue  # it rose: the truncated-rise rule judges what was added
+            unprinted = reported - sampled
             unmatched = sum(
                 max(0, count - baseline_counts.get(bucket, 0))
                 for bucket, count in run_counts.items()
                 if bucket_subcheck(bucket) == (check, name)
             )
+            if unmatched > unprinted:
+                # T287: more unmatched rows exist than the baseline left unprinted, so at least one
+                # must be new rather than hidden above the baseline's print cap.
+                continue
             out[(check, name)] = {
                 "baseline_total": reported,
                 "baseline_sampled": sampled,
-                "unprinted_rows": reported - sampled,
+                "unprinted_rows": unprinted,
                 "unmatched_rows": unmatched,
             }
     return out
@@ -3066,11 +3071,12 @@ def check_main(args: argparse.Namespace, root: Path, source_path: Path,
             print(f"  of which pre-existing or improved, listed above: {pre_on_branch}")
         unknown_on_branch = sum(1 for item in on_branch if item.get("standing") == UNKNOWN_PRE_EXISTING)
         if unknown_on_branch:
-            print(f"  of which unknown-pre-existing, in a subcheck the baseline only sampled: {unknown_on_branch}")
-        for item in on_branch[:40]:
+            print(f"  of which unknown-pre-existing, listed above: {unknown_on_branch}")
+        on_branch_listed = [item for item in on_branch if item.get("standing") != UNKNOWN_PRE_EXISTING]
+        for item in on_branch_listed[:40]:
             print(describe(item, item_tag(item, True)))
-        if len(on_branch) > 40:
-            print(f"  ... {len(on_branch) - 40} more")
+        if len(on_branch_listed) > 40:
+            print(f"  ... {len(on_branch_listed) - 40} more")
         print(f"Infrastructure results, not failures of this tree (never new, growth or blocking): "
               f"{len(infrastructure)}")
         for row in infrastructure:

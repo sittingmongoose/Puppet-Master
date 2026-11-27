@@ -77,7 +77,7 @@ against a current baseline" and "Pre-existing and improved failures" below), fai
 that are new but name none of the branch's files, or a subcheck that did not finish (it timed out, or
 a validator was killed by a signal - an OOM kill or a watchdog), so that the run was
 not fully verified; 2 something it reports does stop the landing, meaning a failure on the branch's
-files that is neither staleness nor pre-existing, non-stale bucket growth, or a rise in a subcheck
+files that is neither staleness, pre-existing, nor `unknown-pre-existing`, non-stale bucket growth, or a rise in a subcheck
 whose failures are truncated, other than the readiness growth
 counter; 3 the check could not run, readiness audit input identity could not be established or matched,
 or a subcheck timed out or a validator was killed while recording a
@@ -533,7 +533,9 @@ What this cannot prove: a failure that sat above its subcheck's print cap when t
 recorded is not in `baseline.json`, so when it later falls inside the sample on a touched file, the
 run cannot tell it from an old one. It is reported as `unknown-pre-existing`, in one line naming the
 row and the baseline's reported total, and it never stops the landing, as long as the subcheck
-reports no more failures than the baseline did. That is T272, the audit-closure row appended after
+reports no more failures than the baseline did and its unmatched rows do not exceed the baseline's
+unprinted allowance (`unmatched_rows <= unprinted_rows`; when more rows are unmatched than the
+baseline left unprinted, at least one must be new and the tag is declined, T287). That is T272, the audit-closure row appended after
 the validator's 200 capped errors: the baseline printed 100 of 201, main had the reopened-rows row,
 and a branch that cut the total to 68 printed it for the first time and blocked on it. The tradeoff
 is the other direction: a real new failure in such a subcheck, on a landing whose own cuts keep the

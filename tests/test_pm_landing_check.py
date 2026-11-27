@@ -2075,6 +2075,43 @@ class TruncatedBaselineRows(LandingRun):
         report = json.loads(self.compare("--json")[1])
         self.assertEqual((report["blocking"], report["unknown_pre_existing"]), (1, []))
 
+    def test_unmatched_rows_above_unprinted_allowance_stop_at_equal_total(self):
+        """T287 (1): when unmatched rows exceed the baseline's unprinted allowance, at least one must be new."""
+        self.stub(audit={AUDIT_CLOSURE: ([closure_error(n) for n in range(50)], 51)})
+        self.record()
+        self.touch(CLOSURE_REGISTRY)
+        extra = {"path": CLOSURE_REGISTRY, "error": "audit_closure_extra_error"}
+        self.stub(audit={AUDIT_CLOSURE: ([closure_error(n) for n in range(48)] + [reopened_rows(56), extra], 51)})
+        code, out = self.compare()
+        self.assertEqual(code, 2, out)
+        self.assertNotIn("[unknown-pre-existing]", out)
+        report = json.loads(self.compare("--json")[1])
+        self.assertEqual((report["blocking"], report["unknown_pre_existing"]), (2, []))
+
+    def test_unmatched_rows_above_unprinted_allowance_stop_at_falling_total(self):
+        """T287 (1): a falling total still blocks when unmatched rows exceed the baseline's unprinted rows."""
+        self.stub(audit={AUDIT_CLOSURE: ([closure_error(n) for n in range(50)], 51)})
+        self.record()
+        self.touch(CLOSURE_REGISTRY)
+        extra = {"path": CLOSURE_REGISTRY, "error": "audit_closure_extra_error"}
+        self.stub(audit={AUDIT_CLOSURE: ([closure_error(n) for n in range(38)] + [reopened_rows(56), extra], 40)})
+        code, out = self.compare()
+        self.assertEqual(code, 2, out)
+        self.assertNotIn("[unknown-pre-existing]", out)
+        report = json.loads(self.compare("--json")[1])
+        self.assertEqual((report["blocking"], report["unknown_pre_existing"]), (2, []))
+
+    def test_unknown_pre_existing_row_prints_once_in_the_text_report(self):
+        """T287 (2): an unknown-pre-existing row is listed once, not repeated under Naming a path."""
+        self.baseline_201()
+        self.touch(CLOSURE_REGISTRY)
+        self.stub(audit={AUDIT_CLOSURE: ([closure_error(n) for n in range(5)] + [reopened_rows(56)], 6)})
+        code, out = self.compare()
+        self.assertEqual(code, 1, out)
+        self.assertEqual(out.count("[unknown-pre-existing] audit-governance/audit_closure"), 1, out)
+        self.assertIn("Naming a path this branch touches: 6", out)
+        self.assertIn("of which unknown-pre-existing, listed above: 1", out)
+
 
 def timeout_row(command_id="lint-contractrefs", seconds=180):
     """What pm-plans-verify.py reports for a subcheck it killed at its bound: the row both aggregates
