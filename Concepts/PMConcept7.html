@@ -131364,9 +131364,9 @@ PM51.pickSource = setting => {
    section each and are drawn as before; so is the first page after load and every page mounted later.
    A scroll that lands on sections content-visibility still skips shows them before its frame is drawn (FO-245), so a
    fast wheel never shows the page's ground where rows are; the arrival's first frame still skips every far section.
-   A scroll that lands on a page of the chapter still unmounted mounts it before its frame, and End / Home mount the
-   page at that end and land on it in one step while any page is unmounted (FO-245 r3);
-   every other page stays a placeholder until the observer reaches it. */
+   A scroll that lands on a page of the chapter still unmounted mounts it before its frame (FO-245 r3); every other page
+   stays a placeholder until the observer reaches it. End / Home keep the browser's own smooth scroll, as before; the
+   blank frames it still shows while pages are unmounted are tracked in FO-248. */
 
 const O55FS_ATTR = 'data-o55-fill';
 const o55fs = {
@@ -131656,56 +131656,6 @@ function o55fsMountNear(sc) {
   }
   return n;
 }
-/* End / Ctrl+End and Home / Ctrl+Home land on the chapter's last or first page. The document scrolls smoothly
-   (scroll-behavior: smooth), so the key's own scroll animated across every page between, and each still-unmounted page
-   it passed showed as an empty placeholder: 6 to 13 blank frames on the way to Containers even with the destination
-   mounted (FO-245 r3, Alexis). While the chapter still has unmounted pages, the key therefore mounts the pages at that
-   end (only as many as fill two views; the rest stay placeholders) in its own task and lands there in one step, so the
-   frame after the key is the real end with its rows. With every page mounted the key keeps its own smooth scroll.
-   Whose key it is (FO-245 r4):
-   - focus on a control in the document that does not own End/Home itself (a button, a link, the document);
-   - or no focus at all (body) after a click on the document's plain text: Chrome's own End then scrolls the scroller
-     of the last pointer-down, the document, through its unbuilt pages (R143: 9 to 32 blank frames), so that key is
-     the document's too, while Settings is the view that takes input;
-   - never a widget that owns the key (a tab list moves to its last tab, a list box to its last option, a text field to
-     its end): the listener runs in the bubble phase on document, after the widget's own handler, skips a key it
-     already took (defaultPrevented) and skips a target inside such a widget. A capture listener had jumped the
-     document 2,023 px away from a focused tab (R143 medium 2). A closed drop-down (a button with role combobox) and a
-     switch or checkbox do not own End/Home: the key scrolls the document from them, so they stay the document's. */
-let o55fsDownInDoc = false;
-document.addEventListener('pointerdown', e => {
-  const sc = root.querySelector('#settings-document');
-  o55fsDownInDoc = !!(sc && e.target && e.target.nodeType === 1 && (e.target === sc || sc.contains(e.target)));
-}, { capture: true, passive: true });
-const O55FS_OWN_KEYS = 'input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="color"]):not([type="file"]):not([type="image"]), textarea, select, [contenteditable]:not([contenteditable="false"]), [role="textbox"], [role="searchbox"], [role="combobox"]:not(button), [role="combobox"][aria-expanded="true"], [role="tablist"], [role="tab"], [role="listbox"], [role="option"], [role="menu"], [role="menubar"], [role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"], [role="tree"], [role="treeitem"], [role="grid"], [role="treegrid"], [role="slider"], [role="spinbutton"], .popover';
-function o55fsEdgeKeyOwner(t, sc) {
-  if (t === document.body || t === document.documentElement) return o55fsDownInDoc && o55fsInteractive();
-  if (!t || t.nodeType !== 1 || !(t === sc || sc.contains(t)) || t.isContentEditable) return false;
-  const own = t.closest(O55FS_OWN_KEYS);
-  return !(own && (own === sc || sc.contains(own)));
-}
-function o55fsMountEnd(sc, last) {
-  const bodies = [...sc.querySelectorAll('[data-continuous-workspace-body]')];
-  if (last) bodies.reverse();
-  let h = 0;
-  const need = 2 * (sc.clientHeight || window.innerHeight || 900);
-  for (const b of bodies) {
-    if (h >= need) break;
-    const body = b.dataset.workspaceMounted === 'false' ? mountContinuousWorkspace(b.dataset.continuousWorkspaceBody) : b;
-    const block = (body || b).closest('[data-workspace-block]') || body || b;
-    h += block.offsetHeight || 0;
-  }
-}
-document.addEventListener('keydown', e => {
-  if ((e.key !== 'End' && e.key !== 'Home') || e.defaultPrevented || e.shiftKey || e.altKey || e.metaKey) return;
-  const sc = root.querySelector('#settings-document');
-  if (!sc || !o55fsEdgeKeyOwner(e.target, sc)) return;
-  if (!sc.querySelector('[data-continuous-workspace-body][data-workspace-mounted="false"]')) return;
-  const end = e.key === 'End';
-  o55fsMountEnd(sc, end);
-  e.preventDefault();
-  sc.scrollTo({ top: end ? sc.scrollHeight : 0, behavior: 'instant' });
-});
 root.addEventListener('scroll', e => { if (e.target.id === 'settings-document') { o55fsMountNear(e.target); o55fsFillNear(e.target); o55fsShowNear(e.target); } }, true);
 /* These global keys belong to Settings only while its panel can receive input. Onboarding leaves the active class
    in place beneath its inert app; modal dialogs can cover Settings without changing either (R97 P1). */
