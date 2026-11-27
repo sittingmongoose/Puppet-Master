@@ -672,10 +672,33 @@
      The layer's own div.psx-note[role=status] in #pm-settings-portals, in Settings' toast material; one at a time, six
      seconds, paused while hovered or focused. Never a PM Notify toast (its actions are a closed set, F3-461).
      Because the receipt body is pointer-events: none for click-through, hover is tracked by a passive document-level
-     pointermove rect test attached only while a non-sticky receipt is open. */
-  let noteEl = null, noteTimer = 0, notePaused = false, noteHovered = false, noteFocused = false, noteSticky = false, noteLeft = 0, noteStart = 0, noteActs = null, notePlacement = 0, noteHoverBound = false;
+     pointermove rect test attached only while a non-sticky receipt is open, initialized from the last known pointer
+     position so a receipt appearing or replaced under a stationary mouse starts paused. */
+  let noteEl = null, noteTimer = 0, notePaused = false, noteHovered = false, noteFocused = false, noteSticky = false, noteLeft = 0, noteStart = 0, noteActs = null, notePlacement = 0, noteHoverBound = false, noteHoverFrame = 0;
+  let lastPointer = null;
   const NOTE_MOVE_OPTS = { passive: true, capture: true };
   const NOTE_LEAVE_OPTS = { passive: true };
+  function onTrackPointer(e) {
+    if (e.pointerType === 'touch') return;
+    if (!Number.isFinite(e.clientX) || !Number.isFinite(e.clientY)) return;
+    lastPointer = { x: e.clientX, y: e.clientY };
+  }
+  function onClearPointer() {
+    lastPointer = null;
+  }
+  D.addEventListener('pointermove', onTrackPointer, NOTE_MOVE_OPTS);
+  D.addEventListener('pointerover', onTrackPointer, NOTE_MOVE_OPTS);
+  H.addEventListener('pointerleave', onClearPointer, NOTE_LEAVE_OPTS);
+  function pointInNote(pt) {
+    if (!pt || !noteEl || !noteEl.isConnected || noteEl.hasAttribute('data-leaving')) return false;
+    const r = noteEl.getBoundingClientRect();
+    return r.width > 0 && r.height > 0 && pt.x >= r.left && pt.x <= r.right && pt.y >= r.top && pt.y <= r.bottom;
+  }
+  function checkNoteHover() {
+    if (!noteEl || !noteEl.isConnected || noteEl.hasAttribute('data-leaving') || noteSticky) return;
+    const inside = pointInNote(lastPointer);
+    if (inside !== noteHovered) { noteHovered = inside; syncNotePause(); }
+  }
   function syncNotePause() {
     if (!noteEl || noteSticky) return;
     if (noteHovered || noteFocused) pauseNote();
@@ -684,8 +707,8 @@
   function onNotePointerMove(e) {
     if (e.pointerType === 'touch') return;
     if (!noteEl || !noteEl.isConnected || noteEl.hasAttribute('data-leaving')) { unbindNoteHover(); return; }
-    const r = noteEl.getBoundingClientRect();
-    const inside = r.width > 0 && r.height > 0 && e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+    if (Number.isFinite(e.clientX) && Number.isFinite(e.clientY)) lastPointer = { x: e.clientX, y: e.clientY };
+    const inside = pointInNote(lastPointer);
     if (inside !== noteHovered) { noteHovered = inside; syncNotePause(); }
   }
   function onNotePointerLeave() {
@@ -777,7 +800,24 @@
     noteEl.dataset.kind = o.kind || '';
     trackModelNote(noteEl, host, o.modelSetting);
     noteLeft = o.ms || 6000; notePaused = false; noteHovered = false; noteFocused = false; noteSticky = !!o.sticky; noteStart = Date.now();
-    if (!noteSticky) { noteTimer = setTimeout(hideNote, noteLeft); bindNoteHover(); } else unbindNoteHover();
+    W.cancelAnimationFrame(noteHoverFrame); noteHoverFrame = 0;
+    if (!noteSticky) {
+      bindNoteHover();
+      if (pointInNote(lastPointer)) {
+        noteHovered = true;
+        notePaused = true;
+      } else {
+        noteTimer = setTimeout(hideNote, noteLeft);
+      }
+      const el = noteEl;
+      noteHoverFrame = W.requestAnimationFrame(() => {
+        noteHoverFrame = 0;
+        if (el !== noteEl || !noteEl || !noteEl.isConnected || noteEl.hasAttribute('data-leaving') || noteSticky) return;
+        checkNoteHover();
+      });
+    } else {
+      unbindNoteHover();
+    }
     PSX.lastNote = { title: o.title, body: o.body || '', actions: (o.actions || []).map((a) => a.label), tip: o.tip || '' };
     PSX.noteCount = (PSX.noteCount || 0) + 1;
     emit('note', PSX.lastNote);
@@ -794,10 +834,11 @@
         host.querySelectorAll(sel).forEach((n) => n.remove());
       }
     }
-    if (!noteEl || !noteEl.isConnected) { clearTimeout(noteTimer); noteTimer = 0; W.cancelAnimationFrame(notePlacement); unbindNoteHover(); noteEl = null; noteActs = null; notePaused = noteHovered = noteFocused = noteSticky = false; return; }
+    if (!noteEl || !noteEl.isConnected) { clearTimeout(noteTimer); noteTimer = 0; W.cancelAnimationFrame(notePlacement); W.cancelAnimationFrame(noteHoverFrame); noteHoverFrame = 0; unbindNoteHover(); noteEl = null; noteActs = null; notePaused = noteHovered = noteFocused = noteSticky = false; return; }
     if (o.kind && noteEl.dataset.kind !== o.kind) return;
     clearTimeout(noteTimer); noteTimer = 0;
     W.cancelAnimationFrame(notePlacement);
+    W.cancelAnimationFrame(noteHoverFrame); noteHoverFrame = 0;
     unbindNoteHover();
     notePaused = noteHovered = noteFocused = noteSticky = false;
     const el = noteEl;

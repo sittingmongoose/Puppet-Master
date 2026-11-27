@@ -10,6 +10,7 @@ export default async function (t) {
 	const onlyClickThrough = t.args.only === 'click-through';
 	const onlyExperts = t.args.only === 'experts';
 	const onlyHoverPause = t.args.only === 'hover-pause';
+	const onlyStillMouse = t.args.only === 'still-mouse';
 
 	async function closeDetailsIfOpen(frame) {
 		await frame.evaluate(() => window.PM_TITLEBAR_NOTIFY?.clearAll?.());
@@ -175,6 +176,10 @@ export default async function (t) {
 	}
 	if (onlyHoverPause) {
 		await runHoverPause();
+		return;
+	}
+	if (onlyStillMouse) {
+		await runStillMousePause();
 		return;
 	}
 
@@ -1692,9 +1697,325 @@ export default async function (t) {
 		}
 	}
 
+	// FO-158 r6i (Astra 6h Low 1): a saved receipt appearing or replaced under a stationary mouse stays paused
+	// past 7 s with Undo and Ctrl+Z still working, and closes within its normal lifetime once the mouse moves away.
+	async function runStillMousePause() {
+		const savedNoteSel = `${noteSelector}[data-kind="saved"]`;
+
+		async function readAwayPoint(frame) {
+			const rootBox = await frame.locator('#pm-settings-root').boundingBox();
+			const noteBox = await frame.locator(savedNoteSel).first().boundingBox().catch(() => null);
+			const cand = [
+				{ x: rootBox.x + 24, y: rootBox.y + 24 },
+				{ x: rootBox.x + 24, y: rootBox.y + Math.min(rootBox.height - 24, 200) },
+			];
+			for (const pt of cand) {
+				if (!noteBox || pt.x < noteBox.x - 8 || pt.x > noteBox.x + noteBox.width + 8 ||
+					pt.y < noteBox.y - 8 || pt.y > noteBox.y + noteBox.height + 8) {
+					return pt;
+				}
+			}
+			return cand[0];
+		}
+
+		function readStillPointState(frame, pt) {
+			return frame.evaluate(({ sel, pt }) => {
+				const note = document.querySelector(sel);
+				if (!note) return null;
+				const nR = note.getBoundingClientRect();
+				const insideNote = pt.x >= nR.left && pt.x <= nR.right && pt.y >= nR.top && pt.y <= nR.bottom;
+				const textRects = [];
+				for (const part of ['.psx-note-title', '.psx-note-body']) {
+					const el = note.querySelector(part);
+					if (!el) continue;
+					const range = document.createRange();
+					range.selectNodeContents(el);
+					for (const r of [...range.getClientRects()]) {
+						if (r.width > 0 && r.height > 0) {
+							textRects.push({
+								part,
+								rect: r.toJSON(),
+								contains: pt.x >= r.left && pt.x <= r.right && pt.y >= r.top && pt.y <= r.bottom,
+							});
+						}
+					}
+				}
+				const overText = textRects.some((x) => x.contains);
+				const btns = [...note.querySelectorAll('button')].map((b) => ({
+					label: b.textContent.trim(),
+					rect: b.getBoundingClientRect().toJSON(),
+				}));
+				const onButton = btns.some((b) =>
+					pt.x >= b.rect.left && pt.x <= b.rect.right && pt.y >= b.rect.top && pt.y <= b.rect.bottom);
+				const top = document.elementFromPoint(pt.x, pt.y);
+				return {
+					noteRect: nR.toJSON(),
+					pt,
+					insideNote,
+					overText,
+					textRects,
+					onButton,
+					notePointerEvents: getComputedStyle(note).pointerEvents,
+					hitInReceipt: !!top && !!top.closest?.('.psx-note'),
+					activeTag: document.activeElement?.tagName || null,
+					activeRole: document.activeElement?.getAttribute?.('role') || null,
+				};
+			}, { sel: savedNoteSel, pt });
+		}
+
+		async function holdStillAndRead(frame, ms = 7500) {
+			await frame.evaluate(() => {
+				window.__psxHoldMoves = 0;
+				window.__psxHoldMoveFn = () => { window.__psxHoldMoves++; };
+				document.addEventListener('pointermove', window.__psxHoldMoveFn, { passive: true, capture: true });
+			});
+			await t.page.waitForTimeout(ms);
+			return frame.evaluate((sel) => {
+				if (window.__psxHoldMoveFn) {
+					document.removeEventListener('pointermove', window.__psxHoldMoveFn, { passive: true, capture: true });
+					delete window.__psxHoldMoveFn;
+				}
+				const note = document.querySelector(sel);
+				return {
+					movesDuringHold: window.__psxHoldMoves || 0,
+					stillOpen: !!note && Number(getComputedStyle(note).opacity) > 0.9,
+					opacity: note ? Number(getComputedStyle(note).opacity) : 0,
+					noteCount: window.PSX?.noteCount || 0,
+				};
+			}, savedNoteSel);
+		}
+
+		let route1 = null;
+		let route2 = null;
+
+		// Route 1 (Glass dark 740x900): Everyday building -> Where it applies -> tastebook -> Change -> High -> Done,
+		// wheel Details so Save lands on the receipt's text line, click Save and keep the mouse completely still.
+		await t.step('still-mouse glass-dark 740x900 (Save under still pointer)', async () => {
+			await t.viewport(740, 900);
+			const frame = await t.app.open();
+			if (!await frame.evaluate(() => document.documentElement.hasAttribute('data-psx-layer'))) {
+				await t.check('settings-picker-feed: not a settings-scope build, skipped (build it with tools/build_standalone.py)', true);
+				route1 = { skipped: true };
+				return;
+			}
+			await frame.waitForFunction(() => !!window.PSX?.lastReport, null, { timeout: 60000 });
+			await resetLookState(frame, 'glass-dark');
+			const id = 'ai.models.worker-model';
+			const about = await revealRow(frame, id);
+			await clickRealCenter(about);
+			await waitForDetailsOpen(frame, id);
+
+			async function saveFromWhereAndHold() {
+				const chSel = '.detail-inspector[aria-hidden="false"] [data-psx-line="project:tastebook"] [data-psx-key$=":change"]';
+				const chLoc = frame.locator(chSel).first();
+				const chBox = await chLoc.boundingBox();
+				await t.page.mouse.click(chBox.x + chBox.width / 2, chBox.y + chBox.height / 2);
+				await t.page.waitForTimeout(250);
+				if (!await frame.locator('.psx-mpick').isVisible().catch(() => false)) {
+					await clickRealCenter(frame.locator('.detail-inspector [data-psx-block="where"] .o55-pick-trigger'));
+				}
+				await clickRealCenter(frame.locator('.psx-mpick .psx-seg button[data-depth="High"]'));
+				await clickRealCenter(frame.locator('.psx-mpick .psx-mpick-foot button', { hasText: 'Done' }));
+				const saveSel = '.detail-inspector [data-psx-key="project:tastebook:save"]';
+				const saveLoc = frame.locator(saveSel).first();
+				await saveLoc.waitFor({ state: 'visible', timeout: 5000 });
+
+				const wheelPlan = await frame.evaluate(({ detailsBody, saveSel }) => {
+					const pane = document.querySelector(detailsBody);
+					const btn = document.querySelector(saveSel);
+					if (!pane || !btn) return null;
+					const r = btn.getBoundingClientRect();
+					const cy = r.top + r.height / 2;
+					const targetY = 795.5;
+					const dy = Math.round(cy - targetY);
+					const maxScroll = pane.scrollHeight - pane.clientHeight;
+					const targetScroll = Math.max(0, Math.min(maxScroll, Math.round(pane.scrollTop + dy)));
+					return { scrollTop: pane.scrollTop, cy, dy: targetScroll - pane.scrollTop, targetScroll };
+				}, { detailsBody, saveSel });
+				if (wheelPlan && wheelPlan.dy !== 0) {
+					const paneBox = await frame.locator(detailsBody).first().boundingBox();
+					await t.page.mouse.move(paneBox.x + paneBox.width / 2, paneBox.y + Math.min(paneBox.height / 2, 200));
+					await t.page.mouse.wheel(0, wheelPlan.dy);
+					await frame.waitForFunction(({ detailsBody, target }) => {
+						const p = document.querySelector(detailsBody);
+						return !!p && Math.abs(p.scrollTop - target) <= 3;
+					}, { detailsBody, target: wheelPlan.targetScroll }, { timeout: 2500 }).catch(() => {});
+					await t.page.waitForTimeout(120);
+				}
+
+				const framePt = await frame.evaluate((sel) => {
+					const r = document.querySelector(sel)?.getBoundingClientRect();
+					return r ? { x: r.left + r.width / 2, y: r.top + r.height / 2 } : null;
+				}, saveSel);
+				const saveBox = await saveLoc.boundingBox();
+				await t.page.mouse.click(saveBox.x + saveBox.width / 2, saveBox.y + saveBox.height / 2);
+				await waitForAnySavedReceipt(frame);
+				const savedEffort = await frame.evaluate((sid) => PSX.effortOf(PSX.getAt(PSX.W, 'project', 'tastebook', sid)), id);
+				const startInfo = await readStillPointState(frame, framePt);
+				const hold = await holdStillAndRead(frame, 7500);
+				return { wheelPlan, framePt, savedEffort, startInfo, hold };
+			}
+
+			// 1a: Save under still pointer -> stays > 7.5 s -> Ctrl+Z restores setting without moving the mouse.
+			const p1a = await saveFromWhereAndHold();
+			let ctrlZWorked = false;
+			if (p1a.hold.stillOpen) {
+				await t.page.keyboard.press('Control+z');
+				ctrlZWorked = await frame.waitForFunction((sid) =>
+					PSX.effortOf(PSX.getAt(PSX.W, 'project', 'tastebook', sid)) !== 'High',
+				id, { timeout: 3000 }).then(() => true, () => false);
+			}
+			await frame.evaluate(() => window.PSX.hideNote && window.PSX.hideNote({ immediate: true }));
+			await t.page.waitForTimeout(150);
+
+			// 1b: Save under still pointer -> stays > 7.5 s -> clicking Undo restores setting.
+			const p1b = await saveFromWhereAndHold();
+			let undoWorked = false;
+			if (p1b.hold.stillOpen) {
+				const undoBtn = frame.locator(savedNoteSel).getByRole('button', { name: 'Undo', exact: true }).first();
+				await clickRealCenter(undoBtn);
+				undoWorked = await frame.waitForFunction((sid) =>
+					PSX.effortOf(PSX.getAt(PSX.W, 'project', 'tastebook', sid)) !== 'High',
+				id, { timeout: 3000 }).then(() => true, () => false);
+			}
+			await frame.evaluate(() => window.PSX.hideNote && window.PSX.hideNote({ immediate: true }));
+			await t.page.waitForTimeout(150);
+
+			const passOk = (p) => Boolean(p.savedEffort === 'High' && p.startInfo?.insideNote && p.startInfo?.overText &&
+				!p.startInfo?.onButton && p.startInfo?.notePointerEvents === 'none' && !p.startInfo?.hitInReceipt &&
+				p.hold.movesDuringHold === 0 && p.hold.stillOpen);
+			route1 = { p1a, ctrlZWorked, p1b, undoWorked, ok: passOk(p1a) && ctrlZWorked && passOk(p1b) && undoWorked };
+		});
+
+		if (route1?.skipped) return;
+
+		// Route 2 (Basic dark 1920x1080): toggle "Move to another service when one is down", rest mouse on receipt title
+		// while focus stays on the switch, press Space without moving the mouse -> replacement receipt stays past 7 s.
+		await t.step('still-mouse basic-dark 1920x1080 (Space replacement under still pointer)', async () => {
+			await t.viewport(1920, 1080);
+			const frame = await t.app.open();
+			await frame.waitForFunction(() => !!window.PSX?.lastReport, null, { timeout: 60000 });
+			await resetLookState(frame, 'basic-dark');
+			const swId = 'ai.models.provider-fallback';
+			const swSel = `#pm-settings-root [id="setting-${swId}"] [role="switch"]`;
+			await revealRow(frame, swId);
+			// Wait for revealSetting/flashSearchHit smooth scroll to finish so the real-mouse click lands on the switch.
+			await frame.waitForFunction((sel) => {
+				const el = document.querySelector(sel);
+				if (!el) return false;
+				const top = Math.round(el.getBoundingClientRect().top);
+				const now = performance.now();
+				if (window.__psxStableTop !== top) {
+					window.__psxStableTop = top;
+					window.__psxStableSince = now;
+					return false;
+				}
+				return now - (window.__psxStableSince || now) >= 350;
+			}, swSel, { timeout: 5000 }).catch(() => {});
+			const sw = frame.locator(swSel).first();
+
+			// Dismiss first-run tip so receipt #1 and replacement receipt #2 share the same compact geometry.
+			await clickUntilVisible(sw, frame.locator(savedNoteSel));
+			const tipNote = await waitForAnySavedReceipt(frame);
+			await clickRealCenter(tipNote.locator('[data-close]').first());
+			await frame.waitForFunction(() => !document.querySelector('#pm-settings-portals > .psx-note'), null, { timeout: 3000 }).catch(() => {});
+
+			async function replaceViaSpaceAndHold() {
+				await clickRealCenter(sw);
+				await waitForAnySavedReceipt(frame);
+				const titleLoc = frame.locator(`${savedNoteSel} .psx-note-title`).first();
+				const framePt = await frame.evaluate((sel) => {
+					const el = document.querySelector(`${sel} .psx-note-title`);
+					if (!el) return null;
+					const range = document.createRange();
+					range.selectNodeContents(el);
+					const r = range.getClientRects()[0] || el.getBoundingClientRect();
+					return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+				}, savedNoteSel);
+				const titleBox = await titleLoc.boundingBox();
+				const titleRect = await frame.evaluate((sel) => document.querySelector(`${sel} .psx-note-title`)?.getBoundingClientRect().toJSON() || null, savedNoteSel);
+				const hoverX = titleBox.x + (framePt.x - titleRect.x);
+				const hoverY = titleBox.y + (framePt.y - titleRect.y);
+				await t.page.mouse.move(hoverX, hoverY, { steps: 4 });
+				await t.page.waitForTimeout(250);
+
+				const pre = await frame.evaluate(({ swSel, swId }) => ({
+					switchFocused: document.activeElement === document.querySelector(swSel),
+					val: PSX.resolve(swId, PSX.S.ctx).value,
+					noteCount: PSX.noteCount || 0,
+				}), { swSel, swId });
+				await t.page.keyboard.press('Space');
+				await frame.waitForFunction(({ prevCount, sel }) => {
+					const n = document.querySelector(sel);
+					return (window.PSX?.noteCount || 0) > prevCount && !!n && Number(getComputedStyle(n).opacity) > 0.9;
+				}, { prevCount: pre.noteCount, sel: savedNoteSel }, { timeout: 4000 });
+				await t.page.waitForTimeout(150);
+				const afterVal = await frame.evaluate((sid) => PSX.resolve(sid, PSX.S.ctx).value, swId);
+				const startInfo = await readStillPointState(frame, framePt);
+				const hold = await holdStillAndRead(frame, 7500);
+				return { pre, afterVal, changed: afterVal !== pre.val, framePt, startInfo, hold };
+			}
+
+			// 2a: Space replacement under still pointer -> stays > 7.5 s -> Ctrl+Z restores value.
+			const p2a = await replaceViaSpaceAndHold();
+			let ctrlZWorked = false;
+			if (p2a.hold.stillOpen) {
+				await t.page.keyboard.press('Control+z');
+				ctrlZWorked = await frame.waitForFunction(({ sid, prev }) =>
+					PSX.resolve(sid, PSX.S.ctx).value === prev,
+				{ sid: swId, prev: p2a.pre.val }, { timeout: 3000 }).then(() => true, () => false);
+			}
+			await frame.evaluate(() => window.PSX.hideNote && window.PSX.hideNote({ immediate: true }));
+			await t.page.waitForTimeout(150);
+
+			// 2b: Space replacement under still pointer -> stays > 7.5 s -> clicking Undo restores value.
+			const p2b = await replaceViaSpaceAndHold();
+			let undoWorked = false;
+			if (p2b.hold.stillOpen) {
+				const undoBtn = frame.locator(savedNoteSel).getByRole('button', { name: 'Undo', exact: true }).first();
+				await clickRealCenter(undoBtn);
+				undoWorked = await frame.waitForFunction(({ sid, prev }) =>
+					PSX.resolve(sid, PSX.S.ctx).value === prev,
+				{ sid: swId, prev: p2b.pre.val }, { timeout: 3000 }).then(() => true, () => false);
+			}
+			await frame.evaluate(() => window.PSX.hideNote && window.PSX.hideNote({ immediate: true }));
+			await t.page.waitForTimeout(150);
+
+			// 2c: Space replacement under still pointer -> stays > 7.5 s -> moving away closes within normal lifetime.
+			const p2c = await replaceViaSpaceAndHold();
+			let closedAfterLeave = false, closedAfterLeaveMs = null;
+			if (p2c.hold.stillOpen) {
+				const away = await readAwayPoint(frame);
+				const leaveAt = Date.now();
+				await t.page.mouse.move(away.x, away.y, { steps: 4 });
+				closedAfterLeave = await frame.waitForFunction(() =>
+					!document.querySelector('#pm-settings-portals > .psx-note'),
+				null, { timeout: 7500 }).then(() => true, () => false);
+				closedAfterLeaveMs = Date.now() - leaveAt;
+			}
+			const closedInLifetime = closedAfterLeave && closedAfterLeaveMs >= 1000 && closedAfterLeaveMs <= 7500;
+			const passOk = (p) => Boolean(p.pre.switchFocused && p.changed && p.startInfo?.insideNote && p.startInfo?.overText &&
+				!p.startInfo?.onButton && p.startInfo?.notePointerEvents === 'none' && !p.startInfo?.hitInReceipt &&
+				p.hold.movesDuringHold === 0 && p.hold.stillOpen);
+			route2 = {
+				p2a, ctrlZWorked, p2b, undoWorked, p2c, closedAfterLeave, closedAfterLeaveMs, closedInLifetime,
+				ok: passOk(p2a) && ctrlZWorked && passOk(p2b) && undoWorked && passOk(p2c) && closedInLifetime,
+			};
+		});
+
+		const witness = JSON.stringify({ route1, route2 });
+		t.log(`STILL_MOUSE_PAUSE ${witness}`);
+		await t.check(
+			'still-mouse receipt pause (glass-dark 740x900 Save + basic-dark 1920x1080 Space replacement): receipt stays past 7 s with Undo and Ctrl+Z working, and closes after moving away',
+			Boolean(route1?.ok && route2?.ok),
+			witness
+		);
+	}
+
 	await runOpenPosition();
 	await runReceiptClose();
 	await runClickThrough();
 	await runExpertsCase();
 	await runHoverPause();
+	await runStillMousePause();
 }
