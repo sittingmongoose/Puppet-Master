@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L15593-L15920
 
-Source SHA256: `4b75bcf142492b6a0b1747d1f49f90916f4dcf12f4ffd82b422401a9d7b5d180`
+Source SHA256: `9c34de2ef93562e8eb995cd913772a076b1d81c9574dec216dd3b6a4e5262a3d`
 
 ---
 
@@ -198,9 +198,9 @@ Immediate-send rows use an isolated payload and can never send unrelated compose
 | `cmd.browser.component.add_to_composer` | Add Component To Composer List | Appends the selected component to the numbered composer component list and stores its hidden reference. | `component_selected && composer_available` | `domain_action` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2` → `Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionResultV2` | `handlers::browser_runtime::component_add_to_composer` |
 | `cmd.browser.component.insert_at_cursor` | Insert Component At Cursor | Inserts a component chip at the composer caret position. | `component_selected && composer_available && caret_position_known` | `domain_action` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2` → `Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionResultV2` | `handlers::browser_runtime::component_insert_at_cursor` |
 | `cmd.browser.component.mode.set_default` | Set Component Mode Default | Persists the last used component action as the initial mode for the next selection. | `settings_writable` | `domain_action` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2` → `Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionResultV2` | `handlers::browser_runtime::component_mode_set_default` |
-| `cmd.browser.devtools.open` (alias of `cmd.browser.open_devtools` from 2026-10-09, UCC-202) | Open DevTools | Opens ordinary internal browser DevTools under policy control; the protected authentication browser is excluded. | `browser_runtime_available && !protected_auth_browser && devtools_policy_allows` | `navigation_wrapper` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `BrowserDevToolsOpenRequest` → `RouteResult` | `handlers::browser_runtime::devtools_open` |
+| `cmd.browser.devtools.open` (alias of `cmd.browser.open_devtools` from 2026-10-09, UCC-202) | Open DevTools | Opens ordinary internal browser DevTools under policy control; the protected authentication browser is excluded. | `browser_runtime_available && !protected_auth_browser && devtools_policy_allows` | `navigation_wrapper` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `BrowserDevToolsOpenRequest` → `BrowserDevToolsOpenResultV1` (the typed route result, `Plans/section15_browser_program_contracts.schema.json`; was `RouteResult` until DL-2602, 2026-11-24) | `handlers::browser_runtime::devtools_open` |
 
-Source surfaces for this family: `browser_selection_bar`, `browser_toolbar`. Every named surface must read the same owner availability and the same exact disabled reason; a surface that cannot read it renders the control disabled rather than optimistic.
+Source surfaces for this family are `browser_selection_bar` and `browser_toolbar`. The canonical `cmd.browser.open_devtools` also has the `command_palette` source from its §2.6A row. Every named surface must read the same owner availability and the same exact disabled reason; a surface that cannot read it renders the control disabled rather than optimistic.
 
 ### UCC-156 - Assistant Redesign Command Registration And Alias Census
 

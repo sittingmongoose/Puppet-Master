@@ -2,9 +2,9 @@
 
 Source: `Plans/newtools.md`
 
-Source lines: L1308-L8598
+Source lines: L1310-L8604
 
-Source SHA256: `80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8`
+Source SHA256: `9f698fcab6c706445f0ef32194c5399f63732355fa657b8c5b42897abc5ff779`
 
 ---
 
@@ -4555,7 +4555,9 @@ plan_unit_id: N2-100
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: GuiToolCatalog entries expose capability flags supports_visible_run, supports_attach_existing, supports_recording, requires_display_server, supports_pm_built_in_browser_visible, and supports_pm_browser_focus_or_reopen.
+canonical_text: >-
+  GuiToolCatalog entries expose capability flags supports_visible_run, supports_attach_existing, supports_recording, requires_display_server, supports_pm_built_in_browser_visible, and supports_pm_browser_focus_or_reopen.
+  Amended 2026-11-25 (C-FIX79 K3 r1): the source list this unit atomizes ("GuiToolCatalog capability flags" in the concrete schema/config entries) names the last two flags in the Browser Program vocabulary, and those names are canonical: supports_browser_program_visible (formerly supports_pm_built_in_browser_visible) and supports_browser_program_focus_or_reopen (formerly supports_pm_browser_focus_or_reopen). The former names are retired aliases kept for traceability and are not catalog fields.
 gui_related: false
 gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
 split_recommended: false
@@ -4588,7 +4590,8 @@ preserved_exact_tokens:
 - supports_pm_browser_focus_or_reopen
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Retired aliases 2026-11-25: supports_pm_built_in_browser_visible -> supports_browser_program_visible; supports_pm_browser_focus_or_reopen -> supports_browser_program_focus_or_reopen (Browser Program vocabulary of the source list).'
 owner_boundary_notes: []
 owner_hints:
 - Plans/newtools.md
@@ -5448,7 +5451,8 @@ preserved_exact_tokens:
 - cmd.orchestrator.open_build_artifact
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- '2026-11-25: "reserved" is historical; cmd.orchestrator.build_run and cmd.orchestrator.open_build_artifact are registered in Plans/UI_Command_Catalog.md and wired in Plans/Wiring_Matrix.production.json, which own their contracts.'
 owner_boundary_notes: []
 owner_hints:
 - Plans/newtools.md
@@ -6129,7 +6133,7 @@ plan_unit_id: N2-132
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: Debug, MCP, custom-plugin, networked-tool, /shell/debugger, and /tunnel/browser actions run through shared /trust/proxy/governance preflight. Every /custom/plugin/networked tool profile declares contacted hosts and /domains before dispatch; undeclared hosts, domains, proxy targets, or remote authorities return blocked_preflight. Governance denials preserve deny-code families, and restart-persistent host/trust decisions must be explicit /durable permission or trust records rather than inferred from transient debug runs.
+canonical_text: Debug, MCP, custom-plugin, networked-tool, /shell/debugger, and /tunnel/browser actions run through shared /trust/proxy/governance preflight. Every /custom/plugin/networked tool profile declares contacted hosts and /domains before dispatch; undeclared hosts, domains, proxy targets, or remote authorities return blocked_preflight. Governance denials preserve deny-code families, and restart-persistent host/trust decisions must be explicit /durable permission or trust records rather than inferred from transient debug runs. The eight deny codes and their fixed blocked_family, blocked_reason_code and retry mapping onto the Permissions_System.md blocked-state payload are stated in this document's Shared Trust Proxy Deny Codes section.
 gui_related: false
 gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
 split_recommended: false

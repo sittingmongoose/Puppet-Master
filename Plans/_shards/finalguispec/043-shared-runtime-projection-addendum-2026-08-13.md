@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5448-L27062
+Source lines: L5455-L27081
 
-Source SHA256: `7ba17c5aa7fb716a162c335b6ec6e71fc68d986a5c12f560da9fc6c85b205c7a`
+Source SHA256: `7c52aa35b4fb3b308c17b6cf275e1f2f81fab5151885cf7a52d3ae688fdbe180`
 
 ---
 
@@ -194,6 +194,10 @@ split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
+- "Typing in `Search in this tab` only filters rows of the active tab or view: the tab, the focused run, the selection and the route stay unchanged, and no result from another tab appears."
+- "Choosing a `Search Orchestrator` result opens that object's canonical route with the object selected: a concern opens its concern record by concern_id; an evidence or artifact result opens `Evidence` with its pane focused; a history result opens `History` with that entry selected and the page's focused run switched to its run_id; a ledger record opens `Ledger` with that exact record selected; a graph node opens `Node Graph` with the node selected and its inspector open (routing examples in `Plans/Run_Graph_View.md`)."
+- "A `Search Orchestrator` result never lands on a page-local text match: opening it from any tab produces the same route and selection as the same object's `Show in ...` deep link, and the tab-local filter of the tab the user left is kept."
+- "When a result's object no longer resolves, opening it shows that object as unavailable on its route instead of falling back to a text match in the current tab."
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
@@ -8379,7 +8383,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  Bundle controls govern revision loops and approval readiness with Resubmit sending unresolved notes as revision context, final approval blocked until notes are handled, status progression, bundle registry persistence, and linked note records. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
+  Bundle controls govern revision loops and approval readiness with Resubmit sending unresolved notes as revision context (Resubmit dispatches cmd.prd_builder.revision.resubmit, the PRDB-014 targeted revision pass, from 2026-11-24 under DL-2602), final approval blocked until notes are handled, status progression, bundle registry persistence, and linked note records. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: Bundle controls and review gates are visible controls despite the source span inference being false.
 split_recommended: false
@@ -10663,7 +10667,7 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Live terminal rendering follows the Section 15 terminal-core architecture: high-frequency
+  Live terminal rendering follows the Section 15 terminal-core architecture (SMPFS-073, Native Buffer Render Performance Model): high-frequency
   mutable grid, native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer
   ingestion and processing, while DOM/React/webview-style document-UI terminal cores are
   non-ship. On the web GUI, the terminal grid is drawn as a fixed, reused set of visible page-text
@@ -11922,7 +11926,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Extremely large datasets use a custom `Model` trait backed by a ring buffer; live terminal
-  rendering is excluded from the normal list rule and follows the Section 15 screen/buffer,
+  rendering is excluded from the normal list rule and follows the Section 15 screen/buffer model (SMPFS-073, Native Buffer Render Performance Model),
   diff-painting, off-UI-thread PTY/buffer architecture, while only bounded terminal transcript
   or plain-log projections use `VecModel`/`ListView`.
 gui_related: true
@@ -12467,7 +12471,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  On startup, the GUI restores layout, theme, dashboard widget layout, activity bar order, editor workspace and per-file dirty buffers, active project-facing shell state, historical hot-reload state, project onboarding/tour state, and safe detached-window coordinates from canonical persistence keys. Resettable corruption is secured before a disclosed reset; canonical editor loss uses mandatory-backup recovery and never becomes a false empty project. Amended 2026-10-09 (DL-180): Home's layout restores from `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` (SP-330), the only Home layout authority, with `layout:v1` holding only side-panel dock state and the popped-out chat window's geometry; each dashboard board's widget layout restores from `widget_layout:v1:dashboard:<board_id>` (WS-030); section 15.4 gives the order. Amended 2026-10-10 (DL-186): each dashboard board restores from its per-project key `widget_layout:v1:<project_id>:<board_id>` (WS-030); the per-board key above was never written, and `widget_layout:v1:dashboard` converts into no board. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
+  On startup, the GUI restores layout, theme, dashboard widget layout, activity bar order, editor workspace and per-file dirty buffers, active project-facing shell state, historical hot-reload state, project onboarding/tour state, and safe detached-window coordinates from canonical persistence keys. Resettable corruption is secured before a disclosed reset; canonical editor loss uses mandatory-backup recovery and never becomes a false empty project. Amended 2026-10-09 (DL-180): Home's layout restores from `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` (SP-330), the only Home layout authority, with `layout:v1` holding only side-panel dock state and the popped-out chat window's geometry; each dashboard board's widget layout restores from `widget_layout:v1:dashboard:<board_id>` (WS-030); 15.4 Startup Restore gives the order. Amended 2026-10-10 (DL-186): each dashboard board restores from its per-project key `widget_layout:v1:<project_id>:<board_id>` (WS-030); the per-board key above was never written, and `widget_layout:v1:dashboard` converts into no board. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines startup restoration of visible shell state.
@@ -13165,7 +13169,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Subscriptions based on 50ms polling are replaced with event-driven `invoke_from_event_loop`;
-  live terminal rendering remains under the Section 15 terminal-core architecture and is not a
+  live terminal rendering remains under the Section 15 terminal-core architecture (SMPFS-073, Native Buffer Render Performance Model) and is not a
   normal text-editor/list widget; dynamic UI scaling uses Slint native global/window scale
   factor only.
 gui_related: true
@@ -13649,7 +13653,7 @@ canonical_text: >-
   the performance of many visible terminal tabs: each terminal tab holds one session with one PTY and one bounded
   ring buffer (SMPFS-180), several terminals show at once only as several panels (F3-630), a hidden terminal tab
   stops its animation work (F3-635, F3-643), and there is no four-pane grid to budget for. The performance targets
-  for DL-035's own engine are Section 15's to set.
+  for DL-035's own engine are owned by SMPFS-073 (Native Buffer Render Performance Model).
 gui_related: true
 gui_classification_reason: >-
   This unit preserves one row of the user-visible Slint migration risks and mitigations table.
@@ -16472,6 +16476,11 @@ canonical_text: >-
   stages/phases, Requirements Builder steps/passes, Orchestrator node/package/lane/seam
   mappings, and Multi-Pass review passes, with per-mapping platform/model selection and
   compatibility warnings.
+  Narrowed 2026-11-24 (DL-2602): only the Requirements Builder mapping (the four
+  planning.interview.builder-* settings, saved through the Settings transaction) and the existing
+  crew and overseer Persona selections remain; the Interview-stage, Orchestrator
+  node/package/lane/seam and Multi-Pass mapping editors and every per-mapping platform/model choice
+  are retired (MD2 NEITHER; models come from the one model defaults list).
 gui_related: true
 gui_classification_reason: >-
   This unit defines surface-specific Persona mapping editors despite the source inference
@@ -16506,7 +16515,9 @@ preserved_exact_tokens:
 - "compatibility warnings"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Retired 2026-11-24 (DL-2602): Interview stages/phases, Orchestrator node/package/lane/seam mappings and Multi-Pass review passes mapping editors."
+- "Retired 2026-11-24 (DL-2602): per-mapping platform/model selection (MD2 NEITHER)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -17902,7 +17913,8 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Deep Plan documents reuse the Embedded Document Pane annotation and revision contract:
   highlighted text opens an annotation action palette, margin markers and an annotation
-  drawer/list show annotations, Resubmit with Annotations launches targeted revision,
+  drawer/list show annotations, Resubmit with Annotations launches targeted revision
+  (it dispatches cmd.prd_builder.revision.resubmit, DL-2602),
   annotation anchors re-anchor deterministically after edits, annotation loss is never silent,
   and Multi-Pass Review is not automatically required before approval or execution.
 gui_related: true

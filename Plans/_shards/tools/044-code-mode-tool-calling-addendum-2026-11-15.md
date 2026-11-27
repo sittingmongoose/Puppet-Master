@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L13358-L13833
+Source lines: L13613-L14089
 
-Source SHA256: `e170ecd83663641560575465fb3e41d5b7881667b8ae0f8a78c0ddb7c4515dde`
+Source SHA256: `49549c0771a51deaab00b327f6bff228f923ce79afbe2c6743de7be2f87f0cce`
 
 ---
 
@@ -338,6 +338,7 @@ acceptance_criteria:
   - A script cannot make a tool call that the same request's selection and policy would not admit as a direct call. The normalized call and its arguments, including values computed while the script runs, pass the same admission checks at the shared T-178 boundary, with selection and policy held constant. Whether the route's direct channel could carry that call, its schema being offered there and its size, is the matter of T-189 and T-191, not of this test.
   - An approval asked for inside a script suspends that script and is answered through the ordinary approval path; a denial, including the immediate one when no person is available, reaches the script as a typed result.
   - Every nested call appears in the event log, receipts and usage rollups exactly as a direct call would, plus the script's operation identity.
+  - With the catalog search L2 schema materialized only on the host, two searches within one script can settle successfully with distinct host-issued child IDs and the same parent_operation_id. A failed nested call repeats its child ID and parent_operation_id in the recovery envelope. The enclosing script retains its own call ID.
   - A script that passes its deadline or the EvalSession hard output-byte ceiling ends with typed recovery evidence, not a success-shaped result.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py lint-contractrefs

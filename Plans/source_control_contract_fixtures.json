@@ -3064,6 +3064,327 @@
         "cross_format_migration_requested": false,
         "runtime_evidence_claimed": false
       }
+    },
+    {
+      "name": "graph_focus_request_v2_commit_target",
+      "definition": "source_control_command_request_v2",
+      "value": {
+        "schema_id": "pm.source_control.command_request.v2",
+        "schema_version": "2.0.0",
+        "project_id": "project:batching",
+        "repo_id": "repo:batching",
+        "command_id": "cmd.source_control.graph.focus",
+        "target_kind": "commit",
+        "target_ref": "1111111111111111111111111111111111111111",
+        "idempotency_key": "idem:graph-focus:1",
+        "return_context_ref": "return:source-control:graph"
+      }
+    },
+    {
+      "name": "suggest_commit_batches_request_v2",
+      "definition": "source_control_command_request_v2",
+      "value": {
+        "schema_id": "pm.source_control.command_request.v2",
+        "schema_version": "2.0.0",
+        "project_id": "project:batching",
+        "repo_id": "repo:batching",
+        "command_id": "cmd.source_control.suggest_commit_batches",
+        "worktree_id": "git-worktree:batching",
+        "scope": "both",
+        "expected_head_oid": "1111111111111111111111111111111111111111",
+        "status_generation": 7,
+        "max_batches": 4,
+        "idempotency_key": "idem:suggest:1",
+        "return_context_ref": "return:source-control:commit"
+      }
+    },
+    {
+      "name": "accept_commit_group_request_v2",
+      "definition": "source_control_command_request_v2",
+      "value": {
+        "schema_id": "pm.source_control.command_request.v2",
+        "schema_version": "2.0.0",
+        "project_id": "project:batching",
+        "repo_id": "repo:batching",
+        "command_id": "cmd.source_control.accept_commit_group",
+        "worktree_id": "git-worktree:batching",
+        "suggestion_set_id": "suggestion-set:1",
+        "batch_id": "batch:1",
+        "expected_head_oid": "1111111111111111111111111111111111111111",
+        "status_generation": 7,
+        "idempotency_key": "idem:accept:1",
+        "return_context_ref": "return:source-control:commit",
+        "include_untracked": true
+      }
+    },
+    {
+      "name": "accept_commit_group_result_v2_succeeded",
+      "definition": "source_control_command_result_v2",
+      "value": {
+        "schema_id": "pm.source_control.command_result.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.source_control.accept_commit_group",
+        "operation_id": "operation:accept:1",
+        "status": "succeeded",
+        "owner_result_ref": "view-command-owner-result:accept:1",
+        "inspection": null,
+        "local_config_before_sha256": null,
+        "local_config_after_sha256": null,
+        "native_result_evidence": null,
+        "network_effect_performed": false,
+        "return_context_ref": "return:source-control:commit"
+      }
+    },
+    {
+      "name": "suggest_owner_result_splits_whole_files_from_hunks",
+      "definition": "source_view_command_owner_result_v1",
+      "value": {
+        "schema_id": "pm.source_control.view_command_owner_result.v1",
+        "command_id": "cmd.source_control.suggest_commit_batches",
+        "operation_id": "operation:suggest:1",
+        "outcome": "suggested",
+        "retry_attempts": 0,
+        "suggestion_set_id": "suggestion-set:1",
+        "created_at": "2026-11-25T12:00:00Z",
+        "batches": [
+          {
+            "batch_id": "batch:1",
+            "paths": [
+              "assets/logo.png",
+              "docs/new-notes.md"
+            ],
+            "hunk_selections": [
+              {
+                "path": "src/lib.rs",
+                "hunk_ids": [
+                  "hunk:3"
+                ]
+              }
+            ],
+            "draft_message": "Add logo and notes",
+            "rationale": "Asset and docs change together"
+          }
+        ],
+        "completed_at_utc": "2026-11-25T12:00:01Z"
+      }
+    },
+    {
+      "name": "accept_owner_result_failed_backend_unsupported",
+      "definition": "source_view_command_owner_result_v1",
+      "value": {
+        "schema_id": "pm.source_control.view_command_owner_result.v1",
+        "command_id": "cmd.source_control.accept_commit_group",
+        "operation_id": "operation:accept:2",
+        "outcome": "failed",
+        "failure_code": "backend_unsupported",
+        "retry_attempts": 0,
+        "completed_at_utc": "2026-11-25T12:00:02Z"
+      }
+    },
+    {
+      "name": "accept_owner_result_stage_effect_unknown",
+      "definition": "source_view_command_owner_result_v1",
+      "value": {
+        "schema_id": "pm.source_control.view_command_owner_result.v1",
+        "command_id": "cmd.source_control.accept_commit_group",
+        "operation_id": "operation:accept:3",
+        "outcome": "failed",
+        "failure_code": "stage_effect_unknown",
+        "retry_attempts": 0,
+        "completed_at_utc": "2026-11-25T12:00:02Z",
+        "suggestion_set_id": "suggestion-set:1",
+        "batch_id": "batch:1"
+      }
+    },
+    {
+      "name": "conflict_open_group_request",
+      "definition": "source_control_command_request_v2",
+      "value": {
+        "schema_id": "pm.source_control.command_request.v2",
+        "schema_version": "2.0.0",
+        "project_id": "project:conflict",
+        "repo_id": "repo:conflict",
+        "worktree_id": "git-worktree:conflict",
+        "status_generation": 5,
+        "idempotency_key": "idem:conflict:1",
+        "return_context_ref": "return:scm:conflict",
+        "command_id": "cmd.source_control.open_conflict",
+        "conflict_selection_ref": "conflict-selection:group:1"
+      }
+    },
+    {
+      "name": "conflict_open_editor_request",
+      "definition": "source_control_command_request_v2",
+      "value": {
+        "schema_id": "pm.source_control.command_request.v2",
+        "schema_version": "2.0.0",
+        "project_id": "project:conflict",
+        "repo_id": "repo:conflict",
+        "worktree_id": "git-worktree:conflict",
+        "status_generation": 5,
+        "idempotency_key": "idem:conflict:1",
+        "return_context_ref": "return:scm:conflict",
+        "command_id": "cmd.source_control.open_merge_editor",
+        "conflict_selection_ref": "conflict-selection:file:1",
+        "path": "src/conflict.rs",
+        "conflict_id": "conflict:1",
+        "where": "right",
+        "mode": "keep",
+        "by": "user",
+        "background": true
+      }
+    },
+    {
+      "name": "conflict_manual_hunk_request",
+      "definition": "source_control_command_request_v2",
+      "value": {
+        "schema_id": "pm.source_control.command_request.v2",
+        "schema_version": "2.0.0",
+        "project_id": "project:conflict",
+        "repo_id": "repo:conflict",
+        "worktree_id": "git-worktree:conflict",
+        "status_generation": 5,
+        "idempotency_key": "idem:conflict:1",
+        "return_context_ref": "return:scm:conflict",
+        "command_id": "cmd.source_control.resolve_conflict_side",
+        "conflict_selection_ref": "conflict-selection:file:1",
+        "path": "src/conflict.rs",
+        "conflict_id": "conflict:1",
+        "hunk_id": "hunk:2",
+        "resolution_side": "manual",
+        "confirmation_ref": "confirmation:conflict:1",
+        "manual_result_ref": "editor-result:1"
+      }
+    },
+    {
+      "name": "conflict_mark_file_resolved_request",
+      "definition": "source_control_command_request_v2",
+      "value": {
+        "schema_id": "pm.source_control.command_request.v2",
+        "schema_version": "2.0.0",
+        "project_id": "project:conflict",
+        "repo_id": "repo:conflict",
+        "worktree_id": "git-worktree:conflict",
+        "status_generation": 5,
+        "idempotency_key": "idem:conflict:1",
+        "return_context_ref": "return:scm:conflict",
+        "command_id": "cmd.source_control.mark_conflict_resolved",
+        "conflict_selection_ref": "conflict-selection:file:1",
+        "path": "src/conflict.rs",
+        "conflict_id": "conflict:1"
+      }
+    },
+    {
+      "name": "conflict_open_returns_route",
+      "definition": "conflict_assistant_owner_result_v1",
+      "value": {
+        "schema_id": "pm.source_control.conflict_assistant_owner_result.v1",
+        "operation_id": "operation:conflict:open:1",
+        "conflict_selection_ref": "conflict-selection:group:1",
+        "retry_allowed": false,
+        "command_id": "cmd.source_control.open_conflict",
+        "outcome": "opened",
+        "route_ref": "route:conflict:group:1"
+      }
+    },
+    {
+      "name": "conflict_side_applied_verified",
+      "definition": "conflict_assistant_owner_result_v1",
+      "value": {
+        "schema_id": "pm.source_control.conflict_assistant_owner_result.v1",
+        "operation_id": "operation:conflict:apply:1",
+        "conflict_selection_ref": "conflict-selection:file:1",
+        "retry_allowed": false,
+        "command_id": "cmd.source_control.resolve_conflict_side",
+        "outcome": "side_applied",
+        "effect_receipt_ref": "receipt:conflict:apply:1"
+      }
+    },
+    {
+      "name": "conflict_mark_resolved_verified",
+      "definition": "conflict_assistant_owner_result_v1",
+      "value": {
+        "schema_id": "pm.source_control.conflict_assistant_owner_result.v1",
+        "operation_id": "operation:conflict:mark:1",
+        "conflict_selection_ref": "conflict-selection:file:1",
+        "retry_allowed": false,
+        "command_id": "cmd.source_control.mark_conflict_resolved",
+        "outcome": "marked_resolved",
+        "effect_receipt_ref": "receipt:conflict:mark:1"
+      }
+    },
+    {
+      "name": "conflict_mark_refuses_markers",
+      "definition": "conflict_assistant_owner_result_v1",
+      "value": {
+        "schema_id": "pm.source_control.conflict_assistant_owner_result.v1",
+        "operation_id": "operation:conflict:mark:2",
+        "conflict_selection_ref": "conflict-selection:file:1",
+        "retry_allowed": false,
+        "command_id": "cmd.source_control.mark_conflict_resolved",
+        "outcome": "failed",
+        "failure_code": "conflict_markers_remaining"
+      }
+    },
+    {
+      "name": "conflict_side_unverified_write_fenced",
+      "definition": "conflict_assistant_owner_result_v1",
+      "value": {
+        "schema_id": "pm.source_control.conflict_assistant_owner_result.v1",
+        "operation_id": "operation:conflict:apply:2",
+        "conflict_selection_ref": "conflict-selection:file:1",
+        "retry_allowed": false,
+        "command_id": "cmd.source_control.resolve_conflict_side",
+        "outcome": "failed",
+        "failure_code": "write_effect_unknown"
+      }
+    },
+    {
+      "name": "conflict_mark_result_requires_owner_result",
+      "definition": "source_control_command_result_v2",
+      "value": {
+        "schema_id": "pm.source_control.command_result.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.source_control.mark_conflict_resolved",
+        "operation_id": "operation:conflict:mark:1",
+        "status": "succeeded",
+        "owner_result_ref": "owner-result:conflict:mark:1",
+        "inspection": null,
+        "local_config_before_sha256": null,
+        "local_config_after_sha256": null,
+        "native_result_evidence": null,
+        "network_effect_performed": false,
+        "return_context_ref": "return:scm:conflict"
+      }
+    },
+    {
+      "name": "accept_reviewed_index_without_staging",
+      "definition": "source_view_command_owner_result_v1",
+      "value": {
+        "schema_id": "pm.source_control.view_command_owner_result.v1",
+        "command_id": "cmd.source_control.accept_commit_group",
+        "operation_id": "operation:accept:staged",
+        "outcome": "staged_for_review",
+        "retry_attempts": 0,
+        "suggestion_set_id": "suggestion-set:staged",
+        "batch_id": "batch:staged",
+        "stage_result_refs": [],
+        "staging_disposition": "already_staged",
+        "completed_at_utc": "2026-11-25T12:00:02Z"
+      }
+    },
+    {
+      "name": "accept_refuses_unreviewed_stage_selection",
+      "definition": "source_view_command_owner_result_v1",
+      "value": {
+        "schema_id": "pm.source_control.view_command_owner_result.v1",
+        "command_id": "cmd.source_control.accept_commit_group",
+        "operation_id": "operation:accept:mismatch",
+        "outcome": "failed",
+        "failure_code": "stage_selection_mismatch",
+        "retry_attempts": 0,
+        "completed_at_utc": "2026-11-25T12:00:02Z"
+      }
     }
   ],
   "invalid": [
@@ -4638,6 +4959,253 @@
         "secret_material_exposed": false,
         "reason_code": null
       }
+    },
+    {
+      "name": "graph_focus_request_v2_rejects_unknown_field",
+      "definition": "source_control_command_request_v2",
+      "base_valid": "graph_focus_request_v2_commit_target",
+      "patch": {
+        "outcome": "focused"
+      },
+      "expected_error": "strict v2 request branch has additionalProperties false"
+    },
+    {
+      "name": "graph_focus_request_v2_commit_target_must_be_full_oid",
+      "definition": "source_control_command_request_v2",
+      "base_valid": "graph_focus_request_v2_commit_target",
+      "patch": {
+        "target_ref": "main"
+      },
+      "expected_error": "commit target_ref is a full object id"
+    },
+    {
+      "name": "view_command_result_v2_never_claims_network_effect",
+      "definition": "source_control_command_result_v2",
+      "base_valid": "accept_commit_group_result_v2_succeeded",
+      "patch": {
+        "network_effect_performed": true
+      },
+      "expected_error": "graph and batching commands perform no network effect"
+    },
+    {
+      "name": "owner_result_failed_requires_failure_code",
+      "definition": "source_view_command_owner_result_v1",
+      "base_valid": "accept_owner_result_failed_backend_unsupported",
+      "remove": [
+        "failure_code"
+      ],
+      "expected_error": "failed outcome carries a failure_code"
+    },
+    {
+      "name": "owner_result_graph_code_not_valid_for_accept",
+      "definition": "source_view_command_owner_result_v1",
+      "base_valid": "accept_owner_result_failed_backend_unsupported",
+      "patch": {
+        "failure_code": "graph_parse_failed"
+      },
+      "expected_error": "batching commands use the batching failure codes"
+    },
+    {
+      "name": "owner_result_batch_needs_paths_or_hunks",
+      "definition": "source_view_command_owner_result_v1",
+      "base_valid": "suggest_owner_result_splits_whole_files_from_hunks",
+      "patch": {
+        "batches": [
+          {
+            "batch_id": "batch:1",
+            "paths": [],
+            "hunk_selections": [],
+            "draft_message": "Empty",
+            "rationale": "Empty"
+          }
+        ]
+      },
+      "expected_error": "a batch stages at least one whole file or hunk selection"
+    },
+    {
+      "name": "suggest_owner_result_rejects_accept_only_failure",
+      "definition": "source_view_command_owner_result_v1",
+      "base_valid": "accept_owner_result_failed_backend_unsupported",
+      "patch": {
+        "command_id": "cmd.source_control.suggest_commit_batches"
+      },
+      "expected_error": "backend_unsupported belongs to accept"
+    },
+    {
+      "name": "accept_owner_result_rejects_suggest_only_failure",
+      "definition": "source_view_command_owner_result_v1",
+      "base_valid": "accept_owner_result_failed_backend_unsupported",
+      "patch": {
+        "failure_code": "assistant_failed"
+      },
+      "expected_error": "assistant_failed belongs to suggest"
+    },
+    {
+      "name": "accept_owner_result_cannot_retry_unknown_stage",
+      "definition": "source_view_command_owner_result_v1",
+      "base_valid": "accept_owner_result_stage_effect_unknown",
+      "patch": {
+        "retry_attempts": 1
+      },
+      "expected_error": "unknown stage effects require reconciliation before a new attempt"
+    },
+    {
+      "name": "accept_owner_result_unknown_stage_names_exact_batch",
+      "definition": "source_view_command_owner_result_v1",
+      "base_valid": "accept_owner_result_stage_effect_unknown",
+      "remove": [
+        "batch_id"
+      ],
+      "expected_error": "unknown stage effects fence the exact batch"
+    },
+    {
+      "name": "suggest_alias_requires_request_normalization",
+      "definition": "source_control_command_request_v2",
+      "base_valid": "suggest_commit_batches_request_v2",
+      "patch": {
+        "command_id": "cmd.source_control.suggest_commit_groups"
+      },
+      "expected_error": "replace the alias id with the canonical id before schema validation"
+    },
+    {
+      "name": "suggest_alias_cannot_label_owner_envelope",
+      "definition": "source_control_command_result_v2",
+      "base_valid": "accept_commit_group_result_v2_succeeded",
+      "patch": {
+        "command_id": "cmd.source_control.suggest_commit_groups"
+      },
+      "expected_error": "the owner envelope always uses the canonical command id"
+    },
+    {
+      "name": "accept_empty_stage_refs_requires_already_staged_disposition",
+      "definition": "source_view_command_owner_result_v1",
+      "base_valid": "accept_reviewed_index_without_staging",
+      "remove": [
+        "staging_disposition"
+      ],
+      "expected_error": "an empty stage result list requires the verified indexed selection"
+    },
+    {
+      "name": "accept_already_staged_cannot_claim_stage_dispatch",
+      "definition": "source_view_command_owner_result_v1",
+      "base_valid": "accept_reviewed_index_without_staging",
+      "patch": {
+        "stage_result_refs": [
+          "receipt:stage:1"
+        ]
+      },
+      "expected_error": "already staged acceptance dispatches no stage step"
+    },
+    {
+      "name": "suggest_result_cannot_report_accept_selection_mismatch",
+      "definition": "source_view_command_owner_result_v1",
+      "base_valid": "accept_refuses_unreviewed_stage_selection",
+      "patch": {
+        "command_id": "cmd.source_control.suggest_commit_batches"
+      },
+      "expected_error": "this refusal belongs to acceptance"
+    },
+    {
+      "name": "conflict_cannot_borrow_git_both_resolution",
+      "definition": "source_control_command_request_v2",
+      "base_valid": "conflict_manual_hunk_request",
+      "patch": {
+        "resolution_side": "both"
+      },
+      "remove": [
+        "manual_result_ref"
+      ],
+      "expected_error": "the separate Git adapter has a different choice set"
+    },
+    {
+      "name": "conflict_manual_requires_result_ref",
+      "definition": "source_control_command_request_v2",
+      "base_valid": "conflict_manual_hunk_request",
+      "remove": [
+        "manual_result_ref"
+      ],
+      "expected_error": "manual resolution requires the exact editor result"
+    },
+    {
+      "name": "conflict_side_requires_confirmation",
+      "definition": "source_control_command_request_v2",
+      "base_valid": "conflict_manual_hunk_request",
+      "remove": [
+        "confirmation_ref"
+      ],
+      "expected_error": "side writes require current exact confirmation"
+    },
+    {
+      "name": "conflict_mark_cannot_target_hunk",
+      "definition": "source_control_command_request_v2",
+      "base_valid": "conflict_mark_file_resolved_request",
+      "patch": {
+        "hunk_id": "hunk:2"
+      },
+      "expected_error": "Mark Conflict Resolved acts on the entire selected file"
+    },
+    {
+      "name": "conflict_editor_requires_conflict_file_id",
+      "definition": "source_control_command_request_v2",
+      "base_valid": "conflict_open_editor_request",
+      "remove": [
+        "conflict_id"
+      ],
+      "expected_error": "require path and conflict id together for the exact file"
+    },
+    {
+      "name": "conflict_markers_failure_does_not_apply_to_side_write",
+      "definition": "conflict_assistant_owner_result_v1",
+      "base_valid": "conflict_mark_refuses_markers",
+      "patch": {
+        "command_id": "cmd.source_control.resolve_conflict_side"
+      },
+      "expected_error": "side application and marking have separate result codes"
+    },
+    {
+      "name": "conflict_unknown_write_cannot_retry",
+      "definition": "conflict_assistant_owner_result_v1",
+      "base_valid": "conflict_side_unverified_write_fenced",
+      "patch": {
+        "retry_allowed": true
+      },
+      "expected_error": "unknown writes remain fenced until reconciliation"
+    },
+    {
+      "name": "conflict_mutation_success_requires_receipt",
+      "definition": "conflict_assistant_owner_result_v1",
+      "base_valid": "conflict_mark_resolved_verified",
+      "remove": [
+        "effect_receipt_ref"
+      ],
+      "expected_error": "verified mutations return their exact effect receipt"
+    },
+    {
+      "name": "conflict_mark_result_cannot_omit_owner_result",
+      "definition": "source_control_command_result_v2",
+      "base_valid": "conflict_mark_result_requires_owner_result",
+      "patch": {
+        "owner_result_ref": null
+      },
+      "expected_error": "typed conflict commands return their exact owner result"
+    },
+    {
+      "name": "conflict_writer_cannot_carry_editor_placement",
+      "definition": "source_control_command_request_v2",
+      "base_valid": "conflict_mark_file_resolved_request",
+      "patch": {
+        "where": "right"
+      },
+      "expected_error": "CV-360 placement belongs to the editor route"
+    },
+    {
+      "name": "accept_selection_mismatch_cannot_retry",
+      "definition": "source_view_command_owner_result_v1",
+      "base_valid": "accept_refuses_unreviewed_stage_selection",
+      "patch": {
+        "retry_attempts": 1
+      },
+      "expected_error": "the user must review the current diff before another acceptance"
     }
   ],
   "server_gap_b_coverage": {

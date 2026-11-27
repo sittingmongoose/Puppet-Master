@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L1128-L1236
+Source lines: L1131-L1240
 
-Source SHA256: `aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26`
+Source SHA256: `97b1d391be028a118aa9ee837749dc861f7f51b6c37f2de93f71048ddf325371`
 
 ---
 
@@ -66,13 +66,13 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 ### 5. Tier overrides: one list per tier vs contextual keys
 
 - **Gap:** YAML shows `tierOverrides.phase.default`, `.phase.architecture`, `.phase.product`, `.task.rust`, `.task.python`, etc. The GUI section says "for each tier (phase/task/subtask/iteration), a text field or list editor for override subagent names."
-- **Clarify:** Resolved to **Simple v1** for the primary user flow: one list per tier (`phase`, `task`, `subtask`, `iteration`) so `tier_overrides` is a tier-keyed map such as `phase: [collaborator]` or `task: [rust-engineer]`. Full contextual keys remain an advanced raw-registry surface only and must not replace the Simple v1 UI unless a later PlanUnit promotes them.
+- **Clarify:** Resolved to **Simple v1** for the primary user flow: one list per tier (`phase`, `task`, `subtask`, `iteration`) so `tier_overrides` is a tier-keyed map such as `phase: [collaborator]` or `task: [rust-engineer]`. This is the compatibility import/export shape; it normalizes into SubagentPolicy (OSI-425) and is not read as a runtime merge path. Full contextual keys remain an advanced raw-registry surface only and must not replace the Simple v1 UI unless a later PlanUnit promotes them.
 
 ### 6. Orchestrator and subagent code not yet present
 
 
 - **Gap:** The plan references `execute_tier_with_subagents`, `build_subagent_invocation`, `execute_with_subagent`, and `SubagentSelector`. These do not exist in the codebase yet; they are specified in the plan's "Integration with Orchestrator" and Phase 3.
-- **Clarify:** Phase 3 (and any subagent execution path) must: (1) Read `enable_tier_subagents` from config; if false, skip subagent invocation (or use a single non-subagent path). (2) When building the list of subagents for a tier, apply `tier_overrides` (replace or merge with selected list), then filter by `disabled_subagents` and ensure `required_subagents` are included. (3) When building `ExecutionRequest` for each subagent run, set `request.plan_mode = tier_config.plan_mode`. Ensure the checklist item "Ensure subagent/invocation path receives tier plan_mode" is done in that code path.
+- **Clarify:** Phase 3 reads only normalized SubagentPolicy (`schema_id: pm.subagent_policy.v1`). OSI-425 imports the legacy `enable_tier_subagents`, `tier_overrides`, `disabled_subagents` and `required_subagents` values into that policy. For each admitted execution unit, run the selector, replace its list with an applicable scope override, filter disabled entries, and add required entries (OSI-214). When building the `ExecutionRequest` for each subagent run, set `request.plan_mode = tier_config.plan_mode`.
 
 ### 7. Message enum and app.rs handlers
 
@@ -91,22 +91,23 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 
 ### 10. Platform-specific subagent output parsers
 
-- **Gap:** Structured handoff validation (`validate_subagent_output`) needs platform-specific parsers: JSON for Cursor/Claude/Gemini, JSONL for Codex, text parsing for Copilot. The plan does not yet specify parser implementation details or fallback behavior when parsing fails.
-- **Clarify:** (1) **JSON parsers:** For Cursor/Claude/Gemini, use `serde_json` to parse `--output-format json` output into `SubagentOutput`. Handle missing fields gracefully (e.g., `downstream_context: None` if field absent). (2) **JSONL parser:** For Codex, parse `--json` or `--experimental-json` JSONL stream; aggregate events into single `SubagentOutput` (last event wins for fields, accumulate findings). (3) **Text parser:** For Copilot, use regex or pattern matching to extract "Task Report:", "Downstream Context:", "Findings:" sections from text output. If sections missing, treat as malformed and retry. (4) **Fallback:** If parsing fails after retry, create partial `SubagentOutput { task_report: raw_output, downstream_context: None, findings: vec![] }` and mark tier as "complete with warnings" rather than failing the run.
+- **Gap:** Structured handoff validation (`validate_subagent_output`) needs transport-scoped parsers (OSI-004, OSI-093): JSON over CLI output for the CliBridge providers (Cursor, Claude Code) and JSON over the direct-provider response's final assistant content for the DirectApi providers (Codex, Copilot, Gemini). The original split "JSON for Cursor/Claude/Gemini, JSONL for Codex, text parsing for Copilot" describes CLI-era output and is historical context only. The plan did not specify parser implementation details or fallback behavior when parsing fails; the Clarify item and the resolved fallback below do.
+- **Clarify:** (1) **JSON parsers:** For Cursor and Claude Code (CliBridge), use `serde_json` to parse the CLI's structured output (`--output-format json` or stream-json, format from platform_specs) into `SubagentOutput`; for Codex, Copilot and Gemini (DirectApi), use `serde_json` on the final assistant content of the direct-provider response. Handle missing fields gracefully (e.g., `downstream_context: None` if field absent). (2) **JSONL parser (historical):** the CLI-era instruction "For Codex, parse `--json` or `--experimental-json` JSONL stream; aggregate events into single `SubagentOutput` (last event wins for fields, accumulate findings)" is not an implementation target: Codex is DirectApi and has no CLI stream. (3) **Text parser (historical):** the CLI-era instruction "For Copilot, use regex or pattern matching to extract \"Task Report:\", \"Downstream Context:\", \"Findings:\" sections from text output" is not an implementation target: Copilot is DirectApi and returns final assistant content parsed as JSON. Pattern extraction of those sections survives only as the generic fallback extraction every transport keeps (OSI-093); if required sections are still missing after it, apply Handoff Retry Ceiling to the malformed output. (4) **Fallback (superseded):** the earlier rule "If parsing fails after retry, create partial `SubagentOutput { task_report: raw_output, downstream_context: None, findings: vec![] }` and mark tier as "complete with warnings" rather than failing the run" is superseded by the resolved fallback below and OSI-093: when the handoff remains invalid after fallback and the Handoff Retry Ceiling budget is exhausted, the error is surfaced with [Retry] [Skip] [View raw output] and settles as Parser-Failure And Unrelated-Failure Recovery Actions (Closure Re-audit Repair Addendum - 2026-11-25) says.
 
 **Subagent Output Parser Fallback (Resolved):**
 
 Platform-specific parsers handle output from each Provider:
-- **Cursor/Claude/Gemini:** JSON parser (stream-json NDJSON events)
-- **Codex:** JSONL parser (newline-delimited JSON events)
-- **Copilot:** Text parser (plain text output, regex-based signal extraction)
+- **Cursor/Claude Code (CliBridge):** Parse single-document JSON or stream-json NDJSON from the CLI according to `platform_specs`. For stream-json, read each newline-delimited event using the existing CliBridge framing and assemble the final assistant content for the attempt in stream order. Parse the handoff from that content. Status, tool and usage events remain transport evidence.
+- **Codex, Copilot, Gemini (DirectApi):** JSON parser over the direct-provider response's final assistant content
+- **OpenCode (ServerBridge):** parser over its server event stream
+- **Transport scope (2026-11-25, OSI-004 and OSI-093):** earlier versions of this list read "Cursor/Claude/Gemini: JSON parser (stream-json NDJSON events)", "Codex: JSONL parser (newline-delimited JSON events)" and "Copilot: Text parser (plain text output, regex-based signal extraction)". Those describe CLI-era output: the Codex JSONL parser, the Copilot text parser, a Gemini stream-json parser, the `--json` / `--experimental-json` flags in the Clarify item above and the CodexOutputParser and CopilotOutputParser snippets (OSI-158, OSI-161) are historical context only, not implementation targets. The GeminiOutputParser snippet (OSI-160) is the live DirectApi parser: it reads `candidates[0].content.parts[0].text` from the direct-provider response body, and only its `--output-format json` comment and `stdout` parameter name are CLI-era wording. Steps 1-5 below apply to every transport.
 
-When a platform-specific parser fails:
-1. **Log:** Record parse error in seglog (`parser.error` event) with the first 500 characters of raw output for diagnostics.
+When the transport parser fails to produce a valid handoff:
+1. **Log:** Record the parser failure in seglog (`parser.error`) under OSI-684. The event provides the first 500 characters of sanitized output for diagnostics and a reference to the full sanitized output.
 2. **Generic fallback:** Attempt generic text extraction — scan for completion signals (including legacy naming variants), error patterns (stack traces, "error:", "fatal:"), and file modification markers.
-3. **If generic succeeds:** Use extracted data; flag the turn as `parser_fallback_used` in seglog metadata.
-4. **If generic also fails:** Treat as a Provider error. Retry once with the same Provider. If retry also fails, surface error to user: "Could not parse output from [Provider]. [Retry] [Skip] [View raw output]."
-5. **Never silently drop output.** All raw output is preserved in the seglog event regardless of parse success.
+3. **If generic succeeds:** Use extracted data only after it passes the same handoff validation. Flag the turn as `parser_fallback_used` in seglog metadata.
+4. **If the output is still invalid:** Request the next format retry with the same Provider while the Handoff Retry Ceiling budget remains. On exhaustion, surface "Could not parse output from [Provider]. [Retry] [Skip] [View raw output]." using the actions of the live recovery point. The earlier "Retry once with the same Provider" wording describes the default budget.
+5. **Never silently drop output.** Preserve the permitted raw output for a recorded parser failure even when generic fallback succeeds.
 
 ### 11. Subagent Persona info: storage, overrides, and injection
 

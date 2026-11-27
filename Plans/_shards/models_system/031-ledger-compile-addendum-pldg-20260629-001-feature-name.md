@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L8269-L8529
+Source lines: L8274-L8552
 
-Source SHA256: `99790d28be8c08ef2ec3e967c4ccdd37229d8184ca708b86330c73bd6071f5b1`
+Source SHA256: `c4e0c6fb1ec69e4f5db3fb393db554fab570c6b49f5153d770afe9f052e413d1`
 
 ---
 
@@ -208,7 +208,21 @@ canonical_text: 'The Free Models priority setting is a PM-wide top-10 provider/m
   per-account authentication, entitlement, health or quota truth: Ready is the shared account owner’s current usable
   result, not merely signed in. DL-259 D4, Jared 2026-10-31: immediately before PM is built, confirm Z.AI’s listed-tools
   rule, Kimi Code’s client/session identity, OpenCode Go’s client/session identity and Muse’s Muse-only subscription
-  credential. This is the pre-build provider-conformance checklist, not a wizard warning, badge or disabled choice.'
+  credential. This is the pre-build provider-conformance checklist, not a wizard warning, badge or disabled choice.
+  DL-2602, Jared 2026-11-24 (C-FIX79), applied 2026-11-25: the Free Models top-10 is not a second list. Puppet Master
+  keeps one model defaults list, Settings > Models Default models (section 7.2), whose job rows are the
+  model_defaults.list_setting_ids settings in Plans/settings_inventory.json at the This project and Everywhere layers.
+  Each row saves one model selection (type model_picker) through the Settings transaction (cmd.settings.transaction.preview
+  / cmd.settings.transaction.apply). A Free Models entry is used for a job only when the person picks it on that job
+  row, either in the row picker or with the Free Models screen per-model action Use for a job, which writes the same
+  row through the same transaction. No ranked top-10 store exists, and the ranked top-10 editor is retired. The top-10
+  wording in this unit and in other passages reads as follows. The global top-10 is the Everywhere rows. Section, surface
+  and role settings are the per-job rows and the section 2 rungs above them, and they keep requested/effective disclosure.
+  Paid-first means the declared factory defaults are paid models and no Free Models entry replaces a row unless the person
+  picks it there; that pick is how a user configures Free Models above paid ones. Saved top-10 order or list means the
+  saved rows, which Auto Apply, provider setup refresh and catalog changes never insert into or change. Outside-top-10
+  fallback means the section 2 resolution order with MS-118 No longer available handling and the Additive Correction v4
+  no-silent-fallback rule, not a ranked fallback list.'
 gui_related: true
 gui_classification_reason: Governs the user-visible top-10 list, section override disclosure, selector behavior, and fallback labels.
 depends_on: []
@@ -216,6 +230,10 @@ unblocks: []
 acceptance_criteria:
 - The top-10 list spans all providers/models, not just Free Models.
 - Paid-first is the default initialization, but explicit user ordering can place Free Models above paid providers/models.
+- 'DL-2602 (applied 2026-11-25): no ranked top-10 store or editor exists. A Free Models entry reaches a job only through
+  that job row of the Settings > Models Default models list (one model_defaults.list_setting_ids setting per row, one
+  model selection each), saved by cmd.settings.transaction.preview / cmd.settings.transaction.apply, whether picked in
+  Settings or with the Free Models screen action Use for a job.'
 - Section/surface/role overrides remain authoritative over the global top-10 and show requested/effective state in the
   GUI.
 - New Ready Free Models entries may become deterministic outside-top-10 fallback candidates immediately, but never insert

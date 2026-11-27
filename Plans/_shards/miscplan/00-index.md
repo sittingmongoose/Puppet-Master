@@ -1,42 +1,42 @@
 # Shard Index: Plans/MiscPlan.md
 
-Generated: 2026-11-13T00:34:44Z
+Generated: 2026-11-26T01:47:18Z
 
-Source SHA256: `075650d61f254d219224a6955894056175249145fa195c870d67edcca7226d33`
+Source SHA256: `5a1f16c378542a770e66a87875b19486d78da6ded77f1e798b0f4c0b9078ba87`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `0f6d5324a4ca60657ec01446e29a73345cd09ba51f58d5d99f92779bf18656a5`
-- [002 - Plan Document Status](002-plan-document-status.md) L7-L16 `7826742de9995f0a1f16481ad8e7c2f689a29eae9797a2e7dada7f53fa9ee7d5`
-- [003 - Rewrite alignment (2026-02-21)](003-rewrite-alignment-2026-02-21.md) L18-L39 `a858b21483d8b2bffd38084bcc337495d48ff105c2475f2534f7c0d87cae8ee3`
-- [004 - Table of Contents](004-table-of-contents.md) L41-L55 `f2a7187d9905238a8f04319ee611c79c08b42d240c9b733e6156b20d8509c869`
-- [005 - 1. Executive Summary](005-1.-executive-summary.md) L57-L75 `f66e6b865655d95d4cb3d12168cbc137758e20f07af48d17746ba83c5b65c7e5`
-- [006 - 2. Problem Statement](006-2.-problem-statement.md) L77-L89 `4527f9aaf4f6dfd49c787dd6c054cfc13d7aa512c74fc95dcd7f4576af9713fd`
-- [007 - 3. Cleanup Policy](007-3.-cleanup-policy.md) L91-L198 `0ba87fcf1b95f125bca4bf6cd34d5984051237e062e507a6fb11ba2fb789c9ff`
-- [008 - 4. Runner Contract Implementation](008-4.-runner-contract-implementation.md) L200-L353 `e70efadcb8cb82aa8b98d94a6ad8b2d0b55f0ab9aba17d84e40d71021e248c64`
-- [009 - 5. Agent Output Directory](009-5.-agent-output-directory.md) L355-L379 `61956ba9604bc7402e26b9a03630b6c3a848a85b3e8316fe4588cd79f9f3974f`
-- [010 - 6. Evidence Retention & Pruning](010-6.-evidence-retention-pruning.md) L381-L407 `5aa0a55165479f91b6af3328f5c890bf7d0222bc733367935dfaf849a8995c20`
-- [011 - 7. Cleanup UX & Config](011-7.-cleanup-ux-config.md) L409-L866 `978ae096159e00893aec64a477ba5cc78a0b626beecb62f6ed74381533fcf895`
-- [012 - 8. Implementation Checklist](012-8.-implementation-checklist.md) L868-L972 `2cf517870777cdff1b411eb592c142fec5de7af03941237096a6b8015fa6d7cd`
-- [013 - 9. Risks & Notes](013-9.-risks-notes.md) L974-L983 `61e7de97b39d948405b39d468a481f2ad98e6e6f0e44922655df0ca88af4b3bc`
-- [014 - 9.1 Gaps and Potential Issues](014-9.1-gaps-and-potential-issues.md) L985-L1140 `452ad638c709c14ba02e278cf11a54eaf6373092d7617af9baeec25c6e0a5eae`
-- [015 - 10. Cross-Plan Dependencies and Impacts](015-10.-cross-plan-dependencies-and-impacts.md) L1142-L1213 `499b1d68a50f863ce5dcec46e7f3fd0cbb8a6ba0855026133cea391775c05a0b`
-- [016 - 10.5 Crews and Subagent Communication Enhancements for Cleanup Operations](016-10.5-crews-and-subagent-communication-enhancements-for-cleanup-o.md) L1215-L1227 `d8396d6dceb74a2e70c93e7ca5ee903bbd75068ef684ea51907f6ecf2735ffcc`
-- [017 - 10.6 Lifecycle and Quality Enhancements for Cleanup Operations](017-10.6-lifecycle-and-quality-enhancements-for-cleanup-operations.md) L1228-L1240 `968935cccee6f62c9932838499b372545b126f483cdfadcbc56ba4db1d143b96`
-- [018 - 11. References](018-11.-references.md) L1241-L1252 `e9bd70428d17ba87787eef1f02b6a7ee33ef009dcc0c9db38ae59dfd2075911d`
-- [019 - Implementation status (Tray and Start-on-Boot, Phase 4)](019-implementation-status-tray-and-start-on-boot-phase-4.md) L1254-L1263 `67d36d6d5f01a4d306c0dc33c26e2a475feb34f128b02161a0135bb095ac7c5f`
-- [020 - 11. References](020-11.-references.md) L1265-L1276 `3daf4e928ac534e80f6aea8ee9d1ec14d2b88d9670827bb0cb51139b51b58449`
-- [021 - Implementation status (Tray and Start-on-Boot, Phase 4)](021-implementation-status-tray-and-start-on-boot-phase-4.md) L1278-L1284 `be6d07e3c470c89a77b5d8fe82c4f19f7bbd21a55d25cca690fffcd244e5397a`
-- [022 - Runner Preparation/Cleanup and Safe-Point Canonical Alignment (2026-03-08)](022-runner-preparation-cleanup-and-safe-point-canonical-alignment-20.md) L1286-L1307 `c3af26e34faea23cd8a58416ce2c7a60292afd18d701f92d4cacf0941d856075`
-- [023 - Runtime Cleanup / Recovery Preservation Addendum (2026-03-09)](023-runtime-cleanup-recovery-preservation-addendum-2026-03-09.md) L1308-L1316 `e3776df37f5130636ca896b1329906217ccb9de91dbc7e36df50706442666cdb`
-- [024 - Debug investigation instrumentation cleanup addendum (2026-03-23)](024-debug-investigation-instrumentation-cleanup-addendum-2026-03-23.md) L1318-L1373 `802227c46d2702e2a7999bc5c9d21d9121c4caf4daf49b3bde98e3ca60208268`
-- [025 - Owner / Consumer Map](025-owner-consumer-map.md) L1375-L1379 `f9cfe794a3b32c654589c3e987dcbf4047ba3b80678468af1d01b016ace9b775`
-- [026 - PlanUnits](026-planunits.md) L1381-L6359 `5fc4289467a76d90ba02652a107a1e5eccfa18646b221df85a3a681bf3096750`
-- [027 - Migration Coverage](027-migration-coverage.md) L6361-L6377 `99f4edd6b928e85b2997c9233583089a8ed379ac54bd07287a561fe61111ef27`
-- [028 - Ledger Compile Addendum - pldg-20260614-001](028-ledger-compile-addendum-pldg-20260614-001.md) L6379-L6414 `b5d0f84a74d979116f6e6aa3a87cb41c3104e6b0eba47111ab4170868c3fced4`
-- [029 - Ledger Compile Addendum - pldg-20260614-002](029-ledger-compile-addendum-pldg-20260614-002.md) L6416-L6456 `d2beab0564e4b2c736ada964f2fb24230d7b69a8af497f09c3ebf42a61bc0137`
-- [030 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](030-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L6458-L6470 `6d101cac372cdaec00401a7d32a11baae479aafd138210eff4d46c1f73c1c12d`
-- [031 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](031-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L6471-L6477 `7066310214f1445552a4db0f46bed81e876533dc188df8d344abc97b0308ce3e`
-- [032 - Remaining Runtime Cleanup Ownership Addendum (2026-08-14)](032-remaining-runtime-cleanup-ownership-addendum-2026-08-14.md) L6479-L6516 `c88b534ad99d8fb08324091c8098b3b7ffc85873c2c3d87b91eb1774388a9440`
+- [001 - Preamble](001-preamble.md) L1-L4 `912c6df10fa85d641cbe0777e43d99cab9592ee4df44d6c8cd57330b33b8bc90`
+- [002 - Plan Document Status](002-plan-document-status.md) L7-L16 `138bf3b1cde7c409722a079211766cc5f61bfc3f9c86e85e2e99162282551831`
+- [003 - Rewrite alignment (2026-02-21)](003-rewrite-alignment-2026-02-21.md) L18-L39 `34c9ac673fb41cdba8825f9047fc7d5f48488e2ce77e39281fc88ac3fb6826f6`
+- [004 - Table of Contents](004-table-of-contents.md) L41-L55 `7ab6d270d6d85f15e8ca5d3c6922276fd8f5d27dd7cf2009c090a35bbbbb8a4d`
+- [005 - 1. Executive Summary](005-1.-executive-summary.md) L57-L75 `945b34e4651e3778a343400ed02cc86cd78bfe6fa6b47c310d56ba27cd972feb`
+- [006 - 2. Problem Statement](006-2.-problem-statement.md) L77-L89 `35200b880184462cc970ff66f7d34dce66256cd1b550e3de8271c3dd4dfd67b6`
+- [007 - 3. Cleanup Policy](007-3.-cleanup-policy.md) L91-L198 `5ee118c13efd780039f572db70a7723d353e52f124143ef93bd918539a17b076`
+- [008 - 4. Runner Contract Implementation](008-4.-runner-contract-implementation.md) L200-L353 `f281a35fa0994f127bc9cdc0a7bbbf301c7bfe12b6a9895868d06eef680bab7e`
+- [009 - 5. Agent Output Directory](009-5.-agent-output-directory.md) L355-L379 `a95da22ac844cfe1138552bf66a4253b839b13efbf2ca285c255c63a1f4f00f2`
+- [010 - 6. Evidence Retention & Pruning](010-6.-evidence-retention-pruning.md) L381-L407 `9bc5e96c3a07210df5d78fa6ce50f593562e7a90e84943c301c80770201e5da4`
+- [011 - 7. Cleanup UX & Config](011-7.-cleanup-ux-config.md) L409-L866 `46447ba3531339d4f38629fd1410b06ee25fbb5a17d04fd995c53cbea121b3ef`
+- [012 - 8. Implementation Checklist](012-8.-implementation-checklist.md) L868-L972 `889f37a334dad63a58898e180002d405a8f80c0a71ce6fa405708c9fd6e81a27`
+- [013 - 9. Risks & Notes](013-9.-risks-notes.md) L974-L983 `a99dce54c4e248828a296b762497ecef9388572080c858574791934f00edaf72`
+- [014 - 9.1 Gaps and Potential Issues](014-9.1-gaps-and-potential-issues.md) L985-L1140 `f2a2daf09f5b22cb34986d5a71f5877d74a201153e24f1f109954ef6052f71dc`
+- [015 - 10. Cross-Plan Dependencies and Impacts](015-10.-cross-plan-dependencies-and-impacts.md) L1142-L1213 `f26614f19d5cad973c3c3aa414b43f1247113a536983251663e0c11698a1aa7c`
+- [016 - 10.5 Crews and Subagent Communication Enhancements for Cleanup Operations](016-10.5-crews-and-subagent-communication-enhancements-for-cleanup-o.md) L1215-L1227 `12db860d679314bad956fbdf3b1ae690116bc89cfb6c97ce0e6924bd0280f4d5`
+- [017 - 10.6 Lifecycle and Quality Enhancements for Cleanup Operations](017-10.6-lifecycle-and-quality-enhancements-for-cleanup-operations.md) L1228-L1240 `a94a2702d219461664b9faaec57d540f94d8aa605c6b8c8d054749d34e3baca1`
+- [018 - 11. References](018-11.-references.md) L1241-L1252 `a9af3735e1701d7c6dacab99927470734f1b286fec9edaeb13686b993971b1d9`
+- [019 - Implementation status (Tray and Start-on-Boot, Phase 4)](019-implementation-status-tray-and-start-on-boot-phase-4.md) L1254-L1263 `2df832345aa408e34687eb503b31f38b64129a7b05bff359b4c30439b9fecf3f`
+- [020 - 11. References](020-11.-references.md) L1265-L1276 `39a5590b34020d1fad2eae283e2cd12a1bba8c9e0082ccd6dc1be82d9b9ed2f5`
+- [021 - Implementation status (Tray and Start-on-Boot, Phase 4)](021-implementation-status-tray-and-start-on-boot-phase-4.md) L1278-L1284 `9127b21b5c3347771839befd4022a249f25120b6fb4dacdde5ccf88122d1198b`
+- [022 - Runner Preparation/Cleanup and Safe-Point Canonical Alignment (2026-03-08)](022-runner-preparation-cleanup-and-safe-point-canonical-alignment-20.md) L1286-L1307 `0d0141414172b85daf4886ee8b408e3b8b2704719e95c583576577cf448c9c4a`
+- [023 - Runtime Cleanup / Recovery Preservation Addendum (2026-03-09)](023-runtime-cleanup-recovery-preservation-addendum-2026-03-09.md) L1308-L1316 `3147253bdb1ab19fe385390bd711a989d91ba21c982fb55087a9052093e14536`
+- [024 - Debug investigation instrumentation cleanup addendum (2026-03-23)](024-debug-investigation-instrumentation-cleanup-addendum-2026-03-23.md) L1318-L1373 `1964a18766e949f81fb6ce7e22d1515d7fcea157bc003deb3da0aa926e0339d1`
+- [025 - Owner / Consumer Map](025-owner-consumer-map.md) L1375-L1379 `6ef905d06a2f70e80795e38c01a1c200f0b248a02a7f32d269e9cea804db027a`
+- [026 - PlanUnits](026-planunits.md) L1381-L6359 `87e3408309ec3e32ebb65633abf3b859d7acf1f700e472b25904eab5e9e49fbc`
+- [027 - Migration Coverage](027-migration-coverage.md) L6361-L6377 `d496b9978b4313f46bec5fc4503e636b1bf96c52c142a4254a310b2e8573a3ca`
+- [028 - Ledger Compile Addendum - pldg-20260614-001](028-ledger-compile-addendum-pldg-20260614-001.md) L6379-L6414 `b93b3316829d7a03d87301bfc8c771ec0700d61362da63cc8191ee58214059b8`
+- [029 - Ledger Compile Addendum - pldg-20260614-002](029-ledger-compile-addendum-pldg-20260614-002.md) L6416-L6481 `bb2897a45619f9d7272affd0208291f99e7955a075e022b9473026ec9c112ca5`
+- [030 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](030-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L6483-L6496 `e31f44873e08a6b3145d9af40615874534ad3a9531f03dada95c2c4a90ab2aed`
+- [031 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](031-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L6497-L6503 `595971671ea8c502e85a1e2e1a7948c8af4579d39cc21d318b7794141142c5f6`
+- [032 - Remaining Runtime Cleanup Ownership Addendum (2026-08-14)](032-remaining-runtime-cleanup-ownership-addendum-2026-08-14.md) L6505-L6542 `3b2a2991c7ded2cd49309e95bf818bfd3f33aef98417b88cf9dcf8c32bc1742b`

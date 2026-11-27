@@ -326,7 +326,7 @@ File keys are the `*_override` spellings above, never the bare GUI labels `perso
 |---|---|---|---|
 | `name` | Required | `string` | Invocation name. Must pass validation and MUST NOT collide with reserved Assistant Chat built-ins or reserved git/GitHub prefixes. |
 | `description` | Required | `string` | Short user-facing description. |
-| `arguments` | Optional | `array<object>` | Positional argument schema for validation/help. Each item is an object with optional `name` (`string`), `hint` (`string`), and `required` (`boolean`); readers preserve unknown item keys. Binds losslessly to the GUI `argumentsHint` field (see mapping below). |
+| `arguments` | Optional | `array<object>` | Positional argument schema for validation/help. Each item is an object with optional `name` (`string`), `hint` (`string`), and `required` (`boolean`). The command file owns `name`, `required`, and every item after `arguments[0]`. Readers preserve unknown item keys byte-stable and never act on them. This table is the live item shape, superseding the 2026-07-08 FABLE addendum. Binds losslessly to the GUI `argumentsHint` field (see mapping below). |
 | `persona_override` | Optional | `string` | Requested Persona override for the command execution context. GUI label `persona`. |
 | `mode_override` | Optional | `string` | Requested runtime mode override when allowed by the owning surface. GUI label `mode`; file values are `ask`/`plan`/`regular`/`yolo` only (GUI `inherit` omits the key). |
 | `permissions_profile_override` | Optional | `string` | Permissions profile override, subject to the central permission system. This is the actual permissions override token; GUI label `permissionsProfile`. |
@@ -334,7 +334,7 @@ File keys are the `*_override` spellings above, never the bare GUI labels `perso
 | `enabled` | Optional | `boolean` | Command availability. Default `true` when absent. `false` hides the command from chat and the palette; the file stays in place. GUI label `Enabled`. |
 | `subtask` | Optional | `boolean` | Canonical child-run boundary (§4.2). Preserved through every file round-trip; default `false` on create. |
 
-GUI↔file mapping (lossless, both directions): GUI `template` is the Markdown body; GUI `description`, `subtask`, `override_builtin`, `enabled` copy by value with the defaults above; GUI `persona`/`mode`/`permissionsProfile` map to `persona_override`/`mode_override`/`permissions_profile_override` with `Inherit`/empty omitting the file key. GUI `argumentsHint` binds to `arguments[0].hint`: reading a missing array, missing item, or missing `hint` key yields `""`; writing a non-empty hint sets exactly that key (creating array/item as needed) and preserves every other item and key; writing `""` removes the `hint` key, drops the item if it becomes empty, and drops the field if the array becomes empty. Richer `arguments` arrays round-trip byte-stable through edits that do not touch the hint. The file spec never adopts bare GUI key spellings without this mapping.
+GUI↔file mapping (lossless, both directions): GUI `template` is the Markdown body; GUI `description`, `subtask`, `override_builtin`, `enabled` copy by value with the defaults above; GUI `persona`/`mode`/`permissionsProfile` map to `persona_override`/`mode_override`/`permissions_profile_override` with `Inherit`/empty omitting the file key. The argument authoring boundary (DL-2604, CS-030) is one control, `Arguments hint` (`argumentsHint`, at most 200 characters), in New Command (§6.1.3) and the hero sheet (F2 of the 2026-09-26 Commands & Shortcuts census, `Concepts/PMConcept7.html`). DL-2604 retires the GUI list editor request (semantic closure registry line 1377). The hint binds to `arguments[0].hint`: reading a missing array, item, or `hint` yields `""`. A non-empty hint writes exactly that key, creating the array or item as needed. Clearing the hint removes only that key, unless it leaves the sole item empty, in which case the `arguments` field is dropped. When later items exist, keep the empty first item as `{}` to preserve their positions. Edits that leave the hint alone round-trip the entire array byte-stable. The file spec never adopts bare GUI key spellings without this mapping.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Prompt_Pipeline.md
 
@@ -550,18 +550,18 @@ Sorted alphabetically by name; project-local entries sort before global when nam
 "New Command" button opens an editor form with:
 - **Name** (text input; validated per §2.5; collision check per §2.4)
 - **Description** (text input; required; max 200 chars)
+- **Arguments hint** (text input; optional; max 200 chars; writes `arguments[0].hint` through the §3.2 GUI↔file mapping; a new command starts with no `arguments` field, so leaving the hint empty at `Create command` writes none)
 - **Persona** (dropdown populated from Persona registry, or null)
 - **Mode** (dropdown: inherit / ask / plan / regular / yolo)
 - **Subtask** (toggle; default off)
 - **Permissions profile override** (dropdown populated from permission profiles, or null)
 - **Override built-in** (toggle; default off; visible only in Expert mode; reserved Assistant Chat slash commands fail validation even if this toggle is enabled, because `override_builtin` does not apply to canonical reserved chat commands.)
 - **Template body** (Markdown editor with syntax highlighting for `$ARGUMENTS`, `$N`, `@path`, `` !`cmd` `` patterns)
-
-Scope selector: project-local or global.
+- **Scope** selector (project-local or global)
 
 #### 6.1.4 Edit
 
-Row click or edit button opens the same editor pre-populated. Editing a global command while a project is active offers "Save as project override" (creates project-local copy) or "Save globally."
+Row click or edit opens the pre-populated hero sheet (2026-09-26 Commands & Shortcuts census, Owned local file actions, F2). Each field commits on edit through `commands.update`. Clearing `Arguments hint` follows §3.2 and preserves the item's other keys and every later item. The first-draft global command save labels "Save as project override" and "Save globally" are retired.
 
 #### 6.1.5 Delete
 
@@ -2367,10 +2367,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
-  New Command opens an editor form for name, description, Persona, mode, subtask, permissions profile
-  override, override built-in, template body and project-local/global save scope, with existing
-  validation and syntax highlighting. There is no saved model or depth field under MD2 NEITHER; old
-  model_override data remains inspection-only through compatibility reads.
+  New Command opens an editor form for name, description, Arguments hint, Persona, mode, subtask, permissions profile override, override built-in, template body and project-local/global save scope, with existing validation and syntax highlighting.
+  There is no saved model or depth field under MD2 NEITHER; old model_override data remains inspection-only through compatibility reads.
 gui_related: true
 gui_classification_reason: The create editor form is a visible command authoring UI.
 split_recommended: true
@@ -2381,6 +2379,7 @@ acceptance_criteria:
   - New Command opens an editor form.
   - Name is validated per section 2.5 and collision-checked per section 2.4.
   - Description is required and has max 200 chars.
+  - Arguments hint is optional, has max 200 chars, and writes `arguments[0].hint` through the section 3.2 mapping; other `arguments` items and keys are file-authored and preserved.
   - Persona, Mode, Subtask, Permissions profile override and Override built-in controls are present; no command model field is offered.
   - Override built-in is visible only in Expert mode.
   - Reserved Assistant Chat slash commands fail validation even if Override built-in is enabled.
@@ -2409,6 +2408,7 @@ preserved_exact_tokens:
   - "!`cmd`"
 negative_constraints:
   - "Reserved Assistant Chat slash commands fail validation even if override_builtin is enabled."
+  - "No GUI list editor for `arguments` is offered; Arguments hint is the only argument control (DL-2604 retires the list-editor request of registry line 1377)."
 owner_hints:
   - Plans/Commands_System.md
 ```
@@ -4356,7 +4356,7 @@ owner_hints: [Plans/Commands_System.md, Plans/storage-plan.md, Plans/UI_Command_
 
 This addendum repairs non-runtime command-system rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
-- Repairs `sfk-f5d64ed00d4c22eab6a72e2e`: `arguments[]` entries have fields `name`, `type`, `required`, `default?`, `enum_values[]?`, `description`, and `ui_editor`. `type` values are `string`, `number`, `boolean`, `path`, `enum`, `object`, and `array`.
+- Repairs `sfk-f5d64ed00d4c22eab6a72e2e`: `arguments[]` entries have fields `name`, `type`, `required`, `default?`, `enum_values[]?`, `description`, and `ui_editor`. `type` values are `string`, `number`, `boolean`, `path`, `enum`, `object`, and `array`. This shape was retired 2026-11-25. The 2026-09-26 §3.2 rewrite owns the live shape with optional `name` (`string`), `hint` (`string`) and `required` (`boolean`). Readers preserve `type`, `default`, `enum_values`, `description` and `ui_editor` byte-stable as unknown keys and never validate or act on them. The GUI authors `Arguments hint` through the §3.2 mapping (§6.1.3).
 - Repairs `sfk-9e43a6ff3203f5ce66e0126d`: Section 6 numbering is structurally superseded by named headings. Missing `6.4` and `6.5` are retired aliases; new citations must use heading names, not bare section numbers.
 - Repairs `sfk-03404db2c315565320a4b3e9`: reserved command prefixes are `cmd.git.`, `cmd.github.`, `cmd.source_control.`, `cmd.file.`, `cmd.permissions.`, `cmd.runtime.`, `cmd.testing.`, `cmd.browser.`, and `cmd.persona.`. Non-owner docs may consume but not mint commands under those prefixes.
 
@@ -6476,16 +6476,16 @@ This addendum records the central command-contract registration for the approved
 | `cmd.chat.teach.cancel` | `Plans/assistant-memory-subsystem.md` | `handlers::assistant_memory::teach_cancel` | `Plans/assistant_memory_contracts.schema.json#/$defs/TeachCancelRequest` -> `Plans/assistant_memory_contracts.schema.json#/$defs/TeachCancelResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
 | `cmd.chat.teach.open_memory` | `Plans/assistant-memory-subsystem.md` | `handlers::assistant_memory::teach_open_memory` | `Plans/assistant_memory_contracts.schema.json#/$defs/MemoryRoute` -> `Plans/assistant_memory_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
 | `cmd.chat.eli5.set` | `Plans/assistant-chat-design.md` | `handlers::assistant_chat::eli5_set` | `Plans/assistant_chat_contracts.schema.json#/$defs/ELI5ThreadOverrideRequest` -> `Plans/assistant_chat_contracts.schema.json#/$defs/ELI5ThreadOverrideResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
-| `cmd.browser.capture.full_to_chat` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::capture_full_to_chat` | `Plans/browser_capture_contracts.schema.json#/$defs/BrowserCaptureFullRequest` -> `Plans/browser_capture_contracts.schema.json#/$defs/BrowserCaptureResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
-| `cmd.browser.capture.region_to_chat` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::capture_region_to_chat` | `Plans/browser_capture_contracts.schema.json#/$defs/BrowserCaptureRegionRequest` -> `Plans/browser_capture_contracts.schema.json#/$defs/BrowserCaptureResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.browser.capture.full_to_chat` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::capture_full_to_chat` | `Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionResultV2` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.browser.capture.region_to_chat` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::capture_region_to_chat` | `Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionResultV2` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
 | `cmd.browser.component.pick` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::component_pick` | `Plans/browser_capture_contracts.schema.json#/$defs/BrowserComponentPickRequest` -> `Plans/browser_capture_contracts.schema.json#/$defs/BrowserComponentPickResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
 | `cmd.browser.component.send_now` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::component_send_now` | `Plans/browser_capture_contracts.schema.json#/$defs/BrowserComponentSendRequest` -> `Plans/browser_capture_contracts.schema.json#/$defs/MessageAdmissionResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
 | `cmd.browser.component.add_to_composer` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::component_add_to_composer` | `Plans/browser_capture_contracts.schema.json#/$defs/BrowserComponentComposerRequest` -> `Plans/browser_capture_contracts.schema.json#/$defs/ComposerBufferResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
 | `cmd.browser.component.insert_at_cursor` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::component_insert_at_cursor` | `Plans/browser_capture_contracts.schema.json#/$defs/BrowserComponentComposerRequest` -> `Plans/browser_capture_contracts.schema.json#/$defs/ComposerBufferResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
 | `cmd.browser.component.mode.set_default` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::component_mode_set_default` | `Plans/browser_capture_contracts.schema.json#/$defs/BrowserComponentModeRequest` -> `Plans/browser_capture_contracts.schema.json#/$defs/SettingsTransactionResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
-| `cmd.browser.devtools.open` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::devtools_open` | `Plans/browser_capture_contracts.schema.json#/$defs/BrowserDevToolsOpenRequest` -> `Plans/browser_capture_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
+| `cmd.browser.devtools.open` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `handlers::browser_runtime::devtools_open` | `Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenRequest` -> `Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserDevToolsOpenResultV1` (navigation wrapper; the typed route result; C-FIX79 decision 2026-11-24) | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
 
-The eleven contract schema documents named above are owner-authored artifacts that must exist and validate before any row leaves `handler_unavailable`. Naming them here does not create them and does not admit a storage key or an EventRecord.
+All owner-authored contract schema documents referenced in the table must exist and validate before any row leaves `handler_unavailable`. Naming them here does not create them. Registration records the schema references. Schema creation, storage key admission and EventRecord admission remain with their respective owners.
 
 ### Typed error vocabulary
 

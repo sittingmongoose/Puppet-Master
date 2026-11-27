@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L4543-L4652
+Source lines: L4550-L4659
 
-Source SHA256: `7ba17c5aa7fb716a162c335b6ec6e71fc68d986a5c12f560da9fc6c85b205c7a`
+Source SHA256: `7c52aa35b4fb3b308c17b6cf275e1f2f81fab5151885cf7a52d3ae688fdbe180`
 
 ---
 
@@ -61,7 +61,7 @@ Deep Plan documents reuse the Embedded Document Pane annotation/revision contrac
 Required behavior:
 - highlight text -> annotation action palette
 - annotation markers in margin + annotation list/drawer
-- `Resubmit with Annotations` launches targeted revision for the plan document
+- `Resubmit with Annotations` launches targeted revision for the plan document by dispatching `cmd.prd_builder.revision.resubmit` (DL-2602)
 - deterministic annotation re-anchoring after edits
 - no silent annotation loss
 - no automatic Multi-Pass Review requirement before plan approval/execution

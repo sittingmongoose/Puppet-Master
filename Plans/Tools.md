@@ -319,13 +319,15 @@ All core tool-contract (`/tool-contract`) adapters default to sync execution sem
 
 #### 3.5.0A Typed recovery and artifact-backed output
 
-Every failed, partial, truncated, or recoverable tool attempt returns a bounded `ToolRecoveryEnvelope` alongside `ToolTurnSettlement`. Canonical fields are:
+Every failed, partial, truncated, or recoverable tool attempt returns a bounded `ToolRecoveryEnvelope` alongside `ToolTurnSettlement`. This includes calls denied before dispatch. Canonical fields are:
 
 ```text
 logical_operation_id
-original_tool_call_id
+original_tool_call_id?
+parent_operation_id?
+gate_id?
 attempt_id
-tool_ref
+tool_ref?
 status
 failure_class
 retryable
@@ -350,6 +352,8 @@ next_safe_action_ids[]
 
 Fields that do not apply retain their typed empty/false state; adapters must not substitute ambiguous prose. `failure_class` is structured and is the only input to automatic retry policy. Permission denial, user decline, FileSafe block, schema mismatch, validation failure, safety stop, and secret-policy block are terminal policy outcomes and MUST NOT be relabeled transient.
 
+`original_tool_call_id` copies the nonempty `tool_call_id` of the settlement, including the provider's original id on duplicate-id denials and the host-issued id on T-189 host-carried calls and T-190 nested calls. Omit it only for a provider-native call the gate denied without an id, including a `length_truncated` denial. `parent_operation_id` copies the settlement's enclosing operation id for a nested call. `gate_id` is the nonempty PM id from the gate record, present for a gated call and absent otherwise. The runtime assigns `logical_operation_id` and `attempt_id` independently of the call id, including for a denied call. `tool_ref` is the normalized tool reference, omitted only when pre-dispatch admission could not resolve it. Omitted members carry neither `null` nor an empty string.
+
 `status` is exactly `complete | partial | timed_out | truncated | unavailable | blocked | failed`. `next_safe_action_ids[]` contains stable preregistered action IDs only; it never embeds arbitrary commands, shell text, credentials, or provider-supplied remediation code.
 
 Recovery rules:
@@ -357,8 +361,8 @@ Recovery rules:
 - One failure never silently becomes multiple attempts. Every retry has a new `attempt_id`, remains under the same `logical_operation_id`, increments `retry_count`, and preserves the preceding settlement.
 - Blind reruns are prohibited. A retry requires a permitted failure class, remaining parent deadline/resource budget, a concrete changed recovery condition, and an unspent class-specific retry allowance.
 - MCP invocations use the stricter MCP-owner rule: at most one additional bounded invoke-time reconnect or noninteractive auth-refresh retry. The general tool retry allowance MUST NOT add retries above that MCP limit.
-- Complete large output is redacted before artifact spill. The model-visible result includes bounded head/tail, exact original size, truncation state, and a canonical artifact ref. If retention fails, settlement is `fatal` or `partial_truncated`, never success.
-- Amended 2026-10-31 (DL-270): the spill target is the content-addressed payload store (SP-337). The canonical artifact ref is a payload reference (BLAKE3 hash, pack, offset), and spilled output is stored once, reference-counted, with garbage collection honouring holds. The same applies to ToolRecoveryEnvelope and ToolManagedOutputRef (T-177).
+- Complete large output is redacted before artifact spill. On successful spill, the model-visible result includes bounded head/tail, exact original size, truncation state, and a canonical artifact ref. If retention fails, the settlement is `fatal` or `partial_truncated` and carries an explicit retention failure. Omit `artifact_or_spill_ref` and `retention_ref` when the complete output could not be retained.
+- Amended 2026-10-31 (DL-270): the spill target is the content-addressed payload store (SP-337). `ToolRecoveryEnvelope.artifact_or_spill_ref` is the canonical SP-337 payload reference. The payload index resolves its BLAKE3 content ID to the pack and offset. `ToolManagedOutputRef` (T-177) carries the same content ID in `ToolTurnSettlement.retention_ref`. Spilled output is stored once, reference-counted, with garbage collection honouring holds.
 - Artifact/spill refs follow canonical retention, access-control, cleanup, and redaction owners; raw secrets, decrypted headers, tokens, cookies, or unredacted environment values never enter the envelope, receipt, prompt, cache, or spill.
 - Terminal recovery reports `cwd_before`/`cwd_after`, bounded pattern-based hints, and the retained full redacted output ref. It tells the caller to inspect the artifact instead of rerunning only to recover omitted bytes.
 - Patch/write reports already-applied success/no-op only when post-read proof shows new content present and old content absent. Whitespace mismatch and ambiguous locations are explicit; mutation remains atomic, FileSafe-approved, and post-write verified.
@@ -376,7 +380,7 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Permissions_Syst
 | `mode` | enum (`"sync"` \| `"async"`) | no | Execution mode. Default `sync`. `sync` waits through `initial_wait`; `async` returns immediately with a live shell handle. |
 | `initial_wait` | integer seconds | no | Sync-mode wait window before returning partial output and a running shell handle. Default `30`; minimum `1`; maximum `300`; values outside this closed range are `validation_error`. |
 | `shellId` | string | no | Existing shell/session binding to reuse for stateful commands; omitted to create a new shell binding. |
-| `detach` | boolean | no | Async-only. When `true`, the process is fully detached and survives client shutdown; when `false`, it remains attached to the shell session. |
+| `detach` | boolean | no | Async-only. When `true`, the process survives client shutdown under execution-host custody. When `false`, it follows the shell session's ordinary lifetime. |
 
 Amended 2026-10-09 (DL-181): `shellId` is the caller's opaque handle for the one canonical `terminal_session_id` its shell binds to (T-007). The runtime keeps that join, so Open in Terminal and Show Terminal reveal the session's terminal tab (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-017`, `#SMPFS-180`), and the handle never appears in the UI. A `shellId` that resolves to a terminal a human opened writes only under the human's grant and the rules of `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-182`: without a grant the write is refused before any byte reaches the session, after a human keystroke it is refused as `preempted`, during a password or secret prompt as `secret_input`, and under input protection with the explicit blocked result of SMPFS-165; the result fields are `Plans/Contracts_V0.md#CV-362`'s. `detach` means process detachment: the process keeps running after the client shuts down. It is not a panel tab's placement or a pop-out, and it opens, moves or closes no tab.
 
@@ -386,7 +390,9 @@ Amended 2026-10-09 (DL-181): `shellId` is the caller's opaque handle for the one
 - Sync still running after `initial_wait`: `{ shellId, status: "running", stdout, stderr, exit_code: null }`
 - Async launch: `{ shellId, status: "running", detach, pid? }`
 
-`stdout` and `stderr` are strings; `exit_code` is an integer on completion and `null` while still running.
+`stdout` and `stderr` are strings. `exit_code` is an integer on authoritative completion and `null` while running, on timeout, or if the session ends without an authoritative command outcome. When the terminal provides a single merged stream, `stdout` carries that stream and `stderr` is empty by definition.
+
+Each status refers to the individual invocation. A fresh binding starts a persistent shell and submits the first command to it. Later calls with the same live `shellId` submit to that shell, retaining its working directory, exported variables and other shell state. The Tool Turn Contract Minima below define submission and authoritative completion. A completed command can leave its shell ready for another call. If the shell ends, its handle identifies the ended session for review and cannot dispatch another command. `detach: true` keeps the running process under the execution host's custody across client shutdown, using the same binding and command boundary.
 
 **Error cases**
 
@@ -395,7 +401,8 @@ Amended 2026-10-09 (DL-181): `shellId` is the caller's opaque handle for the one
 | `validation_error` | Invalid parameter combination, such as `detach` without `mode: "async"` or malformed `initial_wait`. |
 | `permission_denied` | Tool blocked by tool policy before execution. |
 | `filesafe_blocked` | Shell command rejected by FileSafe, command blocklist, or path guard. |
-| `shell_not_found` | Referenced `shellId` does not exist or is no longer active. |
+| `shell_not_found` | Referenced `shellId` does not exist or is no longer active, including when the session ends during a call without authoritative completion for that invocation. |
+| `shell_busy` | The bound shell is handling a command or has no verified idle input boundary. The call writes nothing and is not queued. |
 | `spawn_failed` | Runtime could not start the shell or child process. |
 | `preempted` | The write targeted a terminal where a human took over; nothing was written and the agent has been told (added 2026-10-09, SMPFS-182). |
 | `secret_input` | The terminal is reading a password or other secret, which only the human may answer; nothing was written (added 2026-10-09, SMPFS-182). |
@@ -408,7 +415,7 @@ Amended 2026-10-09 (DL-181): `shellId` is the caller's opaque handle for the one
 - Accepted `initial_wait` range: `1..=300` seconds. `0`, negative values, fractional values, and values above `300` are rejected before dispatch.
 - Recommended hard execution ceiling: `30m` per shell command unless a stricter runner limit is configured.
 - If `initial_wait` expires first, the command remains live and returns `status: "running"` with partial `stdout` / `stderr`.
-- If the hard execution ceiling expires, the runtime terminates the process and returns `{ shellId, status: "timed_out", stdout, stderr, exit_code: null, error: { code: "timeout" } }`.
+- If the hard execution ceiling expires, the runtime stops the exact invocation through terminal runtime control and returns `{ shellId, status: "timed_out", stdout, stderr, exit_code: null, error: { code: "timeout" } }`. If it must end a PM-owned shell to stop the invocation, the binding ends. On a human-opened session, stop only a foreground job the runtime can still attribute to that invocation and has authority to interrupt. If the runtime cannot confirm termination, add `termination_confirmed: false` to `error`. Further dispatch requires a verified idle boundary.
 
 #### 3.5.2 `edit` contract
 
@@ -970,7 +977,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 |---|---|---|---|
 | `goal` | `string` | yes | The delegated work to perform. |
 | `context?` | `object` | no | Structured supporting context, refs, or constraints. |
-| `owner_hint?` | `string` | no | Exact-match hint against `crew.roles`; on no match the current session remains the owner. |
+| `owner_hint?` | `string` | no | Exact-match hint against `crew.roles`, matched to a `role_id` from the closed set `planner`, `implementer`, `reviewer`, `tester`, `designer`, `security`, `release`, `governance` (Personas §10, DL-2602); on no match the current session remains the owner. |
 | `subagent_type?` | `string` | no | Optional child role selector; when present, validate it against the `subagent_registry` enum of 42 subagent types before launch. |
 | `resume?` | `{ delegated_session_id: string }` | no | Resume token for an existing delegated run. |
 | `timeout_s?` | `number` | no | Caller-selected ceiling when policy allows. |
@@ -1098,7 +1105,7 @@ See [OpenCode -- Custom tools](https://opencode.ai/docs/tools/#custom-tools) for
 
 `Persistent EvalSession` lifecycle, retained-variable/kernel identity, Host/Environment lease, resource accounting, restart, idle handling, cleanup, and durable session records are owned by `Plans/Shared_Integration_Runtime.md`. Tools does not create a second evaluator or kernel manager.
 
-An EvalSession may request nested Puppet Master tools only through the same `CapabilityStageRecord`, request selection, policy snapshot, schema validation, parent deadline, FileSafe, network/host, and `ToolRecoveryEnvelope` path as any other caller. Nested calls carry EvalSession/session/operation identity, but possession of a live kernel is never authority to widen the tool universe, access raw credentials, start hidden agents, bypass approval, or extend the parent deadline. Local evaluation time and external tool/provider wait remain separately attributable.
+An EvalSession may request nested Puppet Master tools only through the same `CapabilityStageRecord`, request selection, policy snapshot, schema validation, parent deadline, FileSafe, network/host, and `ToolRecoveryEnvelope` path as any other caller. If the child makes a provider request, that request needs its own provider dispatch permit under Shared Integration Runtime §11. Before tool admission, the host dispatcher mints a `tool_call_id` distinct from the enclosing call and sibling calls and binds it to the EvalSession and enclosing operation. The child keeps that ID through any retry under its own logical operation, with a new `attempt_id` for each retry. Its settlement and any recovery envelope carry the child ID and the enclosing `parent_operation_id` under the typed contracts below, including T-190's Code Mode binding. Possession of a live kernel is never authority to widen the tool universe, access raw credentials, start hidden agents, bypass approval, or extend the parent deadline. Local evaluation time and external tool/provider wait remain separately attributable.
 
 The tool layer may expose an EvalSession-backed capability only when the Shared Integration Runtime reports a product-approved, sandboxed, resource-bounded session for the exact Host/Environment. Failure or cleanup of that session is projected as typed unavailable/recovery evidence; Tools MUST NOT silently create a global kernel or emulate persistence in process-global state. No EvalSession state uses SQLite. Browser actions, when selected as nested tools, remain PM-native Browser Program calls; an EvalSession does not establish a PM-owned external browser-test runtime or compatibility facade.
 
@@ -1267,9 +1274,9 @@ Shell-dispatch rules are part of the canonical tool flow:
 - banned-command checks scan the full rendered command string, including metacharacter and control forms such as `;`, `&&`, `||`, `|`, subshell/grouping constructs, command substitution (`$()` and backticks), and redirection operators where relevant to the shell family; this is full-string validation for the shell-runtime surface
 - implementations SHOULD prefer structured parsing or AST-aware validation where the shell family makes it practical; fallback scanning still MUST evaluate the full rendered command rather than only the first token
 - dispatch occurs through exactly one shell interpretation layer; never eval, and `eval` or equivalent second-pass command construction is prohibited
-- Unix-style shell dispatch passes the already `shellQuote`-protected command through `exec.Command("bash", "-c", command)` or an equivalent one-layer platform runner; it must not run a second interpreter after quoting.
+- For standalone Unix `shell_string` dispatch (no `terminal_session_id`), pass the approved text unchanged as the single command argument after `-c` to the resolved interpreter, as in `exec.Command("bash", "-c", command)` for Bash. The session-bound form used by every `bash` tool call submits the approved literal buffer once to the persistent session interpreter using the Tool Turn Contract Minima. A reused `shellId` keeps the interpreter's working directory and exports (§3.5.1).
 - shell selection is platform-aware (`/bin/bash` or equivalent on Unix; `cmd.exe` / PowerShell family on Windows based on configured tool semantics)
-- all paths interpolated into shell commands MUST be shell-escaped for the target platform; on Windows this means quoting, double-backslash handling, or forward-slash conversion according to the selected shell, and individual tools MUST NOT implement their own competing escaping layer
+- When PM constructs a shell string, the shared escaping layer escapes internally interpolated values, including paths, for the selected shell before full-string validation and approval. Use `shellQuote` on Unix and the selected Windows shell's quoting, double-backslash handling or forward-slash conversion on Windows. Individual tools MUST NOT implement a competing escaping layer. Both dispatch forms use the approved `shell_string` byte for byte, with any terminal transport framing and submit action outside that text.
 - shell instances are isolated per agent tree so environment variables do not leak across session/agent boundaries
 - shell lifecycle is mutex-guarded; work queues MUST be `/non-blocking`, and writes to a dead shell return a structured error instead of hanging forever
 - `OC-LIFE-006` requires an alive-check before queue writes; if the shell is dead, PM returns a structured LIFE error instead of blocking forever
@@ -2032,7 +2039,7 @@ Core rules:
 - DuckDuckGo capability rows must preserve native-ish search, PM-composed research/fetch/extract, and partial crawl behavior instead of flattening those cells to unsupported.
 - Google must remain a pluggable adapter slot with display label Google, and its ledger support semantics must not be collapsed away.
 - GUI/help canon must preserve row-level health/error disclosure, last-failure messaging, inline contextual help, and availability/support-tier visibility in Settings and /web help/autocomplete. Help appears inline as a tooltip or below-field text, not as a separate help page; Settings UI, `/web` help, and autocomplete show both provider availability and support tier per provider × operation as a capability matrix or per-provider badge rows.
-- Retire stale cited-search ownership residue from reference sections; provider-capability and web-routing canon is owned by Plans/Tools.md sections 11-12, while Plans/newtools.md#8.2.1 is non-normative consumer guidance only.
+- The **Provider capability matrix** and **Web tool routing algorithm** headings in `Plans/Tools.md` own provider capability and web routing. Stale cited-search ownership in reference sections is retired. `Plans/newtools.md#8.2.1` is consumer guidance only.
 - Firecrawl provider identity canon includes exact provider ID firecrawl, display name Firecrawl, default lower-priority position below Exa and Tavily and above DuckDuckGo, user-adjustable ordering, default-disabled state until API key or self-hosted URL is configured, and retirement of exact stale residue "stale cited-search framing and older `newtools` wording" from owner/provider canon.
 - Firecrawl gap coverage is MVP scope across high/medium/lower source findings; lower-priority provider placement controls default ordering only and remains user-changeable.
 - Support-tier stored canon uses `pm_composed` for PM-assembled behavior; `pm-composed` is only a display/source-lineage alias and must normalize to `pm_composed`.
@@ -2151,7 +2158,7 @@ Core rules:
 - Site Reader canon must require real browser interaction, reserve `Reading Site` for the PM-native Site Reader path, and prevent provider-routed fetch from reusing that reserved identity.
 - Answer construction must preserve search-then-read behavior, final citations must come from the actual read path rather than raw search snippets alone, and web activity/provenance docs must use the exact storage/contracts/browser ContractRef targets instead of malformed generic anchors.
 - Routing must remain cost-aware when multiple providers offer similar capability; static priority alone is insufficient, and the >100 credits warning plus 500 credits cap must remain aligned with routing.
-- Retire stale cited-search ownership residue from reference sections; provider-capability and web-routing canon is owned by Plans/Tools.md sections 11-12, while Plans/newtools.md#8.2.1 is non-normative consumer guidance only.
+- The **Provider capability matrix** and **Web tool routing algorithm** headings in `Plans/Tools.md` own provider capability and web routing. Stale cited-search ownership in reference sections is retired. `Plans/newtools.md#8.2.1` is consumer guidance only.
 - Natural-language web intents must hit the same dispatcher as slash commands, and site or page reading intents must resolve to webfetch rather than websearch or provider extract.
 - `search_provider` override is NOT exposed as a tool parameter; provider selection is handled by the capability-based routing algorithm and configured provider stack.
 - Adapter-agnostic routing follows the ordered sequence: Step 1: NORMALIZE OPERATION - normalize the requested operation/input; resolve the canonical runtime snapshot; resolve permission for the canonical web tool key; Step 5: QUERY CAPABILITY MATRIX by querying the provider capability registry / adapter contract; filter eligible adapters by runtime identity constraints, support tier, execution role, account/auth viability, and freshness/health constraints; choose the effective adapter through the shared runtime/provider resolver; fallback only to the next eligible adapter for the same operation; and persist both canonical runtime snapshot + web-operation payload.
@@ -2410,7 +2417,7 @@ Browser capture actions — visible full screenshot, explicit full-page screensh
 
 ### 15.8 Consumed command IDs
 
-Tools registers no new command IDs for this section. It dispatches for the owners below and its required result boundary is stated so a consumer cannot mistake a tool receipt for a domain mutation.
+Tools registers no new command IDs for this section. It dispatches for the owners below and its required result boundary is stated so a consumer cannot mistake a tool receipt for a domain mutation. Browser command tokens that Section 15 names in Tools' area resolve as follows, and none of them is a Tools tool name: `cmd.browser.share_with_agent` is a registered catalog command owned by `Plans/Section15_MVP_Promoted_Features_Spec.md` (`Plans/UI_Command_Catalog.md`, payload `{ browser_session_id, thread_id }`, event `browser.context_shared`); it changes browser-session share state only, Tools dispatches nothing for it, and an agent's later browser actions on the shared session are ordinary Tools browser actions under the three-layer browser permissions model stated in this document's browser permissions/safety rule. `browser_run_code` and `browser_evaluate` are retired bare spellings, accepted only as compatibility inputs that normalize to `cmd.browser.program.run` (`source_form: pm_browser_script`, `capability_profile: advanced`) and `cmd.browser.page.evaluate` respectively (`Plans/Section15_MVP_Promoted_Features_Spec.md`, §3.18A PM Browser Script, BrowserProgram, and local execution, subsection Receipts, events, ObservableWork, commands, and projections; and Browser Action Table And Timeouts); Tools registers no tool, alias or handler under either spelling.
 
 | Command ID | Owner | Required result boundary |
 |---|---|---|
@@ -2445,7 +2452,7 @@ Tools is the single-owner SSOT for tool-level web operation behavior, provider c
 
 OpenCode billing and /caching evidence confirms that extra abstraction layers make tracking HARDER, not easier; Tools therefore owns explicit tool-level cache-routing and provider-capability decisions while usage, storage, prompt-cache, and provider bridge owners keep their narrower accounting and persistence contracts.
 
-- Firecrawl/web operations in `Plans/Tools.md` span `### 3.5C`, `### 3.5D`, `## 10`, `### 10.3`, `### 10.7`, `### 11.1`, and `## 14`. This document owns Firecrawl integration, TODO contract carry-through, provider placement, cache, audit/error mapping, and the traceability obligations `obl-013`, `obl-014`, `obl-041`, `obl-053`, `obl-054`, `obl-062`, `obl-066`, `obl-067`, `obl-029`, `obl-040`, `obl-043`, and `obl-068`.
+- Firecrawl/web operations in `Plans/Tools.md` span `todowrite` and `todoread` runtime contract, Web operation family runtime contract, Firecrawl provider integration (PM-to-Firecrawl mapping and Audit, error, and self-hosted rules), Provider capability matrix (Provider classes, defaults, and fallback disclosure), and Web content caching layer. This document owns Firecrawl integration, TODO contract carry-through, provider placement, cache, audit/error mapping, and the traceability obligations `obl-013`, `obl-014`, `obl-041`, `obl-053`, `obl-054`, `obl-062`, `obl-066`, `obl-067`, `obl-029`, `obl-040`, `obl-043`, and `obl-068`.
 - Stale permission, LSP, and web-output carry-through markers such as `/LSP/web-output`, `/web-output/LSP/permission`, and legacy `web-output` phrasing are retired as owner text; live tool canon points to the dedicated Contracts and storage owners for WebAction, common web output fields, and blocked-action payloads.
 
 ### Consumer propagation
@@ -3476,6 +3483,8 @@ canonical_text: >-
   process detachment, never tab placement or pop-out; a write through a `shellId` into a terminal a human opened
   follows Section 15's SMPFS-182 and is refused without the human's grant, as `preempted` after a take-over and as
   `secret_input` during a secret prompt.
+  In §3.5.1 and Tool Turn Contract Minima, the first and subsequent calls execute in the same persistent shell.
+  Completion and exit status belong to the invocation. The shell can remain live after the command completes.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
@@ -3488,6 +3497,8 @@ acceptance_criteria:
 - Parameters `command`, `mode`, `initial_wait`, `shellId`, and `detach` remain preserved.
 - Output shapes for completed sync, still-running sync, and async launch remain preserved.
 - All error codes and timeout behavior remain preserved.
+- A first command changes directory and exports a variable, then completes. A second call using its shellId observes both changes. A further call can exit nonzero while the shell remains live.
+- Output or elapsed time alone cannot complete a command. A fresh or reused session that ends without authoritative command completion retains available output and gives no exit code for the command.
 - "Amended 2026-10-09 (DL-181): every shellId resolves to exactly one terminal_session_id that Open in Terminal and Show Terminal can reveal as its terminal tab; detach never opens, moves or closes a tab; writes into a human-opened terminal follow SMPFS-182 with explicit preempted and secret_input refusals."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -6928,7 +6939,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: Shell dispatch validates the full rendered command string, prefers structured parsing where practical, uses
-  exactly one shell interpretation layer, prohibits `eval`, and requires platform-correct path escaping.
+  exactly one shell interpretation layer, and prohibits `eval`. Platform-correct escaping applies to inputs PM
+  interpolates before validation and approval. Standalone Unix dispatch passes the approved shell string unchanged as
+  one command argument. Session-bound dispatch submits it unchanged to the persistent interpreter (T-018).
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
@@ -6937,7 +6950,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Banned-command checks scan the full rendered command string.
-- Unix shell dispatch uses one shell interpretation layer.
+- The standalone Unix runner receives the exact approved shell string as one command argument. The session-bound runner submits the exact approved buffer once to the persistent interpreter.
 - Individual tools do not implement competing escaping layers.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -10577,11 +10590,7 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:14
 - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:11
 - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:20
-- Plans/Tools.md:623
-- Plans/Tools.md:669
-- Plans/Tools.md:2160
-- Plans/Tools.md:2163
-- Plans/Tools.md:2164
+- "Plans/Tools.md#section=13. Batch operations"
 preserved_exact_tokens:
 - 'urls: string[]'
 - 'formats?: string[]'
@@ -11185,7 +11194,7 @@ gui_classification_reason: Tool schema and section numbering are backend/tooling
 depends_on: [T-055, T-056, T-104]
 unblocks: []
 acceptance_criteria:
-  - Section references such as Tools.md Section 12 resolve unambiguously after cleanup.
+  - References to the second numbered block resolve by heading name, including Provider capability matrix and Web tool routing algorithm.
   - task tool subagent_type validation routes through subagent_registry.
   - Stale count-based subagent lists do not become live registry authority.
 validation_surfaces:
@@ -11260,9 +11269,9 @@ source_lineage:
   - pldg-20260615-001-part-4-fable-cleanup:atom-0010
   - pldg-20260615-001-part-4-fable-cleanup:atom-0011
   - pldg-20260615-001-part-4-fable-cleanup:atom-0012
-  - local:Plans/Tools.md:2039
-  - local:Plans/Tools.md:2113
-  - local:Plans/Tools.md:2169
+  - "local:Plans/Tools.md#section=11.1 Provider classes, defaults, and fallback disclosure"
+  - "local:Plans/Tools.md#section=11.2 Support-tier vocabulary"
+  - "local:Plans/Tools.md#section=12. Web tool routing algorithm"
 preserved_exact_tokens:
   - "Fields:"
   - "Rules:"
@@ -11739,6 +11748,7 @@ unblocks: []
 acceptance_criteria:
 - finish_reason=length with tool call is classified partial_truncated.
 - nullable reasoning/content arrays are normalized without crashing and without dropping provider-native metadata.
+- After dispatch, missing or null required content produces a typed result fact and cannot settle as success. An optional null reasoning array alongside a valid result keeps its provider metadata.
 - large MCP tool_result is stored as managed output ref or rejected with explicit retention failure.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
@@ -11814,7 +11824,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  P2-CACHEABLE-TOOL-OUTPUT-REFS (P2) is compiled as canonical Puppet Master intent for Hash-addressed cache refs for stable large tool outputs: Large stable outputs use refs with TTL/redaction; secrets are never cached; model-visible preview references complete retained output. Amended 2026-10-31 (DL-270): hash-addressed refs for large stable outputs resolve to payload-store entries (SP-337). Dedupe, reference counts and garbage collection holds live in the payload store; the TTL here is a cache-eligibility rule, not a separate storage owner.
+  P2-CACHEABLE-TOOL-OUTPUT-REFS (P2) records the intent for Hash-addressed cache refs for stable large tool outputs.
+  Hash-addressed refs resolve to SP-337 payload-store entries under DL-270. Model-visible previews reference the
+  complete retained redacted output. Secrets are never cached. Cache eligibility TTL and reuse across calls are
+  deferred until Tools defines the cache key, TTL start, duration and expiry rule. Until then T-168 admits no cache
+  hits across calls. Authorized reads of retained output, deduplication, reference counts and garbage collection
+  holds still follow SP-337.
 gui_related: false
 gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
 depends_on:
@@ -11822,14 +11837,14 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- Large stable outputs use refs with TTL/redaction
+- Large stable outputs use refs with TTL/redaction once cache reuse is defined above. Until then a later call cannot use a T-168 cache hit even if a previous call retained an identical payload.
 - secrets are never cached
 - model-visible preview references complete retained output.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
-- Large stable outputs use refs with TTL/redaction
+- Large stable outputs use refs with TTL/redaction once cache reuse is defined above. Until then a later call cannot use a T-168 cache hit even if a previous call retained an identical payload.
 - secrets are never cached
 - model-visible preview references complete retained output.
 risk_class: p2_context_cache_coverage
@@ -11884,6 +11899,7 @@ status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
   P0-TOOL-CALL-MALFORMATION-GATE (P0) is compiled as canonical Puppet Master intent for Malformed/truncated/partial tool-turn admission: Add ProviderToolTurnAdmissionGate. Only settled tool calls with valid schema, args, IDs, provider-native metadata, and truncation state can enter replayable history. Rejected turns become provider_turn_malformed records with raw-redacted reference and loop policy. The preserved PM gap/delta is: Malformed provider output must be stopped before durable history admission, not only before actual tool execution. The observed external-repo signal remains source-lineage evidence: OpenCode, Cline, Agent Zero, and Pi all show broken tool-call deltas, XML/JSON fragments, nullable reasoning/content, stringified MCP params, truncation, empty tool calls, and loops when malformed turns reach history or repair logic.
+  The typed payload in Tool Turn Contract Minima uses the PM gate_id to correlate a denial and discloses when redacted evidence is unavailable.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -11894,6 +11910,7 @@ acceptance_criteria:
 - Partial streamed JSON/tool XML never becomes replayable assistant history.
 - A length finishReason on tool-call deltas blocks/retries under typed policy, not as ordinary no-tool response.
 - Replayed history never includes malformed or duplicate tool_call IDs.
+- A length-ended call without a provider id carries the same gate_id on the gate, malformed record, settlement and recovery envelope. The provider id members are absent, and settlement is partial_truncated.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
@@ -12226,14 +12243,15 @@ unblocks: []
 acceptance_criteria:
 - Empty output remains empty with reason
 - Missing image does not become fake caption
-- Malformed JSON records parse error and raw captured bytes
+- Malformed JSON records parse error and raw captured bytes when safe capture is available. The parse error is always recorded. Available evidence has `raw_redacted_state` set to `available` and a `raw_redacted_ref` to the redacted capture. Otherwise `raw_redacted_state` is `unavailable` and the ref is omitted.
+- Apply the post-dispatch result table to zero bytes, empty arrays, absent required images and complete responses with invalid JSON. Check the settlement state, typed fact and evidence ref or explicit unavailability.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
 - Empty output remains empty with reason
 - Missing image does not become fake caption
-- Malformed JSON records parse error and raw captured bytes
+- Malformed JSON records parse error and raw captured bytes when safe capture is available. Check the parse error and the `available` state with a redacted capture ref, or the `unavailable` state with the ref omitted.
 risk_class: p0_mcp_tools_and_tool_settlement_hardening
 reasoning_tier: high
 context_scope: mcp_tools_and_tool_settlement
@@ -12286,6 +12304,7 @@ status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
   tool_output_retention (P0) is compiled as canonical Puppet Master intent for tool_output_retention: Add ToolManagedOutputRef and retention-failure semantics The preserved PM gap/delta is: No hard no-lossy-success rule for managed tool output retention The observed external-repo signal remains source-lineage evidence: OpenCode v2 Tool output bounding/managed storage; large body issues
+  T-177 defines ToolManagedOutputRef as the content ID of the retained redacted output in the SP-337 payload store.
 gui_related: false
 gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
 depends_on:
@@ -12427,23 +12446,254 @@ This addendum is canonical tool contract text for deferred non-runtime FABLE row
 Repairs row `sfk-88d65b2be00892daadd2f0d8`.
 
 - The first `## 10. Implementation plan: permissions (spec for implementers)` remains a permissions implementation-plan compatibility section.
-- The second `## 10. Firecrawl provider integration` is canonically superseded as `## 11. Firecrawl provider integration`.
-- Citations to Firecrawl subsections must use `Firecrawl provider integration` plus the subsection title rather than bare `§10.x` until the heading numbers are mechanically renumbered in a dedicated structural cleanup.
+- The second block of numbered chapters, from the second `## 10. Firecrawl provider integration` through `## 15. Assistant collaboration, To-Do proposal, and read-only advisor tool boundaries` (with its `## 11.` to `## 14.`), is cited by heading name: the chapter and subsection numbers in that block are not authoritative, because `## 10.` to `## 13.` also number the first block (`Implementation plan: permissions`, `Relationship to other plans`, `Implementation checklist`, `References`). Corrected 2026-11-24 (Decision_Log DL-2602, C-FIX79): the earlier line here that superseded the second `## 10.` as `## 11. Firecrawl provider integration` is withdrawn, since `## 11. Relationship to other plans` already holds that number; no heading is renamed.
+- Citations to Firecrawl subsections must use `Firecrawl provider integration` plus the subsection title rather than bare `§10.x`. Renumbering the second block is left to a scheduled structural cleanup.
 - Citations to permissions implementation subsections must include `Implementation plan: permissions` plus the subsection title.
 
 ### Tool Turn Contract Minima
 
 Repairs rows `sfk-0649b6a2c860f179ee699f58`, `sfk-e257db159bd84ee85f74371d`, and `sfk-47f640ed50d4ed24f6b34c49`.
 
-`ToolTurnSettlement` fields are `settlement_id`, `tool_call_id`, `settlement_state`, `result_ref?`, `error_ref?`, `truncation_ref?`, `redaction_ref?`, `retention_ref?`, `retry_after_ms?`, `created_at_utc`, and `schema_version`.
+`ToolTurnSettlement` fields are `settlement_id`, `tool_call_id?`, `parent_operation_id?`, `gate_id?`, `settlement_state`, `result_ref?`, `result_facts?`, `error_ref?`, `truncation_ref?`, `redaction_ref?`, `retention_ref?`, `retry_after_ms?`, `created_at_utc`, and `schema_version`. The typed shape below gives the ID provenance and all field presence rules.
 
-`settlement_state` values are `success`, `partial`, `partial_truncated`, `malformed`, `nullable_content`, `redacted`, `retained`, `retryable`, and `fatal`. `success` is legal only when required result, error, truncation, retention, and redaction metadata are normalized.
+`settlement_state` values are `success`, `partial`, `partial_truncated`, `malformed`, `nullable_content`, `redacted`, `retained`, `retryable`, and `fatal`. `success` follows the §3.5 rule and the post-dispatch normalization below.
 
-`CommandInvocationContract` fields are `invocation_id`, `tool_call_id`, `invocation_kind`, `interpreter`, `argv?`, `shell_string?`, `powershell_script?`, `pty_input_ref?`, `cwd`, `env_policy_ref`, `permission_snapshot_id?`, `configured`, `allowed`, `injected`, `visible_to_model`, `created_at_utc`, and `schema_version`.
+`CommandInvocationContract` fields are `invocation_id`, `tool_call_id`, `invocation_kind`, `interpreter`, `argv?`, `shell_string?`, `powershell_script?`, `pty_input_ref?`, `cwd`, `env_policy_ref`, `permission_snapshot_id?`, `configured`, `allowed`, `injected`, `visible_to_model`, `created_at_utc`, and `schema_version`. Amended 2026-11-26: the list also has `terminal_session_id?`, typed below.
 
 `invocation_kind` values are `shell_string`, `argv`, `powershell_script`, `pty_input`, and `tui_automation`.
 
-`ProviderToolTurnAdmissionGate` fields are `gate_id`, `tool_call_id`, `provider_id`, `model_id`, `allowed`, `denial_reason_code?`, `permission_snapshot_id?`, `capability_snapshot_id?`, and `created_at_utc`.
+`ProviderToolTurnAdmissionGate` fields are `gate_id`, `tool_call_id?`, `call_index`, `provider_id`, `model_id`, `allowed`, `denial_reason_code?`, `permission_snapshot_id?`, `capability_snapshot_id?`, and `created_at_utc`. The typed contract below gives the provider-native and T-189 in-band ID rules.
+
+#### `interpreter` type and the `bash` adapter binding (added 2026-11-25)
+
+`CommandInvocationContract.interpreter` is an object `{ interpreter_kind, executable_path, version? }`. `interpreter_kind` is the closed enum `bash`, `zsh`, `sh`, `fish`, `pwsh`, `powershell`, `cmd`, and `none`; `executable_path` is the absolute path the runtime resolved, never a bare name; `version` is an optional string. `none` is legal only with `invocation_kind = argv` (direct exec with no shell). A call whose interpreter cannot be resolved is refused with `spawn_failed` before dispatch.
+
+Every `bash` tool call (§3.5.1) that reaches command normalization produces exactly one `CommandInvocationContract` before invocation approval and dispatch, mapped field by field. A call denied by T-169 has no invocation contract.
+
+| Contract field | Value for a `bash` call |
+|---|---|
+| `invocation_id` | New for every call, also when `shellId` reuses a session. |
+| `tool_call_id` | The `bash` tool call's id. |
+| `invocation_kind` | Always `shell_string`. `bash` never produces `argv`, `powershell_script`, `pty_input`, or `tui_automation`. |
+| `interpreter` | With `shellId`: the shell of the bound `terminal_session_id` (DL-181). Without it: the shell the runtime resolves for the frozen Project/worktree or Computer/working-root context (T-187) when it creates the binding. |
+| `shell_string` | `command`, byte for byte: no trimming, re-quoting or splitting. |
+| `argv`, `powershell_script`, `pty_input_ref` | Absent. |
+| `terminal_session_id` | With `shellId`, use the bound session's id (DL-181). Without it, reserve the canonical id of the new session before building the contract. No terminal starts on reservation. On admission and startup the result's `shellId` binds to that id. Release an unused reservation if approval or startup fails. |
+| `cwd` | The frozen working root (T-187) for a new binding; for a reused `shellId`, the session's working directory observed at dispatch. |
+| `env_policy_ref` | The environment policy of the shell binding. |
+| `permission_snapshot_id` | The snapshot the pre-dispatch Permissions and FileSafe evaluation used. |
+| `configured`, `allowed`, `injected`, `visible_to_model` | Copied from the `bash` entry of the `ActiveToolNamespaceReceipt` current at dispatch (below). |
+| `created_at_utc` | Stamped by the runtime when it builds the contract, before dispatch (RFC 3339 UTC). |
+| `schema_version` | `1.0.0`. |
+
+`mode`, `initial_wait`, `detach`, and `shellId` are execution controls of §3.5.1 and are not contract fields. After admission and per-invocation approval, a new binding starts `executable_path` as a persistent interactive shell on the reserved terminal session, using the contract's `cwd` and `env_policy_ref`. Startup must establish shell readiness and authoritative command tracking before command submission or returns `spawn_failed`. A reused binding submits to the existing interpreter. Every admitted `bash` dispatch with either binding uses the session-bound `shell_string` variant below.
+
+For both bindings, check terminal input ownership under DL-181 and SMPFS-182, including the human-write grant, take-over, secret-input and input-protection checks of CV-362. Recheck the approved target and observed `cwd` at the verified idle shell boundary before writing. A changed target or directory requires fresh admission before any bytes are written. Each shell accepts one `bash` invocation at a time. The terminal adapter supplies the exact bytes as one shell input buffer, using the profile's literal command-entry path, then submits that buffer once. Transport framing and the separate submit action are outside the approved command text. Preserve newlines and quoting in the buffer. If the profile cannot submit the full text unchanged, refuse with `validation_error` before writing. The shell evaluates the buffer in its current interpreter context. It does not run the command in a separate interpreter or subshell unless the approved command itself asks for one.
+
+At submission, bind the invocation to its session and command boundary. Settle command completion once, from shell integration authenticated under SMPFS-183 or authoritative runtime evidence for that exact invocation and its integer exit status. A prompt-like string, unmatched mark, quiet interval or session disconnect supplies no exit code (SMPFS-021, SMPFS-022, SMPFS-129). Attribute only the invocation's output to its result and apply SMPFS-023 and CV-362 backing and loss rules to terminal reads. If the session ends without authoritative command completion, return the available output with `status: "failed"`, `exit_code: null` and `error.code: "shell_not_found"`. Completion of a command does not retire a live binding. Sync waits up to `initial_wait`, and async returns on dispatch. The hard ceiling applies to the command under §3.5.1.
+
+`command` is never executed as `argv[0]`, and a non-string `command` is `validation_error`. `powershell_script` stays reserved for inspected PowerShell wrapper scripts (T-171) and `pty_input` for raw input to an interactive program. Approval UI shows `shell_string` verbatim beside `interpreter_kind` and `executable_path` and identifies the new shell or the existing terminal by its tab.
+
+#### `CommandInvocationContract` typed shape and variants (added 2026-11-26)
+
+Field types, for every tool that builds the contract (the `bash` mapping above is one producer):
+
+| Field | Type | Rule |
+|---|---|---|
+| `invocation_id` | string (UUID) | New for every call. |
+| `tool_call_id` | string | The tool call that produced the contract. |
+| `invocation_kind` | closed enum | One of the five values above; selects exactly one content field (variant table below). |
+| `interpreter` | object `{ interpreter_kind, executable_path, version? }` | As defined in the `interpreter` subsection above. |
+| `argv` | array of strings, at least 1 entry | `argv[0]` is the program, resolved to an absolute path before dispatch; each entry is passed as one argument with no shell. |
+| `shell_string` | string, at least 1 byte | Byte for byte, never trimmed, re-quoted or split. The session-bound form submits one shell input buffer under the rules above. The standalone form passes one command argument. |
+| `powershell_script` | string, at least 1 byte | The text of an inspected PowerShell wrapper script. |
+| `pty_input_ref` | string | Reference to the exact bytes written to the PTY of a bound terminal session. |
+| `terminal_session_id` | string, optional | The canonical terminal session (DL-181) the contract writes into. Required for `pty_input` and the session-bound `shell_string` form, including the new session of a first `bash` call. Absent for standalone `shell_string`, `argv` and `powershell_script`. |
+| `cwd` | string | Absolute path. |
+| `env_policy_ref` | string | The environment policy applied to the process. |
+| `permission_snapshot_id` | string, optional | Present on every contract that is dispatched: the snapshot the pre-dispatch Permissions and FileSafe evaluation used. Absent only on a contract refused before that evaluation ran. |
+| `configured`, `allowed`, `injected`, `visible_to_model` | boolean | Copied from the producing tool's `ToolNamespaceEntry` in the `ActiveToolNamespaceReceipt` current at dispatch. |
+| `created_at_utc` | RFC 3339 UTC string | Stamped by the runtime when it builds the contract, before dispatch. |
+| `schema_version` | string | `1.0.0`. |
+
+Variants are exclusive. Exactly the content field the kind names is present; the other three content fields are absent:
+
+| `invocation_kind` | Required content field | `interpreter_kind` | Dispatch |
+|---|---|---|---|
+| `shell_string` | `shell_string` | any value except `none`; with `terminal_session_id`, the shell of that session | Session-bound: submit to the new or reused live shell using the terminal write and completion rules above. Standalone (no `terminal_session_id`, never produced by `bash`): run the text as one command argument for a one-shot process with `-c` (`bash`, `zsh`, `sh`, `fish`), `-NoProfile -Command` (`pwsh`, `powershell`) or `/d /s /c` (`cmd`). |
+| `argv` | `argv` | `none` | Direct exec of `argv`; never routed through a shell (T-171). |
+| `powershell_script` | `powershell_script` | `pwsh` or `powershell` | Needs the inspected-wrapper receipt and, when configured, one-shot approval (T-171). |
+| `pty_input` | `pty_input_ref` | the shell of the bound terminal session; not `none` | The referenced bytes are written to the `terminal_session_id` session, exactly and with nothing appended, under the DL-181 and SMPFS-182 write rules. |
+| `tui_automation` | none defined | none defined | Reserved, not admitted: no registered tool produces this kind and no body field exists for it. A contract carrying it is refused with `validation_error` before dispatch until an owner registers a TUI-automation tool and adds its body field to this table. |
+
+A contract that breaks a presence, type or variant rule is refused with `validation_error` before dispatch and nothing runs. Approval UI shows the one content field verbatim beside `invocation_kind`, `interpreter_kind` and `executable_path`. For a terminal target it identifies the new shell or the existing terminal by its tab. For a standalone target it shows the one-shot interpreter form and flags (T-171 criterion 2).
+
+#### `ActiveToolNamespaceReceipt` typed contract (added 2026-11-25)
+
+T-172's receipt is one immutable record per session namespace generation:
+
+| Field | Type | Rule |
+|---|---|---|
+| `receipt_id` | string | Opaque and unique. |
+| `session_id` | string | The session the namespace belongs to. |
+| `thread_id` | string | |
+| `run_id` | string, optional | Present for run-scoped sessions. |
+| `provider_id`, `model_id` | string | The route that receives the tool schemas. |
+| `namespace_generation` | integer ≥ 1 | Rises by one on every change to any entry; a change always writes a new receipt. |
+| `catalog_generation` | integer | The `CapabilityMaterializationReceipt.catalog_generation` it was built from (§1.0A). |
+| `policy_snapshot_id` | string | |
+| `entries[]` | array of `ToolNamespaceEntry` | One per tool namespace, ordered by the §1.0A schema order. |
+| `created_at_utc` | RFC 3339 UTC string | |
+| `schema_version` | string | `1.0.0`. |
+
+`ToolNamespaceEntry` fields: `namespace_id` (string; the canonical tool or family name, such as `bash`, `computer.screen`, or `mcp.<server>`), `capability_ref` (string; the `CapabilityStageRecord` capability), `configured`, `allowed`, `injected`, `visible_to_model`, `visible_to_ui` (all boolean), `startup_status` (closed enum `not_required`, `pending`, `ready`, `failed`, `timed_out`), `denial_reason_code?`, `schema_ref?` (`{ schema_id, schema_version, schema_sha256 }`, required when `visible_to_model` is true), and `evidence_ref?` (string).
+
+`configured` is true when the capability's `installed` and `project_enabled` stages are true; `allowed` when `policy_available` is also true; `injected` when its L2 schema was materialized into this provider request. `injected` requires `allowed`, `allowed` requires `configured`, `visible_to_model` requires `injected`, and `visible_to_ui` requires `configured`. `denial_reason_code` is required whenever any of the five booleans is false or `startup_status` is `pending`, `failed`, or `timed_out`; its values are the §1.0A omission codes (`not_installed`, `project_disabled`, `policy_denied`, `incompatible_runtime`, `unavailable`, `not_selected`, `budget_deferred`, `schema_unavailable`, `collision_suppressed`) plus `provider_not_receiving`, `startup_pending`, and `startup_failed`. When all five booleans are true, `startup_status` decides the code: `pending` gives `startup_pending`, and `failed` or `timed_out` gives `startup_failed`; `ready` and `not_required` carry no code. A `startup_pending` denial is not final: the startup settling is an entry change, so it writes the next receipt generation with `startup_status` `ready` (no code) or `failed`/`timed_out` (`startup_failed`).
+
+For a direct tool call, dispatch requires all five entry booleans to be true and `startup_status` to be `ready` or `not_required`. For direct dispatch, any other entry denies the call with that entry's `denial_reason_code` before dispatch (T-172 criterion 2). Tool mentions, UI chips, and model-visible schemas read one receipt at one `namespace_generation` (T-172 criterion 3).
+
+For a nested EvalSession call, the host admits the request-selected tool and validates its L2 schema under §4.4. In Code Mode this requires membership in T-189's callable catalog and T-190's checks on each call. Nested calls are exempt from the generic direct-exposure checks for `injected`, `visible_to_model`, and `visible_to_ui`. T-186 still requires all its receipt flags for every computer tool call, including nested dispatch. The tool's own capability, policy, and readiness checks still apply.
+
+Example:
+
+```json
+{
+  "receipt_id": "atnr_01",
+  "session_id": "sess_7",
+  "thread_id": "thr_3",
+  "provider_id": "provider_a",
+  "model_id": "model_a",
+  "namespace_generation": 4,
+  "catalog_generation": 12,
+  "policy_snapshot_id": "pol_88",
+  "entries": [
+    { "namespace_id": "bash", "capability_ref": "builtin:bash", "configured": true, "allowed": true, "injected": true, "visible_to_model": true, "visible_to_ui": true, "startup_status": "not_required", "schema_ref": { "schema_id": "pm.tool.bash", "schema_version": "1.0.0", "schema_sha256": "<64 hex>" } },
+    { "namespace_id": "computer.screen", "capability_ref": "builtin:computer.screen", "configured": true, "allowed": false, "injected": false, "visible_to_model": false, "visible_to_ui": true, "startup_status": "not_required", "denial_reason_code": "policy_denied" }
+  ],
+  "created_at_utc": "2026-11-25T15:00:00Z",
+  "schema_version": "1.0.0"
+}
+```
+
+Persistence of this receipt is not settled here: it needs a storage registration in `Plans/storage-plan.md` (a redb family or an admitted seglog event family), which this section does not create.
+
+#### `ProviderToolTurnAdmissionGate` typed contract (T-169, added 2026-11-26)
+
+One gate record is written for every provider-native tool call subject to PM admission and every T-189 in-band tool call before the turn that carries it may enter replayable history or be dispatched. An EvalSession nested call enters the host admission path above and the per-tool dispatch checks of §4.4 and T-190 using its host-issued identity, outside this provider-turn gate.
+
+| Field | Type | Rule |
+|---|---|---|
+| `gate_id` | string | Opaque and unique, minted by PM. It correlates the gate with the records that reference this decision. |
+| `tool_call_id` | nonempty string, optional | For provider-native carriage, copy the provider's own id. An omitted or empty provider id is absent here and always denied as `tool_call_id_missing`, or as `length_truncated` when that check fired first. Native carriage never receives a stand-in. For T-189 in-band carriage, use the id that PM minted for this call before the gate. |
+| `call_index` | integer, at least 0 | The call's position among the tool calls of its provider turn, in stream order. With `gate_id` it identifies a denied call with no native id. |
+| `provider_id`, `model_id` | string | The route that produced the call. |
+| `allowed` | boolean | True only when every check below passes. |
+| `denial_reason_code` | closed enum, optional | Required when `allowed` is false, absent when it is true. |
+| `permission_snapshot_id` | string, optional | The Permissions snapshot the dispatch check used; present whenever that check ran. |
+| `capability_snapshot_id` | string, optional | The `Plans/Models_System.md` capability snapshot of the route; present whenever the route has one. |
+| `created_at_utc` | RFC 3339 UTC string | |
+
+Checks, in this order; the first that fails gives the code: `length_truncated` (the provider ended the tool-call deltas with a length finish reason; checked first, so a length-ended call keeps this code even when its id, name or arguments are also incomplete, which is the Truncation gate case of §8.2 and T-167's `partial_truncated` rule), `tool_call_id_missing` (the call has no id), `tool_call_id_duplicate` (the id was already admitted in this session), `empty_tool_call` (no tool name), `args_unparseable` (streamed JSON or tool XML is partial, or the arguments are not one complete JSON value, in a call that did not end on length), `tool_not_in_namespace` (the `ActiveToolNamespaceReceipt` current for the turn has no entry for the tool), then the namespace dispatch rule above (an entry that does not permit dispatch denies with its own `denial_reason_code`), `schema_invalid` (the arguments fail that entry's `schema_ref` schema), and `provider_metadata_missing` (provider-native metadata the route requires is absent). `denial_reason_code` is closed to these eight codes plus the `ToolNamespaceEntry.denial_reason_code` values.
+
+A denied call never enters replayable history and is never dispatched. The gate emits one `provider_turn_malformed` record per denied call, using the payload below (T-169). The eight gate codes normalize to `failure_class = structured_output_invalid` and follow its `Plans/Executor_Protocol.md` §7.1 row (max retries 2, no backoff). If another provider-turn retry is admitted under that row and the existing retry budget and loop rules, the tool turn settles `retryable`. Otherwise it settles `malformed` and the run takes that classifier's escalation. The one exception is `length_truncated`: it follows the same retry row and settles `partial_truncated` on every attempt, as T-167 requires. Its structured error is `truncated_by_length` (Truncation gate), and no argument is synthesized. A namespace denial settles `fatal` with the receipt entry's own code and does not retry. An admitted provider retry requests one replacement for the failed turn, even when several calls were denied. It performs no invocation retry under §3.5.0A or "Retry classification and bounded recovery".
+
+All four records for a denied call carry the same `gate_id`: the gate record, the `provider_turn_malformed` record, the `ToolTurnSettlement` and the `ToolRecoveryEnvelope`. Copy the gate's `tool_call_id` to each record when present, as `original_tool_call_id` in the recovery envelope. For a provider-native call that arrived without an id, omit the corresponding member in all four records. The envelope has `retryable: false` because the denied call itself cannot be dispatched again. Its `status` is `truncated` for `length_truncated`, `blocked` for a namespace denial and `failed` for other gate denials. Persistence of gate and `provider_turn_malformed` records waits on the same Storage registration as the receipt above.
+
+#### `provider_turn_malformed` payload (T-169)
+
+The payload is one UTF-8 JSON object containing only the following members. Optional members are omitted when absent. Use `gate_id` as its record identity and to resolve the gate's provider/model route. The payload is per-call recovery evidence outside replayable assistant history. The turn-level history admission and quarantine contract remains owned by `Plans/Prompt_Pipeline.md#PP-060`.
+
+| Field | Type | Rule |
+|---|---|---|
+| `record_type` | string constant | `provider_turn_malformed`. |
+| `schema_version` | string constant | `1.0.0`. |
+| `gate_id` | nonempty string | Matches the denied gate record. |
+| `call_index` | integer, at least 0 | Copy the gate's position in the provider turn. |
+| `tool_call_id` | nonempty string, optional | Copy the gate's call id when present. |
+| `denial_reason_code` | closed enum | Copy the gate's reason, including the receipt's namespace reason when that check denied admission. |
+| `raw_redacted_state` | closed enum | `available` if redacted provider evidence could be captured and referenced, otherwise `unavailable`. |
+| `raw_redacted_ref` | nonempty string, optional | Required when `raw_redacted_state` is `available`, otherwise absent. Resolves to evidence from the same provider turn containing the rejected call's source as received, after secret redaction. |
+| `created_at_utc` | RFC 3339 UTC string | Copy the gate's timestamp. |
+
+Capture evidence with the bounded redaction and access controls of §3.5.0A. The reference is opaque to the provider. The payload carries no inline provider bytes or hashes of unredacted material. If capture or redaction fails, use `unavailable` and preserve the denial, settlement and retry decision. A `length_truncated` settlement's `truncation_ref` still resolves to this record even when its source evidence is unavailable.
+
+Example of a length-ended call cut off before its provider id arrived, with redacted source evidence available:
+
+```json
+{
+  "record_type": "provider_turn_malformed",
+  "schema_version": "1.0.0",
+  "gate_id": "gate_42",
+  "call_index": 0,
+  "denial_reason_code": "length_truncated",
+  "raw_redacted_state": "available",
+  "raw_redacted_ref": "redacted_42",
+  "created_at_utc": "2026-11-26T12:00:00Z"
+}
+```
+
+#### `ToolTurnSettlement` typed shape (T-167, added 2026-11-26)
+
+One immutable settlement is written per tool call attempt, including a call the admission gate denied. It carries one `settlement_state`; when several conditions hold at once, the §3.5 precedence (`fatal` > `malformed` > `partial_truncated` > `redacted` > `nullable_content` > `partial` > `retryable` > `retained` > `success`) picks that one value, and the refs of the other conditions that hold are still present.
+
+| Field | Type | Rule |
+|---|---|---|
+| `settlement_id` | string | Opaque and unique. |
+| `tool_call_id` | nonempty string, optional | Copy the gated call id when present. Use the trusted PM-issued call id for a hosted structured intent or an EvalSession nested call. Omit only for a provider-native call denied without an id. |
+| `parent_operation_id` | nonempty string, optional | Required for an EvalSession nested call. The enclosing operation's `logical_operation_id`, which for Code Mode is the outer script's operation id. Absent on the outer script and other direct calls. |
+| `gate_id` | nonempty string, optional | The call's `ProviderToolTurnAdmissionGate` record. Present for every call judged by that gate, including native calls denied without an id. Absent for every other call, including nested calls. |
+| `settlement_state` | closed enum | One of the nine values above. |
+| `result_ref` | string or SP-337 payload reference object, optional | Present whenever a normalized tool result exists, including a valid partial result. Use the SP-337 object `{blake3_id, byte_size, media_type}` for a spilled result (DL-270, §3.5.0A) and a string reference otherwise. Absent for a gate denial or when no normalized result exists. Required for `success` unless the tool's own contract omits it. |
+| `result_facts` | nonempty array of objects, optional | Required when a dispatched call matches a row in the post-dispatch result table below, with one fact per affected value. Absent otherwise. |
+| `error_ref` | string, optional | Reference to the structured error (its code and the `ToolRecoveryEnvelope`). Required for `malformed`, `retryable` and `fatal`, every gate denial, and any post-dispatch failure fact below even when another state takes precedence. Absent for `success`. |
+| `truncation_ref` | string, optional | Required whenever output or arguments were truncated, including every `partial_truncated` settlement. Absent for `success`. For a `length_truncated` denial, it resolves to the `provider_turn_malformed` record. For output truncation with successful spill, it resolves to the bounded head/tail, exact original size and artifact ref of §3.5.0A. If the complete-output spill fails, it resolves to the attempt's `ToolRecoveryEnvelope` with the truncation flag and byte counts. The `error_ref` records the explicit retention failure in either `fatal` or `partial_truncated`. |
+| `redaction_ref` | string, optional | Reference to the redaction applied. Required whenever any result or output content was redacted, so always for `redacted`. |
+| `retention_ref` | `ToolManagedOutputRef` string, optional | The SP-337 content ID of this attempt's retained output, defined by T-177. Present whenever output was successfully spilled or retained, so always for `retained`. |
+| `retry_after_ms` | integer, at least 0, optional | Present only with `retryable`, when the retry row or a provider minimum delay sets one. |
+| `created_at_utc` | RFC 3339 UTC string | |
+| `schema_version` | string | `1.0.0`. |
+
+`success` is legal only under the §3.5 rule (required result, error, truncation, retention and redaction metadata normalized and persisted, or intentionally omitted by the tool's own contract); a settlement that would break a presence rule above is never written as `success`: it takes the state the missing metadata gives (for failed retention, `fatal` or `partial_truncated`, §3.5.0A). Persistence of settlements waits on the same Storage registration as the receipt above.
+
+**Post-dispatch result normalization (T-167, T-173).** After dispatch, the adapter checks the returned result against the selected tool's result contract before settling the attempt or projecting its result into history. The table sets the facts and candidate states for the returned content. A typed execution error that accounts for the missing result follows its own error path. For declared output truncation use `truncation_ref` and `partial_truncated`; do not infer malformed or missing content solely from the cut. Normalize optional absent or null content and reasoning fields with their provider-native metadata intact. Keep any usable, valid content in its original shape, including empty strings or arrays, and preserve absence or null where observed. Never fill an empty or missing value with generated text, a caption or an image placeholder.
+
+| Observed result | `reason_code` | Candidate `settlement_state` |
+|---|---|---|
+| A tool result or result field that the tool contract requires to be present and non-null is absent or explicitly null, with no prior execution error explaining the absence. | `required_content_missing` for absence, `required_content_null` for null. | `nullable_content` |
+| A result field that requires an image lacks the actual image or its required artifact reference, including absent, null or empty image values. Use this row for the image field in place of the generic missing, null or empty row. | `required_image_missing` | `nullable_content` |
+| A zero-byte result, empty string or empty array that the tool contract requires to contain content. | `required_content_empty` | `nullable_content` |
+| An empty result allowed by the tool contract, including an explicitly void result. | `empty_output_allowed` | No failure state. Apply the ordinary settlement rules. |
+| A complete nonempty body declared JSON cannot be decoded as UTF-8 and one complete JSON value. Syntactically valid JSON `null` follows the content rules above. | `invalid_result_json` | `malformed` |
+
+Each fact has a `reason_code` from the table and `result_path`, a string JSON Pointer locating the field in the result contract's shape (empty string for the whole result or a body that could not be parsed). For `invalid_result_json`, the fact also has `parse_byte_offset`, a zero-based nonnegative integer offset into the received body where decoding or parsing failed (body length at EOF), and `raw_redacted_state` (`available` or `unavailable`). When `available`, `raw_redacted_ref` is a nonempty string resolving to the original result bytes after secret redaction, captured before any repair or reserialization and protected by the bounded capture and access rules of §3.5.0A. If policy, bounds or a capture/redaction failure prevents a safe capture, use `unavailable` and omit the ref. All three parse-only members are absent for other reasons. Keep these source bytes outside replayable history and surface only the typed failure and any valid normalized result.
+
+Every reason except `empty_output_allowed` is a failure fact. Preserve its code in `result_facts` even when another state wins under §3.5. `error_ref` resolves to the structured error and recovery envelope. Use the tool owner's code when it supplies one, such as `mcp_schema_mismatch`; otherwise use the reason of the first failure fact in table order, breaking ties by ascending UTF-8 `result_path`. For these content and parse failures use the terminal schema-mismatch classification and `retryable: false`, with `status: partial` if valid result content survives or `status: failed` if none survives. An independently applicable higher-priority failure keeps its own recovery status and diagnostics. The dispatched attempt receives its own settlement and never enters T-169's provider-turn denial or replacement path.
+
+#### `ToolProgressHeartbeat` contract (T-175, added 2026-11-26)
+
+Every long-running tool call of the families `mcp`, `subagent`, `browser` and `device` emits heartbeats while it runs. The PM-side adapter that supervises the call emits them while the server, child session, browser session or device session behind it is alive and responsive, so silence means liveness was lost, not that the work is slow. A heartbeat is a live progress signal on the tool call; it is not a durable record. Command tools (`bash`) follow §3.5.1 for terminal liveness and per-invocation completion.
+
+| Field | Type | Rule |
+|---|---|---|
+| `tool_call_id` | string | The running call. |
+| `tool_family` | closed enum `mcp`, `subagent`, `browser`, `device` | |
+| `sequence` | integer, at least 1 | Rises by one per heartbeat of the call. |
+| `progress` | object, optional | `{ completed?, total?, message? }`: `completed` integer at least 0, `total` integer at least 1, `message` string of at most 200 characters. |
+| `emitted_at_utc` | RFC 3339 UTC string | |
+
+Intervals. A family emits a heartbeat at least every `heartbeat_interval_ms`. For `mcp` that is the `Plans/MCP_Integration.md` liveness default (`heartbeat_interval_ms` 15000); the other three families use the same 15000 ms default. `max_silent_interval_ms` is twice the heartbeat interval (30000 by default). A heartbeat, an output chunk or a settlement of the call resets the silence timer.
+
+States of a running call, shown on its tool card:
+
+| From | Event | To |
+|---|---|---|
+| `running` | silent for `max_silent_interval_ms` | `stalled`: the card shows the call as stalled with the time since the last signal and keeps its Stop control |
+| `stalled` | any heartbeat, output chunk or settlement | `running` (or settled) |
+| `stalled` | still silent when the silence reaches `heartbeat_lost_after_ms` (120000 ms for every family; an `mcp` call's own `tool_call_timeout_ms`, counted from the call's start, still applies beside it) | settled: `ToolTurnSettlement.settlement_state = fatal` with error code `heartbeat_lost`, the code the MCP synthetic settlement receipt already uses |
+| `running` or `stalled` | user stops the call | settled through that tool's own stop path |
+
+`stalled` is a display state, not a settlement: the call keeps running and nothing is retried automatically.
+
 
 ### Webcrawl Host Pattern Matcher Owner
 
@@ -12555,12 +12805,17 @@ canonical_text: >-
   artifact with bounded head/tail and exact size; blind retry and loss-shaped success are prohibited. Amended 2026-10-31
   (DL-270): the canonical artifact is a payload-store entry (SP-337) referenced by content hash; no separate artifact store
   exists for large output.
+  ToolManagedOutputRef is the BLAKE3 content ID (a 64-character lowercase hexadecimal string) of the SP-337 entry
+  containing the attempt's complete redacted output. ToolTurnSettlement.retention_ref carries that ID directly. When
+  ToolRecoveryEnvelope.artifact_or_spill_ref is present for the same attempt, its BLAKE3 content ID must equal
+  retention_ref. An authorized read resolves the ID in the attempt's SP-337 store to the complete redacted output bytes.
 gui_related: false
 gui_classification_reason: Backend result, retry, artifact, and verification contract; UI consumers only project its evidence.
 depends_on: [T-007, T-077, T-079, T-167, T-173, T-174]
 unblocks: []
 acceptance_criteria:
   - Truncated terminal output retains complete redacted artifact evidence, bounded head/tail, original size, and cwd changes.
+  - The settlement and recovery envelope identify the same payload, and an authorized read by that ID returns the full redacted output, including bytes omitted from the preview.
   - Already-applied patch is success/no-op only with post-read proof; ambiguous or whitespace-mismatched patch does not mutate.
   - Retention failure cannot settle as success, and policy/FileSafe/secret/schema denials cannot become transient retries.
   - Every retry is a separate attempt under one logical operation and requires a typed changed recovery condition.
@@ -13685,6 +13940,7 @@ acceptance_criteria:
   - A script cannot make a tool call that the same request's selection and policy would not admit as a direct call. The normalized call and its arguments, including values computed while the script runs, pass the same admission checks at the shared T-178 boundary, with selection and policy held constant. Whether the route's direct channel could carry that call, its schema being offered there and its size, is the matter of T-189 and T-191, not of this test.
   - An approval asked for inside a script suspends that script and is answered through the ordinary approval path; a denial, including the immediate one when no person is available, reaches the script as a typed result.
   - Every nested call appears in the event log, receipts and usage rollups exactly as a direct call would, plus the script's operation identity.
+  - With the catalog search L2 schema materialized only on the host, two searches within one script can settle successfully with distinct host-issued child IDs and the same parent_operation_id. A failed nested call repeats its child ID and parent_operation_id in the recovery envelope. The enclosing script retains its own call ID.
   - A script that passes its deadline or the EvalSession hard output-byte ceiling ends with typed recovery evidence, not a success-shaped result.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py lint-contractrefs

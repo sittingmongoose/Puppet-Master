@@ -2,9 +2,9 @@
 
 Source: `Plans/Widget_System.md`
 
-Source lines: L1126-L1189
+Source lines: L1157-L1223
 
-Source SHA256: `ee7020e9012ae96dae030d4199408291d8f3386233eb9e2e6577ce4fa64f740e`
+Source SHA256: `7d291dba46b53f3751c546e112b3eb7af72dcca28e9f6c0e742ca1adfbfa6d18`
 
 ---
 
@@ -70,5 +70,8 @@ This addendum repairs non-runtime widget rows without creating WorkNodes, implem
 
 - Repairs `sfk-27612d81432b8c866dbb6e76`: `widget-custom-metrics` is the canonical id for custom metric widgets. Fields are `widget_id`, `metric_id`, `query_ref`, `unit`, `refresh_interval_seconds`, `empty_state_copy_id`, and `owner_doc_ref`.
 - Repairs `sfk-243d9819162bc839409ce15b`: external usage-feature references to Widget_System `§2`, `§3`, `§4`, or `§7` resolve to named widget hostability, projection trust, layout namespace, and Progress catalog anchors. New citations must use names instead of numeric section aliases.
+  Corrected 2026-11-25: the exact resolution is `§2` to `## 2. Hostability and data contracts`; `§3` to `## 3. Layout persistence` (grid, sizes and gestures are WS-017 and WS-019); `§4` as an add-widget-flow citation to WS-030's Catalogue, because `## 4. Orchestrator Progress widget scope and catalog linkage` is the Progress catalog, not the add-widget flow; `§7` and `#5` (widget configuration persistence) to `## 3. Layout persistence` with WS-020's `configuration_refs` and WS-004's configuration record. Plans/usage-feature.md cites these anchors directly. The other external `§7` citation, `ContractName:Plans/Widget_System.md#7` in FinalGUISpec Appendix C `### C.5 redb Key Migration` (kept there as a preserved ContractRef), is the `dashboard_layout:v1` to `widget_layout:v1:dashboard` key migration and also resolves to `## 3. Layout persistence`.
 - Repairs `sfk-7d2d295617efe72e4e966b52`: external references to Widget_System `§7` map to the named `Progress catalog and hostability` section. New citations must use named anchors because this file's live headings are not numbered as §7.
+  Corrected 2026-11-25: no heading is named `Progress catalog and hostability`, and the two external `§7` citations (usage-feature.md, per-widget configuration; FinalGUISpec Appendix C `### C.5 redb Key Migration`, `ContractName:Plans/Widget_System.md#7`, the dashboard layout key migration) are about configuration and layout persistence, not the Progress catalog. `§7` resolves to `## 3. Layout persistence` with WS-020 (`configuration_refs`) and WS-004 (configuration record). The Progress catalog's real headings are `### Progress-only widget hostability` and `### Catalog source and drill linkage` under `## 4. Orchestrator Progress widget scope and catalog linkage`.
 - Repairs `sfk-cdbe4e263b71df9ea3cb1655`: example widget-shell payload: `{\"widget_id\":\"widget.orchestrator_status\",\"widget_kind\":\"progress\",\"host_surface\":\"dashboard\",\"data_ref\":\"projection.widget.orchestrator_status\",\"refresh_interval_seconds\":30,\"empty_state\":\"no_active_run\",\"schema_version\":\"1.0.0\"}`.
+  Corrected 2026-11-25: that sample names no catalog entry and `dashboard` is not a Progress host (Progress widgets are on no dashboard until the Orchestrator redesign, WS-030). The catalog example is the `progress.blocked-concerns` payload under `### Catalog source and drill linkage`.

@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L31726-L32038
+Source lines: L31862-L32176
 
-Source SHA256: `aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26`
+Source SHA256: `97b1d391be028a118aa9ee837749dc861f7f51b6c37f2de93f71048ddf325371`
 
 ---
 
@@ -73,8 +73,9 @@ Repairs row `sfk-f0bb4b941956a19bb7f62357`.
 
 - The canonical config key is `subagent.handoff.max_retries`.
 - Default `subagent.handoff.max_retries = 1`; the initial handoff attempt is not counted as a retry.
-- Effective range is `0..=3`. Values above 3 are invalid in product spec and must be rejected before dispatch.
-- On exhaustion, the handoff records `handoff_retry_exhausted` with `attempt_count`, `max_retries`, `last_error_class`, and `next_allowed_actions[] = [retry, skip_with_operator_acceptance, view_raw_output]`.
+- Accepted config values are integers in `0..=3`. Reject out-of-range values before dispatch. The effective automatic budget is the lower of this value and the Executor §7.1 `structured_output_invalid` maximum (2). Both owners use the same retry count. A configured 3 is valid and allows at most two automatic retries.
+- On each attempt, validate the transport parser result and try and validate generic fallback if it fails. If the output remains invalid, compare the automatic same-Provider format retries already dispatched for that handoff with the effective budget. While the count is below the budget, use the existing classified retry admission for the next format retry and keep the parser recovery prompt closed. When the count reaches the budget and that attempt's output is still invalid after fallback, the budget is exhausted. With a budget of 0 this can happen on the initial attempt. Fallback, event append/replay and operator recovery actions do not increment this count.
+- Only on exhaustion, the handoff records `handoff_retry_exhausted` with `attempt_count`, `max_retries` (the effective budget), `last_error_class`, and `next_allowed_actions[] = [retry, skip_with_operator_acceptance, view_raw_output]`. `attempt_count` includes the initial attempt and its dispatched automatic format retries. The live action list comes from the blocked episode in Parser-Failure And Unrelated-Failure Recovery Actions.
 
 ### Execution-Unit Hook Naming
 
@@ -84,6 +85,7 @@ Repairs row `sfk-1a88c3d82dd8176a236abe6a`.
 - Legacy `BeforeTier`, `AfterTier`, and `verify_tier_start` strings are source-lineage aliases only. They may appear in imported records, but normalized orchestration records must store `hook_name_normalized` using the canonical execution-unit names.
 - Import normalization table: `BeforeTier -> BeforeUnit`, `AfterTier -> AfterUnit`, `verify_tier_start -> VerifyUnitStart`, `verify_tier_end -> VerifyUnitEnd`.
 - New owner prose and generated receipts must not introduce tier-era hook names as active hook identifiers.
+- Naming fence (2026-11-25): every remaining tier-era spelling in this document is a legacy alias of the canonical names above, not an active identifier. That covers `verify_tier_start` / `verify_tier_end` as function and module names (`src/verification/tier_start.rs`, `tier_end.rs`, `tier_verification.rs`) in the start/end verification sections and their code examples, the `BeforeTierStart` / `DuringTierStart` / `AfterTierStart` and `BeforeTierEnd` / `AfterTierEnd` verification responsibilities (the before, during and after phases of `VerifyUnitStart` and `VerifyUnitEnd`), the `BeforeTierResult` / `AfterTierResult` type names in the hook trait example, and the PlanUnits OSI-109, OSI-110, OSI-112, OSI-119 (BeforeTierEnd), OSI-120 (DuringTierEnd), OSI-121 (AfterTierEnd), OSI-122, OSI-164, OSI-177, OSI-180, OSI-184, OSI-221 and OSI-224. Since 2026-11-26 each of those PlanUnits states its active behaviour with the canonical name (`BeforeUnit`, `AfterUnit`, `VerifyUnitStart`, `VerifyUnitEnd`, or the before, during or after phase of `VerifyUnitStart` / `VerifyUnitEnd`) and keeps the tier-era spelling only beside it, tagged as a legacy alias.
 
 ### Cross-Platform Process Existence Check
 

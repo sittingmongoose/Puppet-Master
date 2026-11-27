@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30296-L31400
+Source lines: L30331-L31435
 
-Source SHA256: `7ba17c5aa7fb716a162c335b6ec6e71fc68d986a5c12f560da9fc6c85b205c7a`
+Source SHA256: `7c52aa35b4fb3b308c17b6cf275e1f2f81fab5151885cf7a52d3ae688fdbe180`
 
 ---
 
@@ -71,7 +71,7 @@ stale_retired_dispositions:
 - "The three-family / Retro-Dark-default selector adjudication is superseded per dec-2026-07-16-pm6-theme-settings-canon-promotion-seal and preserved as migration lineage prose."
 - "The later Friendly-Dark-default promotion is itself superseded by the Basic Dark untouched first-open/fresh-project factory contract; it remains historical lineage only."
 owner_boundary_notes:
-- "The Project-scoped theme:v1/layout:v1 snapshot and write behavior remain owned by section 15.1 and F3-217; this unit defines factory selection and visible restoration/copy behavior."
+- "The Project-scoped theme:v1/layout:v1 snapshot and write behavior remain owned by 15.1 redb Schema and F3-217; this unit defines factory selection and visible restoration/copy behavior."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -265,7 +265,7 @@ stale_retired_dispositions:
 - 'Amended 2026-10-14: W5 is approved but coordinated with Glass publication; the old three-mode background is not
   the new product wallpaper model.'
 owner_boundary_notes:
-- "Registration of glass_background_mode:v1 in the section 15.1 storage tables is owned by F3-444; this unit consumes the key."
+- "Registration of glass_background_mode:v1 in the 15.1 redb Schema storage tables is owned by F3-444; this unit consumes the key."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -331,7 +331,7 @@ stale_retired_dispositions:
 - "The concept localStorage name pm.glassAlpha is a demo persistence shim; the canonical key is glass_alpha:v1."
 - 'Amended 2026-10-17 (DL-228): defaults, clamps and display follow SSYS-010 and general.visual.glass-transparency (one .55 default, floors .35 and .45, ceiling 1). It read: .60 for glass-dark, .55 for glass-light, ceilings .85 and .88.'
 owner_boundary_notes:
-- "Registration of glass_alpha:v1 in the section 15.1 storage tables is owned by F3-444; the locked non-glass presentation row is owned by F3-443."
+- "Registration of glass_alpha:v1 in the 15.1 redb Schema storage tables is owned by F3-444; the locked non-glass presentation row is owned by F3-443."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```

@@ -4,7 +4,7 @@ Source: `Plans/MiscPlan.md`
 
 Source lines: L1381-L6359
 
-Source SHA256: `075650d61f254d219224a6955894056175249145fa195c870d67edcca7226d33`
+Source SHA256: `5a1f16c378542a770e66a87875b19486d78da6ded77f1e798b0f4c0b9078ba87`
 
 ---
 
@@ -2564,7 +2564,7 @@ acceptance_criteria:
 - The implementation plan reads sections 7.7 through 7.11.2 and checklist sections 8.8 through 8.10.2 before planning Shortcuts and Skills.
 - No-project Skills creation offers global-only paths.
 - Slint key event integration point is identified and documented.
-- platform_specs or equivalent documents how each platform receives skills.
+- platform_specs or equivalent documents how each platform receives skills; since 2026-11-25 the equivalent is the provider-agnostic M-083 SkillRunnerBinding.
 - Implementation order preserves cleanup/run-config foundation before Shortcuts, Skills, Cleanup UX, enhancements, and pre-completion.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
@@ -4076,8 +4076,8 @@ unblocks: []
 acceptance_criteria:
 - Slint key-event capture location and KeyMap application are confirmed against Slint 1.17.1 or current stable docs before implementation.
 - Skill discovery handles Windows path case and separators as needed.
-- platform_specs or equivalent documents how each provider receives skill list, paths, content, environment, prompt injection, or tools.
-- list_skills_for_agent remains stubbed until platform-specific delivery is defined.
+- platform_specs or equivalent documents how each provider receives skill list, paths, content, environment, prompt injection, or tools. Since 2026-11-25 the equivalent is the provider-agnostic M-083 SkillRunnerBinding, the same for every provider.
+- list_skills_for_agent remains stubbed until platform-specific delivery is defined. Since 2026-11-25 that delivery is defined by the M-083 SkillRunnerBinding, so the helper is no longer stubbed and uses the M-083 signature.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -4106,10 +4106,10 @@ preserved_exact_tokens:
 - Gemini
 negative_constraints: []
 compatibility_only_notes:
-- Provider skill injection remains stubbed until platform_specs or equivalent defines delivery.
+- Provider skill injection remains stubbed until platform_specs or equivalent defines delivery. The equivalent is the M-083 SkillRunnerBinding (2026-11-25), so injection is no longer stubbed.
 stale_retired_dispositions: []
 owner_boundary_notes:
-- Provider docs and platform_specs own provider-specific delivery details.
+- Provider docs and platform_specs own provider-specific delivery details. Retired 2026-11-26 for skill delivery, which has no provider-specific details (Skills_System §4.5 owns it and M-083 SkillRunnerBinding types it); provider docs keep only provider facts outside skill delivery.
 owner_hints:
 - Plans/MiscPlan.md
 preserved_contractrefs: []

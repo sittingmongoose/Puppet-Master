@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L4179-L4277
 
-Source SHA256: `7ba17c5aa7fb716a162c335b6ec6e71fc68d986a5c12f560da9fc6c85b205c7a`
+Source SHA256: `7c52aa35b4fb3b308c17b6cf275e1f2f81fab5151885cf7a52d3ae688fdbe180`
 
 ---
 
@@ -88,7 +88,7 @@ The relationship: page widgets (Widget_System.md) are composed of atomic compone
 ### C.5 redb Key Migration
 
 
-The existing `dashboard_layout:v1` redb key (section 15.1) stores a simple card-order list. The new widget layout system uses a richer schema. Migration strategy:
+The existing `dashboard_layout:v1` redb key (15.1 redb Schema) stores a simple card-order list. The new widget layout system uses a richer schema. Migration strategy:
 
 1. **On first load** after the widget system upgrade:
    - Check if `dashboard_layout:v1` exists and `widget_layout:v1:dashboard` does NOT exist.
@@ -105,5 +105,5 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Widget_Syste
 - Section 7.2 of this document -- Dashboard (original card grid specification)
 - Section 8 of this document -- Core Widget Catalog (atomic UI components)
 - Section 12.3 of this document -- Dashboard grid responsive breakpoints
-- Section 15.1 of this document -- redb persistence for dashboard layout
+- 15.1 redb Schema in this document covers dashboard layout persistence
 - Plans/storage-plan.md -- redb namespaces

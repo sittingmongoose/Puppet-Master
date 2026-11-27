@@ -2,9 +2,9 @@
 
 Source: `Plans/agent-rules-context.md`
 
-Source lines: L310-L2338
+Source lines: L310-L2344
 
-Source SHA256: `abc7dcb9b880d42034005d801131e1eb874cebd74eed7af23de2a74cb86375e6`
+Source SHA256: `64d60448dac0a023b529346f47bff671430f35b8ba26fe20f72985f21483a43e`
 
 ---
 
@@ -520,13 +520,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/agent-rules-context.md
 canonical_text: >-
-  Feeding rules into every agent uses one rules pipeline API such as
-  get_agent_rules_context(application_config, project_path: Option<&Path>) -> String to return one
-  formatted Application rules plus Project rules block; Orchestrator, Interview, and Assistant all
-  call it with their project context and avoid copy-pasting Context7 or DRY into multiple prompt
-  builders. The scope-aware input also names the actual work Computer, application/thread identity and
-  source revisions; project_path=None omits Project rules only. App sidecars use the owned app
-  thread/run area. Conversion re-resolves future context with lineage and never leaks unrelated-run
+  Feeding rules into every agent uses one rules pipeline API, get_agent_rules_context(request:
+  &AgentRulesContextRequest) -> AgentRulesContextResult (the locked function contract and typed request in FABLE
+  Deferred Action Concrete Repair Addendum - 2026-07-08), whose formatted_block_ref names one formatted Application
+  rules plus Project rules block; the earlier example get_agent_rules_context(application_config, project_path:
+  Option<&Path>) -> String illustrates that formatted text only and is not a second signature. Orchestrator, Interview,
+  and Assistant all call it with their project context and avoid copy-pasting Context7 or DRY into multiple prompt
+  builders. The scope-aware input also names the actual work Computer, application/thread identity and source revisions
+  (computer_id, thread_id or run_id, source_revisions[]); project_path=None omits Project rules only. App sidecars use
+  the owned app thread/run area. Conversion re-resolves future context with lineage and never leaks unrelated-run
   journals.
 gui_related: false
 gui_classification_reason: This unit covers prompt assembly API and callers, not GUI behavior.
@@ -760,9 +762,13 @@ plan_unit_id: ARC-013
 unit_type: requirement
 status: accepted
 owner_doc: Plans/agent-rules-context.md
-canonical_text: Implementation hooks define storage for application and project rules and require a shared rules pipeline
-  that loads application rules, optionally loads project rules when project_path is set, returns one formatted string, and
-  is called by Orchestrator, Interview, and Assistant prompt builders.
+canonical_text: >-
+  Implementation hooks define storage for application and project rules and require one shared rules pipeline,
+  get_agent_rules_context(request: &AgentRulesContextRequest) -> AgentRulesContextResult (the locked function contract
+  and typed request in FABLE Deferred Action Concrete Repair Addendum - 2026-07-08), that loads application rules and
+  the work Computer's applicable application context, optionally loads project rules when project_path is set, returns
+  one formatted string through formatted_block_ref when errors[] is empty, and is called by Orchestrator, Interview, and
+  Assistant prompt builders, each refusing its dispatch with the first error code when errors[] is not empty.
 gui_related: false
 gui_classification_reason: This unit covers storage and backend prompt assembly hooks, not GUI presentation.
 split_recommended: false

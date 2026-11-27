@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L11211-L11296
+Source lines: L11220-L11305
 
-Source SHA256: `e170ecd83663641560575465fb3e41d5b7881667b8ae0f8a78c0ddb7c4515dde`
+Source SHA256: `49549c0771a51deaab00b327f6bff228f923ce79afbe2c6743de7be2f87f0cce`
 
 ---
 
@@ -60,9 +60,9 @@ source_lineage:
   - pldg-20260615-001-part-4-fable-cleanup:atom-0010
   - pldg-20260615-001-part-4-fable-cleanup:atom-0011
   - pldg-20260615-001-part-4-fable-cleanup:atom-0012
-  - local:Plans/Tools.md:2039
-  - local:Plans/Tools.md:2113
-  - local:Plans/Tools.md:2169
+  - "local:Plans/Tools.md#section=11.1 Provider classes, defaults, and fallback disclosure"
+  - "local:Plans/Tools.md#section=11.2 Support-tier vocabulary"
+  - "local:Plans/Tools.md#section=12. Web tool routing algorithm"
 preserved_exact_tokens:
   - "Fields:"
   - "Rules:"

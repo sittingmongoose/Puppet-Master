@@ -1277,7 +1277,8 @@
             {
               "type": "string",
               "minLength": 1,
-              "maxLength": 256
+              "maxLength": 256,
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
             },
             {
               "type": "null"
@@ -1918,6 +1919,39 @@
             "properties": {
               "command_id": {
                 "enum": [
+                  "cmd.permissions.create_global_rule",
+                  "cmd.permissions.create_project_rule",
+                  "cmd.permissions.create_computer_rule"
+                ]
+              }
+            },
+            "required": [
+              "command_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "rule_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 36,
+                    "maxLength": 36,
+                    "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "command_id": {
+                "enum": [
                   "cmd.permissions.update_rule",
                   "cmd.permissions.reorder_rule",
                   "cmd.permissions.delete_rule",
@@ -1970,7 +2004,7 @@
           }
         }
       ],
-      "description": "PS-144 command-specific admission: validate_rule writes nothing; mutations CAS the actual owning collection revision/hash, and update/reorder/delete/revoke name a stable rule_id. Creating/updating a durable allow needs the explicit person choice, including in YOLO. Repository origin/loosening acceptance is rechecked from the actual source by the owner; non-repository rules need no fabricated repository acceptance and ordinary revoke/delete do not manufacture a human-only gate."
+      "description": "PS-144 command-specific admission: validate_rule writes nothing; mutations CAS the actual owning collection revision/hash, and update/reorder/delete/revoke name a stable rule_id. Creating/updating a durable allow needs the explicit person choice, including in YOLO. Repository origin/loosening acceptance is rechecked from the actual source by the owner; non-repository rules need no fabricated repository acceptance and ordinary revoke/delete do not manufacture a human-only gate. A create carries a new lowercase hyphenated RFC 9562 UUID rule_id or null (the owner then generates one); update/reorder/delete/revoke name the rule's existing stable rule_id unchanged, which for a rule created before the UUID form is its original key."
     },
     "permission_rule_command_result_v2": {
       "type": "object",
@@ -2052,7 +2086,31 @@
           "minLength": 1,
           "maxLength": 256
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "created"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "rule_id": {
+                "type": "string",
+                "minLength": 36,
+                "maxLength": 36,
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+              }
+            }
+          }
+        }
+      ]
     },
     "build_grant_revoke_request_legacy_v1": {
       "type": "object",

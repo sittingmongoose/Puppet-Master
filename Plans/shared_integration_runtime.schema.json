@@ -3774,8 +3774,60 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 256
+        },
+        "update_operation": {
+          "description": "cmd.persona.update only (Personas.md section 4.1 item 5, Decision_Log DL-2602). Absent means edit. set_enabled and restore_shipped_default are refused with invalid_args for a protected core built-in or a Persona with no shipped default.",
+          "enum": [
+            "edit",
+            "set_enabled",
+            "restore_shipped_default"
+          ]
+        },
+        "enabled": {
+          "description": "Required with update_operation set_enabled and allowed only with it: the new value of the PERSONA.md enabled field.",
+          "type": "boolean"
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "update_operation"
+            ]
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "const": "cmd.persona.update"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "update_operation"
+            ],
+            "properties": {
+              "update_operation": {
+                "const": "set_enabled"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "enabled"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "enabled"
+              ]
+            }
+          }
+        }
+      ]
     },
     "persona_owner_result_v2": {
       "type": "object",

@@ -1730,7 +1730,7 @@ Run & Debug is the `run_debug` side-panel owner for runtime diagnostics entry, P
 
 #### Search side-panel owner
 
-Search is a one-visible-at-a-time search-surface side-panel occupant under `FinalGUISpec.md §4.1` with explicit `/open-focus` behavior, not a hand-waved overlay or `/gap`. It owns `/user-search` and `/content-search` UI for project code-search and file-content-search results, grep-result and grep-style rows, minimum match options for case, `/word/regex`, optional path/file scope, virtualized result rows, and replace-in-files when MVP replace remains enabled. `FinalGUISpec.md §15.3` and the Search panel use shared `/routing`, `/evidence/ledger`, and file-opening rules so content-search rows open through the same `OpenFile` path/range highlight flow as chat, File Manager, and LSP opens.
+Search is a one-visible-at-a-time search-surface side-panel occupant under `FinalGUISpec.md §4.1` with explicit `/open-focus` behavior, not a hand-waved overlay or `/gap`. It owns `/user-search` and `/content-search` UI for project code-search and file-content-search results, grep-result and grep-style rows, minimum match options for case, `/word/regex`, optional path/file scope, virtualized result rows, and replace-in-files when MVP replace remains enabled. `FinalGUISpec.md §15.3` (15.3 Tantivy Indices) and the Search panel use shared `/routing`, `/evidence/ledger`, and file-opening rules so content-search rows open through the same `OpenFile` path/range highlight flow as chat, File Manager, and LSP opens.
 
 Search is also the `search-owner` for the full indexing control surface: enable/disable index, rebuild/re-anchor, large-file threshold default 10 MB, generated-file index-exclusion patterns, follow-symlinks toggle, and visible indexed/stale/unindexed/fallback state. If the user turns OFF indexing while a build is in progress, PM cancels the builder with `CancellationToken`, removes partial generation state, and on `re-enable` starts a fresh build. Settings may persist global defaults, but Search exposes the project-scoped same-freshness and `/freshness/degradation` control and status copy users need before interpreting results.
 
@@ -2746,7 +2746,7 @@ Required behavior summary:
 - Tree-level actions include `New file`, `New folder`, `Rename`, `Delete`, Copy full path, Copy relative path, Add to Assistant Chat, Open With, Download / Save Local Copy, and `/Cut/Paste` for workspace nodes. `cmd.file` / `cmd.file.*` is the command-family for workspace-node actions, and missing actions must not remain anonymous context-menu-only behavior; terminal reveal actions stay in the terminal family, with `Open in Terminal` using `cmd.terminal.open` and `Show Terminal` using `cmd.terminal.show`.
 - Workspace-node clipboard is a dedicated file-operation model: paste and `/drop` reuse one path-validation plus conflict-resolution engine, cut-pending state remains visibly armed until paste or clear, and successful paste uses the same progress and toast feedback as drag/drop instead of a second feedback path.
 - File-manager operational GUI coverage remains MVP and implementation-ready for `/file-manager/remote/review/runtime` seams: `/delete/duplicate/bulk`, `/refresh/conflicts`, generated-vs-workspace-file identity, `/open/save/export`, `/hiding`, `/test/share`, `/ignored-file` behavior, `/browser/terminal/artifacts` reveal/reuse rules, chat-thread diff exposure, multi-surface routing, exact-session terminal reveal, and project-driven orchestration-native feature-fleshing. These are PM-native obligations, not competitor-derived features to add blindly.
-- Known GUI ownership references are explicit: `§7.16` Chat, `§7.18` File Editor, `§7.20` Bottom Panel / Browser / Problems / Debug / Ports, `§7.4.2` Settings > LSP, `§7.4.5` Settings > SSH, and `§7.4.6` Settings > Debug. Remote-LSP GUI projections consume host-aware owner contracts such as `(server_id, root)` only as display context until the LSP owner provides the stronger root identity.
+- Known GUI ownership references are explicit: `§7.16` Chat, `§7.18` File Editor, `§7.20` Bottom Panel / Browser / Problems / Debug / Ports, `§7.4.4 Settings (Unified) panel specification` (its LSP row) Settings > LSP, `§7.4.5` Settings > SSH, and `§7.4.6` Settings > Debug. Remote-LSP GUI projections consume host-aware owner contracts such as `(server_id, root)` only as display context until the LSP owner provides the stronger root identity.
 
 ### 7.18 File Editor
 
@@ -2851,7 +2851,7 @@ Rules:
 Bundle Controls govern revision loops and approval readiness for reviewed document/file bundles.
 
 Required behavior:
-- `Resubmit` in bundle review sends all unresolved notes as revision context
+- `Resubmit` in bundle review sends all unresolved notes as revision context; it dispatches `cmd.prd_builder.revision.resubmit` (the PRDB-014 targeted revision pass, DL-2602) with `bundle_id`, the open annotation ids in deterministic order and `expected_bundle_revision`
 - final approval is blocked until every note is resolved, responded to, or dismissed
 - bundle status progression is `draft -> in_review -> all_notes_resolved -> approved -> merged`
 - bundle-level persistence uses `bundle_registry.v1:{project_id}:{bundle_id}` with linked `note_record.v1:*` entries
@@ -3151,7 +3151,7 @@ The GUI must never visually "jump" or "flicker" when background data updates arr
 
 ### 11.3 Terminal-Specific Anti-Flickering
 
-- Live terminal rendering follows the Section 15 terminal-core architecture: terminal output is a high-frequency mutable grid, DOM/React/webview-style document-UI terminal cores are non-ship, and the core centers native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer ingestion and processing. The web GUI's terminal (DL-139) draws the same Rust terminal grid as a fixed, reused set of visible page-text rows updated by diff; it never adds one element per output line or treats output as a growing document, and it ships only after passing the heavy-output speed tests. Its selection is tracked in the terminal grid's own data, like the desktop terminal, not with the browser's selection, so a selection survives scrolling and new output; this is the one exception to the web GUI's use of browser selection (F3-583).
+- Live terminal rendering follows the Section 15 terminal-core architecture (SMPFS-073, Native Buffer Render Performance Model): terminal output is a high-frequency mutable grid, DOM/React/webview-style document-UI terminal cores are non-ship, and the core centers native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer ingestion and processing. The web GUI's terminal (DL-139) draws the same Rust terminal grid as a fixed, reused set of visible page-text rows updated by diff; it never adds one element per output line or treats output as a growing document, and it ships only after passing the heavy-output speed tests. Its selection is tracked in the terminal grid's own data, like the desktop terminal, not with the browser's selection, so a selection survives scrolling and new output; this is the one exception to the web GUI's use of browser selection (F3-583).
 - Bounded terminal transcript or plain-log projections may expose a visible row window in `VecModel`/`ListView`, but those projections are derived views rather than the live terminal core.
 - When output arrives rapidly, throttle GUI projection updates to max 30fps and batch rows arriving within 33ms; PTY/buffer ingestion and diff computation remain off the UI thread.
 - Ring buffers stay in Rust; the GUI holds only the visible transcript or plain-log projection window.
@@ -3390,7 +3390,7 @@ Hidden views have zero runtime cost. Widget trees are destroyed when the conditi
 ### 14.3 Virtualized Lists
 
 
-Chat messages, file trees, log outputs, evidence lists, and other long lists use Slint's `ListView` with `VecModel`. For extremely large datasets (100k+ log lines), implement a custom `Model` trait backed by a ring buffer to keep memory bounded. Live terminal rendering is excluded from this normal-list rule and follows the Section 15 screen/buffer, diff-based painting, and off-UI-thread PTY/buffer architecture; only bounded terminal transcript or plain-log projections use `VecModel`/`ListView`. Amended 2026-10-31 (DL-270): a chat thread is not held whole in a `VecModel`; its model holds the loaded render pages only (the hot tail, the newest page and any older pages the person has loaded) and grows through the mandatory load-older paging (SP-338, ACD-242, F3-667).
+Chat messages, file trees, log outputs, evidence lists, and other long lists use Slint's `ListView` with `VecModel`. For extremely large datasets (100k+ log lines), implement a custom `Model` trait backed by a ring buffer to keep memory bounded. Live terminal rendering is excluded from this normal-list rule and follows the Section 15 screen/buffer model (SMPFS-073, Native Buffer Render Performance Model), diff-based painting, and off-UI-thread PTY/buffer architecture; only bounded terminal transcript or plain-log projections use `VecModel`/`ListView`. Amended 2026-10-31 (DL-270): a chat thread is not held whole in a `VecModel`; its model holds the loaded render pages only (the hot tail, the newest page and any older pages the person has loaded) and grows through the mandatory load-older paging (SP-338, ACD-242, F3-667).
 
 ---
 
@@ -3484,7 +3484,7 @@ Normative mapping notes:
 - `editor_state:v1:{project_id}`, `hotreload_state:v1:{project_id}`, and the SP-252 Onboarding predecessor keys are read-only `StorageMigrationCoordinator` copy-forward inputs, never ordinary-open fallbacks or new-write keys. The global onboarding alias may copy forward only when its target Project/session is unambiguous. A missing canonical row plus a present alias enters migration; it does not authorize a lazy rewrite-on-save. Editor/hotreload new writes use `editor_workspace_state.v1:{project_id}` and `hotreload_state.v1:{project_id}`; Onboarding consumes only SP-252's current session-key/value-schema binding. A reset does not delete a real Project or authorize repeating its creation.
 - Missing `hotreload_state` or `onboarding_state` may use the registered default/first-run presentation. Corrupt or incompatible values are secured byte-for-byte in quarantine before the GUI discloses the reset and uses defaults. Missing, corrupt, or incompatible `editor_buffer_recovery_state` or `editor_workspace_state` is not a silent empty/default workspace: the GUI attempts mandatory-backup recovery and discloses the affected files/workspace state and maximum credible loss when recovery is unavailable.
 - `dashboard_layout:v1` is a deprecated migration-read alias only; `widget_layout:v1:dashboard` is the canonical dashboard key after migration. Amended 2026-10-10 (DL-186): dashboard boards are kept per project under `widget_layout:v1:<project_id>:<board_id>` (WS-030), and `widget_layout:v1:dashboard` is no board's key.
-- §15.1 lists the keys required for GUI state persistence. For the complete key catalog including non-GUI keys, see `Plans/storage-plan.md` §2.3.
+- The 15.1 redb Schema section lists the keys required for GUI state persistence. For the complete key catalog including non-GUI keys, see `Plans/storage-plan.md` §2.3.
 - Viewer-mode and MCP readiness copy must mirror owner-doc precision. When the active durable store is locked by another writer or the selected `pm.lock` cannot be acquired, the GUI enters `/viewer-mode` and labels the state as read-only/viewer rather than implying ordinary edit capability. MCP readiness rows consume `mcp_server_record` and `mcp_runtime_availability` from the MCP owner docs; cost-display and `/account/readiness` copy must route to the canonical Usage/cost and account/readiness owner pipelines instead of creating local MCP, account, or cost buckets.
 - Terminal GUI persistence imports the full storage-owned terminal key catalog instead of forking a local subset: `terminal_workspace_state.v1:{project_id}:{workspace_tab_id}`, `terminal_section_record.v1:{project_id}:{terminal_section_id}`, `terminal_tab_record.v1:{project_id}:{terminal_tab_id}`, `terminal_pane_record.v1:{project_id}:{terminal_pane_id}`, `terminal_leaf_pane_record.v1:{project_id}:{terminal_leaf_pane_id}`, `terminal_workgroup_record.v1:{project_id}:{terminal_workgroup_id}`, `editor_terminal_panel_state.v1:{project_id}:{workspace_tab_id}:{editor_terminal_panel_id}`, `terminal_session_record.v1:{project_id}:{terminal_session_id}`, and `terminal_command_block.v1:{project_id}:{terminal_session_id}:{command_block_id}`. Wildcard audit shorthands such as `terminal_workspace_state.v1:*` and `terminal_command_block.v1:*` resolve to these concrete key families. The GUI-facing `terminal_layout.v1` / `terminal_session.v1` rows above are projection and compatibility summaries only; restore and open/focus flows resolve through the storage key catalog before claiming liveness. Amended 2026-10-09 (DL-181): SP-332 re-scopes this catalog for one session per tab. A terminal tab is a tab record `terminal:<session>` in the Home layout record (SP-330), its appearance override sits in its serialized state (SP-331), the session record's view link is optional, the workspace, section, workgroup and editor-terminal-panel families are read only as migration inputs, and saved scrollback with its images is the terminal restore record's transcript chunks (F3-221). Amended 2026-10-31 (DL-270, SP-337): transcript chunks stay within the 16 KiB inline body cap; scrollback images are decoded to binary at ingest and held in the payload store, and a chunk carries only their BLAKE3 references.
 
@@ -3833,7 +3833,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  Advanced Storage and Retention settings display effective owner minima, anchors, holds, storage pressure, compaction state, and deletion/quarantine progress; allow only supported policy strengthening; route legal-hold and maintenance mutation to protected owners; distinguish project-list removal from data deletion; and secure exact invalid bytes before any registered reset, rebuild, migration, replacement, or purge while critical authority always fails closed. Amended 2026-10-31 (DL-270, SP-340): the same page opens with a read-only storage health block. For each user-facing storage group that the storage owner's registry names, about eight and not every redb family, it shows usage against that group's disk budget, reclaimable bytes, and the last store compaction with its result and time, drawn with the Usage meter primitive (F3-628, DR-058) and carrying the projection freshness and health of section 15.6. The existing Request storage compaction row is the verified reclaim action. It is one request for the whole storage instance that dispatches `cmd.storage.compaction.request`, shows the owner's maintenance lifecycle and any wait reason, and reports its result per group; it states reclaimed bytes only from the owner's before-and-after measurement of that operation, never from the dispatch receipt. When admission fails it is disabled with the Case L reason (`storage_read_only`, `operation_in_progress` and the rest of the closed list). The block also shows the last verified backup, meaning the newest backup at Structure verified or higher with its level, and what a restore from it would lose; a newer unverified backup is shown beside it (BRS-031, F3-528). Disk budgets, cache sizes, the fragmentation threshold and the compaction schedule are owner values shown here, not Settings rows. The existing Keep usage history for setting keeps its meaning, and daily usage totals are kept whatever it says (SP-341, UF-108). For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
+  Advanced Storage and Retention settings display effective owner minima, anchors, holds, storage pressure, compaction state, and deletion/quarantine progress; allow only supported policy strengthening; route legal-hold and maintenance mutation to protected owners; distinguish project-list removal from data deletion; and secure exact invalid bytes before any registered reset, rebuild, migration, replacement, or purge while critical authority always fails closed. Amended 2026-10-31 (DL-270, SP-340): the same page opens with a read-only storage health block. For each user-facing storage group that the storage owner's registry names, about eight and not every redb family, it shows usage against that group's disk budget, reclaimable bytes, and the last store compaction with its result and time, drawn with the Usage meter primitive (F3-628, DR-058) and carrying the projection freshness and health of the 15.6 Durable Storage Recovery, Continuity, and Trust Surfaces (Case L) section. The existing Request storage compaction row is the verified reclaim action. It is one request for the whole storage instance that dispatches `cmd.storage.compaction.request`, shows the owner's maintenance lifecycle and any wait reason, and reports its result per group; it states reclaimed bytes only from the owner's before-and-after measurement of that operation, never from the dispatch receipt. When admission fails it is disabled with the Case L reason (`storage_read_only`, `operation_in_progress` and the rest of the closed list). The block also shows the last verified backup, meaning the newest backup at Structure verified or higher with its level, and what a restore from it would lose; a newer unverified backup is shown beside it (BRS-031, F3-528). Disk budgets, cache sizes, the fragmentation threshold and the compaction schedule are owner values shown here, not Settings rows. The existing Keep usage history for setting keeps its meaning, and daily usage totals are kept whatever it says (SP-341, UF-108). For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: This unit defines user-visible settings, hold, deletion-status, storage-pressure, and quarantine recovery surfaces.
 depends_on: [SP-237, CV-319, F3-441, UCC-124, SP-340, SP-341, BRS-031, F3-528, F3-628]
@@ -4008,7 +4008,7 @@ Agent ecosystem seams remain explicit migration references: `Plans/Skills_System
 
 All 25 retired Rust/Iced-lineage widgets map to Slint equivalents. Key differences:
 - **Canvas-based widgets** (pixel_grid, paper_texture, step_circle, budget_donut, usage_chart): Use `SharedPixelBuffer` + `Image` instead of Iced's `canvas::Program`
-- **text_editor::Content** (for non-terminal logs or degraded/plain historical terminal transcript projections): Use Slint's `TextEdit` (read-only mode) or custom `ListView` with styled text lines; live terminal rendering follows the Section 15 terminal-core architecture and is not a normal text-editor/list widget.
+- **text_editor::Content** (for non-terminal logs or degraded/plain historical terminal transcript projections): Use Slint's `TextEdit` (read-only mode) or custom `ListView` with styled text lines; live terminal rendering follows the Section 15 terminal-core architecture (SMPFS-073, Native Buffer Render Performance Model) and is not a normal text-editor/list widget.
 - **Subscriptions** (50ms polling): Replace with event-driven `invoke_from_event_loop`
 - **Context menu:** Custom implementation (Slint has no built-in)
 - **Animations** (page transitions, pulsing status dots): Use Slint's property transitions and `animate` keyword
@@ -4062,7 +4062,7 @@ cargo check
 | **No built-in context menu** | Low | Custom `ContextMenu` widget using `TouchArea` pointer events. Positioned at mouse coordinates. Styled per theme. Clipboard operations (Copy/Paste/Select All) delegate to Slint's native `TextInput.copy()` / `.paste()` / `.select-all()` — no custom clipboard state management needed. |
 | **No built-in docking framework** | High | Custom `PanelRegistry` in Rust handles dock/undock state machine, snap detection, window lifecycle. This is the most complex custom component and should be implemented early. |
 | **Font family change requires restart** (retired 2026-10-17, DL-230) | Low | Retired: no restart prompt is shown, because a family switch is live under the look's cover (DL-216, F3-077); the earlier mitigation "Detect font family change in settings. Show restart prompt." is lineage only. Pre-load fonts for all themes on startup so within-family switches (Dark <-> Light) and cross-family switches are drawn without a restart. Auto-mode transitions are equally instant: an OS appearance change resolves the selected family to its other variant with no restart. |
-| **4-split terminal performance** (amended 2026-10-09, DL-181: now the performance of many visible terminal tabs, one session per tab) | Medium | Live terminal panes use native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer ingestion and processing per Section 15. Keep bounded ring buffers per pane (max 10k retained rows) and one PTY per pane. `VecModel`/`ListView` holds only bounded transcript/plain-log projection windows (~500 visible rows plus small overscan), not the terminal core. Batch/throttle projection updates (max 30fps). Since DL-181 each terminal tab holds one session with one PTY and one bounded ring buffer, several terminals show at once only as several panels, a hidden terminal tab stops its animation work, and there is no four-pane grid to budget for (F3-245). |
+| **4-split terminal performance** (amended 2026-10-09, DL-181: now the performance of many visible terminal tabs, one session per tab) | Medium | Live terminal panes use native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer ingestion and processing per SMPFS-073 (Native Buffer Render Performance Model). Keep bounded ring buffers per pane (max 10k retained rows) and one PTY per pane. `VecModel`/`ListView` holds only bounded transcript/plain-log projection windows (~500 visible rows plus small overscan), not the terminal core. Batch/throttle projection updates (max 30fps). Since DL-181 each terminal tab holds one session with one PTY and one bounded ring buffer, several terminals show at once only as several panels, a hidden terminal tab stops its animation work, and there is no four-pane grid to budget for (F3-245). |
 | **Platform-specific window manager issues** | Medium | Test: macOS window snapping with floating panels, Linux compositing with overlay effects, Windows DPI scaling. Handle gracefully with fallback behaviors. |
 | **Large Settings page complexity** | Medium | The old tab counts and two-level-sidebar mandate are retired migration lineage. F3-432 owns one search-first Settings surface with category blooms, shelves, command-palette deep links, and real-data testing. |
 | **Migration scope** | High | 18 existing views + 5 new = 23 total. Prioritize: (1) Theme system + shell layout, (2) Dashboard + Settings, (3) Chat + File Manager, (4) remaining views. Each view can be migrated independently. |
@@ -4101,7 +4101,7 @@ All items previously listed as future considerations are MVP scope and are fully
 | Instant project switch | Workspace-tab project switch model (§3.4) |
 | Sound effects | UX Patterns §10.13 + Settings > General |
 | Hot reload controls | Runtime/dev surfaces in `Plans/assistant-chat-design.md` §22 and `Plans/FileManager.md` §14.6 |
-| In-app instructions editor | File Editor instructions mode in `Plans/FileManager.md` |
+| In-app instructions editor | Settings > Personas & Crews > Defaults > Standing instructions (Rules for every project, Rules for this project) in `Plans/agent-rules-context.md` (ARC-011 and its 2026-07-08 addendum's current binding); edits use the Teach sheet (`cmd.chat.teach.capture` / `cmd.chat.teach.confirm`). The File Editor has no instructions mode. |
 | Additional themes / custom themes | Theme extensibility (§6.6) |
 | Language/framework auto-detection and LSP-aware navigation | Project state + `Plans/LSPSupport.md` + `Plans/FileManager.md` §10 |
 | Catalog / one-click install | Settings > Catalog tab |
@@ -4256,7 +4256,7 @@ The relationship: page widgets (Widget_System.md) are composed of atomic compone
 ### C.5 redb Key Migration
 
 
-The existing `dashboard_layout:v1` redb key (section 15.1) stores a simple card-order list. The new widget layout system uses a richer schema. Migration strategy:
+The existing `dashboard_layout:v1` redb key (15.1 redb Schema) stores a simple card-order list. The new widget layout system uses a richer schema. Migration strategy:
 
 1. **On first load** after the widget system upgrade:
    - Check if `dashboard_layout:v1` exists and `widget_layout:v1:dashboard` does NOT exist.
@@ -4273,7 +4273,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Widget_Syste
 - Section 7.2 of this document -- Dashboard (original card grid specification)
 - Section 8 of this document -- Core Widget Catalog (atomic UI components)
 - Section 12.3 of this document -- Dashboard grid responsive breakpoints
-- Section 15.1 of this document -- redb persistence for dashboard layout
+- 15.1 redb Schema in this document covers dashboard layout persistence
 - Plans/storage-plan.md -- redb namespaces
 ## 19. Persona Editor, Compatibility Disclosure, and Surface-Level Persona Controls (2026-03-06)
 
@@ -4390,6 +4390,7 @@ If a control is skipped, the UI must disclose it in at least one of:
 - When a limitation is known before execution, render the control disabled or warning-badged in place; do not let the user believe it is actionable.
 - When a limitation is only discovered at runtime, surface the disclosure inline on the active surface **and** persist the same information in run detail/history so it is auditable later.
 - Disclosures must name the provider explicitly (for example: `Claude Code skipped temperature; this transport does not expose that Persona control`). Run-requested effort disclosure remains in the model picker/run history owner; it is not a Persona field.
+- Delivery (bound 2026-11-24, DL-2602): no new event carries disclosures. Skipped and Clamped controls travel in the model resolver's shared emit record, `skipped_persona_controls[]` (`Plans/Models_System.md` "Resolver inputs and emit shape" and §10.5), one entry per control with the fields above (`control`, `requested_value`, `effective_value?`, `outcome = skipped | clamped`, `provider`, `reason`). That record is consumed by the runtime snapshot, so the inline disclosure and the run detail/history panel read the same persisted entries. A control with no entry was honored.
 
 ### 19.8 Interview/Builder/Orchestrator mapping editors
 
@@ -4400,6 +4401,12 @@ Settings or surface-specific configuration must support mapping Persona defaults
 - Multi-Pass review passes.
 
 These editors should also allow platform/model selection per mapping and show compatibility warnings.
+
+Narrowed 2026-11-24 (Decision_Log DL-2602, C-FIX79). The live Persona mapping editors are only those with settings behind them:
+- Requirements Builder steps/passes: the four `planning.interview.builder-*` settings (`planning.interview.builder-persona-mode`, `planning.interview.builder-intake-persona`, `planning.interview.builder-drafting-persona`, `planning.interview.builder-review-personas`), saved through the ordinary Settings transaction (`cmd.settings.transaction.preview` / `cmd.settings.transaction.apply`) with that route's validation.
+- Orchestrator Personas: the existing crew Persona selections (`branching.crew.crew-members` "Default lineup" and `branching.crew.crew-coordinator` "Who leads") and the protected core `overseer` Persona the Orchestrator's overseer uses.
+
+The Interview-stage editor, the Orchestrator node/package/lane/seam mapping editor and the generic Multi-Pass review-pass mapping editor are retired, and so is per-mapping platform/model selection: under MD2 NEITHER no Persona mapping carries a model, and models come from the one model defaults list (`Plans/Models_System.md`). Compatibility warnings stay on the remaining editors.
 
 ### 19.9 Acceptance criteria addendum
 
@@ -4593,7 +4600,7 @@ Deep Plan documents reuse the Embedded Document Pane annotation/revision contrac
 Required behavior:
 - highlight text -> annotation action palette
 - annotation markers in margin + annotation list/drawer
-- `Resubmit with Annotations` launches targeted revision for the plan document
+- `Resubmit with Annotations` launches targeted revision for the plan document by dispatching `cmd.prd_builder.revision.resubmit` (DL-2602)
 - deterministic annotation re-anchoring after edits
 - no silent annotation loss
 - no automatic Multi-Pass Review requirement before plan approval/execution
@@ -5087,7 +5094,7 @@ Rules:
 - status, cwd, command summary, elapsed time, exit code / truncation indicator
 - READ-ONLY and non-interactive
 - One card per command
-- Terminal retry behavior follows section 15.1 and its linked owners; retained terminal vocabulary in this web/diff extract does not introduce terminal sessions or terminal actions into web, search, or diff cards.
+- Terminal retry behavior follows 15.1 Terminal operation card widget and its linked owners; retained terminal vocabulary in this web/diff extract does not introduce terminal sessions or terminal actions into web, search, or diff cards.
 - Open in Terminal
 - Show Terminal
 - Rerun in Terminal
@@ -5631,6 +5638,10 @@ split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
+- "Typing in `Search in this tab` only filters rows of the active tab or view: the tab, the focused run, the selection and the route stay unchanged, and no result from another tab appears."
+- "Choosing a `Search Orchestrator` result opens that object's canonical route with the object selected: a concern opens its concern record by concern_id; an evidence or artifact result opens `Evidence` with its pane focused; a history result opens `History` with that entry selected and the page's focused run switched to its run_id; a ledger record opens `Ledger` with that exact record selected; a graph node opens `Node Graph` with the node selected and its inspector open (routing examples in `Plans/Run_Graph_View.md`)."
+- "A `Search Orchestrator` result never lands on a page-local text match: opening it from any tab produces the same route and selection as the same object's `Show in ...` deep link, and the tab-local filter of the tab the user left is kept."
+- "When a result's object no longer resolves, opening it shows that object as unavailable on its route instead of falling back to a text match in the current tab."
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
@@ -13816,7 +13827,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  Bundle controls govern revision loops and approval readiness with Resubmit sending unresolved notes as revision context, final approval blocked until notes are handled, status progression, bundle registry persistence, and linked note records. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
+  Bundle controls govern revision loops and approval readiness with Resubmit sending unresolved notes as revision context (Resubmit dispatches cmd.prd_builder.revision.resubmit, the PRDB-014 targeted revision pass, from 2026-11-24 under DL-2602), final approval blocked until notes are handled, status progression, bundle registry persistence, and linked note records. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: Bundle controls and review gates are visible controls despite the source span inference being false.
 split_recommended: false
@@ -16100,7 +16111,7 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Live terminal rendering follows the Section 15 terminal-core architecture: high-frequency
+  Live terminal rendering follows the Section 15 terminal-core architecture (SMPFS-073, Native Buffer Render Performance Model): high-frequency
   mutable grid, native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer
   ingestion and processing, while DOM/React/webview-style document-UI terminal cores are
   non-ship. On the web GUI, the terminal grid is drawn as a fixed, reused set of visible page-text
@@ -17359,7 +17370,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Extremely large datasets use a custom `Model` trait backed by a ring buffer; live terminal
-  rendering is excluded from the normal list rule and follows the Section 15 screen/buffer,
+  rendering is excluded from the normal list rule and follows the Section 15 screen/buffer model (SMPFS-073, Native Buffer Render Performance Model),
   diff-painting, off-UI-thread PTY/buffer architecture, while only bounded terminal transcript
   or plain-log projections use `VecModel`/`ListView`.
 gui_related: true
@@ -17904,7 +17915,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  On startup, the GUI restores layout, theme, dashboard widget layout, activity bar order, editor workspace and per-file dirty buffers, active project-facing shell state, historical hot-reload state, project onboarding/tour state, and safe detached-window coordinates from canonical persistence keys. Resettable corruption is secured before a disclosed reset; canonical editor loss uses mandatory-backup recovery and never becomes a false empty project. Amended 2026-10-09 (DL-180): Home's layout restores from `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` (SP-330), the only Home layout authority, with `layout:v1` holding only side-panel dock state and the popped-out chat window's geometry; each dashboard board's widget layout restores from `widget_layout:v1:dashboard:<board_id>` (WS-030); section 15.4 gives the order. Amended 2026-10-10 (DL-186): each dashboard board restores from its per-project key `widget_layout:v1:<project_id>:<board_id>` (WS-030); the per-board key above was never written, and `widget_layout:v1:dashboard` converts into no board. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
+  On startup, the GUI restores layout, theme, dashboard widget layout, activity bar order, editor workspace and per-file dirty buffers, active project-facing shell state, historical hot-reload state, project onboarding/tour state, and safe detached-window coordinates from canonical persistence keys. Resettable corruption is secured before a disclosed reset; canonical editor loss uses mandatory-backup recovery and never becomes a false empty project. Amended 2026-10-09 (DL-180): Home's layout restores from `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` (SP-330), the only Home layout authority, with `layout:v1` holding only side-panel dock state and the popped-out chat window's geometry; each dashboard board's widget layout restores from `widget_layout:v1:dashboard:<board_id>` (WS-030); 15.4 Startup Restore gives the order. Amended 2026-10-10 (DL-186): each dashboard board restores from its per-project key `widget_layout:v1:<project_id>:<board_id>` (WS-030); the per-board key above was never written, and `widget_layout:v1:dashboard` converts into no board. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: >-
   This unit defines startup restoration of visible shell state.
@@ -18602,7 +18613,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Subscriptions based on 50ms polling are replaced with event-driven `invoke_from_event_loop`;
-  live terminal rendering remains under the Section 15 terminal-core architecture and is not a
+  live terminal rendering remains under the Section 15 terminal-core architecture (SMPFS-073, Native Buffer Render Performance Model) and is not a
   normal text-editor/list widget; dynamic UI scaling uses Slint native global/window scale
   factor only.
 gui_related: true
@@ -19086,7 +19097,7 @@ canonical_text: >-
   the performance of many visible terminal tabs: each terminal tab holds one session with one PTY and one bounded
   ring buffer (SMPFS-180), several terminals show at once only as several panels (F3-630), a hidden terminal tab
   stops its animation work (F3-635, F3-643), and there is no four-pane grid to budget for. The performance targets
-  for DL-035's own engine are Section 15's to set.
+  for DL-035's own engine are owned by SMPFS-073 (Native Buffer Render Performance Model).
 gui_related: true
 gui_classification_reason: >-
   This unit preserves one row of the user-visible Slint migration risks and mitigations table.
@@ -21909,6 +21920,11 @@ canonical_text: >-
   stages/phases, Requirements Builder steps/passes, Orchestrator node/package/lane/seam
   mappings, and Multi-Pass review passes, with per-mapping platform/model selection and
   compatibility warnings.
+  Narrowed 2026-11-24 (DL-2602): only the Requirements Builder mapping (the four
+  planning.interview.builder-* settings, saved through the Settings transaction) and the existing
+  crew and overseer Persona selections remain; the Interview-stage, Orchestrator
+  node/package/lane/seam and Multi-Pass mapping editors and every per-mapping platform/model choice
+  are retired (MD2 NEITHER; models come from the one model defaults list).
 gui_related: true
 gui_classification_reason: >-
   This unit defines surface-specific Persona mapping editors despite the source inference
@@ -21943,7 +21959,9 @@ preserved_exact_tokens:
 - "compatibility warnings"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Retired 2026-11-24 (DL-2602): Interview stages/phases, Orchestrator node/package/lane/seam mappings and Multi-Pass review passes mapping editors."
+- "Retired 2026-11-24 (DL-2602): per-mapping platform/model selection (MD2 NEITHER)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -23339,7 +23357,8 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Deep Plan documents reuse the Embedded Document Pane annotation and revision contract:
   highlighted text opens an annotation action palette, margin markers and an annotation
-  drawer/list show annotations, Resubmit with Annotations launches targeted revision,
+  drawer/list show annotations, Resubmit with Annotations launches targeted revision
+  (it dispatches cmd.prd_builder.revision.resubmit, DL-2602),
   annotation anchors re-anchor deterministically after edits, annotation loss is never silent,
   and Multi-Pass Review is not automatically required before approval or execution.
 gui_related: true
@@ -27172,6 +27191,19 @@ canonical_text: >-
   Section 15.3 Tantivy Indices reference; promoted-widget catalog material must use a non-conflicting addendum anchor or an
   explicitly named promoted-widget section. Terminal Settings Ownership and Agent Config Skills are nested under Settings and
   inspectors rather than remaining competing Section 7.4 headings.
+  Amended 2026-11-24 (DL-2602, C-FIX79): the accepted end state is the named-heading rule of "Settings Registry And
+  Numbering Supersession", not a rename. The two `## 15.` chapters (`## 15. Persistence` and `## 15. Promoted widget
+  catalog (web tools, planning, question, operation cards)`) and the two `#### 7.4.2` headings (`#### 7.4.2 Indexing
+  settings subsection` and `#### 7.4.2 Agent Config Skills tab`) stay as declared aliases, and no heading is renamed.
+  Citations into any of them use the full heading name, and a bare §7.4.2 is not cited. A bare §15 or §15.n already in
+  the plans resolves to the heading its own context names (an adjacent ContractRef or the heading title written beside
+  it, as in §15.3 Tantivy Indices); only a bare citation whose context names neither chapter's heading means the
+  Persistence chapter. Renumbering is left to a scheduled structural cleanup. Applied 2026-11-25: the bare §7.4.2
+  citations in 00-plans-index, this document, OpenCode_Coverage_Matrix and LSPSupport now name the full heading; the
+  Settings > LSP ones never meant either 7.4.2 heading and now cite `§7.4.4 Settings (Unified) panel specification`
+  (its LSP row). Where a preserved exact token pins the old wording (the LSPSupport checklist lines), the bare §7.4.2
+  stays inside that token with the full heading named beside it. The chat visualizer cites `15.6 Mermaid and inline
+  visualizer widgets` by name, distinct from `15.6 Durable Storage Recovery, Continuity, and Trust Surfaces (Case L)`.
 gui_related: true
 gui_classification_reason: Numbering deconfliction affects user-visible GUI spec sections, settings sections, and cross-reference anchors.
 depends_on: [F3-387]
@@ -27180,6 +27212,7 @@ acceptance_criteria:
   - Section 15.3 resolves to Persistence/Tantivy rather than an ambiguous promoted-widget chapter.
   - Terminal Settings Ownership and Agent Config Skills tab are subordinate Settings anchors.
   - Structural renumbering does not change GUI behavior or widget ownership.
+  - Until a scheduled structural cleanup, the duplicate `## 15.` and `#### 7.4.2` headings are declared aliases and every citation into them names the full heading (DL-2602); a §7.4.2 kept inside a preserved exact token has the full heading named beside it.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - manual FinalGUISpec heading review
@@ -28965,7 +28998,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The model settings GUI exposes a manual all-provider model refresh button near model settings and passive Free Models update timestamps. Successful validated Auto Apply updates create no notification/inbox item and normal settings show only `Last checked` and `Last updated`, with recent-change details behind details or Advanced/Support. Failed or quarantined Free Models updates keep current known-good active and show `Free Models update needs attention` with `Retry check` and `View details`. Routine automatic offline/launch failures remain passive as `Could not check` unless routing availability is affected.
+  The model settings GUI exposes a manual all-provider model refresh button near model settings and passive Free Models update timestamps. Successful validated Auto Apply updates create no notification/inbox item and normal settings show only `Last checked` and `Last updated`, with recent-change details behind details or Advanced/Support. Failed or quarantined Free Models updates keep current known-good active and show `Free Models update needs attention` with `Retry check` and `View details`. Routine automatic offline/launch failures remain passive as `Could not check` unless routing availability is affected. Bound 2026-11-24 (DL-2602): `Refresh Models` and `Retry check` both dispatch `cmd.model.refresh`; `Retry check` sends `refresh_reason = free_models_update_retry` and no `provider_id` (the Free Models grouping is not a provider id, MS-118), and its result and `model.catalog_refreshed` update `Last checked` and `Last updated`. `View details` is a no-persist disclosure that opens the failed or quarantined update's existing activation, quarantine and rollback records (Models_System MS-119); it dispatches no command and writes nothing.
 gui_related: true
 gui_classification_reason: Owns visible model refresh button, update status, timestamps, and attention-state wording.
 depends_on: []
@@ -29029,7 +29062,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Free Models setup and top-10 screens default to global configuration to keep the GUI cleaner, while making clear that section/surface/role settings override the global top-10. Onboarding/doctor sequencing should set up paid providers first, then show Free Models and let the user configure the top-10. Free Models rows use plain setup actions and friendly unavailable labels, with expanded details for underlying provider/account, current skip reason, cooldown/Retry now state, source/ref, and return context.
+  Free Models setup and top-10 screens default to global configuration to keep the GUI cleaner, while making clear that section/surface/role settings override the global top-10. Onboarding/doctor sequencing should set up paid providers first, then show Free Models and let the user configure the top-10. Free Models rows use plain setup actions and friendly unavailable labels, with expanded details for underlying provider/account, current skip reason, cooldown/Retry now state, source/ref, and return context. Bound 2026-11-24 (DL-2602), applied 2026-11-25: the top-10 is not a second list. Free models are chosen in the one model defaults list, Settings > Models `Default models` (Models_System §7.2): each job row is one `model_defaults.list_setting_ids` setting in `Plans/settings_inventory.json`, holds one model selection at its This project or Everywhere layer, and is saved by the ordinary Settings transaction (`cmd.settings.transaction.preview` / `cmd.settings.transaction.apply`); any Free Models entry can be picked for any job there. The ranked top-10 editor is retired and no ranked top-10 store exists; read top-10 wording as Models_System MS-120 defines it. The Free Models screens show availability rows (the labels above, `Retry check` and `View details` as F3-408 binds them) and one per-model action, `Use for a job`, which asks for a job row and layer and sets that row to the model through the same Settings transaction. Configuring the top-10 in onboarding or Doctor means choosing Free Models on those rows. A section, surface or role setting that overrides the global choice is another job row or a Models_System §2 rung above it, and the GUI states requested/effective behavior.
 gui_related: true
 gui_classification_reason: Owns top-10 setup, onboarding placement, override disclosure, setup labels, and visible availability states.
 depends_on: []
@@ -29039,6 +29072,7 @@ acceptance_criteria:
   - Top-10 setup is global by default and does not hide that the list spans all providers/models.
   - Future onboarding/doctor flow sets up paid providers before Free Models top-10 configuration.
   - Unavailable rows use the priority `Needs sign-in`, `Rate limited`, `Provider offline`, `No longer free`, `Update issue`, `Unknown`, or `Multiple issues`.
+  - No ranked top-10 editor or store exists (DL-2602); `Use for a job` writes exactly one Default models job row through `cmd.settings.transaction.preview` / `cmd.settings.transaction.apply`, and a cancelled preview writes nothing.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Top-10 override disclosure fixtures
@@ -29729,8 +29763,9 @@ Repairs rows `sfk-66fc2872ed5f759cc6aaa0f5`, `sfk-832d3cce203e9e0009e0b90b`, and
 
 - The former 19-entry Settings table remains owner-routing and migration lineage only. F3-432 owns the search-first visible surface; Catalog, Sync, SSH, and Debug route to their named subsections or owner panels rather than becoming new tabs.
 - `Settings > Terminal` is owned by the terminal settings subsection; `Agent Config Skills` is owned by Agent Config and Skills owner docs.
-- The duplicate promoted-widget `## 15` heading is superseded by the named promoted-widget addendum anchor. Any "Section 15 terminal-core architecture" reference resolves to the terminal-core screen/buffer section, not the promoted-widget catalog.
+- The duplicate promoted-widget `## 15` heading is superseded by the named promoted-widget addendum anchor. Any "Section 15 terminal-core architecture" reference resolves to the terminal-core screen/buffer section, not the promoted-widget catalog. Clarified 2026-11-26 (DL-2602): no separate addendum anchor exists; the promoted-widget heading stays as the declared alias below and is cited by its full heading name. The terminal-core screen/buffer section is `Terminal-Core Section Anchor`, and its model is SMPFS-073 (Native Buffer Render Performance Model).
 - New citations must use explicit heading names instead of bare `§7.4` or `§15` when more than one migration-era alias exists.
+- Declared aliases (2026-11-24, DL-2602): `## 15. Persistence` and `## 15. Promoted widget catalog (web tools, planning, question, operation cards)` share the number 15, and `#### 7.4.2 Indexing settings subsection` and `#### 7.4.2 Agent Config Skills tab` share 7.4.2. All four headings stay as they are; citations use the full heading name, and renumbering waits for a scheduled structural cleanup (F3-389).
 
 ### Slint Host File Inventory
 
@@ -30356,7 +30391,7 @@ stale_retired_dispositions:
 - "The three-family / Retro-Dark-default selector adjudication is superseded per dec-2026-07-16-pm6-theme-settings-canon-promotion-seal and preserved as migration lineage prose."
 - "The later Friendly-Dark-default promotion is itself superseded by the Basic Dark untouched first-open/fresh-project factory contract; it remains historical lineage only."
 owner_boundary_notes:
-- "The Project-scoped theme:v1/layout:v1 snapshot and write behavior remain owned by section 15.1 and F3-217; this unit defines factory selection and visible restoration/copy behavior."
+- "The Project-scoped theme:v1/layout:v1 snapshot and write behavior remain owned by 15.1 redb Schema and F3-217; this unit defines factory selection and visible restoration/copy behavior."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -30550,7 +30585,7 @@ stale_retired_dispositions:
 - 'Amended 2026-10-14: W5 is approved but coordinated with Glass publication; the old three-mode background is not
   the new product wallpaper model.'
 owner_boundary_notes:
-- "Registration of glass_background_mode:v1 in the section 15.1 storage tables is owned by F3-444; this unit consumes the key."
+- "Registration of glass_background_mode:v1 in the 15.1 redb Schema storage tables is owned by F3-444; this unit consumes the key."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -30616,7 +30651,7 @@ stale_retired_dispositions:
 - "The concept localStorage name pm.glassAlpha is a demo persistence shim; the canonical key is glass_alpha:v1."
 - 'Amended 2026-10-17 (DL-228): defaults, clamps and display follow SSYS-010 and general.visual.glass-transparency (one .55 default, floors .35 and .45, ceiling 1). It read: .60 for glass-dark, .55 for glass-light, ceilings .85 and .88.'
 owner_boundary_notes:
-- "Registration of glass_alpha:v1 in the section 15.1 storage tables is owned by F3-444; the locked non-glass presentation row is owned by F3-443."
+- "Registration of glass_alpha:v1 in the 15.1 redb Schema storage tables is owned by F3-444; the locked non-glass presentation row is owned by F3-443."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -32020,7 +32055,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  `Plans/settings_inventory.json` is the canonical inventory registry of the live settings across 12 categories; 1010 is the pre-pass starting census. Its shape is owned by `Plans/settings_inventory.schema.json` with schema_id `pm.settings_inventory.v1`; layering metadata is owner-validated before use. Registry rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search, badges, and related_features, where related_features is the sparse mapping vocabulary consumed by the curation service usage-signal layer (F3-437). The demo runtime fields value, status, and src are dropped and excluded by the schema: setting values live in real settings storage, status is derived live per F3-435, and src was concept scaffolding. Registry provenance pins the concept sidecar extraction `Concepts/pm6-build/sidecar/pm_settings_data.json` at sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d as source-lineage-only. Settings surfaces, including search, category chips, bloom modals, shelves, row renderers, and the Project Settings Modal, bind to this registry rather than hardcoding inventory rows. Amended 2026-10-17 (DL-228): each row's label, desc and option words in this inventory are the one wording the product renders for it, on every surface that draws the row: Settings, hosted controls (SSYS-044) and the Customize screens (DR-068). A concept's own row wording, such as the onboarding Settings kit's plain- language rows.d labels and help, is a proposal until adopted here. Amended 2026-10-17 (DL-230, Jared): the concept's plain-language labels and help are adopted for the rows it rewrote (for example Theme Mode as "Light or dark", UI Scale as "Size of everything", Reduce Animations as "Reduce motion") in one wording pass: a row's label and desc are its rows.d label and help, its old label stays one of its search aliases, and its option words are option_labels, display words for stored option values that never change what is stored (a value without an entry shows as stored). The Customize words (Fill and Fit for Picture Fit, Still for Background Motion's Off, the materials' "plastic", "Less colour", "Grain", "Text drawing") are adopted the same way (DR-068). Retired rows keep their words. The rows carry option_labels beside options; the schema admits it. Amended 2026-10-29 (S1–S9, D5; PM7): Admit general.visual.pip-parts and general.interaction.status-bar-words, historically taking the inventory from 1009 to 1011; Q22 retires one row, yielding 1010. SSYS-056/057 own their defaults/placement; Parts is one multiselect, not a Pip master or sound row. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory census supersede earlier counts. Historical census token 1011 is retained solely as pre-Q22 lineage. Every live row carries reviewed layering metadata; legacy scope remains lineage and does not determine the offered level menu. The seven canonical inventory additions preserve the twelve category prefixes and the unchanged 38 manager keys; recompute the actual census after collision checks, never display an invented fixed count. F3-670 consumes canonical code.execution.projects-folder, code.execution.no-project-chats-folder, general.interaction.no-project-default-computer, safety.rules.cross-project-read-policy, safety.rules.allow-project-reading, safety.rules.incoming-chat-messages and safety.rules.computer-use. The earlier assistant.* proposal spellings are source-lineage only and accept no write alias. The registry carries the exact seven Case L Storage & Retention rows that section 15.6 owns: system.advanced.chat-history-retention, system.advanced.runtime-history-days, system.advanced.diagnostic-history-days, system.advanced.released-safe-point-days, system.advanced.preserved-terminal-runs, system.advanced.request-storage-compaction and system.advanced.inspect-holds-quarantine; their row contracts are section 15.6's, and deletion and hold rules remain storage-owned. Settings batch 3 (models), Jared 2026-11-12, removes the 18 model-related rows registered in settings_inventory.json compatibility_reads and admits Easy, routine jobs, one per-account model/depth default, and video/speech/music model rows. The live census is derived from unique active inventory IDs, never a dated fixed number. Retired values have read-only compatibility inspection/omission notices, no active search/All Settings/reset controls or new transfer writes. The image provider row folds into the single Making pictures route; independent effort folds into the everyday model choice. Model picker metadata and model/depth value shape are owned by settings_inventory.schema.json.
+  `Plans/settings_inventory.json` is the canonical inventory registry of the live settings across 12 categories; 1010 is the pre-pass starting census. Its shape is owned by `Plans/settings_inventory.schema.json` with schema_id `pm.settings_inventory.v1`; layering metadata is owner-validated before use. Registry rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search, badges, and related_features, where related_features is the sparse mapping vocabulary consumed by the curation service usage-signal layer (F3-437). The demo runtime fields value, status, and src are dropped and excluded by the schema: setting values live in real settings storage, status is derived live per F3-435, and src was concept scaffolding. Registry provenance pins the concept sidecar extraction `Concepts/pm6-build/sidecar/pm_settings_data.json` at sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d as source-lineage-only. Settings surfaces, including search, category chips, bloom modals, shelves, row renderers, and the Project Settings Modal, bind to this registry rather than hardcoding inventory rows. Amended 2026-10-17 (DL-228): each row's label, desc and option words in this inventory are the one wording the product renders for it, on every surface that draws the row: Settings, hosted controls (SSYS-044) and the Customize screens (DR-068). A concept's own row wording, such as the onboarding Settings kit's plain- language rows.d labels and help, is a proposal until adopted here. Amended 2026-10-17 (DL-230, Jared): the concept's plain-language labels and help are adopted for the rows it rewrote (for example Theme Mode as "Light or dark", UI Scale as "Size of everything", Reduce Animations as "Reduce motion") in one wording pass: a row's label and desc are its rows.d label and help, its old label stays one of its search aliases, and its option words are option_labels, display words for stored option values that never change what is stored (a value without an entry shows as stored). The Customize words (Fill and Fit for Picture Fit, Still for Background Motion's Off, the materials' "plastic", "Less colour", "Grain", "Text drawing") are adopted the same way (DR-068). Retired rows keep their words. The rows carry option_labels beside options; the schema admits it. Amended 2026-10-29 (S1–S9, D5; PM7): Admit general.visual.pip-parts and general.interaction.status-bar-words, historically taking the inventory from 1009 to 1011; Q22 retires one row, yielding 1010. SSYS-056/057 own their defaults/placement; Parts is one multiselect, not a Pip master or sound row. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory census supersede earlier counts. Historical census token 1011 is retained solely as pre-Q22 lineage. Every live row carries reviewed layering metadata; legacy scope remains lineage and does not determine the offered level menu. The seven canonical inventory additions preserve the twelve category prefixes and the unchanged 38 manager keys; recompute the actual census after collision checks, never display an invented fixed count. F3-670 consumes canonical code.execution.projects-folder, code.execution.no-project-chats-folder, general.interaction.no-project-default-computer, safety.rules.cross-project-read-policy, safety.rules.allow-project-reading, safety.rules.incoming-chat-messages and safety.rules.computer-use. The earlier assistant.* proposal spellings are source-lineage only and accept no write alias. The registry carries the exact seven Storage & Retention rows owned by 15.6 Durable Storage Recovery, Continuity, and Trust Surfaces (Case L): system.advanced.chat-history-retention, system.advanced.runtime-history-days, system.advanced.diagnostic-history-days, system.advanced.released-safe-point-days, system.advanced.preserved-terminal-runs, system.advanced.request-storage-compaction and system.advanced.inspect-holds-quarantine; that heading carries their row contracts, and deletion and hold rules remain storage-owned. Settings batch 3 (models), Jared 2026-11-12, removes the 18 model-related rows registered in settings_inventory.json compatibility_reads and admits Easy, routine jobs, one per-account model/depth default, and video/speech/music model rows. The live census is derived from unique active inventory IDs, never a dated fixed number. Retired values have read-only compatibility inspection/omission notices, no active search/All Settings/reset controls or new transfer writes. The image provider row folds into the single Making pictures route; independent effort folds into the everyday model choice. Model picker metadata and model/depth value shape are owned by settings_inventory.schema.json.
 gui_related: true
 gui_classification_reason: This unit binds the visible settings surfaces to their canonical inventory registry.
 split_recommended: false
@@ -32243,7 +32278,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The section 15.1 persistence key tables register four settings-driven keys. The shell and layout
+  The 15.1 redb Schema key tables register four settings-driven keys. The shell and layout
   key table gains `glass_background_mode:v1` (retired compatibility input since SSYS-054's
   2026-10-15 publication, interpreted by SP-333; no active writer after that boundary) and
   `glass_alpha:v1` (user glass alpha value within the per-theme clamps; write frequency on change,
@@ -37609,7 +37644,7 @@ canonical_text: 'Final GUI presents one canonical repository_automation side-pan
   Backup and Retention and RestorePreview also show the last verified backup, meaning the newest backup at Structure
   verified or higher with its level, its time and its last event, and say plainly what a restore from it would lose (everything
   written after its capture point), with a newer unverified backup shown beside it. The line and the loss statement are
-  one backup-status record that the Backup manager, the restore preview, the recovery shell (section 15.6) and Storage
+  one backup-status record that the Backup manager, the restore preview, the recovery shell (15.6 Durable Storage Recovery, Continuity, and Trust Surfaces (Case L)) and Storage
   & Retention (F3-457) read; no surface computes them. Derived families are not backed up and rebuild on restore.
 
 
@@ -41485,7 +41520,8 @@ canonical_text: >-
   offers the next step: the regenerate action for a locked title, and the title policy for an
   unavailable model. In the thread menu the regenerate action sits directly under Rename and is
   disabled with its reason when the policy is off or the model is unavailable. A title-generation
-  failure still leaves New chat and is reported in Details and Usage (section 15). The regenerate
+  failure still leaves New chat and is reported in Details and Usage (`15. Thread history and status` of the Assistant Redesign GUI
+  Specification). The regenerate
   action reads Name it for me wherever it is shown, in place of Regenerate Title (DL-134).
 gui_related: true
 gui_classification_reason: "Defines how the chat header shows naming state."
@@ -46740,7 +46776,7 @@ negative_constraints:
 compatibility_only_notes:
   - "Earlier text, lineage only (DL-180, 2026-10-09): Several dashboard tabs may be open, each a board with its own widget layout; `dashboard:home` is the Home dashboard, pinned in the default layout, and the \"+\" menu's Dashboard row lists the project's boards. The board's columns follow the dashboard tab's own width, never the window. Hosting, the boards, the per-board widget layout `widget_layout:v1:dashboard:<board_id>`, the catalogue and the move of today's one dashboard into `dashboard:home` are Plans/Widget_System.md#WS-030's. The Usage board engine runs several boards at once after the Usage port lands (this thread family does that refactor), and the per-kind widget presets tested at 400, 550 and 700 px are Plans/Widget_System.md#WS-017's one per-kind table (DL-176)."
   - "Earlier text, lineage only (R35, panels NUMBERS 6026fa8432): Below 200 px height the shared-holder note hides its icon and sub-line. Add widget is a 24 px target, about 98-119 px with its label and 24 × 24 px below 520 px; Show it here and Open transcript use 32 px document actions. Text formerly 10 px or 9 px inside the board is 11 px; compact status labels are 11/16 px with 10 px glyphs, lane dots 8 px and agent bars 4 px high with a 1 px radius. Card buttons have an 8 px radius and header Add widget 6 px, both 0 in Retro and NieR. Shared grid content has one holder: explicit activate or reveal claims it; an open while another grid is visible shows the note; hiding hands over to another visible grid and closing parks it. Widget-grid columns, reset sizes and reset-save timing are Plans/Widget_System.md#WS-030's. These described the old Home widgets moved between dashboard tabs, which left Home with DL-186."
-  - "The concept keeps custom dashboard names in pm.home.dashboards:v1:<project>, names its engine and hooks PMU.boards and PMW.dashboard, and gives its preset record a schema id of its own; those are concept lineage. `widget_presets:v1` is the product key for the person's presets (section 15.1), and the records are WS-030's and storage-plan's."
+  - "The concept keeps custom dashboard names in pm.home.dashboards:v1:<project>, names its engine and hooks PMU.boards and PMW.dashboard, and gives its preset record a schema id of its own; those are concept lineage. `widget_presets:v1` is the product key for the person's presets (15.1 redb Schema), and the records are WS-030's and storage-plan's."
   - "The concept's agents, their models and progress, and its build-failure notes for a missing board engine are demo data or build lineage, not canon."
 stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds dashboard tab presentation dimensions and shared-holder behaviour."
@@ -49940,7 +49976,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  A focused thread opens from its render pages and never from its events (SP-338, ACD-242, DL-270). The chat reads `thread_head`, the hot tail and the newest sealed 50-item page, paints each item from its display header (role, kind, time, short summary, collapsed-section summaries, attachment and payload references), and loads a full body only when its section is expanded or scrolled to. This holds for the docked chat, the floating window and wizard-embedded instances alike, since they are one component (F3-420). Load-older paging is mandatory, not optional. Scrolling near the top of the loaded items loads the next older 50-item page by itself, and above the oldest loaded item the stream also shows one plain-text row, `Load 50 older`, as the fallback, with no pill, emoji or side stripe (F3-648); the row is reachable by keyboard and its accessible name carries the number of items it will add. Both the scroll and the row fetch the page through `cmd.chat.load_older` (UCC-212), one request for one page, and the row is absent once the first item of the thread is loaded. When a page arrives the item at the reading position stays where it was. Jump-to-latest and its unseen count (F3-368) are unaffected and return to the hot tail. A jump to a message, search hit, anchor or Context link that lies in a page not yet loaded resolves the target's page from `thread_head`'s page index and loads a bounded window of pages around it, then lands on it (F3-103); it never pages through the history in between and never replays events. Sequential load-older is for adjacent scrolling (SP-338). When an older page cannot be read, the row names the owner reason and offers Retry. Render pages are a derived family, so a page that is rebuilding or stale shows `projection_freshness = refreshing | stale` in the grammar of section 15.6, and the thread's canonical history is never described as lost. Under Reduced Motion the page arrives without an animated slide. This unit states what the person sees; storage-plan SP-338 and SP-344 own the numbers: for a 100k-event thread the first page is shown within 150 ms at p95, warm or cold, reading at most 2 MiB. App render pages and load-older cursors bind Server/app/thread/generation; conversion publishes destination pages once, source history stays sealed, and historical pages never become execution authority. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
+  A focused thread opens from its render pages and never from its events (SP-338, ACD-242, DL-270). The chat reads `thread_head`, the hot tail and the newest sealed 50-item page, paints each item from its display header (role, kind, time, short summary, collapsed-section summaries, attachment and payload references), and loads a full body only when its section is expanded or scrolled to. This holds for the docked chat, the floating window and wizard-embedded instances alike, since they are one component (F3-420). Load-older paging is mandatory, not optional. Scrolling near the top of the loaded items loads the next older 50-item page by itself, and above the oldest loaded item the stream also shows one plain-text row, `Load 50 older`, as the fallback, with no pill, emoji or side stripe (F3-648); the row is reachable by keyboard and its accessible name carries the number of items it will add. Both the scroll and the row fetch the page through `cmd.chat.load_older` (UCC-212), one request for one page, and the row is absent once the first item of the thread is loaded. When a page arrives the item at the reading position stays where it was. Jump-to-latest and its unseen count (F3-368) are unaffected and return to the hot tail. A jump to a message, search hit, anchor or Context link that lies in a page not yet loaded resolves the target's page from `thread_head`'s page index and loads a bounded window of pages around it, then lands on it (F3-103); it never pages through the history in between and never replays events. Sequential load-older is for adjacent scrolling (SP-338). When an older page cannot be read, the row names the owner reason and offers Retry. Render pages are a derived family, so a page that is rebuilding or stale shows `projection_freshness = refreshing | stale` in the grammar of 15.6 Durable Storage Recovery, Continuity, and Trust Surfaces (Case L), and the thread's canonical history is never described as lost. Under Reduced Motion the page arrives without an animated slide. This unit states what the person sees; storage-plan SP-338 and SP-344 own the numbers: for a 100k-event thread the first page is shown within 150 ms at p95, warm or cold, reading at most 2 MiB. App render pages and load-older cursors bind Server/app/thread/generation; conversion publishes destination pages once, source history stays sealed, and historical pages never become execution authority. For an admitted No project context, use CV-365 application scope and SP-349’s Server-owned app sibling, showing the work Computer and exact thread/root when relevant. Keep the existing Project edition; no empty Project interpolation, active-Project fallback or ambient cross-Project retrieval. Actual Project-native operations still require their real target. F3-671/672/674 own the corresponding visible app controls and exact returns.
 gui_related: true
 gui_classification_reason: Defines the visible open path, the load-older control and its interaction with scroll and jump behavior.
 split_recommended: false

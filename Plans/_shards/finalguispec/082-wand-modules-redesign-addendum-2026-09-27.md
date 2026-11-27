@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L40716-L41947
+Source lines: L40751-L41983
 
-Source SHA256: `7ba17c5aa7fb716a162c335b6ec6e71fc68d986a5c12f560da9fc6c85b205c7a`
+Source SHA256: `7c52aa35b4fb3b308c17b6cf275e1f2f81fab5151885cf7a52d3ae688fdbe180`
 
 ---
 
@@ -780,7 +780,8 @@ canonical_text: >-
   offers the next step: the regenerate action for a locked title, and the title policy for an
   unavailable model. In the thread menu the regenerate action sits directly under Rename and is
   disabled with its reason when the policy is off or the model is unavailable. A title-generation
-  failure still leaves New chat and is reported in Details and Usage (section 15). The regenerate
+  failure still leaves New chat and is reported in Details and Usage (`15. Thread history and status` of the Assistant Redesign GUI
+  Specification). The regenerate
   action reads Name it for me wherever it is shown, in place of Regenerate Title (DL-134).
 gui_related: true
 gui_classification_reason: "Defines how the chat header shows naming state."

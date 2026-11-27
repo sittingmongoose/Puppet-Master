@@ -4,7 +4,7 @@ Source: `Plans/00-plans-index.md`
 
 Source lines: L451-L809
 
-Source SHA256: `7086127698198bf8738d79132d446d618f5e7df8ab0f877328bb7ac1225b88b5`
+Source SHA256: `4835c6ce019653686b40073a9131a0ee96cd2f21af0f8df7f07b312535726446`
 
 ---
 
@@ -362,7 +362,7 @@ PROC-008 is closed only by the exact owner text and machine contracts cited abov
 The Instant Grep packet uses the following ownership split:
 - `Tools.md` is the primary owner for grep tool semantics, index-accelerated query flow, covering algorithm, fallback behavior, and `tool.invoked` analytics fields
 - `storage-plan.md` is the primary owner for regex index storage layout (§2.1), binary file formats, generation directory scheme, file watcher dual-consumer model (§2.4), and sensitive indexing guards
-- `FinalGUISpec.md` is the primary owner for status bar Indexing indicator (§3.2), Indexing settings section (§7.4.2), and Search panel index-acceleration UX (Search side-panel owner)
+- `FinalGUISpec.md` is the primary owner for status bar Indexing indicator (§3.2), Indexing settings section (§7.4.2 Indexing settings subsection), and Search panel index-acceleration UX (Search side-panel owner)
 - `GitHub_Integration.md` is the primary owner for remote project search index cache (§C.3), bare Git clone lifecycle, non-Git remote indexer binary, and cache settings
 - `assistant-chat-design.md`, `UI_Command_Catalog.md`, `Glossary.md`, `Architecture_Invariants.md`, `BinaryLocator_Spec.md`, `usage-feature.md`, `Wiring_Matrix.md`, and `00-plans-index.md` are reconciliation consumers
 

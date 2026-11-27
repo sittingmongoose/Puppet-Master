@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L13324-L14041
+Source lines: L13367-L14093
 
-Source SHA256: `b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3`
+Source SHA256: `99353ac63ed50aff8d14e4b7787cf016aa84695c424599552c60c0da79f20d67`
 
 ---
 
@@ -228,10 +228,11 @@ canonical_text: >-
   resolved path is checked before opening, and `/proc`, `/sys` and `/dev` (except `/dev/shm`) are refused;
   symlinks are followed and loops fail; every read failure of any file medium (missing, unreadable, not regular,
   sensitive, shorter than claimed) answers exactly `EBADF:Failed to read image file`; temporary files are deleted
-  only inside `/tmp` or `/dev/shm` and only when the path contains `tty-graphics-protocol`; shared memory is
-  unlinked after reading. Remote (SSH) sessions and commands an agent typed may use direct transmission only, and
-  their file, temporary-file and shared-memory media get the same `EBADF` answer. Every error reply is a fixed
-  string that never echoes anything the program sent: `EINVAL:Invalid graphics command`, `ENOENT:Image not
+  only inside `/tmp` or `/dev/shm` and only when the path contains `tty-graphics-protocol`. On macOS, Linux and WSL,
+  shared memory is unlinked after reading. On native Windows the terminal unmaps its views and closes its handles
+  to the named file mapping after reading. Remote (SSH) sessions and commands an agent typed may use direct
+  transmission only, and their file, temporary-file and shared-memory media get the same `EBADF` answer. Every
+  error message is fixed. The kitty reply wraps the message in protocol delimiters and includes any required numeric correlation fields such as `i`, serialized in decimal from validated identifiers. Replies never copy raw program text, paths or image data. Other fixed messages are `EINVAL:Invalid graphics command`, `ENOENT:Image not
   found`, `ENODATA:Insufficient image data`, `EFBIG:Too much data`, `ENOSPC:Storage quota exceeded`,
   `ENOMEM:Image too large`, `EBADPNG:Image could not be decoded`, `EILSEQ:Continuation for an upload that is not in
   progress`, `ETOODEEP`, `ECYCLE` and `ENOPARENT`. A program that sends too much is refused; it never freezes the
@@ -280,9 +281,9 @@ acceptance_criteria:
 - "The kitty graphics protocol with every listed feature, sixel and iTerm2 inline images all ship in the first terminal release; none is phased or left behind an off flag."
 - "Every limit holds at its stated number; a sequence over its cap is dropped and kitty gets EFBIG; an over-quota image store evicts images without placements, then transient images, then the least recently used."
 - "A screen buffer keeps at most 4,096 placements, and the 4,097th drops the oldest placement that no other placement hangs from; no placement covers more than 10,000 cells."
-- "Every file-medium read failure answers exactly EBADF:Failed to read image file; /proc, /sys and /dev (except /dev/shm) are refused; symlink loops fail; temporary files are deleted only inside /tmp or /dev/shm and only with tty-graphics-protocol in the path; shared memory is unlinked after reading."
+- "Every file-medium read failure answers exactly EBADF:Failed to read image file; /proc, /sys and /dev (except /dev/shm) are refused; symlink loops fail; temporary files are deleted only inside /tmp or /dev/shm and only with tty-graphics-protocol in the path. After reading shared memory, unlink it on macOS, Linux and WSL. On native Windows unmap all terminal views and close all terminal handles to the named file mapping."
 - "A remote (SSH) session and a command an agent typed can send images only by direct transmission; their file, temporary-file and shared-memory media get EBADF."
-- "Every error reply is one of the fixed strings and never echoes program data."
+- "The error message matches its fixed string exactly. A kitty reply carries only the validated numeric correlation fields required by the protocol wrapper and never echoes raw program bytes."
 - "Output after an image waits for it; images anchor, scroll, reflow and clip with their cells; text written over sixel and iTerm2 images cuts them out; tmux passthrough works through Unicode placeholders."
 - "Saved scrollback keeps images within the SP-332 quota; text never gives way to images; an evicted image leaves its placeholder label; a restored placeholder id never resolves to an image of the new session; saved images are never backed up, exported or synced."
 - "The accessible buffer and agent reads use [image W×H px], [image] and the placeholder label and never return image bytes; under Reduced Motion an animated image holds its first frame; while the terminal is hidden it pauses."
@@ -391,12 +392,13 @@ canonical_text: >-
   prompt; <agent> is waiting." with Type it, which focuses the terminal. While an agent drives, the row says
   "<agent> is driving this terminal · step N of M · <label>" with Take over (the human takes the lease), Interrupt
   (SIGINT to the foreground job) and Stop (ends the agent's run and returns the lease to the human); after a
-  take-over it says "You took over. <agent> is paused and has been told." with Hand back and Stop <agent>. Every
-  command record carries `by`, the user or the agent by name, written through shell-integration records that only
-  carry weight with that terminal's secret (SMPFS-183); a mark without the secret is plain output and never
-  attributes a command. Agent reads return rendered text with a read state (`final` for a finished command, and the
-  known-empty, complete-so-far, partial and unavailable states of this document's terminal output read
-  semantics), never raw bytes and never images (SMPFS-181). Input protection (SMPFS-165, DL-037, DL-038) outranks
+  take-over it says "You took over. <agent> is paused and has been told." with Hand back and Stop <agent>. A
+  command record carries `by` as `user` or `agent:<name>` when authenticated, and may omit it or use null without
+  trusted attribution (CV-362). Only a shell-integration record with that terminal's secret sets attribution (SMPFS-183).
+  After the seal, amend Plans/Automated_Testing_System.md#ATS-076 to test the attributed, absent and null cases under CV-362.
+  An unauthenticated mark is plain output. Agent reads return rendered text with a read state (`final` for a
+  finished command, and the known-empty, complete-so-far, partial and unavailable states of this document's
+  terminal output read semantics), never raw bytes and never images (SMPFS-181). Input protection (SMPFS-165, DL-037, DL-038) outranks
   every grant: while it is on, user and agent input are both blocked and the agent receives an explicit blocked
   result. Back Seat Driver never drives a terminal, reads a terminal's screen or saved scrollback, or holds a grant
   (`Plans/Back_Seat_Driver.md#BSD-011`).
@@ -429,7 +431,7 @@ acceptance_criteria:
 - "Every command an agent types under any grant still gets its own Tools policy decision and approval over that exact invocation."
 - "No text in the permission row, its hover tags or the Agent input menu says or implies that commands are pre-approved."
 - "During a secret prompt every agent write is refused as secret_input with zero bytes reaching the PTY; the padlock cursor and the Password needed row show."
-- "Every command record carries by; a shell-integration mark or record without the terminal's secret creates no command boundary and no attribution."
+- "Every command record uses CV-362's by field, absent or null without trusted attribution; a shell-integration mark or record without the terminal's secret creates no command boundary and no attribution."
 - "Agent reads return rendered text with a read state, never raw bytes or image data."
 - "Interrupt sends SIGINT to the foreground job; Stop ends the agent's run and returns the writer lease to the human."
 - "Input protection blocks agent input whatever grant is held, with an explicit blocked result."
@@ -511,8 +513,15 @@ canonical_text: >-
   (concept lineage: `OSC 133;...;pmn=<secret>`, `OSC 6973;<secret>;E;<base64 command line>` and
   `OSC 6973;<secret>;W;<who>`; the native sequences are the engine's choice). A mark or record without the right secret is plain output, never a
   command boundary and never attribution; the confidence tiers stay SMPFS-021 and SMPFS-129. Each command record
-  (the command block of SMPFS-022) holds `by` (the user or the agent by name), the exit status, the folder it ran
-  in, and its start and end times, and records persist with saved scrollback (`Plans/storage-plan.md#SP-332`).
+  (the command block of SMPFS-022) holds `by` (the user or the agent by name when attributed by an authenticated
+  record, absent or null otherwise under CV-362), the exit status, the folder it ran in, and its start and end
+  times, and records persist with saved scrollback (`Plans/storage-plan.md#SP-332`).
+  Draw a complete unauthenticated shell-integration mark (including an unverified OSC 633 mark) or private record
+  as inert text once the parser recognizes it. Preserve printable ASCII bytes, double literal backslashes and
+  represent each other byte as a literal backslash, lowercase x and two uppercase hexadecimal digits. Append
+  that text through the ordinary text writer
+  without interpreting its contents as controls, bell, command line or attribution. A valid mark or record remains
+  metadata. SMPFS-130 still forbids exposing incomplete controls at read boundaries.
   Links: OSC 8 hyperlinks are program output, so link text is never trusted as the target. The hover tag shows the
   real target before any open; Ctrl+click (Cmd+click) opens and a plain click selects text. `file://` targets and
   detected `path:line:col` references pass FileSafe's path checks and open through the one opening module
@@ -578,7 +587,7 @@ unblocks:
 - ATS-076
 acceptance_criteria:
 - "OSC 133 marks and the PM-private command-line and who-typed records count only with the terminal session's secret; the same sequences without it are drawn as output and change no command block."
-- "Every command record holds by, exit status, folder, start and end, and survives a restore with saved scrollback."
+- "Every command record holds exit status, folder, start, end and CV-362's by when authenticated, and survives a restore with saved scrollback."
 - "OSC 8 link text never replaces the target: the hover tag shows the target, only Ctrl+click (Cmd+click) or a menu action opens it, file:// targets and detected paths pass FileSafe's path checks and open through the opening module, and a file:// link naming another host never opens as a local path."
 - "A detected path:line:col link passes FileSafe's path checks before it opens; Ctrl+click, Ctrl+double-click and Ctrl+Alt+click open the preview tab, a kept tab and a new panel, and a plain click selects text."
 - "A bell or an OSC 9, OSC 777 or OSC 99 notification in an unseen terminal tab sets its attention mark and a polite announcement, creates no new notification family, and never also counts as OSC 9;4 progress."

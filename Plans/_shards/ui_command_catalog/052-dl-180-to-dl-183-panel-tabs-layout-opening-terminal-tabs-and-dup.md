@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L18470-L19553
 
-Source SHA256: `4b75bcf142492b6a0b1747d1f49f90916f4dcf12f4ffd82b422401a9d7b5d180`
+Source SHA256: `9c34de2ef93562e8eb995cd913772a076b1d81c9574dec216dd3b6a4e5262a3d`
 
 ---
 
@@ -790,7 +790,7 @@ Four pairs of ids named one action each. Each pair now has one canonical id; the
 | Pair | Canonical | The other | Reason |
 |---|---|---|---|
 | `cmd.dashboard.add_widget` / `cmd.widget.add` | `cmd.widget.add`, naming the board in its existing `room` field inside a dashboard tab (WS-030; amended 2026-10-10, DL-186; it read: addressed by `board_id`) and by `page` on the Usage page | `cmd.dashboard.add_widget`: alias of `cmd.widget.add` (`normalization.kind` `alias`, its `dashboard_id` read as the board id carried in `room`; amended 2026-10-10, DL-186) | The dashboard tab runs on the Usage board engine (DL-180), whose family is `cmd.widget.*`; one add serves every board. The alias emits nothing of its own: the production row's `dashboard.widget_added` is withdrawn, and the add is a change to that board's widget layout. |
-| `cmd.browser.devtools.open` / `cmd.browser.open_devtools` | `cmd.browser.open_devtools` | `cmd.browser.devtools.open`: alias of `cmd.browser.open_devtools` | The older id is the one Section15, the Wiring_Matrix and UCC-063 use, and UCC-156's alias census missed the pair. The canonical row takes the UCC-156 row's preconditions (`browser_runtime_available && !protected_auth_browser && devtools_policy_allows`: the protected authentication browser is excluded), its `BrowserDevToolsOpenRequest` to `RouteResult` contract and its sole handler `handlers::browser_runtime::devtools_open`. |
+| `cmd.browser.devtools.open` / `cmd.browser.open_devtools` | `cmd.browser.open_devtools` | `cmd.browser.devtools.open`: alias of `cmd.browser.open_devtools` | The older id is the one Section15, the Wiring_Matrix and UCC-063 use, and UCC-156's alias census missed the pair. The canonical row takes the UCC-156 row's preconditions (`browser_runtime_available && !protected_auth_browser && devtools_policy_allows`: the protected authentication browser is excluded), its `BrowserDevToolsOpenRequest` contract (whose result is the typed route result `BrowserDevToolsOpenResultV1` from 2026-11-24, DL-2602; it read `RouteResult` before) and its sole handler `handlers::browser_runtime::devtools_open`. |
 | `cmd.terminal.restart_session` / `cmd.terminal.restart_replace` | `cmd.terminal.restart_replace` | `cmd.terminal.restart_session`: retired spelling, not an alias | UCC-115 already called it owner-doc lineage and the production exclusions already exclude it; the Wiring_Matrix toolbar row that dispatched it must dispatch `cmd.terminal.restart_replace` instead (the wiring owner makes that change, WM-092). |
 | `cmd.terminal.focus_session` / `cmd.terminal.focus` | `cmd.terminal.focus` | `cmd.terminal.focus_session`: alias of `cmd.terminal.focus` | The 2026-07-02 aliases table allowed exactly this normalization through explicit alias metadata; the Output, Problems and Ports "Show Terminal" link that dispatched it must carry the alias record (the wiring owner makes that change, WM-092). |
 

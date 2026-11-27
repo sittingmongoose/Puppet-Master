@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L1301-L7137
 
-Source SHA256: `4b75bcf142492b6a0b1747d1f49f90916f4dcf12f4ffd82b422401a9d7b5d180`
+Source SHA256: `9c34de2ef93562e8eb995cd913772a076b1d81c9574dec216dd3b6a4e5262a3d`
 
 ---
 
@@ -2473,7 +2473,7 @@ plan_unit_id: UCC-044
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Source Control review, conflict, merge editor, git diff, hunk staging, discard, and conflict resolution command rows define stable command IDs, payloads, confirmations, and preconditions for review and conflict workflows.
+canonical_text: Source Control review, conflict, merge editor, git diff, hunk staging, discard, and conflict resolution command rows define stable command IDs, payloads, confirmations, and preconditions for review and conflict workflows. Conflict Assistant uses the WorktreeGitImprovement contract for exact requests, refusals, route returns and mutation receipts.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -2576,7 +2576,7 @@ preserved_exact_tokens:
 negative_constraints: []
 preserved_contractrefs: []
 compatibility_only_notes:
-- Graph focus/filter/layout grouped names and suggest_commit_groups are compatibility alias families.
+- Graph focus/filter/layout grouped names and suggest_commit_groups are compatibility alias families. The suggest_commit_groups alias normalizes to cmd.source_control.suggest_commit_batches before validation and dedupe.
 stale_retired_dispositions: []
 owner_hints:
 - Plans/UI_Command_Catalog.md

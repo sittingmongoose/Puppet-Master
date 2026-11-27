@@ -23,7 +23,7 @@
     {
       "path": "Plans/shared_integration_runtime.schema.json",
       "uri": "pm.shared_integration_runtime.command_contracts.schema.v1",
-      "sha256": "0e41d89065463e0581357a514ad3d2510d6db8a3e9356dcd23f717f5db4118f5"
+      "sha256": "55af91ab515d32f556efe0b46e8f47417c4e16fca3e8486fe38f1999f88e5af0"
     },
     {
       "path": "Plans/event_record.schema.json",
@@ -178,7 +178,7 @@
     "recovered_after_restart",
     "conflict_reason_code"
   ],
-  "graph_sha256": "37a76b386ab20b3de8d50591827cf4689d34454b2b23ffe618ed34a38bddfe4c",
+  "graph_sha256": "721d597b7e03af19e486373e97a69af4750c79c884c1bdfbfbf4bbac2f42cd8a",
   "application_body_roots": {
     "restore_request": "#/$defs/application_request",
     "safe_point_record": "#/$defs/application_records/properties/safe_point_record",

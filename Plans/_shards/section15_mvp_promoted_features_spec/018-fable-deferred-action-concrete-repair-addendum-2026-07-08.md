@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L9940-L10990
+Source lines: L9943-L11033
 
-Source SHA256: `b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3`
+Source SHA256: `99353ac63ed50aff8d14e4b7787cf016aa84695c424599552c60c0da79f20d67`
 
 ---
 
@@ -16,17 +16,53 @@ This addendum is canonical promoted-feature/browser-terminal spec text for defer
 
 Repairs rows `sfk-756cb4154b9e486d8a6d74db`, `sfk-0a996093252d3d35aa59e6f2`, `sfk-ed92df2325332306b2463b50`, and `sfk-47f354a1222d2abb62b4a9a9`.
 
-| action_id | bucket | default_timeout_ms | output fields |
-| --- | --- | ---: | --- |
-| `cmd.browser.share_with_agent` | user-mediated-share | 30000 | `share_receipt_id`, `target_agent_id`, `artifact_refs[]` |
-| `cmd.browser.run_code` | page-evaluation | 5000 | `evaluation_id`, `stdout?`, `result_ref?`, `error_code?` |
-| `cmd.browser.evaluate` | page-evaluation | 5000 | `evaluation_id`, `json_result_ref?`, `dom_scope_ref?`, `error_code?` |
-| `cmd.browser.open_devtools` | diagnostic | 30000 | `devtools_session_id`, `boundary_ref`, `opened_at_utc` |
-| `cmd.browser.capture_artifact` | artifact | 30000 | `artifact_manifest_id`, `artifact_refs[]`, `retention_until_utc` |
+| action_id | bucket | default_timeout_ms | output fields | tier | permission_layer | allowed_session_classes | requested_capabilities | artifacts_emitted | degradation_or_blocking_behavior | user_visible_entry_points |
+| --- | --- | ---: | --- | --- | --- | --- | --- | --- | --- | --- |
+| `cmd.browser.share_with_agent` | user-mediated-share | 30000 | `share_receipt_id`, `target_agent_id`, `artifact_refs[]` | `guaranteed_everyday` | `always_allowed` (explicit share action) | `workspace_preview`, `automation_session`; never `AuthBrowserSession` | none | none: share state only, so `artifact_refs[]` stays empty unless a separate explicit capture command ran | `runtime_unavailable`; `session_class_restricted` for a protected session; until the browser owner settles its request the handler refuses with `handler_unavailable` (`#SMPFS-328`, DL-341) | browser chrome, assistant chat |
+| `cmd.browser.run_code` | page-evaluation | 5000 | `evaluation_id`, `stdout?`, `result_ref?`, `error_code?` | `advanced_debug_testing` | that of `cmd.browser.program.run`, which it normalizes to | `workspace_preview`, `automation_session`; never `AuthBrowserSession` | `capability_profile: advanced` | the Browser Program receipt and capture refs of the normalized run | input that does not compile losslessly to admitted named actions fails typed with no effect | none: compatibility input only, excluded from production wiring |
+| `cmd.browser.evaluate` | page-evaluation | 5000 | `evaluation_id`, `json_result_ref?`, `dom_scope_ref?`, `error_code?` | `advanced_debug_testing` | that of `cmd.browser.page.evaluate`, which it normalizes to | `workspace_preview`, `automation_session`; never `AuthBrowserSession` | none beyond `cmd.browser.page.evaluate` | none | as `cmd.browser.run_code` | none: compatibility input only, excluded from production wiring |
+| `cmd.browser.open_devtools` | diagnostic | 30000 | `devtools_session_id`, `boundary_ref`, `opened_at_utc` | `advanced_debug_testing` | `always_allowed` under `devtools_policy_allows` | ordinary sessions; never `AuthBrowserSession` | DevTools | none (layout/UI state only) | `runtime_unavailable`; `session_class_restricted` for a protected session; policy denial returns a typed permission result; the request is settled (`BrowserDevToolsOpenRequest` → `BrowserDevToolsOpenResultV1`, DL-2602), so the DL-341 refusal no longer applies; `handler_unavailable` stands only until native evidence exists (`#SMPFS-328`) | browser chrome, command palette |
+| `cmd.browser.capture_artifact` | artifact | 30000 | `artifact_manifest_id`, `artifact_refs[]`, `retention_until_utc` | `guaranteed_everyday` (screenshot capture; trace and video capture have no catalogued command yet, see below) | `always_allowed` | `workspace_preview`, `automation_session`; a protected session returns an explicit exclusion, never an empty capture | screenshot capture | `BrowserArtifactManifest` and its `artifact_refs[]` | `runtime_unavailable`; `session_class_restricted` | none: no catalog or wiring row reaches it; see `BrowserArtifactManifest.action_id` for the live producers |
+| `cmd.browser.capture.full_to_chat` | artifact | 30000 | `BrowserActionResultV2` (`operation_id`, `scope`, `workspace_id`, `session_id`, `page_id`, `page_generation`, `status`, `owner_segment_receipt_ref`, `reason_ref`, `return_context_ref`), bound in `Plans/Commands_System.md` and `Plans/UI_Command_Catalog.md` | `guaranteed_everyday` | `capture_permitted` (the catalog precondition) | `workspace_preview`, `automation_session`; never `AuthBrowserSession` (`!protected_auth_browser`) | screenshot capture | `BrowserArtifactManifest` with one `browser_screenshot` item, plus the isolated payload sent to the current composer destination | `runtime_unavailable`; a protected session returns an explicit exclusion, never an empty capture; `handler_unavailable` until source-hashed native evidence exists | browser chrome capture chip (`#SMPFS-089`) |
+| `cmd.browser.capture.region_to_chat` | artifact | 30000 | as `cmd.browser.capture.full_to_chat` | `guaranteed_everyday` | `capture_permitted` (the catalog precondition) | `workspace_preview`, `automation_session`; never `AuthBrowserSession` (`!protected_auth_browser`) | screenshot capture of a user-selected region | as `cmd.browser.capture.full_to_chat` | as `cmd.browser.capture.full_to_chat` | browser chrome capture chip (`#SMPFS-089`) |
 
-The former `browser_run_code` and `browser_evaluate` tokens are compatibility aliases for `cmd.browser.run_code` and `cmd.browser.evaluate`. Timeout constants are disambiguated as follows: `5000ms` applies to page-evaluation commands; `30000ms` applies to user-mediated share, diagnostic, artifact, and open/wait actions; `30s` is display copy for `30000ms`.
+The two `cmd.browser.capture.*_to_chat` rows are the live capture-chip actions. The other live screenshot producers are the four `Plans/UI_Command_Catalog.md` §2.6A rows named under `BrowserArtifactManifest.action_id` below. `cmd.browser.run_code`, `cmd.browser.evaluate` and `cmd.browser.capture_artifact` have no production entry point (the first two are compatibility input only; no catalog or wiring row reaches the third). Trace and video capture (`#SMPFS-091`'s named-action taxonomy) have no catalogued command; they are `advanced_debug_testing`, as this table's capture row said before 2026-11-26, and such a command joins this table before it may produce a manifest. The former `browser_run_code` and `browser_evaluate` tokens are compatibility aliases for `cmd.browser.run_code` and `cmd.browser.evaluate`. Timeout constants are disambiguated as follows: `5000ms` applies to page-evaluation commands; `30000ms` applies to user-mediated share, diagnostic, artifact, and open/wait actions; `30s` is display copy for `30000ms`.
+
+**Tier rule for every browser command (2026-11-26, DL-2604).** Every `cmd.browser.*` command in `Plans/UI_Command_Catalog.md` or this spec takes its `tier` from one rule, by what the command does, instead of from a row of its own in the table above. The rule has four effect levels. A command takes the highest level any of its effects reaches, in this order, highest first:
+
+| Effect level | A command is at this level when it | `tier` |
+| --- | --- | --- |
+| `runs_code_or_debugs` | evaluates code in the page, runs or resumes a Browser Program, or opens or operates DevTools (the `page-evaluation` and `diagnostic` buckets above) | `advanced_debug_testing` |
+| `sends_data_out` | delivers page content (a selection, element, component, screenshot or the session itself) to a destination other than its own caller's result: an agent thread (share with agent), the chat composer or a chat message (capture or add to chat), or anywhere outside Puppet Master | `guaranteed_everyday` |
+| `changes_page_or_session` | changes the page, a browser tab, page or workspace, the browser session or its agent-control state, the browser layout, or a browser setting | `guaranteed_everyday` |
+| `reads_page_only` | reads the page or browser state and changes nothing; it may draw a PM overlay over the page (a picker highlight) and record what it read as PM evidence for its caller (a receipt or a `BrowserArtifactManifest`) | `guaranteed_everyday` |
+
+The rows of the table above keep their explicit `tier`, and each agrees with the rule: `cmd.browser.share_with_agent`, `cmd.browser.capture.full_to_chat` and `cmd.browser.capture.region_to_chat` are `sends_data_out`; `cmd.browser.capture_artifact` is `reads_page_only`; `cmd.browser.run_code`, `cmd.browser.evaluate` and `cmd.browser.open_devtools` are `runs_code_or_debugs`. The rule cannot classify three commands by itself, because by effect alone they would be `changes_page_or_session` (pause, cancel) or `reads_page_only` (inspect), yet they act only on a Browser Program, which only an advanced run creates: `cmd.browser.program.pause`, `cmd.browser.program.cancel` and `cmd.browser.program.inspect` are `advanced_debug_testing`, with `cmd.browser.program.run` and `cmd.browser.program.resume`. Trace and video capture keep `advanced_debug_testing` as stated above. An alias takes its canonical command's level (`cmd.browser.devtools.open` as `cmd.browser.open_devtools`). `cmd.browser.component.recapture` is not a command (BSTALE-004) and no `cmd.browser.auth.*` command exists, so neither is classified. A new `cmd.browser.*` command takes its level from this rule when it is catalogued; it joins the table above only when it also needs its own timeout, output or artifact contract.
+
+Applying the rule to the catalogued commands on 2026-11-26 gives:
+- `runs_code_or_debugs` (`advanced_debug_testing`): `cmd.browser.page.evaluate`, `cmd.browser.program.run`, `cmd.browser.program.resume`, `cmd.browser.run_code`, `cmd.browser.evaluate`, `cmd.browser.open_devtools`, `cmd.browser.devtools.open`, `cmd.browser.toggle_devtools_dock`; by the named exception, `cmd.browser.program.pause`, `cmd.browser.program.cancel`, `cmd.browser.program.inspect`.
+- `sends_data_out` (`guaranteed_everyday`): `cmd.browser.share_with_agent`, `cmd.browser.pick_element_for_chat`, `cmd.browser.add_selection_to_chat`, `cmd.browser.add_selection_screenshot_to_chat`, `cmd.browser.add_selection_full_screenshot_to_chat`, `cmd.browser.add_screenshot_to_chat`, `cmd.browser.add_full_screenshot_to_chat`, `cmd.browser.capture.full_to_chat`, `cmd.browser.capture.region_to_chat`, `cmd.browser.component.send_now`, `cmd.browser.component.add_to_composer`, `cmd.browser.component.insert_at_cursor`.
+- `changes_page_or_session` (`guaranteed_everyday`): `cmd.browser.open_workspace_preview`, `cmd.browser.open_detached_preview`, `cmd.browser.focus_browser_tab`, `cmd.browser.detach_browser_tab`, `cmd.browser.navigate`, `cmd.browser.reload`, `cmd.browser.revoke_share_with_agent`, `cmd.browser.take_over`, `cmd.browser.pause_agent`, `cmd.browser.let_agent_continue`, `cmd.browser.stop_agent_keep_browser`, `cmd.browser.promote_to_normal_browsing`, `cmd.browser.reopen`, `cmd.browser.retry`, `cmd.browser.keep_closed`, `cmd.browser.page.create`, `cmd.browser.page.activate`, `cmd.browser.page.close`, `cmd.browser.workspace.create`, `cmd.browser.workspace.close`, `cmd.browser.workspace.reset`, `cmd.browser.component.mode.set_default`.
+- `reads_page_only` (`guaranteed_everyday`): `cmd.browser.page.representation.capture`, `cmd.browser.page.representation.delta`, `cmd.browser.page.representation.query`, `cmd.browser.component.pick`, `cmd.browser.capture_artifact`.
+
+The tier says which feature set a command belongs to; it grants nothing. Every command still passes its own catalog precondition, `permission_layer` and session-class rules, and none applies to `AuthBrowserSession`.
 
 `BrowserArtifactManifest` fields are `artifact_manifest_id`, `browser_session_id`, `action_id`, `artifact_refs[]`, `retention_class`, `created_at_utc`, `redaction_profile_id`, and `schema_version`.
+
+Typed 2026-11-25 (C-FIX79 fix round, against `Plans/gui_automation_manifest.schema.json`, because `browser screenshots, traces, and combined selection+screenshot captures use the same artifact pipeline as GUI automation, including naming, retention, manifest shape`): `BrowserArtifactManifest` is one JSON object with exactly these eight fields, all required, unknown fields refused. It is the per-action browser view of the GUI automation manifest, not a second manifest shape: each `artifact_refs[]` entry is one artifact item of that schema.
+
+| Field | Type |
+| --- | --- |
+| `artifact_manifest_id` | string, 1 to 256 characters, unique per manifest |
+| `browser_session_id` | string, 1 to 256 characters: the ordinary `BrowserSession` the action ran in (never an `AuthBrowserSession`); every `artifact_refs[]` item carries the same value in its `browser_session_id` |
+| `action_id` | the producing command's exact ID. Live capture-chip producers: `cmd.browser.capture.full_to_chat`, `cmd.browser.capture.region_to_chat`. Live §2.6A catalog producers: `cmd.browser.add_selection_screenshot_to_chat`, `cmd.browser.add_selection_full_screenshot_to_chat`, `cmd.browser.add_screenshot_to_chat`, `cmd.browser.add_full_screenshot_to_chat`. `cmd.browser.capture_artifact` is allowed only for compatibility input. Any other producer requires a row in the action table above before it can produce a manifest |
+| `artifact_refs[]` | array of at least one item, each validating against `Plans/gui_automation_manifest.schema.json#/properties/artifacts/items` (`artifact_id`, `kind`, `relative_path`, `mime_type`, `sha256`, `size_bytes`, and its optional fields), with `kind` one of `browser_screenshot`, `browser_pdf`, `trace`, `recording`, `console`, `network`; that schema's rule that `browser_screenshot`, `browser_pdf`, `console` and `network` items carry `redaction_status` (`not_needed`, `applied` or `blocked`) applies. A protected session returns the explicit exclusion above, never a manifest with an empty array |
+| `retention_class` | string, 1 to 128 characters, naming a class of Testing's run-evidence retention (the retention row of `Plans/Settings_System.md`'s Built-in browser line); Section 15 adds no retention values of its own |
+| `created_at_utc` | RFC 3339 date-time in UTC, as `created_at_utc` in that schema |
+| `redaction_profile_id` | string, 1 to 256 characters, naming the redaction profile applied (`safety.protection.screenshot-redaction`) |
+| `schema_version` | the constant `"1.0.0"` |
+
+`cmd.browser.capture_artifact`'s `retention_until_utc` is an RFC 3339 UTC instant, or `null` while the retention class sets no limit (the shipped `evidence.retention_days: null` retains everything, `Plans/MiscPlan.md`). Two things stay with the testing owner (`Plans/Automated_Testing_System.md`, held while stream E edits it) and are follow-ups, not settled here: the numeric retention values per `retention_class` with the rule that derives `retention_until_utc` from them, and the naming and storage template (`relative_path` root) for interactive browser-session captures made outside a GUI-automation `run_id`.
 
 ### Tab-Cap Policy And Restore Identity
 
@@ -70,11 +106,11 @@ Legacy `usage_source` values `provider_reported`, `estimated`, `corrected`, and 
 
 Repairs rows `sfk-c5ad7b33fa51846ef1c86c49` and `sfk-e9cc3bc253470d324d189932`.
 
-Terminal VT/xterm/OSC fixtures are grouped by `fixture_id`, `protocol_family`, `input_bytes_ref`, `expected_screen_hash`, `expected_event_refs[]`, and `negative_case`.
+Terminal VT/xterm/OSC fixtures are grouped by `fixture_id`, `protocol_family`, `input_bytes_ref`, `expected_screen_hash`, `expected_event_refs[]`, and `negative_case`. The fixture rows themselves, with their replay byte streams and expected results, are `### Terminal protocol fixture rows` in the 2026-11-25 addendum at the end of this document.
 
 Required record minima:
 
-- `TerminalIngestionReceipt`: `receipt_id`, `terminal_session_id`, `byte_count`, `protocol_family`, `accepted`, `rejected_reason_code?`, `created_at_utc`.
+- `TerminalIngestionReceipt`: `receipt_id`, `terminal_session_id`, `stage`, `byte_count`, `protocol_family`, `accepted`, `rejected_reason_code?`, `transcript_chunk_refs[]?`, `created_at_utc`.
 - `TerminalBackpressureState`: `terminal_session_id`, `queue_depth`, `dropped_frame_count`, `throttle_state`, `last_transition_at_utc`.
 - `TerminalRenderFrame`: `frame_id`, `terminal_session_id`, `dirty_region_refs[]`, `screen_hash`, `rendered_at_utc`.
 - `TerminalInputEvent`: `event_id`, `terminal_session_id`, `input_kind`, `payload_ref`, `permission_snapshot_id?`, `created_at_utc`.
@@ -86,7 +122,7 @@ Required record minima:
 - `TerminalAccessibilitySnapshot`: `snapshot_id`, `terminal_session_id`, `screen_reader_text_ref`, `focus_cell`, `created_at_utc`.
 - `TerminalDiagnosticsEnvelope`: `diagnostic_id`, `terminal_session_id`, `category`, `severity`, `message_ref`, `created_at_utc`.
 
-`TerminalScrollbackAnchor` is a record minimum, not proof of retained content or complete output. Its resolution must satisfy the Terminal output read semantics above, including source identity, whole-range backing validity, mutation handling, and logical-text preservation across ordinary reflow.
+`TerminalScrollbackAnchor` is a record minimum, not proof of retained content or complete output. Its resolution must satisfy the Terminal output read semantics above, including source identity, whole-range backing validity, mutation handling, and logical-text preservation across ordinary reflow. Each of these eleven records has the closed wire shape, field types and owner given in `### Terminal record wire contract` in the 2026-11-25 addendum at the end of this document.
 
 ### Browser Runtime Packaging Boundary
 
@@ -112,6 +148,7 @@ unblocks: []
 acceptance_criteria:
 - A fast-output fixture records byte counts and no silent loss.
 - If retention cap prunes, transcript chunk references prove what remains and what was pruned.
+- The save's authoritative chunk inventory proves what remains, and prune receipts name what that operation removed. Diagnostic history eviction follows the terminal record wire contract below and keeps loss accounting available in bounded counters.
 - UI thread never blocks on raw PTY ingestion.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
@@ -502,12 +539,15 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - No control sequence bytes leak to visible grid when split across reads
+- Cover all byte boundaries of the oversized negative fixtures in one byte-at-a-time replay per fixture alongside the whole and selected two-read replays in Terminal protocol fixture rows.
+- The intentional plain-text rendering in SMPFS-183 occurs only after the complete unauthenticated sequence is recognized and matches the unsplit replay.
 - Synchronized update state closes correctly after arbitrary chunking
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
 - No control sequence bytes leak to visible grid when split across reads
+- The intentional plain-text rendering in SMPFS-183 occurs only after the complete unauthenticated sequence is recognized and matches the unsplit replay.
 - Synchronized update state closes correctly after arbitrary chunking
 risk_class: p1_terminal_runtime_hardening
 reasoning_tier: standard
