@@ -22,7 +22,8 @@
 //   swing    Pip set swinging as its idle swing does (ps.thv += 0.5), 400 ms;
 //   speech   a new long line typing (say(..., now)), 500 ms;
 //   pointer  a pointermove in every frame across the stage, 500 ms (user input);
-//   blink    a blink started (ps.nextBlink = now), 150 ms.
+//   blink    a blink started (ps.nextBlink = now), 160 ms (a blink's length), only on a look whose face has a blink
+//            (NieR's visor has none: logged, not judged).
 // Logged per cell: frames a second, full and partial draws a second, skipped frames a second (the stage's own gate
 // counters when it has them).
 // --set looks= (default all ten; `dark` the five Dark looks) --set screens= (default welcome,where,ready)
@@ -162,7 +163,9 @@ export default async function (t) {
 		}
 		if (slow.length) { const v = slowLookVerdict(slow, o); await t.check(`${look}: at rest the stage draws in 0.1 px steps (a display under 90 Hz: the look's mean)`, v.ok, v.why); }
 		if (String(t.args.motion ?? '1') === '0' || !lastAwake) continue;
-		for (const [kind, wms] of [['swing', 400], ['speech', 500], ['pointer', 500], ['blink', 150]]) {
+		const blinks = await f.evaluate(() => !!document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage?.blinkEl);
+		if (!blinks) t.log(`${look} ${lastAwake} blink: no blink on this face (NieR's visor): not judged`);
+		for (const [kind, wms] of [['swing', 400], ['speech', 500], ['pointer', 500], ['blink', 160]].filter(([k]) => k !== 'blink' || blinks)) {
 			await t.page.mouse.move(W - 6, Math.round(H / 2));
 			const pre = await restWait(f, 'awake', 8000);
 			if (!pre.ok) { await t.check(`${look} ${lastAwake} ${kind}: Pip at rest before the window`, false, `${pre.why}: could not judge`); continue; }
