@@ -584,11 +584,49 @@ const modeSpread = (img, rect) => {
 	assert.match(body, /e\.preventDefault\(\);\n  sc\.scrollTo\(\{ top: to, behavior: 'instant' \}\);/, 'cancel, then one instant main-thread scroll (the document\'s smooth scroll-behavior would hand it back to the compositor)');
 	assert.equal(/o55fsWheel|o55fsMountNear|mountContinuousWorkspace|o55fsShowNear|o55fsFill/.test(body), false, 'the jump leaves the gate, the mount, the fill and the show to the scroll event');
 	const jump = Number((code.match(/\nconst O55FS_JUMP = ([\d.]+);/) || [])[1]);
-	assert.ok(jump > 0 && jump <= 0.5, `O55FS_JUMP is half a view or less (a 456 px wheel blanked a quarter on the Mac; ${jump})`);
+	assert.ok(jump >= 0.4 && jump <= 0.5, `O55FS_JUMP is between 0.4 and half a view: a 456 px wheel blanked a quarter on the Mac, and a 100 px notch must never jump (R149 L1; ${jump})`);
 	const inner = code.slice(code.indexOf('function o55fsInnerTakes('), code.indexOf("window.addEventListener('wheel', e => {"));
 	assert.match(inner, /overflowY/, 'an inner scroller is recognised by its overflow');
 	assert.match(inner, /n !== sc/, 'the walk stops at the document');
 	console.log(`PASS FO-250 long-wheel jump: one non-passive window listener, every guard before the cancel, an instant main-thread scroll at ${jump} of the view, outside the r6 gate`);
+}
+/* R149 M1 and L1: the long-wheel jump and its inner-scroller walk run here as written, against stand-in elements. A notch
+   never jumps, a long wheel over rows jumps once and instantly, a scroller inside the document that can still move or
+   that contains its overscroll (the rosters, at their end too) keeps the wheel, an uncancelable wheel is left alone. */
+{
+	const fs = await import('node:fs');
+	const prod = fs.readFileSync(new URL('../../../onboarding/opus-5.5/src/settings/kit.d/46-first-screen.js', import.meta.url), 'utf8');
+	const code = prod.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+	const cut = (from, to) => { const a = code.indexOf(from); assert.ok(a >= 0, `found: ${from}`); const b = code.indexOf(to, a); assert.ok(b > a, `found the end of: ${from}`); return code.slice(a, b + to.length); };
+	const src = [cut('const O55FS_JUMP', ';'), cut('function o55fsInnerTakes(', '\n}\n'), cut("window.addEventListener('wheel', e => {", '}, { passive: false });')].join('\n');
+	class Node { constructor(o) { Object.assign(this, { parentElement: null, scrollTop: 0, scrollHeight: 50, clientHeight: 50, style: {} }, o); } }
+	class Element extends Node {}
+	const make = () => {
+		const sc = new Element({ id: 'settings-document', scrollHeight: 20000, clientHeight: 900, scrollTop: 1000, jumps: [] });
+		sc.contains = (n) => { for (let x = n; x; x = x.parentElement) if (x === sc) return true; return false; };
+		sc.scrollTo = (o) => { sc.jumps.push(o); sc.scrollTop = o.top; };
+		const root = { querySelector: (sel) => sel === '#settings-document' ? sc : null };
+		let listener = null;
+		const win = { addEventListener: (type, fn) => { if (type === 'wheel') listener = fn; } };
+		new Function('root', 'window', 'getComputedStyle', 'Node', 'Element', src)(root, win, (n) => n.style, Node, Element);
+		assert.equal(typeof listener, 'function', 'the listener was registered');
+		const wheel = (target, deltaY, o = {}) => { const e = { target, deltaY, deltaX: 0, deltaMode: 0, cancelable: true, defaultPrevented: false, ctrlKey: false, shiftKey: false, ...o, preventDefault() { e.defaultPrevented = true; } }; listener(e); return e; };
+		return { sc, wheel };
+	};
+	{ const { sc, wheel } = make(); const row = new Element({ parentElement: sc });
+		const e = wheel(row, 100); assert.equal(e.defaultPrevented, false, 'a 100 px notch is left to the browser'); assert.equal(sc.jumps.length, 0);
+		const big = wheel(row, 600); assert.equal(big.defaultPrevented, true, 'a 600 px wheel over rows (2/3 of the view) is taken');
+		assert.deepEqual(sc.jumps, [{ top: 1600, behavior: 'instant' }], 'one instant main-thread jump by the delta');
+		assert.equal(wheel(row, -5000).defaultPrevented, true, 'a long wheel up is taken too'); assert.equal(sc.scrollTop, 0, 'clamped at the top');
+		assert.equal(wheel(row, -900).defaultPrevented, false, 'at the top a wheel up is left to the page');
+		assert.equal(wheel(row, 900, { cancelable: false }).defaultPrevented, false, 'an uncancelable wheel is left alone'); }
+	const inner = (style, top) => { const { sc, wheel } = make(); const box = new Element({ parentElement: sc, scrollHeight: 1200, clientHeight: 700, scrollTop: top, style: { overflowY: 'auto', ...style } }); const item = new Element({ parentElement: box }); return { sc, e: wheel(item, 900) }; };
+	{ const r = inner({ overscrollBehaviorY: 'contain' }, 500); assert.equal(r.e.defaultPrevented, false, 'a roster at its end with overscroll containment keeps the wheel (R149 M1)'); assert.equal(r.sc.jumps.length, 0, 'the document stays still'); }
+	{ const r = inner({ overscrollBehaviorY: 'none' }, 500); assert.equal(r.e.defaultPrevented, false, 'overscroll-behavior none keeps it too'); }
+	{ const r = inner({ overscrollBehaviorY: 'auto' }, 0); assert.equal(r.e.defaultPrevented, false, 'an inner scroller that can still move takes the wheel'); }
+	{ const r = inner({ overscrollBehaviorY: 'auto' }, 500); assert.equal(r.e.defaultPrevented, true, 'an uncontained inner scroller at its end hands the wheel on: the document jumps'); }
+	{ const r = inner({ overflowY: 'visible', overscrollBehaviorY: 'contain' }, 0); assert.equal(r.e.defaultPrevented, true, 'a box that does not scroll is not a scroller'); }
+	console.log('PASS FO-250 long-wheel jump run on stand-ins: notches left alone, one instant jump over rows, contained or movable inner scrollers keep the wheel');
 }
 {
 	const live = (src, re) => {

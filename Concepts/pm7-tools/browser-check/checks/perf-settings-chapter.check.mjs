@@ -1300,6 +1300,56 @@ export async function flingRoute(t, surface, route, opts = {}) {
 		for (const row of flingRetryVerdict(attempts,route)) await t.check(`${look} ${surface}: ${row.name}`,row.ok,row.detail);
 	}
 }
+/* FO-250 round 2 (R149 M1): the long-wheel jump must leave a wheel over a scroller inside the document that contains its
+   overscroll to the browser, at that scroller's end too. Main: the AI & Providers and Memory rosters
+   (overscroll-behavior: contain) keep a wheel at their end and the document stays still; 07f3a9ef1e jumped the document
+   by the whole wheel. Per chapter: the first roster that scrolls and contains its overscroll is brought into view and
+   scrolled to its end, then one trusted wheel of the document's view height goes over it. */
+export async function rosterWheelRoute(t, surface) {
+	if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+	await t.viewport(1920, 1080); await muteSound(t.page);
+	const f = await t.app.open({sandbox:surface === 'sandbox'});
+	await t.app.resetLayout().catch(() => {}); await f.locator('#tab-settings').click(); await t.settle();
+	for (const chapter of ['ai', 'memory']) {
+		const link = chapter === 'ai' ? f.locator('#pm-settings-root .domain-link[data-domain="ai"]').first()
+			: f.locator('#pm-settings-root .domain-link').filter({hasText:/^\s*Memory/}).first();
+		await link.click(); await t.page.waitForTimeout(900);
+		/* Memory's roster (Personas) is on a page still unmounted at the arrival: bring each such page into view so the
+		   page's own observer mounts it */
+		for (let k = 0; k < 4; k++) {
+			const cold = await f.evaluate(() => {
+				const d = document.querySelector('#pm-settings-root #settings-document');
+				if (!d || [...d.querySelectorAll('.roster-list')].some((x) => x.scrollHeight > x.clientHeight + 4)) return false;
+				const b = d.querySelector('[data-continuous-workspace-body][data-workspace-mounted="false"]');
+				if (!b) return false; b.scrollIntoView({block:'start', behavior:'instant'}); return true;
+			});
+			if (!cold) break;
+			await t.page.waitForTimeout(700);
+		}
+		const set = await f.evaluate(() => {
+			const d = document.querySelector('#pm-settings-root #settings-document');
+			const l = d && [...d.querySelectorAll('.roster-list')].find((x) => { const cs = getComputedStyle(x); return x.scrollHeight > x.clientHeight + 4 && x.getBoundingClientRect().height > 80 && /^(auto|scroll|overlay)$/.test(cs.overflowY) && cs.overscrollBehaviorY !== 'auto'; });
+			if (!l) return null;
+			l.scrollIntoView({block:'center', behavior:'instant'}); l.scrollTop = l.scrollHeight;
+			l.setAttribute('data-psc-roster-wheel', '');
+			const R = window.__pscRosterWheel = {seen:false};
+			window.addEventListener('wheel', (e) => { if (!R.seen && e.isTrusted) { R.seen = true; R.cancelable = e.cancelable; R.inRoster = l.contains(e.target); } }, {capture:true, passive:true, once:true});
+			return {view:d.clientHeight, room:d.scrollHeight - d.clientHeight - d.scrollTop, overscroll:getComputedStyle(l).overscrollBehaviorY};
+		});
+		if (!set) { await t.check(`${surface} ${chapter}: a roster that scrolls and contains its overscroll is on the page`, false, 'none found'); continue; }
+		await t.page.waitForTimeout(500);
+		const before = await f.evaluate(() => { const l = document.querySelector('[data-psc-roster-wheel]'), d = document.querySelector('#pm-settings-root #settings-document'); return {doc:d.scrollTop, roster:l.scrollTop, end:l.scrollHeight - l.clientHeight}; });
+		const b = await f.locator('[data-psc-roster-wheel]').boundingBox();
+		await t.page.mouse.move(b.x + b.width / 2, b.y + b.height / 2);
+		await t.page.mouse.wheel(0, set.view);
+		await t.page.waitForTimeout(900);
+		const after = await f.evaluate(() => { const l = document.querySelector('[data-psc-roster-wheel]'), d = document.querySelector('#pm-settings-root #settings-document'); const r = {doc:d.scrollTop, roster:l.scrollTop, ...window.__pscRosterWheel}; l.removeAttribute('data-psc-roster-wheel'); return r; });
+		const detail = `overscroll ${set.overscroll}; document view ${set.view} px, ${Math.round(set.room)} px of room below; roster ${Math.round(before.roster)}/${Math.round(before.end)} before; wheel ${set.view} px seen ${after.seen}, over the roster ${after.inRoster}, cancelable ${after.cancelable}; document ${Math.round(before.doc)} -> ${Math.round(after.doc)}`;
+		t.log(`${surface} ${chapter} roster wheel: ${detail}`);
+		await t.check(`${surface} ${chapter}: the roster was at its end with room in the document below, and the wheel went over it`, before.roster >= before.end - 1 && set.room >= set.view && after.seen && after.inRoster, detail);
+		await t.check(`${surface} ${chapter}: a view-long wheel over a roster at its end leaves the document still (main's behaviour)`, Math.abs(after.doc - before.doc) < 1, detail);
+	}
+}
 for (const surface of ['normal', 'sandbox']) {
 	tests[`R93 #4 a fast wheel into lower Code fills visible lists before the frame (${surface})`] = (t) => flingRoute(t, surface, 'terminal');
 	/* FO-245 round 3 (A245 high finding 1): the deep routes onto the chapter's unmounted last page */
@@ -1307,6 +1357,8 @@ for (const surface of ['normal', 'sandbox']) {
 	/* FO-250: the same two routes with the document scrolling on the compositor, as it always does on macOS (FLING_COMPOSITE) */
 	tests[`R93 #4 a fast wheel into lower Code fills visible lists before the frame, composited scrolling (${surface})`] = (t) => flingRoute(t, surface, 'terminal', {composite:true});
 	tests[`R93 #4 a single long wheel to the bottom of a fresh Code & Tools paints its last page, composited scrolling (${surface})`] = (t) => flingRoute(t, surface, 'wheel-bottom', {composite:true});
+	/* FO-250 round 2 (R149 M1): the long-wheel jump leaves a contained roster's wheel to the browser */
+	tests[`R93 #4 a long wheel over a roster at its end leaves the document still (${surface})`] = (t) => rosterWheelRoute(t, surface);
 	/* FO-245 round 5 (option C): the End/Home key listener was reverted, so End smooth-scrolls through unmounted pages
 	   again, as on main. The two End fling routes ('end', 'end-text': FLING_ROUTES and flingRoute keep their code) are
 	   not registered until FO-248 lands a fix for those blanks; registered now they would be red, as they are on main. */
