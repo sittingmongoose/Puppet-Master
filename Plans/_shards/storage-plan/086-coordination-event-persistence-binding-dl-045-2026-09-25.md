@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L32957-L33605
 
-Source SHA256: `1bc31c9c49b16058870ded062ae5abad7f0e6bb593f35aaaf7667121ec819469`
+Source SHA256: `011a9501490dde39a1b11d82bf67e792cc604044560056d51b58776a6c9b8ca9`
 
 ---
 
@@ -596,7 +596,7 @@ Until a family is admitted, its events are quarantined before append or projecti
 
 ### `coordination.debug_mirror_exported`
 
-This family is outside this contract. It belongs to DL-045's Storage batch. CV-353 prepares its payload definition only, and it is not admitted: the mirror exporter cannot append it until its own landing, and until then SP-232's criterion that mirror recovery is recorded with it stays unmet. Once admitted, its events advance the checkpoint as no-ops, because debug mirror events are never projection authority. Its retention anchor is settled in its own landing, since its payload has no `run_id`.
+This family is outside this contract. It belongs to DL-045's Storage batch. CV-353 prepares its payload definition only, and it is not admitted: the mirror exporter cannot append it until its own landing, and until then SP-232's criterion that mirror recovery is recorded with it stays unmet. Once admitted, its events advance the checkpoint as no-ops, because debug mirror events are never projection authority. Its retention anchor is settled in its own landing, since its payload has no `run_id`. Amended (DL-270, SP-339): the family is retired, nothing emits it and no landing will admit it; the admission wording above is kept as lineage.
 
 ### Proof boundary
 

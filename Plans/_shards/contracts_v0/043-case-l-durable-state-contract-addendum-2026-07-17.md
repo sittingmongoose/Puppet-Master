@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L26095-L26503
+Source lines: L26097-L26505
 
-Source SHA256: `28617626ccd6d54b6e3eb20652369a54e066fb0691f7ace7c415ed043859e7b2`
+Source SHA256: `621171da165c9602332236e4074ff39f307bcf230c732031310e7a1d0c7bc4f4`
 
 ---
 
@@ -376,7 +376,7 @@ canonical_text: >-
   expected_storage_instance_id (UUID), expected_logical_root_fingerprint
   (lowercase 64-hex), expected_root_generation (non-negative integer),
   expected_fallback_branch_id (UUID), expected_fallback_base_ref (non-secret
-  stable ref), and expected_logical_head_sha256, expected_fallback_head_sha256
+  ref), and expected_logical_head_sha256, expected_fallback_head_sha256
   and expected_bootstrap_binding_sha256 (lowercase 64-hex SHA-256), with every
   other request, result and receipt field as typed in
   Plans/Contracts_V0.md#storage-fallback-divergence-command-envelopes;

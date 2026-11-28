@@ -25595,8 +25595,10 @@ CV-314 field types. Basis is `canon` where canon states the type, and `drafted` 
 | `state` | enum `not_ready`, `model_visible`, `ui_visible`, `roundtrip_ready`, `degraded`, `failed` | yes | canon: CV-314 acceptance criteria |
 | `reason_code` | enum `unavailable`, `disabled_by_policy`, `auth_required`, `restart_required`, `namespace_mismatch`, `timed_out` | yes for `degraded` and `failed`, otherwise optional | drafted: the first five are the non-ready words of the CV-307 readiness status, reused exactly; `timed_out` is a probe that passes its `timeout_ms` |
 | `checked_at` | RFC 3339 UTC timestamp | yes | drafted: the time of the check |
-| `evidence_refs` | array of refs | yes | drafted: canon names roundtrip evidence refs without a type |
+| `evidence_refs` | array of nonempty strings (refs) | yes | drafted: canon names roundtrip evidence refs without a type |
 | `retry_after_ms` | non-negative integer, milliseconds | when applicable | drafted: CV-314 acceptance criteria name it without a type |
+
+Session-prompt inbox event fields are typed by the prepared payload schemas `Plans/event_payloads/w3f/session_prompt_admitted.schema.json`, `session_prompt_rejected.schema.json`, `session_prompt_cancelled.schema.json` and `session_prompt_expired.schema.json`; naming them admits no family. The three type names above (`WebSocketHandshakeRequest`, `RuntimeSurfaceReadinessProbeRequest`, `RuntimeSurfaceReadinessResult`) are drafted labels for these tables.
 
 CV-307 gives the same probe a different status list (`ready`, `degraded`, `unavailable`, `disabled_by_policy`, `auth_required`, `restart_required`, `namespace_mismatch`). How that list relates to `state` above is an open question for this owner; the drafted `reason_code` values follow the reading in which CV-314's `state` is how far the probe got and CV-307's non-ready words are its reasons.
 
@@ -25910,7 +25912,7 @@ Family payloads and state machines:
 | `graph_patch` | `graph_patch_id`, `graph_generation_id`, `patch_kind`, `requested_change_ref`, `affected_node_refs[]`, `decision_ref`, `state_transition_report_ref?`, `concern_refs[]?` | `requested`, `validated`, `applied`, `rejected`, `rolled_back`, `superseded` | `requested -> validated -> applied|rejected`; `applied -> rolled_back|superseded` only with a decision and transition report. |
 | `projection_trust` | `projection_id`, `projection_freshness`, `projection_health`, `generation_match`, `canonical_revalidation_required`, `last_revalidated_at_utc?`, `fallback_route_ref?` | `current`, `refreshing`, `stale`, `degraded`, `unavailable` | `current -> refreshing|stale|degraded|unavailable`; non-current states return to `current` only after canonical revalidation evidence. |
 
-State machine closure for the four families (initial and terminal states, and the triggers the owner text states):
+State machine closure for the four families (the initial states are drafted from each family's transitions, not stated by canon; terminal states and the triggers the owner text states):
 
 | Family | Initial state | Terminal states | Triggers stated | Triggers not stated (recorded gaps) |
 | --- | --- | --- | --- | --- |
@@ -26460,7 +26462,7 @@ canonical_text: >-
   expected_storage_instance_id (UUID), expected_logical_root_fingerprint
   (lowercase 64-hex), expected_root_generation (non-negative integer),
   expected_fallback_branch_id (UUID), expected_fallback_base_ref (non-secret
-  stable ref), and expected_logical_head_sha256, expected_fallback_head_sha256
+  ref), and expected_logical_head_sha256, expected_fallback_head_sha256
   and expected_bootstrap_binding_sha256 (lowercase 64-hex SHA-256), with every
   other request, result and receipt field as typed in
   Plans/Contracts_V0.md#storage-fallback-divergence-command-envelopes;

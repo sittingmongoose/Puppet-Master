@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L25603-L26014
+Source lines: L25605-L26016
 
-Source SHA256: `28617626ccd6d54b6e3eb20652369a54e066fb0691f7ace7c415ed043859e7b2`
+Source SHA256: `621171da165c9602332236e4074ff39f307bcf230c732031310e7a1d0c7bc4f4`
 
 ---
 
@@ -318,7 +318,7 @@ Family payloads and state machines:
 | `graph_patch` | `graph_patch_id`, `graph_generation_id`, `patch_kind`, `requested_change_ref`, `affected_node_refs[]`, `decision_ref`, `state_transition_report_ref?`, `concern_refs[]?` | `requested`, `validated`, `applied`, `rejected`, `rolled_back`, `superseded` | `requested -> validated -> applied|rejected`; `applied -> rolled_back|superseded` only with a decision and transition report. |
 | `projection_trust` | `projection_id`, `projection_freshness`, `projection_health`, `generation_match`, `canonical_revalidation_required`, `last_revalidated_at_utc?`, `fallback_route_ref?` | `current`, `refreshing`, `stale`, `degraded`, `unavailable` | `current -> refreshing|stale|degraded|unavailable`; non-current states return to `current` only after canonical revalidation evidence. |
 
-State machine closure for the four families (initial and terminal states, and the triggers the owner text states):
+State machine closure for the four families (the initial states are drafted from each family's transitions, not stated by canon; terminal states and the triggers the owner text states):
 
 | Family | Initial state | Terminal states | Triggers stated | Triggers not stated (recorded gaps) |
 | --- | --- | --- | --- | --- |
