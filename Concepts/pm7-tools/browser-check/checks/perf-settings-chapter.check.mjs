@@ -1734,6 +1734,12 @@ for (const surface of ['normal', 'sandbox']) {
 	tests[`R93 #4 End after a text click from a fresh Code & Tools paints its last page (${surface})`] = (t) => flingRoute(t, surface, 'end-text');
 	/* FO-248P: Home back up across the pages End left unmounted (FLING_ROUTES.home) */
 	tests[`R93 #4 Home after End from a fresh Code & Tools paints its first page (${surface})`] = (t) => flingRoute(t, surface, 'home');
+	/* FO-251: the same three with the document scrolling on the compositor (FLING_COMPOSITE), as it always does on macOS:
+	   there Chrome's keyboard End / Home is a compositor animation an instant scrollTo cannot cancel, so FO-248P's one-step
+	   landing alone blanks (GTX 1070 Ti forced to composite: 18 of 18 cells); FO-251's take-over cancels the key first */
+	tests[`R93 #4 End from a fresh Code & Tools paints its last page, composited scrolling (${surface})`] = (t) => flingRoute(t, surface, 'end', {composite:true});
+	tests[`R93 #4 End after a text click from a fresh Code & Tools paints its last page, composited scrolling (${surface})`] = (t) => flingRoute(t, surface, 'end-text', {composite:true});
+	tests[`R93 #4 Home after End from a fresh Code & Tools paints its first page, composited scrolling (${surface})`] = (t) => flingRoute(t, surface, 'home', {composite:true});
 	/* FO-248P (R143 medium): a held PageDown mounts the pages it reaches before their frame (pgdnRoute) */
 	tests[`R93 #4 a held PageDown down a fresh Code & Tools never shows a page placeholder (${surface})`] = (t) => pgdnRoute(t, surface);
 	/* FO-245 round 4 (R143 medium 2) and round 5 (R144): guards that main's widget End/Home behaviour is back. Main is
