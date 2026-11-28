@@ -701,7 +701,7 @@
       "replacement_command_ids": [],
       "typed_local_ui_action_id": null,
       "typed_local_payload_schema_ref": null,
-      "reason": "Rejected because custom-theme asset lifecycle has no exact admitted command here; Settings transactions cannot be relabeled as asset create/import/export handlers. DL-2607 (Jared, 2026-11-28) removes the custom-theme Settings buttons and defers custom theme files, so no replacement command or typed local action exists.",
+      "reason": "Rejected because custom-theme asset lifecycle has no exact admitted command here; Settings transactions cannot be relabeled as asset create/import/export handlers. DL-2607 (Jared, 2026-11-28) removes custom themes, including the custom-theme Settings buttons and custom theme files, so no replacement command or typed local action exists.",
       "native_handler_claim": false
     },
     "cmd.theme.import": {
@@ -709,7 +709,7 @@
       "replacement_command_ids": [],
       "typed_local_ui_action_id": null,
       "typed_local_payload_schema_ref": null,
-      "reason": "Rejected because custom-theme asset lifecycle has no exact admitted command here; Settings transactions cannot be relabeled as asset create/import/export handlers. DL-2607 (Jared, 2026-11-28) removes the custom-theme Settings buttons and defers custom theme files, so no replacement command or typed local action exists.",
+      "reason": "Rejected because custom-theme asset lifecycle has no exact admitted command here; Settings transactions cannot be relabeled as asset create/import/export handlers. DL-2607 (Jared, 2026-11-28) removes custom themes, including the custom-theme Settings buttons and custom theme files, so no replacement command or typed local action exists.",
       "native_handler_claim": false
     },
     "cmd.theme.export": {
@@ -717,7 +717,7 @@
       "replacement_command_ids": [],
       "typed_local_ui_action_id": null,
       "typed_local_payload_schema_ref": null,
-      "reason": "Rejected because custom-theme asset lifecycle has no exact admitted command here; Settings transactions cannot be relabeled as asset create/import/export handlers. DL-2607 (Jared, 2026-11-28) removes the custom-theme Settings buttons and defers custom theme files, so no replacement command or typed local action exists.",
+      "reason": "Rejected because custom-theme asset lifecycle has no exact admitted command here; Settings transactions cannot be relabeled as asset create/import/export handlers. DL-2607 (Jared, 2026-11-28) removes custom themes, including the custom-theme Settings buttons and custom theme files, so no replacement command or typed local action exists.",
       "native_handler_claim": false
     },
     "cmd.theme.preview": {
