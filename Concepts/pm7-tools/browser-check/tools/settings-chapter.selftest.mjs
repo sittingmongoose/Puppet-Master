@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
 import { runInNewContext } from 'node:vm';
 import { readdirSync, readFileSync } from 'node:fs';
-import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT, press, selectAllModifier, flingScrollGate, filmFling, flingFilm, FLING_FILM, FLING_RETRY, flingAttempt, retryFling, flingRetryVerdict, captureCpuDetail, FLING_ROUTES, FLING_LOOKS, flingLooks, flingRoute, runFlingLook, filmBands, tabEndVerdict, tabEndRoute, TAB_END_TRAVEL, rosterEndVerdict, rosterEndRoute, wpkHomeVerdict, wpkHomeRoute, GUARD_TRAVEL, ROSTER_MIN_ROOM, WPK_MIN_TOP, endLandVerdict, endLandRoute, endLandKey, END_GAP, END_REPS, END_MIN_TRAVEL, END_SETTLE, END_CAP, tests } from '../checks/perf-settings-chapter.check.mjs';
+import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT, press, selectAllModifier, flingScrollGate, filmFling, flingFilm, FLING_FILM, FLING_RETRY, flingAttempt, retryFling, flingRetryVerdict, captureCpuDetail, FLING_ROUTES, FLING_LOOKS, flingLooks, flingRoute, runFlingLook, filmBands, tabEndVerdict, tabEndRoute, TAB_END_TRAVEL, rosterEndVerdict, rosterEndRoute, wpkHomeVerdict, wpkHomeRoute, GUARD_TRAVEL, ROSTER_MIN_ROOM, WPK_MIN_TOP, endLandVerdict, endLandRoute, endLandKey, END_GAP, END_REPS, END_MIN_TRAVEL, END_SETTLE, END_CAP, PGDN, pgdnFilm, pgdnAttempt, pgdnVerdict, pgdnRoute, armFling, tests } from '../checks/perf-settings-chapter.check.mjs';
 import { encodePng, decodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
 const uncomment = (src) => src.replace(/"(?:\\[\s\S]|[^"\\])*"|'(?:\\[\s\S]|[^'\\])*'|`(?:\\[\s\S]|[^`\\])*`|\/\*[\s\S]*?\*\/|\/\/[^\n]*/g,
 	(token) => token.startsWith('/') ? token.replace(/[^\n]/g, ' ') : token);
@@ -204,6 +204,71 @@ const modeSpread = (img, rect) => {
 	const late = [...at(-83.5, 5, SRC), ...at(16.7, 3, DST), ...at(66.8, 2, BLANK), ...at(100.2, 20, DST)];
 	assert.equal(run(late).dest.bad, false, 'the first destination frame itself shows the rows');
 	assert.equal(v(late).ok, false, 'a later blank frame after the wheel still fails');
+	// FO-248P: Home from the end of a page. The source is the end view (rows in its top half, its foot empty) and the page
+	// holds it for a few frames after the key while it works; held frames are not blanks, a blank after them still is
+	const ENDV = frame(0, { holes: [2, 3] }), MORE = frame(0, { holes: [1, 2, 3] });
+	const homeHeld = [...at(-83.5, 5, ENDV), ...at(16.7, 3, ENDV), ...at(66.8, 20, DST)];
+	assert.equal(FLING_FILM.held, 0.002, 'a frame with under 0.2 % of its pixels changed from the source is the held source view');
+	assert.equal(v(homeHeld).ok, true, `Home: the end view held for three frames, then the top view, passes: ${v(homeHeld).detail}`);
+	assert.equal(run(homeHeld).dest.dt, 66.8, 'Home: the first destination frame is the first frame that left the source view');
+	assert.equal(v([...at(-83.5, 5, ENDV), ...at(16.7, 2, ENDV), ...at(50.1, 2, BLANK), ...at(83.5, 20, DST)]).ok, false, 'Home: a blank after the held end view fails');
+	assert.equal(v([...at(-83.5, 5, ENDV), ...at(16.7, 2, MORE), ...at(50.1, 20, DST)]).ok, false, 'Home: a frame that lost rows the source had is not the held source and fails');
+	assert.equal(v([...at(-83.5, 5, SRC), ...at(16.7, 2, SRC), ...at(50.1, 20, DST)]).ok, true, 'a source with rows in every band held after the input passes as before');
+	// FO-248P: the held PageDown film. Mid-scroll frames show other rows each time, so a frame is a placeholder frame when
+	// half its bands are empty, not when it differs from the settled frame
+	{
+		const pg = (seq) => pgdnFilm(film(seq), { box, view, key: wheel });
+		const PH = frame(3, { holes: [2, 3] }), ONE = frame(3, { holes: [3] });
+		const rows = [...at(-50, 3, SRC), ...Array.from({ length: 70 }, (_, k) => [k * 16.7, k % 2 ? SRC : DST])];
+		assert.deepEqual([pg(rows).bad.length, pg(rows).resolved], [0, true], 'a hold that always shows rows: no placeholder frame, resolved');
+		const edge = rows.map(([dt, png], k) => [dt, k === 12 || k === 13 ? PH : png]);
+		assert.equal(pg(edge).bad.length, 2, 'two frames with the lower half empty (a page placeholder at the edge) are placeholder frames');
+		assert.equal(pg(rows.map(([dt, png], k) => [dt, k === 12 ? BLANK : png])).bad.length, 1, 'a fully blank frame is one');
+		assert.equal(pg(rows.map(([dt, png], k) => [dt, k === 12 ? ONE : png])).bad.length, 0, 'one empty band (a gap between sections) is not');
+		const gappy = pg(rows.filter((_, k) => k < 10 || k > 16));
+		assert.deepEqual([gappy.resolved, gappy.maxGap > 3 * gappy.median], [true, true], 'a capture gap during the hold (a mount frame) is logged, not judged: the hold is judged on its captured frames');
+		assert.equal(PGDN.minFrames, 60, 'a hold needs 60 frames after its first key');
+		assert.equal(pg(rows.slice(0, 3 + PGDN.minFrames - 1)).resolved, false, 'under PGDN.minFrames frames after the first key is not judged');
+		assert.equal(pg([...at(-50, 3, SRC)]).after, 0, 'no frame after the first key');
+		assert.equal(PGDN.empty, 2, 'half the bands');
+		// INTEG4: the hold is read in four quarters whatever FLING_FILM.bands is (FO-248K made that 16)
+		assert.equal(PGDN.quarters, 4, 'a hold is read in four bands');
+		assert.equal(pg(edge).bad[0].bands.length, 4, 'each placeholder frame reports four bands');
+		const R = { keys: PGDN.keys, focus: 'body', coldAtKey: 7, mounted: 5, views: 12.8, settled: true, coldFrames: 0, coldAt: [] };
+		const hold = (seqs, r = R) => ({ n: 'x', r, attempts: seqs.map((seq) => ({ px: pg(seq), r, ...pgdnAttempt(r, pg(seq)) })) });
+		assert.deepEqual(pgdnVerdict([hold([rows]), hold([rows])]).map((x) => x.ok), [true, true, true], 'two clean holds with no unmounted page drawn pass');
+		assert.deepEqual(pgdnVerdict([hold([rows]), hold([edge])]).map((x) => x.ok), [true, true, false], 'a placeholder frame on screen in any hold fails the pixel row');
+		const drawn = { ...R, coldFrames: 2, coldAt: [[812, 40], [829, 22]] };
+		assert.deepEqual(pgdnVerdict([hold([rows]), hold([rows], drawn)]).map((x) => x.ok), [true, false, true], 'an unmounted page in view at an animation frame fails the DOM row');
+		assert.match(pgdnVerdict([hold([rows], drawn)])[1].detail, /2 animation frame\(s\) with an unmounted page in view \[812 ms 40 %; 829 ms 22 %\]/);
+		const lost = rows.slice(0, 3 + 20);
+		assert.equal(pgdnAttempt(R, pg(lost)).retry, true, 'a clean hold with too few frames is driven again');
+		assert.equal(pgdnAttempt(drawn, pg(lost)).retry, false, 'a hold that drew an unmounted page decides at once');
+		assert.equal(pgdnAttempt(R, pg(edge)).retry, false, 'a hold with a placeholder frame decides at once');
+		assert.deepEqual(pgdnVerdict([hold([lost, rows])]).map((x) => x.ok), [true, true, true], 'a too-short attempt followed by a judged clean one passes');
+		assert.deepEqual(pgdnVerdict([hold([lost, lost, lost, lost, lost])]).map((x) => x.ok), [true, true, false], 'five attempts with too few frames are not a pass');
+		assert.deepEqual(pgdnVerdict([hold([lost, edge])]).map((x) => x.ok), [true, true, false], 'a placeholder frame in a later attempt fails');
+		for (const [o, why] of [[{ keys: 3 }, 'too few trusted PageDowns'], [{ focus: 'button' }, 'focus not on the body'], [{ coldAtKey: 2 }, 'too few unmounted pages ahead'], [{ mounted: 0 }, 'no page mounted during the hold'], [{ views: 2 }, 'too little travel'], [{ settled: false }, 'never settled'], [{ coldFrames: undefined }, 'no DOM reading']])
+			assert.deepEqual(pgdnVerdict([hold([rows], { ...R, ...o })]).map((x) => x.ok), [false, false, false], `not judgeable: ${why}`);
+		assert.deepEqual(pgdnVerdict([hold([edge])], { pixels: false }).map((x) => x.ok), [true, true], 'the sandbox surface: the judgeability and DOM rows only (its screencast bands are logged)');
+		assert.deepEqual(pgdnVerdict([hold([rows], drawn)], { pixels: false }).map((x) => x.ok), [true, false], 'the sandbox surface still fails an unmounted page in view');
+		assert.deepEqual(pgdnVerdict([]).map((x) => x.ok), [false, false, false], 'no hold fails');
+		assert.deepEqual(pgdnVerdict(null).map((x) => x.ok), [false, false, false], 'no reading fails');
+		// live: both surfaces run pgdnRoute; it holds trusted PageDowns after a text click, films with the marker and sinks every row
+		for (const surface of ['normal', 'sandbox']) {
+			const name = `R93 #4 a held PageDown down a fresh Code & Tools never shows a page placeholder (${surface})`;
+			assert.equal(typeof tests[name], 'function', `the held PageDown route is a live test on the ${surface} surface`);
+			assert.ok(live(String(tests[name]), /pgdnRoute\(t, surface\)/), 'it runs pgdnRoute');
+		}
+		const psrc = String(pgdnRoute);
+		for (const [re, msg] of [[/for \(const look of flingLooks\(t\.args\.flingLooks\)\) \{/, 'every fling look'], [/\.domain-link\[data-domain="general"\]'\)\.first\(\)\.click\(\);[^\n]*\n[^\n]*\n[^\n]*\n[^\n]*\n[^\n]*psc-vsync-marker[^\n]*\n\t*await f\.locator\('#pm-settings-root \.domain-link\[data-domain="code"\]'\)\.first\(\)\.click\(\);/, 'each attempt enters Code & Tools fresh from General with the marker running'],
+			[/if\(at\)\{await t\.page\.mouse\.click\(\(off\?off\.x:0\)\+at\.x,\(off\?off\.y:0\)\+at\.y\);/, 'a trusted click on plain text'], [/R\.key=e=>\{if\(e\.key!=='PageDown'\|\|!e\.isTrusted\)return;/, 'only trusted PageDowns are counted'],
+			[/film = await filmFling\(client\);/, 'the screencast'], [/const p=Math\.round\(100\*c\/v\.height\);if\(p>=10\)R\.cold\.push\(/, 'the DOM reading of unmounted pages in view at each animation frame'], [/for \(let q = 0; q < PGDN\.keys; q\+\+\) \{ await t\.page\.keyboard\.press\('PageDown'\); await t\.page\.waitForTimeout\(PGDN\.gap\); \}/, 'the hold'],
+			[/const px = pgdnFilm\(frames, \{ box, view: t\.page\.viewportSize\(\), key: r && r\.at \}\);/, 'the frames read on the key\'s clock'], [/if \(!a\.retry\) break;/, 'the retry'],
+			[/const pixels = surface === 'normal';/, 'the pixel row on the normal surface'], [/for \(const row of pgdnVerdict\(holds, \{ pixels \}\)\) await t\.check\(`\$\{surface\}: \$\{row\.name\}`,row\.ok,row\.detail\);/, 'the live sink records each row']])
+			assert.ok(live(psrc, re), `the held PageDown route: ${msg}`);
+		assert.ok(PGDN.keys >= 10 && PGDN.gap <= 80 && PGDN.holds >= 2 && PGDN.minCold >= 3, 'a held key (10+ presses at most 80 ms apart), 2+ holds per look, 3+ unmounted pages ahead');
+	}
 	// a lost frame next to the arrival: the gap could have held a blank frame, so the fling is not judged
 	const lost = [...at(-83.5, 5, SRC), ...at(100.2, 20, DST)];
 	assert.equal(v(lost).ok, false, 'a gap of six frames from the last source frame to the destination is not judged');
@@ -388,11 +453,12 @@ const modeSpread = (img, rect) => {
 			assert.equal(typeof tests[name], 'function', `FO-245 r3: the ${route} route is a live test on the ${surface} surface`);
 			assert.ok(live(String(tests[name]), new RegExp(`flingRoute\\(t, surface, '${route}'\\)`)), `the ${route} test runs the shared runner with its route`);
 		}
-		// FO-245 r5 (option C): the End/Home listener is reverted, so the End fling routes are deferred to FO-248. Registered
-		// now they would be red, as on main; registering one again is FO-248's change and must update this pin.
-		for (const name of [`R93 #4 End from a fresh Code & Tools paints its last page (${surface})`, `R93 #4 End after a text click from a fresh Code & Tools paints its last page (${surface})`])
-			assert.equal(tests[name], undefined, `FO-245 r5: "${name}" is not registered until FO-248`);
-		assert.equal(Object.keys(tests).some((k) => k.includes(`(${surface})`) && /flingRoute\(t, surface, 'end(-text)?'\)/.test(String(tests[k]))), false, `FO-245 r5: no ${surface} test runs an End fling route`);
+		// FO-248P: the document's own End scroll is completed in one step, so the two End fling routes deferred by FO-245 r5
+		// are live again on both surfaces, each through the shared runner with its route
+		for (const [name, route] of [[`R93 #4 End from a fresh Code & Tools paints its last page (${surface})`, 'end'], [`R93 #4 End after a text click from a fresh Code & Tools paints its last page (${surface})`, 'end-text'], [`R93 #4 Home after End from a fresh Code & Tools paints its first page (${surface})`, 'home']]) {
+			assert.equal(typeof tests[name], 'function', `FO-248P: the ${route} route is a live test on the ${surface} surface`);
+			assert.ok(live(String(tests[name]), new RegExp(`flingRoute\\(t, surface, '${route}'\\)`)), `the ${route} test runs the shared runner with its route`);
+		}
 	}
 	// Execute the same attempt and check sink as the browser runner. CDP and the DOM are deterministic stand-ins.
 	const exercise = async (route, seqs) => {
@@ -506,6 +572,34 @@ const modeSpread = (img, rect) => {
 	assert.equal(deepDrive.receipts[0].wheelPending, 1, 'the deep route counts unmounted pages instead of list rows');
 	assert.equal(deepDrive.receipts[0].wheelTargetPending, true);
 	assert.deepEqual(deepDrive.rows.map((row) => row.ok), [true, true, true, true], 'the real deep runner exercises the cold last page');
+	// FO-248P's route pins. INTEG4: FO-248K moved flingRoute's inline attempt into armFling (the page recorder) and
+	// runFlingLook (the driver), so the pins read those two; the keydown gate keeps FO-248K's isTrusted-first form, and
+	// Home's comparison window opens once End has settled (FO-248K's commit epoch)
+	{
+		const src = String(armFling) + '\n' + String(runFlingLook);
+		const pin = (re, msg) => assert.ok(live(src, re), msg);
+		pin(/const target=\(\)=>home\?firstBody\(\)\?\.closest\('\[data-workspace-block\]'\):deep\?lastBody\(\)\?\.closest\('\[data-workspace-block\]'\):root\.querySelector\('#section-editor-terminal-look'\);/, 'the deep routes aim at the chapter\'s last page, Home at its first');
+		pin(/const targetPendingNow=\(\)=>home\?pendingNow\(\)>0:deep\?lastBody\(\)\?\.dataset\.workspaceMounted==='false':/, 'the deep routes need the last page unmounted at the input, Home unmounted pages between');
+		// FO-248P: the Home route: a trusted End, the document still, a trusted click on plain text of that view, a trusted Home;
+		// the input is the Home key, and its travel is measured from where End left the page
+		pin(/const first=await text\(\);\n\t*if\(first\)\{await t\.page\.mouse\.click\(\(off\?off\.x:0\)\+first\.x,\(off\?off\.y:0\)\+first\.y\);await t\.page\.waitForTimeout\(200\);\}\n\t*await t\.page\.keyboard\.press\('End'\);/, 'Home: a trusted click on plain text of the first view, then a trusted End');
+		assert.ok(src.indexOf("}else if(route==='home'){") < src.indexOf('const first=await text();') && src.indexOf('const first=await text();') < src.indexOf("await t.page.keyboard.press('Home');"), 'Home: the text click and End come before Home, in its branch');
+		pin(/if\(at\)\{await t\.page\.mouse\.click\(\(off\?off\.x:0\)\+at\.x,\(off\?off\.y:0\)\+at\.y\);/, 'Home: a trusted click on plain text of the end view');
+		pin(/await t\.page\.keyboard\.press\('Home'\);/, 'Home: a trusted Home');
+		pin(/if\(!e\.isTrusted\|\|\(e\.type==='keydown'&&e\.key!==\(home\?'Home':'End'\)\)\)return;/, 'Home: the input is the trusted Home, not the End before it');
+		pin(/if\(home\)R\.start=root\.querySelector\('#settings-document'\)\?\.scrollTop\?\?R\.start;/, 'Home: the travel is measured from the key\'s position');
+		pin(/const kind=route==='end'\|\|route==='end-text'\|\|route==='home'\?'keydown':'wheel';/, 'Home records the key, not a wheel');
+		pin(/R\.wheelTargetPending=targetPendingNow\(\);/, 'the target is judged pending at the input');
+		pin(/if\(r\.height>0&&r\.bottom>v\.top&&r\.top<v\.bottom\)R\.empty\.push\('page:'\+p\.dataset\.continuousWorkspaceBody\);/, 'an unmounted page in the sampled view is empty');
+		// FO-248P: the End branches of flingRoute run again: a visible button of the first view focused without scrolling, or
+		// a trusted click on plain text; then a trusted End, recorded as the input on the frames' clock
+		pin(/if\(route==='end'\)\{/, 'the End route branch');
+		pin(/b\?\.focus\(\{preventScroll:true\}\);return !!b&&document\.activeElement===b;/, 'End from a visible button focused without scrolling');
+		pin(/if\(at\)\{await f\.locator\('\[data-psc-text-click\]'\)\.click\(\{position:at\}\);/, 'End after a trusted click on plain text');
+		assert.equal((src.match(/await t\.page\.keyboard\.press\('End'\);/g) || []).length, 3, 'both End branches press a trusted End, and the Home branch one before its Home');
+		pin(/await f\.evaluate\(\(\)=>\{window\.__pscFling\.commitEpoch=performance\.timeOrigin\+performance\.now\(\);\}\);\n\t*await t\.page\.keyboard\.press\('Home'\);/, 'Home: the comparison window opens after End settled and the text click, right before the Home key');
+		assert.ok(src.indexOf("}else if(route==='home'){") < src.indexOf('window.__pscFling.commitEpoch=performance.timeOrigin') , 'Home: the window opens in its own branch');
+	}
 	// FO-245 r3: the looks. Glass Dark and Glass Light are fling looks (their wallpaper passed the round 1 reading)
 	for (const look of ['basic-dark', 'nier-light', 'glass-dark', 'glass-light']) assert.ok(FLING_LOOKS.includes(look), `${look} is a fling look`);
 	assert.deepEqual(flingLooks(undefined), FLING_LOOKS, 'the default fling looks');
@@ -526,7 +620,15 @@ const modeSpread = (img, rect) => {
 			assert.equal(flingVerdict(deep({}), run(good), route)[3].ok, true, `${route}: a clean film passes`);
 			assert.equal(flingVerdict(deep({}), run([...at(-83.5, 5, GSRC), ...at(16.7, 4, WALL), ...at(83.5, 20, GDST)]), route)[3].ok, false, `${route}: a wallpaper-only film fails`);
 		}
-		assert.deepEqual(Object.keys(FLING_ROUTES), ['terminal', 'wheel-bottom', 'end', 'end-text']);
+		assert.deepEqual(Object.keys(FLING_ROUTES), ['terminal', 'wheel-bottom', 'end', 'end-text', 'home']);
+		// FO-248P: Home goes up, needs body focus and unmounted pages between at the key
+		const up = (o) => deep({ wheelFocus: 'body', top: 0, moved: -19000, ...o });
+		assert.deepEqual(flingVerdict(up({}), null, 'home').slice(0, 3).map((x) => x.ok), [true, true, true], 'home: body focus, pages between unmounted, crossed up into the first page, nothing empty');
+		assert.equal(flingVerdict(up({ moved: 19000 }), null, 'home')[1].ok, false, 'home: a move down is not Home\'s travel');
+		assert.equal(flingVerdict(up({ moved: -100 }), null, 'home')[1].ok, false, 'home: under one viewport up fails');
+		assert.equal(flingVerdict(up({ wheelTargetPending: false }), null, 'home')[0].ok, false, 'home: no unmounted page between did not test a cold crossing');
+		assert.equal(flingVerdict(up({ wheelFocus: 'button#x' }), null, 'home')[0].ok, false, 'home: the route needs body focus');
+		assert.equal(flingVerdict(deep({ moved: -19000 }), null, 'end')[1].ok, false, 'end: a move up is not End\'s travel');
 		// FO-245 r4: the text-click route judges like End, and needs focus on the page body at the key
 		const tx = (o) => deep({ wheelFocus: 'body', ...o });
 		assert.deepEqual(flingVerdict(tx({}), null, 'end-text').slice(0, 3).map((x) => x.ok), [true, true, true], 'end-text: body focus, last page unmounted, crossed, nothing empty');
@@ -538,7 +640,7 @@ const modeSpread = (img, rect) => {
 		assert.equal(flingVerdict(tx({}), run([...at(-83.5, 5, GSRC), ...at(16.7, 4, WALL), ...at(83.5, 20, GDST)]), 'end-text')[3].ok, false, 'end-text: a wallpaper-only film fails');
 		assert.equal(flingVerdict(deep({}), null, 'end')[0].ok, true, 'end: the focused-control route does not need body focus');
 	}
-	console.log('PASS fling frames: blank, unfilled and wallpaper-only frames on screen fail through the live recorder and judge (edge detail, FO-245 r3), a lost arrival frame is not judged, and the two live routes (Terminal look, a long wheel to the bottom; the End routes wait for FO-248) in the Glass looks too use both and the shared retry');
+	console.log('PASS fling frames: blank, unfilled and wallpaper-only frames on screen fail through the live recorder and judge (edge detail, FO-245 r3), a lost arrival frame is not judged, and the five live routes (Terminal look, a long wheel to the bottom, End from a focused button, End after a text click and Home after End; FO-248P) in the Glass looks too use both and the shared retry');
 }
 
 /* FO-245 r4 (R143 medium 2): End on a focused tab belongs to the tab list (main's behaviour) */
@@ -633,8 +735,10 @@ const modeSpread = (img, rect) => {
 	const established = {
 		'10-values.js': 1, '19-nier-parts.js': 3, '20-motion.js': 1, '20-nier-world.js': 1, '22-nier-chips.js': 1,
 		'23-nier-theme-menu.js': 2, '27-place.js': 1, '28-in-place.js': 2, '29-pip-editor.js': 1,
-		'30-inspector.js': 5, '32-model-nicknames.js': 1, '46-first-screen.js': 3, '60-wizard.js': 1
+		'30-inspector.js': 5, '32-model-nicknames.js': 1, '46-first-screen.js': 4, '60-wizard.js': 1
 	};
+	/* INTEG4: 46-first-screen.js has four keyboard registrations since FO-248P (main's three plus its passive bubble-phase
+	   note on window, whose no-interception contract the FO-248P block below pins) */
 	const directory = new URL('../../../onboarding/opus-5.5/src/settings/kit.d/', import.meta.url);
 	const listeners = (source) => [...uncomment(source).matchAll(
 		/\baddEventListener\s*\(\s*(['"`])(?:keydown|keyup|keypress|beforeinput)\1|\bon(?:keydown|keyup|keypress|beforeinput)\b\s*(?:=\s*(?!=)|:)/g
@@ -653,33 +757,67 @@ const modeSpread = (img, rect) => {
 	}
 	assert.equal(listeners('// window.onkeydown = f\n/* root.addEventListener("keyup", f) */'), 0);
 }
-/* FO-245 r5 (option C): the product has no End/Home key listener of its own (rounds 3 and 4 had one; it overrode the
-   tab list, the roster and the wallpaper picker, R143 and R144). End/Home blanks are FO-248's; a listener that comes
-   back fails here until FO-248 changes this pin. The cold-page mount and the content-visibility show stay. */
+/* FO-245 r5 (option C) removed rounds 3-4's End/Home key listener: it overrode the tab list, the roster and the wallpaper
+   picker (R143, R144). FO-248P (2026-11-28) lands End / Home in one step without intercepting a key: a passive,
+   bubble-phase note on window of an End / Home no handler took, and the document's OWN scroll toward that edge (its scroll
+   event, or the next rAF after the frame's scroll animations) completed at once. These pins hold that contract. */
 {
 	const fs = await import('node:fs');
 	const prod = fs.readFileSync(new URL('../../../onboarding/opus-5.5/src/settings/kit.d/46-first-screen.js', import.meta.url), 'utf8');
 	const code = prod.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
-	// End and Home are named once, in main's fill-before-the-key set; that listener only fills, as on main
-	assert.equal((code.match(/['"`]End['"`]/g) || []).length, 1, 'End is named once in the product code (main\'s fill set)');
-	assert.equal((code.match(/['"`]Home['"`]/g) || []).length, 1, 'Home is named once in the product code (main\'s fill set)');
+	const block = (at) => { let i = code.indexOf('{', at), depth = 0, j = i; for (; j < code.length; j++) { if (code[j] === '{') depth++; else if (code[j] === '}' && --depth === 0) break; } return code.slice(at, j + 1); };
+	const fn = (name) => { const at = code.indexOf(`function ${name}(`); assert.ok(at >= 0, `${name} is defined`); return block(at); };
+	// End and Home are named in two places only: main's fill set and the FO-248P note
+	assert.equal((code.match(/['"`]End['"`]/g) || []).length, 3, 'End is named in main\'s fill set and twice in the note (the key test and the edge)');
+	assert.equal((code.match(/['"`]Home['"`]/g) || []).length, 2, 'Home is named in main\'s fill set and in the note');
+	// main's capture listener only fills, unchanged (FO-248P: skipping it while pages were unmounted left General's Home 104 px short)
 	assert.match(code, /const O55FS_KEYS = new Set\(\['End', 'Home'\]\);\nroot\.addEventListener\('keydown', e => \{\n  if \(!o55fs\.pending\.size\) return;\n  const sc = root\.querySelector\('#settings-document'\);\n  if \(O55FS_KEYS\.has\(e\.key\) && sc && \(e\.target === sc \|\| sc\.contains\(e\.target\)\) && !\(e\.target\.matches && e\.target\.matches\('input, textarea, select, \[contenteditable=""\], \[contenteditable="true"\]'\)\)\) o55fsFillAll\(\);\n\}, true\);/, 'main\'s End/Home listener only fills the pending rows, unchanged');
 	assert.equal((code.match(/O55FS_KEYS/g) || []).length, 2, 'the fill set is used by that listener only');
 	for (const gone of ['o55fsMountEnd', 'o55fsEdgeKeyOwner', 'O55FS_OWN_KEYS', 'o55fsDownInDoc'])
 		assert.equal(code.includes(gone), false, `${gone} (rounds 3-4's End/Home jump) is gone`);
-	// no keydown listener scrolls or prevents a key's default, except main's own Tab, Find, F3 and Select All fills
-	for (const m of code.matchAll(/addEventListener\('keydown',/g)) {
-		let i = code.indexOf('{', m.index), depth = 0, j = i;
-		for (; j < code.length; j++) { if (code[j] === '{') depth++; else if (code[j] === '}' && --depth === 0) break; }
-		const body = code.slice(m.index, j + 1);
-		assert.equal(/preventDefault|scrollTo|scrollBy|scrollTop\s*=|scrollIntoView/.test(body), false, `a keydown listener neither scrolls nor takes a key's default: ${body.split('\n')[0]}`);
-	}
+	// no keydown listener scrolls, mounts or prevents a key's default
+	const keys = [...code.matchAll(/addEventListener\('keydown',/g)].map((m) => block(m.index));
+	for (const body of keys) assert.equal(/preventDefault|scrollTo\(|scrollBy\(|scrollTop\s*=(?!=)|scrollIntoView|mountContinuousWorkspace|o55fsMount|o55fsEdgeLand/.test(body), false, `a keydown listener neither scrolls, mounts nor takes a key's default: ${body.split('\n')[0]}`);
 	assert.equal(/document\.addEventListener\('pointerdown'/.test(code), false, 'no pointer-down memory on document (round 4\'s text-click route)');
-	// kept: the scroll handler mounts a cold page (behind r6's wheel gate, pinned below), fills and shows skipped sections before the frame
-	assert.match(code, /root\.addEventListener\('scroll', e => \{ if \(e\.target\.id === 'settings-document'\) \{ if \(o55fsWheeling\(\)\) o55fsMountNear\(e\.target\); o55fsFillNear\(e\.target\); o55fsShowNear\(e\.target\); \} \}, true\);/, 'the scroll handler mounts the cold page while a wheel scrolls, fills and shows before the frame (FO-245 r1/r3 kept, r6 gate)');
-	for (const kept of ['function o55fsMountNear(sc)', 'function o55fsShowNear(sc)', 'function o55fsShowFor(shown)', 'const o55fsFresh = new Set();', 'mountContinuousWorkspace = function (id)', "root.addEventListener('contentvisibilityautostatechange'"])
+	// the note: one listener on window, passive (it cannot cancel), bubble phase (after every widget's own handler)
+	const notes = [...code.matchAll(/\nwindow\.addEventListener\('keydown', e => \{\n  o55fsEdge = null;/g)];
+	assert.equal(notes.length, 1, 'one FO-248P key note, on window');
+	const note = block(notes[0].index + 1), tailOf = code.slice(notes[0].index + 1 + note.length, notes[0].index + 1 + note.length + 24);
+	assert.match(tailOf, /^, \{ passive: true \}\);/, 'the note is passive and in the bubble phase (no capture)');
+	assert.match(note, /const edge = \(e\.key === 'End' \|\| e\.key === 'Home'\) && !e\.shiftKey;\n  if \(\(!step && !edge\) \|\| e\.defaultPrevented \|\| e\.altKey \|\| e\.metaKey\) return;/, 'End / Home (Ctrl too, never Shift: a selection) or a step key, and never a key a widget took (defaultPrevented); any other key returns first');
+	assert.match(note, /if \(t && t\.nodeType === 1 && \(t\.isContentEditable \|\| t\.closest\(O55FS_EDGE_TEXT\)\)\) return;/, 'never from a text field');
+	assert.match(note, /const cold = o55fsCold\(sc\);\n  if \(!sc \|\| \(step \? !cold : !\(cold \|\| o55fsUnlaid\(sc\)\)\) \|\| !o55fsInteractive\(\)\) return;/, 'End / Home only while the chapter has unmounted pages or sections never laid out, a step key only while pages are unmounted, and only while Settings takes input');
+	assert.ok(note.indexOf('if ((!step && !edge)') < note.indexOf('O55FS_EDGE_TEXT') && note.indexOf('O55FS_EDGE_TEXT') < note.indexOf('o55fsInteractive()'), 'the key test, then the text field, then the style read');
+	// never laid out: a section content-visibility skipped since it was drawn and has not laid out once (nor shown, FO-245)
+	assert.match(code, /if \(e\.skipped\) \{ o55fsSkipped\.add\(s\); if \(!o55fsLaid\.has\(s\)\) o55fsUnseen\.add\(s\); \}\n  else \{ o55fsSkipped\.delete\(s\); o55fsLaid\.add\(s\); o55fsUnseen\.delete\(s\); \}/, 'a section joins the never-laid-out set when skipped before any layout, and leaves it at its first layout');
+	assert.match(code, /s\.style\.contentVisibility = 'visible'; o55fsSkipped\.delete\(s\); o55fsLaid\.add\(s\); o55fsUnseen\.delete\(s\); shown\.push\(s\);/, 'a skipped section shown before its frame (FO-245) is laid out');
+	assert.match(code, /const o55fsUnlaid = sc => \{\n  for \(const s of o55fsUnseen\) \{\n    if \(!s\.isConnected\) \{ o55fsUnseen\.delete\(s\); continue; \}\n    if \(sc\.contains\(s\) && !s\.closest\('details:not\(\[open\]\)'\)\) return true;/, 'only a connected section of the document outside a closed disclosure counts');
+	assert.match(note, /const k = o55fsEdge = \{ at: performance\.now\(\), end: e\.key === 'End', top: sc\.scrollTop \};/, 'the note keeps the time, the edge and the position at the key');
+	assert.match(note, /const watch = \(\) => \{ if \(o55fsEdge !== k\) return; const s = root\.querySelector\('#settings-document'\); if \(s\) o55fsEdgeScroll\(s\); if \(o55fsEdge === k\) requestAnimationFrame\(watch\); \};\n  requestAnimationFrame\(watch\);\n\}$/, 'the note is read in each frame\'s rAF while it lives, from the key\'s next frame');
+	for (const tx of ['input:not([type="checkbox"])', 'textarea', 'select', '[contenteditable]:not([contenteditable="false"])', '[role="textbox"]', '[role="searchbox"]'])
+		assert.ok(code.includes(`const O55FS_EDGE_TEXT = '`) && code.slice(code.indexOf('const O55FS_EDGE_TEXT')).split('\n')[0].includes(tx), `a text field is not the document's: ${tx}`);
+	// the take-over: only the document's own move toward the noted edge, within O55FS_EDGE_MS
+	const take = fn('o55fsEdgeScroll');
+	assert.match(take, /if \(performance\.now\(\) - k\.at > O55FS_EDGE_MS\) \{ o55fsEdge = null; return false; \}/, 'the note expires');
+	assert.match(take, /const moved = sc\.scrollTop - k\.top;\n  if \(k\.end \? moved <= 0 : moved >= 0\) return false;/, 'only a move of the document toward the noted edge is taken');
+	assert.match(take, /o55fsEdge = null;\s*o55fsEdgeLand\(sc, k\.end\);/, 'it is taken once');
+	const edgeMs = Number((code.match(/\nconst O55FS_EDGE_MS = (\d+);\n/) || [])[1]);
+	assert.ok(edgeMs >= 200 && edgeMs <= 1000, `O55FS_EDGE_MS covers a slow first frame and no more than a second (${edgeMs})`);
+	assert.match(fn('o55fsEdgeLand'), /o55fsMountEdge\(sc, end\);\n  sc\.scrollTo\(\{ top: end \? sc\.scrollHeight : 0, behavior: 'instant' \}\);\s*o55fsFillNear\(sc\); o55fsShowNear\(sc\);/, 'the landing mounts the edge pages, lands at that edge and shows its rows before the frame');
+	assert.match(take, /const held = o55fsEdgeHeld = \{ end: k\.end, n: 3 \};/, 'the landing is kept for three frames (the arrival\'s own restore)');
+	assert.match(take, /if \(--held\.n > 0\) requestAnimationFrame\(keep\); else o55fsEdgeHeld = null;\n  \};\n  requestAnimationFrame\(keep\);\n  return true;\n\}$/, 'the hold starts in the landing\'s next frame and runs its three frames');
+	assert.match(take, /if \(s && Math\.abs\(s\.scrollTop - \(held\.end \? s\.scrollHeight - s\.clientHeight : 0\)\) > 2\) o55fsEdgeLand\(s, held\.end\);/, 'a write that moves the landed page off its edge is undone');
+	assert.equal((code.match(/o55fsEdgeLand\(/g) || []).length, 3, 'o55fsEdgeLand: defined, the take-over and the hold');
+	assert.equal((code.match(/o55fsEdgeScroll\(/g) || []).length, 3, 'o55fsEdgeScroll: defined, the scroll handler and the rAF read');
+	// anything else ends the note and the hold: another key, a wheel, a pointer press, another scroller's scroll
+	assert.match(note, /^window\.addEventListener\('keydown', e => \{\n  o55fsEdge = null; o55fsEdgeHeld = null; o55fsStepAt = -Infinity;/, 'every key ends the note, the hold and the step window first');
+	assert.match(code, /\nroot\.addEventListener\('wheel', \(\) => \{ o55fsEdge = null; o55fsEdgeHeld = null; o55fsStepAt = -Infinity; \}, \{ capture: true, passive: true \}\);\n/, 'a wheel ends them');
+	assert.match(code, /\nroot\.addEventListener\('pointerdown', \(\) => \{ o55fsEdge = null; o55fsEdgeHeld = null; o55fsStepAt = -Infinity; \}, \{ capture: true, passive: true \}\);\n/, 'a pointer press ends them');
+	// the scroll handler: the take-over first, then r6's wheel mount or the step keys' look-ahead, then the fills and shows
+	assert.match(code, /root\.addEventListener\('scroll', e => \{\n  if \(e\.target\.id !== 'settings-document'\) \{ o55fsEdge = null; return; \}\n  o55fsEdgeScroll\(e\.target\);\n  if \(o55fsWheeling\(\)\) o55fsMountNear\(e\.target\);\n  else if \(o55fsStepping\(\)\) o55fsMountNear\(e\.target, o55fsStepDir\);\n  o55fsFillNear\(e\.target\); o55fsShowNear\(e\.target\);\n\}, true\);/, 'the scroll handler: another scroller ends the note; the take-over, the wheel or step mount, the fills and shows, before the frame');
+	for (const kept of ['function o55fsMountNear(sc, ahead = 0)', 'function o55fsShowNear(sc)', 'function o55fsShowFor(shown)', 'const o55fsFresh = new Set();', 'mountContinuousWorkspace = function (id)', "root.addEventListener('contentvisibilityautostatechange'"])
 		assert.ok(code.includes(kept), `kept: ${kept}`);
-	console.log('PASS End/Home: the product has no End/Home key listener of its own (FO-248); the cold-page mount and the content-visibility show are kept');
+	console.log(`PASS End/Home: no key intercepted; a passive bubble note of an untaken End/Home, and only the document's own scroll toward that edge within ${edgeMs} ms is completed in one step (FO-248P)`);
 }
 
 /* FO-245 r6 (option E, R145 medium): round 3's cold-page mount runs in the scroll event only while a wheel scroll is under
@@ -692,7 +830,8 @@ const modeSpread = (img, rect) => {
 	const code = prod.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
 	// the gate: one passive wheel listener writes the time, the scroll handler is the only caller of the mount
 	const wheels = [...code.matchAll(/addEventListener\(\s*['"`]wheel['"`]/g)];
-	assert.equal(wheels.length, 2, 'two wheel listeners in the product file: the gate and FO-250\'s long-wheel jump');
+	assert.equal(wheels.length, 3, 'three wheel listeners in the product file: the gate, FO-248P\'s note reset (both passive, capturing on root) and FO-250\'s long-wheel jump (window, not passive)');
+	assert.equal(wheels.filter((m) => code.slice(m.index - 5, m.index) === 'root.').length, 2, 'two of them are on root (the gate and the note reset)');
 	assert.match(code, /\nroot\.addEventListener\('wheel', \(\) => \{ o55fsWheelAt = performance\.now\(\); \}, \{ capture: true, passive: true \}\);\n/, 'the wheel listener is passive, captures on root and only notes the time');
 	// FO-250: the one cancelling listener is the long-wheel jump (below); nothing else in the file cancels a default
 	assert.equal((code.match(/preventDefault/g) || []).length, 1, 'only FO-250\'s long-wheel jump cancels an event\'s default');
@@ -703,17 +842,27 @@ const modeSpread = (img, rect) => {
 	assert.ok(ms >= 100 && ms <= 1000, `O55FS_WHEEL_MS covers a wheel's smooth scroll and no more than a second (${ms})`);
 	assert.equal((code.match(/let o55fsWheelAt = -Infinity;/g) || []).length, 1, 'no wheel before the first one');
 	const calls = [...code.matchAll(/o55fsMountNear\(/g)].map((m) => code.slice(code.lastIndexOf('\n', m.index) + 1, code.indexOf('\n', m.index)));
-	assert.deepEqual(calls.map((l) => l.trim().startsWith('function') ? 'def' : /if \(o55fsWheeling\(\)\) o55fsMountNear\(e\.target\);/.test(l) ? 'gated' : 'other'), ['def', 'gated'], 'o55fsMountNear is defined once and called only behind the wheel gate');
+	assert.deepEqual(calls.map((l) => l.trim().startsWith('function') ? 'def' : /if \(o55fsWheeling\(\)\) o55fsMountNear\(e\.target\);/.test(l) ? 'gated' : /^\s*else if \(o55fsStepping\(\)\) o55fsMountNear\(e\.target, o55fsStepDir\);$/.test(l) ? 'step' : 'other'), ['def', 'gated', 'step'], 'o55fsMountNear is defined once and called only behind the wheel gate or, otherwise, the step keys\' window (FO-248P)');
+	// FO-248P: the step keys' window. PageDown, PageUp, Space and the arrows (not with Ctrl) open it from the passive note;
+	// End / Home, every other key, a wheel and a pointer press close it; it lasts the wheel gate's window; the mount it
+	// gates looks one view ahead in the key's direction
+	assert.match(code, /\nconst O55FS_STEP_KEYS = \{ PageDown: 1, PageUp: -1, ' ': 1, Spacebar: 1, ArrowDown: 1, ArrowUp: -1 \};\n/, 'the step keys and their directions');
+	assert.match(code, /\nconst o55fsStepping = \(\) => performance\.now\(\) - o55fsStepAt <= O55FS_WHEEL_MS;\n/, 'the step window is the wheel gate\'s');
+	assert.match(code, /const step = Object\.prototype\.hasOwnProperty\.call\(O55FS_STEP_KEYS, e\.key\) && !e\.ctrlKey;/, 'the step keys, never with Ctrl');
+	assert.match(code, /if \(step\) \{ o55fsStepAt = performance\.now\(\); o55fsStepDir = e\.key === ' ' && e\.shiftKey \? -1 : O55FS_STEP_KEYS\[e\.key\]; return; \}/, 'a step key opens the window from the note, after the same untaken / text-field / cold-page tests');
+	assert.equal((code.match(/o55fsStepAt = performance\.now\(\)/g) || []).length, 1, 'only the note opens the step window');
+	assert.equal((code.match(/o55fsStepAt = -Infinity/g) || []).length, 4, 'closed at the start, by every key, a wheel and a pointer press');
+	assert.match(code, /const r = sc\.getBoundingClientRect\(\), h = ahead \? sc\.clientHeight : 0;\n  const view = \{ top: r\.top - \(ahead < 0 \? h : 0\), bottom: r\.bottom \+ \(ahead > 0 \? h : 0\) \};/, 'the look-ahead is one view in the key\'s direction, none for the wheel');
 	assert.equal((code.match(/o55fsWheeling\(\)/g) || []).length, 1, 'the gate is read only by the scroll handler');
-	// no key listener of any kind: the three keydown listeners are main's (End/Home fill, Find/F3/Select All, Tab), no keyup/keypress
-	assert.equal([...code.matchAll(/addEventListener\(\s*['"`]key(down|up|press)['"`]/g)].length, 3, 'three key listeners, all main\'s');
+	// the keydown listeners are main's three (End/Home fill, Find/F3/Select All, Tab) and FO-248P's passive note; no keyup/keypress
+	assert.equal([...code.matchAll(/addEventListener\(\s*['"`]key(down|up|press)['"`]/g)].length, 4, 'four key listeners: main\'s three and FO-248P\'s passive note');
 	assert.equal([...code.matchAll(/addEventListener\(\s*['"`](keyup|keypress|beforeinput)['"`]/g)].length, 0, 'no keyup or keypress listener');
 	for (const m of code.matchAll(/addEventListener\('keydown',/g)) {
 		let i = code.indexOf('{', m.index), depth = 0, j = i;
 		for (; j < code.length; j++) { if (code[j] === '{') depth++; else if (code[j] === '}' && --depth === 0) break; }
 		assert.equal(/o55fsWheel|o55fsMountNear|mountContinuousWorkspace/.test(code.slice(m.index, j + 1)), false, 'no key listener touches the gate or mounts a page');
 	}
-	console.log(`PASS wheel gate: one passive wheel listener notes the time, o55fsMountNear runs only behind it (${ms} ms), no key listener is added`);
+	console.log(`PASS wheel gate: one passive wheel listener notes the time, o55fsMountNear runs only behind it (${ms} ms) or the step keys' window (FO-248P), and no key listener mounts or scrolls`);
 }
 /* FO-250: on a composited scroller (macOS) the compositor drew a long wheel's destination from the last committed paint
    before the frame that shows and paints it. A wheel of half a view or more on the settings document is scrolled by the
