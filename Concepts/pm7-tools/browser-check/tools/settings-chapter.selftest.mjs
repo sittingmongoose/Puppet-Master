@@ -459,6 +459,16 @@ const modeSpread = (img, rect) => {
 			assert.equal(typeof tests[name], 'function', `FO-248P: the ${route} route is a live test on the ${surface} surface`);
 			assert.ok(live(String(tests[name]), new RegExp(`flingRoute\\(t, surface, '${route}'\\)`)), `the ${route} test runs the shared runner with its route`);
 		}
+		// INTEG4: FO-250's rows are live on both surfaces too: the two wheel routes with the document forced to composite,
+		// and the long wheel over a contained roster at its end
+		for (const [name, route] of [[`R93 #4 a fast wheel into lower Code fills visible lists before the frame, composited scrolling (${surface})`, 'terminal'],
+			[`R93 #4 a single long wheel to the bottom of a fresh Code & Tools paints its last page, composited scrolling (${surface})`, 'wheel-bottom']]) {
+			assert.equal(typeof tests[name], 'function', `FO-250: the composited ${route} route is a live test on the ${surface} surface`);
+			assert.ok(live(String(tests[name]), new RegExp(`flingRoute\\(t, surface, '${route}', \\{composite:true\\}\\)`)), `the composited ${route} test runs the shared runner with the composite option`);
+		}
+		const roster = tests[`R93 #4 a long wheel over a roster at its end leaves the document still (${surface})`];
+		assert.equal(typeof roster, 'function', `FO-250 round 2: the roster row is a live test on the ${surface} surface`);
+		assert.ok(live(String(roster), /rosterWheelRoute\(t, surface\)/), 'the roster row runs rosterWheelRoute');
 	}
 	// Execute the same attempt and check sink as the browser runner. CDP and the DOM are deterministic stand-ins.
 	const exercise = async (route, seqs) => {
