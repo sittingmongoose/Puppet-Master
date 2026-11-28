@@ -22,6 +22,8 @@
 // and Code & Tools, both ways (`--set seq=a:b,...`). Both surfaces (`--set sandbox=0` and `1`). `--set motion=reduce`
 // runs under Reduced Motion. `--set appReduce=1` exercises the app preference; combine with `motion=reduce` to cover both sources in More options.
 // `--set settle=<ms>` waits after each look change (default 4000).
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
 import { setLookBySetting, guardPaintedLook } from '../helpers/settings-look.mjs';
 import { muteSound } from '../helpers/quiet-page.mjs';
 import { decodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
@@ -439,6 +441,27 @@ export function flingVerdict(r, film, route = 'terminal') {
    between the commit and a real wheel, within the same five-attempt budget. All attempts must witness travel
    and filled rows. At least one must actually exercise the pending target. */
 export const FLING_RETRY = { attempts: 5 };
+const CAPTURE_GAPS = 'capture gaps (host load or renderer stall)';
+const execFileAsync = promisify(execFile);
+
+async function readBrowserSlots(host) {
+	const { stdout } = await execFileAsync('browser-check', ['slots', '--host', host, '--json'], { timeout: 8000, maxBuffer: 256 * 1024 });
+	return JSON.parse(stdout);
+}
+
+export async function captureCpuDetail(host, readSlots = readBrowserSlots) {
+	if (!host) return '';
+	try {
+		const { rows } = await readSlots(host);
+		const state = rows?.find(({ machine }) => machine.name === host || machine.fleet === host)?.state;
+		const sample = [state?.fleet_queue?.cpu, state?.cpu].find((cpu) => Number.isFinite(cpu?.busy_pct));
+		if (!sample) return '';
+		const sampledFor = sample.covered_s ?? sample.sample_s;
+		return `browser host ${host} CPU ${sample.busy_pct}% busy${Number.isFinite(sampledFor) ? ` over ${sampledFor} s` : ''} (sampled after retries)`;
+	} catch {
+		return '';
+	}
+}
 export function flingAttempt(r, px, kind = 'terminal') {
 	const rows = flingVerdict(r, px, kind), bad = px && Array.isArray(px.bad) ? px.bad.length : 0;
 	const resolved = !!px && px.resolved === true, route = rows.slice(0, 3).every((x) => x.ok);
@@ -465,17 +488,17 @@ export function flingRetryVerdict(list, route = 'terminal') {
 	if (!list || !list.length) return flingVerdict({}, null, route).map((row) => ({ ...row, ok: false, detail: 'no fling attempt ran' }));
 	const used = list.at(-1), log = list.map((a) => `attempt ${a.k}: ${flingAttemptLine(a)}`).join('; ');
 	const anyBad = list.some((a) => a.bad > 0);
-	const hostLoad = list.length === FLING_RETRY.attempts && list.every((a) => a.route && !a.resolved && a.bad === 0);
+	const captureGaps = list.length === FLING_RETRY.attempts && list.every((a) => a.route && !a.resolved && a.bad === 0);
 	return used.rows.map((row, i) => {
 		if (i < 3) {
 			const ok = row.ok && list.every((a) => a.rows[i].ok || (i === 0 && a.idleFilled));
 			return { ...row, ok, detail: `${row.detail} (attempt ${used.k} of ${list.length})` };
 		}
 		const detail = `${row.detail}; ${list.length} attempt(s), at most ${FLING_RETRY.attempts}: ${log}`;
-		if (hostLoad) {
-			const kind = 'not judged (host load)';
+		if (captureGaps) {
+			const kind = CAPTURE_GAPS;
 			const gaps = list.map((a) => `${a.gap ?? 'unmeasured'} / ${a.median ?? 'unmeasured'}`).join(', ');
-			return { name: `${kind}: ${row.name}`, ok: false, detail: `${kind}: ${list.length} attempts unresolved, 0 bad frames, gaps ${gaps} ms (span / median); ${detail}` };
+			return { kind, name: `${kind}: ${row.name}`, ok: false, detail: `${kind}: ${list.length} attempts unresolved, 0 bad frames, gaps ${gaps} ms (span / median); ${detail}` };
 		}
 		return { ...row, ok: row.ok && used.route && used.resolved && !anyBad, detail };
 	});
@@ -1097,8 +1120,8 @@ export async function wpkHomeRoute(t, surface) {
    revert it mounted 2-5 pages during that animation; the document grew 1,100-1,700 px and the animation still stopped at
    the old end, 630-1,270 px short, in 26 of 112 presses. Main mounts only through its IntersectionObserver and always
    lands 45-46 px from the end (0 of 107 short). Round 6 mounts in the scroll event only while a wheel scroll is under way.
-   Each press: Code & Tools entered fresh from General, then a trusted End or Ctrl+End, alternately from a visible button of
-   the first view (focused without scrolling) and after a trusted click on plain text (focus on the body). The press is
+   Each press: Code & Tools entered fresh from General, then a trusted End (and Ctrl+End off Mac), alternately from a visible
+   button of the first view (focused without scrolling) and after a trusted click on plain text (focus on the body). The press is
    judged once the document has held still for END_SETTLE ms (capped at END_CAP ms), and only when the chapter still had
    unmounted pages at the key and the key had more than END_MIN_TRAVEL px to go. END_GAP: main lands 45-46 px from the end in
    every press (R145, 107 presses, three hosts) and R145's shortest short landing was 634 px; 150 px is three times main's
@@ -1109,6 +1132,10 @@ export const END_REPS = 8;
 export const END_MIN_TRAVEL = 5000;
 export const END_SETTLE = 1500;
 export const END_CAP = 6000;
+export function endLandKey(platform, index) {
+	return /^Mac/.test(platform) || index % 4 < 2 ? 'End' : 'Control+End';
+}
+
 export function endLandVerdict(list, want = 2 * END_REPS) {
 	const presses = Array.isArray(list) ? list : [];
 	const judgeable = (p) => !!p && p.key === true && p.coldAtKey > 0 && p.focusOk === true && p.travelWant > END_MIN_TRAVEL && p.settled === true && p.gap != null;
@@ -1126,9 +1153,11 @@ export function endLandVerdict(list, want = 2 * END_REPS) {
 export async function endLandRoute(t, surface) {
 	if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
 	const f = await guardPage(t, surface, 'general', 'code');
+	const platform = await f.evaluate(() => navigator.platform);
+	t.log(`${surface} End landing browser platform: ${platform}`);
 	const reps = Number(t.args.endReps || END_REPS), presses = [];
 	for (let i = 0; i < 2 * reps; i++) {
-		const from = i % 2 ? 'text' : 'button', keyName = i % 4 < 2 ? 'End' : 'Control+End';
+		const from = i % 2 ? 'text' : 'button', keyName = endLandKey(platform, i);
 		if (i) {
 			await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click(); await t.page.waitForTimeout(700);
 			await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
@@ -1277,7 +1306,10 @@ export async function runFlingLook(t, f, look, surface, route) {
 	};
 	const attempts=await retryFling(attempt,FLING_RETRY.attempts,route);
 	for (const a of attempts) t.log(`${look} ${surface} ${route} fling attempt ${a.k}/${FLING_RETRY.attempts}: ${flingAttemptLine(a)}`);
-	for (const row of flingRetryVerdict(attempts,route)) await t.check(`${look} ${surface}: ${row.name}`,row.ok,row.detail);
+	for (const row of flingRetryVerdict(attempts,route)) {
+		const cpu = row.kind === CAPTURE_GAPS ? await captureCpuDetail(t.run?.chromeHost) : '';
+		await t.check(`${look} ${surface}: ${row.name}`, row.ok, [row.detail, cpu].filter(Boolean).join('; '));
+	}
 }
 
 /* One fling route (FLING_ROUTES) on one surface, in every fling look (exported for the selftest's live pins). */

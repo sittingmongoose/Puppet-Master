@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
 import { runInNewContext } from 'node:vm';
 import { readdirSync, readFileSync } from 'node:fs';
-import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT, press, selectAllModifier, flingScrollGate, filmFling, flingFilm, FLING_FILM, FLING_RETRY, flingAttempt, retryFling, flingRetryVerdict, FLING_ROUTES, FLING_LOOKS, flingLooks, flingRoute, runFlingLook, filmBands, tabEndVerdict, tabEndRoute, TAB_END_TRAVEL, rosterEndVerdict, rosterEndRoute, wpkHomeVerdict, wpkHomeRoute, GUARD_TRAVEL, ROSTER_MIN_ROOM, WPK_MIN_TOP, endLandVerdict, endLandRoute, END_GAP, END_REPS, END_MIN_TRAVEL, END_SETTLE, END_CAP, tests } from '../checks/perf-settings-chapter.check.mjs';
+import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT, press, selectAllModifier, flingScrollGate, filmFling, flingFilm, FLING_FILM, FLING_RETRY, flingAttempt, retryFling, flingRetryVerdict, captureCpuDetail, FLING_ROUTES, FLING_LOOKS, flingLooks, flingRoute, runFlingLook, filmBands, tabEndVerdict, tabEndRoute, TAB_END_TRAVEL, rosterEndVerdict, rosterEndRoute, wpkHomeVerdict, wpkHomeRoute, GUARD_TRAVEL, ROSTER_MIN_ROOM, WPK_MIN_TOP, endLandVerdict, endLandRoute, endLandKey, END_GAP, END_REPS, END_MIN_TRAVEL, END_SETTLE, END_CAP, tests } from '../checks/perf-settings-chapter.check.mjs';
 import { encodePng, decodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
 const uncomment = (src) => src.replace(/"(?:\\[\s\S]|[^"\\])*"|'(?:\\[\s\S]|[^'\\])*'|`(?:\\[\s\S]|[^`\\])*`|\/\*[\s\S]*?\*\/|\/\/[^\n]*/g,
 	(token) => token.startsWith('/') ? token.replace(/[^\n]/g, ' ') : token);
@@ -302,14 +302,29 @@ const modeSpread = (img, rect) => {
 		const d = await drive([lost, lost, lost, lost, lost, good]);
 		assert.deepEqual(d.driven, [1, 2, 3, 4, 5], 'five attempts at most');
 		assert.equal(d.rows[3].ok, false, 'five unresolved attempts fail: not judged never passes');
-		assert.match(d.rows[3].name, /^not judged \(host load\):/);
-		assert.match(d.rows[3].detail, /^not judged \(host load\): 5 attempts unresolved, 0 bad frames, gaps /);
+		assert.match(d.rows[3].name, /^capture gaps \(host load or renderer stall\):/);
+		assert.match(d.rows[3].detail, /^capture gaps \(host load or renderer stall\): 5 attempts unresolved, 0 bad frames, gaps /);
+	}
+	{
+		const machine = { name: 'gtx1070ti', fleet: 'gpu-lane' };
+		const read = async (host) => {
+			assert.equal(host, 'gpu-lane', 'the sample is requested for the browser host');
+			return { rows: [
+				{ machine: { name: 'vm' }, state: { cpu: { busy_pct: 99, sample_s: 3 } } },
+				{ machine, state: { fleet_queue: { cpu: { busy_pct: 23.9, covered_s: 61.3 } }, cpu: { busy_pct: 35.5, sample_s: 3.1 } } }
+			] };
+		};
+		assert.equal(await captureCpuDetail('gpu-lane', read), 'browser host gpu-lane CPU 23.9% busy over 61.3 s (sampled after retries)');
+		assert.equal(await captureCpuDetail('gtx1070ti', async () => ({ rows: [{ machine, state: { cpu: { busy_pct: 0, sample_s: 3 } } }] })),
+			'browser host gtx1070ti CPU 0% busy over 3 s (sampled after retries)');
+		assert.equal(await captureCpuDetail('vm', async () => ({ rows: [{ machine, state: { cpu: { busy_pct: 99 } } }] })), '', 'another host cannot supply a sample');
+		assert.equal(await captureCpuDetail('mac', async () => { throw new Error('slots unavailable'); }), '', 'a missing sample leaves the gap verdict intact');
 	}
 	for (const [seqs, driven, why] of [[[blank, good, good], [1], 'a resolved bad first attempt'], [[lost, blank, good], [1, 2], 'a resolved bad second attempt'], [[lostBlank, good, good], [1], 'an unresolved attempt with bad frames'], [[lost, lostBlank, good], [1, 2], 'a later unresolved attempt with bad frames'], [[late, good, good], [1], 'a later blank after a good first destination']]) {
 		const d = await drive(seqs);
 		assert.deepEqual(d.driven, driven, `${why} decides at once, no retry`);
 		assert.equal(d.rows[3].ok, false, `${why} fails`);
-		assert.doesNotMatch(d.rows[3].name, /host load/);
+		assert.doesNotMatch(d.rows[3].name, /capture gaps/);
 	}
 	const idleFill = { wheelPending: 0, wheelTargetPending: false };
 	{
@@ -319,7 +334,7 @@ const modeSpread = (img, rect) => {
 		assert.match(d.rows[3].detail, /Terminal look filled before the wheel/);
 		const exhausted = await drive(Array(5).fill(good), () => fling(idleFill));
 		assert.equal(exhausted.rows[0].ok, false, 'idle fills alone never witness the precondition');
-		assert.doesNotMatch(exhausted.rows[3].name, /host load/);
+		assert.doesNotMatch(exhausted.rows[3].name, /capture gaps/);
 		const badIdle = await drive([blank, good], () => fling(idleFill));
 		assert.deepEqual(badIdle.driven, [1], 'idle fill never hides a witnessed bad frame');
 		assert.equal(badIdle.rows[3].ok, false);
@@ -719,10 +734,16 @@ const modeSpread = (img, rect) => {
 		assert.equal(typeof tests[name], 'function', `the End landing guard is a live test on the ${surface} surface`);
 		assert.ok(live(String(tests[name]), /endLandRoute\(t, surface\)/), 'the End landing test runs endLandRoute');
 	}
+	const keysFor = (platform) => Array.from({ length: 2 * END_REPS }, (_, i) => endLandKey(platform, i));
+	assert.deepEqual(keysFor('MacIntel'), Array(16).fill('End'), 'a Mac browser receives only plain End, even from a Linux driver');
+	for (const platform of ['Linux x86_64', 'Win32'])
+		assert.deepEqual(keysFor(platform), Array.from({ length: 4 }, () => ['End', 'End', 'Control+End', 'Control+End']).flat(),
+			`${platform} keeps the old key and focus alternation`);
 	const src = String(endLandRoute);
 	for (const [re, msg] of [[/guardPage\(t, surface, 'general', 'code'\)/, 'a fresh Code & Tools'],
 		[/\.domain-link\[data-domain="general"\]'\)\.first\(\)\.click\(\);[^\n]*\n\t*await f\.locator\('#pm-settings-root \.domain-link\[data-domain="code"\]'\)\.first\(\)\.click\(\);/, 'each press enters Code & Tools fresh from General'],
-		[/const from = i % 2 \? 'text' : 'button', keyName = i % 4 < 2 \? 'End' : 'Control\+End';/, 'both starts and both keys'],
+		[/const from = i % 2 \? 'text' : 'button', keyName = endLandKey\(platform, i\);/, 'both starts and browser-platform key selection'],
+		[/const platform = await f\.evaluate\(\(\) => navigator\.platform\);/, 'the platform comes from browser JavaScript'],
 		[/b\?\.focus\(\{preventScroll:true\}\);/, 'the button focused without scrolling'], [/await f\.locator\('\[data-psc-end-text\]'\)\.click\(\{position:at\}\);/, 'a trusted click on plain text'],
 		[/if\(e\.key!=='End'\|\|!e\.isTrusted\|\|R\.key\)return;R\.key=true;/, 'the trusted End'],
 		[/R\.focusOk=from==='button'\?!!a&&a\.tagName==='BUTTON'&&sc\.contains\(a\):a===document\.body;/, 'the focus each start must give'],
