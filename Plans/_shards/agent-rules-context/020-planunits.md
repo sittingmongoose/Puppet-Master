@@ -2,9 +2,9 @@
 
 Source: `Plans/agent-rules-context.md`
 
-Source lines: L310-L2344
+Source lines: L310-L2358
 
-Source SHA256: `64d60448dac0a023b529346f47bff671430f35b8ba26fe20f72985f21483a43e`
+Source SHA256: `df94c7947ba59736a20e715bc53730b10aad790414d462c5e8308396164b06e9`
 
 ---
 
@@ -234,7 +234,9 @@ canonical_text: >-
   project_path=None; Project-level rules are included only for the exact bound Project. Computer
   context is not a Project identity or a new node/attempt rule hierarchy. ARC-008 keeps
   application-instruction precedence; Settings layering resolves behavior/source choices without
-  reversing that priority.
+  reversing that priority. Any failure to open, read, or decode as valid UTF-8 either
+  app.agent_rules.application_markdown or the work Computer's applicable application context fails
+  closed with application_rules_unreadable and never yields a usable partial application block.
 gui_related: false
 gui_classification_reason: This unit covers durable rules scope and injection policy, not GUI behavior.
 split_recommended: false
@@ -526,8 +528,9 @@ canonical_text: >-
   rules plus Project rules block; the earlier example get_agent_rules_context(application_config, project_path:
   Option<&Path>) -> String illustrates that formatted text only and is not a second signature. Orchestrator, Interview,
   and Assistant all call it with their project context and avoid copy-pasting Context7 or DRY into multiple prompt
-  builders. The scope-aware input also names the actual work Computer, application/thread identity and source revisions
-  (computer_id, thread_id or run_id, source_revisions[]); project_path=None omits Project rules only. App sidecars use
+  builders. The scope-aware input also names the actual work Computer, application/thread identity, source revisions,
+  and resolved budget policy inputs (computer_id, thread_id or run_id, source_revisions[], max_bytes,
+  warn_threshold_bytes, strict_mode); project_path=None omits Project rules only. App sidecars use
   the owned app thread/run area. Conversion re-resolves future context with lineage and never leaks unrelated-run
   journals.
 gui_related: false
@@ -765,10 +768,12 @@ owner_doc: Plans/agent-rules-context.md
 canonical_text: >-
   Implementation hooks define storage for application and project rules and require one shared rules pipeline,
   get_agent_rules_context(request: &AgentRulesContextRequest) -> AgentRulesContextResult (the locked function contract
-  and typed request in FABLE Deferred Action Concrete Repair Addendum - 2026-07-08), that loads application rules and
-  the work Computer's applicable application context, optionally loads project rules when project_path is set, returns
-  one formatted string through formatted_block_ref when errors[] is empty, and is called by Orchestrator, Interview, and
-  Assistant prompt builders, each refusing its dispatch with the first error code when errors[] is not empty.
+  and typed request in FABLE Deferred Action Concrete Repair Addendum - 2026-07-08), that loads application rules
+  (app.agent_rules.application_markdown) and the work Computer's applicable application context, optionally loads
+  project rules when project_path is set, enforces the request's resolved max_bytes, warn_threshold_bytes, and
+  strict_mode, fails closed on unreadable application, Computer, or project sources, returns one formatted string
+  through formatted_block_ref when errors[] is empty, and is called by Orchestrator, Interview, and Assistant prompt
+  builders, each refusing its dispatch with the first error code when errors[] is not empty.
 gui_related: false
 gui_classification_reason: This unit covers storage and backend prompt assembly hooks, not GUI presentation.
 split_recommended: false
@@ -1677,9 +1682,18 @@ plan_unit_id: ARC-029
 unit_type: requirement
 status: accepted
 owner_doc: Plans/agent-rules-context.md
-canonical_text: Runtime budget enforcement computes total instruction bytes and estimated tokens before a run, warns on threshold
-  exceedance, can block runs in strict mode until reduced, never truncates Work Bundle acceptance criteria, truncates examples/illustrative
-  sections first, and uses deterministic truncation policy.
+canonical_text: >-
+  Runtime budget enforcement computes total instruction bytes and estimated tokens before a run, warns on threshold
+  exceedance, can block runs in strict mode until reduced, never truncates Work Bundle acceptance criteria, truncates
+  examples/illustrative sections first, and uses deterministic truncation policy. Callers resolve max_bytes,
+  warn_threshold_bytes (1..=max_bytes, defaulting to max_bytes when no lower warn point is configured), and strict_mode
+  (boolean, defaulting to false / warn-only per dec-2026-02-26-context-injection-defaults) from the active
+  Settings/runtime budget policy and pass them on AgentRulesContextRequest to get_agent_rules_context. The pipeline
+  reads only those request values (never an unpinned settings lookup): bytes above warn_threshold_bytes within
+  max_bytes emit budget_threshold_exceeded; bytes above max_bytes trigger deterministic truncation (recording truncated
+  per ARC-030), after which a post-truncation block still above max_bytes emits budget_threshold_exceeded (usable) when
+  strict_mode is false and refuses dispatch with budget_exceeded_strict (formatted_block_ref null, byte_count 0) when
+  strict_mode is true.
 gui_related: false
 gui_classification_reason: This unit covers runtime budget calculation and non-GUI truncation policy.
 split_recommended: false
