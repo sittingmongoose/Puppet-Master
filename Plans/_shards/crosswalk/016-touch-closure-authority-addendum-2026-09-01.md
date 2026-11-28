@@ -4,7 +4,7 @@ Source: `Plans/Crosswalk.md`
 
 Source lines: L3375-L3436
 
-Source SHA256: `2ab27e2c80bf1dccd3906a987fa207e103af8679f2ed73bbf5e7ffe49fc0007b`
+Source SHA256: `ea5c5a6b23ece0992f83140a6a680509aeb7dcb64be07c6e1c3365f82743245d`
 
 ---
 
@@ -58,10 +58,10 @@ implementation_surfaces:
   - Plans/touch_closure.schema.json
 node_compile_hint: {mode: machine_crosswalk_static_coverage_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - Plans/Commands_System.md#cs-074---remaining-packet-command-production-intent-and-sole-future-handler-closure
-  - Plans/UI_Command_Catalog.md#ucc-152---remaining-packet-command-reverse-gui-coverage
-  - Plans/Wiring_Matrix.md#wm-051---remaining-packet-command-production-intent-wiring
-  - Plans/UI_Wiring_Rules.md#uiw-017---remaining-packet-command-dispatch-return-and-disabled-state-closure
+  - Plans/Commands_System.md#cs-074---remaining-touch-primary-command-closure
+  - Plans/UI_Command_Catalog.md#ucc-152---remaining-touch-reverse-gui-closure
+  - Plans/Wiring_Matrix.md#wm-051---remaining-touch-production-intent-wiring
+  - Plans/UI_Wiring_Rules.md#uiw-017---exact-touch-commandguihandler-closure
 preserved_exact_tokens: [touch_closure.json, command_id, sole_handler, schema_ref, reverse_consumers, production-intent, typed local UI action]
 negative_constraints:
   - "Do not make Touch Closure a runtime owner, schema owner, event authority, or evidence authority."

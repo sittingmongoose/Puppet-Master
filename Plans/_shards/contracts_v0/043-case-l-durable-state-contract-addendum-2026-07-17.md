@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L26014-L26415
+Source lines: L26095-L26503
 
-Source SHA256: `8739726276ab1980f995281db4a4467a42e4308a5bad7c4af725b78053d81c85`
+Source SHA256: `db4fb67e04f99e422d8746b5734456e0ef82b4f225a06789579a0de4841790a4`
 
 ---
 
@@ -372,7 +372,14 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   Three closed fallback-divergence requests carry exact command identity,
-  command-specific confirmation, and eight owner-revalidated CAS components;
+  command-specific confirmation, and eight owner-revalidated CAS components:
+  expected_storage_instance_id (UUID), expected_logical_root_fingerprint
+  (lowercase 64-hex), expected_root_generation (non-negative integer),
+  expected_fallback_branch_id (UUID), expected_fallback_base_ref (non-secret
+  stable ref), and expected_logical_head_sha256, expected_fallback_head_sha256
+  and expected_bootstrap_binding_sha256 (lowercase 64-hex SHA-256), with every
+  other request, result and receipt field as typed in
+  Plans/Contracts_V0.md#storage-fallback-divergence-command-envelopes;
   their closed results distinguish keep-logical binding selection, inactive
   fork candidate, and exact-byte encrypted dual-root custody; and one owner
   receipt supplies durable audit without an EventRecord family.

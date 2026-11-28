@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L7982-L8268
+Source lines: L7982-L8270
 
-Source SHA256: `8739726276ab1980f995281db4a4467a42e4308a5bad7c4af725b78053d81c85`
+Source SHA256: `db4fb67e04f99e422d8746b5734456e0ef82b4f225a06789579a0de4841790a4`
 
 ---
 
@@ -198,7 +198,7 @@ Each family definition is a closed object (`additionalProperties: false`). The s
 7. **Closed domains.** `status`, `terminal_status`, `claim_kind`, `claim_confidence`, `crash_reason` and `abort_reason` take exactly the values OSI-438 lists. `status` never takes a terminal value.
 8. **EventRecord joins.** A coordination EventRecord has `scope_kind` `project` and the payload's `project_id` and `run_id`. Its `thread_id` and `node_id` equal the payload's, or are null when the payload omits them; `attempt_id` is null. Its `event_type` names the family and its `payload_schema_id` is the family's schema ID. Its `idempotency_key` equals the payload's. `payload_ref` is null, `redaction_profile` is `no_secrets` and `replay_policy` is `dedupe_by_idempotency_key`. `event_id` and `idempotency_key` follow SP-320's recipe. `occurred_at_utc` equals the payload's family timestamp: `started_at_utc`, `observed_at_utc`, `finished_at_utc`, `detected_at_utc` or `aborted_at_utc`. The payload's `observed_at_utc` is the time the producer observed the change. The envelope's `observed_at_utc` stays Storage's writer-observed time. `actor_ref` names the component that initiated the event through `AgentCoordinator`: the Orchestrator or scheduler path for registration, updates and unregistration, the scheduler or crash detector for a crash, and the resolving component for an abort.
 9. **Precedence.** These rows and the closed schema govern over the Orchestrator sketch structs: `RegisterAgent`, `AgentStatusUpdate`, `AgentOperationUpdate`, `AgentFileOwnershipUpdate`, `AgentTerminalUpdate`, `FileActivityClaim` and the projection JSON example. Those sketches are source lineage, and OSI-438 maps their fields.
-10. **The debug mirror row.** `debug_mirror_exported` is prepared from its row, with `schema_version`, so that Storage's record family covers every key shape. It stays not admitted, and gets no identity recipe or producer binding here.
+10. **The debug mirror row.** `debug_mirror_exported` is prepared from its row, with `schema_version`, so that Storage's record family covers every key shape. It stays not admitted, and gets no identity recipe or producer binding here. The family is retired (Plans/Decision_Log.md#DL-270, Plans/storage-plan.md#SP-339): no mirror file is exported and nothing emits it, so it has no producer, command, route, storage port or reader binding to name; `pm export` writes JSON on request and emits no event.
 
 ##### CV-353 - Closed Coordination Payload Schema Binding
 
@@ -211,7 +211,9 @@ canonical_text: >-
   Newly authored owner contract under DL-045. The closed payload form of the seven coordination agent families is
   Plans/coordination_event_payloads.schema.json, with a shared lineage_envelope and non_secret_ref and one closed
   definition per family, each with its own schema ID pm.coordination_event.<family>.schema.v1;
-  debug_mirror_exported is prepared there and not admitted. Every coordination payload carries a required
+  debug_mirror_exported is prepared there and not admitted; it is retired (Plans/Decision_Log.md#DL-270,
+  Plans/storage-plan.md#SP-339), nothing emits it, and so it has no producer, command, route, storage-port or
+  reader binding. Every coordination payload carries a required
   schema_version, 1.0.0 here, as the run.started payload does. project_id, run_id, agent_id, platform,
   idempotency_key and agent_revision are required, and optional fields are omitted rather than null. Revision
   fields, text and number bounds, typed non-secret references, the OSI-438 closed domains and the EventRecord
