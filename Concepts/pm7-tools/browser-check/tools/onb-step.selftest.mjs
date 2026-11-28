@@ -10,7 +10,7 @@ import { resolve, dirname, join } from 'node:path';
 const here = dirname(fileURLToPath(import.meta.url));
 const m = await import(process.argv[2] ? pathToFileURL(resolve(process.argv[2])).href : '../checks/perf-onb-step.check.mjs');
 const rigPath = process.argv[3] ? resolve(process.argv[3]) : join(here, '../../../onboarding/opus-5.5/src/js/58-rig.js');
-for (const k of ['WATCH', 'POSEWATCH', 'restStepVerdict', 'slowLookVerdict', 'motionVerdict', 'poseVerdict']) assert.equal(typeof m[k], 'function', `the check exports ${k}`);
+for (const k of ['WATCH', 'POSEWATCH', 'ZWATCH', 'restStepVerdict', 'slowLookVerdict', 'motionVerdict', 'poseVerdict', 'zVerdict']) assert.equal(typeof m[k], 'function', `the check exports ${k}`);
 const { restStepVerdict: rest, motionVerdict: motion } = m;
 
 // at rest, 3 s at 120 Hz: main before the gate drew every frame; the gate draws a few to about 30 a second
@@ -52,11 +52,29 @@ assert.equal(rest({ full: 0, part: 0, frames: 3, secs: .05, fps: 0 }).ok, false)
 	assert.equal(pose({ err: 'no stage' }).ok, false); assert.equal(pose({ frames: 5, gaps: [0, 0, 0, 0, 0], maxPx: 0 }).ok, false, 'too few frames: could not judge');
 	assert.equal(pose({ skip: "Retro's own stepped draw (20/s)" }).skip, true);
 }
+// a sleeping z's written opacity against a full draw's (A150): a z off only in the frame it appears passes; one step too
+// opaque for 3 frames in a row (c5292b0416, Basic Dark Welcome at 320x640 on Jared's PC) fails; no z read never passes
+{
+	const z = m.zVerdict, rd = (longest, stale = 7) => ({ frames: 1250, glyphs: 9, glyphFrames: 2780, stale, longest, worst: { t: 1, written: .26, want: .25 } });
+	assert.equal(z(rd(1)).ok, true, 'off only in the frame a z appears');
+	assert.equal(z(rd(2, 12)).ok, true, 'two frames');
+	assert.equal(z(rd(3, 507)).ok, false, 'three frames one step too opaque');
+	assert.match(z(rd(3, 507)).why, /a z drawn late .*written 0\.26, full draw 0\.25/);
+	assert.equal(z({ err: 'no stage' }).ok, false); assert.equal(z({ frames: 400, glyphs: 0 }).ok, false, 'no z read: could not judge');
+	assert.equal(z({ skip: 'NieR has no sleeping z' }).skip, true);
+	const chk = readFileSync(process.argv[2] ? resolve(process.argv[2]) : join(here, '../checks/perf-onb-step.check.mjs'), 'utf8');
+	const zw = chk.slice(chk.indexOf('export const ZWATCH'), chk.indexOf('export function zVerdict'));
+	assert.ok(zw.length > 200, 'ZWATCH found');
+	assert.doesNotMatch(zw, /zMoved|\.dr\b|drawDue|poseKey|drawn/, "the glyph reference does not read the gate's record");
+	assert.match(zw, /p\.e\.getAttribute\('opacity'\)/, 'the written opacity is read from the page');
+	assert.match(zw, /R\(Math\.max\(0, 1 - \(p\.life \/ p\.max\) \*\* 2\)\)/, "the reference is render()'s fade, rounded by the page's R");
+	assert.match(chk, /String\(t\.args\.zSize \|\| '320x640'\)/, 'read in a small window by default');
+}
 // the reference is the painter's own formula and rounding, never the gate's key (a check that compares poseKey with drawn
 // inherits the gate's blind spot: A147 finding 2)
 {
 	const chk = readFileSync(process.argv[2] ? resolve(process.argv[2]) : join(here, '../checks/perf-onb-step.check.mjs'), 'utf8');
-	const pw = chk.slice(chk.indexOf('export const POSEWATCH'), chk.indexOf('export function poseVerdict'));
+	const pw = chk.slice(chk.indexOf('export const POSEWATCH'), chk.indexOf('export const ZWATCH'));
 	assert.ok(pw.length > 200, 'POSEWATCH found');
 	assert.doesNotMatch(pw, /poseKey|drawn|drawDue/, 'the pose reference does not read the gate');
 	assert.match(pw, /scale\(\$\{R\(sx\)\} \$\{R\(sy\)\}\)/, 'the reference writes the head scales rounded, as render() does');
@@ -113,6 +131,11 @@ for (const [re, what] of [[/this\.typeT \|\| this\.tipW/, 'speech and a note bei
 	assert.match(due, re, `drawDue draws every frame for ${what}`);
 assert.match(src.slice(src.indexOf('    poseKey() {'), src.indexOf('    zMoved(')), /d\.push\(R\(ps\.sx \* \(1 - br \* \.4\)\), R\(ps\.sy \* \(1 \+ br\)\)\);/, 'the draw key holds the head scales as the painter writes them (A147)');
 assert.match(src, /    render\(part\) \{[\s\S]*scale\(\$\{R\(sx\)\} \$\{R\(sy\)\}\)/, 'render() still writes the head scales rounded (the key matches what is painted)');
+{
+	const zm = src.slice(src.indexOf('    zMoved(p, step) {'), src.indexOf('    drawDue() {'));
+	assert.match(zm, /R\(Math\.max\(0, 1 - \(p\.life \/ p\.max\) \*\* 2\)\) !== q\[3\]/, "a z's opacity is compared as the painter writes it (A150)");
+	assert.match(src, /p\.dr = \[p\.x, p\.y, p\.r, R\(Math\.max\(0, op\)\)\];/, 'renderFx keeps the opacity it wrote, rounded');
+}
 assert.match(src, /const PIP_DRAW_SWING_PXS = 30, PIP_DRAW_FAST_PXS = 12, PIP_DRAW_FAST_HOLD = \.5;/, 'a swing is drawn whole: from 30 px a second until under 12 for half a second');
 assert.match(due, /if \(pxs >= PIP_DRAW_SWING_PXS\) this\.swingOn = true;/, 'a swing starts the every-frame draw');
 assert.match(due, /if \(this\.swingOn\) return 'full';/, 'drawDue draws every frame through a swing');

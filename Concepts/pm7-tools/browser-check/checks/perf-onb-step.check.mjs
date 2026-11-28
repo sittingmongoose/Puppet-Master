@@ -28,6 +28,14 @@
 //            0.25: the 0.1 px step plus the corner sum of its parts, A147 measured 0.19 after the repair) device px
 //            stale for more than --set poseRun (default 2) frames in a row. Retro (its own stepped draw) and a still
 //            stage are logged, not judged.
+//   glyphs   on Welcome (Pip asleep, its z's rising; not NieR, which has none), in the same window: after every stepped frame
+//            of the stage's loop, each live z's opacity as the page wrote it against the opacity a full draw would write
+//            at that tick (render()'s own fade, 1 - (life/max)^2, rounded by the page's R). A cell fails when a z is off
+//            for more than --set zRun (default 2) frames in a row (A150: compared continuously, a z crossing a rounding
+//            step stayed one step too opaque for three refreshes in Basic Dark and Light). Read at --set zSize (default
+//            320x640, the viewport set for the window and put back after), where the stage is drawn smaller and a z moves
+//            under a tenth of a pixel a frame at 120 Hz (A150's route was 390x844 on a faster display); --set zSize=0
+//            reads it at 1920x1080, where a z moves half a pixel a frame and is drawn every frame anyway.
 // Then per look, on the last awake screen of --set screens, windows where the stage must draw every frame (each at most
 // --set miss (default 2) frames without a full draw, outside Retro, which draws at its own rate and is only logged):
 //   swing    Pip set swinging as its idle swing does (ps.thv += 0.5), 400 ms;
@@ -39,7 +47,7 @@
 // counters when it has them).
 // --set looks= (default all ten; `dark` the five Dark looks) --set screens= (default welcome,where,ready)
 // --set settle= (default 20000) --set viewSettle= (default 6000) --set ms= --set restMax= --set restShare= --set miss=
-// --set poseMs= (0 leaves the pose rows out) --set poseMax= --set poseRun= --set motion=0 leaves out the every-frame windows. One surface per run (--set sandbox=1 for the sandbox).
+// --set poseMs= (0 leaves the pose and glyph rows out) --set zRun= --set poseMax= --set poseRun= --set motion=0 leaves out the every-frame windows. One surface per run (--set sandbox=1 for the sandbox).
 import { muteSound } from '../helpers/quiet-page.mjs';
 import { POSE, restVerdict } from './perf-onb-rest.check.mjs';
 
@@ -124,6 +132,51 @@ export const POSEWATCH = (ms) => new Promise((res) => {
 	setTimeout(finish, ms + 2000);
 });
 
+// In the page: each live sleeping z's written opacity against a full draw's, after every stepped frame of the stage's loop,
+// for ms. Exported for tools/onb-step.selftest.mjs.
+export const ZWATCH = (ms) => new Promise((res) => {
+	const host = document.querySelector('#pm-o55-onboarding .o55-stage'), st = host && host.__pipStage;
+	if (!st || !Array.isArray(st.fx) || typeof st.loop !== 'function') { res({ err: 'no stage with particles (#pm-o55-onboarding .o55-stage __pipStage, fx)' }); return; }
+	if ((typeof st.frameRate === 'function' && st.frameRate()) || st.reduced) { res({ skip: st.reduced ? 'a still stage (Reduced Motion)' : `Retro's own stepped draw (${st.frameRate()}/s)` }); return; }
+	if (st.famName === 'nier') { res({ skip: 'NieR has no sleeping z' }); return; }
+	const R = window.O55 && O55.pipStage && O55.pipStage.h && O55.pipStage.h.R;
+	if (typeof R !== 'function') { res({ err: "no O55.pipStage.h.R (the painter's rounding)" }); return; }
+	const W = { frames: 0, glyphFrames: 0, glyphs: 0, stale: 0, longest: 0, worst: null };
+	const runs = new Map(), seen = new WeakSet();
+	const own = Object.prototype.hasOwnProperty.call(st, 'loop'), orig = st.loop;
+	let lastT = st.t, t0 = performance.now(), done = false;
+	const finish = () => { if (done) return; done = true; if (own) st.loop = orig; else delete st.loop; W.secs = (performance.now() - t0) / 1000; res(W); };
+	st.loop = function () {
+		const out = orig.apply(this, arguments);
+		if (!done && st.t !== lastT) {
+			lastT = st.t; W.frames++;
+			for (const p of st.fx) {
+				if (p.kind !== 'z' || !p.e) continue;
+				if (!seen.has(p)) { seen.add(p); W.glyphs++; }
+				const written = Number(p.e.getAttribute('opacity')), want = R(Math.max(0, 1 - (p.life / p.max) ** 2));
+				W.glyphFrames++;
+				if (written !== want) {
+					const n = (runs.get(p) || 0) + 1; runs.set(p, n); W.stale++;
+					if (n > W.longest) { W.longest = n; W.worst = { t: Math.round(st.t * 10000) / 10000, written, want }; }
+				} else runs.set(p, 0);
+			}
+		}
+		if (performance.now() - t0 >= ms) finish();
+		return out;
+	};
+	setTimeout(finish, ms + 2000);
+});
+
+// a glyph reading against the rule (a z's written opacity off a full draw's for at most zRun frames in a row): { ok, why }
+export function zVerdict(r, o = {}) {
+	const run = o.zRun ?? 2;
+	if (!r || r.err) return { ok: false, why: `no reading (${r && r.err || 'none'}): could not judge` };
+	if (r.skip) return { ok: true, skip: true, why: `${r.skip}: logged, not judged` };
+	if (!(r.frames > 30) || !(r.glyphs > 0)) return { ok: false, why: `${r.frames || 0} stepped frames, ${r.glyphs || 0} z's read: could not judge` };
+	const ok = r.longest <= run;
+	return { ok, why: `${r.size ? r.size + ': ' : ''}${r.glyphs} z's over ${r.frames} frames (${r.glyphFrames} readings): ${r.stale} readings off a full draw's opacity, the longest run ${r.longest} frames (want at most ${run})${ok ? '' : `: a z drawn late (worst at t ${r.worst.t}: written ${r.worst.written}, full draw ${r.worst.want})`}` };
+}
+
 // a pose reading against the rule (at most poseMax device px stale for at most poseRun frames in a row): { ok, why }
 export function poseVerdict(r, o = {}) {
 	const max = o.poseMax ?? .25, run = o.poseRun ?? 2;
@@ -183,7 +236,7 @@ export default async function (t) {
 	const lookArg = String(t.args.looks || 'all');
 	const looks = lookArg === 'all' ? ALL : lookArg === 'dark' ? ALL.filter((l) => l.endsWith('-dark')) : lookArg.split(',').filter(Boolean);
 	const screens = String(t.args.screens || 'welcome,where,ready').split(',').filter(Boolean);
-	const poseMs = Number(t.args.poseMs || 6000);
+	const poseMs = Number(t.args.poseMs || 6000), zRun = Number(t.args.zRun ?? 2);
 	const ms = Number(t.args.ms || 3000), o = { poseMax: Number(t.args.poseMax ?? .25), poseRun: Number(t.args.poseRun ?? 2), restMax: Number(t.args.restMax ?? 60), restShare: Number(t.args.restShare ?? .5), slowShare: Number(t.args.slowShare ?? .85), miss: Number(t.args.miss ?? 2) };
 	const W = 1920, H = 1080;
 	await t.viewport(W, H);
@@ -224,11 +277,27 @@ export default async function (t) {
 			if (!pre.ok) { await t.check(`${cell}: Pip ${want} and at rest before the window`, false, `${pre.why}: could not judge`); continue; }
 			const r = await f.evaluate(WATCH, ['rest', ms]);
 			const pr = poseMs > 0 ? await f.evaluate(POSEWATCH, poseMs) : null;
+			/* (the z's in a small window, --set zSize, default 320x640: the stage is drawn smaller there, so a z moves under a
+			   tenth of a pixel a frame and its fade is what decides its draws, on the 120 Hz reference too; A150's route was
+			   390x844 on a faster display) */
+			let zr = null;
+			if (poseMs > 0 && screen === 'welcome') {
+				const [zw, zh] = String(t.args.zSize || '320x640').split('x').map(Number);
+				if (zw && zh) { await t.viewport(zw, zh); await t.page.waitForTimeout(2000); }
+				zr = await f.evaluate(ZWATCH, poseMs);
+				if (zr && !zr.err && !zr.skip) zr.size = zw && zh ? `${zw}x${zh}` : `${W}x${H}`;
+				if (zw && zh) { await t.viewport(W, H); await t.page.waitForTimeout(1500); }
+			}
 			await holdLife(false);
 			if (pr) {
 				const pv = poseVerdict(pr, o);
 				t.log(`${cell}: pose: ${pv.why}`);
 				if (!pv.skip) await t.check(`${cell}: the painted head is never more than ${o.poseMax} px from a full draw for more than ${o.poseRun} frames`, pv.ok, pv.why);
+			}
+			if (zr) {
+				const zv = zVerdict(zr, { zRun });
+				t.log(`${cell}: glyphs: ${zv.why}`);
+				if (!zv.skip) await t.check(`${cell}: each sleeping z's opacity is a full draw's within ${zRun} frames`, zv.ok, zv.why);
 			}
 			t.log(`${cell}: at rest: ${line(r)}`);
 			const v = restStepVerdict(r, o);
