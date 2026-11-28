@@ -689,6 +689,45 @@ the set of paths and each SHA-256 before checking. Repeat both comparisons befor
 and before push. A file visible on only one side invalidates the receipt. A full audit-folder
 copy can include tens of gigabytes of unrelated capture data.
 
+`python3 -B scripts/pm-land.py copy-inputs` does this for a local worktree: run from it (or pass
+`--worktree DIR`), it copies every selected input the worktree lacks, links the raw-evidence
+symlink, keeps the ones that already hold the shared checkout's bytes, refuses without copying
+anything when one differs, and then re-hashes each against the shared checkout. It checks every
+destination's folders before the first write and refuses a symlinked one, creates each file
+exclusively, writes the raw-evidence link as an absolute link (replacing one that dangles, such as a
+verbatim copy of the shared checkout's relative link), and resolves it again afterwards.
+`--worktree` must name a worktree's root. It is the same
+selection `pm-land.py check` copies into its remote checkout (`copy_inputs`), so there is one list.
+On 2026-11-27 it was 3,428 entries, about 1.8 GB, and took 50 seconds on the VM.
+
+Two writers refuse with exit 2 when that list names files the tree lacks, and name each missing path
+(a directory once, when every input in it is missing) and the `copy-inputs` command:
+
+- `pm-plan-index.py generate`, for the inputs under `Plans/`. Without the audit `FINAL_REPORT.md`
+  files, or without the currentness edition, the index it writes differs from the one the shared
+  checkout writes: the edition's drift rows collapse into one `pnc019_source_hash_path_missing` row.
+- `pm-landing-check.py --record-baseline`, for the whole list less the currentness edition, which
+  `--readiness-audit-root` binds on its own. `copy-inputs` copies the edition too, so record with
+  `--readiness-audit-root Plans/.audits/event-authority-2026-08-13-currentness` afterwards, as
+  above.
+
+Every other input counts as present only as a regular file reached through real folders: a link,
+or a linked folder above it, counts as missing, because a validator that resolves it lands outside
+the tree (on 2026-09-21 the widget audit report linked to its archived copy made the web validator
+emit no output in both aggregates). `copy-inputs` replaces a linked file with a regular copy; it
+removes only the link and never writes its target. A linked folder is refused; move it aside first.
+
+The raw-evidence link counts as present only when it resolves from the tree to the evidence share,
+and a capture only when `json_syntax` itself would read it: the guard calls the verifier's own
+`raw_capture_link_admitted` and `admitted_raw_captures` (`scripts/pm-plans-verify.py`), so a capture
+behind a nested link below the evidence link is named as missing, exactly as the verifier skips it. A sparse tree still
+gets the recorder's own exit-3 sparse refusal first.
+
+`--allow-missing-inputs` lets either go on anyway and prints a warning that names what is missing;
+what it writes is not what the shared checkout writes and is never landed or committed as a
+baseline. In the shared checkout itself nothing can be missing, and the guard passes at once. Where
+the shared checkout is not mounted, the list is unknown and both refuse unless overridden.
+
 Anyone who writes a checker input in the shared checkout, including readiness receipts, currentness editions and other ignored inputs the check reads, must hold the landing lock.
 
 ## Landing by hand
@@ -865,13 +904,13 @@ summary. `git add Plans/.plan_migration` below stages both changes. Git history 
     git fetch origin
     git checkout -B plans/snapshot-$(date -u +%Y%m%d) origin/main
     git sparse-checkout disable
-    ln -sfn /mnt/Cursor/PuppetMaster-Evidence/tests/agent_packet_restrictions \
-            tests/agent_packet_restrictions
+    python3 -B scripts/pm-land.py copy-inputs
     python3 scripts/pm-plan-migration.py snapshot-current \
         --run-id pds-$(date -u +%Y%m%d)-001-current-planunit-snapshot \
         --expected-doc-count "$(ls Plans/*.md | wc -l)" \
         --supersedes-run-id "$(python3 -c "import json;print(json.load(open('Plans/.plan_migration/current_run.json'))['run_id'])")"
-    python3 scripts/pm-landing-check.py --record-baseline
+    python3 scripts/pm-landing-check.py --record-baseline \
+        --readiness-audit-root Plans/.audits/event-authority-2026-08-13-currentness
     git add Plans/.plan_migration reports/landing-checks/baseline.json
     git commit -m "plans: refresh the plan-migration snapshot and the landing-check baseline"
     git push -u origin HEAD
@@ -883,8 +922,12 @@ Six things that make the difference between a good baseline and a misleading one
 
 - `git sparse-checkout disable`, because a sparse tree is missing inputs the checks read and records
   failures no landing ever sees.
-- The symlink, because `json_syntax` reads 16 raw captures underneath it. It is the one check input
-  under `tests/` that stays untracked: it points at raw evidence, which is never committed here.
+- `copy-inputs`, for the ignored inputs, among them the raw-evidence symlink, because `json_syntax`
+  reads 16 raw captures underneath it. It is the one check input under `tests/` that stays
+  untracked: it points at raw evidence, which is never committed here. The shared checkout's link
+  is relative, so a verbatim copy dangles in a tree at another depth and hides all 16;
+  `copy-inputs` writes an absolute link and replaces a dangling one, and `--record-baseline`
+  refuses until the link resolves to the evidence share and every capture is a file behind it.
 - The readiness audit source: both modes select it mechanically and the baseline binds its actual
   ignored inputs. Use `--readiness-audit-root DIR` for another evidence location; no manual audit copy
   is needed. A later comparison must use the same input bytes.

@@ -436,6 +436,20 @@ class RawCaptureSymlinkTests(unittest.TestCase):
             "raw_capture_manifest_entry_not_in_verifier_file_set",
             {failure["error"] for failure in report["failures"]},
         )
+        # pm-land.py's ignored-input guard asks the same function, so it refuses this layout too.
+        admitted = pm_plans_verify.admitted_raw_captures(
+            self.root, ["tests/agent_packet_restrictions/case-0/capture.json"], self.allowed)
+        self.assertEqual(admitted, [])
+
+    def test_census_reads_captures_only_through_the_shared_admission_rule(self) -> None:
+        with mock.patch.object(pm_plans_verify, "admitted_raw_captures", return_value=[]) as admitted:
+            files = pm_plans_verify.iter_repo_files()
+        admitted.assert_called_once()
+        self.assertFalse(self.expected & set(files))
+        self.assertTrue(pm_plans_verify.raw_capture_link_admitted(self.root, self.allowed))
+        self.assertEqual(set(pm_plans_verify.admitted_raw_captures(
+            self.root, [path.relative_to(self.root).as_posix() for path in self.expected], self.allowed)),
+            self.expected)
 
 
 if __name__ == "__main__":

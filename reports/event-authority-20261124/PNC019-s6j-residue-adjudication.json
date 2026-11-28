@@ -12,13 +12,36 @@
   "citation_completions": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/s8-prep-20261124/s6j/completions.json",
   "citation_completions_sha256": "cecc734b20627133a894232707df7928353efdf72bba2efa0580c2e2c8e17447"
  },
+ "supplement_inputs": [
+  {
+   "lane": "s6j-supp3",
+   "adjudicated_at_head": "686bdd20f96989b7b57149743afeaa5f31dd682e",
+   "tokens": [
+    "out.append",
+    "re.sub",
+    "selection_reason.alternatives"
+   ],
+   "residue": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/S6J-SUPP3-20261128/logs/before/RESIDUE.jsonl",
+   "residue_sha256": "28c762f2e819e421467a660a70b4740b35b8471fb0704b1ab0b45b23870e478f",
+   "drafts": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/S6J-SUPP3-20261128/drafts/DISPOSITIONS-3.jsonl",
+   "drafts_sha256": "18560c5e0ac1e19b1c4e1cf7df116dc2fb6ce731653ecce787cefc8b9e81da09",
+   "rows": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/S6J-SUPP3-20261128/ROWS.jsonl",
+   "rows_sha256": "d050ecc8598b703d73523e2ef7d30ea2c649bcbf52a8a942f9541601fb92fec3",
+   "draft_sha256sums": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/S6J-SUPP3-20261128/SHA256SUMS",
+   "draft_sha256sums_sha256": "7874fe8862905803fa589162becf680513f740d6cc65ab8252355c9d9df70f2e",
+   "review_verdicts": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/S6J-SUPP3-BLIND-neonxhigh-20261128/REVIEW.json",
+   "review_verdicts_sha256": "1721b66d55e33d416dc3646dce35d62ceb5eaa2fd794e6a8fe8e326d30d45da9",
+   "review_sha256sums": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/S6J-SUPP3-BLIND-neonxhigh-20261128/SHA256SUMS",
+   "review_sha256sums_sha256": "c0a95c9331535fe8eb5929ced95578ee97eb8916a1dc3d3f6d1da45896da48d9"
+  }
+ ],
  "supplement": {
   "path": "Plans/.audits/event-authority-2026-08-12/census-adjudication/S6J-NEW-NAMES-LEDGER.jsonl",
-  "rows": 185,
-  "sha256": "470b9bb19695acbf766ac5075ccd3c0916004f45be029c6be507ce89287f4c33"
+  "rows": 188,
+  "sha256": "9fedc8e1ea1799b5d335548f05b050c7785221d2d4d7484273bb71d9ff151a45"
  },
  "counts_by_disposition": {
-  "REJECTED_LEXICAL_CANDIDATE": 185
+  "REJECTED_LEXICAL_CANDIDATE": 188
  },
  "not_folded": [],
  "boundary": "Supplement rows are owner-cited exclusions of uncovered census tokens. They admit, alias or register nothing and change no denominator, registry row, contract or cohort.",
@@ -1521,6 +1544,27 @@
    "completed_citations": []
   },
   {
+   "key": "out.append||Plans/DRY_Rules.md",
+   "token": "out.append",
+   "source_path": "Plans/DRY_Rules.md",
+   "source_line": 217,
+   "semantic_kind": "python_call_in_code_block",
+   "related_registered_family": null,
+   "confidence": "HIGH",
+   "primary_citation": {
+    "ref": "Plans/DRY_Rules.md:217",
+    "path": "Plans/DRY_Rules.md",
+    "line_start": 217,
+    "line_end": 217,
+    "sha256": "193ec4e4be174ed616d752a7772ac46ae739f451217df8f2ee945ee04ae73b86",
+    "quote": "out.append(ln)"
+   },
+   "rule_clause": "Plans/.audits/event-authority-2026-08-12/closed-world-census/admission/CENSUS_ADMISSION_RULE_V2.json:22",
+   "review_verdict": "AGREE",
+   "review_why": "Verified at 686bdd20f9: Python list method call `out.append(ln)` on local list `out = []` (line 213) inside the fenced ```python reference block defining `normalize(text: str) -> str` (lines 206-225, section 7.1 Packet-fidelity semantic matching, added by 44b40ce8ca). Sole exact EA_TOKEN_RE match in canonical Plans (census occurrence_count=1; window [216,217,218] matches EA_EVENT_CUE_RE only via `append` in `out.append`). Zero bindings in event_family_registry.json (518 families), Wiring_Matrix.production.json, landed ledgers, or any EventRecord declaration. Exact 15-key precedent row format and 5/5 citations verified; CENSUS_ADMISSION_RULE_V2.json:22 (DIRECT_EVENT_TYPE_BINDING_REQUIRED) applies.",
+   "completed_citations": []
+  },
+  {
    "key": "owner.filesafe.filesafe_command_denied.original_source.application||Plans/Contracts_V0.md",
    "token": "owner.filesafe.filesafe_command_denied.original_source.application",
    "source_path": "Plans/Contracts_V0.md",
@@ -2697,6 +2741,27 @@
    "completed_citations": []
   },
   {
+   "key": "re.sub||Plans/DRY_Rules.md",
+   "token": "re.sub",
+   "source_path": "Plans/DRY_Rules.md",
+   "source_line": 216,
+   "semantic_kind": "python_call_in_code_block",
+   "related_registered_family": null,
+   "confidence": "HIGH",
+   "primary_citation": {
+    "ref": "Plans/DRY_Rules.md:216",
+    "path": "Plans/DRY_Rules.md",
+    "line_start": 216,
+    "line_end": 216,
+    "sha256": "193ec4e4be174ed616d752a7772ac46ae739f451217df8f2ee945ee04ae73b86",
+    "quote": "ln = re.sub(r\"[ \\t]+\", \" \", ln)    # step 4: any run of spaces/tabs, leading runs included, becomes one space"
+   },
+   "rule_clause": "Plans/.audits/event-authority-2026-08-12/closed-world-census/admission/CENSUS_ADMISSION_RULE_V2.json:22",
+   "review_verdict": "AGREE",
+   "review_why": "Verified at 686bdd20f9: Python standard-library call `re.sub(...)` (`import re` line 207) at lines 216 and 218 inside the same fenced ```python reference block defining `normalize(text: str) -> str` (lines 206-225, section 7.1 Packet-fidelity semantic matching, added by 44b40ce8ca). Exactly 2 EA_TOKEN_RE occurrences in canonical Plans (census occurrence_count=2; both lines sit within +/-1 line of line 217 `out.append(ln)` whose `append` triggers EA_EVENT_CUE_RE). Zero bindings in event_family_registry.json, Wiring_Matrix.production.json, landed ledgers, or any EventRecord declaration. Exact 15-key precedent row format and 5/5 citations verified; CENSUS_ADMISSION_RULE_V2.json:22 applies.",
+   "completed_citations": []
+  },
+  {
    "key": "reader.artifacts.capture_provenance.inspected||Plans/Test_Capture_and_Motion_Evidence.md",
    "token": "reader.artifacts.capture_provenance.inspected",
    "source_path": "Plans/Test_Capture_and_Motion_Evidence.md",
@@ -3733,6 +3798,27 @@
    "rule_clause": "Plans/.audits/event-authority-2026-08-12/closed-world-census/admission/CENSUS_ADMISSION_RULE_V2.json:22",
    "review_verdict": "AGREE",
    "review_why": "Primary reason field of the registered scheduler.pass, selected from the first wake. Rule 22 applies to the exact field path.",
+   "completed_citations": []
+  },
+  {
+   "key": "selection_reason.alternatives||Plans/Models_System.md",
+   "token": "selection_reason.alternatives",
+   "source_path": "Plans/Models_System.md",
+   "source_line": 1350,
+   "semantic_kind": "field_path",
+   "related_registered_family": null,
+   "confidence": "HIGH",
+   "primary_citation": {
+    "ref": "Plans/Models_System.md:1350",
+    "path": "Plans/Models_System.md",
+    "line_start": 1350,
+    "line_end": 1350,
+    "sha256": "c4e0c6fb1ec69e4f5db3fb393db554fab570c6b49f5153d770afe9f052e413d1",
+    "quote": "... dget is skipped. A model whose price is unknown is not skipped by this gate and stays pickable; wherever that choice is shown (the resolver record's `selection_reason.alternatives[]`, the model picker and any settlement or receipt text) its price is shown as unknown (`cost_status` `unknown`), never as `$0.00` or as within budget ..."
+   },
+   "rule_clause": "Plans/.audits/event-authority-2026-08-12/closed-world-census/admission/CENSUS_ADMISSION_RULE_V2.json:22",
+   "review_verdict": "AGREE",
+   "review_why": "Verified at 686bdd20f9: JSON field path `selection_reason.alternatives[]` on the shared model resolver record (`Models_System.md:73-96`, `1374-1391`, `9843-9890`, `9988`, `10024`, `10041`; Cost gating edit at line 1350 from DL-2604 / 4ff39ab47c). Canonical Plans has 5 exact EA_TOKEN_RE occurrences (`Models_System.md:1350,9988,10024,10041` and `Decision_Log.md:63631`), and census occurrence_count=1 because only line 1350 has an EA_EVENT_CUE_RE token (`emit` on line 1351) in its +/-1-line window. Not an EventRecord event_type or event family; zero bindings in event_family_registry.json, Wiring_Matrix.production.json, landed ledgers, or any EventRecord producer declaration. Exact 15-key precedent row format and 4/4 citations verified; CENSUS_ADMISSION_RULE_V2.json:22 applies.",
    "completed_citations": []
   },
   {
