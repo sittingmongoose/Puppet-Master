@@ -2153,68 +2153,27 @@ impl ThemeVariant {
 
 ### 6.6 Theme Extensibility Architecture (MVP)
 
-The architecture supports unlimited user-created themes beyond the ten built-in variants.
+Puppet Master ships exactly the ten built-in variants below; it has no user-created themes.
 
-**Deferred 2026-11-28 (DL-2607, Jared, registry line 1467):** custom theme files are not a supported feature for now; Puppet Master supports only the looks its Settings controls offer. The custom theme file format, the startup scan and hot reload of `~/.puppet-master/themes/`, custom entries and the `[custom]` badge in the theme selector, custom theme fonts in `~/.puppet-master/fonts/`, and the four Settings buttons below are deferred, not live; the text about them in this section is kept as deferred lineage and is built only if a later decision brings custom theme files back. The five built-in families, their ten variants and the one Light/Dark/Auto control are unchanged.
+**Removed 2026-11-28 (DL-2607, Jared, registry line 1467):** custom themes are not part of the product. Jared: "We arent going to support custom themes outside of the controls we have in settings." and, on 2026-11-28, "The custom theme stuff needs to be removed from pmconcept7 and the plans." There is no custom theme file or file format, no themes folder, no startup scan, validation or hot reload of theme files, no custom theme fonts, no custom loader, no custom entry or `[custom]` badge in the theme selector, and no Settings button to open a themes folder or create, import or export a theme. The five built-in families, their ten variants and the one Light/Dark/Auto control are the whole theme surface.
 
 **Built-in themes (ship with app):**
 - Basic Dark, Basic Light, Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, NieR Dark, NieR Light (the ten variants in §6.1-6.2 and the Theme System addendum - 2026-07-16). Basic Dark is the bundled/pre-claim fallback when no applicable saved look exists; a new Project follows Your usual settings through SSYS-002/059, and saved own values retain their admitted precedence. The former Friendly Dark factory default is superseded.
 
-**Custom theme file format (deferred, DL-2607):** Custom themes are defined as TOML files in `~/.puppet-master/themes/<name>.toml`. Each file specifies token overrides; any token not specified inherits from any built-in variant base named by a `base` field (`basic-*`, `retro-*`, `glass-*`, or `friendly-*`).
-
-```toml
-[meta]
-name = "Solarized Dark"
-author = "User"
-base = "basic-dark"          # inherit unset tokens from this variant
-version = "1.0"
-
-[colors]
-background = "#002b36"
-surface = "#073642"
-surface-elevated = "#0a4050"
-text-primary = "#839496"
-text-secondary = "#657b83"
-accent-blue = "#268bd2"
-accent-magenta = "#d33682"
-accent-lime = "#859900"
-accent-orange = "#cb4b16"
-
-[effects]
-retro-effects-enabled = false
-pixel-grid-opacity = 0.0
-border-width = 1
-border-radius = 4
-
-[fonts]
-# omitted = inherit from base
-
-
-# display-font = "CustomFont"  # requires font file in ~/.puppet-master/fonts/
-```
-
-**Theme loading and validation (deferred, DL-2607):**
-- On startup, scan `~/.puppet-master/themes/` for `.toml` files
-- Parse and validate each file against the token schema (§6.2). Invalid files log a warning and are skipped (not loaded); user sees a toast on Settings open: "Theme '{name}' has errors -- see log for details"
-- Valid custom themes appear in the theme selector (Settings > General and title bar theme selector) alongside built-in themes
-- **Hot reload:** Editing a theme TOML file while the app is running triggers a re-scan (via file watcher on the themes directory). If the currently active theme is modified, changes apply immediately (same as live theme switch within a family). If font changes are detected, the change applies live under the look's cover (F3-077); the earlier "prompt for restart" is retired (2026-10-17, DL-230).
-
 **Theme selector UI:**
 - The title-bar trigger is a morphing icon button: sun = manual Light mode, moon = manual Dark mode, continuous sun-to-moon morph = Auto mode (follows OS appearance)
 - The menu shows a Light/Dark/Auto segmented control above five theme-family rows (Basic, Friendly, Glass, Retro, NieR)
-- Each family row shows: family name, color swatch preview (4 circles: background, surface, accent-blue, accent-lime), and a "[built-in]" or "[custom]" badge; when a family has >4 themes available (built-in + custom), that row becomes a dropdown of its variants with author shown for custom entries
+- Each family row shows: family name and color swatch preview (4 circles: background, surface, accent-blue, accent-lime), and lists only that family's built-in variants; there is no built-in/custom badge and no custom entry (DL-2607)
 - In Auto mode the selected family resolves to its dark or light variant by following the operating system appearance (`prefers-color-scheme`) and updates live when the OS setting changes
 - The fifth family row is NieR (Q22); Adjust NieR opens the existing editor. Family selection uses the same Settings pair, with no checkbox, saved-underlying-family note or independent override. Entering NieR uses its one Reboot moment only when the Reboot moment part is installed; otherwise it uses the standard look cover. Leaving NieR and switching Light/Dark within NieR use the standard look cover. Reduced Motion keeps the existing calm/instant settle policy. Explicit Play reboot moment remains a local rehearsal that changes no setting.
 - "Manage themes" link at bottom opens Settings > General > Themes section
-- Settings > General includes: theme family selection plus Light/Dark/Auto mode control. The "Open themes folder" button (opens `~/.puppet-master/themes/` in system file manager), "Create new theme" button (copies a template TOML to the themes folder and opens it in File Editor), "Import theme" button (file picker for .toml) and "Export theme" button (saves current token values as .toml) are removed: retired from Settings and deferred with custom theme files by DL-2607 (2026-11-28).
+- Settings > General includes: theme family selection plus Light/Dark/Auto mode control, and no theme file buttons (DL-2607).
 - Theme selection uses SSYS-010’s internal transaction preview/apply without a visible timed or hover-applied app-theme preview; editor/terminal scheme search, readability signals, previews and cancellation are owned by F3-642/F3-650.
 - Settings > Terminal owns durable terminal appearance/theme/color, default cwd, font, and default behavior controls; runtime terminal panels consume those preferences but do not mint separate settings owners.
 - Terminal theme schema is semantic, not raw ANSI-only: it defines background `/foreground`, ANSI `/basic` and bright palettes, cursor and selection colors, search highlight colors, command-block and sticky-header chrome, and badge/status colors for `/failure/running/context` states.
 - Terminal theme catalog includes PM-matched themes, polished general-purpose themes, and `/fun/funky` or `/expressive` presets only when `/contrast` and readability checks pass; previews support `/search/light-dark` pairing, quick `/switching`, instant apply, and easy `/revert`.
 
 Amended 2026-10-14 (DL-189, DL-190, DL-197; superseding the earlier DL-183 entry treatment): F3-642/DR-068 own the layered terminal appearance and shared scheme catalog; F3-650 owns the full Customize screen, its More/Settings entry points, This/All scope and live preview; SSYS-051/UCC-201 own its Project and tab writers; F3-654 owns settled-text contrast. The earlier popover-only entry is retired; F3-642 retains the user-selectable program-output floor while F3-654 governs interface text. Appearance changes apply live with no restart.
-
-**Custom font support (deferred with custom theme files, DL-2607):** Custom themes can reference font files placed in `~/.puppet-master/fonts/`. Font files (.ttf, .otf, .woff2) are loaded at startup. A theme TOML referencing a missing font falls back to the base theme's font and shows a warning toast.
 
 **Theme selection (amended 2026-10-14):** F3-084 and SSYS-010 retire the visible hover/timed app-theme preview. Static swatches identify a choice; activation commits through the internal Settings preview/apply transaction. Editor/terminal scheme previews remain F3-650’s separate affordance.
 
@@ -3336,7 +3295,6 @@ puppet-master-rs/
     |   +-- palette.rs                # Color palettes (ported from current)
     |   +-- tokens.rs                 # Generated Rust token bindings from the shared design-token source (F3-583)
     |   +-- variants.rs               # ThemeVariant enum + apply_to
-    |   +-- custom_loader.rs          # DEFERRED (DL-2607) - Load custom themes from TOML files
     +-- browser/                      # NEW - Browser tab webview integration
     |   +-- mod.rs
     |   +-- webview.rs                # wry webview lifecycle, URL navigation
@@ -4082,7 +4040,6 @@ cargo check
 | **SSH connection stability** | Medium | SSH connections may drop unexpectedly (network change, host reboot, timeout). Mitigation: Keep-alive packets every 30s. On disconnect, retain local buffer contents and stale snapshot state, auto-retry once in a bounded way, then show an explicit `Reconnect` action. Never silently fall back to local execution for remote-mode projects. |
 | **Catalog service availability** | Low | Catalog index may be unavailable (network down, server offline). Mitigation: Bundle a fallback index with the app binary. Cache last-fetched index locally. Show "Catalog may be outdated" banner when using cached data. All catalog operations work offline with cached index. |
 | **Sound effects cross-platform audio** | Low | `rodio` audio playback may fail on some Linux configurations (missing PulseAudio/ALSA). Mitigation: Detect audio device availability at startup. If unavailable, disable sound effects silently and hide the toggle in Settings (or show "(audio unavailable)" label). No error toasts for missing audio. |
-| **Custom theme validation** | Low | User-created theme TOML files may have invalid colors, missing tokens, or malformed syntax. Mitigation: Validate all custom themes on load. Skip invalid themes with a warning toast on Settings open. Never crash on invalid theme files. Use base theme values for any missing or invalid tokens. Deferred with custom theme files (DL-2607); applies only if they return. |
 | **Settings page tab count (24 tabs)** | Medium | Old 24-tab, 19-tab, and two-level-sidebar vocabulary is risk lineage only. F3-432 mitigates the live surface with fuzzy search, category blooms, shelves, and command-palette `Open setting: {name}` deep links. |
 | **Project switch state reload performance** | Medium | Switching projects triggers full state reload (editor tabs, file tree, chat threads, config, LSP servers). Mitigation: Load in priority order: (1) config (instant, from redb), (2) file tree (async scan, show skeleton), (3) editor tabs (lazy, only load active tab content), (4) LSP/Search/Source Control projections (background refresh), (5) chat threads (lazy load). Show skeleton placeholders during reload. Target: <500ms to interactive. |
 | **File watcher resource consumption** | Low | Hot reload and preview watchers monitor project directories for changes. Large projects (>10k files) may consume significant inotify/FSEvents handles. Mitigation: Use `notify` crate with debounced mode. Watch only relevant source directories. Cap watchers and disclose fallback when root-only watching is required. |
@@ -4104,7 +4061,7 @@ All items previously listed as future considerations are MVP scope and are fully
 | Sound effects | UX Patterns §10.13 + Settings > General |
 | Hot reload controls | Runtime/dev surfaces in `Plans/assistant-chat-design.md` §22 and `Plans/FileManager.md` §14.6 |
 | In-app instructions editor | Settings > Personas & Crews > Defaults > Standing instructions (Rules for every project, Rules for this project) in `Plans/agent-rules-context.md` (ARC-011 and its 2026-07-08 addendum's current binding); edits use the Teach sheet (`cmd.chat.teach.capture` / `cmd.chat.teach.confirm`). The File Editor has no instructions mode. |
-| Additional themes / custom themes | Theme extensibility (§6.6); custom theme files deferred by DL-2607 |
+| Additional themes / custom themes | Theme extensibility (§6.6): the five built-in families; custom themes were removed by DL-2607 (2026-11-28) |
 | Language/framework auto-detection and LSP-aware navigation | Project state + `Plans/LSPSupport.md` + `Plans/FileManager.md` §10 |
 | Catalog / one-click install | Settings > Catalog tab |
 | Sync bundle manager | Settings > Sync tab |
@@ -4162,13 +4119,13 @@ These decisions are final and must not be revisited during implementation:
 2. **winit + Skia only** -- Skia on the GPU by default, Skia's own CPU raster as the only fallback, extended by Puppet Master's Skia renderer extensions (F3-582); FemtoVG and Slint's separate software renderer are retired (DL-139); on a software GPU adapter the CPU raster is always used, even over an explicit GPU choice, with a warning that no GPU was detected
 3. **No React/Tauri product UI** -- native desktop is Rust + Slint `.slint` markup; the web GUI is a Rust Leptos client drawn with browser elements and CSS, with JavaScript limited to generated or minimal glue (DL-139, F3-583)
 4. **IDE shell layout** -- Activity Bar + Side Panel (left) + Primary Content + chat column (right); Home's primary content is one universal panel system (amended 2026-10-09, DL-180: the Bottom Panel is no longer a zone; F3-630, F3-637)
-5. **Five theme families / ten built-in themes** -- Basic Dark, Basic Light, Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, NieR Dark, NieR Light (Q22) (built-in variants; custom themes via TOML deferred by DL-2607, 2026-11-28). Basic Dark is the bundled/pre-claim fallback; a new Project follows Your usual settings through SSYS-002/059. Explicit saved theme/layout customization survives. Settings copy brings source-owned values by default, or effective values only through Keep them fixed; copied own values and layouts remain detached. This supersedes the Friendly Dark default and the earlier three-family lock while preserving both as historical lineage.
+5. **Five theme families / ten built-in themes** -- Basic Dark, Basic Light, Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, NieR Dark, NieR Light (Q22) (built-in variants only; custom themes via TOML were removed by DL-2607, 2026-11-28). Basic Dark is the bundled/pre-claim fallback; a new Project follows Your usual settings through SSYS-002/059. Explicit saved theme/layout customization survives. Settings copy brings source-owned values by default, or effective values only through Keep them fixed; copied own values and layouts remain detached. This supersedes the Friendly Dark default and the earlier three-family lock while preserving both as historical lineage.
 6. **Settings and presentation ownership** -- `Plans/Settings_System.md` owns the Settings shell and ordinary-setting semantics; `Plans/newtools.md` N2-151 owns the Doctor registry/router/projection; auth/account owners retain Login; Final GUI owns their K3-shell presentation, chrome, theme, layout, and motion rather than a unified semantic Settings + Login + Doctor owner.
 7. **Event-driven updates** via `invoke_from_event_loop`, not polling
 8. **redb for layout persistence**, seglog for events, Tantivy for search. Amended 2026-10-31 (DL-270): the storage stack is owned by storage-plan SP-335 to SP-345: seglog with sealed-segment zstd, a content-addressed payload store, canonical and derived redb in two files, Tantivy, a Parquet archive read by embedded DuckDB, and SQLite banned for PM-owned stores (SP-342).
 9. **Model/platform selection via dropdowns**, not text entry
 10. **Product name: `Puppet Master`**
-11. **All 12 former future considerations are MVP** -- browser, instant project switch, sound effects, hot reload, instructions editor, custom themes, language detection, catalog, sync, SSH, Debug Mode workflows, and terminal tab management (custom themes since deferred by DL-2607, 2026-11-28)
+11. **All 12 former future considerations are MVP** -- browser, instant project switch, sound effects, hot reload, instructions editor, custom themes, language detection, catalog, sync, SSH, Debug Mode workflows, and terminal tab management (custom themes were since removed by DL-2607, 2026-11-28)
 12. **Bottom runtime zone includes the classical debugger surface** -- Superseded 2026-10-09 (DL-180, DL-181): there is no fixed bottom runtime zone. Terminal, Output, Problems, Ports and Debug Console are tab kinds that open in any panel, the tools landing beside the terminals by kind affinity, and the default Home layout's full-width bottom row is an ordinary panel row (F3-630, F3-634, F3-635); each terminal tab holds one session (F3-640, SMPFS-180). What stands: the Debugger / DAP Debugger stays part of the product (decision 14), and browser-capable preview/browsing is not a debug substitute. Earlier text, kept for lineage: "Terminal, Problems, Output, Ports, and Debugger / DAP Debugger remain runtime-zone occupants; browser-capable preview/browsing is not a bottom-panel debug substitute"
 13. **Browser runtime contract is capability-first, not crate-name-first** -- implementation must satisfy the promoted browser/session model rather than hard-locking the spec to stale `wry` wording
 14. **Classical debugger uses DAP** -- the integrated debugger surface is DAP-based and distinct from Assistant Debug Mode
@@ -9914,37 +9871,34 @@ owner_hints:
 
 ```yaml
 plan_unit_id: F3-080
-unit_type: requirement
-status: accepted
+unit_type: retirement_record
+status: retired
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Custom themes are TOML files under the Puppet Master themes directory, specify metadata plus
-  token overrides, and inherit unspecified tokens from any built-in variant base named by the
-  base field (basic-*, retro-*, glass-*, or friendly-*, for example base = "basic-dark"). Deferred 2026-11-28 (DL-2607, Jared, registry line 1467): custom theme files are not supported for now, so this behavior is kept as deferred lineage and is not built unless a later decision restores custom theme files; the five built-in families and the Light/Dark/Auto control are unchanged.
-gui_related: true
-gui_classification_reason: >-
-  This unit defines user-visible custom theme configuration and theme authoring behavior.
-split_recommended: true
+  Removed 2026-11-28 by DL-2607 (Jared): custom theme files are not part of the product, so the former
+  ~/.puppet-master/themes/<name>.toml format with its [meta], [colors], [effects] and [fonts] tables,
+  token overrides and base = "basic-dark" inheritance (the former Solarized Dark example) defines
+  nothing; the identifier remains only for historical links.
+gui_related: false
+gui_classification_reason: Historical identifier only; custom themes are not part of the product (DL-2607).
+split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- No product work or acceptance obligation is compiled from this retired identifier.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
-risk_class: finalgui_drift
-reasoning_tier: standard
-context_scope: finalgui_standardization
-implementation_surfaces:
-- "Plans/FinalGUISpec.md"
+- python3 scripts/pm-plan-index.py validate
+risk_class: historical_reference_reactivation
+reasoning_tier: low
+context_scope: retired_identifier
+implementation_surfaces: []
 node_compile_hint:
-  mode: custom_theme_schema_and_base_inheritance
+  mode: retired_no_product_work
   create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0064"
+- Plans/Decision_Log.md#DL-2607
 preserved_exact_tokens:
 - "~/.puppet-master/themes/<name>.toml"
 - "Solarized Dark"
@@ -9954,51 +9908,45 @@ preserved_exact_tokens:
 - "[colors]"
 - "[effects]"
 - "[fonts]"
-negative_constraints: []
-compatibility_only_notes: []
-stale_retired_dispositions: []
-owner_boundary_notes: []
+- DL-2607
+negative_constraints:
+- Do not reactivate this historical identifier as a product requirement, and do not restore custom themes without a new decision superseding DL-2607.
 owner_hints:
-- "Plans/FinalGUISpec.md"
+- Plans/FinalGUISpec.md
 ```
 
 ### F3-081 - Custom Theme Loading Validation And Hot Reload
 
 ```yaml
 plan_unit_id: F3-081
-unit_type: requirement
-status: accepted
+unit_type: retirement_record
+status: retired
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Theme loading scans custom theme TOML files on startup, validates token schema, skips invalid
-  files with warning/toast disclosure, and hot-reloads modified active themes; a font change in a
-  hot-reloaded active theme applies live under the look's cover (F3-077).
-  Amended 2026-10-17 (DL-230, Jared): the restart prompt is retired. Superseded lineage (kept findable): it
-  read "hot-reloads modified active themes while prompting for restart on font changes". Deferred 2026-11-28 (DL-2607, Jared, registry line 1467): custom theme files are not supported for now, so this behavior is kept as deferred lineage and is not built unless a later decision restores custom theme files; the five built-in families and the Light/Dark/Auto control are unchanged.
-gui_related: true
-gui_classification_reason: >-
-  This unit defines visible theme loading, validation, toast, and live theme update behavior.
-split_recommended: true
+  Removed 2026-11-28 by DL-2607 (Jared): custom theme files are not part of the product, so there is no
+  startup scan of .toml theme files, no "Theme '{name}' has errors -- see log for details" toast, no
+  file watcher, re-scan or Hot reload of themes and no handling of font changes in a theme file; the
+  identifier remains only for historical links.
+gui_related: false
+gui_classification_reason: Historical identifier only; custom themes are not part of the product (DL-2607).
+split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- No product work or acceptance obligation is compiled from this retired identifier.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
-risk_class: finalgui_drift
-reasoning_tier: standard
-context_scope: finalgui_standardization
-implementation_surfaces:
-- "Plans/FinalGUISpec.md"
+- python3 scripts/pm-plan-index.py validate
+risk_class: historical_reference_reactivation
+reasoning_tier: low
+context_scope: retired_identifier
+implementation_surfaces: []
 node_compile_hint:
-  mode: custom_theme_loading_validation_and_hot_reload
+  mode: retired_no_product_work
   create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0064"
+- Plans/Decision_Log.md#DL-2607
 preserved_exact_tokens:
 - ".toml"
 - "Theme '{name}' has errors -- see log for details"
@@ -10006,13 +9954,11 @@ preserved_exact_tokens:
 - "Hot reload"
 - "re-scan"
 - "font changes"
-negative_constraints: []
-compatibility_only_notes: []
-stale_retired_dispositions:
-- "Retired 2026-10-17 (DL-230, Jared): \"prompt for restart\" on font changes is withdrawn; a font change in a hot-reloaded active theme applies live under the look's cover (F3-077)."
-owner_boundary_notes: []
+- DL-2607
+negative_constraints:
+- Do not reactivate this historical identifier as a product requirement, and do not restore custom themes without a new decision superseding DL-2607.
 owner_hints:
-- "Plans/FinalGUISpec.md"
+- Plans/FinalGUISpec.md
 ```
 
 ### F3-082 - Theme Selector Management Surface
@@ -10025,17 +9971,16 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The title-bar theme selector is a morphing sun/moon trigger (sun for manual Light, moon for manual Dark and
   continuous morph for Auto), opening a Light/Dark/Auto segmented control above five family rows in order Basic,
-  Friendly, Glass, Retro and NieR. Each row retains built-in/custom metadata and swatch previews; a family
-  becomes a dropdown when more than four built-in/custom choices exist. NieR is an ordinary family row with its
+  Friendly, Glass, Retro and NieR. Each row shows its swatch preview and lists only its built-in variants.
+  NieR is an ordinary family row with its
   Light/Dark variants, and Adjust NieR opens ui.settings.nier_editor.open. The old NieR Mode menuitemcheckbox is
   removed. The segmented control uses cmd.settings.transaction.preview then cmd.settings.transaction.apply for
   the existing atomic family/mode pair (DL-228); each family pick composes cmd.settings.transaction.preview then
   cmd.settings.transaction.apply for the atomic family/mode pair under SSYS-009. Auto follows OS appearance live
   for every family including NieR. Settings exposes the same five family choices plus one Light/Dark/Auto control (DL-301), resolving to ten
-  variants. Retired 2026-11-28 (DL-2607, Jared, registry line 1467): the former theme folder/create/import/export
-  actions ("Open themes folder", "Create new theme", "Import theme", "Export theme") are removed from Settings and
-  deferred with custom theme files, and the selector's custom entries and [custom] badge are deferred with them, so
-  every live family row lists only its built-in variants. Entering NieR uses its one Reboot moment only when the Reboot moment part
+  variants. Removed 2026-11-28 by DL-2607 (Jared): custom themes are not part of the product, so the former
+  "Open themes folder", "Create new theme", "Import theme" and "Export theme" buttons, the [built-in] and [custom]
+  badges and the >4 themes dropdown of custom entries do not exist. Entering NieR uses its one Reboot moment only when the Reboot moment part
   is installed; otherwise it uses the standard look cover. Leaving NieR and switching Light/Dark within NieR use
   the standard look cover. Reduced Motion keeps the existing calm/instant settle policy. Explicit Play reboot
   moment remains a local rehearsal that changes no setting. Amended Q22, Jared 2026-10-30 (DL-257): the fifth
@@ -10045,7 +9990,7 @@ canonical_text: >-
   confirmation 1030182542-5544). The earlier label Adjust NieR look is retained as historical source text only.
 gui_related: true
 gui_classification_reason: >-
-  This unit defines user-visible theme selector controls and Settings theme management UI.
+  This unit defines user-visible theme selector controls and the Settings theme choice.
 split_recommended: true
 depends_on: []
 unblocks: []
@@ -10086,10 +10031,10 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not retain an independent NieR checkbox or hidden underlying family."
   - "Do not dispatch a new NieR command; family and mode use their existing owner commands."
-  - "Do not restore the four custom-theme buttons or custom theme files without a new decision superseding DL-2607."
+  - "Do not restore the four custom-theme buttons, custom selector entries or custom theme files without a new decision superseding DL-2607."
 compatibility_only_notes: []
 stale_retired_dispositions:
-  - "Retired 2026-11-28 (DL-2607, Jared): the theme folder/create/import/export actions and the custom-theme selector entries are removed with custom theme files, deferred for now; the preserved button labels are lineage only."
+  - "Removed 2026-11-28 (DL-2607, Jared): the theme folder/create/import/export actions, the built-in/custom badges and the custom selector entries are removed with custom themes; the preserved button labels and badge tokens are lineage only."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -10177,14 +10122,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Custom themes may reference user font files; missing fonts fall back to the base theme with a warning
-  toast (deferred with custom theme files by DL-2607, 2026-11-28; not built for now). Jared's 2026-10-13 preview removal retires the theme selector's hover-applied widget-card preview
+  Removed 2026-11-28 by DL-2607 (Jared): custom themes and their user font files in ~/.puppet-master/fonts/
+  (.ttf, .otf, .woff2; the missing font case that falls back with a warning toast) are not part of the
+  product. Jared's 2026-10-13 preview removal retires the theme selector's hover-applied widget-card preview
   as well as the Settings preference (SSYS-010): theme rows retain their static identifying swatches and
   apply on activation through the Settings transaction. This does not remove F3-650's separately approved
   editor/terminal scheme previews.
 gui_related: true
 gui_classification_reason: >-
-  This unit defines visible custom font fallback and theme preview presentation.
+  This unit defines visible theme preview presentation; its former custom font fallback is removed (DL-2607).
 split_recommended: true
 depends_on: []
 unblocks: []
@@ -16961,7 +16907,8 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Rust panel, effects, and theme modules include panel registry, dock/undock layout, snap
   zones, pixel grid and paper texture generation, color palettes, design tokens, ThemeVariant
-  application, and custom theme TOML loading (deferred by DL-2607, 2026-11-28, with custom theme files).
+  application. Removed 2026-11-28 by DL-2607: custom_loader.rs and loading custom themes from TOML files
+  are not part of the product.
 gui_related: true
 gui_classification_reason: >-
   This unit covers Rust-side panel registry, layout, effects, and theme modules that support
@@ -20028,51 +19975,44 @@ owner_hints:
 
 ```yaml
 plan_unit_id: F3-263
-unit_type: constraint
-status: accepted
+unit_type: retirement_record
+status: retired
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The `Custom theme validation` risk is mitigated as follows: Custom theme TOML loading
-  validates colors, tokens, and syntax, skips invalid themes with warning toast on Settings
-  open, never crashes, and falls back to base values. Deferred with custom theme files (DL-2607,
-  2026-11-28): the risk applies only if a later decision restores them.
-gui_related: true
-gui_classification_reason: >-
-  This unit preserves one row of the user-visible Slint migration risks and mitigations table.
+  Removed 2026-11-28 by DL-2607 (Jared): the Custom theme validation risk row (TOML validation,
+  warning toast, Never crash, base theme values) is deleted from the risks table because custom theme
+  files are not part of the product; the identifier remains only for historical links.
+gui_related: false
+gui_classification_reason: Historical identifier only; custom themes are not part of the product (DL-2607).
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- No product work or acceptance obligation is compiled from this retired identifier.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
-risk_class: finalgui_risk
-reasoning_tier: standard
-context_scope: finalgui_standardization
-implementation_surfaces:
-- "Plans/FinalGUISpec.md"
+- python3 scripts/pm-plan-index.py validate
+risk_class: historical_reference_reactivation
+reasoning_tier: low
+context_scope: retired_identifier
+implementation_surfaces: []
 node_compile_hint:
-  mode: custom_theme_validation_risk
+  mode: retired_no_product_work
   create_worknodes: false
+  create_nodeseeds: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
+- Plans/Decision_Log.md#DL-2607
 preserved_exact_tokens:
 - "Custom theme validation"
 - "TOML"
 - "warning toast"
 - "Never crash"
 - "base theme values"
-negative_constraints: []
-compatibility_only_notes: []
-stale_retired_dispositions: []
-owner_boundary_notes:
-- "The row remains part of the FinalGUISpec risk/mitigation matrix."
+- DL-2607
+negative_constraints:
+- Do not reactivate this historical identifier as a product requirement, and do not restore custom themes without a new decision superseding DL-2607.
 owner_hints:
-- "Plans/FinalGUISpec.md"
+- Plans/FinalGUISpec.md
 ```
 
 ### F3-264 - Settings Tab Count Risk
@@ -20302,7 +20242,7 @@ canonical_text: >-
   Former future considerations are MVP scope and route to their owner docs for
   browser/click-to-context, search, instant project switch, sound effects, hot reload,
   instructions editor, custom themes, language/LSP navigation, catalog, sync, SSH, run/debug,
-  and browser/terminal tabs. Custom theme files are since deferred (DL-2607, 2026-11-28); the five
+  and browser/terminal tabs. Custom themes were since removed by DL-2607 (2026-11-28); the five
   built-in theme families stay MVP.
 gui_related: true
 gui_classification_reason: >-

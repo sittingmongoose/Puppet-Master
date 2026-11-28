@@ -3733,7 +3733,7 @@ Every Settings view, manager tab or plain page, draws its short everyday groups 
 
 | Plain page | Everyday groups, in order | More options |
 |---|---|---|
-| App & Input | Theme & colors; Size & readability; Sending messages; How the assistant works; What the chat shows; Help & explanations; Window & panels (including Choose widgets and Restore home layout); When Puppet Master opens; Spelling | Fine-tuning the look; More about help (the former Custom themes group is removed: custom theme files are deferred by DL-2607, 2026-11-28) |
+| App & Input | Theme & colors; Size & readability; Sending messages; How the assistant works; What the chat shows; Help & explanations; Window & panels (including Choose widgets and Restore home layout); When Puppet Master opens; Spelling | Fine-tuning the look; More about help (the former Custom themes group is removed: custom themes are not part of the product, DL-2607, 2026-11-28) |
 | Editor & Terminal (was Editor & Runtime; its containers moved to Containers) | Saving & tabs; File tree; Editing; Terminal; Terminal look; Terminal output & history; Copy & paste; Project search index | Big files & folders; Terminal look: more options; Terminal: more options; Search index: more options |
 | Containers (was Containers & Execution) | Docker on this computer; Docker Hub and other registries; Building & publishing images; Running containers; Changed containers; Disk cleanup; Kubernetes; Unraid templates; Your app's store listing; Your publisher profile | Docker panel views & records; Template repository details |
 | Planning & Interviews | Plan and Deep Plan; Planning Wizard; Interview topics; Helpers | Question limits; This wizard session only; Files & formats |

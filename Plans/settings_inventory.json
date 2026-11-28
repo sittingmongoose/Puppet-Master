@@ -40429,7 +40429,7 @@
   "compatibility_reads": {
     "general.visual.manage-custom-themes": {
       "replacement_ids": [],
-      "read_rule": "DL-2607 (Jared, 2026-11-28) removes the custom-theme Settings buttons and defers custom theme files. Read only for historical inspection; no custom theme file is scanned, created, imported or exported.",
+      "read_rule": "DL-2607 (Jared, 2026-11-28) removes the custom-theme Settings buttons and custom theme files from the product. Read only for historical inspection; no custom theme file is scanned, created, imported or exported.",
       "write_policy": "omit_retired_key",
       "search_policy": "explain_retirement",
       "transfer_policy": "omit_with_notice",
@@ -40443,7 +40443,7 @@
     },
     "general.visual.custom-theme-base": {
       "replacement_ids": [],
-      "read_rule": "DL-2607 (Jared, 2026-11-28) defers custom theme files, so no custom theme inherits from a starting theme. Read only for historical inspection; the saved value is never applied.",
+      "read_rule": "DL-2607 (Jared, 2026-11-28) removes custom theme files from the product, so no custom theme inherits from a starting theme. Read only for historical inspection; the saved value is never applied.",
       "write_policy": "omit_retired_key",
       "search_policy": "explain_retirement",
       "transfer_policy": "omit_with_notice",
