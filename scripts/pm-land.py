@@ -5,13 +5,13 @@ from __future__ import annotations
 
 import argparse
 import ast
-import errno
+import fcntl
 import importlib.util
 from collections import Counter
-from contextlib import contextmanager
 from datetime import datetime, timezone
 import hashlib
 import json
+import math
 import os
 from pathlib import Path, PurePosixPath
 import re
@@ -66,18 +66,21 @@ CLEANUP_DRAIN_POLL = 0.1
 PR_SET_CHILD_SUBREAPER = 36
 PR_GET_CHILD_SUBREAPER = 37
 ALIVE_SYSTEMD_STATES = frozenset({"active", "activating", "deactivating", "reloading", "refreshing"})
-# One landing check per host: a directory lease under RUNS, taken with an atomic mkdir before the remote job
-# starts. Two overlapping checks on Nas1 need about 24 GB on a 19 GB host (TOOLS-LANDCHECK-ONE-PER-HOST).
-HOST_LEASE_SCHEMA = "pm.land.host_lease.v1"
-HOST_LEASE_DIR = "host-leases"
+# One landing check per host (TOOLS-LANDCHECK-ONE-PER-HOST): two overlapping checks on Nas1 need about 24 GB on
+# a 19 GB host. The remote job itself holds an exclusive flock on a file on the check host's own disk for its
+# whole life, and the kernel drops it when the job's process ends, however it ends. `check` probes that lock
+# over ssh and waits while it is held; a job that finds it held when it starts does nothing and says so.
+HOST_LOCK_SCHEMA = "pm.land.host_lock.v1"
+HOST_LOCK_DIR_ENV = "PM_LAND_HOST_LOCK_DIR"
+HOST_LOCK_NAME = "landing-check.lock"
+HOST_LOCK_HOLDER = "landing-check.holder.json"
+HOST_BUSY_FILE = "host-busy.json"
+LANDER_FILE = "lander.json"
+HOST_LOCK_TRY_SECONDS = 2.0  # a job retries this long before it counts the host as busy: a probe holds it for microseconds
+HOST_LOCK_TRY_POLL = 0.05
 HOST_WAIT_MINUTES = 30
 HOST_LEASE_POLL_SECONDS = 30
 HOST_LEASE_NOTICE_SECONDS = 5 * 60
-HOST_LEASE_UNCHECKED_SECONDS = 90 * 60  # a lease whose job cannot be checked counts as stale after this
-HOST_LEASE_JOB_GRACE_SECONDS = 5 * 60  # a named job may take this long to appear on its host
-HOST_LEASE_RECLAIM_STALE_SECONDS = 5 * 60
-LONG_JOB_ALIVE_STATES = frozenset({"running", "starting", "stopping"})
-LONG_JOB_ENDED_STATES = frozenset({"done", "failed", "stopped", "lost"})
 
 
 class Refusal(RuntimeError):
@@ -1761,21 +1764,13 @@ def cleanup_after_check(folder, host):
             say(result.stdout.strip())
 
 
-# ----------------------------------------------------------------------------------- host leases
-# `check --on <host>` holds RUNS/host-leases/<host>/ while its remote job may run. A busy host is waited
-# for; a lease counts as stale only when its long-job is no longer running on that host, or, when that
-# cannot be checked, once it is 90 minutes old. A live lease is never broken.
-#
-# A lease is born complete: its holder.json is written into a private sibling folder that is then renamed
-# to <host>, so the lease path never shows a lease without its holder, and a rename cannot replace a
-# lease that has one. Reclaiming, releasing and recording the job all happen under one mutex
-# (<host>.reclaim), and each first re-reads the lease and acts only on the very lease it judged.
-
-LEASE_CHANGED = "changed"
-LEASE_MUTEX_WAIT_SECONDS = 30
-LEASE_MUTEX_POLL_SECONDS = 0.05
-LEASE_RETRY_LIMIT = 50  # immediate retries in a row (a lease that vanished or changed) before a normal poll
-
+# ----------------------------------------------------------------------------------- host locks
+# The lock is <state>/pm-land/landing-check.lock on the check host's local disk, held with flock(LOCK_EX) by
+# the remote worker from before its checkout until it exits. flock, not lockf: a POSIX lockf lock is dropped
+# when the process closes any other descriptor of the file. The lock file is never removed, so every job locks
+# the same inode. landing-check.holder.json beside it says which check holds it, for the waiting message only;
+# nothing is decided from it. Taking the lock is the job's first step, so starting two jobs at once is safe:
+# the one that does not get the lock writes host-busy.json into its run folder and ends without checking.
 
 def lease_clock():
     return time.monotonic()
@@ -1785,297 +1780,183 @@ def lease_sleep(seconds):
     time.sleep(seconds)
 
 
-def host_lease_path(host):
-    return RUNS / HOST_LEASE_DIR / host
+def host_lock_dir():
+    override = os.environ.get(HOST_LOCK_DIR_ENV)
+    if override:
+        return Path(override)
+    state = os.environ.get("XDG_STATE_HOME")
+    return (Path(state) if state else Path.home() / ".local" / "state") / "pm-land"
 
 
-def read_lease_holder(lease):
+def try_lock(descriptor):
     try:
-        holder = read_json(lease / "holder.json")
+        fcntl.flock(descriptor, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError:
+        return False
+    return True
+
+
+def read_lock_holder(directory):
+    try:
+        holder = read_json(directory / HOST_LOCK_HOLDER)
     except (OSError, ValueError):
         return None
     return holder if isinstance(holder, dict) else None
 
 
-def lease_identity(lease):
-    """The lease folder's (inode, mtime in ns), or None when there is no folder at the path."""
+def host_lock_state(directory=None):
+    """{"free": bool, "holder": the display record or None}, read on the check host. A free lock is taken and
+    dropped again at once."""
+    directory = directory or host_lock_dir()
+    directory.mkdir(parents=True, exist_ok=True)
+    descriptor = os.open(directory / HOST_LOCK_NAME, os.O_RDWR | os.O_CREAT | os.O_CLOEXEC, 0o666)
     try:
-        info = os.lstat(lease)
-    except FileNotFoundError:
-        return None
-    return (info.st_ino, info.st_mtime_ns)
+        free = try_lock(descriptor)
+    finally:
+        os.close(descriptor)
+    return {"free": free, "holder": None if free else read_lock_holder(directory)}
 
 
-def read_lease_state(lease):
-    """(holder, identity) read together. Identity is None when no lease is there, and LEASE_CHANGED when the
-    folder was released, replaced or rewritten during the read: either way the caller retries at once."""
-    identity = lease_identity(lease)
-    if identity is None:
-        return None, None
-    holder = read_lease_holder(lease)
-    after = lease_identity(lease)
-    if after != identity:
-        return None, (None if after is None else LEASE_CHANGED)
-    return holder, identity
+class HostLock:
+    """The lock the remote worker holds for the life of its process."""
+
+    def __init__(self, directory, descriptor):
+        self.directory = directory
+        self.descriptor = descriptor
+
+    def release(self):
+        if self.descriptor is None:
+            return
+        try:
+            (self.directory / HOST_LOCK_HOLDER).unlink()
+        except OSError:
+            pass
+        os.close(self.descriptor)  # closing the only descriptor drops the flock
+        self.descriptor = None
 
 
-def lease_age(holder, identity):
-    age = age_seconds(holder.get("started_utc")) if holder else None
-    if age is None and isinstance(identity, tuple):
-        age = time.time() - identity[1] / 1e9
-    return age
-
-
-def remote_job_state(host, name):
-    """The job's long-job state on `host`, "absent" when the host has no such job, or None when unknown."""
+def hold_host_lock(folder, host, ref, head):
+    """Take the host's lock for this job, or write host-busy.json into the run folder and return None."""
+    directory = host_lock_dir()
+    directory.mkdir(parents=True, exist_ok=True)
+    descriptor = os.open(directory / HOST_LOCK_NAME, os.O_RDWR | os.O_CREAT | os.O_CLOEXEC, 0o666)
+    deadline = time.monotonic() + HOST_LOCK_TRY_SECONDS
+    while not try_lock(descriptor):
+        if time.monotonic() >= deadline:
+            os.close(descriptor)
+            write_json(folder / HOST_BUSY_FILE, {"schema": HOST_LOCK_SCHEMA, "host": host, "found_utc": iso(),
+                                                 "holder": read_lock_holder(directory)})
+            return None
+        time.sleep(HOST_LOCK_TRY_POLL)
     try:
-        result = ssh(host, "long-job", "status", name, "--json", check=False)
+        lander = read_json(folder / LANDER_FILE)
+    except (OSError, ValueError):
+        lander = {}
+    holder = {"schema": HOST_LOCK_SCHEMA, "host": host, "machine": socket.gethostname(), "topic": ref,
+              "commit": head, "job": job_name(folder), "run_folder": str(folder), "started_utc": iso(),
+              "worker_pid": os.getpid(), "lander": lander.get("lander") if isinstance(lander, dict) else None,
+              "lander_machine": lander.get("lander_machine") if isinstance(lander, dict) else None}
+    try:
+        write_json(directory / HOST_LOCK_HOLDER, holder)
+    except OSError:
+        pass
+    return HostLock(directory, descriptor)
+
+
+def probe_worker(argv):
+    parser = argparse.ArgumentParser()
+    parser.add_argument("host", choices=HOSTS)
+    args = parser.parse_args(argv)
+    require_host(args.host)
+    print(json.dumps(host_lock_state(), sort_keys=True))
+    return 0
+
+
+def probe_host_lock(host):
+    """The check host's lock state over ssh, or None when it could not be read (the job then decides)."""
+    try:
+        result = ssh(host, "python3", "-B", "-", "probe-host-lock", host,
+                     input_text=Path(__file__).read_text(encoding="utf-8"), check=False)
     except (Refusal, OSError):
         return None
-    if result.returncode == 2 and "no job named" in (result.stderr or ""):
-        return "absent"
     if result.returncode:
         return None
     try:
-        info = json.loads(result.stdout)
-    except ValueError:
+        state = json.loads(result.stdout.strip().splitlines()[-1])
+    except (ValueError, IndexError):
         return None
-    if (not isinstance(info, list) or len(info) != 1 or not isinstance(info[0], dict)
-            or info[0].get("name") != name or not isinstance(info[0].get("state"), str)):
+    if not isinstance(state, dict) or not isinstance(state.get("free"), bool):
         return None
-    return info[0]["state"]
-
-
-def lease_verdict(host, lease, holder, identity=None):
-    """Return (stale, reason) for an existing lease, read as (holder, identity) by read_lease_state."""
-    job = holder.get("job") if holder else None
-    if isinstance(job, str) and job:
-        state = remote_job_state(host, job)
-        if state in LONG_JOB_ALIVE_STATES:
-            return False, f"its job {job} is {state} on {host}"
-        if state in LONG_JOB_ENDED_STATES:
-            return True, f"its job {job} is {state} on {host}"
-        if state == "absent":
-            recorded = age_seconds(holder.get("job_recorded_utc"))
-            if recorded is not None and 0 <= recorded < HOST_LEASE_JOB_GRACE_SECONDS:
-                return False, f"its job {job} is about to start on {host}"
-            return True, f"its job {job} is not on {host}"
-    elif holder and holder.get("lander_machine") == socket.gethostname():
-        if proc_alive_as(holder.get("lander_pid"), holder.get("lander_pid_start")):
-            return False, f"its lander (pid {holder.get('lander_pid')}) has not started a job yet"
-        return True, f"its lander (pid {holder.get('lander_pid')}) ended before starting a job"
-    age = lease_age(holder, identity)
-    if age is None:
-        return False, "its age could not be read"
-    if age >= HOST_LEASE_UNCHECKED_SECONDS:
-        return True, f"its job could not be checked and the lease is over {HOST_LEASE_UNCHECKED_SECONDS // 60} minutes old"
-    return False, f"its job could not be checked; it counts as stale after {HOST_LEASE_UNCHECKED_SECONDS // 60} minutes"
-
-
-@contextmanager
-def lease_mutex(lease, wait_seconds):
-    """Yield True while holding <host>.reclaim, or False when it stayed taken for `wait_seconds`."""
-    mutex = lease.with_name(lease.name + ".reclaim")
-    deadline = time.monotonic() + max(0.0, wait_seconds)
-    while True:
-        try:
-            mutex.mkdir()
-            break
-        except FileExistsError:
-            try:
-                stale = time.time() - mutex.stat().st_mtime > HOST_LEASE_RECLAIM_STALE_SECONDS
-            except FileNotFoundError:
-                continue
-            if stale:
-                try:
-                    mutex.rmdir()
-                except OSError:
-                    pass
-                continue
-            if time.monotonic() >= deadline:
-                yield False
-                return
-            time.sleep(LEASE_MUTEX_POLL_SECONDS)
-    try:
-        yield True
-    finally:
-        try:
-            mutex.rmdir()
-        except OSError:
-            pass
-
-
-def set_lease_aside(lease, identity):
-    """Rename the lease folder aside and remove it, if it is still the folder with `identity`."""
-    tomb = lease.with_name(f"{lease.name}.stale-{uuid.uuid4().hex[:12]}")
-    try:
-        os.rename(lease, tomb)
-    except FileNotFoundError:
-        return False
-    if lease_identity(tomb) is None or lease_identity(tomb)[0] != identity[0]:
-        # Not the folder judged (cannot happen under the mutex with leases born complete): put it back.
-        try:
-            os.rename(tomb, lease)
-        except OSError:
-            say(f"Moved a {lease.name} landing-check lease aside that was not the one judged, and could not put it "
-                f"back: {tomb}")
-        return False
-    shutil.rmtree(tomb, ignore_errors=True)
-    return True
-
-
-def reclaim_host_lease(lease, seen, reason):
-    """Remove a stale lease, but only while it is still exactly the lease judged stale: `seen` is the
-    (holder, identity) that read_lease_state returned before the verdict."""
-    seen_holder, seen_identity = seen
-    if not isinstance(seen_identity, tuple):
-        return False
-    with lease_mutex(lease, 0) as held:
-        if not held:
-            return False
-        holder, identity = read_lease_state(lease)
-        if identity != seen_identity or holder != seen_holder:
-            return False
-        if holder is None:
-            # An empty folder is removed by name: a lease born since has its holder.json, so rmdir refuses it.
-            try:
-                os.rmdir(lease)
-                removed = True
-            except OSError:
-                removed = set_lease_aside(lease, identity)
-        else:
-            removed = set_lease_aside(lease, identity)
-        if not removed:
-            return False
-        entry = {"host": lease.name, "reclaimed_utc": iso(), "reason": reason, "holder": holder,
-                 "by_machine": socket.gethostname(), "by_pid": os.getpid()}
-        with (lease.parent / "reclaimed.jsonl").open("a", encoding="utf-8") as log:
-            log.write(json.dumps(entry, sort_keys=True) + "\n")
-        say(f"Reclaimed the stale {lease.name} landing-check lease: {reason}")
-        return True
+    return state
 
 
 def describe_holder(holder):
-    if not holder:
-        return "a lease with no readable holder.json"
-    who = holder.get("lander") or f"{holder.get('lander_machine')} pid {holder.get('lander_pid')}"
-    commit = holder.get("commit") or ""
+    if not isinstance(holder, dict):
+        return "a check that has not written its holder file yet"
+    who = holder.get("lander") or holder.get("lander_machine") or "a lander"
+    topic = str(holder.get("topic") or "").removeprefix("refs/heads/")
+    commit = str(holder.get("commit") or "")
     job = f", job {holder['job']}" if holder.get("job") else ""
-    return f"{who} for {holder.get('branch')} {commit[:12]}{job} since {holder.get('started_utc')}"
+    return f"{who} for {topic} {commit[:12]}{job} since {holder.get('started_utc')}"
 
 
-def birth_lease(lease, holder):
-    """Put a complete lease at `lease` in one rename. False when a lease is already there."""
-    temporary = lease.with_name(f".{lease.name}.new-{uuid.uuid4().hex[:12]}")
-    temporary.mkdir()
-    try:
-        write_json(temporary / "holder.json", holder)
-        os.rename(temporary, lease)
-    except OSError as exc:
-        shutil.rmtree(temporary, ignore_errors=True)
-        if exc.errno in (errno.EEXIST, errno.ENOTEMPTY):
-            return False
-        raise
-    except BaseException:
-        shutil.rmtree(temporary, ignore_errors=True)
-        raise
-    return True
+class HostWait:
+    """The lander's side: wait while the host's lock is held, up to the one deadline every attempt shares."""
 
-
-class HostLease:
-    def __init__(self, host, path, holder):
+    def __init__(self, host, wait_minutes):
         self.host = host
-        self.path = path
-        self.holder = holder
-        self.job_may_run = False
+        self.wait_minutes = wait_minutes
+        self.deadline = lease_clock() + max(0.0, wait_minutes) * 60
+        self.waited = False
+        self.last_notice = None
 
-    def owned(self):
-        holder, identity = read_lease_state(self.path)
-        return isinstance(identity, tuple) and (holder or {}).get("token") == self.holder["token"], identity
-
-    def record_job(self, folder):
-        self.holder.update(job=job_name(folder), run_folder=str(folder), job_recorded_utc=iso())
-        with lease_mutex(self.path, LEASE_MUTEX_WAIT_SECONDS) as held:
-            if not held:
-                raise Refusal(f"could not lock the {self.host} landing-check lease to record its job: {self.path}")
-            mine, _ = self.owned()
-            if not mine:
-                raise Refusal(f"the {self.host} landing-check lease was taken over before the job started: {self.path}")
-            write_json(self.path / "holder.json", self.holder)
-
-    def release(self):
-        with lease_mutex(self.path, LEASE_MUTEX_WAIT_SECONDS) as held:
-            if not held:
-                say(f"Could not lock the {self.host} landing-check lease to release it; left as it is: {self.path}. "
-                    "It counts as stale once its job has ended.")
+    def until_free(self):
+        while True:
+            state = probe_host_lock(self.host)
+            if state is None or state["free"]:
+                if self.waited:
+                    say(f"{self.host} is free. Starting the check.")
                 return
-            mine, identity = self.owned()
-            if not mine:
-                say(f"The {self.host} landing-check lease was taken over after its job ended; left as it is.")
-                return
-            set_lease_aside(self.path, identity)
+            self.busy(describe_holder(state.get("holder")))
 
-
-def acquire_host_lease(host, branch, commit, wait_minutes=HOST_WAIT_MINUTES):
-    """Hold the host's landing-check lease, waiting for a busy host up to `wait_minutes` (HostBusy after)."""
-    lease = host_lease_path(host)
-    lease.parent.mkdir(parents=True, exist_ok=True)
-    stat_ = read_proc_stat(os.getpid())
-    holder = {"schema": HOST_LEASE_SCHEMA, "host": host, "branch": branch, "commit": commit, "job": None,
-              "run_folder": None, "job_recorded_utc": None,
-              "lander": os.environ.get("PM_LAND_LANDER") or os.environ.get("PM_MAIL_AS") or None,
-              "lander_machine": socket.gethostname(), "lander_pid": os.getpid(),
-              "lander_pid_start": stat_["start"] if stat_ else None, "token": uuid.uuid4().hex}
-    deadline = lease_clock() + max(0.0, wait_minutes) * 60
-    waited = False
-    last_notice = None
-    retries = 0
-    while True:
-        holder["started_utc"] = iso()
-        if birth_lease(lease, holder):
-            if waited:
-                say(f"{host} is free. Took its landing-check lease: {lease}")
-            return HostLease(host, lease, holder)
-        current, identity = read_lease_state(lease)
-        if not isinstance(identity, tuple) and retries < LEASE_RETRY_LIMIT:
-            retries += 1  # released or rewritten between two reads: never stale, try again now
-            continue
-        retries = 0
-        reason = "it changed while it was read"
-        if isinstance(identity, tuple):
-            stale, reason = lease_verdict(host, lease, current, identity)
-            if stale and reclaim_host_lease(lease, (current, identity), reason):
-                continue
-        remaining = deadline - lease_clock()
+    def busy(self, notice):
+        remaining = self.deadline - lease_clock()
         if remaining <= 0:
-            raise HostBusy(f"{host} stayed busy for {wait_minutes:g} minutes: its landing-check lease is held by "
-                           f"{describe_holder(current)} ({reason}). Lease: {lease}. No check ran; retry later.")
-        notice = (describe_holder(current), reason)
+            raise HostBusy(f"{self.host} stayed busy for {self.wait_minutes:g} minutes: its landing-check lock is held "
+                           f"by {notice}. No check ran; retry later.")
         moment = lease_clock()
-        if last_notice is None or notice != last_notice[0] or moment - last_notice[1] >= HOST_LEASE_NOTICE_SECONDS:
-            say(f"{host} is busy: landing-check lease held by {notice[0]} ({reason}). "
-                f"Waiting up to {max(0, round(remaining / 60))} more minutes. Lease: {lease}")
-            last_notice = (notice, moment)
-        waited = True
-        lease_sleep(min(HOST_LEASE_POLL_SECONDS, max(remaining, 0.0)))
+        if (self.last_notice is None or notice != self.last_notice[0]
+                or moment - self.last_notice[1] >= HOST_LEASE_NOTICE_SECONDS):
+            say(f"{self.host} is busy: landing-check lock held by {notice}. "
+                f"Waiting up to {max(0, round(remaining / 60))} more minutes.")
+            self.last_notice = (notice, moment)
+        self.waited = True
+        lease_sleep(min(HOST_LEASE_POLL_SECONDS, remaining))
+
+    def lost_race(self, folder):
+        try:
+            holder = read_json(folder / HOST_BUSY_FILE).get("holder")
+        except (OSError, ValueError, AttributeError):
+            holder = None
+        say(f"{self.host} was taken by another check as this one started; nothing ran. Evidence: {folder}")
+        self.busy(describe_holder(holder))
 
 
 def check_topic(root, branch, host, base=None, *, host_wait_minutes=HOST_WAIT_MINUTES):
     ref = check_ref(branch)
     head = sha(revision(root, ref + "^{commit}"), "topic tip")
-    # The lease comes before the pins, so a wait for a busy host cannot leave the pinned main behind.
-    lease = acquire_host_lease(host, branch, head, host_wait_minutes)
-    try:
-        return pinned_check(root, branch, host, base, ref, head, lease)
-    finally:
-        if lease.job_may_run:
-            say(f"Kept the {host} landing-check lease while job {lease.holder['job']} may still run: {lease.path}. "
-                "It counts as stale once that job has ended.")
-        else:
-            lease.release()
+    # The wait comes before the pins, so waiting for a busy host cannot leave the pinned main behind.
+    waiter = HostWait(host, host_wait_minutes)
+    while True:
+        waiter.until_free()
+        folder = pinned_check(root, branch, host, base, ref, head)
+        if folder is None:
+            return 0
+        waiter.lost_race(folder)
 
 
-def pinned_check(root, branch, host, base, ref, head, lease):
+def pinned_check(root, branch, host, base, ref, head):
+    """Run one check. None when it ran; the run folder when its job found the host's lock held and did nothing."""
     tips = origin_refs(root, MAIN_REF, ref)
     main = tips[MAIN_REF]
     if base is None:
@@ -2098,18 +1979,17 @@ def pinned_check(root, branch, host, base, ref, head, lease):
     # when the check at that commit prints one. Without those lines no batch runs, and batch-check says so.
     rows = base is not None and check_can_batch(
         git(root, "show", f"{head}:scripts/pm-landing-check.py", check=False).stdout)
+    write_json(folder / LANDER_FILE, {"lander": os.environ.get("PM_LAND_LANDER") or os.environ.get("PM_MAIL_AS"),
+                                      "lander_machine": socket.gethostname()})
     try:
-        lease.record_job(folder)
-        lease.job_may_run = True
         start_remote_job(folder, host, ref, head, tree, checked_base, main, rows)
-        lease.job_may_run = False
+        if (folder / HOST_BUSY_FILE).exists() and not path.exists():
+            return folder
         record = read_json(path)
         verify_record(folder, record, host, ref, head, tree, checked_base)
     except TransportFailure:
         raise
     except (Refusal, OSError, ValueError, KeyError, TypeError):
-        # A refused start or a failed wait means the job is not running; a lost SSH (above) may leave it running.
-        lease.job_may_run = False
         cleanup_after_check(folder, host)
         raise
     cleanup_after_check(folder, host)
@@ -2117,7 +1997,7 @@ def pinned_check(root, branch, host, base, ref, head, lease):
     say(f"Receipt: {path}")
     say(f"Landing checker exit {code} ({EXIT_LABELS[code]}). Shard check exit {record['shard_exit_code']}."
         f" Report: {record['report']}")
-    return 0
+    return None
 
 
 # --------------------------------------------------------------------------------- batch landings
@@ -3509,7 +3389,14 @@ def worker_main(argv):
     folder = require_run_folder(Path(__file__).absolute().parent)
     require_host(args.host)
     if args.mode == "check":
-        remote_check(folder, args.host, args.ref, args.head, args.tree, args.base, args.main, args.rows == "rows")
+        lock = hold_host_lock(folder, args.host, args.ref, args.head)
+        if lock is None:
+            print(f"{args.host} is held by another landing check; this job did nothing.", flush=True)
+            return 0
+        try:
+            remote_check(folder, args.host, args.ref, args.head, args.tree, args.base, args.main, args.rows == "rows")
+        finally:
+            lock.release()
     else:
         remote_cleanup(folder, args.host)
     return 0
@@ -3518,6 +3405,9 @@ def worker_main(argv):
 def main(argv=None):
     try:
         if __file__ == "<stdin>":
+            stdin_args = sys.argv[1:] if argv is None else list(argv)
+            if stdin_args[:1] == ["probe-host-lock"]:
+                return probe_worker(stdin_args[1:])
             return verify_worker(argv)
         if Path(__file__).name == "worker.py":
             return worker_main(argv)
@@ -3578,8 +3468,8 @@ def main(argv=None):
                                                              .stdout.strip()))
         if args.command == "check":
             root = Path(git(Path.cwd(), "rev-parse", "--show-toplevel").stdout.strip())
-            if not args.host_wait_minutes >= 0:
-                check.error("--host-wait-minutes must be 0 or more")
+            if not (math.isfinite(args.host_wait_minutes) and args.host_wait_minutes >= 0):
+                check.error("--host-wait-minutes must be a finite number, 0 or more")
             if args.base is None:
                 return check_topic(root, args.branch, args.on, host_wait_minutes=args.host_wait_minutes)
             return check_topic(root, args.branch, args.on, args.base, host_wait_minutes=args.host_wait_minutes)

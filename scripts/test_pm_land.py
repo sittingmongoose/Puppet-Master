@@ -115,6 +115,15 @@ class LandingFixture(unittest.TestCase):
         path_patcher = patch.object(land, "worktree_path", return_value=self.remote)
         path_patcher.start()
         self.addCleanup(path_patcher.stop)
+        # The host lock: a worker started here locks a folder of this fixture, and `check` sees a free host
+        # without ssh unless a test says otherwise.
+        self.host_locks = self.root / "host-locks"
+        lock_env = patch.dict(os.environ, {land.HOST_LOCK_DIR_ENV: str(self.host_locks)})
+        lock_env.start()
+        self.addCleanup(lock_env.stop)
+        probe = patch.object(land, "probe_host_lock", return_value={"free": True, "holder": None})
+        self.probe = probe.start()
+        self.addCleanup(probe.stop)
 
         self.git(self.shared, "init", "-b", "main")
         self.git(self.shared, "config", "user.email", "fixture@example.invalid")
@@ -261,68 +270,91 @@ class LandingFixture(unittest.TestCase):
         new_run.assert_not_called()
 
     # ------------------------------------------------------------------ one landing check per host
-    def test_check_holds_the_host_lease_while_its_job_runs_and_releases_it_after(self):
-        lease = land.host_lease_path("nas1")
-        seen = {}
-
-        def remote_job(folder, host, *args):
-            holder = land.read_json(lease / "holder.json")
-            seen.update(holder)
-            self.assertEqual((holder["host"], holder["branch"], holder["commit"]), ("nas1", self.branch, self.head))
-            self.assertEqual(holder["job"], land.job_name(folder))
-            self.assertEqual(holder["run_folder"], str(folder))
-
+    def test_check_probes_the_host_and_runs_with_no_new_output_when_it_is_free(self):
         output = io.StringIO()
-        with (patch.object(land, "new_run", return_value=self.folder),
-              patch.object(land, "start_remote_job", side_effect=remote_job),
+        with (patch.object(land, "new_run", return_value=self.folder), patch.object(land, "start_remote_job"),
               patch.object(land, "cleanup_after_check"), redirect_stdout(output)):
             self.assertEqual(land.check_topic(self.shared, self.branch, "nas1"), 0)
-        self.assertEqual(seen["schema"], land.HOST_LEASE_SCHEMA)
-        self.assertFalse(lease.exists())
-        self.assertNotIn("lease", output.getvalue())
+        self.probe.assert_called_once_with("nas1")
+        self.assertNotIn("lock", output.getvalue())
+        self.assertNotIn("busy", output.getvalue())
+        self.assertEqual(land.read_json(self.folder / land.LANDER_FILE)["lander_machine"], socket.gethostname())
 
-    def test_check_releases_the_lease_when_its_job_fails_and_keeps_it_when_ssh_is_lost(self):
-        lease = land.host_lease_path("nas1")
-        with (patch.object(land, "new_run", return_value=self.folder),
-              patch.object(land, "start_remote_job", side_effect=land.Refusal("remote job failed")),
-              patch.object(land, "cleanup_after_check"), redirect_stdout(io.StringIO()),
-              self.assertRaisesRegex(land.Refusal, "remote job failed")):
-            land.check_topic(self.shared, self.branch, "nas1")
-        self.assertFalse(lease.exists())
+    def test_check_waits_for_a_busy_host_before_it_pins_and_then_runs(self):
+        busy = {"free": False, "holder": lock_holder(job="pm-check-live")}
+        self.probe.side_effect = [busy, busy, {"free": True, "holder": None}]
         output = io.StringIO()
-        with (patch.object(land, "new_run", return_value=self.folder),
-              patch.object(land, "start_remote_job", side_effect=land.TransportFailure("Lost SSH to nas1")),
-              redirect_stdout(output), self.assertRaises(land.TransportFailure)):
-            land.check_topic(self.shared, self.branch, "nas1")
-        self.assertEqual(land.read_json(lease / "holder.json")["job"], land.job_name(self.folder))
-        self.assertIn("Kept the nas1 landing-check lease", output.getvalue())
+        with (patch.object(land, "origin_refs", wraps=land.origin_refs) as pins,
+              patch.object(land, "new_run", return_value=self.folder),
+              patch.object(land, "start_remote_job") as start, patch.object(land, "cleanup_after_check"),
+              patch.object(land, "lease_sleep", side_effect=lambda _s: self.assertEqual(pins.call_count, 0)),
+              redirect_stdout(output)):
+            self.assertEqual(land.check_topic(self.shared, self.branch, "nas1"), 0)
+        start.assert_called_once()
+        self.assertEqual(output.getvalue().count("nas1 is busy: landing-check lock held by other-lander for fix/other "
+                                                 "aaaaaaaaaaaa, job pm-check-live since "), 1)
+        self.assertIn("nas1 is free. Starting the check.", output.getvalue())
+
+    def test_a_job_that_finds_the_host_taken_does_nothing_and_check_waits_and_retries(self):
+        lost = self.runs / "lost-run"
+        lost.mkdir()
+
+        def first_finds_it_taken(folder, *args):
+            if folder == lost:
+                land.write_json(folder / land.HOST_BUSY_FILE, {"holder": lock_holder(job="pm-check-winner")})
+
+        output = io.StringIO()
+        with (patch.object(land, "new_run", side_effect=[lost, self.folder]),
+              patch.object(land, "start_remote_job", side_effect=first_finds_it_taken) as start,
+              patch.object(land, "cleanup_after_check") as clean, patch.object(land, "lease_sleep"),
+              redirect_stdout(output)):
+            self.assertEqual(land.check_topic(self.shared, self.branch, "nas1"), 0)
+        self.assertEqual([c.args[0] for c in start.call_args_list], [lost, self.folder])
+        clean.assert_called_once_with(self.folder, "nas1")
+        self.assertIn(f"nas1 was taken by another check as this one started; nothing ran. Evidence: {lost}",
+                      output.getvalue())
+        self.assertIn("job pm-check-winner", output.getvalue())
+        self.assertIn(f"Landing checker exit 1", output.getvalue())
 
     def test_a_busy_host_times_out_with_exit_three_and_runs_no_check(self):
-        holder = hold_lease(self.runs, "nas1", job="pm-check-live")
-        stderr, output = io.StringIO(), io.StringIO()
-        with (patch.object(land, "ssh", side_effect=job_states({"pm-check-live": "running"})),
-              patch.object(land, "new_run") as new_run, patch.object(land, "lease_sleep"),
-              redirect_stdout(output), redirect_stderr(stderr), working_directory(self.shared)):
+        self.probe.return_value = {"free": False, "holder": lock_holder(job="pm-check-live")}
+        stderr = io.StringIO()
+        with (patch.object(land, "new_run") as new_run, patch.object(land, "lease_sleep"),
+              redirect_stdout(io.StringIO()), redirect_stderr(stderr), working_directory(self.shared)):
             self.assertEqual(land.main(["check", self.branch, "--host-wait-minutes", "0"]), 3)
         new_run.assert_not_called()
-        self.assertIn("nas1 stayed busy for 0 minutes", stderr.getvalue())
-        self.assertIn("job pm-check-live is running on nas1", stderr.getvalue())
-        self.assertEqual(land.read_json(land.host_lease_path("nas1") / "holder.json"), holder)
+        self.assertIn("nas1 stayed busy for 0 minutes: its landing-check lock is held by other-lander for fix/other "
+                      "aaaaaaaaaaaa, job pm-check-live", stderr.getvalue())
 
-    def test_check_without_on_leases_the_default_host_and_the_verify_and_publish_paths_hold_none(self):
-        with (patch.object(land, "acquire_host_lease", side_effect=AssertionError("no lease here")),
-              redirect_stdout(io.StringIO())):
+    def test_check_without_on_probes_the_default_host_and_verify_probes_nothing(self):
+        self.probe.side_effect = AssertionError("verify takes no lock")
+        with redirect_stdout(io.StringIO()):
             self.assertEqual(self.verify(self.head, self.base), 0)
-        with (patch.object(land, "acquire_host_lease", wraps=land.acquire_host_lease) as acquire,
-              patch.object(land, "new_run", return_value=self.folder), patch.object(land, "start_remote_job"),
+        self.probe.side_effect = None
+        with (patch.object(land, "new_run", return_value=self.folder), patch.object(land, "start_remote_job"),
               patch.object(land, "cleanup_after_check"), redirect_stdout(io.StringIO()),
               working_directory(self.shared)):
             self.assertEqual(land.main(["check", self.branch]), 0)
-        self.assertEqual(acquire.call_args.args[:3], ("nas1", self.branch, self.head))
-        self.assertEqual(acquire.call_args.args[3], land.HOST_WAIT_MINUTES)
-        self.assertFalse(land.host_lease_path("nas1").exists())
+        self.probe.assert_called_once_with("nas1")
         source = Path(land.__file__).read_text(encoding="utf-8")
-        self.assertEqual(source.count("acquire_host_lease("), 2)  # its definition and check_topic's one call
+        self.assertEqual(source.count("hold_host_lock("), 2)  # its definition and the worker's one call
+        self.assertEqual(source.count("probe_host_lock("), 2)  # its definition and HostWait's one call
+
+    def test_the_worker_holds_the_host_lock_for_the_whole_check_and_frees_it_after(self):
+        seen = {}
+
+        def remote_check(folder, *args):
+            seen.update(land.host_lock_state())
+
+        with (patch.object(land, "remote_check", side_effect=remote_check),
+              patch.object(land.Path, "absolute", return_value=self.folder / "worker.py")):
+            self.assertEqual(land.worker_main(["check", "nas1", self.ref, self.head, self.tree, self.base]), 0)
+        self.assertFalse(seen["free"])
+        self.assertEqual((seen["holder"]["topic"], seen["holder"]["commit"], seen["holder"]["job"]),
+                         (self.ref, self.head, land.job_name(self.folder)))
+        self.assertTrue(land.host_lock_state()["free"])
+        self.assertFalse((self.host_locks / land.HOST_LOCK_HOLDER).exists())
+        self.assertFalse((self.folder / land.HOST_BUSY_FILE).exists())
 
     def test_remote_checkout_rejects_a_branch_that_moved_after_pin(self):
         self.git(self.origin, "update-ref", self.ref, self.base, self.head)
@@ -1863,32 +1895,11 @@ def landing_report(pre=(), more: int = 0, counter=(), compare: int = 0, timeouts
     return "\n".join(lines)
 
 
-def hold_lease(runs, host, **fields):
-    """Write a lease another check holds, as acquire_host_lease would have."""
-    lease = runs / land.HOST_LEASE_DIR / host
-    lease.mkdir(parents=True)
-    holder = {"schema": land.HOST_LEASE_SCHEMA, "host": host, "branch": "fix/other", "commit": "a" * 40,
-              "job": None, "run_folder": None, "job_recorded_utc": land.iso(), "lander": "other-lander",
-              "lander_machine": "another-machine", "lander_pid": 1, "lander_pid_start": "1",
-              "token": "other-token", "started_utc": land.iso(), **fields}
-    land.write_json(lease / "holder.json", holder)
-    return holder
-
-
-def job_states(states, calls=None):
-    """A stand-in for ssh that answers `long-job status <name> --json` from `states`."""
-    def fake(host, *argv, **kwargs):
-        if calls is not None:
-            calls.append((host, *argv))
-        if argv[:2] != ("long-job", "status"):
-            raise AssertionError(f"unexpected ssh: {argv}")
-        state = states.get(argv[2], "absent")
-        if state == "absent":
-            return subprocess.CompletedProcess(argv, 2, "", f"long-job: no job named {argv[2]} on this machine")
-        if state == "unreachable":
-            return subprocess.CompletedProcess(argv, 255, "", "ssh: connect to host: timed out")
-        return subprocess.CompletedProcess(argv, 0, json.dumps([{"name": argv[2], "state": state}]), "")
-    return fake
+def lock_holder(**fields):
+    """The display record another check's worker would have written."""
+    return {"schema": land.HOST_LOCK_SCHEMA, "host": "nas1", "machine": "ubuntu-agent-nas1",
+            "topic": "refs/heads/fix/other", "commit": "a" * 40, "job": None, "run_folder": "/runs/other",
+            "started_utc": land.iso(), "worker_pid": 1, "lander": "other-lander", "lander_machine": "vm", **fields}
 
 
 class working_directory:
@@ -1903,21 +1914,19 @@ class working_directory:
         os.chdir(self.previous)
 
 
-def ago(seconds):
-    return land.iso(land.now_utc() - timedelta(seconds=seconds))
-
-
-class HostLeaseTests(unittest.TestCase):
-    """One landing check per host: the lease rules, with ssh and the clock replaced."""
+class HostLockTests(unittest.TestCase):
+    """One landing check per host: the worker's lock on the host's own disk, and the lander's wait."""
 
     def setUp(self):
-        temporary = tempfile.TemporaryDirectory(prefix="test-pm-land-lease-")
+        temporary = tempfile.TemporaryDirectory(prefix="test-pm-land-lock-")
         self.addCleanup(temporary.cleanup)
-        self.runs = Path(temporary.name) / "landing-remote"
-        patcher = patch.object(land, "RUNS", self.runs)
-        patcher.start()
-        self.addCleanup(patcher.stop)
-        self.lease = land.host_lease_path("nas1")
+        self.root = Path(temporary.name)
+        self.locks = self.root / "host-locks"
+        env = patch.dict(os.environ, {land.HOST_LOCK_DIR_ENV: str(self.locks)})
+        env.start()
+        self.addCleanup(env.stop)
+        self.folder = self.root / "run-a"
+        self.folder.mkdir()
         self.clock = [1000.0]
         self.sleeps = []
         clock = patch.object(land, "lease_clock", side_effect=lambda: self.clock[0])
@@ -1926,270 +1935,265 @@ class HostLeaseTests(unittest.TestCase):
         sleeper = patch.object(land, "lease_sleep", side_effect=self.sleep)
         sleeper.start()
         self.addCleanup(sleeper.stop)
-        self.on_sleep = None
+        quick = patch.object(land, "HOST_LOCK_TRY_SECONDS", 0.1)
+        quick.start()
+        self.addCleanup(quick.stop)
 
     def sleep(self, seconds):
         self.sleeps.append(seconds)
         self.clock[0] += seconds
-        if self.on_sleep:
-            self.on_sleep()
 
-    def acquire(self, states, wait=30, calls=None, output=None):
-        output = output if output is not None else io.StringIO()
-        with patch.object(land, "ssh", side_effect=job_states(states, calls)), redirect_stdout(output):
-            lease = land.acquire_host_lease("nas1", "fix/topic", "b" * 40, wait)
-        return lease, output.getvalue()
+    def test_the_lock_is_held_shown_and_freed_and_its_file_stays(self):
+        self.assertEqual(land.host_lock_state(), {"free": True, "holder": None})
+        land.write_json(self.folder / land.LANDER_FILE, {"lander": "me", "lander_machine": "vm"})
+        lock = land.hold_host_lock(self.folder, "nas1", "refs/heads/fix/a", "b" * 40)
+        state = land.host_lock_state()
+        self.assertFalse(state["free"])
+        self.assertEqual((state["holder"]["job"], state["holder"]["lander"], state["holder"]["worker_pid"]),
+                         (land.job_name(self.folder), "me", os.getpid()))
+        self.assertEqual(land.describe_holder(state["holder"])[:22], "me for fix/a bbbbbbbbb")
+        lock.release()
+        lock.release()  # a second release is a no-op
+        self.assertEqual(land.host_lock_state(), {"free": True, "holder": None})
+        self.assertTrue((self.locks / land.HOST_LOCK_NAME).exists())  # every job locks the same inode
 
-    def test_acquire_writes_the_holder_and_release_removes_the_lease(self):
-        calls = []
-        lease, output = self.acquire({}, calls=calls)
-        holder = land.read_json(self.lease / "holder.json")
-        self.assertEqual(holder, lease.holder)
-        self.assertEqual((holder["host"], holder["branch"], holder["commit"], holder["job"]),
-                         ("nas1", "fix/topic", "b" * 40, None))
-        self.assertEqual(holder["lander_machine"], socket.gethostname())
-        self.assertEqual(holder["lander_pid"], os.getpid())
-        self.assertIsNotNone(land.parse_iso(holder["started_utc"]))
-        self.assertEqual((calls, self.sleeps, output), ([], [], ""))
-        lease.release()
-        self.assertFalse(self.lease.exists())
-        again, _ = self.acquire({})
-        again.release()
+    def test_a_second_job_finds_the_host_taken_and_records_who_has_it(self):
+        first = land.hold_host_lock(self.folder, "nas1", "refs/heads/fix/a", "b" * 40)
+        second = self.root / "run-b"
+        second.mkdir()
+        self.assertIsNone(land.hold_host_lock(second, "nas1", "refs/heads/fix/b", "c" * 40))
+        busy = land.read_json(second / land.HOST_BUSY_FILE)
+        self.assertEqual(busy["holder"]["job"], land.job_name(self.folder))
+        first.release()
+        third = land.hold_host_lock(second, "nas1", "refs/heads/fix/b", "c" * 40)
+        self.assertIsNotNone(third)
+        third.release()
 
-    def test_a_second_check_waits_until_the_first_releases(self):
-        hold_lease(self.runs, "nas1", job="pm-check-first")
+    def test_the_holder_file_is_shown_but_never_decides(self):
+        self.locks.mkdir()
+        land.write_json(self.locks / land.HOST_LOCK_HOLDER, lock_holder(job="pm-check-crashed"))  # left by a dead job
+        lock = land.hold_host_lock(self.folder, "nas1", "refs/heads/fix/a", "b" * 40)
+        self.assertIsNotNone(lock)
+        lock.release()
+        self.assertEqual(land.describe_holder(None), "a check that has not written its holder file yet")
 
-        def first_ends():
-            if len(self.sleeps) == 3:
-                shutil.rmtree(self.lease)
-
-        self.on_sleep = first_ends
-        lease, output = self.acquire({"pm-check-first": "running"})
-        self.assertEqual(self.sleeps, [land.HOST_LEASE_POLL_SECONDS] * 3)
-        self.assertEqual(output.count("nas1 is busy: landing-check lease held by other-lander for fix/other "
-                                      "aaaaaaaaaaaa, job pm-check-first since "), 1)
-        self.assertIn("its job pm-check-first is running on nas1", output)
-        self.assertIn("Waiting up to 30 more minutes", output)
-        self.assertIn("nas1 is free. Took its landing-check lease", output)
-        self.assertEqual(land.read_json(self.lease / "holder.json")["token"], lease.holder["token"])
-
-    def test_a_long_wait_repeats_its_notice_every_five_minutes(self):
-        hold_lease(self.runs, "nas1", job="pm-check-first")
+    def test_the_wait_repeats_its_notice_every_five_minutes_and_ends_in_host_busy(self):
+        busy = {"free": False, "holder": lock_holder(job="pm-check-first")}
         output = io.StringIO()
-        with self.assertRaises(land.HostBusy):
-            self.acquire({"pm-check-first": "running"}, wait=12, output=output)
+        with (patch.object(land, "probe_host_lock", return_value=busy), redirect_stdout(output),
+              self.assertRaisesRegex(land.HostBusy, "nas1 stayed busy for 12 minutes: its landing-check lock is held by "
+                                                    "other-lander for fix/other aaaaaaaaaaaa, job pm-check-first")):
+            land.HostWait("nas1", 12).until_free()
         self.assertEqual(sum(self.sleeps), 12 * 60)
+        self.assertEqual(set(self.sleeps), {land.HOST_LEASE_POLL_SECONDS})
         self.assertEqual(output.getvalue().count("nas1 is busy:"), 3)  # at 0, 5 and 10 minutes
 
-    def test_a_live_lease_is_never_broken_and_the_wait_ends_in_host_busy(self):
-        for state in sorted(land.LONG_JOB_ALIVE_STATES):
-            with self.subTest(state=state):
-                holder = hold_lease(self.runs, "nas1", job="pm-check-live", started_utc=ago(5 * 3600),
-                                    job_recorded_utc=ago(5 * 3600))
-                with self.assertRaisesRegex(land.HostBusy, f"nas1 stayed busy for 30 minutes.*is {state} on nas1"):
-                    self.acquire({"pm-check-live": state})
-                self.assertEqual(land.read_json(self.lease / "holder.json"), holder)
-                self.assertFalse((self.lease.parent / "reclaimed.jsonl").exists())
-                shutil.rmtree(self.lease)
+    def test_an_unreadable_probe_lets_the_job_decide(self):
+        with patch.object(land, "probe_host_lock", return_value=None), redirect_stdout(io.StringIO()) as output:
+            land.HostWait("nas1", 0).until_free()
+        self.assertEqual((output.getvalue(), self.sleeps), ("", []))
 
-    def test_a_stale_lease_whose_job_is_gone_is_reclaimed(self):
-        for state in ("absent", *sorted(land.LONG_JOB_ENDED_STATES)):
-            with self.subTest(state=state):
-                hold_lease(self.runs, "nas1", job="pm-check-old", job_recorded_utc=ago(600))
-                lease, output = self.acquire({"pm-check-old": state})
-                self.assertIn("Reclaimed the stale nas1 landing-check lease", output)
-                self.assertEqual(self.sleeps, [])
-                self.assertEqual(land.read_json(self.lease / "holder.json")["token"], lease.holder["token"])
-                rows = (self.lease.parent / "reclaimed.jsonl").read_text(encoding="utf-8").splitlines()
-                self.assertEqual(json.loads(rows[-1])["holder"]["token"], "other-token")
-                self.assertEqual([p.name for p in self.lease.parent.iterdir() if ".stale-" in p.name], [])
-                lease.release()
+    def test_a_lost_start_race_waits_on_the_same_deadline(self):
+        waiter = land.HostWait("nas1", 1)
+        land.write_json(self.folder / land.HOST_BUSY_FILE, {"holder": lock_holder(job="pm-check-winner")})
+        with redirect_stdout(io.StringIO()) as output:
+            waiter.lost_race(self.folder)
+            waiter.lost_race(self.folder)
+            with self.assertRaises(land.HostBusy):
+                waiter.lost_race(self.folder)
+        self.assertEqual(self.sleeps, [30, 30])
+        self.assertIn("job pm-check-winner", output.getvalue())
 
-    def test_a_job_named_moments_ago_may_still_be_starting(self):
-        hold_lease(self.runs, "nas1", job="pm-check-new", job_recorded_utc=ago(30))
-        with self.assertRaisesRegex(land.HostBusy, "about to start"):
-            self.acquire({}, wait=1)
+    def test_probe_host_lock_reads_the_hosts_answer_and_nothing_else(self):
+        answers = [subprocess.CompletedProcess([], 0, '{"free": false, "holder": null}\n', ""),
+                   subprocess.CompletedProcess([], 255, "", "ssh: timed out"),
+                   subprocess.CompletedProcess([], 0, "not json\n", ""),
+                   subprocess.CompletedProcess([], 0, '{"free": "yes"}\n', "")]
+        with patch.object(land, "ssh", side_effect=answers) as ssh:
+            self.assertEqual(land.probe_host_lock("nas1"), {"free": False, "holder": None})
+            self.assertEqual([land.probe_host_lock("nas1") for _ in range(3)], [None, None, None])
+        self.assertEqual(ssh.call_args.args[:5], ("nas1", "python3", "-B", "-", "probe-host-lock"))
+        self.assertIn("def probe_worker(", ssh.call_args.kwargs["input_text"])
 
-    def test_an_unchecked_lease_is_stale_only_after_ninety_minutes(self):
-        hold_lease(self.runs, "nas1", job="pm-check-far", started_utc=ago(89 * 60))
-        with self.assertRaisesRegex(land.HostBusy, "could not be checked; it counts as stale after 90 minutes"):
-            self.acquire({"pm-check-far": "unreachable"}, wait=0)
-        self.assertEqual(land.read_json(self.lease / "holder.json")["token"], "other-token")
-        shutil.rmtree(self.lease)
-        hold_lease(self.runs, "nas1", job="pm-check-far", started_utc=ago(91 * 60))
-        lease, output = self.acquire({"pm-check-far": "unreachable"}, wait=0)
-        self.assertIn("could not be checked and the lease is over 90 minutes old", output)
-        self.assertEqual(land.read_json(self.lease / "holder.json")["token"], lease.holder["token"])
-
-    def test_a_partial_job_keeps_the_lease_like_an_unchecked_one(self):
-        hold_lease(self.runs, "nas1", job="pm-check-left", started_utc=ago(60))
-        with self.assertRaises(land.HostBusy):
-            self.acquire({"pm-check-left": "partial"}, wait=0)
-
-    def test_a_lander_on_this_machine_is_live_until_its_process_ends(self):
-        mine = land.read_proc_stat(os.getpid())
-        hold_lease(self.runs, "nas1", lander_machine=socket.gethostname(), lander_pid=os.getpid(),
-                   lander_pid_start=mine["start"], started_utc=ago(5 * 3600))
-        with self.assertRaisesRegex(land.HostBusy, "has not started a job yet"):
-            self.acquire({}, wait=0)
-        shutil.rmtree(self.lease)
-        hold_lease(self.runs, "nas1", lander_machine=socket.gethostname(), lander_pid=os.getpid(),
-                   lander_pid_start="1", started_utc=ago(60))
-        lease, output = self.acquire({}, wait=0)
-        self.assertIn("ended before starting a job", output)
-        lease.release()
-
-    def test_a_lease_with_an_unreadable_holder_counts_as_held_and_an_empty_folder_is_no_lease(self):
-        self.lease.mkdir(parents=True)
-        (self.lease / "holder.json").write_text("{not json", encoding="utf-8")
-        with self.assertRaisesRegex(land.HostBusy, "no readable holder.json"):
-            self.acquire({}, wait=0)
-        old = time.time() - 91 * 60
-        os.utime(self.lease, (old, old))
-        lease, _ = self.acquire({}, wait=0)
-        self.assertEqual(land.read_json(self.lease / "holder.json")["token"], lease.holder["token"])
-        lease.release()
-        self.lease.mkdir()  # leases are born complete, so an empty folder is nobody's
-        lease, output = self.acquire({}, wait=0)
-        self.assertEqual(land.read_json(self.lease / "holder.json")["token"], lease.holder["token"])
-        self.assertEqual(output, "")
-
-    def test_a_lease_is_never_visible_without_its_holder(self):
-        seen = []
-        real = land.write_json
-
-        def watch(path, value):
-            if path.name == "holder.json":
-                seen.append(self.lease.exists())
-            return real(path, value)
-
-        with patch.object(land, "write_json", side_effect=watch):
-            lease, _ = self.acquire({})
-        self.assertEqual(seen, [False])  # the holder is written before the lease path exists
-        self.assertEqual(land.read_json(self.lease / "holder.json"), lease.holder)
-        self.assertEqual(sorted(p.name for p in self.lease.parent.iterdir()), ["nas1"])
-
-    def test_a_release_between_two_reads_lets_no_second_check_share_the_host(self):
-        """The cheap review's N1 interleave, made deterministic: B fails to take the lease A holds; A releases
-        just before B reads the holder; right after B's verdict, A2 starts taking the lease and stops before its
-        holder.json is written. B must never call the vanished lease stale and reclaim A2's newborn one: only one
-        of B and A2 may end up holding nas1."""
-        first, _ = self.acquire({})
-        real_read, real_verdict, real_write = land.read_lease_holder, land.lease_verdict, land.write_json
-        main = threading.current_thread()
-        paused, go = threading.Event(), threading.Event()
-        state = {"released": False, "a2": None}
-        results = {}
-
-        def a2_writes(path, value):
-            if threading.current_thread() is not main and path.name == "holder.json" and not paused.is_set():
-                paused.set()
-                go.wait(10)
-            return real_write(path, value)
-
-        def a2():
-            try:
-                results["a2"] = land.acquire_host_lease("nas1", "fix/a2", "c" * 40, 0)
-            except land.HostBusy as exc:
-                results["a2"] = exc
-
-        def start_a2():
-            if state["a2"] is None:
-                state["a2"] = threading.Thread(target=a2)
-                state["a2"].start()
-                paused.wait(10)
-
-        def read_after_release(lease):
-            if threading.current_thread() is main and not state["released"]:
-                state["released"] = True
-                first.release()
-            return real_read(lease)
-
-        def verdict_then_a2(*args, **kwargs):
-            verdict = real_verdict(*args, **kwargs)
-            if threading.current_thread() is main:
-                start_a2()
-            return verdict
-
-        output = io.StringIO()
-        with (patch.object(land, "ssh", side_effect=job_states({})), redirect_stdout(output),
-              patch.object(land, "read_lease_holder", side_effect=read_after_release),
-              patch.object(land, "lease_verdict", side_effect=verdict_then_a2),
-              patch.object(land, "write_json", side_effect=a2_writes)):
-            try:
-                results["b"] = land.acquire_host_lease("nas1", "fix/b", "b" * 40, 0)
-            except land.HostBusy as exc:
-                results["b"] = exc
-            go.set()
-            start_a2()
-            go.set()
-            state["a2"].join(10)
-        holders = [name for name in ("b", "a2") if isinstance(results.get(name), land.HostLease)]
-        self.assertTrue(state["released"])
-        self.assertEqual(len(holders), 1, f"two checks hold nas1: {results}; output: {output.getvalue()}")
-        winner = results[holders[0]]
-        self.assertEqual(land.read_json(self.lease / "holder.json")["token"], winner.holder["token"])
-        self.assertNotIn("Reclaimed", output.getvalue())
-        self.assertFalse((self.lease.parent / "reclaimed.jsonl").exists())
-
-    def test_reclaim_leaves_a_lease_that_changed_hands_and_waits_for_another_reclaimer(self):
-        hold_lease(self.runs, "nas1", job="pm-check-old")
-        seen = land.read_lease_state(self.lease)
-        shutil.rmtree(self.lease)
-        hold_lease(self.runs, "nas1", job="pm-check-new", token="new-token")
-        with redirect_stdout(io.StringIO()):
-            self.assertFalse(land.reclaim_host_lease(self.lease, seen, "its job is gone"))
-        self.assertEqual(land.read_json(self.lease / "holder.json")["token"], "new-token")
-        current = land.read_lease_state(self.lease)
-        mutex = self.lease.with_name("nas1.reclaim")
-        mutex.mkdir()
-        with redirect_stdout(io.StringIO()):
-            self.assertFalse(land.reclaim_host_lease(self.lease, current, "its job is gone"))
-        self.assertTrue(self.lease.exists())
-        self.assertTrue(mutex.exists())
-        mutex.rmdir()
-        with redirect_stdout(io.StringIO()):
-            self.assertFalse(land.reclaim_host_lease(self.lease, (None, None), "vanished"))
-            self.assertTrue(land.reclaim_host_lease(self.lease, current, "its job is gone"))
-        self.assertFalse(self.lease.exists())
-
-    def test_reclaim_of_an_empty_folder_never_removes_a_lease_born_in_its_place(self):
-        self.lease.mkdir(parents=True)
-        seen = land.read_lease_state(self.lease)
-        self.lease.rmdir()
-        hold_lease(self.runs, "nas1", token="newborn")
-        with redirect_stdout(io.StringIO()):
-            self.assertFalse(land.reclaim_host_lease(self.lease, seen, "old empty folder"))
-        self.assertEqual(land.read_json(self.lease / "holder.json")["token"], "newborn")
-
-    def test_record_job_refuses_a_lease_it_no_longer_holds(self):
-        lease, _ = self.acquire({})
-        shutil.rmtree(self.lease)
-        hold_lease(self.runs, "nas1", token="next-token")
-        with self.assertRaisesRegex(land.Refusal, "taken over before the job started"):
-            lease.record_job(self.runs / "some-run")
-        self.assertEqual(land.read_json(self.lease / "holder.json")["token"], "next-token")
-
-    def test_release_leaves_a_lease_another_check_took_over(self):
-        lease, _ = self.acquire({})
-        shutil.rmtree(self.lease)
-        hold_lease(self.runs, "nas1", token="next-token")
-        output = io.StringIO()
-        with redirect_stdout(output):
-            lease.release()
-        self.assertEqual(land.read_json(self.lease / "holder.json")["token"], "next-token")
-        self.assertIn("taken over", output.getvalue())
-
-    def test_the_cli_takes_a_wait_and_refuses_a_negative_one(self):
+    def test_the_cli_takes_a_finite_wait_and_refuses_the_rest(self):
         with patch.object(land, "check_topic", return_value=0) as check, \
                 working_directory(Path(__file__).resolve().parent):
             self.assertEqual(land.main(["check", "fix/topic", "--on", "1070ti", "--host-wait-minutes", "5"]), 0)
         self.assertEqual(check.call_args.args[1:], ("fix/topic", "1070ti"))
         self.assertEqual(check.call_args.kwargs, {"host_wait_minutes": 5.0})
-        with redirect_stderr(io.StringIO()), self.assertRaises(SystemExit), \
-                working_directory(Path(__file__).resolve().parent):
-            land.main(["check", "fix/topic", "--host-wait-minutes", "-1"])
+        for value in ("-1", "inf", "nan"):
+            with self.subTest(value=value), redirect_stderr(io.StringIO()), self.assertRaises(SystemExit), \
+                    working_directory(Path(__file__).resolve().parent):
+                land.main(["check", "fix/topic", "--host-wait-minutes", value])
 
+
+# A real worker process for the lock tests: it loads this pm-land.py and takes the host lock with the real
+# hold_host_lock, as the worker's check mode does first, in a run folder of its own.
+#   hold: print HELD (or BUSY and exit 3), then hold until killed or stdin closes.
+#   rounds <n>: run n jobs one after another, each retrying until it gets the lock. Inside, it creates
+#   <locks>/inside with O_EXCL, so a second holder at the same time is seen; a marker left by a holder that was
+#   SIGKILLed inside (its process is gone or a zombie) is counted apart.
+LOCK_CHILD = r"""
+import importlib.util, json, os, sys, time, uuid
+from pathlib import Path
+script, runs, mode, arg = sys.argv[1], Path(sys.argv[2]), sys.argv[3], sys.argv[4]
+spec = importlib.util.spec_from_file_location("pm_land", script)
+land = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(land)
+land.HOST_LOCK_TRY_SECONDS = 0.0
+
+folder = runs / uuid.uuid4().hex  # one run folder per worker: a busy attempt rewrites its host-busy.json
+folder.mkdir(parents=True)
+
+def job():
+    return land.hold_host_lock(folder, "nas1", "refs/heads/fix/child", "c" * 40)
+
+def alive(pid):
+    try:
+        state = Path(f"/proc/{pid}/stat").read_text().rsplit(")", 1)[1].split()[0]
+    except (OSError, IndexError):
+        return False
+    return state not in ("Z", "X")
+
+if mode == "hold":
+    lock = job()
+    if lock is None:
+        print("BUSY", flush=True)
+        sys.exit(3)
+    print("HELD", flush=True)
+    sys.stdin.read()
+    lock.release()
+    sys.exit(0)
+# The kernel drops a SIGKILLed holder's flock while it closes its files, a moment before /proc shows it as a
+# zombie. A marker whose owner still looks alive is counted as `dual` only if that owner then removes it
+# itself, which a second live holder would do; if the owner turns out dead, it was that exit window.
+counts = {"rounds": 0, "dual": 0, "killed_inside": 0, "exit_window": 0, "busy": 0}
+marker = land.host_lock_dir() / "inside"
+for _ in range(int(arg)):
+    while (lock := job()) is None:
+        counts["busy"] += 1
+        time.sleep(0.001)
+    seen = None
+    while True:
+        try:
+            fd = os.open(marker, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o666)
+            break
+        except FileExistsError:
+            try:
+                other = int(marker.read_text() or "0")
+            except (OSError, ValueError):
+                continue
+            if alive(other):
+                seen = other
+                time.sleep(0.001)
+                continue
+            counts["killed_inside"] += 1
+            counts["exit_window"] += seen == other
+            seen = None
+            try:
+                marker.unlink()
+            except FileNotFoundError:
+                pass
+    counts["dual"] += seen is not None  # the marker went away while its owner was alive: it was inside too
+    os.write(fd, str(os.getpid()).encode())
+    os.close(fd)
+    time.sleep(0.002)
+    marker.unlink(missing_ok=True)  # missing only when a second holder was inside too
+    lock.release()
+    counts["rounds"] += 1
+print(json.dumps(counts), flush=True)
+"""
+
+
+class HostLockProcessTests(unittest.TestCase):
+    """Real worker processes contending for one host's lock on its local disk."""
+
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory(prefix="test-pm-land-lockproc-")
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name)
+        self.env = {**os.environ, land.HOST_LOCK_DIR_ENV: str(self.root / "host-locks")}
+
+    def child(self, mode, arg=0):
+        child = subprocess.Popen([sys.executable, "-B", "-c", LOCK_CHILD, str(Path(land.__file__)),
+                                  str(self.root / "runs"), mode, str(arg)], env=self.env, stdin=subprocess.PIPE,
+                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        self.addCleanup(self.end, child)
+        return child
+
+    @staticmethod
+    def end(child):
+        if child.poll() is None:
+            child.kill()
+        child.wait(30)
+        for stream in (child.stdin, child.stdout, child.stderr):
+            if stream and not stream.closed:
+                stream.close()
+
+    def holder(self):
+        child = self.child("hold")
+        self.assertEqual(child.stdout.readline().strip(), "HELD", child.stderr.read() if child.poll() else "")
+        return child
+
+    def contender(self):
+        child = self.child("hold")
+        line = child.stdout.readline().strip()
+        if line == "HELD":
+            child.stdin.close()
+        self.assertEqual(child.wait(30), 0 if line == "HELD" else 3)
+        return line
+
+    def probe(self):
+        """The real probe path: pm-land.py's source on stdin, as `check` sends it over ssh."""
+        source = Path(land.__file__).read_text(encoding="utf-8").replace(
+            'if __name__ == "__main__":', 'MACHINES = {host: socket.gethostname() for host in HOSTS}\n'
+                                          'if __name__ == "__main__":')
+        result = subprocess.run([sys.executable, "-B", "-", "probe-host-lock", "nas1"], input=source, env=self.env,
+                                capture_output=True, text=True, timeout=60)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        return json.loads(result.stdout)
+
+    def test_two_jobs_contend_and_the_second_gets_the_lock_after_the_first_ends(self):
+        self.assertEqual(self.probe(), {"free": True, "holder": None})
+        first = self.holder()
+        self.assertEqual(self.contender(), "BUSY")
+        state = self.probe()
+        self.assertFalse(state["free"])
+        self.assertEqual(state["holder"]["worker_pid"], first.pid)
+        first.stdin.close()
+        self.assertEqual(first.wait(30), 0)
+        self.assertEqual(self.contender(), "HELD")
+
+    def test_sigkill_of_the_holding_job_frees_the_lock(self):
+        first = self.holder()
+        self.assertEqual(self.contender(), "BUSY")
+        first.send_signal(signal.SIGKILL)
+        first.wait(30)
+        self.assertTrue(self.probe()["free"])
+        self.assertEqual(self.contender(), "HELD")
+
+    def test_jobs_started_together_let_exactly_one_check_run(self):
+        children = [self.child("hold") for _ in range(8)]
+        lines = [child.stdout.readline().strip() for child in children]
+        self.assertEqual(sorted(lines), ["BUSY"] * 7 + ["HELD"])
+
+    def test_no_two_holders_across_many_rounds_with_holders_killed(self):
+        workers = [self.child("rounds", 15) for _ in range(6)]
+        victims = [self.child("rounds", 10000) for _ in range(2)]
+        time.sleep(1.0)
+        for victim in victims:
+            victim.send_signal(signal.SIGKILL)
+            victim.wait(30)
+        totals = {"rounds": 0, "dual": 0, "killed_inside": 0, "exit_window": 0, "busy": 0}
+        for worker in workers:
+            out, err = worker.communicate(timeout=300)
+            self.assertEqual(worker.returncode, 0, err)
+            for key, value in json.loads(out.strip().splitlines()[-1]).items():
+                totals[key] += value
+        self.assertEqual(totals["dual"], 0, totals)
+        self.assertEqual(totals["rounds"], 6 * 15)
+        self.assertGreater(totals["busy"], 0, totals)  # they did contend
+        self.assertEqual(self.contender(), "HELD")
 
 CRASH = 'Traceback (most recent call last):\n  File "scripts/pm-landing-check.py", line 9, in main\nKeyError: \'x\''
 
