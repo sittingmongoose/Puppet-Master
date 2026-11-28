@@ -183915,10 +183915,13 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         this.idleLook ? this.idleLook.join() : '', this.tipLook > this.t, this.t - (this.busyT || -9) < 2.5, pointer.t, this.props.size, this.target || '');
       return { v, o, h, d: d.join('|') };
     }
-    /* a sleeping z (or any particle) moved a tenth of a pixel, or faded 1 %, since it was drawn (p.dr, renderFx) */
+    /* a sleeping z (or any particle) moved a tenth of a pixel since it was drawn, or its opacity as the painter writes it
+       (R, to 0.01) is not the one written (p.dr, renderFx). The opacity is compared rounded: compared continuously, a z
+       that had crossed a rounding step waited three refreshes one step too opaque (A150). Its place and turn are written
+       finer than the step. */
     zMoved(p, step) {
       const q = p.dr; if (!q) return true;
-      return Math.abs(p.x - q[0]) >= step || Math.abs(p.y - q[1]) >= step || Math.abs(p.r - q[2]) / 6 * 12 >= step || Math.abs((1 - (p.life / p.max) ** 2) - q[3]) >= PIP_DRAW_STEP_OP;
+      return Math.abs(p.x - q[0]) >= step || Math.abs(p.y - q[1]) >= step || Math.abs(p.r - q[2]) / 6 * 12 >= step || R(Math.max(0, 1 - (p.life / p.max) ** 2)) !== q[3];
     }
     /* '' when nothing the stage shows has moved a tenth of a pixel since it was last drawn; 'part' when only the sleeping
        z's (or a new one is due) or NieR's target brackets have; 'full' otherwise, and always while anything is under way
@@ -184219,7 +184222,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         const sc = p.kind === 'ring' ? Math.min(1 + ease(k) * 2.2, p.room || Infinity) : p.kind === 'check' ? (k < .1 ? k / .1 * 1.18 : k < .18 ? 1.18 - (k - .1) / .08 * .18 : 1) : 1;
         attr(p.e, 'transform', `translate(${R(p.x)} ${R(p.y)}) rotate(${R(p.r * 57.3 / 6)}) scale(${R(sc)})`);
         attr(p.e, 'opacity', R(Math.max(0, op)));
-        p.dr = [p.x, p.y, p.r, 1 - k * k];
+        p.dr = [p.x, p.y, p.r, R(Math.max(0, op))];
       });
       // sleeping z's
       if (this.sleepZ && !this.reduced && this.t - (this.lastZ || 0) > .9 && f !== 'nier') {
