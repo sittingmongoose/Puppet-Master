@@ -485,9 +485,9 @@ a page of about 15,000 elements, and on that page every frame the main thread re
 5. **Read theme tokens once per look** (`O55.art.tokens` caches by the owning `data-theme` and the root's inline
    variables); a `getComputedStyle` in every scene render forced a style pass of the page.
 6. **The app beneath the window holds still.** It is inert and dimmed, so its own loops are paused while the window is
-   open. On a computer that composites in software (WebGL reports SwiftShader or llvmpipe, or the first opening draws
-   slower than about 48 fps) the app is not drawn at all while the window is open: the scrim lies over the page's own
-   ground (`data-o55-solid`, `O55.solid`). A fast computer keeps the dimmed live app.
+   open, and it is not drawn at all while the window is open, on every computer and in every look (FO-253, Jared
+   2026-11-28): the scrim lies over the page's own ground (`data-o55-solid`, `O55.solid`), so a redraw of Pip no longer
+   re-sorts the app's layers. It comes back unchanged, under the full scrim, as the window starts to close.
 7. **An owner operation the gate refused is not dispatched again until the gate's context changes.** A screen whose
    `mounted()` started a post-commit command before the commit refreshed, mounted and re-dispatched in an endless
    promise chain that froze the page.

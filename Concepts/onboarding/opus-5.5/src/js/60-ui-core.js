@@ -1108,7 +1108,6 @@
     if (!hold) { leave(); focusHeading(); skin('screen', layer, dir); O55.motion.real.setTimeout(armStageTokens, 1600); return; }
     O55.motion.release(() => {
       S.root.classList.remove('o55-hold');
-      if (dir === 'open') checkSolid(); /* the opening is the window's busiest motion: measured while it plays */
       /* The opening may be the skin's to play first (NieR's cold open: the window opens empty, a boot log runs where the
          title will be and its line becomes the title's rule). The screen waits for the skin's promise, or for a key or
          a press, which shows it at once (a key also lands on its primary); the stage shows when the promise says
@@ -1569,28 +1568,20 @@
     O55.motion.setLowResource(!!S.env.lowResource, 'scenario');
     if (O55.tour && O55.tour.reset) O55.tour.reset({ silent: true, force: true });
   }
-  /* Solid backdrop. A computer that cannot draw the dimmed app beneath at full rate (no GPU: the app's live backdrop
-     blurs, paper grounds and translucent layers composited in software, one pass per frame of motion in the window)
-     gets a solid backdrop instead, so the window's own motion stays at 60 fps; a fast computer keeps the dimmed live
-     app. Known at once when the browser renders in software (O55.motion.softwareRendered), otherwise measured over the
-     first opening (the app then goes once the scrim covers it); kept for the page, and the app comes back as the
-     window starts to close. */
-  let SOLID = null;
+  /* Solid backdrop (FO-253, Jared 2026-11-28: "I decided on hide the live app behind the onboarding weeks ago. I said
+     to hide it. Do that."; pm7-perf README decision 2). While the window is open the app beneath is not drawn at all,
+     on every computer and in every look: the scrim lies over the page's own ground (10-window.css, data-o55-solid).
+     Every redraw of Pip made Chrome re-sort the whole page's layers, three quarters of them the dimmed app's (about
+     130-160 ms a second: Basic 680 -> 546, Glass 877 -> 721). This was the slow computers' path (no GPU, or a first
+     opening drawn slower than about 48 fps); it is everyone's now, so nothing is measured. The app goes from the
+     window's first frame, under the click's full dim, and comes back unchanged as the window starts to close, under
+     the full scrim, before the window leaves: it is only not drawn (visibility), so its layout, scroll and state stay.
+     Checks only: O55.solid.set(false) shows the dimmed live app again (glass-frost-resize measures the frost over it);
+     set(null) is the default, hidden. */
+  const SOLID_DEFAULT = true;
+  let SOLID = SOLID_DEFAULT;
   const setSolid = (on) => { const h = document.documentElement; if (h.hasAttribute('data-o55-solid') !== !!on) h.toggleAttribute('data-o55-solid', !!on); };
-  function checkSolid() {
-    if (SOLID !== null || document.hidden || O55.motion.reduced()) return;
-    O55.motion.sampleFrames(900).then((r) => {
-      if (SOLID !== null || document.hidden) return;
-      /* fewer than a dozen frames in 0.9 s is itself the answer (a Glass skin without a GPU draws three a second) */
-      SOLID = r.n < 12 || r.median > 21;
-      if (SOLID && S.open && !S.root.classList.contains('o55-opening')) setSolid(true);
-    });
-  }
-  O55.solid = { get: () => SOLID, set(v) { SOLID = v == null ? null : !!v; setSolid(!!SOLID && S.open); } };
-  /* (asking the browser whether it renders in software builds a WebGL context, 180 ms on the VM: done once while the
-     page is idle after it loads, never inside the window's opening) */
-  const warm = () => { try { O55.motion.softwareRendered(); } catch (_) {} };
-  if (typeof window.requestIdleCallback === 'function') window.requestIdleCallback(warm, { timeout: 6000 }); else window.setTimeout(warm, 3000);
+  O55.solid = { get: () => SOLID, set(v) { SOLID = v == null ? SOLID_DEFAULT : !!v; setSolid(!!SOLID && S.open); } };
 
   /* A new install's window opens by itself about 140 ms after the page has loaded (95-boot.js), and Settings paints the
      Project's stored theme as the page loads (DOMContentLoaded): the look a new install starts in, Basic Dark (the head
@@ -1715,8 +1706,7 @@
        stays until this root is on screen, so the dim never drops out between the two. */
     if (!wasShown && !O55.motion.reduced()) r.classList.add('o55-hold');
     clearOpenScrim();
-    /* known in advance on a computer that renders in software: the backdrop is solid from the first frame */
-    if (SOLID === null && O55.motion.softwareRendered()) SOLID = true;
+    /* the backdrop is solid from the first frame (FO-253, above) */
     if (SOLID && !wasShown) setSolid(true);
     O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 2800 }).then(() => { if (S.open) { r.classList.remove('o55-opening', 'o55-scrim-lit'); if (SOLID) setSolid(true); } });
     const pane = r.querySelector('.o55-pane'); pane.innerHTML = '';
