@@ -387,6 +387,46 @@ window.addEventListener('keydown', e => {
   const watch = () => { if (o55fsEdge !== k) return; const s = root.querySelector('#settings-document'); if (s) o55fsEdgeScroll(s); if (o55fsEdge === k) requestAnimationFrame(watch); };
   requestAnimationFrame(watch);
 }, { passive: true });
+/* FO-251 (2026-11-28; a prototype for pm7-build's behaviour call, macOS only): there the settings document is a composited
+   scroller, and Chrome runs a keyboard End / Home as a compositor animation that an instant scrollTo does not cancel.
+   Mac M3 trace: the take-over above lands at 19,261 px 42 ms after End, and the compositor's animation keeps drawing its
+   own offsets (1,187 px at 45 ms, 3,324 px at 57 ms) until it ends 110-200 ms after the key: 1 to 7 blank frames per End
+   or Home. Nothing passive stopped it (FO251-REPORT: mounting the edge on the key, a fixed background, an overflow
+   toggle, a smooth no-op scroll, a 30-frame hold all left 4 to 15 blank frames in half the cells). So on macOS only, an
+   End / Home, or Cmd+Down / Cmd+Up (the MacBook's own keys for them), that reaches window unhandled, in the bubble phase
+   after every widget's own handler, is cancelled before the compositor is told, and lands in one step as the take-over
+   above does, when the browser would scroll the document with it:
+   - no handler took it (defaultPrevented), no text field holds it, Settings takes input, and the chapter still has
+     unmounted pages or sections never laid out (the note's own conditions); no Shift, Alt or Ctrl (Ctrl+End does not
+     scroll on macOS);
+   - the key's scroller is the document: the focused node, or for a focus on the page's body the last node pressed, is
+     inside the document, inside no widget that owns these keys, and below no inner scroller that would take the key
+     (o55fsInnerTakes, Chrome's own rule: one that can still move that way or contains its overscroll; R144's roster);
+   - the document is not already at that edge. */
+const O55FS_MAC = /^Mac/.test(navigator.platform || '');
+const O55FS_EDGE_OWN = '[role="tablist"], [role="tab"], [role="listbox"], [role="option"], [role="menu"], [role="menubar"], [role="menuitem"], [role="menuitemradio"], [role="menuitemcheckbox"], [role="grid"], [role="treegrid"], [role="tree"], [role="treeitem"], [role="slider"], [role="spinbutton"], [aria-expanded="true"], .wpk-row';
+let o55fsPressed = null;   /* the last node pressed in Settings: Chrome's scroller for a key with focus on the body */
+if (O55FS_MAC) {
+  root.addEventListener('pointerdown', e => { o55fsPressed = e.target; }, { capture: true, passive: true });
+  window.addEventListener('keydown', e => {
+    if (e.defaultPrevented || e.shiftKey || e.altKey || e.ctrlKey) return;
+    const end = e.metaKey ? e.key === 'ArrowDown' : e.key === 'End';
+    if (!end && !(e.metaKey ? e.key === 'ArrowUp' : e.key === 'Home')) return;
+    const t = e.target;
+    if (t && t.nodeType === 1 && (t.isContentEditable || t.closest(O55FS_EDGE_TEXT))) return;
+    const sc = root.querySelector('#settings-document');
+    if (!sc || !(o55fsCold(sc) || o55fsUnlaid(sc)) || !o55fsInteractive()) return;
+    const from = !t || t === document.body || t === document.documentElement ? o55fsPressed : t;
+    if (!(from instanceof Node) || !from.isConnected || !sc.contains(from)) return;
+    const el = from instanceof Element ? from : from.parentElement;
+    if ((el && el.closest(O55FS_EDGE_OWN)) || o55fsInnerTakes(from, sc, end ? 1 : -1)) return;
+    if (end ? sc.scrollTop >= sc.scrollHeight - sc.clientHeight - 1 : sc.scrollTop <= 0) return;
+    e.preventDefault();
+    /* the note's take-over, as if the document had started toward that edge: the landing and its three-frame hold */
+    o55fsEdge = { at: performance.now(), end, top: sc.scrollTop + (end ? -1 : 1) };
+    o55fsEdgeScroll(sc);
+  });
+}
 root.addEventListener('wheel', () => { o55fsEdge = null; o55fsEdgeHeld = null; o55fsStepAt = -Infinity; }, { capture: true, passive: true });
 root.addEventListener('pointerdown', () => { o55fsEdge = null; o55fsEdgeHeld = null; o55fsStepAt = -Infinity; }, { capture: true, passive: true });
 /* the pages at the edge, down to two screens of them (FO-245 r4's o55fsMountEnd) */
