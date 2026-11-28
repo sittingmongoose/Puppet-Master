@@ -5,8 +5,10 @@ from __future__ import annotations
 
 import argparse
 import ast
+import errno
 import importlib.util
 from collections import Counter
+from contextlib import contextmanager
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -1763,6 +1765,17 @@ def cleanup_after_check(folder, host):
 # `check --on <host>` holds RUNS/host-leases/<host>/ while its remote job may run. A busy host is waited
 # for; a lease counts as stale only when its long-job is no longer running on that host, or, when that
 # cannot be checked, once it is 90 minutes old. A live lease is never broken.
+#
+# A lease is born complete: its holder.json is written into a private sibling folder that is then renamed
+# to <host>, so the lease path never shows a lease without its holder, and a rename cannot replace a
+# lease that has one. Reclaiming, releasing and recording the job all happen under one mutex
+# (<host>.reclaim), and each first re-reads the lease and acts only on the very lease it judged.
+
+LEASE_CHANGED = "changed"
+LEASE_MUTEX_WAIT_SECONDS = 30
+LEASE_MUTEX_POLL_SECONDS = 0.05
+LEASE_RETRY_LIMIT = 50  # immediate retries in a row (a lease that vanished or changed) before a normal poll
+
 
 def lease_clock():
     return time.monotonic()
@@ -1784,13 +1797,32 @@ def read_lease_holder(lease):
     return holder if isinstance(holder, dict) else None
 
 
-def lease_age(lease, holder):
+def lease_identity(lease):
+    """The lease folder's (inode, mtime in ns), or None when there is no folder at the path."""
+    try:
+        info = os.lstat(lease)
+    except FileNotFoundError:
+        return None
+    return (info.st_ino, info.st_mtime_ns)
+
+
+def read_lease_state(lease):
+    """(holder, identity) read together. Identity is None when no lease is there, and LEASE_CHANGED when the
+    folder was released, replaced or rewritten during the read: either way the caller retries at once."""
+    identity = lease_identity(lease)
+    if identity is None:
+        return None, None
+    holder = read_lease_holder(lease)
+    after = lease_identity(lease)
+    if after != identity:
+        return None, (None if after is None else LEASE_CHANGED)
+    return holder, identity
+
+
+def lease_age(holder, identity):
     age = age_seconds(holder.get("started_utc")) if holder else None
-    if age is None:
-        try:
-            age = time.time() - lease.stat().st_mtime
-        except OSError:
-            return None
+    if age is None and isinstance(identity, tuple):
+        age = time.time() - identity[1] / 1e9
     return age
 
 
@@ -1814,8 +1846,8 @@ def remote_job_state(host, name):
     return info[0]["state"]
 
 
-def lease_verdict(host, lease, holder):
-    """Return (stale, reason) for an existing lease."""
+def lease_verdict(host, lease, holder, identity=None):
+    """Return (stale, reason) for an existing lease, read as (holder, identity) by read_lease_state."""
     job = holder.get("job") if holder else None
     if isinstance(job, str) and job:
         state = remote_job_state(host, job)
@@ -1832,45 +1864,95 @@ def lease_verdict(host, lease, holder):
         if proc_alive_as(holder.get("lander_pid"), holder.get("lander_pid_start")):
             return False, f"its lander (pid {holder.get('lander_pid')}) has not started a job yet"
         return True, f"its lander (pid {holder.get('lander_pid')}) ended before starting a job"
-    age = lease_age(lease, holder)
-    if age is None or age >= HOST_LEASE_UNCHECKED_SECONDS:
+    age = lease_age(holder, identity)
+    if age is None:
+        return False, "its age could not be read"
+    if age >= HOST_LEASE_UNCHECKED_SECONDS:
         return True, f"its job could not be checked and the lease is over {HOST_LEASE_UNCHECKED_SECONDS // 60} minutes old"
     return False, f"its job could not be checked; it counts as stale after {HOST_LEASE_UNCHECKED_SECONDS // 60} minutes"
 
 
-def reclaim_host_lease(lease, seen, reason):
-    """Remove a stale lease, but only while it still holds the holder judged stale."""
+@contextmanager
+def lease_mutex(lease, wait_seconds):
+    """Yield True while holding <host>.reclaim, or False when it stayed taken for `wait_seconds`."""
     mutex = lease.with_name(lease.name + ".reclaim")
-    try:
-        mutex.mkdir()
-    except FileExistsError:
+    deadline = time.monotonic() + max(0.0, wait_seconds)
+    while True:
         try:
-            if time.time() - mutex.stat().st_mtime > HOST_LEASE_RECLAIM_STALE_SECONDS:
-                mutex.rmdir()
-        except OSError:
-            pass
-        return False
+            mutex.mkdir()
+            break
+        except FileExistsError:
+            try:
+                stale = time.time() - mutex.stat().st_mtime > HOST_LEASE_RECLAIM_STALE_SECONDS
+            except FileNotFoundError:
+                continue
+            if stale:
+                try:
+                    mutex.rmdir()
+                except OSError:
+                    pass
+                continue
+            if time.monotonic() >= deadline:
+                yield False
+                return
+            time.sleep(LEASE_MUTEX_POLL_SECONDS)
     try:
-        current = read_lease_holder(lease)
-        if (current or {}).get("token") != (seen or {}).get("token"):
-            return False
-        tomb = lease.with_name(f"{lease.name}.stale-{uuid.uuid4().hex[:12]}")
-        try:
-            os.rename(lease, tomb)
-        except FileNotFoundError:
-            return False
-        entry = {"host": lease.name, "reclaimed_utc": iso(), "reason": reason, "holder": current,
-                 "by_machine": socket.gethostname(), "by_pid": os.getpid()}
-        with (lease.parent / "reclaimed.jsonl").open("a", encoding="utf-8") as log:
-            log.write(json.dumps(entry, sort_keys=True) + "\n")
-        shutil.rmtree(tomb, ignore_errors=True)
-        say(f"Reclaimed the stale {lease.name} landing-check lease: {reason}")
-        return True
+        yield True
     finally:
         try:
             mutex.rmdir()
         except OSError:
             pass
+
+
+def set_lease_aside(lease, identity):
+    """Rename the lease folder aside and remove it, if it is still the folder with `identity`."""
+    tomb = lease.with_name(f"{lease.name}.stale-{uuid.uuid4().hex[:12]}")
+    try:
+        os.rename(lease, tomb)
+    except FileNotFoundError:
+        return False
+    if lease_identity(tomb) is None or lease_identity(tomb)[0] != identity[0]:
+        # Not the folder judged (cannot happen under the mutex with leases born complete): put it back.
+        try:
+            os.rename(tomb, lease)
+        except OSError:
+            say(f"Moved a {lease.name} landing-check lease aside that was not the one judged, and could not put it "
+                f"back: {tomb}")
+        return False
+    shutil.rmtree(tomb, ignore_errors=True)
+    return True
+
+
+def reclaim_host_lease(lease, seen, reason):
+    """Remove a stale lease, but only while it is still exactly the lease judged stale: `seen` is the
+    (holder, identity) that read_lease_state returned before the verdict."""
+    seen_holder, seen_identity = seen
+    if not isinstance(seen_identity, tuple):
+        return False
+    with lease_mutex(lease, 0) as held:
+        if not held:
+            return False
+        holder, identity = read_lease_state(lease)
+        if identity != seen_identity or holder != seen_holder:
+            return False
+        if holder is None:
+            # An empty folder is removed by name: a lease born since has its holder.json, so rmdir refuses it.
+            try:
+                os.rmdir(lease)
+                removed = True
+            except OSError:
+                removed = set_lease_aside(lease, identity)
+        else:
+            removed = set_lease_aside(lease, identity)
+        if not removed:
+            return False
+        entry = {"host": lease.name, "reclaimed_utc": iso(), "reason": reason, "holder": holder,
+                 "by_machine": socket.gethostname(), "by_pid": os.getpid()}
+        with (lease.parent / "reclaimed.jsonl").open("a", encoding="utf-8") as log:
+            log.write(json.dumps(entry, sort_keys=True) + "\n")
+        say(f"Reclaimed the stale {lease.name} landing-check lease: {reason}")
+        return True
 
 
 def describe_holder(holder):
@@ -1882,6 +1964,24 @@ def describe_holder(holder):
     return f"{who} for {holder.get('branch')} {commit[:12]}{job} since {holder.get('started_utc')}"
 
 
+def birth_lease(lease, holder):
+    """Put a complete lease at `lease` in one rename. False when a lease is already there."""
+    temporary = lease.with_name(f".{lease.name}.new-{uuid.uuid4().hex[:12]}")
+    temporary.mkdir()
+    try:
+        write_json(temporary / "holder.json", holder)
+        os.rename(temporary, lease)
+    except OSError as exc:
+        shutil.rmtree(temporary, ignore_errors=True)
+        if exc.errno in (errno.EEXIST, errno.ENOTEMPTY):
+            return False
+        raise
+    except BaseException:
+        shutil.rmtree(temporary, ignore_errors=True)
+        raise
+    return True
+
+
 class HostLease:
     def __init__(self, host, path, holder):
         self.host = host
@@ -1889,19 +1989,31 @@ class HostLease:
         self.holder = holder
         self.job_may_run = False
 
-    def write(self):
-        write_json(self.path / "holder.json", self.holder)
+    def owned(self):
+        holder, identity = read_lease_state(self.path)
+        return isinstance(identity, tuple) and (holder or {}).get("token") == self.holder["token"], identity
 
     def record_job(self, folder):
         self.holder.update(job=job_name(folder), run_folder=str(folder), job_recorded_utc=iso())
-        self.write()
+        with lease_mutex(self.path, LEASE_MUTEX_WAIT_SECONDS) as held:
+            if not held:
+                raise Refusal(f"could not lock the {self.host} landing-check lease to record its job: {self.path}")
+            mine, _ = self.owned()
+            if not mine:
+                raise Refusal(f"the {self.host} landing-check lease was taken over before the job started: {self.path}")
+            write_json(self.path / "holder.json", self.holder)
 
     def release(self):
-        current = read_lease_holder(self.path)
-        if (current or {}).get("token") != self.holder["token"]:
-            say(f"The {self.host} landing-check lease was taken over after its job ended; left as it is.")
-            return
-        shutil.rmtree(self.path, ignore_errors=True)
+        with lease_mutex(self.path, LEASE_MUTEX_WAIT_SECONDS) as held:
+            if not held:
+                say(f"Could not lock the {self.host} landing-check lease to release it; left as it is: {self.path}. "
+                    "It counts as stale once its job has ended.")
+                return
+            mine, identity = self.owned()
+            if not mine:
+                say(f"The {self.host} landing-check lease was taken over after its job ended; left as it is.")
+                return
+            set_lease_aside(self.path, identity)
 
 
 def acquire_host_lease(host, branch, commit, wait_minutes=HOST_WAIT_MINUTES):
@@ -1917,26 +2029,22 @@ def acquire_host_lease(host, branch, commit, wait_minutes=HOST_WAIT_MINUTES):
     deadline = lease_clock() + max(0.0, wait_minutes) * 60
     waited = False
     last_notice = None
+    retries = 0
     while True:
-        try:
-            lease.mkdir()
-        except FileExistsError:
-            pass
-        else:
-            holder["started_utc"] = iso()
-            taken = HostLease(host, lease, holder)
-            try:
-                taken.write()
-            except BaseException:
-                shutil.rmtree(lease, ignore_errors=True)
-                raise
+        holder["started_utc"] = iso()
+        if birth_lease(lease, holder):
             if waited:
                 say(f"{host} is free. Took its landing-check lease: {lease}")
-            return taken
-        current = read_lease_holder(lease)
-        stale, reason = lease_verdict(host, lease, current)
-        if stale:
-            if reclaim_host_lease(lease, current, reason):
+            return HostLease(host, lease, holder)
+        current, identity = read_lease_state(lease)
+        if not isinstance(identity, tuple) and retries < LEASE_RETRY_LIMIT:
+            retries += 1  # released or rewritten between two reads: never stale, try again now
+            continue
+        retries = 0
+        reason = "it changed while it was read"
+        if isinstance(identity, tuple):
+            stale, reason = lease_verdict(host, lease, current, identity)
+            if stale and reclaim_host_lease(lease, (current, identity), reason):
                 continue
         remaining = deadline - lease_clock()
         if remaining <= 0:

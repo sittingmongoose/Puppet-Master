@@ -15,6 +15,7 @@ import socket
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 import unittest
 from unittest.mock import patch
@@ -2038,29 +2039,136 @@ class HostLeaseTests(unittest.TestCase):
         self.assertIn("ended before starting a job", output)
         lease.release()
 
-    def test_a_lease_being_written_counts_as_held(self):
+    def test_a_lease_with_an_unreadable_holder_counts_as_held_and_an_empty_folder_is_no_lease(self):
         self.lease.mkdir(parents=True)
+        (self.lease / "holder.json").write_text("{not json", encoding="utf-8")
         with self.assertRaisesRegex(land.HostBusy, "no readable holder.json"):
             self.acquire({}, wait=0)
         old = time.time() - 91 * 60
         os.utime(self.lease, (old, old))
         lease, _ = self.acquire({}, wait=0)
         self.assertEqual(land.read_json(self.lease / "holder.json")["token"], lease.holder["token"])
+        lease.release()
+        self.lease.mkdir()  # leases are born complete, so an empty folder is nobody's
+        lease, output = self.acquire({}, wait=0)
+        self.assertEqual(land.read_json(self.lease / "holder.json")["token"], lease.holder["token"])
+        self.assertEqual(output, "")
+
+    def test_a_lease_is_never_visible_without_its_holder(self):
+        seen = []
+        real = land.write_json
+
+        def watch(path, value):
+            if path.name == "holder.json":
+                seen.append(self.lease.exists())
+            return real(path, value)
+
+        with patch.object(land, "write_json", side_effect=watch):
+            lease, _ = self.acquire({})
+        self.assertEqual(seen, [False])  # the holder is written before the lease path exists
+        self.assertEqual(land.read_json(self.lease / "holder.json"), lease.holder)
+        self.assertEqual(sorted(p.name for p in self.lease.parent.iterdir()), ["nas1"])
+
+    def test_a_release_between_two_reads_lets_no_second_check_share_the_host(self):
+        """The cheap review's N1 interleave, made deterministic: B fails to take the lease A holds; A releases
+        just before B reads the holder; right after B's verdict, A2 starts taking the lease and stops before its
+        holder.json is written. B must never call the vanished lease stale and reclaim A2's newborn one: only one
+        of B and A2 may end up holding nas1."""
+        first, _ = self.acquire({})
+        real_read, real_verdict, real_write = land.read_lease_holder, land.lease_verdict, land.write_json
+        main = threading.current_thread()
+        paused, go = threading.Event(), threading.Event()
+        state = {"released": False, "a2": None}
+        results = {}
+
+        def a2_writes(path, value):
+            if threading.current_thread() is not main and path.name == "holder.json" and not paused.is_set():
+                paused.set()
+                go.wait(10)
+            return real_write(path, value)
+
+        def a2():
+            try:
+                results["a2"] = land.acquire_host_lease("nas1", "fix/a2", "c" * 40, 0)
+            except land.HostBusy as exc:
+                results["a2"] = exc
+
+        def start_a2():
+            if state["a2"] is None:
+                state["a2"] = threading.Thread(target=a2)
+                state["a2"].start()
+                paused.wait(10)
+
+        def read_after_release(lease):
+            if threading.current_thread() is main and not state["released"]:
+                state["released"] = True
+                first.release()
+            return real_read(lease)
+
+        def verdict_then_a2(*args, **kwargs):
+            verdict = real_verdict(*args, **kwargs)
+            if threading.current_thread() is main:
+                start_a2()
+            return verdict
+
+        output = io.StringIO()
+        with (patch.object(land, "ssh", side_effect=job_states({})), redirect_stdout(output),
+              patch.object(land, "read_lease_holder", side_effect=read_after_release),
+              patch.object(land, "lease_verdict", side_effect=verdict_then_a2),
+              patch.object(land, "write_json", side_effect=a2_writes)):
+            try:
+                results["b"] = land.acquire_host_lease("nas1", "fix/b", "b" * 40, 0)
+            except land.HostBusy as exc:
+                results["b"] = exc
+            go.set()
+            start_a2()
+            go.set()
+            state["a2"].join(10)
+        holders = [name for name in ("b", "a2") if isinstance(results.get(name), land.HostLease)]
+        self.assertTrue(state["released"])
+        self.assertEqual(len(holders), 1, f"two checks hold nas1: {results}; output: {output.getvalue()}")
+        winner = results[holders[0]]
+        self.assertEqual(land.read_json(self.lease / "holder.json")["token"], winner.holder["token"])
+        self.assertNotIn("Reclaimed", output.getvalue())
+        self.assertFalse((self.lease.parent / "reclaimed.jsonl").exists())
 
     def test_reclaim_leaves_a_lease_that_changed_hands_and_waits_for_another_reclaimer(self):
-        seen = hold_lease(self.runs, "nas1", job="pm-check-old")
+        hold_lease(self.runs, "nas1", job="pm-check-old")
+        seen = land.read_lease_state(self.lease)
         shutil.rmtree(self.lease)
         hold_lease(self.runs, "nas1", job="pm-check-new", token="new-token")
         with redirect_stdout(io.StringIO()):
             self.assertFalse(land.reclaim_host_lease(self.lease, seen, "its job is gone"))
         self.assertEqual(land.read_json(self.lease / "holder.json")["token"], "new-token")
-        current = land.read_lease_holder(self.lease)
+        current = land.read_lease_state(self.lease)
         mutex = self.lease.with_name("nas1.reclaim")
         mutex.mkdir()
         with redirect_stdout(io.StringIO()):
             self.assertFalse(land.reclaim_host_lease(self.lease, current, "its job is gone"))
         self.assertTrue(self.lease.exists())
         self.assertTrue(mutex.exists())
+        mutex.rmdir()
+        with redirect_stdout(io.StringIO()):
+            self.assertFalse(land.reclaim_host_lease(self.lease, (None, None), "vanished"))
+            self.assertTrue(land.reclaim_host_lease(self.lease, current, "its job is gone"))
+        self.assertFalse(self.lease.exists())
+
+    def test_reclaim_of_an_empty_folder_never_removes_a_lease_born_in_its_place(self):
+        self.lease.mkdir(parents=True)
+        seen = land.read_lease_state(self.lease)
+        self.lease.rmdir()
+        hold_lease(self.runs, "nas1", token="newborn")
+        with redirect_stdout(io.StringIO()):
+            self.assertFalse(land.reclaim_host_lease(self.lease, seen, "old empty folder"))
+        self.assertEqual(land.read_json(self.lease / "holder.json")["token"], "newborn")
+
+    def test_record_job_refuses_a_lease_it_no_longer_holds(self):
+        lease, _ = self.acquire({})
+        shutil.rmtree(self.lease)
+        hold_lease(self.runs, "nas1", token="next-token")
+        with self.assertRaisesRegex(land.Refusal, "taken over before the job started"):
+            lease.record_job(self.runs / "some-run")
+        self.assertEqual(land.read_json(self.lease / "holder.json")["token"], "next-token")
 
     def test_release_leaves_a_lease_another_check_took_over(self):
         lease, _ = self.acquire({})
