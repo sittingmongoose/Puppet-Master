@@ -511,7 +511,10 @@ const modeSpread = (img, rect) => {
 	assert.deepEqual(flingLooks(undefined), FLING_LOOKS, 'the default fling looks');
 	assert.equal(flingLooks('all').length, 10, '--set flingLooks=all runs all ten');
 	assert.deepEqual(flingLooks('glass-light,nope'), ['glass-light'], 'a named list keeps only real looks');
-	assert.ok(live(String(flingRoute), /await runFlingLook\(t, f, look, surface, route\)/), 'the live runner judges each look with the exercised function');
+	assert.ok(live(String(flingRoute), /await runFlingLook\(t, f, look, surface, route, hooks\)/), 'the live runner judges each look with the exercised function');
+	// INTEG4 (FO-248K + FO-250): FO-250's composite-style check runs from the exercised attempt, right after its General click
+	assert.ok(live(String(runFlingLook), /waitForTimeout\(700\);\n\t\tif \(hooks\.afterGeneral\) await hooks\.afterGeneral\(\);\n\t\tconst box = /), 'the attempt runs the route hook after General');
+	assert.ok(live(String(flingRoute), /const hooks = \{afterGeneral: async \(\) => \{\n\t\tif \(composited\) return;[^]*?composited = true;\n\t\tawait t\.check\([^\n]*will-change[^\n]*\/scroll-position\/\.test\(wc\)/), 'the composited routes check the style once, on the first attempt');
 	// the route rows: each deep route names its own target, and an unmounted page in view fails the empty row
 	{
 		const deep = (o) => ({ committed: true, pending: 9, targetPending: true, wheel: 1200, wheelPending: 9, wheelTargetPending: true, sampled: true, start: 0, top: 19000, moved: 19000, height: 880, targetInView: true, empty: [], ...o });
@@ -689,9 +692,11 @@ const modeSpread = (img, rect) => {
 	const code = prod.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
 	// the gate: one passive wheel listener writes the time, the scroll handler is the only caller of the mount
 	const wheels = [...code.matchAll(/addEventListener\(\s*['"`]wheel['"`]/g)];
-	assert.equal(wheels.length, 1, 'one wheel listener in the product file (the gate)');
+	assert.equal(wheels.length, 2, 'two wheel listeners in the product file: the gate and FO-250\'s long-wheel jump');
 	assert.match(code, /\nroot\.addEventListener\('wheel', \(\) => \{ o55fsWheelAt = performance\.now\(\); \}, \{ capture: true, passive: true \}\);\n/, 'the wheel listener is passive, captures on root and only notes the time');
-	assert.equal(/preventDefault/.test(code), false, 'nothing in the product file cancels an event\'s default');
+	// FO-250: the one cancelling listener is the long-wheel jump (below); nothing else in the file cancels a default
+	assert.equal((code.match(/preventDefault/g) || []).length, 1, 'only FO-250\'s long-wheel jump cancels an event\'s default');
+	assert.ok(code.indexOf('preventDefault') > code.indexOf("window.addEventListener('wheel', e => {"), 'the cancel is inside the FO-250 wheel listener');
 	assert.equal((code.match(/o55fsWheelAt\s*=(?!=)/g) || []).length, 2, 'o55fsWheelAt is set only where it is declared and in the wheel listener');
 	assert.match(code, /\nconst o55fsWheeling = \(\) => performance\.now\(\) - o55fsWheelAt <= O55FS_WHEEL_MS;\n/, 'the gate compares the time since the last wheel with O55FS_WHEEL_MS');
 	const ms = Number((code.match(/\nconst O55FS_WHEEL_MS = (\d+);\n/) || [])[1]);
@@ -709,6 +714,71 @@ const modeSpread = (img, rect) => {
 		assert.equal(/o55fsWheel|o55fsMountNear|mountContinuousWorkspace/.test(code.slice(m.index, j + 1)), false, 'no key listener touches the gate or mounts a page');
 	}
 	console.log(`PASS wheel gate: one passive wheel listener notes the time, o55fsMountNear runs only behind it (${ms} ms), no key listener is added`);
+}
+/* FO-250: on a composited scroller (macOS) the compositor drew a long wheel's destination from the last committed paint
+   before the frame that shows and paints it. A wheel of half a view or more on the settings document is scrolled by the
+   main thread in one step. Pinned: its guards (only a cancelable vertical pixel wheel that no earlier listener took, no
+   zoom or Shift, a document that can move and no scroller inside it that can still take the wheel), the threshold, the
+   instant jump, a window listener that bubbles after the horizontal-strip wheel, and no part in the r6 gate. */
+{
+	const fs = await import('node:fs');
+	const prod = fs.readFileSync(new URL('../../../onboarding/opus-5.5/src/settings/kit.d/46-first-screen.js', import.meta.url), 'utf8');
+	const code = prod.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+	const at = code.indexOf("window.addEventListener('wheel', e => {");
+	assert.ok(at > 0, 'the FO-250 wheel listener is on window');
+	let depth = 0, j = code.indexOf('{', at);
+	for (; j < code.length; j++) { if (code[j] === '{') depth++; else if (code[j] === '}' && --depth === 0) break; }
+	const body = code.slice(at, code.indexOf('\n', j) + 1);
+	assert.match(body, /\}, \{ passive: false \}\);\n$/, 'not passive and not capturing: it runs after the document\'s horizontal-strip wheel');
+	for (const g of ['!e.cancelable', 'e.defaultPrevented', 'e.ctrlKey', 'e.shiftKey', 'e.deltaMode !== 0', 'Math.abs(e.deltaX) > Math.abs(e.deltaY)', '!sc.contains(e.target)', 'Math.abs(e.deltaY) < sc.clientHeight * O55FS_JUMP', 'Math.abs(to - top) < 1', 'o55fsInnerTakes(e.target, sc, e.deltaY)'])
+		assert.ok(body.includes(g), `the jump's guard: ${g}`);
+	assert.ok(body.indexOf('o55fsInnerTakes(') < body.indexOf('e.preventDefault()'), 'every guard runs before the cancel');
+	assert.match(body, /e\.preventDefault\(\);\n  sc\.scrollTo\(\{ top: to, behavior: 'instant' \}\);/, 'cancel, then one instant main-thread scroll (the document\'s smooth scroll-behavior would hand it back to the compositor)');
+	assert.equal(/o55fsWheel|o55fsMountNear|mountContinuousWorkspace|o55fsShowNear|o55fsFill/.test(body), false, 'the jump leaves the gate, the mount, the fill and the show to the scroll event');
+	const jump = Number((code.match(/\nconst O55FS_JUMP = ([\d.]+);/) || [])[1]);
+	assert.ok(jump >= 0.4 && jump <= 0.5, `O55FS_JUMP is between 0.4 and half a view: a 456 px wheel blanked a quarter on the Mac, and a 100 px notch must never jump (R149 L1; ${jump})`);
+	const inner = code.slice(code.indexOf('function o55fsInnerTakes('), code.indexOf("window.addEventListener('wheel', e => {"));
+	assert.match(inner, /overflowY/, 'an inner scroller is recognised by its overflow');
+	assert.match(inner, /n !== sc/, 'the walk stops at the document');
+	console.log(`PASS FO-250 long-wheel jump: one non-passive window listener, every guard before the cancel, an instant main-thread scroll at ${jump} of the view, outside the r6 gate`);
+}
+/* R149 M1 and L1: the long-wheel jump and its inner-scroller walk run here as written, against stand-in elements. A notch
+   never jumps, a long wheel over rows jumps once and instantly, a scroller inside the document that can still move or
+   that contains its overscroll (the rosters, at their end too) keeps the wheel, an uncancelable wheel is left alone. */
+{
+	const fs = await import('node:fs');
+	const prod = fs.readFileSync(new URL('../../../onboarding/opus-5.5/src/settings/kit.d/46-first-screen.js', import.meta.url), 'utf8');
+	const code = prod.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+	const cut = (from, to) => { const a = code.indexOf(from); assert.ok(a >= 0, `found: ${from}`); const b = code.indexOf(to, a); assert.ok(b > a, `found the end of: ${from}`); return code.slice(a, b + to.length); };
+	const src = [cut('const O55FS_JUMP', ';'), cut('function o55fsInnerTakes(', '\n}\n'), cut("window.addEventListener('wheel', e => {", '}, { passive: false });')].join('\n');
+	class Node { constructor(o) { Object.assign(this, { parentElement: null, scrollTop: 0, scrollHeight: 50, clientHeight: 50, style: {} }, o); } }
+	class Element extends Node {}
+	const make = () => {
+		const sc = new Element({ id: 'settings-document', scrollHeight: 20000, clientHeight: 900, scrollTop: 1000, jumps: [] });
+		sc.contains = (n) => { for (let x = n; x; x = x.parentElement) if (x === sc) return true; return false; };
+		sc.scrollTo = (o) => { sc.jumps.push(o); sc.scrollTop = o.top; };
+		const root = { querySelector: (sel) => sel === '#settings-document' ? sc : null };
+		let listener = null;
+		const win = { addEventListener: (type, fn) => { if (type === 'wheel') listener = fn; } };
+		new Function('root', 'window', 'getComputedStyle', 'Node', 'Element', src)(root, win, (n) => n.style, Node, Element);
+		assert.equal(typeof listener, 'function', 'the listener was registered');
+		const wheel = (target, deltaY, o = {}) => { const e = { target, deltaY, deltaX: 0, deltaMode: 0, cancelable: true, defaultPrevented: false, ctrlKey: false, shiftKey: false, ...o, preventDefault() { e.defaultPrevented = true; } }; listener(e); return e; };
+		return { sc, wheel };
+	};
+	{ const { sc, wheel } = make(); const row = new Element({ parentElement: sc });
+		const e = wheel(row, 100); assert.equal(e.defaultPrevented, false, 'a 100 px notch is left to the browser'); assert.equal(sc.jumps.length, 0);
+		const big = wheel(row, 600); assert.equal(big.defaultPrevented, true, 'a 600 px wheel over rows (2/3 of the view) is taken');
+		assert.deepEqual(sc.jumps, [{ top: 1600, behavior: 'instant' }], 'one instant main-thread jump by the delta');
+		assert.equal(wheel(row, -5000).defaultPrevented, true, 'a long wheel up is taken too'); assert.equal(sc.scrollTop, 0, 'clamped at the top');
+		assert.equal(wheel(row, -900).defaultPrevented, false, 'at the top a wheel up is left to the page');
+		assert.equal(wheel(row, 900, { cancelable: false }).defaultPrevented, false, 'an uncancelable wheel is left alone'); }
+	const inner = (style, top) => { const { sc, wheel } = make(); const box = new Element({ parentElement: sc, scrollHeight: 1200, clientHeight: 700, scrollTop: top, style: { overflowY: 'auto', ...style } }); const item = new Element({ parentElement: box }); return { sc, e: wheel(item, 900) }; };
+	{ const r = inner({ overscrollBehaviorY: 'contain' }, 500); assert.equal(r.e.defaultPrevented, false, 'a roster at its end with overscroll containment keeps the wheel (R149 M1)'); assert.equal(r.sc.jumps.length, 0, 'the document stays still'); }
+	{ const r = inner({ overscrollBehaviorY: 'none' }, 500); assert.equal(r.e.defaultPrevented, false, 'overscroll-behavior none keeps it too'); }
+	{ const r = inner({ overscrollBehaviorY: 'auto' }, 0); assert.equal(r.e.defaultPrevented, false, 'an inner scroller that can still move takes the wheel'); }
+	{ const r = inner({ overscrollBehaviorY: 'auto' }, 500); assert.equal(r.e.defaultPrevented, true, 'an uncontained inner scroller at its end hands the wheel on: the document jumps'); }
+	{ const r = inner({ overflowY: 'visible', overscrollBehaviorY: 'contain' }, 0); assert.equal(r.e.defaultPrevented, true, 'a box that does not scroll is not a scroller'); }
+	console.log('PASS FO-250 long-wheel jump run on stand-ins: notches left alone, one instant jump over rows, contained or movable inner scrollers keep the wheel');
 }
 {
 	// main lands 45-46 px from the end every press (R145); the revert stopped 634-1,268 px short in about one press in four
