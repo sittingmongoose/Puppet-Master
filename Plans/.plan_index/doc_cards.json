@@ -7144,6 +7144,8 @@
         "Plans/concern_created_contracts/concern_created_operation.schema.json",
         "Plans/concern_created_contracts/concern_record.schema.json",
         "Plans/coordination_event_admission.json",
+        "Plans/ds15_deck2_contracts.json",
+        "Plans/ds15_deck2_fixtures.json",
         "Plans/event_family_registry.json",
         "Plans/event_family_registry.schema.json",
         "Plans/event_record.schema.json",
@@ -7203,7 +7205,7 @@
         "scripts/pm_wiring_inventory.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 63883,
+      "line_count": 63892,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 1011,
       "plan_unit_ids": [
@@ -8426,7 +8428,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "b60c6e9c5aefd2fc2bffee0742133949e1d61ae22356abedba5b5487250a9a30",
+      "sha256": "13e4c16fb3de8a5bb3e97ed781136c8a1fe15caa1600bd3db00638716ca4c635",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 1011
@@ -11058,7 +11060,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "2735a5044a88de605ff000ae9a796cb3fccd90b407ecda9d56f9cc4d3cacd0cf",
+      "sha256": "b440c740ef39e8cfafd798eb45173ba60f82fe869d71c430b307e4c8c8ef631b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 668,
@@ -20197,7 +20199,7 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "bb151b762d1925d4742c2acdf085e213db87453939046da10d0bd07bec46b3f6",
+      "sha256": "19c7b99009806153ce156f7a31c73d3f8480643cdbf16744b1791b671b85474b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 195,
@@ -25304,7 +25306,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-28T17:55:26Z",
+  "generated_at_utc": "2026-11-28T18:40:35Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

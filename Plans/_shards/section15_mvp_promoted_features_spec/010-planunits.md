@@ -4,7 +4,7 @@ Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
 Source lines: L1056-L8896
 
-Source SHA256: `bb151b762d1925d4742c2acdf085e213db87453939046da10d0bd07bec46b3f6`
+Source SHA256: `19c7b99009806153ce156f7a31c73d3f8480643cdbf16744b1791b671b85474b`
 
 ---
 
@@ -3338,7 +3338,7 @@ plan_unit_id: SMPFS-055
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Catalog install, update, and remove flows are lifecycle-aware for commands, skills, plugins/hooks, themes, and MCP configs, with update/remove behavior explicit for active or referenced items.
+canonical_text: Catalog install, update, and remove flows are lifecycle-aware for commands, skills, plugins/hooks, and MCP configs, with update/remove behavior explicit for active or referenced items. Removed 2026-11-28 by DL-2607, themes are no longer a Catalog item type, and no theme is installed, updated or removed through the Catalog.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false

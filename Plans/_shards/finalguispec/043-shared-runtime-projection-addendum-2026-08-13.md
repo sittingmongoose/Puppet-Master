@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L5414-L27037
 
-Source SHA256: `2735a5044a88de605ff000ae9a796cb3fccd90b407ecda9d56f9cc4d3cacd0cf`
+Source SHA256: `b440c740ef39e8cfafd798eb45173ba60f82fe869d71c430b307e4c8c8ef631b`
 
 ---
 
@@ -4568,9 +4568,9 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The title-bar theme selector is a morphing sun/moon trigger (sun for manual Light, moon for manual Dark and
   continuous morph for Auto), opening a Light/Dark/Auto segmented control above five family rows in order Basic,
-  Friendly, Glass, Retro and NieR. Each row shows its swatch preview and lists only its built-in variants.
-  NieR is an ordinary family row with its
-  Light/Dark variants, and Adjust NieR opens ui.settings.nier_editor.open. The old NieR Mode menuitemcheckbox is
+  Friendly, Glass, Retro and NieR. Each row shows its family name and swatch preview and lists no Light or Dark
+  variant; the single Light/Dark/Auto control chooses the variant for every family (DL-301). NieR is an ordinary
+  family row, and Adjust NieR opens ui.settings.nier_editor.open. The old NieR Mode menuitemcheckbox is
   removed. The segmented control uses cmd.settings.transaction.preview then cmd.settings.transaction.apply for
   the existing atomic family/mode pair (DL-228); each family pick composes cmd.settings.transaction.preview then
   cmd.settings.transaction.apply for the atomic family/mode pair under SSYS-009. Auto follows OS appearance live
