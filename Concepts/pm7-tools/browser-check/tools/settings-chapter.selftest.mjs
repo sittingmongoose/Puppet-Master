@@ -3,8 +3,14 @@
 // The page probe itself is tested in a browser on a constructed page: diagnostics/settings-chapter-probe.check.mjs.
 import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
-import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT, press, selectAllModifier, flingScrollGate, filmFling, flingFilm, FLING_FILM, FLING_RETRY, flingAttempt, retryFling, flingRetryVerdict, FLING_ROUTES, FLING_LOOKS, flingLooks, flingRoute, filmBands, tabEndVerdict, tabEndRoute, TAB_END_TRAVEL, rosterEndVerdict, rosterEndRoute, wpkHomeVerdict, wpkHomeRoute, GUARD_TRAVEL, ROSTER_MIN_ROOM, WPK_MIN_TOP, endLandVerdict, endLandRoute, END_GAP, END_REPS, END_MIN_TRAVEL, END_SETTLE, END_CAP, tests } from '../checks/perf-settings-chapter.check.mjs';
+import { runInNewContext } from 'node:vm';
+import { readdirSync, readFileSync } from 'node:fs';
+import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT, press, selectAllModifier, flingScrollGate, filmFling, flingFilm, FLING_FILM, FLING_RETRY, flingAttempt, retryFling, flingRetryVerdict, FLING_ROUTES, FLING_LOOKS, flingLooks, flingRoute, runFlingLook, filmBands, tabEndVerdict, tabEndRoute, TAB_END_TRAVEL, rosterEndVerdict, rosterEndRoute, wpkHomeVerdict, wpkHomeRoute, GUARD_TRAVEL, ROSTER_MIN_ROOM, WPK_MIN_TOP, endLandVerdict, endLandRoute, END_GAP, END_REPS, END_MIN_TRAVEL, END_SETTLE, END_CAP, tests } from '../checks/perf-settings-chapter.check.mjs';
 import { encodePng, decodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
+const uncomment = (src) => src.replace(/"(?:\\[\s\S]|[^"\\])*"|'(?:\\[\s\S]|[^'\\])*'|`(?:\\[\s\S]|[^`\\])*`|\/\*[\s\S]*?\*\/|\/\/[^\n]*/g,
+	(token) => token.startsWith('/') ? token.replace(/[^\n]/g, ' ') : token);
+const live = (src, re) => re.test(uncomment(src));
+const invoke = (fn, globals, arg) => runInNewContext(`(${fn})(arg)`, { ...globals, arg });
 const decodeOnce = (png) => decodePng(png);
 /* the round 1 reading, kept here only to show what it counted: the share of a rect's pixels ten or more grey levels from
    its commonest level */
@@ -90,9 +96,9 @@ const modeSpread = (img, rect) => {
  * passed 17/17). The bounded wait and the explicit missing-witness result stay. */
 {
 	const CONTROL = '#workspace-stage .setting-row :is(button, input, select, textarea, [role="switch"], [role="slider"], [role="checkbox"])';
-	const run = async (waitForHoverTags, censusFinishes, controlExists = true) => {
+	const run = async (waitForHoverTags, censusFinishesOn, controlExists = true) => {
 		const events = [];
-		let tagged = 0;
+		let tagged = 0, waits = 0;
 		const f = {
 			locator: (selector) => ({
 				first: () => ({
@@ -104,7 +110,7 @@ const modeSpread = (img, rect) => {
 						assert.ok(timeout > 0, 'the wait is bounded');
 						events.push('wait for tags');
 						await Promise.resolve();
-						if (!censusFinishes) throw Object.assign(new Error('no tag appeared'), { name: 'TimeoutError' });
+						if (++waits < censusFinishesOn) throw Object.assign(new Error('no tag appeared'), { name: 'TimeoutError' });
 						tagged = 1;
 					}
 				})
@@ -116,13 +122,15 @@ const modeSpread = (img, rect) => {
 		const sample = await press(t, f, 'ai', { waitForHoverTags });
 		return { events, tagged: sample.tagged };
 	};
-	assert.deepEqual(await run(true, true), { events: ['hover control', 'wait for tags', 'sample', 'press'], tagged: 1 },
+	assert.deepEqual(await run(true, 1), { events: ['hover control', 'wait for tags', 'sample', 'press'], tagged: 1 },
 		'a real hover of the leaving chapter\'s control precedes the bounded tag wait, the sample and the press');
-	assert.deepEqual(await run(true, false), { events: ['hover control', 'wait for tags', 'sample', 'press'], tagged: 0 },
-		'a timed-out census still yields an unsampled switch for the existing missing-witness verdict');
-	assert.deepEqual(await run(true, false, false), { events: ['wait for tags', 'sample', 'press'], tagged: 0 },
+	assert.deepEqual(await run(true, 2), { events: ['hover control', 'wait for tags', 'sample', 'hover control', 'wait for tags', 'sample', 'press'], tagged: 1 },
+		'a second qualification samples the late tag before the first and only switch');
+	assert.deepEqual(await run(true, Infinity), { events: ['hover control', 'wait for tags', 'sample', 'hover control', 'wait for tags', 'sample', 'press'], tagged: 0 },
+		'two timed-out censuses retain the missing-witness verdict');
+	assert.deepEqual(await run(true, Infinity, false), { events: ['wait for tags', 'sample', 'wait for tags', 'sample', 'press'], tagged: 0 },
 		'no hoverable control: the bounded wait and the missing-witness result stay');
-	assert.deepEqual(await run(false, true), { events: ['sample', 'press'], tagged: 0 },
+	assert.deepEqual(await run(false, 1), { events: ['sample', 'press'], tagged: 0 },
 		'presses outside the hover matrix keep their original schedule');
 	console.log('PASS hover setup: a real control hover qualifies the outgoing tagged input before the bounded wait; a missing control or tag keeps the explicit missing-witness result');
 }
@@ -161,23 +169,16 @@ const modeSpread = (img, rect) => {
  * go through the live recorder (filmFling, fed by a stand-in CDP session) and the live judge (flingFilm, flingVerdict). */
 {
 	// a match in live code: not on a line holding a line comment before it, and not inside a block comment
-	const live = (src, re) => {
-		for (const m of src.matchAll(new RegExp(re.source, re.flags.replace('g', '') + 'g'))) {
-			const before = src.slice(0, m.index), line = before.slice(before.lastIndexOf('\n') + 1);
-			if (before.lastIndexOf('/*') > before.lastIndexOf('*/') || line.includes('//')) continue;
-			return true;
-		}
-		return false;
-	};
 	const fling = (o) => ({ committed: true, pending: 33, targetPending: true, wheel: 1200, wheelPending: 30, wheelTargetPending: true, sampled: true, start: 0, top: 2900, moved: 2900, height: 880, targetInView: true, empty: [], ...o });
 	const view = { width: 1920, height: 1080 }, box = { x: 627, y: 143, width: 685, height: 912 }, W = FLING_FILM.width, H = FLING_FILM.height;
 	// a frame: the list's ground with text-like rules every 12 px from `phase`, leaving `holes` bands (0-3) empty
-	const frame = (phase, { holes = [], blank = false, faint = [] } = {}) => {
+	const frame = (phase, { holes = [], blank = false, faint = [], wipe } = {}) => {
 		const data = Buffer.alloc(W * H * 4);
 		for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
 			const i = (y * W + x) * 4, inDoc = x >= 313 && x < 656 && y >= 71 && y < 527;
 			const band = Math.floor((y - 83) / Math.floor((515 - 83) / 4));
-			const ink = inDoc && !blank && !holes.includes(band) && (y + phase) % 12 < 2 && (x + phase) % 9 < 6 && (!faint.includes(band) || (x + phase) % 180 < 6);
+			const erased = wipe && y >= wipe[0] && y < wipe[1];
+			const ink = inDoc && !blank && !erased && !holes.includes(band) && (y + phase) % 12 < 2 && (x + phase) % 9 < 6 && (!faint.includes(band) || (x + phase) % 180 < 6);
 			const g = ink ? 200 : inDoc ? 45 : 20;
 			data[i] = data[i + 1] = data[i + 2] = g; data[i + 3] = 255;
 		}
@@ -187,7 +188,7 @@ const modeSpread = (img, rect) => {
 	const wheel = 1_000_000;
 	// frames every 16.7 ms: [ms from the wheel, png]
 	const film = (seq) => seq.map(([dt, png]) => ({ wall: wheel + dt, png }));
-	const run = (seq) => flingFilm(film(seq), { box, view, wheel });
+	const run = (seq, times) => flingFilm(film(seq), { box, view, wheel, ...times });
 	const v = (seq, r = fling({})) => flingVerdict(r, run(seq))[3];
 	const at = (from, n, png) => Array.from({ length: n }, (_, k) => [from + k * 16.7, png]);
 	const good = [...at(-83.5, 5, SRC), ...at(16.7, 20, DST)];
@@ -196,7 +197,7 @@ const modeSpread = (img, rect) => {
 	const blank = [...at(-83.5, 5, SRC), ...at(16.7, 3, BLANK), ...at(66.8, 20, DST)];
 	const b = v(blank);
 	assert.equal(b.ok, false, 'Astra\'s case: blank frames between the source and the destination rows fail');
-	assert.match(b.detail, /first destination frame 5 at 16\.7 ms \[0, 0, 0, 0\] BLANK; 3 blank or unfilled frame\(s\)/);
+	assert.match(b.detail, /first destination frame 5 at 16\.7 ms \[(?:0, )+0\] BLANK; 3 blank or unfilled frame\(s\)/);
 	const hole = [...at(-83.5, 5, SRC), ...at(16.7, 2, HOLE), ...at(50.1, 20, DST)];
 	assert.equal(v(hole).ok, false, 'a frame whose rows are missing in one band of the view (an unfilled list) fails');
 	// a blank frame after a good first destination frame (a hand-back that let content-visibility skip the rows again)
@@ -213,6 +214,28 @@ const modeSpread = (img, rect) => {
 	const justAfter = [...at(-83.5, 5, SRC), [1, BLANK], ...at(16.7, 20, DST)];
 	assert.equal(run(justAfter).dest.dt, 1, 'the blank frame 1 ms after the wheel is the first destination frame');
 	assert.equal(v(justAfter).ok, false, 'a blank frame just after the recorded wheel time fails');
+	// A245 frame 892: replay the one-frame shape, a shifted dispatch epoch, and the same timeline with the frame lost.
+	const single = [...at(-83.5, 5, SRC), [0, BLANK], ...at(16.7, 20, DST)];
+	assert.equal(run(single).bad.length, 1, 'one witnessed blank is enough');
+	const shifted = run(single, { commit: wheel - 50, wheel: wheel + 8 });
+	assert.equal(shifted.bad.length, 1, 'a blank after commit and before the recorded wheel still fails');
+	const dropped = run(single.filter(([dt]) => dt !== 0));
+	assert.equal(dropped.resolved, true, 'the three-median policy still accepts this gap');
+	assert.equal(dropped.bad.length, 0, 'no pixel verdict for an absent frame');
+	assert.equal(dropped.unwitnessed, 1, 'the accepted gap reports an unwitnessed interval');
+	assert.match(v(good).detail, /accepted gap can hide a blank shorter than about two capture intervals/);
+	const edge = (delta) => run([...at(-83.5, 5, SRC), ...at(delta, 20, DST)]);
+	assert.equal(edge(33.4).resolved, true, 'three capture medians are allowed');
+	assert.equal(edge(41.8).resolved, false, '3.5 capture medians fail closed');
+	const local = frame(5, { wipe: [111, 136] });
+	const localFilm = [...at(-83.5, 5, SRC), [16.7, local], ...at(33.4, 20, DST)];
+	const coarse = (png) => filmBands(decodeOnce(png), run(good).rect, 4);
+	assert.ok(coarse(local).every((v, k) => v >= coarse(DST)[k] * FLING_FILM.keep), 'the old quarter bands miss this 50 px blank');
+	assert.equal(run(localFilm).bad.length, 1, 'a single blank smaller than a quarter band fails');
+	const sparse = frame(5, { holes: [1, 2, 3] });
+	const sparseReading = run([...at(-83.5, 5, SRC), ...at(16.7, 20, sparse)]);
+	assert.ok(sparseReading.judged >= 2 && sparseReading.judgedQuarters === 1, 'narrow bands cannot replace two occupied quarters');
+	assert.equal(flingVerdict(fling({}), sparseReading)[3].ok, false, 'the sparse settled reference still fails closed');
 	// a film that stopped before the fling settled: its last frame is the source, so nothing is judged as settled
 	const unsettled = [...at(-83.5, 5, SRC), ...at(16.7, 2, SRC)];
 	assert.equal(run(unsettled).moved, 0, 'the settled frame is the source view');
@@ -279,19 +302,34 @@ const modeSpread = (img, rect) => {
 		const d = await drive([lost, lost, lost, lost, lost, good]);
 		assert.deepEqual(d.driven, [1, 2, 3, 4, 5], 'five attempts at most');
 		assert.equal(d.rows[3].ok, false, 'five unresolved attempts fail: not judged never passes');
-		assert.match(d.rows[3].detail, /5 attempt\(s\), at most 5/);
+		assert.match(d.rows[3].name, /^not judged \(host load\):/);
+		assert.match(d.rows[3].detail, /^not judged \(host load\): 5 attempts unresolved, 0 bad frames, gaps /);
 	}
 	for (const [seqs, driven, why] of [[[blank, good, good], [1], 'a resolved bad first attempt'], [[lost, blank, good], [1, 2], 'a resolved bad second attempt'], [[lostBlank, good, good], [1], 'an unresolved attempt with bad frames'], [[lost, lostBlank, good], [1, 2], 'a later unresolved attempt with bad frames'], [[late, good, good], [1], 'a later blank after a good first destination']]) {
 		const d = await drive(seqs);
 		assert.deepEqual(d.driven, driven, `${why} decides at once, no retry`);
 		assert.equal(d.rows[3].ok, false, `${why} fails`);
+		assert.doesNotMatch(d.rows[3].name, /host load/);
+	}
+	const idleFill = { wheelPending: 0, wheelTargetPending: false };
+	{
+		const d = await drive([good, good], (k) => fling(k === 1 ? idleFill : {}));
+		assert.deepEqual(d.driven, [1, 2]);
+		assert.deepEqual(d.rows.map((r) => r.ok), [true, true, true, true], 'an idle-fill miss followed by a qualified attempt passes');
+		assert.match(d.rows[3].detail, /Terminal look filled before the wheel/);
+		const exhausted = await drive(Array(5).fill(good), () => fling(idleFill));
+		assert.equal(exhausted.rows[0].ok, false, 'idle fills alone never witness the precondition');
+		assert.doesNotMatch(exhausted.rows[3].name, /host load/);
+		const badIdle = await drive([blank, good], () => fling(idleFill));
+		assert.deepEqual(badIdle.driven, [1], 'idle fill never hides a witnessed bad frame');
+		assert.equal(badIdle.rows[3].ok, false);
 	}
 	// the route rows cannot be shopped for: an attempt failing one stops the retry and fails, and every attempt is held to them
 	{
 		const d = await drive([lost, good, good], (k) => fling(k === 1 ? { targetInView: false } : {}));
 		assert.deepEqual(d.driven, [1], 'an attempt that fails a route row is not retried');
 		assert.equal(d.rows[1].ok, false, 'the travel and target row fails');
-		const shop = flingRetryVerdict([{ k: 1, ...flingAttempt(fling({ wheelTargetPending: false }), run(lost)) }, { k: 2, ...flingAttempt(fling({}), run(good)) }]);
+		const shop = flingRetryVerdict([{ k: 1, ...flingAttempt(fling({ targetPending: false, wheelTargetPending: false }), run(lost)) }, { k: 2, ...flingAttempt(fling({}), run(good)) }]);
 		assert.equal(shop[0].ok, false, 'a route row failed on any attempt fails, even when the deciding attempt passes it');
 		assert.equal(flingAttempt(fling({ moved: 100 }), run(lost)).retry, false, 'too little wheel travel is not a capture gap');
 		assert.equal(flingAttempt(fling({ wheel: 0 }), run(lost)).retry, false, 'no trusted wheel is not a capture gap');
@@ -321,6 +359,8 @@ const modeSpread = (img, rect) => {
 	// the live test calls the recorder and the judge (a revert to the DOM-only verdict, or a recorder or judge of its own,
 	// fails here), keeps the capture-fidelity marker running by Web Animations, and keeps its wheel gate (ASTRA21-SETTINGS-LIVE-ARM)
 	// FO-245 r2 (R141 finding 2): a pin holds only on live code, never on a commented-out copy of it
+	assert.equal(live('const url = "https://example.test"; call(); // hidden();', /call\(\);/), true, 'a URL before a live statement is not a comment');
+	assert.equal(live('const text = "/*"; call();', /call\(\);/), true, 'quoted block delimiters are not comments');
 	assert.equal(live('a();\n//b();\n/* c();\n*/ d();', /b\(\);/), false, 'live(): a line comment is not live code');
 	assert.equal(live('a();\n/* c();\n*/ d();', /c\(\);/), false, 'live(): a block comment is not live code');
 	assert.equal(live('a();\n/* c();\n*/ d();', /d\(\);/), true, 'live(): code after a block comment is live');
@@ -337,43 +377,122 @@ const modeSpread = (img, rect) => {
 			assert.equal(tests[name], undefined, `FO-245 r5: "${name}" is not registered until FO-248`);
 		assert.equal(Object.keys(tests).some((k) => k.includes(`(${surface})`) && /flingRoute\(t, surface, 'end(-text)?'\)/.test(String(tests[k]))), false, `FO-245 r5: no ${surface} test runs an End fling route`);
 	}
-	const src = String(flingRoute);
-	const pin = (re, msg) => assert.ok(live(src, re), msg);
-	pin(/film=await filmFling\(client\)/, 'the live test films the fling');
-	pin(/const px=flingFilm\(frames,\{box,view,wheel:r\.wheelEpoch\}\);/, 'the live test reads the frames with the shared judge');
-	pin(/R\.wheelEpoch=performance\.timeOrigin\+R\.wheel;/, 'the wheel time is on the frames\' clock, unshifted');
-	pin(/document\.documentElement\.appendChild\(d\);d\.animate\(\[\{opacity:\.5\},\{opacity:1\}\],\{duration:1000,iterations:Infinity,direction:'alternate'\}\);/, 'the capture-fidelity marker runs by Web Animations');
-	pin(/if\(performance\.now\(\)-t0>=1000\)return res\(true\);requestAnimationFrame\(step\);\};requestAnimationFrame\(step\);\}\),null,\{timeout:15000\}\)/, 'the film runs until the scroller has held still for a second (settle wait, 15 s cap)');
-	pin(/frames=await film\.stop\(\);/, 'the film is stopped after the settle wait');
-	assert.ok(src.indexOf('if(performance.now()-t0>=1000)return res(true)') < src.indexOf('frames=await film.stop();'), 'the film stops after the settle wait, not before');
-	// the bounded retry: the live test drives the whole route per attempt and judges through the shared retry and verdict
-	pin(/const attempts=await retryFling\(attempt,FLING_RETRY\.attempts,route\);/, 'the live test retries through the shared retryFling, with its route');
-	pin(/for \(const row of flingRetryVerdict\(attempts,route\)\) await t\.check\(/, 'the live verdict is the shared retry verdict, with its route');
-	pin(/for \(const row of flingRetryVerdict\(attempts,route\)\) await t\.check\(`\$\{look\} \$\{surface\}: \$\{row\.name\}`,row\.ok,row\.detail\);/, 'the live sink records each row\'s own verdict (A245 low 5: a literal true there passed the selftest)');
-	assert.equal(/function\s+(retryFling|flingRetryVerdict|flingAttempt|flingVerdict)\b|\b(retryFling|flingRetryVerdict|flingAttempt|flingVerdict)\s*=/.test(src), false, 'the live test has no retry or judge of its own');
-	assert.equal(/flingVerdict\(/.test(src.replace(/flingRetryVerdict\(/g, '')), false, 'the live test does not judge one attempt by itself');
-	const a0 = src.indexOf('const attempt=async(k)=>{'), a1 = src.indexOf('const attempts=await retryFling(attempt,');
-	assert.ok(a0 >= 0 && a1 > a0, 'the attempt is defined before the retry');
-	const body = src.slice(a0, a1);
-	for (const [re, msg] of [[/\.domain-link\[data-domain="general"\]'\)\.first\(\)\.click\(\)/, 'General'], [/window\.__pscFling=\{route,committed:false/, 'a fresh page recorder'], [/film=await filmFling\(client\)/, 'a fresh film'], [/\.domain-link\[data-domain="code"\]'\)\.first\(\)\.click\(\)/, 'Code'], [/await t\.page\.mouse\.wheel\(0,Math\.ceil\(delta\)\);/, 'the wheel'], [/return \{r,px\};/, 'its reading']])
-		assert.ok(live(body, re), `each attempt drives the whole route: ${msg}`);
-	assert.match(src, /if\(sc\.id!=='settings-document'\|\|!R\.committed\|\|!R\.wheel\|\|R\.sampled\|\|R\.armed\|\|Math\.abs\(sc\.scrollTop-R\.start\)<R\.height\)return;/, 'the live scroll gate arms only after the delivered input (flingScrollGate)');
-	assert.match(src, /R\.moved=R\.wheelTop==null\?null:R\.top-R\.wheelTop/, 'the live travel is measured from the input delivery position (flingScrollGate)');
-	// FO-245 r3: the deep routes' page recorder: the last page is the target, judged unmounted at the input, an unmounted
-	// page in view is empty, and the long wheel overshoots the bottom
-	pin(/const target=\(\)=>deep\?lastBody\(\)\?\.closest\('\[data-workspace-block\]'\):root\.querySelector\('#section-editor-terminal-look'\);/, 'the deep routes aim at the chapter\'s last page');
-	pin(/const targetPendingNow=\(\)=>deep\?lastBody\(\)\?\.dataset\.workspaceMounted==='false':/, 'the deep routes need the last page unmounted at the input');
-	pin(/R\.wheelTargetPending=targetPendingNow\(\);/, 'the target is judged pending at the input');
-	pin(/if\(r\.height>0&&r\.bottom>v\.top&&r\.top<v\.bottom\)R\.empty\.push\('page:'\+p\.dataset\.continuousWorkspaceBody\);/, 'an unmounted page in the sampled view is empty');
-	// FO-245 r5: the End branches of flingRoute ('end', 'end-text') are kept for FO-248 but run by no test, so their
-	// source is not pinned here; their verdict rows still are (below)
-	pin(/R\.delta=deep\?sc\.scrollHeight-sc\.scrollTop\+sc\.clientHeight:/, 'the long wheel overshoots the bottom by a view');
+	// Execute the same attempt and check sink as the browser runner. CDP and the DOM are deterministic stand-ins.
+	const exercise = async (route, seqs) => {
+		const names = [], wheelDeltas = [], receipts = [], rows = [];
+		let attempt = -1, now = 0, observer, marker, settling = false;
+		const handlers = new Map(), window = {
+			addEventListener: (event, fn) => handlers.set(event, fn),
+			removeEventListener: (event) => handlers.delete(event)
+		};
+		const performance = { timeOrigin: wheel - 500, now: () => now };
+		const rect = { top: 0, bottom: 912, height: 912 };
+		const sc = { id: 'settings-document', scrollTop: 0, scrollHeight: 2800, clientHeight: 912,
+			getBoundingClientRect: () => rect, querySelectorAll: () => [] };
+		const terminal = { getBoundingClientRect: () => ({ top: 500, bottom: 600, height: 100 }), querySelector: () => ({}) };
+		const last = { closest: () => ({ getBoundingClientRect: () => rect }), dataset: { workspaceMounted: 'false' } };
+		const root = {
+			querySelector: (sel) => ({
+				'.domain-link.active': { dataset: { domain: 'code' } },
+				'#settings-document': sc, '#section-editor-terminal-look': terminal
+			})[sel],
+			querySelectorAll: (sel) => sel.includes('workspace-body') ? [last] : [{}, {}, {}]
+		};
+		const document = { getElementById: () => root, querySelector: () => sc, body: {} };
+		const MutationObserver = class {
+			constructor(fn) { observer = fn; }
+			observe() {}
+			disconnect() {}
+		};
+		const globals = { window, document, performance, MutationObserver, requestAnimationFrame: (fn) => fn() };
+		const f = {
+			locator: (sel) => ({
+				first: () => ({
+					click: async () => {
+						const start = sel.includes('"general"');
+						names.push(start ? 'general' : 'code');
+						if (start) { attempt++; sc.scrollTop = 0; }
+						else { now = 450; observer(); }
+					}
+				}),
+				boundingBox: async () => box
+			}),
+			evaluate: async (fn, arg) => invoke(fn, globals, arg),
+			waitForFunction: async (fn, arg, options) => {
+				if (options.timeout !== 15000) return assert.equal(invoke(fn, globals, arg), true);
+				const start = now;
+				await invoke(fn, { ...globals, requestAnimationFrame: (fn) => setImmediate(() => {
+					now += 250;
+					if (now - start === 500) sc.scrollTop++;
+					fn();
+				}) });
+				settling = now - start >= 1500;
+			}
+		};
+		const cdps = [];
+		const page = {
+			waitForTimeout: async () => {},
+			waitForFunction: async (fn) => invoke(fn, globals),
+			viewportSize: () => view,
+			evaluate: async (fn) => invoke(fn, { document: {
+				createElement: () => ({ style: {}, setAttribute() {}, animate() { marker = true; } }),
+				documentElement: { appendChild() {} },
+				getElementById: () => ({ remove() { marker = false; } })
+			} }),
+			mouse: {
+				move: async () => {},
+				wheel: async (_, delta) => {
+					wheelDeltas.push(delta);
+					now = 525;
+					handlers.get('wheel')({ type: 'wheel', isTrusted: false, timeStamp: 450 });
+					assert.equal(window.__pscFling.wheel, undefined, 'synthetic input cannot arm');
+					handlers.get('wheel')({ type: 'wheel', isTrusted: true, timeStamp: 500 });
+					sc.scrollTop = 1500;
+					handlers.get('scroll')({ target: sc });
+					receipts.push({ ...window.__pscFling });
+				}
+			},
+			context: () => ({ newCDPSession: async () => {
+				const c = new EventEmitter();
+				settling = false;
+				c.send = async (name) => {
+					if (name === 'Page.startScreencast') {
+						assert.equal(marker, true, 'vsync marker is animating when capture starts');
+						for (const [k, frame] of film(seqs[attempt]).entries()) {
+							c.emit('Page.screencastFrame', { sessionId: k, metadata: { timestamp: frame.wall / 1000 }, data: frame.png.toString('base64') });
+						}
+					}
+					if (name === 'Page.stopScreencast') {
+						// filmFling catches stop errors, so record the state for assertion outside CDP.
+						cdps.push({ marker, settling });
+					}
+				};
+				c.detach = async () => {};
+				return c;
+			} })
+		};
+		await runFlingLook({ page, log() {}, check: async (name, ok, detail) => rows.push({ name, ok, detail }) }, f, 'basic-dark', 'normal', route);
+		assert.deepEqual(cdps, seqs.map(() => ({ marker: true, settling: true })), 'capture stops only after the awaited one-second still window');
+		return { names, wheelDeltas, receipts, rows };
+	};
+	const driven = await exercise('terminal', [lost, single]);
+	assert.deepEqual(driven.names, ['general', 'code', 'general', 'code'], 'a retry drives both clicks again');
+	assert.deepEqual(driven.wheelDeltas, [555, 555], 'a retry also delivers the real Terminal look wheel again');
+	assert.equal(driven.receipts[0].wheel, 525, 'the listener records delivery time without an offset');
+	assert.equal(driven.receipts[0].wheelEpoch, wheel, 'the event epoch precedes delayed listener dispatch');
+	assert.equal(driven.receipts[0].commitEpoch, wheel - 50, 'the chapter commit is on the same clock');
+	assert.deepEqual(driven.rows.map((row) => row.ok), [true, true, true, false], 'the live sink receives the real failing pixel verdict');
+	const deepDrive = await exercise('wheel-bottom', [good]);
+	assert.deepEqual(deepDrive.wheelDeltas, [3712], 'the deep wheel goes past the bottom');
+	assert.equal(deepDrive.receipts[0].wheelPending, 1, 'the deep route counts unmounted pages instead of list rows');
+	assert.equal(deepDrive.receipts[0].wheelTargetPending, true);
+	assert.deepEqual(deepDrive.rows.map((row) => row.ok), [true, true, true, true], 'the real deep runner exercises the cold last page');
 	// FO-245 r3: the looks. Glass Dark and Glass Light are fling looks (their wallpaper passed the round 1 reading)
 	for (const look of ['basic-dark', 'nier-light', 'glass-dark', 'glass-light']) assert.ok(FLING_LOOKS.includes(look), `${look} is a fling look`);
 	assert.deepEqual(flingLooks(undefined), FLING_LOOKS, 'the default fling looks');
 	assert.equal(flingLooks('all').length, 10, '--set flingLooks=all runs all ten');
 	assert.deepEqual(flingLooks('glass-light,nope'), ['glass-light'], 'a named list keeps only real looks');
-	pin(/for \(const look of flingLooks\(t\.args\.flingLooks\)\) \{/, 'the live runner runs every fling look');
+	assert.ok(live(String(flingRoute), /await runFlingLook\(t, f, look, surface, route\)/), 'the live runner judges each look with the exercised function');
 	// the route rows: each deep route names its own target, and an unmounted page in view fails the empty row
 	{
 		const deep = (o) => ({ committed: true, pending: 9, targetPending: true, wheel: 1200, wheelPending: 9, wheelTargetPending: true, sampled: true, start: 0, top: 19000, moved: 19000, height: 880, targetInView: true, empty: [], ...o });
@@ -403,14 +522,6 @@ const modeSpread = (img, rect) => {
 /* FO-245 r4 (R143 medium 2): End on a focused tab belongs to the tab list (main's behaviour) */
 {
 	// the fling block's live(): a match in live code only (not commented out)
-	const live = (src, re) => {
-		for (const m of src.matchAll(new RegExp(re.source, re.flags.replace('g', '') + 'g'))) {
-			const before = src.slice(0, m.index), line = before.slice(before.lastIndexOf('\n') + 1);
-			if (before.lastIndexOf('/*') > before.lastIndexOf('*/') || line.includes('//')) continue;
-			return true;
-		}
-		return false;
-	};
 	const main = { key: true, focusTab: true, coldAtKey: 3, tabs: 4, startIndex: 0, maxTravel: 0, scrolls: 0, travel: 0, lastSelected: true, lastFocused: true, lastInView: true, focusAfter: 'button#pm51-tab-last' };
 	assert.deepEqual(tabEndVerdict(main).map((x) => x.ok), [true, true, true], 'main: the last tab selected and focused, the document still');
 	const r3 = { ...main, maxTravel: 2023, scrolls: 43, travel: 2023, lastInView: false };
@@ -441,14 +552,6 @@ const modeSpread = (img, rect) => {
 /* FO-245 r5 (R144): two more widgets keep their own End/Home (main's behaviour): the AI & Providers roster scrolls
    itself on End, and the General wallpaper picker takes Home without moving the document */
 {
-	const live = (src, re) => {
-		for (const m of src.matchAll(new RegExp(re.source, re.flags.replace('g', '') + 'g'))) {
-			const before = src.slice(0, m.index), line = before.slice(before.lastIndexOf('\n') + 1);
-			if (before.lastIndexOf('/*') > before.lastIndexOf('*/') || line.includes('//')) continue;
-			return true;
-		}
-		return false;
-	};
 	// the roster: main scrolls the roster 487 px to its end and leaves the document; r4 jumped the document to the chapter end
 	const main = { key: true, focusRoster: true, focusAtKey: 'button.resource-row', coldAtKey: 3, rosterStart: 0, rosterRoom: 487, maxTravel: 0, scrolls: 0, travel: 0, rosterEnd: 487, rosterMax: 487 };
 	assert.deepEqual(rosterEndVerdict(main).map((x) => x.ok), [true, true, true], 'main: the roster scrolls to its end, the document stays');
@@ -501,6 +604,33 @@ const modeSpread = (img, rect) => {
 	console.log('PASS widget guards: End on the roster scrolls the roster and Home on the wallpaper picker keeps the document still (main\'s behaviour), judged only with unmounted pages at the key');
 }
 
+/* Existing widget keyboard bindings (tabs, menus and dialogs) own their own keys. Scan every Settings
+   script for added registrations, including a keyCode-based listener with no "End"/"Home" string. The
+   live End/Home guards pin what the existing widgets actually do with the keys. */
+{
+	const established = {
+		'10-values.js': 1, '19-nier-parts.js': 3, '20-motion.js': 1, '20-nier-world.js': 1, '22-nier-chips.js': 1,
+		'23-nier-theme-menu.js': 2, '27-place.js': 1, '28-in-place.js': 2, '29-pip-editor.js': 1,
+		'30-inspector.js': 5, '32-model-nicknames.js': 1, '46-first-screen.js': 3, '60-wizard.js': 1
+	};
+	const directory = new URL('../../../onboarding/opus-5.5/src/settings/kit.d/', import.meta.url);
+	const listeners = (source) => [...uncomment(source).matchAll(
+		/\baddEventListener\s*\(\s*(['"`])(?:keydown|keyup|keypress|beforeinput)\1|\bon(?:keydown|keyup|keypress|beforeinput)\b\s*(?:=\s*(?!=)|:)/g
+	)].length;
+	const read = (name) => readFileSync(new URL(name, directory), 'utf8');
+	const files = readdirSync(directory).filter((name) => name.endsWith('.js'));
+	const added = (sources) => files.filter((name) => listeners(sources(name)) > (established[name] ?? 0));
+	assert.deepEqual(added(read), [], 'no additional Settings keyboard registrations (FO-248 will adjudicate any new End/Home owner)');
+	for (const [name, mutation] of [
+		['46-first-screen.js', 'root.addEventListener("keydown", e => { if ([35, 36].includes(e.keyCode)) root.scrollTop = 100; });'],
+		['47-status-words.js', "document.addEventListener('keydown', e => { if (e.key === 'End') root.scrollTop = 100; });"],
+		['47-status-words.js', 'window.onkeydown = e => { if (e.which === 35) root.scrollTop = 100; };']
+	]) {
+		assert.ok(files.includes(name), `${name} is included in the Settings scan`);
+		assert.deepEqual(added((file) => file === name ? `${read(file)}\n${mutation}` : read(file)), [name], 'an additional Settings registration is detected');
+	}
+	assert.equal(listeners('// window.onkeydown = f\n/* root.addEventListener("keyup", f) */'), 0);
+}
 /* FO-245 r5 (option C): the product has no End/Home key listener of its own (rounds 3 and 4 had one; it overrode the
    tab list, the roster and the wallpaper picker, R143 and R144). End/Home blanks are FO-248's; a listener that comes
    back fails here until FO-248 changes this pin. The cold-page mount and the content-visibility show stay. */
@@ -562,14 +692,6 @@ const modeSpread = (img, rect) => {
 	console.log(`PASS wheel gate: one passive wheel listener notes the time, o55fsMountNear runs only behind it (${ms} ms), no key listener is added`);
 }
 {
-	const live = (src, re) => {
-		for (const m of src.matchAll(new RegExp(re.source, re.flags.replace('g', '') + 'g'))) {
-			const before = src.slice(0, m.index), line = before.slice(before.lastIndexOf('\n') + 1);
-			if (before.lastIndexOf('/*') > before.lastIndexOf('*/') || line.includes('//')) continue;
-			return true;
-		}
-		return false;
-	};
 	// main lands 45-46 px from the end every press (R145); the revert stopped 634-1,268 px short in about one press in four
 	const press = (o) => ({ key: true, keyName: 'End', from: 'button', focusOk: true, focusAtKey: 'button in the document', coldAtKey: 6, travelWant: 19100, settled: true, gap: 45, top: 20155, ...o });
 	const mainRun = Array.from({ length: 2 * END_REPS }, (_, i) => press({ from: i % 2 ? 'text' : 'button', gap: 45 + (i % 2) }));
