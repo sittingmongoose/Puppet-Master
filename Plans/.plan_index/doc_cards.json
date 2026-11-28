@@ -7203,7 +7203,7 @@
         "scripts/pm_wiring_inventory.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 63882,
+      "line_count": 63883,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 1011,
       "plan_unit_ids": [
@@ -8426,7 +8426,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "45570be6aae80cd28b9d8839c0f156a06d8ad884fcc20b5a4675a5515996fb33",
+      "sha256": "b60c6e9c5aefd2fc2bffee0742133949e1d61ae22356abedba5b5487250a9a30",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 1011
@@ -10117,8 +10117,8 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 36,
-        "True": 644
+        "False": 39,
+        "True": 641
       },
       "heading_count": 1062,
       "implementation_surfaces": [
@@ -10227,7 +10227,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 54887,
+      "line_count": 54827,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 680,
       "plan_unit_ids": [
@@ -11058,11 +11058,11 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "4b40288629168b5a8d3f26c92c06c2e5684fe632f7943eeb95d1e10f3585da72",
+      "sha256": "2735a5044a88de605ff000ae9a796cb3fccd90b407ecda9d56f9cc4d3cacd0cf",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 671,
-        "retired": 3,
+        "accepted": 668,
+        "retired": 6,
         "superseded": 6
       },
       "title": "Puppet Master GUI Specification -- Slint Rewrite",
@@ -11070,14 +11070,14 @@
         "acceptance_contract": 2,
         "command_contract": 3,
         "compatibility_disposition": 3,
-        "constraint": 72,
+        "constraint": 71,
         "contract": 2,
         "decision": 6,
         "gui_requirement": 29,
         "integration_contract": 13,
         "interaction_contract": 18,
-        "requirement": 529,
-        "retirement_record": 1,
+        "requirement": 527,
+        "retirement_record": 4,
         "security_constraint": 1,
         "validation_rule": 1
       },
@@ -20669,7 +20669,7 @@
         "theme_or_layout_cross_project_leak",
         "unowned_preference_or_scope_drift"
       ],
-      "sha256": "a0976141957a1246874bb469c64ac6036cfdff760aba7de6af1d38f01d036410",
+      "sha256": "21e331a5d42867370bc34ef4bafd192e62af2f50012943e6f22dab8bb1f5c375",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 62
@@ -24086,7 +24086,7 @@
         "wand_module_surface_drift",
         "wrong_git_target_or_phantom_handler"
       ],
-      "sha256": "212330f7717d2191d3575fdd8ea7a8b8c42e56ebf3e5c88e9d43690464bdce89",
+      "sha256": "008eb99a192c8e9745ae34de8b3bdc8ab7dc5a926265cdf9603226c053577f10",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 197,
@@ -25304,7 +25304,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-28T05:04:45Z",
+  "generated_at_utc": "2026-11-28T17:55:26Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -25312,15 +25312,15 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 5688,
-      "True": 3950
+      "False": 5691,
+      "True": 3947
     },
     "plan_unit_count": 9638,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 9358,
+      "accepted": 9355,
       "draft": 47,
-      "retired": 205,
+      "retired": 208,
       "superseded": 28
     },
     "unit_type_counts": {
@@ -25345,7 +25345,7 @@
       "compatibility_contract": 1,
       "compatibility_disposition": 137,
       "compatibility_note": 2,
-      "constraint": 635,
+      "constraint": 634,
       "consumer_alignment": 1,
       "consumer_contract": 1,
       "consumer_requirement": 1,
@@ -25391,8 +25391,8 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 6128,
-      "retirement_record": 3,
+      "requirement": 6126,
+      "retirement_record": 6,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
