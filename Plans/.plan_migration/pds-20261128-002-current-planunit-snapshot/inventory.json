@@ -1637,12 +1637,12 @@
     }
   ],
   "expected_doc_count": 96,
-  "generated_at_utc": "2026-11-27T23:04:31Z",
+  "generated_at_utc": "2026-11-28T04:05:02Z",
   "locked_doc_count": 37,
   "pilot_doc": "Plans/00-plans-index.md",
   "plan_unit_count": 9636,
   "plans_manifest_sha256": "ee3c343d2d5baf352cc6075c447d47417062b784c6a4e973643f7f1e9a0a4824",
-  "run_id": "pds-20261127-002-current-planunit-snapshot",
+  "run_id": "pds-20261128-002-current-planunit-snapshot",
   "schema_id": "pm.plan_migration.inventory.v1",
   "scope": "exact current top-level Plans/*.md",
   "sharded_doc_count": 74,
@@ -1651,6 +1651,6 @@
   "span_count": 16499,
   "supersedes_run_ids": [
     "pds-20260611-002-atomize-planunits",
-    "pds-20261127-001-current-planunit-snapshot"
+    "pds-20261128-001-current-planunit-snapshot"
   ]
 }
