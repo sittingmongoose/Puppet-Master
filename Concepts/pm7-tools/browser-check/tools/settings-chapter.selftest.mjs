@@ -466,6 +466,14 @@ const modeSpread = (img, rect) => {
 			assert.equal(typeof tests[name], 'function', `FO-250: the composited ${route} route is a live test on the ${surface} surface`);
 			assert.ok(live(String(tests[name]), new RegExp(`flingRoute\\(t, surface, '${route}', \\{composite:true\\}\\)`)), `the composited ${route} test runs the shared runner with the composite option`);
 		}
+		// FO-251: End, End after a text click and Home with the document forced to composite (the compositor's keyboard
+		// animation that an instant scrollTo cannot cancel), so a host that scrolls by repainting judges that path too
+		for (const [name, route] of [[`R93 #4 End from a fresh Code & Tools paints its last page, composited scrolling (${surface})`, 'end'],
+			[`R93 #4 End after a text click from a fresh Code & Tools paints its last page, composited scrolling (${surface})`, 'end-text'],
+			[`R93 #4 Home after End from a fresh Code & Tools paints its first page, composited scrolling (${surface})`, 'home']]) {
+			assert.equal(typeof tests[name], 'function', `FO-251: the composited ${route} route is a live test on the ${surface} surface`);
+			assert.ok(live(String(tests[name]), new RegExp(`flingRoute\\(t, surface, '${route}', \\{composite:true\\}\\)`)), `the composited ${route} test runs the shared runner with the composite option`);
+		}
 		const roster = tests[`R93 #4 a long wheel over a roster at its end leaves the document still (${surface})`];
 		assert.equal(typeof roster, 'function', `FO-250 round 2: the roster row is a live test on the ${surface} surface`);
 		assert.ok(live(String(roster), /rosterWheelRoute\(t, surface\)/), 'the roster row runs rosterWheelRoute');
@@ -748,7 +756,7 @@ const modeSpread = (img, rect) => {
 		'30-inspector.js': 5, '32-model-nicknames.js': 1, '46-first-screen.js': 5, '60-wizard.js': 1
 	};
 	/* INTEG4: 46-first-screen.js has four keyboard registrations since FO-248P (main's three plus its passive bubble-phase
-	   note on window, whose no-interception contract the FO-248P block below pins); FO-251 adds a fifth, the macOS-only
+	   note on window, whose no-interception contract the FO-248P block below pins); FO-251 adds a fifth, the
 	   End / Home take-over (pinned and run on stand-ins in its own block below) */
 	const directory = new URL('../../../onboarding/opus-5.5/src/settings/kit.d/', import.meta.url);
 	const listeners = (source) => [...uncomment(source).matchAll(
@@ -779,8 +787,8 @@ const modeSpread = (img, rect) => {
 	const block = (at) => { let i = code.indexOf('{', at), depth = 0, j = i; for (; j < code.length; j++) { if (code[j] === '{') depth++; else if (code[j] === '}' && --depth === 0) break; } return code.slice(at, j + 1); };
 	const fn = (name) => { const at = code.indexOf(`function ${name}(`); assert.ok(at >= 0, `${name} is defined`); return block(at); };
 	// End and Home are named in two places only: main's fill set and the FO-248P note
-	assert.equal((code.match(/['"`]End['"`]/g) || []).length, 4, 'End is named in main\'s fill set, twice in the note (the key test and the edge) and in FO-251\'s macOS take-over');
-	assert.equal((code.match(/['"`]Home['"`]/g) || []).length, 3, 'Home is named in main\'s fill set, in the note and in FO-251\'s macOS take-over');
+	assert.equal((code.match(/['"`]End['"`]/g) || []).length, 4, 'End is named in main\'s fill set, twice in the note (the key test and the edge) and in FO-251\'s take-over');
+	assert.equal((code.match(/['"`]Home['"`]/g) || []).length, 3, 'Home is named in main\'s fill set, in the note and in FO-251\'s take-over');
 	// main's capture listener only fills, unchanged (FO-248P: skipping it while pages were unmounted left General's Home 104 px short)
 	assert.match(code, /const O55FS_KEYS = new Set\(\['End', 'Home'\]\);\nroot\.addEventListener\('keydown', e => \{\n  if \(!o55fs\.pending\.size\) return;\n  const sc = root\.querySelector\('#settings-document'\);\n  if \(O55FS_KEYS\.has\(e\.key\) && sc && \(e\.target === sc \|\| sc\.contains\(e\.target\)\) && !\(e\.target\.matches && e\.target\.matches\('input, textarea, select, \[contenteditable=""\], \[contenteditable="true"\]'\)\)\) o55fsFillAll\(\);\n\}, true\);/, 'main\'s End/Home listener only fills the pending rows, unchanged');
 	assert.equal((code.match(/O55FS_KEYS/g) || []).length, 2, 'the fill set is used by that listener only');
@@ -788,7 +796,7 @@ const modeSpread = (img, rect) => {
 		assert.equal(code.includes(gone), false, `${gone} (rounds 3-4's End/Home jump) is gone`);
 	// no keydown listener scrolls, mounts or prevents a key's default
 	const keys = [...code.matchAll(/addEventListener\('keydown',/g)].map((m) => block(m.index)).filter((body) => !body.includes('O55FS_EDGE_OWN'));
-	assert.equal(keys.length, 4, 'FO-251\'s macOS take-over (pinned below) is the only keydown listener left out of this contract');
+	assert.equal(keys.length, 4, 'FO-251\'s take-over (pinned below) is the only keydown listener left out of this contract');
 	for (const body of keys) assert.equal(/preventDefault|scrollTo\(|scrollBy\(|scrollTop\s*=(?!=)|scrollIntoView|mountContinuousWorkspace|o55fsMount|o55fsEdgeLand/.test(body), false, `a keydown listener neither scrolls, mounts nor takes a key's default: ${body.split('\n')[0]}`);
 	assert.equal(/document\.addEventListener\('pointerdown'/.test(code), false, 'no pointer-down memory on document (round 4\'s text-click route)');
 	// the note: one listener on window, passive (it cannot cancel), bubble phase (after every widget's own handler)
@@ -820,7 +828,7 @@ const modeSpread = (img, rect) => {
 	assert.match(take, /if \(--held\.n > 0\) requestAnimationFrame\(keep\); else o55fsEdgeHeld = null;\n  \};\n  requestAnimationFrame\(keep\);\n  return true;\n\}$/, 'the hold starts in the landing\'s next frame and runs its three frames');
 	assert.match(take, /if \(s && Math\.abs\(s\.scrollTop - \(held\.end \? s\.scrollHeight - s\.clientHeight : 0\)\) > 2\) o55fsEdgeLand\(s, held\.end\);/, 'a write that moves the landed page off its edge is undone');
 	assert.equal((code.match(/o55fsEdgeLand\(/g) || []).length, 3, 'o55fsEdgeLand: defined, the take-over and the hold');
-	assert.equal((code.match(/o55fsEdgeScroll\(/g) || []).length, 4, 'o55fsEdgeScroll: defined, the scroll handler, the rAF read and FO-251\'s macOS take-over');
+	assert.equal((code.match(/o55fsEdgeScroll\(/g) || []).length, 4, 'o55fsEdgeScroll: defined, the scroll handler, the rAF read and FO-251\'s take-over');
 	// anything else ends the note and the hold: another key, a wheel, a pointer press, another scroller's scroll
 	assert.match(note, /^window\.addEventListener\('keydown', e => \{\n  o55fsEdge = null; o55fsEdgeHeld = null; o55fsStepAt = -Infinity;/, 'every key ends the note, the hold and the step window first');
 	assert.match(code, /\nroot\.addEventListener\('wheel', \(\) => \{ o55fsEdge = null; o55fsEdgeHeld = null; o55fsStepAt = -Infinity; \}, \{ capture: true, passive: true \}\);\n/, 'a wheel ends them');
@@ -832,26 +840,29 @@ const modeSpread = (img, rect) => {
 	console.log(`PASS End/Home: no key intercepted; a passive bubble note of an untaken End/Home, and only the document's own scroll toward that edge within ${edgeMs} ms is completed in one step (FO-248P)`);
 }
 
-/* FO-251 (prototype for pm7-build's behaviour call): on macOS the document is a composited scroller and Chrome's keyboard
-   End / Home there is a compositor animation an instant scrollTo cannot cancel, so FO-248P's take-over lands and the
-   compositor drags the view back across empty pages. On macOS only, an End / Home (or Cmd+Down / Cmd+Up) that reaches
-   window unhandled and whose scroller is the document is cancelled and landed by the note's take-over. Pinned: the macOS
-   gate, the bubble-phase window listener, every guard before the cancel, and the listener run as written on stand-ins. */
+/* FO-251 (pm7-build: on every platform): where the document is a composited scroller (macOS always; Windows and Linux
+   where Chrome gives up LCD text) Chrome's keyboard End / Home is a compositor animation an instant scrollTo cannot
+   cancel, so FO-248P's take-over lands and the compositor drags the view back across empty pages. On every platform an
+   End / Home (Ctrl too off macOS; Cmd+Down / Cmd+Up on macOS only) that reaches window unhandled and whose scroller is the
+   document is cancelled and landed by the note's take-over. Pinned: no platform gate on the registration, the modifier
+   rule per platform, the bubble-phase window listener, every guard before the cancel, and the listener run as written on
+   stand-ins. */
 {
 	const fs = await import('node:fs');
 	const prod = fs.readFileSync(new URL('../../../onboarding/opus-5.5/src/settings/kit.d/46-first-screen.js', import.meta.url), 'utf8');
 	const code = prod.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
 	const cut = (from, to) => { const a = code.indexOf(from); assert.ok(a >= 0, `found: ${from}`); const b = code.indexOf(to, a); assert.ok(b > a, `found the end of: ${from}`); return code.slice(a, b + to.length); };
-	assert.match(code, /\nconst O55FS_MAC = \/\^Mac\/\.test\(navigator\.platform \|\| ''\);\n/, 'the take-over is gated on a macOS browser (its navigator.platform)');
-	const mac = cut('if (O55FS_MAC) {', '\n}\n');
-	assert.equal((code.match(/O55FS_MAC/g) || []).length, 2, 'O55FS_MAC: declared and read once, by the block that registers the take-over');
-	assert.match(mac, /^if \(O55FS_MAC\) \{\n  root\.addEventListener\('pointerdown', e => \{ o55fsPressed = e\.target; \}, \{ capture: true, passive: true \}\);\n  window\.addEventListener\('keydown', e => \{\n/, 'inside it: the pressed-node memory (passive) and the key listener on window');
-	assert.match(mac, /\n  \}\);\n\}\n$/, 'the key listener is bubble phase (no options): it runs after every widget\'s own handler and after the note');
-	assert.ok(code.indexOf('if (O55FS_MAC) {') > code.indexOf("window.addEventListener('keydown', e => {\n  o55fsEdge = null;"), 'registered after FO-248P\'s note');
-	const order = ['e.defaultPrevented || e.shiftKey || e.altKey || e.ctrlKey', "e.metaKey ? e.key === 'ArrowDown' : e.key === 'End'", "e.metaKey ? e.key === 'ArrowUp' : e.key === 'Home'", 't.closest(O55FS_EDGE_TEXT)', '!(o55fsCold(sc) || o55fsUnlaid(sc)) || !o55fsInteractive()', 'o55fsPressed : t', '!sc.contains(from)', 'el.closest(O55FS_EDGE_OWN)', 'o55fsInnerTakes(from, sc, end ? 1 : -1)', 'sc.scrollTop >= sc.scrollHeight - sc.clientHeight - 1 : sc.scrollTop <= 0', 'e.preventDefault()'];
+	assert.match(code, /\nconst O55FS_MAC = \/\^Mac\/\.test\(navigator\.platform \|\| ''\);\n/, 'macOS is told by the browser (its navigator.platform)');
+	const mac = cut("root.addEventListener('pointerdown', e => { o55fsPressed = e.target; }", '\n});\n');
+	assert.equal((code.match(/O55FS_MAC/g) || []).length, 2, 'O55FS_MAC: declared and read once, by the modifier rule (no gate on the registration)');
+	assert.equal(code.includes('if (O55FS_MAC)'), false, 'the take-over is registered on every platform (pm7-build, 2026-11-28)');
+	assert.match(mac, /^root\.addEventListener\('pointerdown', e => \{ o55fsPressed = e\.target; \}, \{ capture: true, passive: true \}\);\nwindow\.addEventListener\('keydown', e => \{\n/, 'the pressed-node memory (passive) and the key listener on window, at the top level');
+	assert.match(mac, /\n\}\);\n$/, 'the key listener is bubble phase (no options): it runs after every widget\'s own handler and after the note');
+	assert.ok(code.indexOf("root.addEventListener('pointerdown', e => { o55fsPressed") > code.indexOf("window.addEventListener('keydown', e => {\n  o55fsEdge = null;"), 'registered after FO-248P\'s note');
+	const order = ['!e.isTrusted || e.isComposing || e.defaultPrevented || e.shiftKey || e.altKey || (O55FS_MAC ? e.ctrlKey : e.metaKey)', "e.metaKey ? e.key === 'ArrowDown' : e.key === 'End'", "e.metaKey ? e.key === 'ArrowUp' : e.key === 'Home'", 't.closest(O55FS_EDGE_TEXT)', '!(o55fsCold(sc) || o55fsUnlaid(sc)) || !o55fsInteractive()', 'o55fsPressed : t', '!sc.contains(from)', 'el.closest(O55FS_EDGE_OWN)', 'o55fsInnerTakes(from, sc, end ? 1 : -1)', 'sc.scrollTop >= sc.scrollHeight - sc.clientHeight - 1 : sc.scrollTop <= 0', 'e.preventDefault()'];
 	let last = -1;
 	for (const g of order) { const i = mac.indexOf(g); assert.ok(i > last, `in order, before the cancel: ${g}`); last = i; }
-	assert.match(mac, /e\.preventDefault\(\);\s*o55fsEdge = \{ at: performance\.now\(\), end, top: sc\.scrollTop \+ \(end \? -1 : 1\) \};\s*o55fsEdgeScroll\(sc\);\n  \}\);/, 'then the note\'s own take-over, landing and three-frame hold (no second landing path)');
+	assert.match(mac, /e\.preventDefault\(\);\s*o55fsEdge = \{ at: performance\.now\(\), end, top: sc\.scrollTop \+ \(end \? -1 : 1\) \};\s*o55fsEdgeScroll\(sc\);\n\}\);/, 'then the note\'s own take-over, landing and three-frame hold (no second landing path)');
 	for (const own of ['[role="tablist"]', '[role="tab"]', '[role="listbox"]', '[role="option"]', '[role="menu"]', '[role="slider"]', '[role="spinbutton"]', '[role="grid"]', '[role="tree"]', '[aria-expanded="true"]', '.wpk-row'])
 		assert.ok(code.slice(code.indexOf('const O55FS_EDGE_OWN')).split('\n')[0].includes(own), `a widget that owns End / Home keeps it: ${own}`);
 	/* run as written on stand-ins */
@@ -873,12 +884,22 @@ const modeSpread = (img, rect) => {
 		const win = { addEventListener: (type, fn) => { L[type] = fn; } };
 		S = new Function('root', 'window', 'document', 'navigator', 'getComputedStyle', 'Node', 'Element', 'o55fsCold', 'o55fsUnlaid', 'o55fsInteractive', 'o55fsEdgeScroll', src)(
 			root, win, { body, documentElement }, { platform }, (n) => n.style, Node, Element, () => cold, () => unlaid, () => interactive, (s) => takes.push({ s, edge: S.edge() }));
-		const key = (key, target, o = {}) => { const e = { key, target, defaultPrevented: false, shiftKey: false, altKey: false, ctrlKey: false, metaKey: false, ...o, preventDefault() { e.defaultPrevented = true; } }; if (L.keydown) L.keydown(e); return e; };
+		const key = (key, target, o = {}) => { const e = { key, target, isTrusted: true, isComposing: false, defaultPrevented: false, shiftKey: false, altKey: false, ctrlKey: false, metaKey: false, ...o, preventDefault() { e.defaultPrevented = true; } }; if (L.keydown) L.keydown(e); return e; };
 		const press = (target) => L.pointerdown && L.pointerdown({ target });
 		return { sc, body, L, key, press, takes };
 	};
-	{ const { L } = make({ platform: 'Win32' }); assert.equal(L.keydown, null, 'off macOS no key listener is registered'); assert.equal(L.pointerdown, null, 'nor the pressed-node memory'); }
-	{ const { L } = make({ platform: 'Linux x86_64' }); assert.equal(L.keydown, null, 'Linux: none either'); }
+	for (const platform of ['Win32', 'Linux x86_64']) {
+		const { sc, body, L, key, press, takes } = make({ platform });
+		assert.equal(typeof L.keydown, 'function', `${platform}: the take-over is registered (every platform)`); assert.equal(typeof L.pointerdown, 'function', `${platform}: so is the pressed-node memory`);
+		press(new Element({ parentElement: sc }));
+		assert.equal(key('End', body).defaultPrevented, true, `${platform}: End after a text click is taken`);
+		assert.equal(key('End', body, { ctrlKey: true }).defaultPrevented, true, `${platform}: Ctrl+End is taken (it scrolls the document off macOS)`);
+		sc.scrollTop = 5000; assert.equal(key('Home', body, { ctrlKey: true }).defaultPrevented, true, `${platform}: Ctrl+Home too`); assert.equal(takes.at(-1).edge.end, false);
+		sc.scrollTop = 0; const n = takes.length;
+		for (const [k, o, why] of [['ArrowDown', { metaKey: true }, 'Meta+Down (the Windows key; Cmd+Down is macOS only)'], ['End', { metaKey: true }, 'Meta+End'], ['End', { shiftKey: true }, 'Shift+End'], ['End', { altKey: true }, 'Alt+End']])
+			assert.equal(key(k, body, o).defaultPrevented, false, `${platform}: left alone: ${why}`);
+		assert.equal(takes.length, n, `${platform}: none of those reached the landing`);
+	}
 	{ const { sc, body, key, press, takes } = make(); const text = new Element({ parentElement: sc });
 		press(text);
 		const e = key('End', body); assert.equal(e.defaultPrevented, true, 'End after a text click (focus on the body) is taken');
@@ -891,7 +912,7 @@ const modeSpread = (img, rect) => {
 		assert.equal(takes.at(-1).edge.end, true);
 		sc.scrollTop = 500; assert.equal(key('ArrowUp', body, { metaKey: true }).defaultPrevented, true, 'Cmd+Up is Home'); assert.equal(takes.at(-1).edge.end, false);
 		const n = takes.length;
-		for (const [k, o, why] of [['ArrowDown', {}, 'a plain arrow'], ['End', { ctrlKey: true }, 'Ctrl+End (it does not scroll on macOS)'], ['End', { shiftKey: true }, 'Shift+End (a selection)'], ['End', { altKey: true }, 'Alt+End'], ['End', { metaKey: true }, 'Cmd+End'], ['PageDown', {}, 'PageDown'], ['End', { defaultPrevented: true }, 'a key a widget took']])
+		for (const [k, o, why] of [['ArrowDown', {}, 'a plain arrow'], ['End', { ctrlKey: true }, 'Ctrl+End (it does not scroll on macOS)'], ['End', { shiftKey: true }, 'Shift+End (a selection)'], ['End', { altKey: true }, 'Alt+End'], ['End', { metaKey: true }, 'Cmd+End'], ['PageDown', {}, 'PageDown'], ['End', { isTrusted: false }, 'a script\'s synthetic End (no default action on main)'], ['End', { isComposing: true }, 'End during an IME composition'], ['End', { defaultPrevented: true }, 'a key a widget took']])
 			assert.equal(key(k, body, o).defaultPrevented, !!o.defaultPrevented, `left alone: ${why}`);
 		assert.equal(takes.length, n, 'none of those reached the landing'); }
 	{ const { sc, key } = make(); const btn = new Element({ parentElement: sc });
@@ -913,7 +934,7 @@ const modeSpread = (img, rect) => {
 	assert.equal(inner({ overscrollBehaviorY: 'auto' }, 500).defaultPrevented, true, 'an uncontained one at its end hands End on to the document');
 	assert.equal(inner({ overscrollBehaviorY: 'auto' }, 0, 'Home').defaultPrevented, true, 'and one at its top hands Home on');
 	{ const { sc, key } = make(); sc.scrollTop = 19100; assert.equal(key('End', new Element({ parentElement: sc })).defaultPrevented, false, 'a document already at its end is left alone'); sc.scrollTop = 0; assert.equal(key('Home', new Element({ parentElement: sc })).defaultPrevented, false, 'and at its top'); }
-	console.log('PASS FO-251 macOS End / Home take-over: macOS only, bubble on window after the note, every guard before the cancel, run on stand-ins (widgets, text fields, the roster, presses outside, Ctrl/Shift/Alt kept)');
+	console.log('PASS FO-251 End / Home take-over: every platform (Cmd+arrows on macOS, Ctrl off it), bubble on window after the note, every guard before the cancel, run on stand-ins (widgets, text fields, the roster, presses outside, Ctrl/Shift/Alt kept)');
 }
 
 /* FO-245 r6 (option E, R145 medium): round 3's cold-page mount runs in the scroll event only while a wheel scroll is under
@@ -930,9 +951,9 @@ const modeSpread = (img, rect) => {
 	assert.equal(wheels.filter((m) => code.slice(m.index - 5, m.index) === 'root.').length, 2, 'two of them are on root (the gate and the note reset)');
 	assert.match(code, /\nroot\.addEventListener\('wheel', \(\) => \{ o55fsWheelAt = performance\.now\(\); \}, \{ capture: true, passive: true \}\);\n/, 'the wheel listener is passive, captures on root and only notes the time');
 	// FO-250: the one cancelling listener is the long-wheel jump (below); nothing else in the file cancels a default
-	assert.equal((code.match(/preventDefault/g) || []).length, 2, 'only FO-250\'s long-wheel jump and FO-251\'s macOS End / Home take-over cancel an event\'s default');
+	assert.equal((code.match(/preventDefault/g) || []).length, 2, 'only FO-250\'s long-wheel jump and FO-251\'s End / Home take-over cancel an event\'s default');
 	assert.ok(code.lastIndexOf('preventDefault') > code.indexOf("window.addEventListener('wheel', e => {"), 'one cancel is inside the FO-250 wheel listener');
-	assert.ok(code.indexOf('preventDefault') > code.indexOf('if (O55FS_MAC) {') && code.indexOf('preventDefault') < code.indexOf("window.addEventListener('wheel', e => {"), 'the other is inside FO-251\'s macOS-only block');
+	assert.ok(code.indexOf('preventDefault') > code.indexOf("root.addEventListener('pointerdown', e => { o55fsPressed") && code.indexOf('preventDefault') < code.indexOf("window.addEventListener('wheel', e => {"), 'the other is inside FO-251\'s take-over');
 	assert.equal((code.match(/o55fsWheelAt\s*=(?!=)/g) || []).length, 2, 'o55fsWheelAt is set only where it is declared and in the wheel listener');
 	assert.match(code, /\nconst o55fsWheeling = \(\) => performance\.now\(\) - o55fsWheelAt <= O55FS_WHEEL_MS;\n/, 'the gate compares the time since the last wheel with O55FS_WHEEL_MS');
 	const ms = Number((code.match(/\nconst O55FS_WHEEL_MS = (\d+);\n/) || [])[1]);
@@ -952,7 +973,7 @@ const modeSpread = (img, rect) => {
 	assert.match(code, /const r = sc\.getBoundingClientRect\(\), h = ahead \? sc\.clientHeight : 0;\n  const view = \{ top: r\.top - \(ahead < 0 \? h : 0\), bottom: r\.bottom \+ \(ahead > 0 \? h : 0\) \};/, 'the look-ahead is one view in the key\'s direction, none for the wheel');
 	assert.equal((code.match(/o55fsWheeling\(\)/g) || []).length, 1, 'the gate is read only by the scroll handler');
 	// the keydown listeners are main's three (End/Home fill, Find/F3/Select All, Tab) and FO-248P's passive note; no keyup/keypress
-	assert.equal([...code.matchAll(/addEventListener\(\s*['"`]key(down|up|press)['"`]/g)].length, 5, 'five key listeners: main\'s three, FO-248P\'s passive note and FO-251\'s macOS-only take-over');
+	assert.equal([...code.matchAll(/addEventListener\(\s*['"`]key(down|up|press)['"`]/g)].length, 5, 'five key listeners: main\'s three, FO-248P\'s passive note and FO-251\'s take-over');
 	assert.equal([...code.matchAll(/addEventListener\(\s*['"`](keyup|keypress|beforeinput)['"`]/g)].length, 0, 'no keyup or keypress listener');
 	for (const m of code.matchAll(/addEventListener\('keydown',/g)) {
 		let i = code.indexOf('{', m.index), depth = 0, j = i;
