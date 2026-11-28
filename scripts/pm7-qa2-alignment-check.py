@@ -57,7 +57,11 @@ def check():
     # less catalog.chat_worktree_bind_existing: DL-335 retires that command because UCC-058 forbids exposing it.
     # Q5c / DL-471 Q-ID6/Q-ID7b (2026-11-09): +2 production-intent rows (1331 -> 1333), the existing-topology
     # shell_view catalog.git_worktree_open_topology and catalog.git_worktree_repair, unavailable until defined.
-    require(len(read("Wiring_Matrix.production.json")["entries"]) == 1335, "QA2/DL-270 plus refresh plus DL-333 less DL-335 plus DL-471 plus DL-475 production wiring union differs")
+    # C-FIX79 (DL-2602 answer 7; fix round K5-r1, registry line 1536; round 4, registry line 1345) added three
+    # production-intent rows (1335 -> 1338): catalog.prd_builder_revision_resubmit,
+    # catalog.chat_open_investigation_target and the Settings generated-media route Verify action
+    # (see scripts/pm-touch-closure-verify.py production_wiring_entry_count).
+    require(len(read("Wiring_Matrix.production.json")["entries"]) == 1338, "QA2/DL-270 plus refresh plus DL-333 less DL-335 plus DL-471 plus DL-475 plus C-FIX79 (DL-2602) production wiring union differs")
     actor = read("glyph_catalog.json")["qa2_actor_presentation"]
     require(actor["you"]["silhouette"] == "person_alone" and not actor["you"]["marionette_cross"]
             and not actor["you"]["puppet_strings"] and actor["wand"]["glyph_id"] == "wand",
