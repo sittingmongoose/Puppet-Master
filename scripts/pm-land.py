@@ -5,10 +5,13 @@ from __future__ import annotations
 
 import argparse
 import ast
+import fcntl
+import importlib.util
 from collections import Counter
 from datetime import datetime, timezone
 import hashlib
 import json
+import math
 import os
 from pathlib import Path, PurePosixPath
 import re
@@ -63,6 +66,21 @@ CLEANUP_DRAIN_POLL = 0.1
 PR_SET_CHILD_SUBREAPER = 36
 PR_GET_CHILD_SUBREAPER = 37
 ALIVE_SYSTEMD_STATES = frozenset({"active", "activating", "deactivating", "reloading", "refreshing"})
+# One landing check per host (TOOLS-LANDCHECK-ONE-PER-HOST): two overlapping checks on Nas1 need about 24 GB on
+# a 19 GB host. The remote job itself holds an exclusive flock on a file on the check host's own disk for its
+# whole life, and the kernel drops it when the job's process ends, however it ends. `check` probes that lock
+# over ssh and waits while it is held; a job that finds it held when it starts does nothing and says so.
+HOST_LOCK_SCHEMA = "pm.land.host_lock.v1"
+HOST_LOCK_DIR_ENV = "PM_LAND_HOST_LOCK_DIR"
+HOST_LOCK_NAME = "landing-check.lock"
+HOST_LOCK_HOLDER = "landing-check.holder.json"
+HOST_BUSY_FILE = "host-busy.json"
+LANDER_FILE = "lander.json"
+HOST_LOCK_TRY_SECONDS = 2.0  # a job retries this long before it counts the host as busy: a probe holds it for microseconds
+HOST_LOCK_TRY_POLL = 0.05
+HOST_WAIT_MINUTES = 30
+HOST_LEASE_POLL_SECONDS = 30
+HOST_LEASE_NOTICE_SECONDS = 5 * 60
 
 
 class Refusal(RuntimeError):
@@ -71,6 +89,10 @@ class Refusal(RuntimeError):
 
 class TransportFailure(Refusal):
     """The remote job may still be active, so preserve its worktree and evidence."""
+
+
+class HostBusy(Refusal):
+    """Another landing check held the host for the whole wait: an infrastructure result, exit 3."""
 
 
 def now() -> str:
@@ -361,22 +383,280 @@ def require_same_inputs(expected, actual, label):
         raise Refusal(f"{label} ignored input mismatch: " + ", ".join(changed))
 
 
-def copy_inputs(shared, worktree):
+def symlinked_ancestor(worktree, name):
+    """The first ancestor of worktree/name, below worktree, that is a symlink or not a directory."""
+    current = worktree
+    for part in PurePosixPath(name).parts[:-1]:
+        current = current / part
+        if current.is_symlink() or (current.exists() and not current.is_dir()):
+            return current
+    return None
+
+
+def raw_link_resolves(worktree, target):
+    """The raw-evidence link resolves, from worktree itself, to target."""
+    link = worktree / RAW_LINK
+    try:
+        return link.is_symlink() and link.is_dir() and link.resolve(strict=True) == target
+    except (OSError, RuntimeError):
+        return False
+
+
+def exclusive_copy(source, destination):
+    """copy2 that never replaces a file created after the pre-scan."""
+    with source.open("rb") as reader, destination.open("xb") as writer:
+        shutil.copyfileobj(reader, writer)
+    shutil.copystat(source, destination)
+
+
+def copy_inputs(shared, worktree, *, keep_present=False):
+    """Copy every ignored input the checks read from the shared checkout into worktree.
+
+    A remote checkout is fresh, so any existing path is refused. With keep_present (the
+    copy-inputs command, for a local worktree that may already hold some of them), a path that
+    already holds the shared checkout's exact bytes, or a raw-evidence link that resolves to the
+    same evidence directory, is kept; a raw-evidence link that does not resolve from the worktree
+    (such as a verbatim copy of the shared checkout's relative link) is recreated as an absolute
+    link; any other input that is a link is replaced by a regular copy (the link itself is removed,
+    its target is never written); anything else that differs is refused without changing anything.
+    Every destination's ancestors are checked before the first write, so nothing is written through
+    a symlinked folder.
+    """
     tracked = tracklist(worktree)
     expected = input_manifest(shared, worktree, tracked)
+    raw_target = (shared / RAW_LINK).resolve(strict=True)
+    pending, differing, dangling, relink = [], [], False, []
     for name in expected:
         if name.startswith(RAW_LINK + "/"):
             continue
         destination = worktree / name
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        if destination.exists() or destination.is_symlink():
+        ancestor = symlinked_ancestor(worktree, name)
+        if ancestor is not None:
+            differing.append(f"{name} (its folder {ancestor.relative_to(worktree)} is a symlink or a file)")
+        elif keep_present and name != RAW_LINK and destination.is_symlink():
+            relink.append(name)  # a linked input is never a real file of this tree: replace the link
+        elif not (destination.exists() or destination.is_symlink()):
+            pending.append(name)
+        elif not keep_present:
             raise Refusal(f"refusing to overwrite an existing checkout path: {destination}")
+        elif name == RAW_LINK:
+            if raw_link_resolves(worktree, raw_target):
+                continue
+            if destination.is_symlink() and not destination.exists():
+                dangling = True  # a link that leads nowhere holds nothing to keep
+                pending.append(name)
+            else:
+                differing.append(name)
+        elif destination.is_symlink() or not destination.is_file() or file_hash(destination) != expected[name]:
+            differing.append(name)
+    if differing:
+        raise Refusal("refusing to overwrite checkout paths that differ from the shared checkout's "
+                      f"(move them aside first; nothing was copied): {', '.join(differing)}")
+    for name in relink:
+        destination = worktree / name
+        if destination.is_symlink():
+            destination.unlink()  # removes the link only; its target is untouched
+        exclusive_copy(shared / name, destination)  # O_EXCL: never follows a link recreated meanwhile
+    for name in pending:
+        destination = worktree / name
+        destination.parent.mkdir(parents=True, exist_ok=True)
         if name == RAW_LINK:
-            destination.symlink_to((shared / name).resolve(strict=True), target_is_directory=True)
+            if dangling:
+                destination.unlink()
+            destination.symlink_to(raw_target, target_is_directory=True)
         else:
-            shutil.copy2(shared / name, destination)
-    require_same_inputs(expected, input_manifest(worktree, worktree, tracked), "copied")
+            exclusive_copy(shared / name, destination)
+    if not raw_link_resolves(worktree, raw_target):
+        raise Refusal(f"the raw-evidence link {worktree / RAW_LINK} does not resolve to {raw_target} after the copy")
+    if keep_present:
+        # The worktree may hold other ignored files of its own; compare only what was expected.
+        copied = {name: (f"symlink:{(worktree / name).resolve(strict=True)}" if name == RAW_LINK
+                         else regular_hash(worktree, name, through_raw_link=within(name, RAW_LINK)))
+                  for name in expected}
+        require_same_inputs(expected, copied, "copied")
+    else:
+        require_same_inputs(expected, input_manifest(worktree, worktree, tracked), "copied")
     return expected
+
+
+# The guard pm-plan-index.py generate and pm-landing-check.py --record-baseline run before they
+# write anything: the same selection copy_inputs copies, so the two can never disagree on the list.
+COPY_INPUTS_COMMAND = "python3 -B scripts/pm-land.py copy-inputs"
+COLLAPSE_DEPTH = 3  # name a whole directory such as Plans/.audits/<audit>/ when all of it is missing
+
+
+def missing_ignored_inputs(worktree, shared=None, *, prefixes=None, exclude=()):
+    """Return (selected, missing): the ignored inputs the shared checkout holds that copy_inputs
+    would copy, limited to prefixes and less exclude, and those of them absent from worktree.
+
+    The raw-evidence link counts as one input; the captures behind it live on the evidence share.
+    """
+    worktree, shared = Path(worktree).resolve(), Path(SHARED if shared is None else shared)
+    if not (shared / ".git").exists():
+        raise Refusal(f"cannot read the shared checkout {shared}, so the ignored inputs this tree "
+                      "needs are unknown")
+    if worktree == shared.resolve():
+        return [], []
+    tracked = tracklist(worktree)
+
+    def wanted(name):
+        return ((prefixes is None or any(within(name, prefix) for prefix in prefixes))
+                and not any(within(name, prefix) for prefix in exclude))
+
+    selected = sorted(name for name in copies(shared, worktree, tracked, None) if wanted(name))
+    # Every input but the raw-evidence link must be a regular file reached through real folders:
+    # a validator that resolves a linked input can land outside the tree (the widget audit report
+    # linked to its archived copy made the web validator crash; Astra r2 deep review).
+    missing = [name for name in selected if input_link(worktree, name) is not None
+               or not (worktree / name).is_file()]
+    if wanted(RAW_LINK) and (shared / RAW_LINK).is_symlink():
+        # The link counts only when it resolves, from this tree, to the evidence share, and every
+        # capture the tracked manifest names is a file behind it. A verbatim copy of the shared
+        # checkout's relative link dangles here and hides all of them (Astra deep review, r0).
+        # A capture counts only when json_syntax itself would read it: the verifier's own rule,
+        # which also refuses a nested link anywhere below the capture link (Astra r1 deep review).
+        captures = sorted(raw_paths(worktree, tracked, None))
+        selected.extend([RAW_LINK, *captures])
+        verifier = raw_capture_verifier()
+        evidence = verifier.RAW_EVIDENCE_DIRECTORY
+        if not verifier.raw_capture_link_admitted(worktree, evidence):
+            missing.extend([RAW_LINK, *captures])
+        else:
+            readable = {path.relative_to(worktree).as_posix()
+                        for path in verifier.admitted_raw_captures(worktree, captures, evidence)}
+            missing.extend(name for name in captures if name not in readable)
+    return selected, missing
+
+
+def input_link(worktree, name):
+    """The link that stands in for this input in worktree: the input itself, or a folder above it
+    (a file where a folder belongs counts too); None when the path is reached without links."""
+    ancestor = symlinked_ancestor(worktree, name)
+    if ancestor is not None:
+        return ancestor.relative_to(worktree).as_posix()
+    return name if (worktree / name).is_symlink() else None
+
+
+_VERIFIER = []
+
+
+def raw_capture_verifier():
+    """scripts/pm-plans-verify.py beside this script: the json_syntax reader whose capture rule
+    the guard applies, loaded once."""
+    if not _VERIFIER:
+        path = Path(__file__).resolve().with_name("pm-plans-verify.py")
+        spec = importlib.util.spec_from_file_location("pm_plans_verify_raw_captures", path)
+        if spec is None or spec.loader is None:
+            raise Refusal(f"cannot load the json_syntax verifier {path}")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        for name in ("raw_capture_link_admitted", "admitted_raw_captures", "RAW_EVIDENCE_DIRECTORY"):
+            if not hasattr(module, name):
+                raise Refusal(f"the json_syntax verifier {path} has no {name}")
+        _VERIFIER.append(module)
+    return _VERIFIER[0]
+
+
+def describe_missing(selected, missing, links=None):
+    """One line per missing input, naming a directory once when every input below it is missing.
+
+    links maps an input that is present only through a link to that link (input_link)."""
+    links = links or {}
+    lines = []
+    for name in missing:
+        link = links.get(name)
+        if link is None:
+            continue
+        line = (f"{name} is a link; run {COPY_INPUTS_COMMAND} to replace links with real files" if link == name
+                else f"{link}/ is a linked folder (or a file where a folder belongs); move it aside, then run "
+                     f"{COPY_INPUTS_COMMAND}")
+        if line not in lines:
+            lines.append(line)
+    missing = [name for name in missing if name not in links]
+    totals, absent = Counter(), Counter()
+    for counter, names in ((totals, selected), (absent, missing)):
+        for name in names:
+            parts = PurePosixPath(name).parts
+            for depth in range(COLLAPSE_DEPTH, len(parts)):
+                counter["/".join(parts[:depth])] += 1
+    if RAW_LINK in missing:
+        captures = sum(within(name, RAW_LINK) and name != RAW_LINK for name in missing)
+        lines.append(f"{RAW_LINK} (missing, or a link that does not resolve from this tree to the evidence "
+                     f"share; all {captures} captures behind it)")
+    else:
+        # Each capture by name: json_syntax cannot read it (absent, or behind a nested link).
+        lines.extend(f"{name} (json_syntax cannot read it: absent, or behind a nested link)"
+                     for name in missing if within(name, RAW_LINK))
+    missing = [name for name in missing if not within(name, RAW_LINK)]
+    for name in missing:
+        parts = PurePosixPath(name).parts
+        directory = next(("/".join(parts[:depth]) for depth in range(COLLAPSE_DEPTH, len(parts))
+                          if absent["/".join(parts[:depth])] == totals["/".join(parts[:depth])]), None)
+        line = f"{directory}/ (all {totals[directory]} inputs in it)" if directory else name
+        if line not in lines:
+            lines.append(line)
+    return lines
+
+
+def ignored_input_guard(tool, action, worktree, *, allow_missing, prefixes=None, exclude=(),
+                        shared=None, stream=None, extra_hint=None):
+    """Refuse with exit 2 (return 2) when ignored inputs are missing, unless allow_missing.
+
+    Returns None when the tool may go on, after a loud warning if it goes on without inputs.
+    """
+    stream = stream or sys.stderr
+    shared = SHARED if shared is None else shared
+    try:
+        selected, missing = missing_ignored_inputs(worktree, shared, prefixes=prefixes, exclude=exclude)
+    except (Refusal, OSError, ValueError, KeyError) as exc:
+        if not allow_missing:
+            print(f"{tool}: refusing to {action}: {exc}.", file=stream)
+            print(f"{tool}: run it where the shared checkout is mounted, or pass --allow-missing-inputs "
+                  "to go on without knowing.", file=stream)
+            return 2
+        print(f"{tool}: WARNING: --allow-missing-inputs: {exc}; going on without checking the ignored "
+              "inputs. The output may not match one built in the shared checkout.", file=stream)
+        return None
+    if not missing:
+        return None
+    links = {name: link for name in missing if not within(name, RAW_LINK)
+             for link in [input_link(Path(worktree).resolve(), name)] if link is not None}
+    lines = describe_missing(selected, missing, links)
+    if not allow_missing:
+        print(f"{tool}: refusing to {action}: {len(missing)} gitignored input(s) that the shared checkout "
+              f"{shared} has are missing from {worktree}, or reach it only through a link, so the result "
+              "would differ from one built with them:", file=stream)
+        for line in lines:
+            print(f"  {line}", file=stream)
+        print(f"{tool}: copy them in from this worktree with: {COPY_INPUTS_COMMAND}", file=stream)
+        if extra_hint:
+            print(f"{tool}: {extra_hint}", file=stream)
+        print(f"{tool}: or pass --allow-missing-inputs to {action} without them (never for a landing).",
+              file=stream)
+        return 2
+    banner = "!" * 78
+    print(banner, file=stream)
+    print(f"{tool}: WARNING: --allow-missing-inputs: going on to {action} WITHOUT {len(missing)} "
+          f"gitignored input(s) the shared checkout {shared} has. The result is NOT what the shared "
+          "checkout produces; never land it:", file=stream)
+    for line in lines:
+        print(f"  {line}", file=stream)
+    print(f"{tool}: to build with them instead: {COPY_INPUTS_COMMAND}", file=stream)
+    print(banner, file=stream)
+    return None
+
+
+def copy_inputs_command(worktree):
+    worktree = Path(worktree).resolve()
+    top = git(worktree, "rev-parse", "--show-toplevel", check=False)
+    if top.returncode or Path(top.stdout.strip()).resolve() != worktree:
+        named = f"; its worktree root is {top.stdout.strip()}" if not top.returncode else ""
+        raise Refusal(f"--worktree must name a worktree's root, not {worktree}{named}")
+    if worktree == SHARED.resolve():
+        raise Refusal("this is the shared checkout; it already holds its own inputs")
+    manifest = copy_inputs(SHARED, worktree, keep_present=True)
+    say(f"pm-land: {len(manifest)} ignored inputs match the shared checkout's in {worktree}")
+    return 0
 
 
 def require_clean_full(worktree, commit, tree):
@@ -1484,9 +1764,199 @@ def cleanup_after_check(folder, host):
             say(result.stdout.strip())
 
 
-def check_topic(root, branch, host, base=None):
+# ----------------------------------------------------------------------------------- host locks
+# The lock is <state>/pm-land/landing-check.lock on the check host's local disk, held with flock(LOCK_EX) by
+# the remote worker from before its checkout until it exits. flock, not lockf: a POSIX lockf lock is dropped
+# when the process closes any other descriptor of the file. The lock file is never removed, so every job locks
+# the same inode. landing-check.holder.json beside it says which check holds it, for the waiting message only;
+# nothing is decided from it. Taking the lock is the job's first step, so starting two jobs at once is safe:
+# the one that does not get the lock writes host-busy.json into its run folder and ends without checking.
+
+def lease_clock():
+    return time.monotonic()
+
+
+def lease_sleep(seconds):
+    time.sleep(seconds)
+
+
+def host_lock_dir():
+    override = os.environ.get(HOST_LOCK_DIR_ENV)
+    if override:
+        return Path(override)
+    state = os.environ.get("XDG_STATE_HOME")
+    return (Path(state) if state else Path.home() / ".local" / "state") / "pm-land"
+
+
+def try_lock(descriptor):
+    try:
+        fcntl.flock(descriptor, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError:
+        return False
+    return True
+
+
+def read_lock_holder(directory):
+    try:
+        holder = read_json(directory / HOST_LOCK_HOLDER)
+    except (OSError, ValueError):
+        return None
+    return holder if isinstance(holder, dict) else None
+
+
+def host_lock_state(directory=None):
+    """{"free": bool, "holder": the display record or None}, read on the check host. A free lock is taken and
+    dropped again at once."""
+    directory = directory or host_lock_dir()
+    directory.mkdir(parents=True, exist_ok=True)
+    descriptor = os.open(directory / HOST_LOCK_NAME, os.O_RDWR | os.O_CREAT | os.O_CLOEXEC, 0o666)
+    try:
+        free = try_lock(descriptor)
+    finally:
+        os.close(descriptor)
+    return {"free": free, "holder": None if free else read_lock_holder(directory)}
+
+
+class HostLock:
+    """The lock the remote worker holds for the life of its process."""
+
+    def __init__(self, directory, descriptor):
+        self.directory = directory
+        self.descriptor = descriptor
+
+    def release(self):
+        if self.descriptor is None:
+            return
+        try:
+            (self.directory / HOST_LOCK_HOLDER).unlink()
+        except OSError:
+            pass
+        os.close(self.descriptor)  # closing the only descriptor drops the flock
+        self.descriptor = None
+
+
+def hold_host_lock(folder, host, ref, head):
+    """Take the host's lock for this job, or write host-busy.json into the run folder and return None."""
+    directory = host_lock_dir()
+    directory.mkdir(parents=True, exist_ok=True)
+    descriptor = os.open(directory / HOST_LOCK_NAME, os.O_RDWR | os.O_CREAT | os.O_CLOEXEC, 0o666)
+    deadline = time.monotonic() + HOST_LOCK_TRY_SECONDS
+    while not try_lock(descriptor):
+        if time.monotonic() >= deadline:
+            os.close(descriptor)
+            write_json(folder / HOST_BUSY_FILE, {"schema": HOST_LOCK_SCHEMA, "host": host, "found_utc": iso(),
+                                                 "holder": read_lock_holder(directory)})
+            return None
+        time.sleep(HOST_LOCK_TRY_POLL)
+    try:
+        lander = read_json(folder / LANDER_FILE)
+    except (OSError, ValueError):
+        lander = {}
+    holder = {"schema": HOST_LOCK_SCHEMA, "host": host, "machine": socket.gethostname(), "topic": ref,
+              "commit": head, "job": job_name(folder), "run_folder": str(folder), "started_utc": iso(),
+              "worker_pid": os.getpid(), "lander": lander.get("lander") if isinstance(lander, dict) else None,
+              "lander_machine": lander.get("lander_machine") if isinstance(lander, dict) else None}
+    try:
+        write_json(directory / HOST_LOCK_HOLDER, holder)
+    except OSError:
+        pass
+    return HostLock(directory, descriptor)
+
+
+def probe_worker(argv):
+    parser = argparse.ArgumentParser()
+    parser.add_argument("host", choices=HOSTS)
+    args = parser.parse_args(argv)
+    require_host(args.host)
+    print(json.dumps(host_lock_state(), sort_keys=True))
+    return 0
+
+
+def probe_host_lock(host):
+    """The check host's lock state over ssh, or None when it could not be read (the job then decides)."""
+    try:
+        result = ssh(host, "python3", "-B", "-", "probe-host-lock", host,
+                     input_text=Path(__file__).read_text(encoding="utf-8"), check=False)
+    except (Refusal, OSError):
+        return None
+    if result.returncode:
+        return None
+    try:
+        state = json.loads(result.stdout.strip().splitlines()[-1])
+    except (ValueError, IndexError):
+        return None
+    if not isinstance(state, dict) or not isinstance(state.get("free"), bool):
+        return None
+    return state
+
+
+def describe_holder(holder):
+    if not isinstance(holder, dict):
+        return "a check that has not written its holder file yet"
+    who = holder.get("lander") or holder.get("lander_machine") or "a lander"
+    topic = str(holder.get("topic") or "").removeprefix("refs/heads/")
+    commit = str(holder.get("commit") or "")
+    job = f", job {holder['job']}" if holder.get("job") else ""
+    return f"{who} for {topic} {commit[:12]}{job} since {holder.get('started_utc')}"
+
+
+class HostWait:
+    """The lander's side: wait while the host's lock is held, up to the one deadline every attempt shares."""
+
+    def __init__(self, host, wait_minutes):
+        self.host = host
+        self.wait_minutes = wait_minutes
+        self.deadline = lease_clock() + max(0.0, wait_minutes) * 60
+        self.waited = False
+        self.last_notice = None
+
+    def until_free(self):
+        while True:
+            state = probe_host_lock(self.host)
+            if state is None or state["free"]:
+                if self.waited:
+                    say(f"{self.host} is free. Starting the check.")
+                return
+            self.busy(describe_holder(state.get("holder")))
+
+    def busy(self, notice):
+        remaining = self.deadline - lease_clock()
+        if remaining <= 0:
+            raise HostBusy(f"{self.host} stayed busy for {self.wait_minutes:g} minutes: its landing-check lock is held "
+                           f"by {notice}. No check ran; retry later.")
+        moment = lease_clock()
+        if (self.last_notice is None or notice != self.last_notice[0]
+                or moment - self.last_notice[1] >= HOST_LEASE_NOTICE_SECONDS):
+            say(f"{self.host} is busy: landing-check lock held by {notice}. "
+                f"Waiting up to {max(0, round(remaining / 60))} more minutes.")
+            self.last_notice = (notice, moment)
+        self.waited = True
+        lease_sleep(min(HOST_LEASE_POLL_SECONDS, remaining))
+
+    def lost_race(self, folder):
+        try:
+            holder = read_json(folder / HOST_BUSY_FILE).get("holder")
+        except (OSError, ValueError, AttributeError):
+            holder = None
+        say(f"{self.host} was taken by another check as this one started; nothing ran. Evidence: {folder}")
+        self.busy(describe_holder(holder))
+
+
+def check_topic(root, branch, host, base=None, *, host_wait_minutes=HOST_WAIT_MINUTES):
     ref = check_ref(branch)
     head = sha(revision(root, ref + "^{commit}"), "topic tip")
+    # The wait comes before the pins, so waiting for a busy host cannot leave the pinned main behind.
+    waiter = HostWait(host, host_wait_minutes)
+    while True:
+        waiter.until_free()
+        folder = pinned_check(root, branch, host, base, ref, head)
+        if folder is None:
+            return 0
+        waiter.lost_race(folder)
+
+
+def pinned_check(root, branch, host, base, ref, head):
+    """Run one check. None when it ran; the run folder when its job found the host's lock held and did nothing."""
     tips = origin_refs(root, MAIN_REF, ref)
     main = tips[MAIN_REF]
     if base is None:
@@ -1509,8 +1979,12 @@ def check_topic(root, branch, host, base=None):
     # when the check at that commit prints one. Without those lines no batch runs, and batch-check says so.
     rows = base is not None and check_can_batch(
         git(root, "show", f"{head}:scripts/pm-landing-check.py", check=False).stdout)
+    write_json(folder / LANDER_FILE, {"lander": os.environ.get("PM_LAND_LANDER") or os.environ.get("PM_MAIL_AS"),
+                                      "lander_machine": socket.gethostname()})
     try:
         start_remote_job(folder, host, ref, head, tree, checked_base, main, rows)
+        if (folder / HOST_BUSY_FILE).exists() and not path.exists():
+            return folder
         record = read_json(path)
         verify_record(folder, record, host, ref, head, tree, checked_base)
     except TransportFailure:
@@ -1523,7 +1997,7 @@ def check_topic(root, branch, host, base=None):
     say(f"Receipt: {path}")
     say(f"Landing checker exit {code} ({EXIT_LABELS[code]}). Shard check exit {record['shard_exit_code']}."
         f" Report: {record['report']}")
-    return 0
+    return None
 
 
 # --------------------------------------------------------------------------------- batch landings
@@ -2915,7 +3389,14 @@ def worker_main(argv):
     folder = require_run_folder(Path(__file__).absolute().parent)
     require_host(args.host)
     if args.mode == "check":
-        remote_check(folder, args.host, args.ref, args.head, args.tree, args.base, args.main, args.rows == "rows")
+        lock = hold_host_lock(folder, args.host, args.ref, args.head)
+        if lock is None:
+            print(f"{args.host} is held by another landing check; this job did nothing.", flush=True)
+            return 0
+        try:
+            remote_check(folder, args.host, args.ref, args.head, args.tree, args.base, args.main, args.rows == "rows")
+        finally:
+            lock.release()
     else:
         remote_cleanup(folder, args.host)
     return 0
@@ -2924,6 +3405,9 @@ def worker_main(argv):
 def main(argv=None):
     try:
         if __file__ == "<stdin>":
+            stdin_args = sys.argv[1:] if argv is None else list(argv)
+            if stdin_args[:1] == ["probe-host-lock"]:
+                return probe_worker(stdin_args[1:])
             return verify_worker(argv)
         if Path(__file__).name == "worker.py":
             return worker_main(argv)
@@ -2932,6 +3416,9 @@ def main(argv=None):
         check = commands.add_parser("check", help="run remote landing checks on a pushed branch")
         check.add_argument("branch")
         check.add_argument("--on", choices=HOSTS, default=DEFAULT_HOST)
+        check.add_argument("--host-wait-minutes", type=float, default=HOST_WAIT_MINUTES,
+                           help="how long to wait while another landing check holds the host's lease before giving "
+                                f"up with exit 3 (default: {HOST_WAIT_MINUTES})")
         check.add_argument("--base", help="the commit this branch is measured against: the fetched origin/main by "
                                           "default; inside a batch, its full batch-start SHA")
         verify = commands.add_parser("verify", help="read-only verification under the hand lander's lock")
@@ -2971,12 +3458,21 @@ def main(argv=None):
                                                             "target must still be at")
         publish.add_argument("--commit", required=True,
                              help="the landed full SHA, which must match refs/heads/main in --repo")
+        copy = commands.add_parser("copy-inputs",
+                                   help="copy the gitignored inputs the checks and the plan index read from the "
+                                        "shared checkout into a local worktree, keeping the ones already there")
+        copy.add_argument("--worktree", type=Path, default=None, help="the worktree to fill (default: this one)")
         args = parser.parse_args(argv)
+        if args.command == "copy-inputs":
+            return copy_inputs_command(args.worktree or Path(git(Path.cwd(), "rev-parse", "--show-toplevel")
+                                                             .stdout.strip()))
         if args.command == "check":
             root = Path(git(Path.cwd(), "rev-parse", "--show-toplevel").stdout.strip())
+            if not (math.isfinite(args.host_wait_minutes) and args.host_wait_minutes >= 0):
+                check.error("--host-wait-minutes must be a finite number, 0 or more")
             if args.base is None:
-                return check_topic(root, args.branch, args.on)
-            return check_topic(root, args.branch, args.on, args.base)
+                return check_topic(root, args.branch, args.on, host_wait_minutes=args.host_wait_minutes)
+            return check_topic(root, args.branch, args.on, args.base, host_wait_minutes=args.host_wait_minutes)
         if args.command == "batch-status":
             return batch_status(args.shared, args.lock_dir)
         if args.command == "batch-check":

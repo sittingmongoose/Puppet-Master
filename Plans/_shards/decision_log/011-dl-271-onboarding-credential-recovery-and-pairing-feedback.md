@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L63678
+Source lines: L28747-L63762
 
-Source SHA256: `c99cdb3f669dd9c552cd07b6296f593b5713bafddc793ea09c63a7adee3c7e4f`
+Source SHA256: `e6d22399262fb02cf6d4920dbe1363aa9b27ff323c9bb60a9e88c237388fc97d`
 
 ---
 
@@ -34940,3 +34940,87 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Commands_System.md#CS-030, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-100, ContractName:Plans/Models_System.md#MS-102, ContractName:Plans/Models_System.md#MS-135
+
+### DL-696: Event Authority certifies PNC-019 with the remaining Goal-five rows named at certification and proved afterwards
+
+```yaml
+plan_unit_id: DL-696
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  On 2026-11-27 at 12:36 PM EST (17:36Z), Jared answered card ea-s8-scope ("Seal Monday with unproven rows listed openly, or keep proving?") on the deck with option A, "List all remaining rows by name, prove afterwards". The answer is recorded in /mnt/Cursor/agent-reports/v1/answers/vm.pm-ea-lead--ea-s8-scope.json (SHA-256 93dc649a240aab48d472c5d6bf634416b5313b71fe85486ba0ba9868963a29a0, answeredAt 2026-11-27T17:36:46.118Z, signed ed25519 key c112b38be1d32ea0). The signed answer binds the card as presented: cardSeq 1794501344000, cardSha256 f697207995915a4391e7f143a4d8b08fc84251778e6b19ae0da298874c3c6db1. The card file on disk, /mnt/Cursor/agent-reports/v1/writers/vm.pm-ea-lead/cards/vm.pm-ea-lead--ea-s8-scope.json (SHA-256 7b50bb56ed57c8dd2d057c23ae31cfe6fe3d6d9c0aa24087b16814f1a216a21c, seq 1794501344039), is the later withdrawn copy; its option labels and exception text are the ones quoted here. pm-ea-lead relayed the answer in pm-mail 1127183321.
+
+  The answer extends Jared's earlier answer to card E-ROUTEBACK3 (2026-11-24T16:21:46.801Z, option A, "Prove the 150 shared ones first"; /mnt/Cursor/agent-reports/v1/answers/vm.pm-ea-lead--E-ROUTEBACK3.json, SHA-256 ab5e6d8efc61cfa597d107b93ec6079f5d28621e882703bfb5ecac4afaf966da; card as presented cardSeq 1794501343268, cardSha256 83229f0e43e7b09b19470ff8d1de4449c2d1dd2e710fa1053ae8e5b1721cae47; withdrawn copy on disk SHA-256 66fff46a1164671755b1d598fa0f6e312120e5d9a2d78a85af6019f27249b37a). Under that answer, 31 checks are listed by name at certification and proven afterwards. The card's own exception reads, word for word: "Option A lets about 740 unproven rows into the seal as named open items, extending your earlier answer for 31 rows." The rule it sets aside, for those rows only, is "Rows close only by a credited kill or two sound proofs."
+
+  The named rows are the NAMED-AT-CERTIFICATION list, /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/NAMED-AT-CERT-r2-20261128/NAMED-AT-CERT.json (SHA-256 38f3188a2811f1636aa535350bda21d94981adc00920bc0b10da80d022516e91). It is built mechanically from GAP-LIST v2r18 FINAL-E4 (/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/gap-list-v2r18-FINAL-E4-20261127, SHA256SUMS-v2r18-final-e4 SHA-256 00d42ef6491b63871d17ead14a8a1df36962774639aa281ceea55eb0a6844743). It lists by name, each exactly once with its reason class and its e4 record, every matrix row of the five Goal families and the shared adapter that e4 does not close (e4 class OPEN, GATED, HOLD or OUT): 761 rows, goal.cancelled 236, goal.updated 86, goal_run.cancelled 0, goal_run.certified 266, goal_run.started 147, shared-adapter 26. By reason class:
+  - UNPROVED 551: no kill and no two-SOUND proof.
+  - HELD 159: held on named rows or by a named hold ruling.
+  - W4_NON_SOUND 50: a W4 proof proposal that neither reviewer found SOUND, or that no majority of three found SOUND. Both verdicts are carried, and for the 4 split rows the deciding re-judgments too.
+  - NEEDS_JARED_RIDES_A 1: goal.updated dg5/site/pm_goal_test_storage.py:1647, split reads with one re-read left, which rides this answer.
+  The 761 include the 7 rows that the lead's signature state/SIGN-17-LEAD-RULING-NAMED-GAPS-20261127.md (SHA-256 35104447a76f9013fc59f6296c8928de759eadfd77eaeb38ce09ce9d360eb160, pm-ea-lead 1127194500-eef5) did not sign as named gaps.
+
+  The list also names, outside that count, the other 217 row entries e4 does not credit, each under its own e4 authority:
+  - NAMED_GAP 107, each with the ground e4 records: the W5 signature (state/SIGN-W5-NAMED-GAPS-20261127.md, SHA-256 13668d9b98eb867e4f728370742050a13ce8d72a66d70b047c3296c79b5f59c9) for 96, DL-2600 for 1, and the lead's SIGN-17 signature for 10.
+  - OWNER_WORK 30. The 4 W4 wrong-target-line rows name the correct line.
+  - HELD 46 and UNPROVED 34: goal_run.cancelled's outside-matrix rulings and the 31 rows already named under E-ROUTEBACK3 A.
+  No credited row is listed. If the cf2 6/19 ON collector run has not completed by Sun Nov 29 12 PM EST (pm-ea-lead 1127183619), its 7 cases are also named open at certification, reason "collector cost": CF06-N14, CF06-N15, CF06-N23, CF08-P02, CF08-N13, CF09-N05 and P7-N04.
+
+  The named rows are proved after certification. The certificate records them as named open items, never as proven or credited. A named row leaves the list only as e4's reopen rule says, word for word: "An entry leaves only by a published, verified result: a kill, an accepted proof, or a credited row ruling. A new credited report or a new ED13-family ruling is added to the build and the coverage check must pass over every UNCOVERED clause it leaves; a miss stops the build." Until such a result is published, a named row's class, reason and evidence stay as the list records them.
+
+  On this record, the seven depth cells of the five Goal families that DEPTH-ASSESSMENT-39 left non-passing are graded PASS:
+  - goal.cancelled: compatibility_withdrawal and positive_negative_oracles.
+  - goal.updated: producer and positive_negative_oracles.
+  - goal_run.started, goal_run.certified and goal_run.cancelled: positive_negative_oracles.
+  pm-ea-lead 1127184732 (A) set this entry as the record those cells cite. Each such PASS rests only on this entry and the family's matrix in GAP-LIST v2r18 FINAL-E4. It cites the NAMED-AT-CERTIFICATION list by path and SHA-256 and names the family's count in both sections. It is a named partial: the listed rows have no kill or accepted proof, and the cell does not claim full coverage. For goal_run.cancelled, the A section holds 0 rows and 63 more are named under their own e4 authorities.
+
+  Nothing else is relaxed. No row outside the list, no other family or criterion, and no seal condition changes. DL-2600's documented gap for goal.cancelled dg5/roots/schema is unchanged. The frozen validator, its specification and the seal rule are unchanged. This entry grants no admission, registry change, producer adoption, native execution claim, readiness clearance or governance seal. Native execution stays NOT_RUN.
+gui_related: false
+gui_classification_reason: Records which Event Authority test-coverage rows are named open at certification; no visual presentation changes.
+depends_on: [DL-039, DL-045, DL-400, DL-2600]
+unblocks: []
+acceptance_criteria:
+- "The NAMED-AT-CERTIFICATION list's row set equals GAP-LIST v2r18 FINAL-E4's not-closed matrix set (in_matrix true, class OPEN, GATED, HOLD or OUT) exactly, with no extra, missing or duplicate (row, family). Its counts are goal.cancelled 236, goal.updated 86, goal_run.cancelled 0, goal_run.certified 266, goal_run.started 147 and shared-adapter 26."
+- "No listed row is credited or closed in GAP-LIST v2r18 FINAL-E4, and no credited row is listed; every NAMED_GAP row cites the W5 signature, DL-2600 or the SIGN-17 signature."
+- "Each Goal-five depth-cell PASS graded on this entry cites it and the NAMED-AT-CERTIFICATION list as a named partial, never as full coverage. A named row leaves the list only by a published, verified kill, accepted proof or credited row ruling."
+validation_surfaces:
+- sh /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/NAMED-AT-CERT-r2-20261128/checks/run_checks.sh
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/NAMED-AT-CERT-r2-20261128/NAMED-AT-CERT.json
+risk_class: event_authority_named_open_at_certification
+reasoning_tier: high
+context_scope: event_authority_pnc019_s8_seal
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- "/mnt/Cursor/agent-reports/v1/answers/vm.pm-ea-lead--ea-s8-scope.json (SHA-256 93dc649a240aab48d472c5d6bf634416b5313b71fe85486ba0ba9868963a29a0; presented card cardSha256 f697207995915a4391e7f143a4d8b08fc84251778e6b19ae0da298874c3c6db1)"
+- "/mnt/Cursor/agent-reports/v1/writers/vm.pm-ea-lead/cards/vm.pm-ea-lead--ea-s8-scope.json (withdrawn copy, SHA-256 7b50bb56ed57c8dd2d057c23ae31cfe6fe3d6d9c0aa24087b16814f1a216a21c)"
+- "/mnt/Cursor/agent-reports/v1/answers/vm.pm-ea-lead--E-ROUTEBACK3.json (SHA-256 ab5e6d8efc61cfa597d107b93ec6079f5d28621e882703bfb5ecac4afaf966da; presented card cardSha256 83229f0e43e7b09b19470ff8d1de4449c2d1dd2e710fa1053ae8e5b1721cae47)"
+- "/mnt/Cursor/agent-reports/v1/writers/vm.pm-ea-lead/cards/vm.pm-ea-lead--E-ROUTEBACK3.json (withdrawn copy, SHA-256 66fff46a1164671755b1d598fa0f6e312120e5d9a2d78a85af6019f27249b37a)"
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/NAMED-AT-CERT-r2-20261128/NAMED-AT-CERT.json (SHA-256 38f3188a2811f1636aa535350bda21d94981adc00920bc0b10da80d022516e91)"
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/gap-list-v2r18-FINAL-E4-20261127/SHA256SUMS-v2r18-final-e4 (SHA-256 00d42ef6491b63871d17ead14a8a1df36962774639aa281ceea55eb0a6844743)"
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/state/SIGN-17-LEAD-RULING-NAMED-GAPS-20261127.md (SHA-256 35104447a76f9013fc59f6296c8928de759eadfd77eaeb38ce09ce9d360eb160)"
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/state/SIGN-W5-NAMED-GAPS-20261127.md (SHA-256 13668d9b98eb867e4f728370742050a13ce8d72a66d70b047c3296c79b5f59c9)"
+preserved_exact_tokens:
+- "ea-s8-scope"
+- "List all remaining rows by name, prove afterwards"
+- "E-ROUTEBACK3"
+- "Prove the 150 shared ones first"
+- "1127183321"
+- "1127183619"
+- "1127184732"
+- "1127194500-eef5"
+- "NAMED-AT-CERTIFICATION"
+- "GAP-LIST v2r18 FINAL-E4"
+- "38f3188a2811f1636aa535350bda21d94981adc00920bc0b10da80d022516e91"
+- "00d42ef6491b63871d17ead14a8a1df36962774639aa281ceea55eb0a6844743"
+- "f697207995915a4391e7f143a4d8b08fc84251778e6b19ae0da298874c3c6db1"
+- "dg5/site/pm_goal_test_storage.py:1647"
+negative_constraints:
+- A named row is never recorded as proven or credited at certification.
+- Each Goal-five depth-cell PASS on this entry is a named partial resting on the list, never a claim of full coverage.
+- No other row, family, criterion or seal condition is relaxed; no admission, registry change, producer adoption, native execution claim, readiness clearance or governance seal.
+```

@@ -184,7 +184,8 @@ READINESS_AUDIT_DIRECT_INPUTS = (
     "adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl",
 )
 READINESS_AUDIT_INPUTS_SCHEMA_ID = "pm.landing_check.readiness_audit_inputs.v1"
-SHARED_READINESS_AUDIT_ROOT = Path("/mnt/Cursor/PuppetMaster") / READINESS_AUDIT_REL
+SHARED_CHECKOUT = Path("/mnt/Cursor/PuppetMaster")
+SHARED_READINESS_AUDIT_ROOT = SHARED_CHECKOUT / READINESS_AUDIT_REL
 # Files regenerated from every owner document. A branch that edits one document rewrites all of
 # them, so their paths say nothing about what the branch decided and are kept out of the match.
 DERIVED_PREFIXES = ("Plans/_shards/", "Plans/.plan_index/")
@@ -2398,6 +2399,29 @@ def describe(item: dict[str, Any], tag: str, width: int = 150) -> str:
     return f"{head}  {fields}"
 
 
+def _load_pm_land() -> Any:
+    """pm-land.py owns the list of ignored inputs it copies; the guard reads that one list."""
+    spec = importlib.util.spec_from_file_location("pm_land_inputs", Path(__file__).resolve().with_name("pm-land.py"))
+    if spec is None or spec.loader is None:
+        raise ImportError("unable to load scripts/pm-land.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def ignored_input_guard(root: Path, allow_missing: bool) -> int | None:
+    """Refuse a baseline (exit 2) when ignored inputs the shared checkout has are missing here.
+
+    A baseline recorded without them holds missing-file failures that a real landing never sees.
+    The currentness edition is left out: --readiness-audit-root binds and exposes it on its own.
+    """
+    return _load_pm_land().ignored_input_guard(
+        "pm-landing-check", "record a baseline", root, allow_missing=allow_missing,
+        shared=SHARED_CHECKOUT, exclude=(READINESS_AUDIT_REL,),
+        extra_hint=("copy-inputs also copies the currentness edition; record with --readiness-audit-root "
+                    f"{READINESS_AUDIT_REL} once it is here, or move it aside first."))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--root", default=str(ROOT), help="repository root (default: this checkout)")
@@ -2441,7 +2465,13 @@ def main() -> int:
     parser.add_argument("--keep-check-reports", default=None, metavar="DIR",
                         help="also keep each check's full report, every row it printed, as DIR/<check>.json, "
                              "so the run can be replayed exactly; DIR must be outside the repository")
+    parser.add_argument("--allow-missing-inputs", action="store_true",
+                        help="with --record-baseline, record even when gitignored inputs that the shared "
+                             "checkout has are missing here; prints a warning, and such a baseline must not "
+                             "be committed")
     args = parser.parse_args()
+    if args.allow_missing_inputs and not args.record_baseline:
+        parser.error("--allow-missing-inputs goes only with --record-baseline")
     if not 1 <= args.jobs <= MAX_JOBS:
         parser.error(f"--jobs must be between 1 and {MAX_JOBS}")
     for option, value in (("--memory-floor-gb", args.memory_floor_gb),
@@ -2453,6 +2483,15 @@ def main() -> int:
             parser.error(f"{option} must not be negative")
 
     root = Path(args.root).resolve()
+    # A sparse tree keeps its own exit-3 diagnostic below, which says what is actually wrong.
+    try:
+        sparse_first = bool(sparse_paths(root)) and not args.allow_sparse
+    except OSError:
+        sparse_first = False
+    if args.record_baseline and not sparse_first:
+        refused = ignored_input_guard(root, args.allow_missing_inputs)
+        if refused is not None:
+            return refused
     shared_source = not args.readiness_audit_root and SHARED_READINESS_AUDIT_ROOT.is_dir()
     source_path = (root / args.readiness_audit_root if args.readiness_audit_root else
                    SHARED_READINESS_AUDIT_ROOT if shared_source else root / READINESS_AUDIT_REL)

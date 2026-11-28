@@ -1703,14 +1703,41 @@ def validate() -> dict[str, Any]:
     }
 
 
+def _load_pm_land():
+    """pm-land.py owns the list of ignored inputs it copies; the guard reads that one list."""
+    spec = importlib.util.spec_from_file_location("pm_land_inputs", Path(__file__).resolve().with_name("pm-land.py"))
+    if spec is None or spec.loader is None:
+        raise ImportError("unable to load scripts/pm-land.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def ignored_input_guard(allow_missing: bool) -> int | None:
+    """Refuse (exit 2) when ignored Plans inputs the shared checkout has are missing here.
+
+    Without them the index silently changes: missing audit FINAL_REPORT.md files, or the
+    Event Authority currentness edition, which turns its drift rows into one path-missing row.
+    """
+    return _load_pm_land().ignored_input_guard(
+        "pm-plan-index", "generate the plan index", ROOT, allow_missing=allow_missing, prefixes=("Plans",))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="command", required=True)
-    sub.add_parser("generate")
+    generate_parser = sub.add_parser("generate")
+    generate_parser.add_argument(
+        "--allow-missing-inputs", action="store_true",
+        help="generate even when gitignored Plans inputs that the shared checkout has (audit reports, the "
+             "currentness edition) are missing here; prints a warning, and the result must not be landed")
     sub.add_parser("validate")
     args = parser.parse_args()
 
     if args.command == "generate":
+        refused = ignored_input_guard(args.allow_missing_inputs)
+        if refused is not None:
+            return refused
         report = generate()
     else:
         report = validate()

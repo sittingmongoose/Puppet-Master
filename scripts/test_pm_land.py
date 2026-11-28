@@ -15,6 +15,7 @@ import socket
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 import unittest
 from unittest.mock import patch
@@ -107,9 +108,22 @@ class LandingFixture(unittest.TestCase):
         )
         patches.start()
         self.addCleanup(patches.stop)
+        # The ignored-input guard applies json_syntax's own capture rule against this evidence root.
+        verifier = patch.object(land.raw_capture_verifier(), "RAW_EVIDENCE_DIRECTORY", self.evidence)
+        verifier.start()
+        self.addCleanup(verifier.stop)
         path_patcher = patch.object(land, "worktree_path", return_value=self.remote)
         path_patcher.start()
         self.addCleanup(path_patcher.stop)
+        # The host lock: a worker started here locks a folder of this fixture, and `check` sees a free host
+        # without ssh unless a test says otherwise.
+        self.host_locks = self.root / "host-locks"
+        lock_env = patch.dict(os.environ, {land.HOST_LOCK_DIR_ENV: str(self.host_locks)})
+        lock_env.start()
+        self.addCleanup(lock_env.stop)
+        probe = patch.object(land, "probe_host_lock", return_value={"free": True, "holder": None})
+        self.probe = probe.start()
+        self.addCleanup(probe.stop)
 
         self.git(self.shared, "init", "-b", "main")
         self.git(self.shared, "config", "user.email", "fixture@example.invalid")
@@ -210,7 +224,7 @@ class LandingFixture(unittest.TestCase):
         script = Path(__file__).with_name("pm-land.py")
         result = subprocess.run(["python3", "-B", str(script), "--help"], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0)
-        self.assertIn("{check,verify,batch-status,batch-check,publish}", result.stdout)
+        self.assertIn("{check,verify,batch-status,batch-check,publish,copy-inputs}", result.stdout)
         for removed in ("run", "inventory", "preflight", "fetch-main", "push-main", "_remote"):
             with self.subTest(command=removed):
                 result = subprocess.run(["python3", "-B", str(script), removed], capture_output=True, text=True)
@@ -254,6 +268,97 @@ class LandingFixture(unittest.TestCase):
               self.assertRaisesRegex(land.Refusal, "local topic .* origin is")):
             land.check_topic(self.shared, self.branch, "nas1")
         new_run.assert_not_called()
+
+    # ------------------------------------------------------------------ one landing check per host
+    def test_check_probes_the_host_and_runs_with_no_new_output_when_it_is_free(self):
+        output = io.StringIO()
+        with (patch.object(land, "new_run", return_value=self.folder), patch.object(land, "start_remote_job"),
+              patch.object(land, "cleanup_after_check"), redirect_stdout(output)):
+            self.assertEqual(land.check_topic(self.shared, self.branch, "nas1"), 0)
+        self.probe.assert_called_once_with("nas1")
+        # Exactly the lines a check printed before host locks, with the temporary folder normalised (its name
+        # may contain any word, "lock" and "busy" included).
+        self.assertEqual(output.getvalue().replace(str(self.root), "<root>").splitlines(), [
+            "Receipt: <root>/evidence/scratch/landing-remote/fixture-run/record.json",
+            "Landing checker exit 1 (findings to read). Shard check exit 0. "
+            "Report: <root>/evidence/scratch/landing-remote/fixture-run/landing-check.json"])
+        self.assertEqual(land.read_json(self.folder / land.LANDER_FILE)["lander_machine"], socket.gethostname())
+
+    def test_check_waits_for_a_busy_host_before_it_pins_and_then_runs(self):
+        busy = {"free": False, "holder": lock_holder(job="pm-check-live")}
+        self.probe.side_effect = [busy, busy, {"free": True, "holder": None}]
+        output = io.StringIO()
+        with (patch.object(land, "origin_refs", wraps=land.origin_refs) as pins,
+              patch.object(land, "new_run", return_value=self.folder),
+              patch.object(land, "start_remote_job") as start, patch.object(land, "cleanup_after_check"),
+              patch.object(land, "lease_sleep", side_effect=lambda _s: self.assertEqual(pins.call_count, 0)),
+              redirect_stdout(output)):
+            self.assertEqual(land.check_topic(self.shared, self.branch, "nas1"), 0)
+        start.assert_called_once()
+        self.assertEqual(output.getvalue().count("nas1 is busy: landing-check lock held by other-lander for fix/other "
+                                                 "aaaaaaaaaaaa, job pm-check-live since "), 1)
+        self.assertIn("nas1 is free. Starting the check.", output.getvalue())
+
+    def test_a_job_that_finds_the_host_taken_does_nothing_and_check_waits_and_retries(self):
+        lost = self.runs / "lost-run"
+        lost.mkdir()
+
+        def first_finds_it_taken(folder, *args):
+            if folder == lost:
+                land.write_json(folder / land.HOST_BUSY_FILE, {"holder": lock_holder(job="pm-check-winner")})
+
+        output = io.StringIO()
+        with (patch.object(land, "new_run", side_effect=[lost, self.folder]),
+              patch.object(land, "start_remote_job", side_effect=first_finds_it_taken) as start,
+              patch.object(land, "cleanup_after_check") as clean, patch.object(land, "lease_sleep"),
+              redirect_stdout(output)):
+            self.assertEqual(land.check_topic(self.shared, self.branch, "nas1"), 0)
+        self.assertEqual([c.args[0] for c in start.call_args_list], [lost, self.folder])
+        clean.assert_called_once_with(self.folder, "nas1")
+        self.assertIn(f"nas1 was taken by another check as this one started; nothing ran. Evidence: {lost}",
+                      output.getvalue())
+        self.assertIn("job pm-check-winner", output.getvalue())
+        self.assertIn(f"Landing checker exit 1", output.getvalue())
+
+    def test_a_busy_host_times_out_with_exit_three_and_runs_no_check(self):
+        self.probe.return_value = {"free": False, "holder": lock_holder(job="pm-check-live")}
+        stderr = io.StringIO()
+        with (patch.object(land, "new_run") as new_run, patch.object(land, "lease_sleep"),
+              redirect_stdout(io.StringIO()), redirect_stderr(stderr), working_directory(self.shared)):
+            self.assertEqual(land.main(["check", self.branch, "--host-wait-minutes", "0"]), 3)
+        new_run.assert_not_called()
+        self.assertIn("nas1 stayed busy for 0 minutes: its landing-check lock is held by other-lander for fix/other "
+                      "aaaaaaaaaaaa, job pm-check-live", stderr.getvalue())
+
+    def test_check_without_on_probes_the_default_host_and_verify_probes_nothing(self):
+        self.probe.side_effect = AssertionError("verify takes no lock")
+        with redirect_stdout(io.StringIO()):
+            self.assertEqual(self.verify(self.head, self.base), 0)
+        self.probe.side_effect = None
+        with (patch.object(land, "new_run", return_value=self.folder), patch.object(land, "start_remote_job"),
+              patch.object(land, "cleanup_after_check"), redirect_stdout(io.StringIO()),
+              working_directory(self.shared)):
+            self.assertEqual(land.main(["check", self.branch]), 0)
+        self.probe.assert_called_once_with("nas1")
+        source = Path(land.__file__).read_text(encoding="utf-8")
+        self.assertEqual(source.count("hold_host_lock("), 2)  # its definition and the worker's one call
+        self.assertEqual(source.count("probe_host_lock("), 2)  # its definition and HostWait's one call
+
+    def test_the_worker_holds_the_host_lock_for_the_whole_check_and_frees_it_after(self):
+        seen = {}
+
+        def remote_check(folder, *args):
+            seen.update(land.host_lock_state())
+
+        with (patch.object(land, "remote_check", side_effect=remote_check),
+              patch.object(land.Path, "absolute", return_value=self.folder / "worker.py")):
+            self.assertEqual(land.worker_main(["check", "nas1", self.ref, self.head, self.tree, self.base]), 0)
+        self.assertFalse(seen["free"])
+        self.assertEqual((seen["holder"]["topic"], seen["holder"]["commit"], seen["holder"]["job"]),
+                         (self.ref, self.head, land.job_name(self.folder)))
+        self.assertTrue(land.host_lock_state()["free"])
+        self.assertFalse((self.host_locks / land.HOST_LOCK_HOLDER).exists())
+        self.assertFalse((self.folder / land.HOST_BUSY_FILE).exists())
 
     def test_remote_checkout_rejects_a_branch_that_moved_after_pin(self):
         self.git(self.origin, "update-ref", self.ref, self.base, self.head)
@@ -1393,6 +1498,353 @@ print(json.dumps({{"schema_id": "pm.landing_check.report.v1", "commit": {self.he
         for name in names:
             self.assertEqual(manifest[name], land.file_hash(fresh / name))
 
+    # The guard pm-plan-index.py generate and pm-landing-check.py --record-baseline run, and the
+    # copy-inputs command that answers it, read the one selection copy_inputs copies.
+    def fresh_worktree(self, name="fresh"):
+        fresh = self.root / name
+        self.git(self.shared, "worktree", "add", "--detach", str(fresh), self.head)
+        return fresh
+
+    def guard(self, worktree, **kwargs):
+        stream = io.StringIO()
+        code = land.ignored_input_guard("tool", "build", worktree, stream=stream, **kwargs)
+        return code, stream.getvalue()
+
+    def test_guard_refuses_missing_ignored_inputs_and_names_each(self):
+        fresh = self.fresh_worktree()
+        code, text = self.guard(fresh, allow_missing=False)
+        self.assertEqual(code, 2)
+        self.assertIn("tool: refusing to build: 4 gitignored input(s)", text)
+        lines = [line.strip() for line in text.splitlines() if line.startswith("  ")]
+        self.assertEqual(lines, [f"{land.RAW_LINK} (missing, or a link that does not resolve from this tree to "
+                                 "the evidence share; all 1 captures behind it)",
+                                 "Plans/.audits/ignored.txt", "Plans/.audits/whole/ (all 1 inputs in it)"])
+        self.assertIn(land.COPY_INPUTS_COMMAND, text)
+        self.assertIn("--allow-missing-inputs", text)
+
+    def test_guard_names_only_the_missing_file_of_a_partly_present_directory(self):
+        self.put(self.shared, "Plans/.audits/whole/second.json", "{}\n")
+        fresh = self.fresh_worktree()
+        land.copy_inputs(self.shared, fresh, keep_present=True)
+        (fresh / "Plans/.audits/whole/second.json").unlink()
+        code, text = self.guard(fresh, allow_missing=False)
+        self.assertEqual(code, 2)
+        self.assertEqual([line.strip() for line in text.splitlines() if line.startswith("  ")],
+                         ["Plans/.audits/whole/second.json"])
+
+    def test_guard_passes_silently_when_every_input_is_present(self):
+        fresh = self.fresh_worktree()
+        land.copy_inputs(self.shared, fresh, keep_present=True)
+        self.assertEqual(self.guard(fresh, allow_missing=False), (None, ""))
+        # The shared checkout holds its own inputs by definition.
+        self.assertEqual(self.guard(self.shared, allow_missing=False), (None, ""))
+
+    def test_guard_override_goes_on_with_a_loud_warning(self):
+        fresh = self.fresh_worktree()
+        code, text = self.guard(fresh, allow_missing=True)
+        self.assertIsNone(code)
+        self.assertIn("WARNING: --allow-missing-inputs", text)
+        self.assertIn("NOT what the shared checkout produces", text)
+        self.assertIn("Plans/.audits/ignored.txt", text)
+        self.assertIn(land.COPY_INPUTS_COMMAND, text)
+
+    def test_guard_prefixes_and_exclusions_narrow_the_same_list(self):
+        fresh = self.fresh_worktree()
+        selected, missing = land.missing_ignored_inputs(fresh, prefixes=("Plans",),
+                                                        exclude=("Plans/.audits/whole",))
+        self.assertEqual(selected, ["Plans/.audits/ignored.txt"])
+        self.assertEqual(missing, selected)
+        manifest = land.input_manifest(self.shared, fresh, land.tracklist(fresh))
+        everything, _ = land.missing_ignored_inputs(fresh)
+        # The guard's list is the copy manifest's, raw captures behind the link included.
+        self.assertEqual(set(everything), set(manifest))
+
+    def test_guard_refuses_when_the_shared_checkout_is_unreadable(self):
+        fresh = self.fresh_worktree()
+        code, text = self.guard(fresh, allow_missing=False, shared=self.root / "absent")
+        self.assertEqual(code, 2)
+        self.assertIn("cannot read the shared checkout", text)
+        code, text = self.guard(fresh, allow_missing=True, shared=self.root / "absent")
+        self.assertIsNone(code)
+        self.assertIn("WARNING: --allow-missing-inputs", text)
+
+    def test_copy_inputs_command_keeps_identical_inputs_and_refuses_different_ones(self):
+        fresh = self.fresh_worktree()
+        self.put(fresh, self.ignore_file, "audit notes\n")
+        with redirect_stdout(io.StringIO()):
+            self.assertEqual(land.main(["copy-inputs", "--worktree", str(fresh)]), 0)
+        self.assertEqual((fresh / "Plans/.audits/whole/included.json").read_text(), "{}\n")
+        self.assertEqual((fresh / land.RAW_LINK).resolve(), (self.evidence / "raw").resolve())
+        # Running it again changes nothing and still passes.
+        with redirect_stdout(io.StringIO()):
+            self.assertEqual(land.main(["copy-inputs", "--worktree", str(fresh)]), 0)
+        other = self.fresh_worktree("other")
+        self.put(other, self.ignore_file, "local edits\n")
+        stderr = io.StringIO()
+        with redirect_stderr(stderr):
+            self.assertEqual(land.main(["copy-inputs", "--worktree", str(other)]), 3)
+        self.assertIn("differ from the shared checkout's", stderr.getvalue())
+        self.assertIn(self.ignore_file, stderr.getvalue())
+        self.assertFalse((other / "Plans/.audits/whole/included.json").exists())
+        self.assertEqual((other / self.ignore_file).read_text(), "local edits\n")
+
+    def relative_raw_link(self, root):
+        """Give root/tests the shared checkout's link as relative text, as in the Astra deep review."""
+        link = root / land.RAW_LINK
+        if link.is_symlink():
+            link.unlink()
+        link.symlink_to(os.path.relpath(self.evidence / "raw", self.shared / "tests"), target_is_directory=True)
+        return link
+
+    def test_guard_refuses_a_verbatim_relative_raw_link_that_dangles_here(self):
+        # The reviewer's case: the shared checkout's relative link copied into a tree at another depth.
+        self.relative_raw_link(self.shared)
+        fresh = self.fresh_worktree("deeper/fresh")
+        land.copy_inputs(self.shared, fresh, keep_present=True)
+        link = self.relative_raw_link(fresh)
+        self.assertTrue(link.is_symlink())
+        self.assertFalse(link.exists())
+        code, text = self.guard(fresh, allow_missing=False)
+        self.assertEqual(code, 2)
+        self.assertIn(f"{land.RAW_LINK} (missing, or a link that does not resolve", text)
+        self.assertIn("all 1 captures behind it", text)
+        # copy-inputs recreates it so it resolves from this tree, and the guard then passes.
+        with redirect_stdout(io.StringIO()):
+            self.assertEqual(land.main(["copy-inputs", "--worktree", str(fresh)]), 0)
+        self.assertEqual(link.resolve(strict=True), (self.evidence / "raw").resolve())
+        self.assertTrue(Path(os.readlink(link)).is_absolute())
+        self.assertEqual(self.guard(fresh, allow_missing=False), (None, ""))
+
+    def test_guard_passes_a_relative_raw_link_that_resolves_here(self):
+        self.relative_raw_link(self.shared)
+        fresh = self.fresh_worktree()  # same depth as the shared checkout, so the same text resolves
+        land.copy_inputs(self.shared, fresh, keep_present=True)
+        self.relative_raw_link(fresh)
+        self.assertEqual((fresh / land.RAW_LINK).resolve(strict=True), (self.evidence / "raw").resolve())
+        self.assertEqual(self.guard(fresh, allow_missing=False), (None, ""))
+        with redirect_stdout(io.StringIO()):
+            self.assertEqual(land.main(["copy-inputs", "--worktree", str(fresh)]), 0)
+        self.assertFalse(Path(os.readlink(fresh / land.RAW_LINK)).is_absolute())  # kept as it was
+
+    def test_guard_names_a_capture_missing_behind_a_resolving_link(self):
+        fresh = self.fresh_worktree()
+        land.copy_inputs(self.shared, fresh, keep_present=True)
+        (self.evidence / "empty").mkdir()
+        (fresh / land.RAW_LINK).unlink()
+        (fresh / land.RAW_LINK).symlink_to(self.evidence / "empty", target_is_directory=True)
+        code, text = self.guard(fresh, allow_missing=False)
+        self.assertEqual(code, 2)
+        self.assertEqual([line.strip() for line in text.splitlines() if line.startswith("  ")],
+                         [f"{self.raw_capture} (json_syntax cannot read it: absent, or behind a nested link)"])
+
+    def nested_link_layout(self):
+        """The Astra r1 deep review's layout: an in-share capture directory whose historical capture
+        is a regular copy and whose live captures sit behind a nested directory link. Every byte
+        matches the manifest; json_syntax still cannot read the two live ones."""
+        live = ("live/a.json", "live/b.json")
+        for name in live:
+            self.put(self.evidence / "raw", name, "{}\n")
+        entries = [{"path": self.raw_capture}, *({"path": f"{land.RAW_LINK}/{name}"} for name in live)]
+        self.put(self.shared, land.RAW_MANIFEST, json.dumps({"entries": entries}))
+        self.git(self.shared, "commit", "-qam", "three captures")
+        fresh = self.root / "nested"
+        self.git(self.shared, "worktree", "add", "--detach", str(fresh), "HEAD")
+        land.copy_inputs(self.shared, fresh, keep_present=True)
+        self.assertEqual(self.guard(fresh, allow_missing=False), (None, ""))  # control: the plain link passes
+        alternate = self.evidence / "alternate"
+        self.put(alternate, "capture.jsonl", (self.evidence / "raw/capture.jsonl").read_text())
+        (alternate / "live").symlink_to(self.evidence / "raw/live", target_is_directory=True)
+        (fresh / land.RAW_LINK).unlink()
+        (fresh / land.RAW_LINK).symlink_to(alternate, target_is_directory=True)
+        for name in live:
+            self.assertTrue((fresh / land.RAW_LINK / name).is_file())  # is_file() alone would pass them
+        return fresh, [f"{land.RAW_LINK}/{name}" for name in live]
+
+    def test_guard_refuses_captures_behind_a_nested_link_and_names_them(self):
+        fresh, unreadable = self.nested_link_layout()
+        code, text = self.guard(fresh, allow_missing=False)
+        self.assertEqual(code, 2)
+        self.assertIn("refusing to build: 2 gitignored input(s)", text)
+        self.assertEqual([line.strip() for line in text.splitlines() if line.startswith("  ")],
+                         [f"{name} (json_syntax cannot read it: absent, or behind a nested link)"
+                          for name in unreadable])
+        # The guard's verdict is the verifier's: it admits exactly the historical capture here.
+        verifier = land.raw_capture_verifier()
+        admitted = verifier.admitted_raw_captures(fresh, [self.raw_capture, *unreadable], self.evidence)
+        self.assertEqual([path.relative_to(fresh).as_posix() for path in admitted], [self.raw_capture])
+
+    def test_record_baseline_refuses_captures_behind_a_nested_link(self):
+        fresh, unreadable = self.nested_link_layout()
+        code, stderr, baseline = self.record_baseline(fresh)
+        self.assertEqual(code, 2)
+        for name in unreadable:
+            self.assertIn(name, stderr)
+        self.assertNotIn(f"  {self.raw_capture} ", stderr)
+        self.assertFalse(baseline.exists())
+
+    def record_baseline(self, fresh):
+        spec = importlib.util.spec_from_file_location("pm_landing_check_guard",
+                                                      Path(__file__).with_name("pm-landing-check.py"))
+        check = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(check)
+        baseline = fresh / "baseline.json"
+        stderr = io.StringIO()
+        with patch.object(check, "SHARED_CHECKOUT", self.shared), patch.object(check, "_load_pm_land", return_value=land), \
+             patch.object(sys, "argv", ["pm-landing-check.py", "--root", str(fresh), "--record-baseline",
+                                        "--baseline", str(baseline)]), \
+             patch.object(check, "readiness_source_identity", side_effect=AssertionError("ran past the guard")), \
+             redirect_stderr(stderr), redirect_stdout(io.StringIO()):
+            code = check.main()
+        return code, stderr.getvalue(), baseline
+
+    def linked_widget_report(self, target_text=None):
+        """The Astra r2 deep review's case: an audit report that is a link to its archived copy.
+        The bytes behind the link equal the shared checkout's; a validator that resolves the
+        link lands outside the tree and crashes."""
+        fresh = self.fresh_worktree()
+        land.copy_inputs(self.shared, fresh, keep_present=True)
+        name = "Plans/.audits/whole/included.json"
+        archive = self.put(self.root / "archive", name, target_text or (self.shared / name).read_text())
+        (fresh / name).unlink()
+        (fresh / name).symlink_to(archive)
+        self.assertTrue((fresh / name).is_file())  # is_file() alone would pass it
+        return fresh, name, archive
+
+    def test_guard_refuses_a_linked_input_and_names_it(self):
+        fresh, name, _ = self.linked_widget_report()
+        for kwargs in ({}, {"prefixes": ("Plans",)}):  # --record-baseline's list and generate's
+            with self.subTest(**kwargs):
+                code, text = self.guard(fresh, allow_missing=False, **kwargs)
+                self.assertEqual(code, 2)
+                self.assertIn("refusing to build: 1 gitignored input(s)", text)
+                self.assertEqual([line.strip() for line in text.splitlines() if line.startswith("  ")],
+                                 [f"{name} is a link; run {land.COPY_INPUTS_COMMAND} to replace links with "
+                                  "real files"])
+
+    def test_record_baseline_refuses_a_linked_input_and_writes_no_baseline(self):
+        fresh, name, _ = self.linked_widget_report()
+        code, stderr, baseline = self.record_baseline(fresh)
+        self.assertEqual(code, 2)
+        self.assertIn(f"{name} is a link", stderr)
+        self.assertFalse(baseline.exists())
+
+    def test_generate_refuses_a_linked_input(self):
+        spec = importlib.util.spec_from_file_location("pm_plan_index_guard", Path(__file__).with_name("pm-plan-index.py"))
+        index = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = index  # its dataclasses look their module up by name
+        self.addCleanup(sys.modules.pop, spec.name, None)
+        try:
+            spec.loader.exec_module(index)
+        except ModuleNotFoundError as exc:
+            if exc.name != "yaml":
+                raise
+            self.skipTest("PyYAML is unavailable to this Python interpreter")
+        fresh, name, _ = self.linked_widget_report()
+        stderr = io.StringIO()
+        with patch.object(index, "ROOT", fresh), patch.object(index, "_load_pm_land", return_value=land), \
+             patch.object(index, "generate", side_effect=AssertionError("generated past the guard")), \
+             patch.object(sys, "argv", ["pm-plan-index.py", "generate"]), redirect_stderr(stderr):
+            self.assertEqual(index.main(), 2)
+        self.assertIn("refusing to generate the plan index", stderr.getvalue())
+        self.assertIn(f"{name} is a link", stderr.getvalue())
+
+    def test_copy_inputs_replaces_a_linked_input_without_writing_its_target(self):
+        for target_text in (None, "older archived bytes\n"):
+            with self.subTest(target_text=target_text):
+                fresh, name, archive = self.linked_widget_report(target_text)
+                before = archive.read_bytes()
+                with redirect_stdout(io.StringIO()):
+                    self.assertEqual(land.main(["copy-inputs", "--worktree", str(fresh)]), 0)
+                self.assertFalse((fresh / name).is_symlink())
+                self.assertEqual(land.file_hash(fresh / name), land.file_hash(self.shared / name))
+                self.assertEqual(archive.read_bytes(), before)  # the link's target is never written
+                self.assertEqual(self.guard(fresh, allow_missing=False), (None, ""))
+                self.git(self.shared, "worktree", "remove", "--force", str(fresh))
+                shutil.rmtree(self.root / "archive")
+
+    def test_copy_inputs_replaces_a_dangling_input_link(self):
+        fresh = self.fresh_worktree()
+        (fresh / "Plans/.audits").mkdir(parents=True)
+        (fresh / self.ignore_file).symlink_to(self.root / "nowhere.txt")
+        code, text = self.guard(fresh, allow_missing=False)
+        self.assertIn(f"{self.ignore_file} is a link", text)
+        with redirect_stdout(io.StringIO()):
+            self.assertEqual(land.main(["copy-inputs", "--worktree", str(fresh)]), 0)
+        self.assertFalse((fresh / self.ignore_file).is_symlink())
+        self.assertFalse((self.root / "nowhere.txt").exists())
+        self.assertEqual((fresh / self.ignore_file).read_text(), "audit notes\n")
+
+    def test_guard_names_a_linked_folder_once_and_says_to_move_it_aside(self):
+        fresh = self.fresh_worktree()
+        land.copy_inputs(self.shared, fresh, keep_present=True)
+        archive = self.root / "archive-whole"
+        shutil.copytree(fresh / "Plans/.audits/whole", archive)
+        shutil.rmtree(fresh / "Plans/.audits/whole")
+        (fresh / "Plans/.audits/whole").symlink_to(archive, target_is_directory=True)
+        code, text = self.guard(fresh, allow_missing=False)
+        self.assertEqual(code, 2)
+        self.assertEqual([line.strip() for line in text.splitlines() if line.startswith("  ")],
+                         ["Plans/.audits/whole/ is a linked folder (or a file where a folder belongs); move it "
+                          f"aside, then run {land.COPY_INPUTS_COMMAND}"])
+
+    def test_guard_refuses_a_raw_link_outside_the_evidence_share(self):
+        fresh = self.fresh_worktree()
+        land.copy_inputs(self.shared, fresh, keep_present=True)
+        outside = self.root / "elsewhere"
+        self.put(outside, "capture.jsonl", "{}\n")
+        (fresh / land.RAW_LINK).unlink()
+        (fresh / land.RAW_LINK).symlink_to(outside, target_is_directory=True)
+        code, text = self.guard(fresh, allow_missing=False)
+        self.assertEqual(code, 2)
+        self.assertIn(f"{land.RAW_LINK} (missing, or a link that does not resolve", text)
+
+    def test_record_baseline_refuses_the_reviewers_case_and_writes_no_baseline(self):
+        self.relative_raw_link(self.shared)
+        fresh = self.fresh_worktree("deeper/fresh")
+        land.copy_inputs(self.shared, fresh, keep_present=True)
+        self.relative_raw_link(fresh)
+        code, stderr, baseline = self.record_baseline(fresh)
+        self.assertEqual(code, 2)
+        self.assertIn("refusing to record a baseline", stderr)
+        self.assertIn(land.RAW_LINK, stderr)
+        self.assertFalse(baseline.exists())
+
+    def test_copy_inputs_refuses_a_symlinked_folder_before_any_write(self):
+        fresh = self.fresh_worktree()
+        outside = self.root / "outside"
+        outside.mkdir()
+        (fresh / "Plans/.audits").mkdir(parents=True)
+        (fresh / "Plans/.audits/whole").symlink_to(outside, target_is_directory=True)
+        stderr = io.StringIO()
+        with redirect_stderr(stderr):
+            self.assertEqual(land.main(["copy-inputs", "--worktree", str(fresh)]), 3)
+        self.assertIn("Plans/.audits/whole is a symlink or a file", stderr.getvalue())
+        self.assertEqual(list(outside.iterdir()), [])
+        self.assertFalse((fresh / self.ignore_file).exists())
+        self.assertFalse((fresh / land.RAW_LINK).is_symlink())
+
+    def test_copy_inputs_command_refuses_a_subdirectory_and_names_the_root(self):
+        fresh = self.fresh_worktree()
+        stderr = io.StringIO()
+        with redirect_stderr(stderr):
+            self.assertEqual(land.main(["copy-inputs", "--worktree", str(fresh / "Plans")]), 3)
+        self.assertIn("must name a worktree's root", stderr.getvalue())
+        self.assertIn(f"its worktree root is {fresh.resolve()}", stderr.getvalue())
+        self.assertFalse((fresh / self.ignore_file).exists())
+
+    def test_exclusive_copy_never_replaces_a_file(self):
+        source = self.put(self.root, "source.txt", "new\n")
+        target = self.put(self.root, "target.txt", "kept\n")
+        with self.assertRaises(FileExistsError):
+            land.exclusive_copy(source, target)
+        self.assertEqual(target.read_text(), "kept\n")
+
+    def test_copy_inputs_command_refuses_the_shared_checkout(self):
+        stderr = io.StringIO()
+        with redirect_stderr(stderr):
+            self.assertEqual(land.main(["copy-inputs", "--worktree", str(self.shared)]), 3)
+        self.assertIn("this is the shared checkout", stderr.getvalue())
+
 
 READINESS = "run-gates/validate_implementation_readiness"
 
@@ -1446,6 +1898,306 @@ def landing_report(pre=(), more: int = 0, counter=(), compare: int = 0, timeouts
         lines.append(tail)
     return "\n".join(lines)
 
+
+def lock_holder(**fields):
+    """The display record another check's worker would have written."""
+    return {"schema": land.HOST_LOCK_SCHEMA, "host": "nas1", "machine": "ubuntu-agent-nas1",
+            "topic": "refs/heads/fix/other", "commit": "a" * 40, "job": None, "run_folder": "/runs/other",
+            "started_utc": land.iso(), "worker_pid": 1, "lander": "other-lander", "lander_machine": "vm", **fields}
+
+
+class working_directory:
+    def __init__(self, path):
+        self.path = path
+
+    def __enter__(self):
+        self.previous = Path.cwd()
+        os.chdir(self.path)
+
+    def __exit__(self, *exc):
+        os.chdir(self.previous)
+
+
+class HostLockTests(unittest.TestCase):
+    """One landing check per host: the worker's lock on the host's own disk, and the lander's wait."""
+
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory(prefix="test-pm-land-lock-")
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name)
+        self.locks = self.root / "host-locks"
+        env = patch.dict(os.environ, {land.HOST_LOCK_DIR_ENV: str(self.locks)})
+        env.start()
+        self.addCleanup(env.stop)
+        self.folder = self.root / "run-a"
+        self.folder.mkdir()
+        self.clock = [1000.0]
+        self.sleeps = []
+        clock = patch.object(land, "lease_clock", side_effect=lambda: self.clock[0])
+        clock.start()
+        self.addCleanup(clock.stop)
+        sleeper = patch.object(land, "lease_sleep", side_effect=self.sleep)
+        sleeper.start()
+        self.addCleanup(sleeper.stop)
+        quick = patch.object(land, "HOST_LOCK_TRY_SECONDS", 0.1)
+        quick.start()
+        self.addCleanup(quick.stop)
+
+    def sleep(self, seconds):
+        self.sleeps.append(seconds)
+        self.clock[0] += seconds
+
+    def test_the_lock_is_held_shown_and_freed_and_its_file_stays(self):
+        self.assertEqual(land.host_lock_state(), {"free": True, "holder": None})
+        land.write_json(self.folder / land.LANDER_FILE, {"lander": "me", "lander_machine": "vm"})
+        lock = land.hold_host_lock(self.folder, "nas1", "refs/heads/fix/a", "b" * 40)
+        state = land.host_lock_state()
+        self.assertFalse(state["free"])
+        self.assertEqual((state["holder"]["job"], state["holder"]["lander"], state["holder"]["worker_pid"]),
+                         (land.job_name(self.folder), "me", os.getpid()))
+        self.assertEqual(land.describe_holder(state["holder"])[:22], "me for fix/a bbbbbbbbb")
+        lock.release()
+        lock.release()  # a second release is a no-op
+        self.assertEqual(land.host_lock_state(), {"free": True, "holder": None})
+        self.assertTrue((self.locks / land.HOST_LOCK_NAME).exists())  # every job locks the same inode
+
+    def test_a_second_job_finds_the_host_taken_and_records_who_has_it(self):
+        first = land.hold_host_lock(self.folder, "nas1", "refs/heads/fix/a", "b" * 40)
+        second = self.root / "run-b"
+        second.mkdir()
+        self.assertIsNone(land.hold_host_lock(second, "nas1", "refs/heads/fix/b", "c" * 40))
+        busy = land.read_json(second / land.HOST_BUSY_FILE)
+        self.assertEqual(busy["holder"]["job"], land.job_name(self.folder))
+        first.release()
+        third = land.hold_host_lock(second, "nas1", "refs/heads/fix/b", "c" * 40)
+        self.assertIsNotNone(third)
+        third.release()
+
+    def test_the_holder_file_is_shown_but_never_decides(self):
+        self.locks.mkdir()
+        land.write_json(self.locks / land.HOST_LOCK_HOLDER, lock_holder(job="pm-check-crashed"))  # left by a dead job
+        lock = land.hold_host_lock(self.folder, "nas1", "refs/heads/fix/a", "b" * 40)
+        self.assertIsNotNone(lock)
+        lock.release()
+        self.assertEqual(land.describe_holder(None), "a check that has not written its holder file yet")
+
+    def test_the_wait_repeats_its_notice_every_five_minutes_and_ends_in_host_busy(self):
+        busy = {"free": False, "holder": lock_holder(job="pm-check-first")}
+        output = io.StringIO()
+        with (patch.object(land, "probe_host_lock", return_value=busy), redirect_stdout(output),
+              self.assertRaisesRegex(land.HostBusy, "nas1 stayed busy for 12 minutes: its landing-check lock is held by "
+                                                    "other-lander for fix/other aaaaaaaaaaaa, job pm-check-first")):
+            land.HostWait("nas1", 12).until_free()
+        self.assertEqual(sum(self.sleeps), 12 * 60)
+        self.assertEqual(set(self.sleeps), {land.HOST_LEASE_POLL_SECONDS})
+        self.assertEqual(output.getvalue().count("nas1 is busy:"), 3)  # at 0, 5 and 10 minutes
+
+    def test_an_unreadable_probe_lets_the_job_decide(self):
+        with patch.object(land, "probe_host_lock", return_value=None), redirect_stdout(io.StringIO()) as output:
+            land.HostWait("nas1", 0).until_free()
+        self.assertEqual((output.getvalue(), self.sleeps), ("", []))
+
+    def test_a_lost_start_race_waits_on_the_same_deadline(self):
+        waiter = land.HostWait("nas1", 1)
+        land.write_json(self.folder / land.HOST_BUSY_FILE, {"holder": lock_holder(job="pm-check-winner")})
+        with redirect_stdout(io.StringIO()) as output:
+            waiter.lost_race(self.folder)
+            waiter.lost_race(self.folder)
+            with self.assertRaises(land.HostBusy):
+                waiter.lost_race(self.folder)
+        self.assertEqual(self.sleeps, [30, 30])
+        self.assertIn("job pm-check-winner", output.getvalue())
+
+    def test_probe_host_lock_reads_the_hosts_answer_and_nothing_else(self):
+        answers = [subprocess.CompletedProcess([], 0, '{"free": false, "holder": null}\n', ""),
+                   subprocess.CompletedProcess([], 255, "", "ssh: timed out"),
+                   subprocess.CompletedProcess([], 0, "not json\n", ""),
+                   subprocess.CompletedProcess([], 0, '{"free": "yes"}\n', "")]
+        with patch.object(land, "ssh", side_effect=answers) as ssh:
+            self.assertEqual(land.probe_host_lock("nas1"), {"free": False, "holder": None})
+            self.assertEqual([land.probe_host_lock("nas1") for _ in range(3)], [None, None, None])
+        self.assertEqual(ssh.call_args.args[:5], ("nas1", "python3", "-B", "-", "probe-host-lock"))
+        self.assertIn("def probe_worker(", ssh.call_args.kwargs["input_text"])
+
+    def test_the_cli_takes_a_finite_wait_and_refuses_the_rest(self):
+        with patch.object(land, "check_topic", return_value=0) as check, \
+                working_directory(Path(__file__).resolve().parent):
+            self.assertEqual(land.main(["check", "fix/topic", "--on", "1070ti", "--host-wait-minutes", "5"]), 0)
+        self.assertEqual(check.call_args.args[1:], ("fix/topic", "1070ti"))
+        self.assertEqual(check.call_args.kwargs, {"host_wait_minutes": 5.0})
+        for value in ("-1", "inf", "nan"):
+            with self.subTest(value=value), redirect_stderr(io.StringIO()), self.assertRaises(SystemExit), \
+                    working_directory(Path(__file__).resolve().parent):
+                land.main(["check", "fix/topic", "--host-wait-minutes", value])
+
+
+# A real worker process for the lock tests: it loads this pm-land.py and takes the host lock with the real
+# hold_host_lock, as the worker's check mode does first, in a run folder of its own.
+#   hold: print HELD (or BUSY and exit 3), then hold until killed or stdin closes.
+#   rounds <n>: run n jobs one after another, each retrying until it gets the lock. Inside, it creates
+#   <locks>/inside with O_EXCL, so a second holder at the same time is seen; a marker left by a holder that was
+#   SIGKILLed inside (its process is gone or a zombie) is counted apart.
+LOCK_CHILD = r"""
+import importlib.util, json, os, sys, time, uuid
+from pathlib import Path
+script, runs, mode, arg = sys.argv[1], Path(sys.argv[2]), sys.argv[3], sys.argv[4]
+spec = importlib.util.spec_from_file_location("pm_land", script)
+land = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(land)
+land.HOST_LOCK_TRY_SECONDS = 0.0
+
+folder = runs / uuid.uuid4().hex  # one run folder per worker: a busy attempt rewrites its host-busy.json
+folder.mkdir(parents=True)
+
+def job():
+    return land.hold_host_lock(folder, "nas1", "refs/heads/fix/child", "c" * 40)
+
+def alive(pid):
+    try:
+        state = Path(f"/proc/{pid}/stat").read_text().rsplit(")", 1)[1].split()[0]
+    except (OSError, IndexError):
+        return False
+    return state not in ("Z", "X")
+
+if mode == "hold":
+    lock = job()
+    if lock is None:
+        print("BUSY", flush=True)
+        sys.exit(3)
+    print("HELD", flush=True)
+    sys.stdin.read()
+    lock.release()
+    sys.exit(0)
+# The kernel drops a SIGKILLed holder's flock while it closes its files, a moment before /proc shows it as a
+# zombie. A marker whose owner still looks alive is counted as `dual` only if that owner then removes it
+# itself, which a second live holder would do; if the owner turns out dead, it was that exit window.
+counts = {"rounds": 0, "dual": 0, "killed_inside": 0, "exit_window": 0, "busy": 0}
+marker = land.host_lock_dir() / "inside"
+for _ in range(int(arg)):
+    while (lock := job()) is None:
+        counts["busy"] += 1
+        time.sleep(0.001)
+    seen = None
+    while True:
+        try:
+            fd = os.open(marker, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o666)
+            break
+        except FileExistsError:
+            try:
+                other = int(marker.read_text() or "0")
+            except (OSError, ValueError):
+                continue
+            if alive(other):
+                seen = other
+                time.sleep(0.001)
+                continue
+            counts["killed_inside"] += 1
+            counts["exit_window"] += seen == other
+            seen = None
+            try:
+                marker.unlink()
+            except FileNotFoundError:
+                pass
+    counts["dual"] += seen is not None  # the marker went away while its owner was alive: it was inside too
+    os.write(fd, str(os.getpid()).encode())
+    os.close(fd)
+    time.sleep(0.002)
+    marker.unlink(missing_ok=True)  # missing only when a second holder was inside too
+    lock.release()
+    counts["rounds"] += 1
+print(json.dumps(counts), flush=True)
+"""
+
+
+class HostLockProcessTests(unittest.TestCase):
+    """Real worker processes contending for one host's lock on its local disk."""
+
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory(prefix="test-pm-land-lockproc-")
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name)
+        self.env = {**os.environ, land.HOST_LOCK_DIR_ENV: str(self.root / "host-locks")}
+
+    def child(self, mode, arg=0):
+        child = subprocess.Popen([sys.executable, "-B", "-c", LOCK_CHILD, str(Path(land.__file__)),
+                                  str(self.root / "runs"), mode, str(arg)], env=self.env, stdin=subprocess.PIPE,
+                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        self.addCleanup(self.end, child)
+        return child
+
+    @staticmethod
+    def end(child):
+        if child.poll() is None:
+            child.kill()
+        child.wait(30)
+        for stream in (child.stdin, child.stdout, child.stderr):
+            if stream and not stream.closed:
+                stream.close()
+
+    def holder(self):
+        child = self.child("hold")
+        self.assertEqual(child.stdout.readline().strip(), "HELD", child.stderr.read() if child.poll() else "")
+        return child
+
+    def contender(self):
+        child = self.child("hold")
+        line = child.stdout.readline().strip()
+        if line == "HELD":
+            child.stdin.close()
+        self.assertEqual(child.wait(30), 0 if line == "HELD" else 3)
+        return line
+
+    def probe(self):
+        """The real probe path: pm-land.py's source on stdin, as `check` sends it over ssh."""
+        source = Path(land.__file__).read_text(encoding="utf-8").replace(
+            'if __name__ == "__main__":', 'MACHINES = {host: socket.gethostname() for host in HOSTS}\n'
+                                          'if __name__ == "__main__":')
+        result = subprocess.run([sys.executable, "-B", "-", "probe-host-lock", "nas1"], input=source, env=self.env,
+                                capture_output=True, text=True, timeout=60)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        return json.loads(result.stdout)
+
+    def test_two_jobs_contend_and_the_second_gets_the_lock_after_the_first_ends(self):
+        self.assertEqual(self.probe(), {"free": True, "holder": None})
+        first = self.holder()
+        self.assertEqual(self.contender(), "BUSY")
+        state = self.probe()
+        self.assertFalse(state["free"])
+        self.assertEqual(state["holder"]["worker_pid"], first.pid)
+        first.stdin.close()
+        self.assertEqual(first.wait(30), 0)
+        self.assertEqual(self.contender(), "HELD")
+
+    def test_sigkill_of_the_holding_job_frees_the_lock(self):
+        first = self.holder()
+        self.assertEqual(self.contender(), "BUSY")
+        first.send_signal(signal.SIGKILL)
+        first.wait(30)
+        self.assertTrue(self.probe()["free"])
+        self.assertEqual(self.contender(), "HELD")
+
+    def test_jobs_started_together_let_exactly_one_check_run(self):
+        children = [self.child("hold") for _ in range(8)]
+        lines = [child.stdout.readline().strip() for child in children]
+        self.assertEqual(sorted(lines), ["BUSY"] * 7 + ["HELD"])
+
+    def test_no_two_holders_across_many_rounds_with_holders_killed(self):
+        workers = [self.child("rounds", 15) for _ in range(6)]
+        victims = [self.child("rounds", 10000) for _ in range(2)]
+        time.sleep(1.0)
+        for victim in victims:
+            victim.send_signal(signal.SIGKILL)
+            victim.wait(30)
+        totals = {"rounds": 0, "dual": 0, "killed_inside": 0, "exit_window": 0, "busy": 0}
+        for worker in workers:
+            out, err = worker.communicate(timeout=300)
+            self.assertEqual(worker.returncode, 0, err)
+            for key, value in json.loads(out.strip().splitlines()[-1]).items():
+                totals[key] += value
+        self.assertEqual(totals["dual"], 0, totals)
+        self.assertEqual(totals["rounds"], 6 * 15)
+        self.assertGreater(totals["busy"], 0, totals)  # they did contend
+        self.assertEqual(self.contender(), "HELD")
 
 CRASH = 'Traceback (most recent call last):\n  File "scripts/pm-landing-check.py", line 9, in main\nKeyError: \'x\''
 

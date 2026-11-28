@@ -5568,6 +5568,7 @@
     "DL-2594",
     "DL-2595",
     "DL-2591",
+    "DL-696",
     "DL-451",
     "DL-694",
     "F3-585",
@@ -60595,6 +60596,26 @@
       "edge_type": "depends_on",
       "from": "DL-695",
       "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-696",
+      "to": "DL-039"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-696",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-696",
+      "to": "DL-2600"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-696",
+      "to": "DL-400"
     },
     {
       "edge_type": "depends_on",
@@ -165337,7 +165358,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-27T06:32:06Z",
+  "generated_at_utc": "2026-11-28T00:04:42Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -224171,6 +224192,23 @@
         "heading_level": 3,
         "heading_line": 40410,
         "line": 40412,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_pnc019_s8_seal",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-696",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_named_open_at_certification",
+      "source_location": {
+        "heading": "DL-696: Event Authority certifies PNC-019 with the remaining Goal-five rows named at certification and proved afterwards",
+        "heading_level": 3,
+        "heading_line": 63680,
+        "line": 63682,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -329141,10 +329179,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27904,
+    "depends_on_edge_count": 27908,
     "downstream_blocked_node_count": 0,
-    "edge_count": 31139,
-    "node_count": 9635,
+    "edge_count": 31143,
+    "node_count": 9636,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3235,
     "unresolved_reference_count": 0
