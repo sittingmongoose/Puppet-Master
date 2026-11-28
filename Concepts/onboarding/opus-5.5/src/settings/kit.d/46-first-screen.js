@@ -225,14 +225,14 @@ root.addEventListener('toggle', e => {
   const d = e.target;
   if (d && d.open && d.matches && d.matches('details')) PM51.fillDisclosure(d);
 }, true);
-/* While the chapter still has unmounted pages, End / Home are completed in one step from the document's own scroll
-   (FO-248P, below) and land on a page mounted in full, so the arrival page's pending rows are not built here: on the GTX
-   1070 Ti that fill made the key's frame 190 ms longer and held the source view that much longer. */
+/* FO-248P keeps this fill while pages are unmounted too: skipping it (the key's frame was 190 ms shorter on the GTX 1070
+   Ti) left the arrival page's rows to fill under a later Home, which then stopped 104 px below the top of General (4 of
+   6 presses; main 0). The one-step End below reads the frame after it, so its length draws no blank. */
 const O55FS_KEYS = new Set(['End', 'Home']);
 root.addEventListener('keydown', e => {
   if (!o55fs.pending.size) return;
   const sc = root.querySelector('#settings-document');
-  if (O55FS_KEYS.has(e.key) && sc && (e.target === sc || sc.contains(e.target)) && !(e.target.matches && e.target.matches('input, textarea, select, [contenteditable=""], [contenteditable="true"]')) && !sc.querySelector('[data-continuous-workspace-body][data-workspace-mounted="false"]')) o55fsFillAll();
+  if (O55FS_KEYS.has(e.key) && sc && (e.target === sc || sc.contains(e.target)) && !(e.target.matches && e.target.matches('input, textarea, select, [contenteditable=""], [contenteditable="true"]'))) o55fsFillAll();
 }, true);
 root.addEventListener('pointerdown', e => {
   const sc = root.querySelector('#settings-document');
@@ -248,10 +248,15 @@ root.addEventListener('pointerdown', e => {
    sections in the view are touched, so an ordinary scroll, which content-visibility's own margin keeps ahead of, changes
    nothing, a shown section is never skipped again at the hand-back (no one-frame unlock), and an arrival's first frame
    still skips every far section (FO-196). */
+/* FO-248P: a section skipped since it was drawn, which content-visibility has never laid out, still holds its estimated
+   size; a smooth End / Home that crosses it lays it out on the way and the page's anchoring then stops the scroll off its
+   edge (General: Home after a one-step End stopped 70-2,760 px below the top, 6 of 6 presses; main 0). */
+const o55fsLaid = new WeakSet(), o55fsUnseen = new Set();
 root.addEventListener('contentvisibilityautostatechange', e => {
   const s = e.target;
   if (!s.matches || !s.matches('.settings-section')) return;
-  if (e.skipped) o55fsSkipped.add(s); else o55fsSkipped.delete(s);
+  if (e.skipped) { o55fsSkipped.add(s); if (!o55fsLaid.has(s)) o55fsUnseen.add(s); }
+  else { o55fsSkipped.delete(s); o55fsLaid.add(s); o55fsUnseen.delete(s); }
 }, true);
 /* shown now, handed back to content-visibility two frames later, by when it has found them relevant */
 function o55fsShowFor(shown) {
@@ -267,7 +272,7 @@ function o55fsShowNear(sc) {
   for (const s of o55fsSkipped) {
     if (!s.isConnected) { o55fsSkipped.delete(s); continue; }
     if (!sc.contains(s) || s.closest('details:not([open])')) continue;
-    if (o55fsInView(s.getBoundingClientRect(), view)) { s.style.contentVisibility = 'visible'; o55fsSkipped.delete(s); shown.push(s); }
+    if (o55fsInView(s.getBoundingClientRect(), view)) { s.style.contentVisibility = 'visible'; o55fsSkipped.delete(s); o55fsLaid.add(s); o55fsUnseen.delete(s); shown.push(s); }
   }
   /* a page mounted in the last two frames: its sections have not been judged by content-visibility yet (r3, below) */
   for (const body of o55fsFresh) {
@@ -327,9 +332,9 @@ const O55FS_WHEEL_MS = 400;
 let o55fsWheelAt = -Infinity;
 root.addEventListener('wheel', () => { o55fsWheelAt = performance.now(); }, { capture: true, passive: true });
 const o55fsWheeling = () => performance.now() - o55fsWheelAt <= O55FS_WHEEL_MS;
-/* FO-248P (2026-11-28): End / Home (and Ctrl+End / Ctrl+Home) over a chapter with unmounted pages land in one step, as
-   pm7-build accepted for FO-245 (decision A, 2026-11-27): the pages at that edge are mounted and the document lands there
-   at once, instead of Chrome's 250-800 ms smooth scroll across empty placeholders (main and FO-245 r6: 13-26 blank frames
+/* FO-248P (2026-11-28): End / Home (and Ctrl+End / Ctrl+Home) over a chapter with unmounted pages, or with sections
+   content-visibility has never laid out (o55fsUnlaid, above), land in one step, as pm7-build accepted for FO-245
+   (decision A, 2026-11-27): the pages at that edge are mounted and the document lands there at once, instead of Chrome's 250-800 ms smooth scroll across empty placeholders (main and FO-245 r6: 13-26 blank frames
    per End). Chrome 158 animates keyboard End whatever scroll-behavior says (forced auto: 4-7 scroll events over 480-850
    ms, as with smooth), so CSS cannot do this. No key is intercepted:
    - a passive key listener on window (bubble phase, after every widget's own handler; passive, so it cannot cancel the
@@ -355,6 +360,14 @@ const O55FS_STEP_KEYS = { PageDown: 1, PageUp: -1, ' ': 1, Spacebar: 1, ArrowDow
 let o55fsStepAt = -Infinity, o55fsStepDir = 0;
 const o55fsStepping = () => performance.now() - o55fsStepAt <= O55FS_WHEEL_MS;
 const o55fsCold = sc => !!(sc && sc.querySelector('[data-continuous-workspace-body][data-workspace-mounted="false"]'));
+/* a section of the document content-visibility has never laid out (outside a closed disclosure) */
+const o55fsUnlaid = sc => {
+  for (const s of o55fsUnseen) {
+    if (!s.isConnected) { o55fsUnseen.delete(s); continue; }
+    if (sc.contains(s) && !s.closest('details:not([open])')) return true;
+  }
+  return false;
+};
 window.addEventListener('keydown', e => {
   o55fsEdge = null; o55fsEdgeHeld = null; o55fsStepAt = -Infinity;
   /* cheapest tests first: any other key (typing) returns before a style read */
@@ -364,7 +377,9 @@ window.addEventListener('keydown', e => {
   const t = e.target;
   if (t && t.nodeType === 1 && (t.isContentEditable || t.closest(O55FS_EDGE_TEXT))) return;
   const sc = root.querySelector('#settings-document');
-  if (!o55fsCold(sc) || !o55fsInteractive()) return;
+  /* End / Home while the chapter still has unmounted pages or sections never laid out; a step key while pages are unmounted */
+  const cold = o55fsCold(sc);
+  if (!sc || (step ? !cold : !(cold || o55fsUnlaid(sc))) || !o55fsInteractive()) return;
   if (step) { o55fsStepAt = performance.now(); o55fsStepDir = e.key === ' ' && e.shiftKey ? -1 : O55FS_STEP_KEYS[e.key]; return; }
   const k = o55fsEdge = { at: performance.now(), end: e.key === 'End', top: sc.scrollTop };
   const watch = () => { if (o55fsEdge !== k) return; const s = root.querySelector('#settings-document'); if (s) o55fsEdgeScroll(s); if (o55fsEdge === k) requestAnimationFrame(watch); };
