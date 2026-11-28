@@ -4,7 +4,7 @@ Source: `Plans/Models_System.md`
 
 Source lines: L9729-L10101
 
-Source SHA256: `1dcc305478a22fcff08c781fd36cac0a0b37177bba3df6a768406b4bb2d13bb9`
+Source SHA256: `efbaa82786f5390d7c1a17476f378a7dc31751af22946ffb10510efb3fa266bc`
 
 ---
 
@@ -218,7 +218,7 @@ Open-string values in the examples (platform, model, account, auth mode, executi
 | --- | --- | --- |
 | `receipt_id` | string | Unique per receipt. |
 | `attempt_id` | string | The provider attempt this settles. |
-| `model_id` | string | Effective model of the attempt. |
+| `model_id` | string | Effective model of the attempt, as the canonical `provider_id/model_id` id (§1.1). |
 | `account_id` | string or null | Effective account; null when the route has no account. |
 | `capability_snapshot_ref` | string | Snapshot whose effort support was read. |
 | `requested_effort` | string or null | The label requested for this run; null when none was requested. |
@@ -245,7 +245,7 @@ Open-string values in the examples (platform, model, account, auth mode, executi
 {
   "receipt_id": "esr_0193",
   "attempt_id": "attempt_0007",
-  "model_id": "kimi-k2-thinking",
+  "model_id": "moonshot/kimi-k2-thinking",
   "account_id": "acct_kimi",
   "capability_snapshot_ref": "capsnap://kimi/kimi-k2-thinking/rev-9",
   "requested_effort": "max",
@@ -286,9 +286,9 @@ Router input. Each routing decision reads one closed `ModelSelectionRouterInput`
 | `preferred_capabilities[]` | array of string | Optional preferred capabilities; `capability_match` factor. |
 | `cost_policy` | string, closed: `default`, `prefer_low_cost`, `ignore_cost` | Step 3. |
 | `latency_policy` | string, closed: `default`, `prefer_low_latency`, `ignore_latency` | Step 3. |
-| `preference_list[]` | ordered array of `{provider_id: string, model_id: string}` | `user_preference` factor. |
+| `preference_list[]` | ordered array of `{provider_id: string, model_id: string}` | `user_preference` factor. Here and in every `candidates[]`, `fallback_chain[]` and router `selection_reason.alternatives[]` entry, `provider_id` is the runtime platform and `model_id` is the canonical `provider_id/model_id` model id (§1.1, §1.2), which is what the requested and effective model fields copy. |
 | `persona_cost_budget_microusd` | integer or null | `cost_budget` gate; null when no active Persona cost budget applies. |
-| `candidates[]` | array of objects, one per provider/model pair the routing policy allows on an account the person can use (MS-128's provider availability) | Each has `provider_id` (string), `model_id` (string), `account_id` (string or null), `capability_snapshot_ref` (string), `quota_settlement_ref` (string, the EntitlementQuotaSettlement the `account_entitlement` gate reads), `provider_lifecycle_state` (string), `model_lifecycle_state` (string), `effective_context_window_tokens` (integer), `estimated_cost_microusd` (integer or null, null when the price is unknown), `expected_first_response_latency_ms` (integer or null) and `priority` (integer or null, null when unlisted). |
+| `candidates[]` | array of objects, one per provider/model pair the routing policy allows on an account the person can use (MS-128's provider availability) | Each has `provider_id` (string), `model_id` (string), `account_id` (string or null), `capability_snapshot_ref` (string), `account_route_state` (string, closed: `routable`, `hard_blocked`, `not_ready`, `no_account`; the Multi-Account selectable-unit state of the candidate's account when this input was written: `hard_blocked` while `hard_block = true` or a cooldown is active, `not_ready` while readiness is `needs_configuration` or `validation_required` or credentials are invalid or missing, `no_account` when `account_id` is null, otherwise `routable`), `quota_settlement_ref` (string or null: the latest EntitlementQuotaSettlement (MS-130) of the candidate's account, kept as the evidence behind `account_route_state`; null when the account has had no provider attempt yet or `account_id` is null), `provider_lifecycle_state` (string), `model_lifecycle_state` (string), `effective_context_window_tokens` (integer), `estimated_cost_microusd` (integer or null, null when the price is unknown), `expected_first_response_latency_ms` (integer or null) and `priority` (integer or null, null when unlisted). |
 | `fallback_chain[]` | array of the `fallback_chain[]` items above | Step 4, only when no candidate is eligible. |
 
 `task_kind` and `risk_class` never score. A routing policy states what a task kind and risk class need through `modalities[]`, `tool_need[]`, `verification_tier`, `preferred_capabilities[]`, `cost_policy` and `latency_policy`. Whether cost may weigh more for a low-risk task, and which `verification_tier` a verifier's or adjudicator's model must have, are therefore set by the policy and never relaxed by the router: a candidate without the required tier fails `capability_match` (MS-128). The router's winner is the requested pair of the resolver record (MS-128: router output is requested and effective): `requested_platform`, `requested_model` and the MS-135 `requested_model_id` and `requested_provider_id` hold the winner, and the effective fields differ from them only through the fallback and clamp rules above. When there is no winner (Step 4's `no_eligible_candidate`) and the `fallback_chain[]` walk dispatches an entry, the requested pair is the first `fallback_chain[]` entry in `priority` order: `requested_model` and `requested_model_id` hold its `model_id`, and `requested_platform` and `requested_provider_id` hold its `provider_id`. The effective fields and `resolved_model_id` hold the entry actually dispatched, `fallback_used = true`, and `selection_reason.fallback_reason = "no_eligible_candidate"` records that the auto-pick found no match (DL-2606). The routing policy stays auditable through `selection_reason.router_input_ref`.
@@ -298,7 +298,7 @@ Step 1, gates. A candidate that fails any gate is excluded and listed with `elig
 | Gate | Passes when | `exclusion_reason` |
 | --- | --- | --- |
 | `capability_match` | The candidate provides every required capability of the request: modalities, tool need and verification tier. | `capability_missing` |
-| `account_entitlement` | The candidate's account is selectable under Multi-Account: its EntitlementQuotaSettlement `quota_state` permits dispatch and no blocking `failure_class` is set. | `not_entitled` |
+| `account_entitlement` | `account_route_state` is `routable` or `no_account`. Multi-Account owns that state (in Plans/Multi-Account.md: the §4.2 account record, the §5 cooldown and `/hard` no-fallback rules and the §4.6 hard-block rule); a settlement code changes it only this way: `quota_exhausted`, and a `rate_limited` that Multi-Account treats as severe, mark a cooldown, which keeps `hard_block = true` until revalidation after `cooldown_until`; `billing_inactive` and `subscription_mismatch` set `hard_block = true` until a successful revalidation; any other `rate_limited`, `cache_anomaly`, `provider_fault`, `pm_fault` and `unknown` never fail this gate. A null `quota_settlement_ref` passes on `account_route_state` alone; for an account with no provider attempt yet, that first attempt writes its first settlement. | `not_entitled` |
 | `route_health` | The provider lifecycle state is `healthy` or `degraded`. | `route_unhealthy` |
 | model lifecycle | `model_lifecycle_state` allows new dispatch by the table above. | `model_not_dispatchable` |
 | `context_window` | `effective_context_window_tokens` is at least the request's estimated input tokens plus its reserved output tokens. | `context_too_small` |
@@ -321,7 +321,7 @@ Step 3, weights. Weights are integer percentages that always sum to 100. The def
 
 Step 4, choice. `total_score = sum(weight * factor_score)`, an integer from 0 to 100000. The highest `total_score` wins. A tie is broken by lower configured `priority` (unlisted candidates take 2147483647), then `provider_id`, then `model_id`, both in ascending UTF-8 byte order. When no candidate is eligible the router returns `no_eligible_candidate`, the resolver walks `fallback_chain[]` up to `max_depth`, and exhaustion emits `fallback_exhausted`. A walk that dispatches an entry writes the resolver record by the no-winner rule above: the requested pair is the first `fallback_chain[]` entry in `priority` order, the effective pair is the entry dispatched, `fallback_used = true` and `selection_reason.fallback_reason = "no_eligible_candidate"`. Each entry the walk skipped is listed in `selection_reason.alternatives[]` with `eligible = false` and the `exclusion_reason` of the gate it failed, as in Example 2, and `substitution_reason = "model_substituted"` is recorded exactly when the dispatched entry is not that first entry (DL-2606). When any candidate or fallback was excluded with `over_cost_budget`, that exhaustion also emits the MS-102 cost-budget concern with cheaper alternatives or escalation. Cost, latency, capability and quota inputs are read from refs pinned in the resolver record, so the same inputs always select the same winner.
 
-Each `selection_reason.alternatives[]` entry from the router has `provider_id` (string), `model_id` (string), `eligible` (boolean), `exclusion_reason?` (one of the six gate codes), `estimated_cost_microusd` (integer or null; null when the price is unknown, and the GUI then shows the price as unknown, never `$0.00`), `factor_scores?` (object with the six integer factor scores), `weights` (object with the six integer weights), `total_score?` (integer) and `priority` (integer).
+Each `selection_reason.alternatives[]` entry from the router has `provider_id` (string, the runtime platform), `model_id` (string, the canonical model id), `eligible` (boolean), `exclusion_reason?` (one of the six gate codes), `estimated_cost_microusd` (integer or null; null when the price is unknown, and the GUI then shows the price as unknown, never `$0.00`), `factor_scores?` (object with the six integer factor scores), `weights` (object with the six integer weights), `total_score?` (integer) and `priority` (integer).
 
 Example 3, a routing policy picks the model. Input (abridged to the fields that change the result; the fields not shown are present as the table above requires):
 
@@ -337,41 +337,41 @@ Example 3, a routing policy picks the model. Input (abridged to the fields that 
   "cost_policy": "prefer_low_cost",
   "latency_policy": "default",
   "preference_list": [
-    { "provider_id": "claude-code", "model_id": "claude-sonnet-4-6" },
-    { "provider_id": "codex", "model_id": "gpt-5.5-codex" }
+    { "provider_id": "claude-code", "model_id": "anthropic/claude-sonnet-4-6" },
+    { "provider_id": "codex", "model_id": "openai/gpt-5.5-codex" }
   ],
   "persona_cost_budget_microusd": 200000,
   "candidates": [
-    { "provider_id": "claude-code", "model_id": "claude-sonnet-4-6", "provider_lifecycle_state": "healthy", "effective_context_window_tokens": 200000, "estimated_cost_microusd": 120000, "expected_first_response_latency_ms": 2000, "priority": 1 },
-    { "provider_id": "codex", "model_id": "gpt-5.5-codex", "provider_lifecycle_state": "degraded", "effective_context_window_tokens": 128000, "estimated_cost_microusd": 80000, "expected_first_response_latency_ms": 4000, "priority": 2 },
-    { "provider_id": "gemini", "model_id": "gemini-3-pro", "provider_lifecycle_state": "healthy", "effective_context_window_tokens": 1000000, "estimated_cost_microusd": null, "expected_first_response_latency_ms": null, "priority": null },
-    { "provider_id": "claude-code", "model_id": "claude-opus-4-6", "provider_lifecycle_state": "healthy", "effective_context_window_tokens": 200000, "estimated_cost_microusd": 450000, "expected_first_response_latency_ms": 3000, "priority": 3 }
+    { "provider_id": "claude-code", "model_id": "anthropic/claude-sonnet-4-6", "provider_lifecycle_state": "healthy", "effective_context_window_tokens": 200000, "estimated_cost_microusd": 120000, "expected_first_response_latency_ms": 2000, "priority": 1 },
+    { "provider_id": "codex", "model_id": "openai/gpt-5.5-codex", "provider_lifecycle_state": "degraded", "effective_context_window_tokens": 128000, "estimated_cost_microusd": 80000, "expected_first_response_latency_ms": 4000, "priority": 2 },
+    { "provider_id": "gemini", "model_id": "google/gemini-3-pro", "provider_lifecycle_state": "healthy", "effective_context_window_tokens": 1000000, "estimated_cost_microusd": null, "expected_first_response_latency_ms": null, "priority": null },
+    { "provider_id": "claude-code", "model_id": "anthropic/claude-opus-4-6", "provider_lifecycle_state": "healthy", "effective_context_window_tokens": 200000, "estimated_cost_microusd": 450000, "expected_first_response_latency_ms": 3000, "priority": 3 }
   ]
 }
 ```
 
-Every candidate passes `capability_match`, `account_entitlement`, `route_health`, model lifecycle and `context_window` (required tokens 68000). `claude-opus-4-6` fails `cost_budget` (450000 > 200000) and is excluded. `gemini-3-pro` has an unknown price, so it passes `cost_budget` and stays pickable (DL-2604). Of the preferred capabilities, `claude-sonnet-4-6` and `gemini-3-pro` have both and `gpt-5.5-codex` has one. `prefer_low_cost` moves 10 points from `user_preference` to `cost`, giving weights `capability_match` 30, `route_health` 20, `user_preference` 10, `cost` 25, `latency` 10, `context_window` 5. The known costs are 120000 and 80000 and the known latencies 2000 and 4000, so `min` and `max` come from those two candidates only. `claude-sonnet-4-6` wins with 75000. The resolver record's `selection_reason` (other fields as in Examples 1 and 2):
+Every candidate passes `capability_match`, `account_entitlement`, `route_health`, model lifecycle and `context_window` (required tokens 68000). `anthropic/claude-opus-4-6` fails `cost_budget` (450000 > 200000) and is excluded. `google/gemini-3-pro` has an unknown price, so it passes `cost_budget` and stays pickable (DL-2604). Of the preferred capabilities, `anthropic/claude-sonnet-4-6` and `google/gemini-3-pro` have both and `openai/gpt-5.5-codex` has one. `prefer_low_cost` moves 10 points from `user_preference` to `cost`, giving weights `capability_match` 30, `route_health` 20, `user_preference` 10, `cost` 25, `latency` 10, `context_window` 5. The known costs are 120000 and 80000 and the known latencies 2000 and 4000, so `min` and `max` come from those two candidates only. `anthropic/claude-sonnet-4-6` wins with 75000. The resolver record's `selection_reason` (other fields as in Examples 1 and 2):
 
 ```json
 {
   "selected_provider": "claude-code",
-  "selected_model": "claude-sonnet-4-6",
+  "selected_model": "anthropic/claude-sonnet-4-6",
   "precedence_tier": 2,
   "router_input_ref": "rti_0311",
   "alternatives": [
-    { "provider_id": "claude-code", "model_id": "claude-sonnet-4-6", "eligible": true, "estimated_cost_microusd": 120000,
+    { "provider_id": "claude-code", "model_id": "anthropic/claude-sonnet-4-6", "eligible": true, "estimated_cost_microusd": 120000,
       "factor_scores": { "capability_match": 1000, "route_health": 1000, "user_preference": 1000, "cost": 0, "latency": 1000, "context_window": 1000 },
       "weights": { "capability_match": 30, "route_health": 20, "user_preference": 10, "cost": 25, "latency": 10, "context_window": 5 },
       "total_score": 75000, "priority": 1 },
-    { "provider_id": "codex", "model_id": "gpt-5.5-codex", "eligible": true, "estimated_cost_microusd": 80000,
+    { "provider_id": "codex", "model_id": "openai/gpt-5.5-codex", "eligible": true, "estimated_cost_microusd": 80000,
       "factor_scores": { "capability_match": 500, "route_health": 500, "user_preference": 500, "cost": 1000, "latency": 0, "context_window": 500 },
       "weights": { "capability_match": 30, "route_health": 20, "user_preference": 10, "cost": 25, "latency": 10, "context_window": 5 },
       "total_score": 57500, "priority": 2 },
-    { "provider_id": "gemini", "model_id": "gemini-3-pro", "eligible": true, "estimated_cost_microusd": null,
+    { "provider_id": "gemini", "model_id": "google/gemini-3-pro", "eligible": true, "estimated_cost_microusd": null,
       "factor_scores": { "capability_match": 1000, "route_health": 1000, "user_preference": 0, "cost": 0, "latency": 0, "context_window": 1000 },
       "weights": { "capability_match": 30, "route_health": 20, "user_preference": 10, "cost": 25, "latency": 10, "context_window": 5 },
       "total_score": 55000, "priority": 2147483647 },
-    { "provider_id": "claude-code", "model_id": "claude-opus-4-6", "eligible": false, "exclusion_reason": "over_cost_budget", "estimated_cost_microusd": 450000,
+    { "provider_id": "claude-code", "model_id": "anthropic/claude-opus-4-6", "eligible": false, "exclusion_reason": "over_cost_budget", "estimated_cost_microusd": 450000,
       "weights": { "capability_match": 30, "route_health": 20, "user_preference": 10, "cost": 25, "latency": 10, "context_window": 5 },
       "priority": 3 }
   ],
@@ -380,4 +380,4 @@ Every candidate passes `capability_match`, `account_entitlement`, `route_health`
 }
 ```
 
-The same record has `resolver_matrix_entry = "model_selection_router"`, `requested_platform` and `effective_platform` `claude-code`, `requested_model`, `effective_model`, `requested_model_id` and `resolved_model_id` `claude-sonnet-4-6`, and `fallback_used = false`. Wherever this choice is shown, `gemini-3-pro`'s price reads as unknown, never `$0.00` or within budget.
+The same record has `resolver_matrix_entry = "model_selection_router"`, `requested_platform` and `effective_platform` `claude-code`, `requested_model`, `effective_model`, `requested_model_id` and `resolved_model_id` `anthropic/claude-sonnet-4-6`, and `fallback_used = false`. Wherever this choice is shown, `google/gemini-3-pro`'s price reads as unknown, never `$0.00` or within budget.
