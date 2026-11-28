@@ -1447,7 +1447,7 @@ canonical_text: >-
   confidence_scores[], detected_at_ms, resolution_state, selected_value?, resolver_actor?, resolved_at_ms?, and
   audit_receipt_ref?. Readiness scoring uses weighted completeness, evidence, conflict, dependency, and resource axes,
   while resource defaults provide explicit time, token, cost, provider, and review placeholders instead of silent nulls.
-  ConflictRecord field types, in this document's field-block types: conflict_id id; prd_id id; field_path string;
+  ConflictRecord field types, in this document's field-block types plus number for the confidence scores: conflict_id id; prd_id id; field_path string;
   source_refs[] list of ref; confidence_scores[] list of number; detected_at_ms integer (milliseconds since the Unix
   epoch); resolver_actor? nullable ref; resolved_at_ms? nullable integer (milliseconds since the Unix epoch);
   audit_receipt_ref? nullable ref. Four are gap markers. competing_values[] is a list whose item type is provenance gap

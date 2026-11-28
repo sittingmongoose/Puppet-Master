@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L17497-L17576
 
-Source SHA256: `26be045fbcda9f9e366bcd4ec34e607c4213b9aba56a5aacb0c34042a6992c18`
+Source SHA256: `1bc31c9c49b16058870ded062ae5abad7f0e6bb593f35aaaf7667121ec819469`
 
 ---
 
@@ -86,5 +86,5 @@ SP-234 usage projection field types. Each field is persisted when available, as 
 | receipt refs, as `receipt_refs` | array of nonempty strings | canon: `Plans/runtime_artifact_cost_usage.schema.json` |
 | `projection_freshness` | enum `current`, `refreshing`, `stale` | canon: `Plans/Glossary.md#G-012` |
 | `projection_health` | enum `healthy`, `degraded`, `unavailable` | canon: `Plans/Glossary.md#G-012` |
-| checkpoint cursor | not stated | provenance gap; gap_note: no usage projection checkpoint family is registered in `Plans/storage_value_registry.json`, and the unit does not say whether the cursor is the SP-278 durable read token or a seglog position, so its type stays open for the storage owner |
+| checkpoint cursor | not stated | provenance gap; gap_note: the registered candidate is `dt_usage_event_checkpoint` (`Plans/storage_value_registry.json`, SP-594; value `Plans/dt_event_contracts.schema.json#/$defs/usage_event_checkpoint`, cursor `index_read_token` plus `examined_through_sequence_id`), the `usage.event` reader's checkpoint; the unit does not say whether its cursor is that checkpoint, or which cursor the runtime-artifact projector records carry, so the type stays open for the storage owner |
 | rebuild provenance | not stated | provenance gap; gap_note: canon names rebuild provenance for these records but no fields or type, so it stays open for the storage owner |

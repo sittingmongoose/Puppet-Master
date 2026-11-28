@@ -4,7 +4,7 @@ Source: `Plans/MiscPlan.md`
 
 Source lines: L1381-L6365
 
-Source SHA256: `b20824d71571f231f61f7ca68b35ac1e63d0a82d9cccb905c8c1876656ac6f17`
+Source SHA256: `f8fc84123d35047959a219649c19f926e9f55dd1968eb089bc8e47a63650a67b`
 
 ---
 
@@ -641,7 +641,7 @@ status: accepted
 owner_doc: Plans/MiscPlan.md
 canonical_text: >-
   run_git_clean_with_excludes is the only git-clean helper, reads cleanup_exclude_patterns from the cleanup module, emits one -e per exclude pattern, uses shared git binary resolution, and is called only by prepare_working_directory or manual Clean workspace.
-  Its Result<()> fails with one of two declared codes and removes nothing it did not already remove: git_executable_unavailable
+  Its Result<()> fails with one of two declared codes, and a failure removes nothing further: git_executable_unavailable
   when shared git binary resolution returns no executable (the same None case on which GitManager fails its operation), and
   git_clean_failed when the git clean process cannot start or exits non-zero, carrying the exit status and a redacted stderr
   excerpt. clean_untracked false returns Ok(()) without running git. How a caller treats either failure stays with that caller

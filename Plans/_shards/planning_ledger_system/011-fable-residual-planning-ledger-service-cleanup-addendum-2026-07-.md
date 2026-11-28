@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Ledger_System.md`
 
-Source lines: L1034-L1250
+Source lines: L1034-L1251
 
-Source SHA256: `ee7ce63899483cf89e3ab62218301d0f17ac82ae65ef53d323ac50a4cafe8d88`
+Source SHA256: `4df58b72b2f65a562831593848a5477ca7ed125e88cc4c789de108f9446e0837`
 
 ---
 
@@ -42,7 +42,8 @@ canonical_text: >-
   expected_projection_version is set and differs from the current projection version, and idempotency_conflict when
   the idempotency_key was used with a different request digest (the same key and digest returns the original
   event); commit_turn returns stale_revision when expected_current_version differs from the current version, and
-  idempotency_conflict as for append_event; a commit that fails after partial writes leaves the thread
+  idempotency_conflict when turn_id was already committed with a different request digest (the same turn_id and
+  digest returns the original result); a commit that fails after partial writes leaves the thread
   ledger_sync_blocked as PLS-015 requires. import_package returns import_path_traversal, import_absolute_path,
   import_symlink_escape, import_package_too_large, import_expanded_too_large, or import_ledger_collision (an id or
   name collision with no recorded replace or keep-both policy).

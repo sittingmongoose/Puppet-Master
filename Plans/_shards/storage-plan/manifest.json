@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-11-28T18:11:07Z",
+  "generated_at_utc": "2026-11-28T18:53:42Z",
   "index_path": "Plans/_shards/storage-plan/00-index.md",
-  "index_sha256": "cf014c2c9fa5c08991f0019a91684b75269d731e96579c263fe6046cea40ee90",
+  "index_sha256": "714603e7efb370f70e155f2b127f02e1035c19cac0c47a7693051b2d3d2eda25",
   "manifest_path": "Plans/_shards/storage-plan/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/storage-plan/001-preamble.md",
-      "sha256": "d8b85558385432329079317cb1f4090363c01221a3c8c75b9a1d40a9b5d400a6",
+      "sha256": "a890b37922dad8b54cb9cf17795e37d3586acbcbda48bad482a425faa24f45f1",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/storage-plan/002-canonical-owner-section-requirements.md",
-      "sha256": "fe6b83f650ec0644604ed8b0fb0bd778c7f18c3d23d68d696f4e2e5443ba7912",
+      "sha256": "0209eac4d951e26d984297d7dc35b154c8f6d7321f22caa0753097c4998ca972",
       "shard_id": "002",
       "source_line_end": 169,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "Summary",
       "path": "Plans/_shards/storage-plan/003-summary.md",
-      "sha256": "d81e2a0b8c706fdcb1c369495001e227a9d1d1239cf409c5e8e37b06b9a2cbc3",
+      "sha256": "431fd8dd177b4b2494a5601afa46da62dc3eb3250305a75123a2eb13e88c8439",
       "shard_id": "003",
       "source_line_end": 175,
       "source_line_start": 171,
@@ -35,7 +35,7 @@
     {
       "heading": "Table of Contents",
       "path": "Plans/_shards/storage-plan/004-table-of-contents.md",
-      "sha256": "0f409a974f2e3b13f9350d3ea84608d2f8526e21c6f74051f0839e122a182fd2",
+      "sha256": "24056ef3742c70a46a70a331cfb0193a84a7b7a70597dca4244ea4cf4e8c9428",
       "shard_id": "004",
       "source_line_end": 188,
       "source_line_start": 177,
@@ -44,7 +44,7 @@
     {
       "heading": "1. Definitions and concepts",
       "path": "Plans/_shards/storage-plan/005-1.-definitions-and-concepts.md",
-      "sha256": "961b9806adf1fbd367f7fcaeb82500547a741ceac0db8ab5bae55efb6195efb7",
+      "sha256": "0ac0cd06f5039715052be05053f1cffe4d9f8bacce22073df257d39d97c5736e",
       "shard_id": "005",
       "source_line_end": 230,
       "source_line_start": 190,
@@ -53,7 +53,7 @@
     {
       "heading": "2. How we're going to do it",
       "path": "Plans/_shards/storage-plan/006-2.-how-we-re-going-to-do-it.md",
-      "sha256": "e794c9a005857193aa384954160679a3b1281db0a33ac1aa3c9c0b1f17e0aa9a",
+      "sha256": "5a0fe7a5315422f5e7aa6d074ed384121fb10b7242e6a55baeb5641cc2b291b9",
       "shard_id": "006",
       "source_line_end": 2092,
       "source_line_start": 231,
@@ -62,7 +62,7 @@
     {
       "heading": "3. Implementation checklist",
       "path": "Plans/_shards/storage-plan/007-3.-implementation-checklist.md",
-      "sha256": "bd5bbd375da29ff21fba0218d1fa1109adb8d4b37438ef9072e73a9459179c67",
+      "sha256": "b38e55dbc6840cc9c1d08b3c2d3b58db794965737faf5923b1fb2553a1cc33f0",
       "shard_id": "007",
       "source_line_end": 2109,
       "source_line_start": 2094,
@@ -71,7 +71,7 @@
     {
       "heading": "4. Impact on chat (Assistant / Interview)",
       "path": "Plans/_shards/storage-plan/008-4.-impact-on-chat-assistant-interview.md",
-      "sha256": "de5114a7d9ede04c75b2f95e8a5c1747a69980b08bd3eaffd3f988f3244e9d7d",
+      "sha256": "13008f137e34a62ac34af8ced3ccb7411b7261e5a83b19f9b4c5a6b3961ba770",
       "shard_id": "008",
       "source_line_end": 2339,
       "source_line_start": 2111,
@@ -80,7 +80,7 @@
     {
       "heading": "5. Gaps and how we address them",
       "path": "Plans/_shards/storage-plan/009-5.-gaps-and-how-we-address-them.md",
-      "sha256": "4e955c7de26f921af2861a3e524ba251a6a107db52a15b6b98095d36587d91ad",
+      "sha256": "4f3723796cd99a37b3728b7329fbf7380697ea0550ec421faf351d12e01ebb1e",
       "shard_id": "009",
       "source_line_end": 2426,
       "source_line_start": 2340,
@@ -89,7 +89,7 @@
     {
       "heading": "6. Potential problems and solutions",
       "path": "Plans/_shards/storage-plan/010-6.-potential-problems-and-solutions.md",
-      "sha256": "457da5c3b2f1aaa4d52cb1fd280fee70e48dda62b2264cdd370d3a276a1e3301",
+      "sha256": "e0adb7b99a9d0770b77b638116d377f72789484ea59bcbbefcc86547e264016f",
       "shard_id": "010",
       "source_line_end": 2451,
       "source_line_start": 2428,
@@ -98,7 +98,7 @@
     {
       "heading": "7. Backup, restore, compaction, and optional storage enhancements",
       "path": "Plans/_shards/storage-plan/011-7.-backup-restore-compaction-and-optional-storage-enhancements.md",
-      "sha256": "acef9fca68dc71b0e70d4cd418c3f8f0e0c5984255682cb4bdc429021b8cbc07",
+      "sha256": "75b51c8e29a1fd14f8dbd2782edd6a8c58d12761b7190fdced0f3b7cefb19568",
       "shard_id": "011",
       "source_line_end": 2463,
       "source_line_start": 2453,
@@ -107,7 +107,7 @@
     {
       "heading": "8. Implementation order and testing",
       "path": "Plans/_shards/storage-plan/012-8.-implementation-order-and-testing.md",
-      "sha256": "e20b8843a4ddb62dba83223e5309f2ce6b35f50c04d0be5d8989e5712e299824",
+      "sha256": "0e278a771196474fbd1c6cc4717a3524ae7812178e879e6d5bc9068e28a768d8",
       "shard_id": "012",
       "source_line_end": 2595,
       "source_line_start": 2465,
@@ -116,7 +116,7 @@
     {
       "heading": "Version history",
       "path": "Plans/_shards/storage-plan/013-version-history.md",
-      "sha256": "3a98fde7e67cd892bc4bb4b68fcd01d9324455425465c9c14fbea64a72f8b1bb",
+      "sha256": "f75652329b7fc33f68c5c82ea50a9fe4fa875df25d760b429e1689b424f31538",
       "shard_id": "013",
       "source_line_end": 2604,
       "source_line_start": 2597,
@@ -125,7 +125,7 @@
     {
       "heading": "Scheduler Runtime, Safe-Point, and Remediation Storage Addendum (2026-03-08)",
       "path": "Plans/_shards/storage-plan/014-scheduler-runtime-safe-point-and-remediation-storage-addendum-20.md",
-      "sha256": "6cf71ff320bcd87e67df681715fb44a25bb16ff5b272e5e8318fdbf4b5f60950",
+      "sha256": "ad37fd1c58d009b7669b7c2a9185700b058678331481727f5d597265ef541bd2",
       "shard_id": "014",
       "source_line_end": 2643,
       "source_line_start": 2606,
@@ -134,7 +134,7 @@
     {
       "heading": "Runtime Attempt / Safe Point / Queue Analysis Storage Addendum (2026-03-09)",
       "path": "Plans/_shards/storage-plan/015-runtime-attempt-safe-point-queue-analysis-storage-addendum-2026-.md",
-      "sha256": "de2577a4fc6198cdf3de430262096c4407594f6b53bd0ea210553e4eed84ad0e",
+      "sha256": "4f6f0cac5768e2982bbc6c5f18445f93c64ea8ce111ab930ebcedf1869c5cd97",
       "shard_id": "015",
       "source_line_end": 2658,
       "source_line_start": 2644,
@@ -143,7 +143,7 @@
     {
       "heading": "Runtime Attempt / Safe Point / Queue Analysis Canonical Alignment (2026-03-09)",
       "path": "Plans/_shards/storage-plan/016-runtime-attempt-safe-point-queue-analysis-canonical-alignment-20.md",
-      "sha256": "aff337821afa7c22eb1406dabc1380ec35f23506bc159f949d43f5d0840776cd",
+      "sha256": "0f7f118b1695d31e1f9ed8ee5083e4d5679673a450428f4bcca25aeb08e5b14f",
       "shard_id": "016",
       "source_line_end": 2713,
       "source_line_start": 2659,
@@ -152,7 +152,7 @@
     {
       "heading": "Runtime Recovery Persistence and Restart Canonical Alignment (2026-03-09)",
       "path": "Plans/_shards/storage-plan/017-runtime-recovery-persistence-and-restart-canonical-alignment-202.md",
-      "sha256": "fa441bc4efe7587d98b9686d2a6c953b85346a03d9b12b975e4d964aadbaad6e",
+      "sha256": "9f64454d09233fd631096cdffe959c20c89822b0ab53b2c7f7e2acd8582617a3",
       "shard_id": "017",
       "source_line_end": 2734,
       "source_line_start": 2714,
@@ -161,7 +161,7 @@
     {
       "heading": "Permission Snapshot Storage and Safe-Point Namespace Addendum",
       "path": "Plans/_shards/storage-plan/018-permission-snapshot-storage-and-safe-point-namespace-addendum.md",
-      "sha256": "e4e413baf6394b9bc9c9d56888e1f083fa4d2cdcb959b81d35086d9986affbab",
+      "sha256": "4f27f957bbed64d27ec0f65518727856caafa4451b236a5437f1f6b10c07c573",
       "shard_id": "018",
       "source_line_end": 2767,
       "source_line_start": 2735,
@@ -170,7 +170,7 @@
     {
       "heading": "Assistant Worktree Binding Storage Addendum",
       "path": "Plans/_shards/storage-plan/019-assistant-worktree-binding-storage-addendum.md",
-      "sha256": "4262ab9119ac127a28125f2bc823235bac7574065c1c467d9240c3a1d98b563d",
+      "sha256": "e3d601c0c50adc62a607ea1cf92c328ce31b50b42755ef2136b5c728e1d86ebe",
       "shard_id": "019",
       "source_line_end": 2774,
       "source_line_start": 2769,
@@ -179,7 +179,7 @@
     {
       "heading": "8. Web content caching persistence",
       "path": "Plans/_shards/storage-plan/020-8.-web-content-caching-persistence.md",
-      "sha256": "0e540873c96408792adcf2c15e814c6135fc39c8713190fcb038ca45fbd1f7ee",
+      "sha256": "e04e1fb234321fbaf940e597bf061df589f83d46b8cbef6e81769b21ee3a9455",
       "shard_id": "020",
       "source_line_end": 2829,
       "source_line_start": 2775,
@@ -188,7 +188,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/storage-plan/021-owner-consumer-map.md",
-      "sha256": "7062b27c7832ec20018c5fc510f70e909eb6d6ce0fed06526fa052d481f56be0",
+      "sha256": "b6fd086076c6e71a3e72483f253c97589b492762eb32ad652240ff144c20baa3",
       "shard_id": "021",
       "source_line_end": 2835,
       "source_line_start": 2831,
@@ -197,7 +197,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/storage-plan/022-planunits.md",
-      "sha256": "25eff6fd18dd101e49b25902ec7c18a3b260f3d78a35e7fa74e3b9d643c224d8",
+      "sha256": "630bad6dbe934be9c919fc0d972ac6033009b77f624e2619b0939a146a132528",
       "shard_id": "022",
       "source_line_end": 15687,
       "source_line_start": 2837,
@@ -206,7 +206,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/storage-plan/023-migration-coverage.md",
-      "sha256": "5ee896a255c490bc458e59e22c3635adaa4ed7ff3f176da1b9004553cc31b772",
+      "sha256": "6d5a705a59d86f3215eb23dd66a41189059af21fe1c46c02286ecf99b9715890",
       "shard_id": "023",
       "source_line_end": 15699,
       "source_line_start": 15689,
@@ -215,7 +215,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260614-001",
       "path": "Plans/_shards/storage-plan/024-ledger-compile-addendum-pldg-20260614-001.md",
-      "sha256": "d6d0084d939a77702799268dc1a4e06ffcceb6ba40f2c7d6e4d7033aa515de04",
+      "sha256": "7c27f3e7bb1143f4e4090f81785634de73336d2b589e9a692829023d50e2574e",
       "shard_id": "024",
       "source_line_end": 15741,
       "source_line_start": 15701,
@@ -224,7 +224,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260616-001",
       "path": "Plans/_shards/storage-plan/025-ledger-compile-addendum-pldg-20260616-001.md",
-      "sha256": "e7a68de0c3de34c2ca15b1b075ff829468720ef085dd89552b35d2ecbbe33b70",
+      "sha256": "15e53243c9a6f54a7c642217b640f57ee49c8601f8d32b0c1ad6a4c5887aa3d4",
       "shard_id": "025",
       "source_line_end": 15855,
       "source_line_start": 15743,
@@ -233,7 +233,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260616-002",
       "path": "Plans/_shards/storage-plan/026-ledger-compile-addendum-pldg-20260616-002.md",
-      "sha256": "26c224371c2d42eb09bf37b129925c55ec947e057e988a3c2ba117614ac873ea",
+      "sha256": "b8f7e76360c0b46f93978100c45cea0f0611d08f57c053c5edc775fa669d6b70",
       "shard_id": "026",
       "source_line_end": 15970,
       "source_line_start": 15857,
@@ -242,7 +242,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/storage-plan/027-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "3275d67ba085169585e1a3eefb694861623c90af5d941f8af74dc8a274387a5c",
+      "sha256": "f656ad2e1e10a5724d2e9f7669ac6ea9734d7383b1b189b4eca36133526280ba",
       "shard_id": "027",
       "source_line_end": 16067,
       "source_line_start": 15973,
@@ -251,7 +251,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260622-001-fff",
       "path": "Plans/_shards/storage-plan/028-ledger-compile-addendum-pldg-20260622-001-fff.md",
-      "sha256": "17597c9bfa82991fc7bbc138c7442128fd5e55163286fcaf046b4232a343ac92",
+      "sha256": "99233594a99f649f4159e3bd1a5edd0d75144f413c10699d68cb906dd6eceb0d",
       "shard_id": "028",
       "source_line_end": 16168,
       "source_line_start": 16069,
@@ -260,7 +260,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260626-001-feature-name",
       "path": "Plans/_shards/storage-plan/029-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
-      "sha256": "120db05e6b169f124fccdcc89d1587b61a3c43e44d3a5248f71604f3bab585da",
+      "sha256": "3cfd808fe4dc9102938cee63ce7c71cf8a102aac5b93ba50e08eff69d55dd51b",
       "shard_id": "029",
       "source_line_end": 16488,
       "source_line_start": 16171,
@@ -269,7 +269,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260627-001-feature-intake",
       "path": "Plans/_shards/storage-plan/030-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
-      "sha256": "b94c566bfc9405d8e8fbe3484ef651d9038a918190c4f63a474194247d6baa12",
+      "sha256": "17ec8a51a9a3a4f35f7217c2bd57a1a39d7374b68b6b559ced3e6b681ed8aff0",
       "shard_id": "030",
       "source_line_end": 16692,
       "source_line_start": 16490,
@@ -278,7 +278,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260629-001-feature-name",
       "path": "Plans/_shards/storage-plan/031-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
-      "sha256": "67644ffefd7688f8bf180bf3aa6c06cb48646450c61abe46e20740df9685ef8b",
+      "sha256": "c7b9407221faeccb7f4052ed16d943277b7e72dd7b9ab789b57b34ef67a6cdf5",
       "shard_id": "031",
       "source_line_end": 16803,
       "source_line_start": 16694,
@@ -287,7 +287,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260630-001-feature-intake",
       "path": "Plans/_shards/storage-plan/032-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
-      "sha256": "74d2746c8b854ab5d882596c3cf325f04a258c15536bef2cceff82a51184a61c",
+      "sha256": "4f314d8f059690fd6fb9bb3f987e71fdfddb65ff2c3b44efa7b675acb8ec36fe",
       "shard_id": "032",
       "source_line_end": 16894,
       "source_line_start": 16805,
@@ -296,7 +296,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260703-001-feature-intake",
       "path": "Plans/_shards/storage-plan/033-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
-      "sha256": "647e87f2e436aebbdd10bee2514482932831f3be249ec0498e763f2e2da4d7b8",
+      "sha256": "179907e4c7881350f1358349f3750ac6ae827e980f2ddaa030a8d1300ce0e9cb",
       "shard_id": "033",
       "source_line_end": 17373,
       "source_line_start": 16896,
@@ -305,7 +305,7 @@
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/storage-plan/034-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "6e441944356947e90fa17749665e238946cdbe4ff17af322b5b2278411461abc",
+      "sha256": "a6b507bd49339e98d7c2cc5a64ad98ab61883bd2360ef99ef5fe6548d389fc99",
       "shard_id": "034",
       "source_line_end": 17488,
       "source_line_start": 17375,
@@ -314,7 +314,7 @@
     {
       "heading": "FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)",
       "path": "Plans/_shards/storage-plan/035-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md",
-      "sha256": "2632a6108e726ab9d4b5034a120ea95756bc142d52c2f01e7267d764ff1438fc",
+      "sha256": "c4ae9f31598e8843a64df94429c5985b3e1f637ee6254a2fba775aaf0a8fe810",
       "shard_id": "035",
       "source_line_end": 17495,
       "source_line_start": 17489,
@@ -323,7 +323,7 @@
     {
       "heading": "Usage GUI Propagation Addendum - 2026-07-09",
       "path": "Plans/_shards/storage-plan/036-usage-gui-propagation-addendum-2026-07-09.md",
-      "sha256": "4a07f9f3ac6ff2cf0708d75ca4043d5dc57c06b6000bdea5e76a079243e2e765",
+      "sha256": "ea2af961606e8ad041000ed9fa31fafb7ab80710bad5a035f26e4bd96060b0dd",
       "shard_id": "036",
       "source_line_end": 17576,
       "source_line_start": 17497,
@@ -332,7 +332,7 @@
     {
       "heading": "Case L durable-state owner canon - 2026-07-17",
       "path": "Plans/_shards/storage-plan/037-case-l-durable-state-owner-canon-2026-07-17.md",
-      "sha256": "4fccc30de983095b75cac3b8db19d6d2fe793b05a12b646355cf4929117bf8a2",
+      "sha256": "1d8e6d77648584cfb8de8e8c40c82a67483621b52fa0f3e27badb5d653680d26",
       "shard_id": "037",
       "source_line_end": 18978,
       "source_line_start": 17578,
@@ -341,7 +341,7 @@
     {
       "heading": "Known-37 Case L owner materialization",
       "path": "Plans/_shards/storage-plan/038-known-37-case-l-owner-materialization.md",
-      "sha256": "706e9e2baeffb8a14061e691e607e11db494ff198af5f31311cbe1ccda2156a2",
+      "sha256": "1419c5bedeaedeca0cbe4566c6c0ee114e15090160f531b341aa87b4fd2d92db",
       "shard_id": "038",
       "source_line_end": 19066,
       "source_line_start": 18981,
@@ -350,7 +350,7 @@
     {
       "heading": "PMConcept7 Home Workspace layout \u2014 2026-08-04",
       "path": "Plans/_shards/storage-plan/039-pmconcept7-home-workspace-layout-2026-08-04.md",
-      "sha256": "462f430adb3ec99dae09a22e1ae3571ec325731adf49a00e3fc80ea49ed4bd1c",
+      "sha256": "fff95b8f6d5130606a447dbc2d69eef0a0874fdf8c17be1157e3d3cc3e40489e",
       "shard_id": "039",
       "source_line_end": 19154,
       "source_line_start": 19068,
@@ -359,7 +359,7 @@
     {
       "heading": "Run & Debug Revival Addendum - 2026-07-27",
       "path": "Plans/_shards/storage-plan/040-run-debug-revival-addendum-2026-07-27.md",
-      "sha256": "7fdf2487caaf8da1f068a082e47bae4fb504f4e818a953f55c658bc8e057f6fe",
+      "sha256": "635cc28fa8fae95f9d9dbb5dfad976dbd202c1a5aa7bbea28dca15a68c644e81",
       "shard_id": "040",
       "source_line_end": 19203,
       "source_line_start": 19156,
@@ -368,7 +368,7 @@
     {
       "heading": "Shared Integration Runtime persistence and migration addendum (2026-08-13)",
       "path": "Plans/_shards/storage-plan/041-shared-integration-runtime-persistence-and-migration-addendum-20.md",
-      "sha256": "842221d95d60a3041560b7af6efa816d077c20d0319bd6f3ddfd16b452ec8b7d",
+      "sha256": "2720a0b54537aa580915cbd5b36e514752f26bed386e13dda78d84d1f0be2d26",
       "shard_id": "041",
       "source_line_end": 19379,
       "source_line_start": 19205,
@@ -377,7 +377,7 @@
     {
       "heading": "u11 Prism II Usage View-State Addendum - 2026-08-18",
       "path": "Plans/_shards/storage-plan/042-u11-prism-ii-usage-view-state-addendum-2026-08-18.md",
-      "sha256": "01deaeb7670e7db93d4f26727145356d262acd18cfdcf351e1b128fb2ae30951",
+      "sha256": "60ab5cc6b472cbfb50108c3bbda665b9a9a86ee58ec574303bd8c3dfa981161a",
       "shard_id": "042",
       "source_line_end": 19471,
       "source_line_start": 19381,
@@ -386,7 +386,7 @@
     {
       "heading": "PMConcept7 Recovery Settled Layout Addendum - 2026-08-27",
       "path": "Plans/_shards/storage-plan/043-pmconcept7-recovery-settled-layout-addendum-2026-08-27.md",
-      "sha256": "dd5405a76d25fb5fc713390102d3b7949c64e4bb4a268baf91f8d8ca7619a899",
+      "sha256": "600ebd135f9ed35edf2bd5c8afe3dd90637c452991e9861c8348406ff85af437",
       "shard_id": "043",
       "source_line_end": 19655,
       "source_line_start": 19473,
@@ -395,7 +395,7 @@
     {
       "heading": "Packet-Authoritative Storage Disposition And Redaction Addendum - 2026-08-31",
       "path": "Plans/_shards/storage-plan/044-packet-authoritative-storage-disposition-and-redaction-addendum-.md",
-      "sha256": "382a14b5623aab75e86942e13845b5357a8f56ddc59b30a6ffbe2c2a39947210",
+      "sha256": "98758f5e05aa39e659a6d426d1384c8b793c10c34e0b971c74adbe4b76bbd056",
       "shard_id": "044",
       "source_line_end": 19900,
       "source_line_start": 19657,
@@ -404,7 +404,7 @@
     {
       "heading": "Back Seat Driver Contract-Family Persistence Disposition Addendum - 2026-09-23",
       "path": "Plans/_shards/storage-plan/045-back-seat-driver-contract-family-persistence-disposition-addendu.md",
-      "sha256": "9927989dbfa93832927b2d926a07e1fe1105c50cd59817b2cd14ca555e9398d8",
+      "sha256": "3282bf9acb4d5993bec37cc8c043f60ec03df21cae367727cc582f6935f69c9e",
       "shard_id": "045",
       "source_line_end": 19980,
       "source_line_start": 19902,
@@ -413,7 +413,7 @@
     {
       "heading": "Forge, Backup v2, And Go tsnet Storage/Redaction Transaction - 2026-09-01",
       "path": "Plans/_shards/storage-plan/046-forge-backup-v2-and-go-tsnet-storage-redaction-transaction-2026-.md",
-      "sha256": "693eea5fe93f97f27cfc14a18c93fc2fa365c8aa2b315cb14768116c0d5c00d4",
+      "sha256": "5c5255d6af6d1853bd12d46be7d17e1d818b4a120f3d0288ba1c129a5a755f12",
       "shard_id": "046",
       "source_line_end": 20091,
       "source_line_start": 19982,
@@ -422,7 +422,7 @@
     {
       "heading": "Additive Correction v4 \u2014 Records, Replay, And Migration Matrix (2026-09-03)",
       "path": "Plans/_shards/storage-plan/047-additive-correction-v4-records-replay-and-migration-matrix-2026-.md",
-      "sha256": "f44ca38ef5356f384ae50ed2fe9ec1709bb9c7fd74463260a9bed58a3e1dec82",
+      "sha256": "23c183e8603ba54b57e3a14a205b6281b4467fae61ec95eff3b40472e2d059e2",
       "shard_id": "047",
       "source_line_end": 20172,
       "source_line_start": 20093,
@@ -431,7 +431,7 @@
     {
       "heading": "Working Notebook And Context Transition Storage Addendum (2026-09-05)",
       "path": "Plans/_shards/storage-plan/048-working-notebook-and-context-transition-storage-addendum-2026-09.md",
-      "sha256": "4cef6c8c4ac69c456565a2a438bd6b32e6114c77dcd48dcc112e005e15b86ade",
+      "sha256": "5333b0599d793dfd865a187ee5c4522ee8cae164741494916b97563e1c156848",
       "shard_id": "048",
       "source_line_end": 20296,
       "source_line_start": 20174,
@@ -440,7 +440,7 @@
     {
       "heading": "Research decision disposition persistence",
       "path": "Plans/_shards/storage-plan/049-research-decision-disposition-persistence.md",
-      "sha256": "1506e7bd7be0117859436a48bb8e593c0bf91b6fa4fdf44702b00023abbaff27",
+      "sha256": "e55d02647ec010123640c1b61ce285f72ab8a88c7b180d6c00c0f8a48e5d46f0",
       "shard_id": "049",
       "source_line_end": 20384,
       "source_line_start": 20299,
@@ -449,7 +449,7 @@
     {
       "heading": "Compaction completion persistence contract (DL-039 and DL-040)",
       "path": "Plans/_shards/storage-plan/050-compaction-completion-persistence-contract-dl-039-and-dl-040.md",
-      "sha256": "c7b6334bd7cf6665a070112b0d9723f46e6d7638c604a3d172665ff7512b5429",
+      "sha256": "e9fecf703efe527b4026c68ac16d5eb3ac52a8455537515cc35001c0a58f0e1f",
       "shard_id": "050",
       "source_line_end": 20446,
       "source_line_start": 20386,
@@ -458,7 +458,7 @@
     {
       "heading": "DL-042 \u2014 Historical TODO Event Migration Consumer Boundary (2026-09-11)",
       "path": "Plans/_shards/storage-plan/051-dl-042-historical-todo-event-migration-consumer-boundary-2026-09.md",
-      "sha256": "335f6b6b4b4be4d11d2de50a0460da90e57c14fc01d50b82af68154992b61ed9",
+      "sha256": "383df14f2394709f977157f0d81731146b990eccf5f81ae6f19d3a5bc15ad2dc",
       "shard_id": "051",
       "source_line_end": 20453,
       "source_line_start": 20449,
@@ -467,7 +467,7 @@
     {
       "heading": "Scoped Browser Event Persistence \u2014 2026-09-10",
       "path": "Plans/_shards/storage-plan/052-scoped-browser-event-persistence-2026-09-10.md",
-      "sha256": "d98c2fbb9a5e42318fa894b508136b40bb23af57dfa6e2fa2691dffffc09da60",
+      "sha256": "97b7ce4e2f5b1bac607e9c591121f6e9ed1430888c3fb4699a99c9dd9f8a7f80",
       "shard_id": "052",
       "source_line_end": 20510,
       "source_line_start": 20455,
@@ -476,7 +476,7 @@
     {
       "heading": "Browser Program prepared persistence bindings \u2014 2026-11-14",
       "path": "Plans/_shards/storage-plan/053-browser-program-prepared-persistence-bindings-2026-11-14.md",
-      "sha256": "1c473131a65edeecc6216b68237796091617b810a18ac694279f2e69e9e593cb",
+      "sha256": "ec8534ec954c2046214ad4f0bc3bddd95a2a21ebe4d40eea6d1a17898a48cc80",
       "shard_id": "053",
       "source_line_end": 24281,
       "source_line_start": 20512,
@@ -485,7 +485,7 @@
     {
       "heading": "Jujutsu D5 Owner Requirements (2026-09-11)",
       "path": "Plans/_shards/storage-plan/054-jujutsu-d5-owner-requirements-2026-09-11.md",
-      "sha256": "415749fec8afa9053c800c69739355675e39dc94eddc67e2cdbf4641b3d47a66",
+      "sha256": "031bafb7b92ed2ffb72ae5d68c26087804079c28970520564a9bfa6bde678f16",
       "shard_id": "054",
       "source_line_end": 24423,
       "source_line_start": 24282,
@@ -494,7 +494,7 @@
     {
       "heading": "Run-start index consumers and checkpoint - 2026-09-11",
       "path": "Plans/_shards/storage-plan/055-run-start-index-consumers-and-checkpoint-2026-09-11.md",
-      "sha256": "b1b157d214284a8eb44afd050ca795f4a248ef78fe805fd8c5b1e63954b70b2a",
+      "sha256": "6a46afd733b5f79e344f9c7c4398ff6ffae3b70e3b5f25a208939d488e7a832e",
       "shard_id": "055",
       "source_line_end": 24569,
       "source_line_start": 24425,
@@ -503,7 +503,7 @@
     {
       "heading": "Browser workspace-created index and checkpoint \u2014 2026-09-11",
       "path": "Plans/_shards/storage-plan/056-browser-workspace-created-index-and-checkpoint-2026-09-11.md",
-      "sha256": "4a6b67f9422ef54d839554f41c2970c57f2d6e5c97ef21a62d48728aca702d63",
+      "sha256": "2d9b250c71c8e861100aebcbf827be6c65a2dece77465cf784b0b690afc263df",
       "shard_id": "056",
       "source_line_end": 24921,
       "source_line_start": 24571,
@@ -512,7 +512,7 @@
     {
       "heading": "Restore-point created consumer checkpoint contract",
       "path": "Plans/_shards/storage-plan/057-restore-point-created-consumer-checkpoint-contract.md",
-      "sha256": "5d930e103b8b3cacf15b6b5b39718ea0a6080a964f3f1d49829302f8d097e90f",
+      "sha256": "69e46d03a4f0c13540d6392de271fcb22b7a1930730afb5d10a340545eeb7d2a",
       "shard_id": "057",
       "source_line_end": 25102,
       "source_line_start": 24924,
@@ -521,7 +521,7 @@
     {
       "heading": "Restore-point retention summary contract",
       "path": "Plans/_shards/storage-plan/058-restore-point-retention-summary-contract.md",
-      "sha256": "42b8adc63fec3e82955b7bd971c0434eff0bebc7e48d100893b8bea8745aed19",
+      "sha256": "278c1ac215a88395c059e9419310124f7e9f6e5189999ab980b52e2971e78c35",
       "shard_id": "058",
       "source_line_end": 25982,
       "source_line_start": 25104,
@@ -530,7 +530,7 @@
     {
       "heading": "Run-start and restore-created versioned index adoption",
       "path": "Plans/_shards/storage-plan/059-run-start-and-restore-created-versioned-index-adoption.md",
-      "sha256": "4f92bdc77338a7c6883b642d92d83639ee0edcd8212636b5561f6d128f9540df",
+      "sha256": "8927aad58323bd13631ee0252acaee36b2825957b65345f388ab844e85752984",
       "shard_id": "059",
       "source_line_end": 26044,
       "source_line_start": 25984,
@@ -539,7 +539,7 @@
     {
       "heading": "Browser workspace-reset filtered checkpoint \u2014 2026-09-11",
       "path": "Plans/_shards/storage-plan/060-browser-workspace-reset-filtered-checkpoint-2026-09-11.md",
-      "sha256": "ed6b3921975e4ea15ef03d4f86a012a94702dcb48a1de9955e7282f91163277a",
+      "sha256": "72584794a66294d6a5558c2b24e1b682643ed6a78be05d9693ef550c66dd1260",
       "shard_id": "060",
       "source_line_end": 26855,
       "source_line_start": 26046,
@@ -548,7 +548,7 @@
     {
       "heading": "First append receipt custody",
       "path": "Plans/_shards/storage-plan/061-first-append-receipt-custody.md",
-      "sha256": "0a844e9df70ffcbe6bc95912621edca83bc4689aca0f339ed76722f390f74c22",
+      "sha256": "b8d20f4e359ffb45d0444fab210e8f7a78540559c35ba41632fc822f85c24438",
       "shard_id": "061",
       "source_line_end": 27112,
       "source_line_start": 26858,
@@ -557,7 +557,7 @@
     {
       "heading": "Goal body storage custody",
       "path": "Plans/_shards/storage-plan/062-goal-body-storage-custody.md",
-      "sha256": "5ab4cd2d84b439010ac3270a4ab8bf390b81d10f4c136cdfee8b1212b56e04fb",
+      "sha256": "5c7096e8e8c6fcb5d2b834d95e73f94e46d70a94bb94620a7854d186b131f798",
       "shard_id": "062",
       "source_line_end": 27260,
       "source_line_start": 27114,
@@ -566,7 +566,7 @@
     {
       "heading": "Restore-point deletion custody and checkpoint",
       "path": "Plans/_shards/storage-plan/063-restore-point-deletion-custody-and-checkpoint.md",
-      "sha256": "46ea61bc50dd5b3c80fc5b863b570525788c75272389239d4cec65d14685bc2b",
+      "sha256": "a661aad934bf1145774da2a9c86e769a6a48d1662a1a337305772831261c3e3a",
       "shard_id": "063",
       "source_line_end": 27405,
       "source_line_start": 27262,
@@ -575,7 +575,7 @@
     {
       "heading": "Restore-point delete original-result custody",
       "path": "Plans/_shards/storage-plan/064-restore-point-delete-original-result-custody.md",
-      "sha256": "72e0f7beabc885bcd1506296960a3522c7f633cdce719dfc79232ebac020ef3b",
+      "sha256": "a0537fd2c4b8f4428333b4f91637dbc57dfb592f4682fc95bfb68c1317722130",
       "shard_id": "064",
       "source_line_end": 27498,
       "source_line_start": 27408,
@@ -584,7 +584,7 @@
     {
       "heading": "Restore Point Expired Custody And Checkpoint",
       "path": "Plans/_shards/storage-plan/065-restore-point-expired-custody-and-checkpoint.md",
-      "sha256": "9e3542ce76b26cdb9a28106358188e07cf01dc8c864fb98b16cc3d51186e9286",
+      "sha256": "81ea04845c668c592ece5c3f3cce652c410400455e3497805607a83d90698175",
       "shard_id": "065",
       "source_line_end": 27703,
       "source_line_start": 27503,
@@ -593,7 +593,7 @@
     {
       "heading": "Restore-point original admission and retained-custody read phases",
       "path": "Plans/_shards/storage-plan/066-restore-point-original-admission-and-retained-custody-read-phase.md",
-      "sha256": "eed12e04185a7cfbd04cc701c65217da06fdea51173153a241108f0cdbad459e",
+      "sha256": "688bface0085fa0fd7b6ea1a75e7a7da3c561d0862d379dd3cc152b22f964041",
       "shard_id": "066",
       "source_line_end": 27881,
       "source_line_start": 27705,
@@ -602,7 +602,7 @@
     {
       "heading": "Registered restore-point application, corruption and recovery-unavailable event depth (PNC-019 S3, 2026-11-14)",
       "path": "Plans/_shards/storage-plan/067-registered-restore-point-application-corruption-and-recovery-una.md",
-      "sha256": "8276c02a78fccac142e61629625803190969c17195e088fcfe2041cd9cdaef7b",
+      "sha256": "5a85316bc0cd701c321ed90957868afe332a49fd3cf0c65beb4c45b3de516955",
       "shard_id": "067",
       "source_line_end": 28089,
       "source_line_start": 27883,
@@ -611,7 +611,7 @@
     {
       "heading": "Legal-hold transition custody and passive history",
       "path": "Plans/_shards/storage-plan/068-legal-hold-transition-custody-and-passive-history.md",
-      "sha256": "3c72b854a8c1467c27fe17f09c34bb15b9f4134d5d321231bccd19170451640a",
+      "sha256": "d9b60b112b7b45b0bf2bb93b8f031ac4e861f1f2ad6dabbc0685ca53561298e7",
       "shard_id": "068",
       "source_line_end": 28303,
       "source_line_start": 28091,
@@ -620,7 +620,7 @@
     {
       "heading": "Original Standard certification receipt custody",
       "path": "Plans/_shards/storage-plan/069-original-standard-certification-receipt-custody.md",
-      "sha256": "9d26dae966f455eb6a5b016a0017bbbb1da2bc390d953958b534b3d3b07e83f4",
+      "sha256": "93e7f26343b3c7447d1313d4bae500476bcdd46ad320cccfbf847c9666450887",
       "shard_id": "069",
       "source_line_end": 28393,
       "source_line_start": 28305,
@@ -629,7 +629,7 @@
     {
       "heading": "Storage integrity finding custody and read contract",
       "path": "Plans/_shards/storage-plan/070-storage-integrity-finding-custody-and-read-contract.md",
-      "sha256": "acba6b5fff797f26573c5293841bda07688a88ce006606b90d6a31bf8ee7aa8c",
+      "sha256": "bd2446a44e2d4d6015a04fd8f51bac5b226f795f2bdb0732ad068be2a2b83737",
       "shard_id": "070",
       "source_line_end": 28673,
       "source_line_start": 28395,
@@ -638,7 +638,7 @@
     {
       "heading": "Registered Storage, platform and seglog family depth completion (PNC-019 S3, 2026-11-14)",
       "path": "Plans/_shards/storage-plan/071-registered-storage-platform-and-seglog-family-depth-completion-p.md",
-      "sha256": "72229a9802a2aa493f622b6e40785fa6e3f173342c24c5b505c760504bb8d9de",
+      "sha256": "1e8887e515219972dc0e83e429b08a7ae9f9a8ed17dccad7332695f4725079e3",
       "shard_id": "071",
       "source_line_end": 28954,
       "source_line_start": 28674,
@@ -647,7 +647,7 @@
     {
       "heading": "Platform capability decision custody",
       "path": "Plans/_shards/storage-plan/072-platform-capability-decision-custody.md",
-      "sha256": "da255ea02213f9f981c1360017ca9c86f717ed476f18804e7a2f52e435ff3e67",
+      "sha256": "11f6b7d598ddf74ed30db0a92c2fb06ed8f7bfb3b2036e2f955f131218f3d2f5",
       "shard_id": "072",
       "source_line_end": 29086,
       "source_line_start": 28956,
@@ -656,7 +656,7 @@
     {
       "heading": "Boot recovery aggregate and original producer custody",
       "path": "Plans/_shards/storage-plan/073-boot-recovery-aggregate-and-original-producer-custody.md",
-      "sha256": "9042cce8516fa550f98020eebb4421075df7d4ac3ddf0989199fcfd5d0cd58ea",
+      "sha256": "66ec03bd5548e8c5109c88392a116f3027471869dca449ca68171ebd84a2afeb",
       "shard_id": "073",
       "source_line_end": 29203,
       "source_line_start": 29088,
@@ -665,7 +665,7 @@
     {
       "heading": "Boot earliest receipt continuity and activation",
       "path": "Plans/_shards/storage-plan/074-boot-earliest-receipt-continuity-and-activation.md",
-      "sha256": "b757e21317b642ca91b9a3a0df86c76a80cf4ef39625e0b6c218c84e0acb09e1",
+      "sha256": "1b13842c69e2a0106558848fa028f8e7d80f124a75d43cafd8f5202690ebbbce",
       "shard_id": "074",
       "source_line_end": 29306,
       "source_line_start": 29205,
@@ -674,7 +674,7 @@
     {
       "heading": "Recovery original action custody and publication",
       "path": "Plans/_shards/storage-plan/075-recovery-original-action-custody-and-publication.md",
-      "sha256": "d00c5dd5781886576f8a27157df660754206e4ea923889b6565d1c535108af19",
+      "sha256": "e2b5a307fc4997f5e36993a6f91abf5f3b70cc7a533b5258d3a435264aeee1f3",
       "shard_id": "075",
       "source_line_end": 29397,
       "source_line_start": 29308,
@@ -683,7 +683,7 @@
     {
       "heading": "Goal start original command custody and publication",
       "path": "Plans/_shards/storage-plan/076-goal-start-original-command-custody-and-publication.md",
-      "sha256": "00ebbf71ce4f4f3ab14c026a524c97e6fcc12aa9f0ca1fe0f24593fb17091190",
+      "sha256": "664b3e9d04bcd60a5b40509b0811bb5c030c9e8b37ac234e1b542589dec46312",
       "shard_id": "076",
       "source_line_end": 29430,
       "source_line_start": 29399,
@@ -692,7 +692,7 @@
     {
       "heading": "SP-294 - Goal start original command custody and publication",
       "path": "Plans/_shards/storage-plan/077-sp-294-goal-start-original-command-custody-and-publication.md",
-      "sha256": "507a0818ceac18e710fdea373b692cc53bceac5a68f1f38d9d092d8f3f72ca5b",
+      "sha256": "4617fbcfed9be70431c096d145ffe7d76ca5e038405cda8b6dbd572b3d3d9417",
       "shard_id": "077",
       "source_line_end": 29494,
       "source_line_start": 29432,
@@ -701,7 +701,7 @@
     {
       "heading": "Compaction original native source, phase custody and detail retirement",
       "path": "Plans/_shards/storage-plan/078-compaction-original-native-source-phase-custody-and-detail-retir.md",
-      "sha256": "0dcb9189fd4e7409f3e660a4993509b7e918aafd5584e1319c860d94d8f87c31",
+      "sha256": "c8c56a9a4e2f644f16aa12128dfaf92e7849f26f76f1217050ad00f10b4639b2",
       "shard_id": "078",
       "source_line_end": 29703,
       "source_line_start": 29496,
@@ -710,7 +710,7 @@
     {
       "heading": "Goal-created passive current reader and original command members",
       "path": "Plans/_shards/storage-plan/079-goal-created-passive-current-reader-and-original-command-members.md",
-      "sha256": "70b460c630ce40550fae4e93d1c98309c3c605a95bac138c9f57aedb82a44499",
+      "sha256": "dad6f5247d314dbcda1d5a590e76410096fb1af55f86b7ed629c4dd643a49586",
       "shard_id": "079",
       "source_line_end": 29835,
       "source_line_start": 29704,
@@ -719,7 +719,7 @@
     {
       "heading": "Original Goal update source, physical custody and publication",
       "path": "Plans/_shards/storage-plan/080-original-goal-update-source-physical-custody-and-publication.md",
-      "sha256": "b7cf19d7cedc302c16e21086ab95b6c0ecf0e20d57e354922216bfce35183033",
+      "sha256": "7e98ce22d243bd3323cfb334588849c6cc9e7347387fcb20f69cd134ebd4b895",
       "shard_id": "080",
       "source_line_end": 32586,
       "source_line_start": 29836,
@@ -728,7 +728,7 @@
     {
       "heading": "SP-314 \u2014 Original Standard authority families and fresh whole stored profiles (2026-09-20)",
       "path": "Plans/_shards/storage-plan/081-sp-314-original-standard-authority-families-and-fresh-whole-stor.md",
-      "sha256": "98ef07f5d56c7fe2ba83d0f0c130617f24ffd10cd67b99d2a3ca39610469e490",
+      "sha256": "006c084d314a5a7499344d3995fe7a73fbe0e7f4b03190529ddade6b1efa542c",
       "shard_id": "081",
       "source_line_end": 32684,
       "source_line_start": 32589,
@@ -737,7 +737,7 @@
     {
       "heading": "SP-315 \u2014 Certified producer current and retained source disclosure (2026-09-21)",
       "path": "Plans/_shards/storage-plan/082-sp-315-certified-producer-current-and-retained-source-disclosure.md",
-      "sha256": "25e27e4e343e48c1490bd0320118e120452e9cf02427ed5404c5104af42e19ac",
+      "sha256": "825730d8e63e2132d299c28d9998c90050c46f7f7a53126987d68cb5ba6f0caf",
       "shard_id": "082",
       "source_line_end": 32744,
       "source_line_start": 32687,
@@ -746,7 +746,7 @@
     {
       "heading": "SP-316 \u2014 Seven compact authority families, eleven v7 profile-qualified wrapper routes and atomic native/Event release (2026-09-21)",
       "path": "Plans/_shards/storage-plan/083-sp-316-seven-compact-authority-families-eleven-v7-profile-qualif.md",
-      "sha256": "400aefa669a40d2ac0c8e352efdcf3cbad508e9e0bc68974d813706318142f31",
+      "sha256": "4a6e98f163b7541dd90446baf3b008c6c0bae18595cb163ecfe27d8fc31ca32c",
       "shard_id": "083",
       "source_line_end": 32820,
       "source_line_start": 32747,
@@ -755,7 +755,7 @@
     {
       "heading": "SP-317 \u2014 Two projection/checkpoint families and exact RP-PROJECTION-3GEN transaction/generation/cutover obligations (2026-09-21)",
       "path": "Plans/_shards/storage-plan/084-sp-317-two-projection-checkpoint-families-and-exact-rp-projectio.md",
-      "sha256": "f4a956f305e730c5d54ece3c5efa0569bdbca0a2b2060024bf6222707faa3c9a",
+      "sha256": "b3632627fa4cb83683d9b1cfd3cbd8f52f384a034c5ee4d15aa5a40b9538a04d",
       "shard_id": "084",
       "source_line_end": 32897,
       "source_line_start": 32823,
@@ -764,7 +764,7 @@
     {
       "heading": "Terminal workgroup moved \u2014 exact passive source read",
       "path": "Plans/_shards/storage-plan/085-terminal-workgroup-moved-exact-passive-source-read.md",
-      "sha256": "b8e04777000901b48ec789f32bcf32546a8be5b22caa401a7dbf4d22629f34ad",
+      "sha256": "72edf7c2c888ca9486580f2be7069b628a8fefc5f7a732f966c4b1d7e90cae42",
       "shard_id": "085",
       "source_line_end": 32956,
       "source_line_start": 32899,
@@ -773,7 +773,7 @@
     {
       "heading": "Coordination event persistence binding (DL-045, 2026-09-25)",
       "path": "Plans/_shards/storage-plan/086-coordination-event-persistence-binding-dl-045-2026-09-25.md",
-      "sha256": "0b9bdc872fcc318bf34029311b3ae71ca530de2de3198e91dd44a875b7d57ea3",
+      "sha256": "bec2e983933d0896841a705fa355acba133a580bba4828ce8119e0aa651f5cb8",
       "shard_id": "086",
       "source_line_end": 33605,
       "source_line_start": 32957,
@@ -782,7 +782,7 @@
     {
       "heading": "Project Creation-Recovery Context Custody Addendum - 2026-09-26",
       "path": "Plans/_shards/storage-plan/087-project-creation-recovery-context-custody-addendum-2026-09-26.md",
-      "sha256": "5a50435e80a365d5c2ac633e3985660ca60fb3188f1f9667d106309b653953f4",
+      "sha256": "e2241cf43b98d196685c88b3648c62573cc733c2a0dc672412f8f70e9d398092",
       "shard_id": "087",
       "source_line_end": 33667,
       "source_line_start": 33607,
@@ -791,7 +791,7 @@
     {
       "heading": "Application update check schedule persistence \u2014 2026-09-27",
       "path": "Plans/_shards/storage-plan/088-application-update-check-schedule-persistence-2026-09-27.md",
-      "sha256": "bbfcfc827fde2c24a1b2a3c054e8252c4cdcef9398c11f6a839ed2ffa6eed317",
+      "sha256": "e188df25c1163556be027359577785e3e9beda62e6467ddf005aa1e3c1349000",
       "shard_id": "088",
       "source_line_end": 33710,
       "source_line_start": 33669,
@@ -800,7 +800,7 @@
     {
       "heading": "Project automation pause custody \u2014 2026-09-29",
       "path": "Plans/_shards/storage-plan/089-project-automation-pause-custody-2026-09-29.md",
-      "sha256": "ab0a6c8b51b2d45c33d4acee2a562548f13e45b069d7d689ae1702854b20af24",
+      "sha256": "52a57655ffd1a51d3784eb5a7f0bb12e18c733f5b02161dcd1db75b5f714c004",
       "shard_id": "089",
       "source_line_end": 33776,
       "source_line_start": 33712,
@@ -809,7 +809,7 @@
     {
       "heading": "DL-180 to DL-185 \u2014 The v2 Home layout record, terminal appearance and terminal records (2026-10-09)",
       "path": "Plans/_shards/storage-plan/090-dl-180-to-dl-185-the-v2-home-layout-record-terminal-appearance-a.md",
-      "sha256": "52a776a191d6128b8b12939942a3dfc4edc3c5a9d6cccb2be5e364ffbac6ae13",
+      "sha256": "25853095458857764ff008ce6227300936a21d0bb945f7034e7b3cf2875d8dc8",
       "shard_id": "090",
       "source_line_end": 34268,
       "source_line_start": 33778,
@@ -818,7 +818,7 @@
     {
       "heading": "DL-218 record families and legacy Grill Me conversion",
       "path": "Plans/_shards/storage-plan/091-dl-218-record-families-and-legacy-grill-me-conversion.md",
-      "sha256": "7e9b0af21929919459e88541080e42754d8984cef4e3aad440143d71cb33cbe5",
+      "sha256": "7e68ce1db8b9d94b716818c89ede1b9f77ce96778dcef642f69ea4898c9ff395",
       "shard_id": "091",
       "source_line_end": 34346,
       "source_line_start": 34270,
@@ -827,7 +827,7 @@
     {
       "heading": "DL-270 storage profile: compression, durability, payloads, pages, mirrors, analytics, engines, media, gates and placement (2026-10-31)",
       "path": "Plans/_shards/storage-plan/092-dl-270-storage-profile-compression-durability-payloads-pages-mir.md",
-      "sha256": "452bbbd98550c486bf88a55717f1ce91c18b1b8f12deefe8ca7707d0c998e8fb",
+      "sha256": "2bcf9a2f8f7532eaf0c36c8be064666087791320f5436c412bc13eb370168de9",
       "shard_id": "092",
       "source_line_end": 37721,
       "source_line_start": 34349,
@@ -836,7 +836,7 @@
     {
       "heading": "Collaborative workflow event persistence binding (DL-090, 2026-11-04)",
       "path": "Plans/_shards/storage-plan/093-collaborative-workflow-event-persistence-binding-dl-090-2026-11-.md",
-      "sha256": "9464bb0085ea6d940dcff729869011d570d39c1d0cfe426093ed6d344960d827",
+      "sha256": "305fc73f860e58aa7fd55eeeeb89a4579879ad23690de9f435302f4c4c3ec87d",
       "shard_id": "093",
       "source_line_end": 47208,
       "source_line_start": 37722,
@@ -845,7 +845,7 @@
     {
       "heading": "SP-500 \u2014 attempt.completed prepared Event Authority contract",
       "path": "Plans/_shards/storage-plan/094-sp-500-attempt.completed-prepared-event-authority-contract.md",
-      "sha256": "0a7f764e638f60abc4aa4052b3c316aee18c697a78418f0746cc0ad7e42ef2d9",
+      "sha256": "161143ef4be5cce15dad78bea8e1253fcd8d30bcb7f3167a7561202144332068",
       "shard_id": "094",
       "source_line_end": 47268,
       "source_line_start": 47211,
@@ -854,7 +854,7 @@
     {
       "heading": "SP-501 \u2014 attempt.started prepared Event Authority contract",
       "path": "Plans/_shards/storage-plan/095-sp-501-attempt.started-prepared-event-authority-contract.md",
-      "sha256": "f1d338021f4c5a116393a347520f2acbb3e1f044a2ba15766a358361d6f387f4",
+      "sha256": "7ebb424239215d7b27dcbb30aa59b7619bde4cf02edea992186f20ea98c3958d",
       "shard_id": "095",
       "source_line_end": 47328,
       "source_line_start": 47271,
@@ -863,7 +863,7 @@
     {
       "heading": "SP-502 \u2014 node.blocked prepared Event Authority contract",
       "path": "Plans/_shards/storage-plan/096-sp-502-node.blocked-prepared-event-authority-contract.md",
-      "sha256": "bbc3e19e34d9a2ffcabb2318b9ade87f7d7388ff7cf9c9be634fa44b30ede0a8",
+      "sha256": "12026ca4b42da9a5aca6c1e02a01a493fb761d3759e6c336d474b33096a04a49",
       "shard_id": "096",
       "source_line_end": 47388,
       "source_line_start": 47331,
@@ -872,7 +872,7 @@
     {
       "heading": "SP-503 \u2014 node.completed prepared Event Authority contract",
       "path": "Plans/_shards/storage-plan/097-sp-503-node.completed-prepared-event-authority-contract.md",
-      "sha256": "9045c1bea30e8c339ce6649c4435b4f4360855a8ce7416f09ad0487db66d96b1",
+      "sha256": "a32c18f5a6289f0ed80fb0cdb92bd106a89f9feef10614a95a5b278f15201e9b",
       "shard_id": "097",
       "source_line_end": 47448,
       "source_line_start": 47391,
@@ -881,7 +881,7 @@
     {
       "heading": "SP-504 \u2014 node.started prepared Event Authority contract",
       "path": "Plans/_shards/storage-plan/098-sp-504-node.started-prepared-event-authority-contract.md",
-      "sha256": "a3d338cd8dc949c16a48c1941a85fc62b091748c1b3fcac520fcb4aae5c18347",
+      "sha256": "270e5ad9e70d8f8c3ecf03720c0ad83953e0ba5fe7e68a7de692d2e79082bf0f",
       "shard_id": "098",
       "source_line_end": 47508,
       "source_line_start": 47451,
@@ -890,7 +890,7 @@
     {
       "heading": "SP-505 \u2014 node.unblocked prepared Event Authority contract",
       "path": "Plans/_shards/storage-plan/099-sp-505-node.unblocked-prepared-event-authority-contract.md",
-      "sha256": "4478bfeb8c59617015fe3d401518281e1f79623965b31c2d3d0e90d6bdbc7dfa",
+      "sha256": "6f86efe844e8176d05fd37e03f51134059352c378d154f166b19467019f987be",
       "shard_id": "099",
       "source_line_end": 47568,
       "source_line_start": 47511,
@@ -899,7 +899,7 @@
     {
       "heading": "SP-506 \u2014 plan.decomposition_degraded prepared Event Authority contract",
       "path": "Plans/_shards/storage-plan/100-sp-506-plan.decomposition_degraded-prepared-event-authority-cont.md",
-      "sha256": "b0b5d4c4f671f4812ad98e5d3ad3a4217666e0df53e6b5499a9fdb8e4c80f3b2",
+      "sha256": "702590b7d471945c0e05d6acce782f8bef633238bc8247d3c00394dba5c7dd27",
       "shard_id": "100",
       "source_line_end": 47628,
       "source_line_start": 47571,
@@ -908,7 +908,7 @@
     {
       "heading": "SP-507 \u2014 remediation.resolved prepared Event Authority contract",
       "path": "Plans/_shards/storage-plan/101-sp-507-remediation.resolved-prepared-event-authority-contract.md",
-      "sha256": "0a6521348eb88eb774e9ee29e79ce97d7cadaadcbfb5a9b49c50700c3b842e18",
+      "sha256": "a23fad1b4a3a7762ef36f7cacd9f83c572ac35fb12cabe71825d12d7cad353a0",
       "shard_id": "101",
       "source_line_end": 47688,
       "source_line_start": 47631,
@@ -917,7 +917,7 @@
     {
       "heading": "SP-508 \u2014 remediation.spawned prepared Event Authority contract",
       "path": "Plans/_shards/storage-plan/102-sp-508-remediation.spawned-prepared-event-authority-contract.md",
-      "sha256": "92db7d7b2950061fadb02255154b6acf5f3d2936aab012024121efb6d3f1c370",
+      "sha256": "8d79f20b63b71c67b19ca82ddff8abe525892e9b8e97078b37db2830a5d7d009",
       "shard_id": "102",
       "source_line_end": 47748,
       "source_line_start": 47691,
@@ -926,7 +926,7 @@
     {
       "heading": "SP-509 \u2014 run.completed prepared Event Authority contract",
       "path": "Plans/_shards/storage-plan/103-sp-509-run.completed-prepared-event-authority-contract.md",
-      "sha256": "4cf344760dd16046224dfe45563e229137516cdaca95c829220cf032eb8f1b87",
+      "sha256": "edcc16737d9b3fad2ff3179b3f9f1612c887a53417bcee745a2c3a20e11275f3",
       "shard_id": "103",
       "source_line_end": 47808,
       "source_line_start": 47751,
@@ -935,7 +935,7 @@
     {
       "heading": "SP-510 \u2014 run.graph_integrity_failed prepared Event Authority contract",
       "path": "Plans/_shards/storage-plan/104-sp-510-run.graph_integrity_failed-prepared-event-authority-contr.md",
-      "sha256": "7208c3e8562afcd24a39dcc01dafa7b5444ebf8a7b4a873a48f996306b650316",
+      "sha256": "5e6ff330853fc7b6531d587580ecbdc77ebc7fd3f42192afa2110e8ad650444e",
       "shard_id": "104",
       "source_line_end": 47868,
       "source_line_start": 47811,
@@ -944,7 +944,7 @@
     {
       "heading": "SP-511 \u2014 run.node_backoff_expired prepared Event Authority contract",
       "path": "Plans/_shards/storage-plan/105-sp-511-run.node_backoff_expired-prepared-event-authority-contrac.md",
-      "sha256": "53bd47f169659fa8e3b9fe3a8cba1055aadc5dbb5b4f977c388f728d86f26a3c",
+      "sha256": "c3fb4db9cd59f0caa12d5a6017a5cf4fe516a5f7b67e4a1e68fe8b257bc9ecf0",
       "shard_id": "105",
       "source_line_end": 47928,
       "source_line_start": 47871,
@@ -953,7 +953,7 @@
     {
       "heading": "SP-512 \u2014 run.node_backoff_started prepared Event Authority contract",
       "path": "Plans/_shards/storage-plan/106-sp-512-run.node_backoff_started-prepared-event-authority-contrac.md",
-      "sha256": "df2991f7420b823adbbafec442cc1b736aa7bbfcb8824aec636f6df1f0f90c16",
+      "sha256": "cb645ac242164066c6b549983066cc675def56ced014a3c41bd5b99fc301bce6",
       "shard_id": "106",
       "source_line_end": 47988,
       "source_line_start": 47931,
@@ -962,7 +962,7 @@
     {
       "heading": "SP-513 \u2014 run.node_ready prepared Event Authority contract",
       "path": "Plans/_shards/storage-plan/107-sp-513-run.node_ready-prepared-event-authority-contract.md",
-      "sha256": "d0b58c5d68f2b53339cd3af0f033c628193b738da62061e4185e9c1ba9944fa6",
+      "sha256": "55ce8a17205908fca7ac03e2cc70a6bc2042ea931d37c1514843fcb3702738e6",
       "shard_id": "107",
       "source_line_end": 48048,
       "source_line_start": 47991,
@@ -971,7 +971,7 @@
     {
       "heading": "SP-514 \u2014 run.node_retry_scheduled prepared Event Authority contract",
       "path": "Plans/_shards/storage-plan/108-sp-514-run.node_retry_scheduled-prepared-event-authority-contrac.md",
-      "sha256": "567b80b52a089d995cbfcf0374973304ccc17a77bbe82c7f74e0826d96ef0b23",
+      "sha256": "87ca4f49d316afbe1e1d9454857f8c528ff85ac4b05232fd7e38da7fb16dff43",
       "shard_id": "108",
       "source_line_end": 48108,
       "source_line_start": 48051,
@@ -980,7 +980,7 @@
     {
       "heading": "SP-515 \u2014 scheduler.pass prepared Event Authority contract",
       "path": "Plans/_shards/storage-plan/109-sp-515-scheduler.pass-prepared-event-authority-contract.md",
-      "sha256": "2ca3a2ad05fd5af934ebbe82582c77aac8f3f0ac014bae33c4aaa51cd4663376",
+      "sha256": "6796b3b1430dd72016a0992c7a662d522abe4672f48098c053acac7d69fed058",
       "shard_id": "109",
       "source_line_end": 53905,
       "source_line_start": 48111,
@@ -989,7 +989,7 @@
     {
       "heading": "The v2 Home layout slot and receipt contract (DL-045, 2026-11-04)",
       "path": "Plans/_shards/storage-plan/110-the-v2-home-layout-slot-and-receipt-contract-dl-045-2026-11-04.md",
-      "sha256": "18ce584152632576f2d71cdc1ccb9b4c33db566096b602a4d4ae3fd55310d749",
+      "sha256": "fcd4b6acb626e4e2a4506395ec2bbc55e6b0df04a3bcbc87fe46c3c49d61c5ee",
       "shard_id": "110",
       "source_line_end": 54011,
       "source_line_start": 53906,
@@ -998,7 +998,7 @@
     {
       "heading": "Runtime artifact event contracts prepared without admission \u2014 2026-11-04",
       "path": "Plans/_shards/storage-plan/111-runtime-artifact-event-contracts-prepared-without-admission-2026.md",
-      "sha256": "776effefd6aa2d27a583ebad9fddc1b1b6d5bc0d30e564411cb3df609af775c9",
+      "sha256": "2af5e7bfb89fc14db2b5ee4b7b4b60bfdc54223266115aa3d4be430e963d2284",
       "shard_id": "111",
       "source_line_end": 57261,
       "source_line_start": 54014,
@@ -1007,7 +1007,7 @@
     {
       "heading": "DG-OWN-D exact historical reader boundary completion (2026-11-05)",
       "path": "Plans/_shards/storage-plan/112-dg-own-d-exact-historical-reader-boundary-completion-2026-11-05.md",
-      "sha256": "d7e03b5308bdea7344fe37df6feb4ab7890ebb95e988c3bbcb8c9a98fac4519b",
+      "sha256": "8b0356f9fafa687c712a5738209a88a46b5889480a0440a94461b393549ff4c6",
       "shard_id": "112",
       "source_line_end": 57745,
       "source_line_start": 57265,
@@ -1016,7 +1016,7 @@
     {
       "heading": "DG-OWN-C original source and boundary contracts (2026-11-05)",
       "path": "Plans/_shards/storage-plan/113-dg-own-c-original-source-and-boundary-contracts-2026-11-05.md",
-      "sha256": "7b1d610aff7e14fce08d4289c7af838d13d1594edbd69c6e11bff4d1b2773df1",
+      "sha256": "9a56b1ae67fec4ae08f89d1103e59939e3a6a27045b6d6ceabdc306a4efc8064",
       "shard_id": "113",
       "source_line_end": 58262,
       "source_line_start": 57747,
@@ -1025,7 +1025,7 @@
     {
       "heading": "W3A Forge event source and history bindings (phase 1, without admission)",
       "path": "Plans/_shards/storage-plan/114-w3a-forge-event-source-and-history-bindings-phase-1-without-admi.md",
-      "sha256": "18666db67ff6a014cbc9cd2c5add74591b513de094fcf6ba13cc8384e0fe4b24",
+      "sha256": "993112cb27a7dd8d6d7d5422018ec78f815bb4f28adf9f139b10e456544b0030",
       "shard_id": "114",
       "source_line_end": 64967,
       "source_line_start": 58265,
@@ -1034,7 +1034,7 @@
     {
       "heading": "Prepared Source Control Storage contracts \u2014 W3B phase 1, 2026-11-05",
       "path": "Plans/_shards/storage-plan/115-prepared-source-control-storage-contracts-w3b-phase-1-2026-11-05.md",
-      "sha256": "fd06c3f527ce5c0b09e0bab46f2be61dd5ed291c79333326119624274a4dec39",
+      "sha256": "347d81824b7d6143c5d5e65b7b88ad7ecc9687c0b98bd927bec4d93a0efec88d",
       "shard_id": "115",
       "source_line_end": 67131,
       "source_line_start": 64969,
@@ -1043,7 +1043,7 @@
     {
       "heading": "W3C Event Authority phase-1 prepared contracts - 2026-11-05",
       "path": "Plans/_shards/storage-plan/116-w3c-event-authority-phase-1-prepared-contracts-2026-11-05.md",
-      "sha256": "6bb5f46c94d42440c3774232d63f8698d83b537d27cb887f4a737467641750e6",
+      "sha256": "8cca93486b7eb06f376c6f258a3139fa9dc6de448f1a30345cf049da72430c8a",
       "shard_id": "116",
       "source_line_end": 70420,
       "source_line_start": 67134,
@@ -1052,7 +1052,7 @@
     {
       "heading": "W3E event authority drafts - phase 1 (2026-11-05)",
       "path": "Plans/_shards/storage-plan/117-w3e-event-authority-drafts-phase-1-2026-11-05.md",
-      "sha256": "915d591fea550543a48d2172b65226f66f11d8e65ca9a30342957c64c499a185",
+      "sha256": "828ed0e081f52048b9dad6fe4402d1a74afd1696397868bf50dd486664b4212c",
       "shard_id": "117",
       "source_line_end": 72420,
       "source_line_start": 70422,
@@ -1061,7 +1061,7 @@
     {
       "heading": "Event Authority W3F Phase 1 \u2014 Prepared Without Admission (2026-11-05)",
       "path": "Plans/_shards/storage-plan/118-event-authority-w3f-phase-1-prepared-without-admission-2026-11-0.md",
-      "sha256": "9a4274e332bbb65b22928271bfa390251b1a0cf4faf643160f9e14b37ebeb3cb",
+      "sha256": "b1bab303294e019091a4ba95735441e6a220550f9ee0855eb1cec09e7f03f8b0",
       "shard_id": "118",
       "source_line_end": 73387,
       "source_line_start": 72421,
@@ -1070,7 +1070,7 @@
     {
       "heading": "W3G event authority phase 1 - prepared without admission (2026-11-05)",
       "path": "Plans/_shards/storage-plan/119-w3g-event-authority-phase-1-prepared-without-admission-2026-11-0.md",
-      "sha256": "1b16ab97f4c5e3dd679637548e64b83ee81756dd3e74e7b024a90a09661ee6a5",
+      "sha256": "dc5369a0527b9c7d7e2ee167a231bb1a817b8cf85c5beb0bb3f8f94b7ae8d912",
       "shard_id": "119",
       "source_line_end": 74986,
       "source_line_start": 73390,
@@ -1079,7 +1079,7 @@
     {
       "heading": "SP-1550 \u2014 `assistant_plan.schedule_invalidated` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/120-sp-1550-assistant_plan.schedule_invalidated-publication-retentio.md",
-      "sha256": "8a908b19416ec7078b022e8574f24a91f99b01e879dff311360a69ee8a2f89e1",
+      "sha256": "48e39e268d2bed42a6f4563a482ebe0c96ff6767e39d1b28c8b016ed5de2f9fc",
       "shard_id": "120",
       "source_line_end": 75056,
       "source_line_start": 74988,
@@ -1088,7 +1088,7 @@
     {
       "heading": "SP-1551 \u2014 `docker.compose.scenario.deleted` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/121-sp-1551-docker.compose.scenario.deleted-publication-retention-an.md",
-      "sha256": "c88a7e9a844a06ee79ce00dec91b8904e378c0cc0bd9bc9a59ce89c72a34c401",
+      "sha256": "469455921c08ff99655b24158e8e276d26ef7832c2077317f093e48020b13fc7",
       "shard_id": "121",
       "source_line_end": 75126,
       "source_line_start": 75058,
@@ -1097,7 +1097,7 @@
     {
       "heading": "SP-1552 \u2014 `docker.compose.scenario.edited` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/122-sp-1552-docker.compose.scenario.edited-publication-retention-and.md",
-      "sha256": "cad501552e498f89cab41a927349fc4c97f4ec5b9590194910712dcf3bf26378",
+      "sha256": "5aeff77843a0e76b9deec18d996e26c3dde1d02c3916d33f522b542c72ada88d",
       "shard_id": "122",
       "source_line_end": 75196,
       "source_line_start": 75128,
@@ -1106,7 +1106,7 @@
     {
       "heading": "SP-1553 \u2014 `docker.compose.scenario.run` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/123-sp-1553-docker.compose.scenario.run-publication-retention-and-re.md",
-      "sha256": "a648c7e18fc028ddef6ad3615ce10c4bf9c4c5c1d64cd4cb0052452474e44726",
+      "sha256": "bd8918f6d72fda8e13c6602e4e83b8d374f5bc773c83f23e430cd92ecebe3dcb",
       "shard_id": "123",
       "source_line_end": 75266,
       "source_line_start": 75198,
@@ -1115,7 +1115,7 @@
     {
       "heading": "SP-1554 \u2014 `docker.compose.scenario.saved` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/124-sp-1554-docker.compose.scenario.saved-publication-retention-and-.md",
-      "sha256": "796ceb74e70619266772206bb1288cf30d781ad3625cecd60d8a3c269849025a",
+      "sha256": "bb887e654d57de5c3072d700dc1ee27039c868143a40823e0a8d93f34cf4417a",
       "shard_id": "124",
       "source_line_end": 75336,
       "source_line_start": 75268,
@@ -1124,7 +1124,7 @@
     {
       "heading": "SP-1555 \u2014 `execution_window.created` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/125-sp-1555-execution_window.created-publication-retention-and-reade.md",
-      "sha256": "a4d7a2a80bd8a21100ac42b0bf532952b9b634ae82ea3d7bc3246d9833922104",
+      "sha256": "740aeda4adc1abf705007729baf3d707979d8a5e52123193cc0e95f9471190b2",
       "shard_id": "125",
       "source_line_end": 75406,
       "source_line_start": 75338,
@@ -1133,7 +1133,7 @@
     {
       "heading": "SP-1556 \u2014 `execution_window.invalidated` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/126-sp-1556-execution_window.invalidated-publication-retention-and-r.md",
-      "sha256": "7dce9b5a57906378bfe164194e18833dd4d6ca627ddbbee3931b540e3e9bad17",
+      "sha256": "5f9ba76c7618b5d637f3b29479f4e35acdda894510603cf68798b1f5cf927d94",
       "shard_id": "126",
       "source_line_end": 75476,
       "source_line_start": 75408,
@@ -1142,7 +1142,7 @@
     {
       "heading": "SP-1557 \u2014 `execution_window.updated` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/127-sp-1557-execution_window.updated-publication-retention-and-reade.md",
-      "sha256": "9b9fc3192171c15205a0905c945beafe9a043dcb2743a2ee333478615d1e495d",
+      "sha256": "6dbf971891b6d8145914062b58d8dedadd8d9e29aa633b3a16be3f6233f7e555",
       "shard_id": "127",
       "source_line_end": 75546,
       "source_line_start": 75478,
@@ -1151,7 +1151,7 @@
     {
       "heading": "SP-1558 \u2014 `goal.continuation_evaluated` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/128-sp-1558-goal.continuation_evaluated-publication-retention-and-re.md",
-      "sha256": "56c330ee9ceb652a05fb675f5af6c644b816851a5f650073ee340a6d9959ba3c",
+      "sha256": "6d4282627b937e6bfeb7c78be1a91c2768e1c91285f5d732558dd477aed3ecd8",
       "shard_id": "128",
       "source_line_end": 75616,
       "source_line_start": 75548,
@@ -1160,7 +1160,7 @@
     {
       "heading": "SP-1559 \u2014 `named_plan.archived` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/129-sp-1559-named_plan.archived-publication-retention-and-reader-new.md",
-      "sha256": "f16c68c1dc1cadac88dab7381a7516e9bb078310fffa629ee8e9df60bd6346e9",
+      "sha256": "550b22e041d50403f2ec4a7c6ba7726fc25faa29e5d791d62ceb1bce1a4b1d87",
       "shard_id": "129",
       "source_line_end": 75686,
       "source_line_start": 75618,
@@ -1169,7 +1169,7 @@
     {
       "heading": "SP-1560 \u2014 `named_plan.child_refs_changed` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/130-sp-1560-named_plan.child_refs_changed-publication-retention-and-.md",
-      "sha256": "b4a05d89b71572f263f7bca99fd78444edb15d44027a2fadc8f951ae787f5dff",
+      "sha256": "63efd9281425e211acdf7a496a2748f2a96b9b5df51c2ba6e8e56ee7fac050b3",
       "shard_id": "130",
       "source_line_end": 75756,
       "source_line_start": 75688,
@@ -1178,7 +1178,7 @@
     {
       "heading": "SP-1561 \u2014 `named_plan.created` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/131-sp-1561-named_plan.created-publication-retention-and-reader-newl.md",
-      "sha256": "6fb740a3dfd6c836583a09a4f4f81189df7b1ce6165104178119a36f41e6073b",
+      "sha256": "fb5182eceb3649f117f959e1423f7a48e464aa90c799ca8692747029328c716d",
       "shard_id": "131",
       "source_line_end": 75826,
       "source_line_start": 75758,
@@ -1187,7 +1187,7 @@
     {
       "heading": "SP-1562 \u2014 `named_plan.priority_changed` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/132-sp-1562-named_plan.priority_changed-publication-retention-and-re.md",
-      "sha256": "31c1fa40021db912b6dd2cb38a99294692171ce89409f4dc09792ed3baa28866",
+      "sha256": "5b2d7b697c6413e85eea9c7c1a322c8c60f3f45f548939491ee74daaebac2712",
       "shard_id": "132",
       "source_line_end": 75896,
       "source_line_start": 75828,
@@ -1196,7 +1196,7 @@
     {
       "heading": "SP-1563 \u2014 `named_plan.renamed` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/133-sp-1563-named_plan.renamed-publication-retention-and-reader-newl.md",
-      "sha256": "3090aff2696bc7b656a5b4a1c90499f46258c7acbbd1643aae5d6776b3780b8f",
+      "sha256": "7b52bf25375b34f27144858631ce8e472d4f4420e1ac81ec5d3293d50f2f573a",
       "shard_id": "133",
       "source_line_end": 75966,
       "source_line_start": 75898,
@@ -1205,7 +1205,7 @@
     {
       "heading": "SP-1564 \u2014 `named_plan.restored` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/134-sp-1564-named_plan.restored-publication-retention-and-reader-new.md",
-      "sha256": "7c24bb34eafbda947572a76cf11799864c2b57c72c63afbd381bce45af528c63",
+      "sha256": "8af21167c497a0b2232cc1cf3b366847505aab1f77a194f7586eee03ed65c11d",
       "shard_id": "134",
       "source_line_end": 76036,
       "source_line_start": 75968,
@@ -1214,7 +1214,7 @@
     {
       "heading": "SP-1565 \u2014 `runtime.automation_pause_changed` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/135-sp-1565-runtime.automation_pause_changed-publication-retention-a.md",
-      "sha256": "0898227e062c82a5f86792a3bd3d54d2efc83d8dbea7aeeab9efe098536d0de7",
+      "sha256": "a490beb696e80299f2ff03be1da2958f69762edec06200754a3e97f1c10060d3",
       "shard_id": "135",
       "source_line_end": 76106,
       "source_line_start": 76038,
@@ -1223,7 +1223,7 @@
     {
       "heading": "SP-1566 \u2014 `runtime.quota_resume_attempted` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/136-sp-1566-runtime.quota_resume_attempted-publication-retention-and.md",
-      "sha256": "e1e6c3597fa757500f256c306594d51f113c869a60b6d73917d869033935e836",
+      "sha256": "6661b50ca237dc54dd916e308073978213699b827de04588faa612de989620de",
       "shard_id": "136",
       "source_line_end": 76176,
       "source_line_start": 76108,
@@ -1232,7 +1232,7 @@
     {
       "heading": "SP-1567 \u2014 `runtime.quota_resume_consent_changed` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/137-sp-1567-runtime.quota_resume_consent_changed-publication-retenti.md",
-      "sha256": "f74177a4bc9c68a6b30de9d5ad9f88d8b19467ef05d7947537eba97286ba3201",
+      "sha256": "ac60f57c2dcc40cdc01d1a86529dcbcab9a767a4ab51e79686e9b865b32f8a75",
       "shard_id": "137",
       "source_line_end": 76246,
       "source_line_start": 76178,
@@ -1241,7 +1241,7 @@
     {
       "heading": "SP-1568 \u2014 `runtime.quota_wait_started` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/138-sp-1568-runtime.quota_wait_started-publication-retention-and-rea.md",
-      "sha256": "9e0c438f70ab43ab7be54019563f5764be81a30c54caeead5d1c23f56681bf06",
+      "sha256": "5481a9011c0d99ae7bdef1808c031a4852f579f8623cb07cc38d3c1f4c9df3ac",
       "shard_id": "138",
       "source_line_end": 76316,
       "source_line_start": 76248,
@@ -1250,7 +1250,7 @@
     {
       "heading": "SP-1569 \u2014 `scheduled_dispatch.cancelled` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/139-sp-1569-scheduled_dispatch.cancelled-publication-retention-and-r.md",
-      "sha256": "fee3fcf37772be6d3583b8965fc5542999510d58508ef515e6767dd110fbad18",
+      "sha256": "b81cd3e5ea7c9e541e87a9874dfb1945cac21f78f14bd460b514ad87acb08d04",
       "shard_id": "139",
       "source_line_end": 76386,
       "source_line_start": 76318,
@@ -1259,7 +1259,7 @@
     {
       "heading": "SP-1570 \u2014 `scheduled_dispatch.created` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/140-sp-1570-scheduled_dispatch.created-publication-retention-and-rea.md",
-      "sha256": "70c5e820b718d8c0f0c263ac619df99735932f5fd4bc21d16ca6599abc9fda3e",
+      "sha256": "4cbe8ebbf7f9ce28d0887e097e8622c9e5327a9e337381fd6f28de127e2c0839",
       "shard_id": "140",
       "source_line_end": 76456,
       "source_line_start": 76388,
@@ -1268,7 +1268,7 @@
     {
       "heading": "SP-1571 \u2014 `scheduled_dispatch.dispatched` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/141-sp-1571-scheduled_dispatch.dispatched-publication-retention-and-.md",
-      "sha256": "247f30e24d88886cbd879e6a99e16c215d6e8a1488816c145982d88fcd29df3e",
+      "sha256": "3621a8cb77577d048123520d9f64796ceec6f811ff22ef2bb842edd469ef3165",
       "shard_id": "141",
       "source_line_end": 76526,
       "source_line_start": 76458,
@@ -1277,7 +1277,7 @@
     {
       "heading": "SP-1572 \u2014 `scheduled_dispatch.failed` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/142-sp-1572-scheduled_dispatch.failed-publication-retention-and-read.md",
-      "sha256": "2276d3619377941c6a460e634a4f3072cb7053ef633cab61b91b8b6ca9419faa",
+      "sha256": "1818513fd2b15dffed894adb10253570e41e54f93c87bcb0afe01b8eb9aba13a",
       "shard_id": "142",
       "source_line_end": 76596,
       "source_line_start": 76528,
@@ -1286,7 +1286,7 @@
     {
       "heading": "SP-1573 \u2014 `scheduled_dispatch.held` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/143-sp-1573-scheduled_dispatch.held-publication-retention-and-reader.md",
-      "sha256": "422c7bc89d98ebeb3f7cb3c1d6ff22d9b1839d755cabb40f8044416e1637fe80",
+      "sha256": "b570b994ef205a4cdfa0d98862fa9617f7f08ccc9361ff1caf447b1944c0e498",
       "shard_id": "143",
       "source_line_end": 76666,
       "source_line_start": 76598,
@@ -1295,7 +1295,7 @@
     {
       "heading": "SP-1574 \u2014 `scheduled_dispatch.updated` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/144-sp-1574-scheduled_dispatch.updated-publication-retention-and-rea.md",
-      "sha256": "5d4f788f3cb088ccdf421c561fb076f629f1785f8ffcbae4c8ccfe1370798534",
+      "sha256": "a116dd0e1f4c9395911fda21d2a8faa2026dfb1b11af956b73c3e5f9a4774861",
       "shard_id": "144",
       "source_line_end": 76736,
       "source_line_start": 76668,
@@ -1304,7 +1304,7 @@
     {
       "heading": "SP-1575 \u2014 `todo.created` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/145-sp-1575-todo.created-publication-retention-and-reader-newly-auth.md",
-      "sha256": "374bd3a55f526e01336137d5885b8735e3908a46980a27e1db5e085085e729aa",
+      "sha256": "3c4b6154b4a03f71c20c8ff92d37378cae9bce0b08b594a27ae2d98cfaff0b52",
       "shard_id": "145",
       "source_line_end": 76806,
       "source_line_start": 76738,
@@ -1313,7 +1313,7 @@
     {
       "heading": "SP-1576 \u2014 `todo.dependency_changed` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/146-sp-1576-todo.dependency_changed-publication-retention-and-reader.md",
-      "sha256": "3ccc4575a9dd36bc43b1369ff63a471336fe60f69d35d57018a1785170cf7e7e",
+      "sha256": "6387730bbc8ddc3e39168bbd10ffe11687341af20bb681cebb7842478aa65ad6",
       "shard_id": "146",
       "source_line_end": 76876,
       "source_line_start": 76808,
@@ -1322,7 +1322,7 @@
     {
       "heading": "SP-1577 \u2014 `todo.removed_from_current_list` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/147-sp-1577-todo.removed_from_current_list-publication-retention-and.md",
-      "sha256": "bc9c7692e04e68e339e05b64bf04c3dade6aa7fbb018d796fa56eae94aba1b1f",
+      "sha256": "24f9afea4ba7e4a10cc490d49eceb115403e1abf407a2e71b8026fe67f28a2a2",
       "shard_id": "147",
       "source_line_end": 76946,
       "source_line_start": 76878,
@@ -1331,7 +1331,7 @@
     {
       "heading": "SP-1578 \u2014 `todo.reordered` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/148-sp-1578-todo.reordered-publication-retention-and-reader-newly-au.md",
-      "sha256": "1ce171a1e6076a26b02d19469eb68dbad560483e608e95bfa95e2f84d76dee9e",
+      "sha256": "1adb4ed5224f467b677032228549bc83b198b5ee480d378959db2500b7cb44d7",
       "shard_id": "148",
       "source_line_end": 77016,
       "source_line_start": 76948,
@@ -1340,7 +1340,7 @@
     {
       "heading": "SP-1579 \u2014 `todo.status_changed` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/149-sp-1579-todo.status_changed-publication-retention-and-reader-new.md",
-      "sha256": "7193bec116d9c294666b606fd879d44ba34b2b476be35f3ab3d5aac29a112e15",
+      "sha256": "4c6b892c42042aabdc286e9017b2696865e1faab6d155034fee279ef84d39448",
       "shard_id": "149",
       "source_line_end": 77086,
       "source_line_start": 77018,
@@ -1349,7 +1349,7 @@
     {
       "heading": "SP-1580 \u2014 `todo.updated` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/150-sp-1580-todo.updated-publication-retention-and-reader-newly-auth.md",
-      "sha256": "ea01b257aa13e8994e72f39834065a3a69efbd342621b9ead85caf4e4266e683",
+      "sha256": "29800b69c6f263094d7e6840aa169614b877cef8981dbf72f284c77dcc94b7d3",
       "shard_id": "150",
       "source_line_end": 77156,
       "source_line_start": 77088,
@@ -1358,7 +1358,7 @@
     {
       "heading": "SP-1581 \u2014 `todo.work_bound` publication, retention and reader (newly authored, no admission)",
       "path": "Plans/_shards/storage-plan/151-sp-1581-todo.work_bound-publication-retention-and-reader-newly-a.md",
-      "sha256": "61bebb903530ee0c41df7f3ea669d75678a30f424c0ccef26f01ea973dd890cd",
+      "sha256": "90d070f6ed03080a70a267fcaf176fd777d848b1b7d9f9880b10a569e1879bc4",
       "shard_id": "151",
       "source_line_end": 77226,
       "source_line_start": 77158,
@@ -1367,7 +1367,7 @@
     {
       "heading": "W3I continuity source-lineage persistence \u2014 prepared without admission (2026-11-05)",
       "path": "Plans/_shards/storage-plan/152-w3i-continuity-source-lineage-persistence-prepared-without-admis.md",
-      "sha256": "8b61498b6a248d45c10d3bc3edb087ac9b25eeac76c5e97102a916f36c7c44f8",
+      "sha256": "ae8c3e5dd7056cc76268404ca0882e8bac36dc4e92414dcecbb24f22894be344",
       "shard_id": "152",
       "source_line_end": 78556,
       "source_line_start": 77228,
@@ -1376,7 +1376,7 @@
     {
       "heading": "PNC-019 S2: storage custody of the three DL-300 families (newly authored under DL-411, 2026-11-14)",
       "path": "Plans/_shards/storage-plan/153-pnc-019-s2-storage-custody-of-the-three-dl-300-families-newly-au.md",
-      "sha256": "3eafff7ec46dc094ab7c1ea05e0d86cd3cc28a059aba848bc6c1ca54f5e0a7be",
+      "sha256": "754d73e9937c8a334131805df6f840696cfa92fbcf66194041e055040260f4d0",
       "shard_id": "153",
       "source_line_end": 78560,
       "source_line_start": 78558,
@@ -1385,7 +1385,7 @@
     {
       "heading": "SP-2300 \u2014 `settings.layer.changed` publication, retention and reader (newly authored, DL-411)",
       "path": "Plans/_shards/storage-plan/154-sp-2300-settings.layer.changed-publication-retention-and-reader-.md",
-      "sha256": "d1967bb0aeec3dbe01c765e6505603714be8efa48409b22ccfcf02cf6b276df4",
+      "sha256": "22da4d3f69a43172d636b4a98932e7176652831a946697e42184e917bf79c851",
       "shard_id": "154",
       "source_line_end": 78631,
       "source_line_start": 78562,
@@ -1394,7 +1394,7 @@
     {
       "heading": "SP-2301 \u2014 `approval.chat_tool_requested` publication, retention and reader (newly authored, DL-411)",
       "path": "Plans/_shards/storage-plan/155-sp-2301-approval.chat_tool_requested-publication-retention-and-r.md",
-      "sha256": "234a7acf64bd625532531cc6ea0287cce5d608cf638efa4505f85b7ca0a35eb0",
+      "sha256": "ee4e4f923011c617d358476de7973c9628e7591a50f17d8a4a552385f597f8a6",
       "shard_id": "155",
       "source_line_end": 78702,
       "source_line_start": 78633,
@@ -1403,7 +1403,7 @@
     {
       "heading": "SP-2302 \u2014 `approval.chat_tool_resolved` publication, retention and reader (newly authored, DL-411)",
       "path": "Plans/_shards/storage-plan/156-sp-2302-approval.chat_tool_resolved-publication-retention-and-re.md",
-      "sha256": "280e4c1d99fdb5b2aaec7362403e83b71a40b46079ec67dca01484ed09d4b95a",
+      "sha256": "845f8c09649b124d1cb78784a21cd3d3f627f04ad9c3dd3e8dc201a77559627f",
       "shard_id": "156",
       "source_line_end": 78773,
       "source_line_start": 78704,
@@ -1412,7 +1412,7 @@
     {
       "heading": "SP-2303 \u2014 Project chat-tool approval source record (newly authored, DL-411)",
       "path": "Plans/_shards/storage-plan/157-sp-2303-project-chat-tool-approval-source-record-newly-authored-.md",
-      "sha256": "86c5eb46f03e6d313d163567f2df6fedc3eafdecf783013051fc2f7a194ad466",
+      "sha256": "5e8497e7e77df3f74627b7051c95863aa0cf5d0faad9c57fecb852d768034fe3",
       "shard_id": "157",
       "source_line_end": 78829,
       "source_line_start": 78775,
@@ -1421,7 +1421,7 @@
     {
       "heading": "Prepared tier-start setup-check outcome histories (E8-6 B)",
       "path": "Plans/_shards/storage-plan/158-prepared-tier-start-setup-check-outcome-histories-e8-6-b.md",
-      "sha256": "60ab53657aa18c88ed0d54b16051c2e9ba9039e8b7dd7327a721e7e5702803c6",
+      "sha256": "3e5738f014ca8284c3b835ddd85db725d41b61141bb0fe1ad39db9892efcea88",
       "shard_id": "158",
       "source_line_end": 78929,
       "source_line_start": 78831,
@@ -1430,7 +1430,7 @@
     {
       "heading": "goal_run.replanned persistence, Storage roles and projection (PNC-019 lane rv8b, 2026-11-14)",
       "path": "Plans/_shards/storage-plan/159-goal_run.replanned-persistence-storage-roles-and-projection-pnc-.md",
-      "sha256": "daf9916de7f2a7975d88de474dce08f5d3b14638afd55c6ef4464b604fee01ae",
+      "sha256": "a325c87f4dd7f7d4322f2cfc18b8dfaca07f8cad6442f2f9b54c9a3f23fb04f6",
       "shard_id": "159",
       "source_line_end": 79116,
       "source_line_start": 78931,
@@ -1440,6 +1440,6 @@
   "source": {
     "line_count": 79116,
     "path": "Plans/storage-plan.md",
-    "sha256": "26be045fbcda9f9e366bcd4ec34e607c4213b9aba56a5aacb0c34042a6992c18"
+    "sha256": "1bc31c9c49b16058870ded062ae5abad7f0e6bb593f35aaaf7667121ec819469"
   }
 }

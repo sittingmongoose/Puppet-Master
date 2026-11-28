@@ -1946,8 +1946,8 @@ canonical_text: Backup offers a separately authorized workflow to obtain missing
   backup; cancelled when the person or owner cancels the attempt; permission_denied when current credential authorization
   for the source, target or remote is absent; stale_currentness when the source, target, remote binding or missing
   dependency scope changed since preflight and authorization; operation_conflict when a concurrent capture, restore,
-  completion or repository change races the attempt; and owner_unavailable when the Source Control transport owner,
-  the authorized remote or the credential is unavailable. An indeterminate transport outcome is the Source Control
+  completion or repository change races the attempt; and owner_unavailable when the Source Control transport owner
+  or the authorized remote is unavailable, or the credential store cannot be read. An indeterminate transport outcome is the Source Control
   owner's outcome_unknown, recorded as not complete and reconciled through that owner before any retry or
   verification. Data still missing
   after a successful download is not a failure result; the closure stays explicitly incomplete. How a result carries

@@ -4,7 +4,7 @@ Source: `Plans/Plugins_System.md`
 
 Source lines: L650-L4087
 
-Source SHA256: `f196222f87d74b08d7ac052475b8e407abe9ee38f6dc46c9f7926f2eb395406a`
+Source SHA256: `dc83a2989c3fd9441ed0491ee22634cf75f13fa15d97da6a2afd55d295673799`
 
 ---
 
@@ -1520,7 +1520,7 @@ plan_unit_id: PLUG-030
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plugins_System.md
-canonical_text: "Plugins may register custom tools through PluginContext.register_tool with ToolDefinition name, description, input_schema JSON Schema, and execute handler returning ToolResult. register_tool refuses, registering nothing, with tool_name_invalid when name fails tool-name validation and with schema_invalid (the Tools owner's code) when input_schema is not valid JSON Schema. A name that collides with a built-in tool is not a refusal: by default it registers under the namespaced alias of section 6.2 (TOOL-COLLISION), and when config.plugins.allow_tool_override is true section 6.2's override applies."
+canonical_text: "Plugins may register custom tools through PluginContext.register_tool with ToolDefinition name, description, input_schema JSON Schema, and execute handler returning ToolResult. register_tool refuses, registering nothing, with tool_name_invalid when name fails tool-name validation (the rule itself has provenance gap: section 6 cites Plans/Tools.md section 3, which states no name rule) and with schema_invalid (the Tools owner's code) when input_schema is not valid JSON Schema. A name that collides with a built-in tool is not a refusal: by default it registers under the namespaced alias of section 6.2 (TOOL-COLLISION), and when config.plugins.allow_tool_override is true section 6.2's override applies."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
 split_recommended: false

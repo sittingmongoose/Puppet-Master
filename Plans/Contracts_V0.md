@@ -25512,7 +25512,7 @@ unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: |-
-  Contracts_V0 closes the residual FABLE feature-contract gaps for owner-section bodies, remote/tunnel WebSocket authentication, runtime-surface readiness probing, and session-prompt admission inbox events. Remote or tunneled WebSocket setup uses a proof-of-possession bearer session token bound to runtime_id, project_id, session_id, origin, csrf_nonce, and permission_snapshot_id; the server rejects missing, expired, mismatched, replayed, or origin-invalid handshakes before initialize and emits redacted auth receipts. Runtime readiness is a typed probe with request fields, result states, reasons, and roundtrip evidence refs. The handshake request, probe request and probe result fields are typed in the CV-314 field tables directly after this unit; a degraded or failed readiness result's reason_code is exactly unavailable, disabled_by_policy, auth_required, restart_required, namespace_mismatch or timed_out. Session-prompt admission is a typed inbox event family with idempotency derived from session_id, prompt_id, target_thread_id, and normalized prompt hash. An admitted app WebSocket session binds the explicit scope, owning Server, runtime/session/Client/origin/CSRF and permission refs through a versioned successor. Conversion reissues target-authorized credentials/routes; source tokens never carry across as destination authority. Historical Project auth bindings stay exact.
+  Contracts_V0 closes the residual FABLE feature-contract gaps for owner-section bodies, remote/tunnel WebSocket authentication, runtime-surface readiness probing, and session-prompt admission inbox events. Remote or tunneled WebSocket setup uses a proof-of-possession bearer session token bound to runtime_id, project_id, session_id, origin, csrf_nonce, and permission_snapshot_id; the server rejects missing, expired, mismatched, replayed, or origin-invalid handshakes before initialize and emits redacted auth receipts. Runtime readiness is a typed probe with request fields, result states, reasons, and roundtrip evidence refs. The handshake request, probe request and probe result fields are typed in the CV-314 field tables directly after this unit; a degraded or failed readiness result's reason_code is one of unavailable, disabled_by_policy, auth_required, restart_required, namespace_mismatch or timed_out (drafted; the CV-314 field tables keep its relation to the CV-307 status words open). Session-prompt admission is a typed inbox event family with idempotency derived from session_id, prompt_id, target_thread_id, and normalized prompt hash. An admitted app WebSocket session binds the explicit scope, owning Server, runtime/session/Client/origin/CSRF and permission refs through a versioned successor. Conversion reissues target-authorized credentials/routes; source tokens never carry across as destination authority. Historical Project auth bindings stay exact.
 gui_related: true
 gui_classification_reason: WebSocket/session readiness errors and session-prompt admission are visible to runtime/chat surfaces, while the fields themselves are backend contracts.
 depends_on: [CV-306, CV-307, CV-308, CV-313]
@@ -25595,8 +25595,8 @@ CV-314 field types. Basis is `canon` where canon states the type, and `drafted` 
 | `state` | enum `not_ready`, `model_visible`, `ui_visible`, `roundtrip_ready`, `degraded`, `failed` | yes | canon: CV-314 acceptance criteria |
 | `reason_code` | enum `unavailable`, `disabled_by_policy`, `auth_required`, `restart_required`, `namespace_mismatch`, `timed_out` | yes for `degraded` and `failed`, otherwise optional | drafted: the first five are the non-ready words of the CV-307 readiness status, reused exactly; `timed_out` is a probe that passes its `timeout_ms` |
 | `checked_at` | RFC 3339 UTC timestamp | yes | drafted: the time of the check |
-| `evidence_refs` | array of refs | yes | canon: the result carries roundtrip evidence refs |
-| `retry_after_ms` | non-negative integer, milliseconds | when applicable | canon: CV-314 acceptance criteria |
+| `evidence_refs` | array of refs | yes | drafted: canon names roundtrip evidence refs without a type |
+| `retry_after_ms` | non-negative integer, milliseconds | when applicable | drafted: CV-314 acceptance criteria name it without a type |
 
 CV-307 gives the same probe a different status list (`ready`, `degraded`, `unavailable`, `disabled_by_policy`, `auth_required`, `restart_required`, `namespace_mismatch`). How that list relates to `state` above is an open question for this owner; the drafted `reason_code` values follow the reading in which CV-314's `state` is how far the probe got and CV-307's non-ready words are its reasons.
 
@@ -25917,7 +25917,7 @@ State machine closure for the four families (initial and terminal states, and th
 | `corroboration` | `requested` | `superseded` is final; `confirmed`, `denied`, `downgraded` and `escalated` are terminal outcomes whose only exit is `superseded` | any terminal outcome -> `superseded`: a lineage-changing supersession record that sets `superseded_by_record_id` | `requested -> collecting`; `collecting -> confirmed|denied|downgraded|escalated` |
 | `promotion` | `draft` | `rejected`, `revoked`, `superseded` | `approved -> revoked|superseded`: a compensating record | `draft -> eligible`; `eligible -> approved|rejected|paused_hitl`; `paused_hitl -> approved|rejected` |
 | `graph_patch` | `requested` | `rejected`, `rolled_back`, `superseded` | `applied -> rolled_back|superseded`: a `decision_ref` and a `state_transition_report_ref` | `requested -> validated`; `validated -> applied|rejected` |
-| `projection_trust` | `current` | none: the record lasts as long as its projection | a non-current state -> `current`: canonical revalidation evidence | `current -> refreshing|stale|degraded|unavailable` |
+| `projection_trust` | `current` | no terminal state is stated | a non-current state -> `current`: canonical revalidation evidence | `current -> refreshing|stale|degraded|unavailable` |
 
 A transition the table names without its trigger is a recorded gap (provenance gap; the owner text names the transition but not what causes it) that reaches Plans/Plan_To_Node_Compilation.md#PNC-038; no transition outside these tables is admitted. Two outcomes are stated nowhere and remain open questions for this owner: what happens to a record in a non-terminal state (`corroboration` `requested` or `collecting`, `promotion` `draft`, `eligible` or `paused_hitl`, `graph_patch` `requested` or `validated`) when the work it belongs to is cancelled or abandoned, and whether `projection_trust` may move between two non-current states without first returning to `current`.
 
@@ -25938,12 +25938,12 @@ Family payload field types. Basis is `canon` where the table above or another ow
 | `promotion` | `required_evidence_refs[]` | array of string refs | drafted |
 | `promotion` | `hitl_required` | boolean | drafted: whether a person must act, beside the `paused_hitl` state |
 | `promotion` | `promotion_receipt_ref?` | optional string ref | drafted |
-| `graph_patch` | `graph_patch_id`, `graph_generation_id` | string id | drafted |
-| `graph_patch` | `patch_kind` | string | drafted: canon names no values; the closed list is still open |
-| `graph_patch` | `requested_change_ref`, `decision_ref` | string ref | drafted |
-| `graph_patch` | `affected_node_refs[]` | array of string refs | drafted |
-| `graph_patch` | `state_transition_report_ref?` | optional string ref | drafted |
-| `graph_patch` | `concern_refs[]?` | optional array of string refs | drafted |
+| `graph_patch` | `graph_patch_id`, `graph_generation_id` | nonempty string id | canon: `Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json#/$defs/graph_patch_RequestedGraphPatch` (and its Validated and Applied siblings) |
+| `graph_patch` | `patch_kind` | nonempty string | canon: `Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json#/$defs/graph_patch_RequestedGraphPatch` (and its Validated and Applied siblings); no closed value list exists |
+| `graph_patch` | `requested_change_ref`, `decision_ref` | nonempty string ref | canon: `Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json#/$defs/graph_patch_RequestedGraphPatch` (and its Validated and Applied siblings) |
+| `graph_patch` | `affected_node_refs[]` | array of nonempty string refs | canon: `Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json#/$defs/graph_patch_RequestedGraphPatch` (and its Validated and Applied siblings) |
+| `graph_patch` | `state_transition_report_ref?` | optional nonempty string ref | canon: `Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json#/$defs/graph_patch_RequestedGraphPatch` (and its Validated and Applied siblings) |
+| `graph_patch` | `concern_refs[]?` | optional array of nonempty string refs | canon: `Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json#/$defs/graph_patch_RequestedGraphPatch` (and its Validated and Applied siblings) |
 | `projection_trust` | `projection_id` | string id | drafted |
 | `projection_trust` | `projection_freshness` | enum `current`, `refreshing`, `stale` | canon: Plans/Glossary.md#G-012 |
 | `projection_trust` | `projection_health` | enum `healthy`, `degraded`, `unavailable` | canon: Plans/Glossary.md#G-012 |

@@ -3200,7 +3200,7 @@
         "unverified_or_mispriced_backup_verification",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "99f3154c8e743b6c4ae0c29b37fef24e86f5dd99ca800eb85605695bdecdaea8",
+      "sha256": "cb14fecece7f310605c5980d4a52bc4a2780f3dbb27cd7d2449a8d8609e897b8",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 36
@@ -6450,7 +6450,7 @@
         "worktree_lifecycle_record_loss",
         "wrong_original_source_realm_or_implicit_reference_alias"
       ],
-      "sha256": "db4fb67e04f99e422d8746b5734456e0ef82b4f225a06789579a0de4841790a4",
+      "sha256": "28617626ccd6d54b6e3eb20652369a54e066fb0691f7ace7c415ed043859e7b2",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 769,
@@ -9793,7 +9793,7 @@
         "future image source resolver",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 15389,
+      "line_count": 15388,
       "path": "Plans/FileSafe.md",
       "plan_unit_count": 213,
       "plan_unit_ids": [
@@ -10046,7 +10046,7 @@
         "unrecoverable_mutation",
         "unsafe_host_side_effect"
       ],
-      "sha256": "d2a96fd86b994b1dad7fc25f7903d48482dc894e36baa335772b2ecd7ade4b94",
+      "sha256": "174719e3fe043a9ad4ed2678913ac224cf4dbb671053257c4569b3e70be9faa2",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 213
@@ -13609,7 +13609,7 @@
         "temporary_instrumentation_lifecycle_drift",
         "worktree_cleanup_dependency_distinction_drift"
       ],
-      "sha256": "b20824d71571f231f61f7ca68b35ac1e63d0a82d9cccb905c8c1876656ac6f17",
+      "sha256": "f8fc84123d35047959a219649c19f926e9f55dd1968eb089bc8e47a63650a67b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 84
@@ -16577,7 +16577,7 @@
         "visualizer_sandbox_escape",
         "wholesale_browser_state_or_auth_export"
       ],
-      "sha256": "3b13491872c87e8f5114b23146b81a8c1ca46f39b8eaf7cc821db05d59fc5d2c",
+      "sha256": "f6557aab3fda34aa71ecb2ff7c273ba58e44d50b45ccaac9353e549b250981ca",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 151
@@ -17212,7 +17212,7 @@
         "scripts/pm-prd-planning-runtime-validate.py",
         "tests/test_pm_audit_closure.py"
       ],
-      "line_count": 1846,
+      "line_count": 1847,
       "path": "Plans/Planning_Ledger_System.md",
       "plan_unit_count": 27,
       "plan_unit_ids": [
@@ -17273,7 +17273,7 @@
         "source_loss",
         "vague_compile_output"
       ],
-      "sha256": "ee7ce63899483cf89e3ab62218301d0f17ac82ae65ef53d323ac50a4cafe8d88",
+      "sha256": "4df58b72b2f65a562831593848a5477ca7ed125e88cc4c789de108f9446e0837",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 27
@@ -17641,7 +17641,7 @@
         "residual_bridge_overreach",
         "scope_authority_or_custody_drift"
       ],
-      "sha256": "f196222f87d74b08d7ac052475b8e407abe9ee38f6dc46c9f7926f2eb395406a",
+      "sha256": "dc83a2989c3fd9441ed0491ee22634cf75f13fa15d97da6a2afd55d295673799",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 79
@@ -17773,7 +17773,7 @@
         "targeted_revision_contract_drift",
         "untrusted_source_security_bypass"
       ],
-      "sha256": "f2604391d3bd175f746faacefefe4807b97b8a1d5f12d529dd047734bdef32ba",
+      "sha256": "b0764158b292548ab2e5e91e8a3b4814aa5d79da5b979d825d518b6a6977c93f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 15
@@ -22667,7 +22667,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "26be045fbcda9f9e366bcd4ec34e607c4213b9aba56a5aacb0c34042a6992c18",
+      "sha256": "1bc31c9c49b16058870ded062ae5abad7f0e6bb593f35aaaf7667121ec819469",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 783,
@@ -25298,7 +25298,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-28T18:49:25Z",
+  "generated_at_utc": "2026-11-28T18:54:33Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

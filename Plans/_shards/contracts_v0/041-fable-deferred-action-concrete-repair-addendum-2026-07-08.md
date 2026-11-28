@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L25603-L26014
 
-Source SHA256: `db4fb67e04f99e422d8746b5734456e0ef82b4f225a06789579a0de4841790a4`
+Source SHA256: `28617626ccd6d54b6e3eb20652369a54e066fb0691f7ace7c415ed043859e7b2`
 
 ---
 
@@ -325,7 +325,7 @@ State machine closure for the four families (initial and terminal states, and th
 | `corroboration` | `requested` | `superseded` is final; `confirmed`, `denied`, `downgraded` and `escalated` are terminal outcomes whose only exit is `superseded` | any terminal outcome -> `superseded`: a lineage-changing supersession record that sets `superseded_by_record_id` | `requested -> collecting`; `collecting -> confirmed|denied|downgraded|escalated` |
 | `promotion` | `draft` | `rejected`, `revoked`, `superseded` | `approved -> revoked|superseded`: a compensating record | `draft -> eligible`; `eligible -> approved|rejected|paused_hitl`; `paused_hitl -> approved|rejected` |
 | `graph_patch` | `requested` | `rejected`, `rolled_back`, `superseded` | `applied -> rolled_back|superseded`: a `decision_ref` and a `state_transition_report_ref` | `requested -> validated`; `validated -> applied|rejected` |
-| `projection_trust` | `current` | none: the record lasts as long as its projection | a non-current state -> `current`: canonical revalidation evidence | `current -> refreshing|stale|degraded|unavailable` |
+| `projection_trust` | `current` | no terminal state is stated | a non-current state -> `current`: canonical revalidation evidence | `current -> refreshing|stale|degraded|unavailable` |
 
 A transition the table names without its trigger is a recorded gap (provenance gap; the owner text names the transition but not what causes it) that reaches Plans/Plan_To_Node_Compilation.md#PNC-038; no transition outside these tables is admitted. Two outcomes are stated nowhere and remain open questions for this owner: what happens to a record in a non-terminal state (`corroboration` `requested` or `collecting`, `promotion` `draft`, `eligible` or `paused_hitl`, `graph_patch` `requested` or `validated`) when the work it belongs to is cancelled or abandoned, and whether `projection_trust` may move between two non-current states without first returning to `current`.
 
@@ -346,12 +346,12 @@ Family payload field types. Basis is `canon` where the table above or another ow
 | `promotion` | `required_evidence_refs[]` | array of string refs | drafted |
 | `promotion` | `hitl_required` | boolean | drafted: whether a person must act, beside the `paused_hitl` state |
 | `promotion` | `promotion_receipt_ref?` | optional string ref | drafted |
-| `graph_patch` | `graph_patch_id`, `graph_generation_id` | string id | drafted |
-| `graph_patch` | `patch_kind` | string | drafted: canon names no values; the closed list is still open |
-| `graph_patch` | `requested_change_ref`, `decision_ref` | string ref | drafted |
-| `graph_patch` | `affected_node_refs[]` | array of string refs | drafted |
-| `graph_patch` | `state_transition_report_ref?` | optional string ref | drafted |
-| `graph_patch` | `concern_refs[]?` | optional array of string refs | drafted |
+| `graph_patch` | `graph_patch_id`, `graph_generation_id` | nonempty string id | canon: `Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json#/$defs/graph_patch_RequestedGraphPatch` (and its Validated and Applied siblings) |
+| `graph_patch` | `patch_kind` | nonempty string | canon: `Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json#/$defs/graph_patch_RequestedGraphPatch` (and its Validated and Applied siblings); no closed value list exists |
+| `graph_patch` | `requested_change_ref`, `decision_ref` | nonempty string ref | canon: `Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json#/$defs/graph_patch_RequestedGraphPatch` (and its Validated and Applied siblings) |
+| `graph_patch` | `affected_node_refs[]` | array of nonempty string refs | canon: `Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json#/$defs/graph_patch_RequestedGraphPatch` (and its Validated and Applied siblings) |
+| `graph_patch` | `state_transition_report_ref?` | optional nonempty string ref | canon: `Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json#/$defs/graph_patch_RequestedGraphPatch` (and its Validated and Applied siblings) |
+| `graph_patch` | `concern_refs[]?` | optional array of nonempty string refs | canon: `Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json#/$defs/graph_patch_RequestedGraphPatch` (and its Validated and Applied siblings) |
 | `projection_trust` | `projection_id` | string id | drafted |
 | `projection_trust` | `projection_freshness` | enum `current`, `refreshing`, `stale` | canon: Plans/Glossary.md#G-012 |
 | `projection_trust` | `projection_health` | enum `healthy`, `degraded`, `unavailable` | canon: Plans/Glossary.md#G-012 |
