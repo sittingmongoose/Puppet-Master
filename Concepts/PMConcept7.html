@@ -183229,7 +183229,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       /* the whole prop stays inside the pane it is painted in, as it swings too: a sign with a long name hung at pairB
          crossed the pane's right edge at the divider and lost its end (SOL-AST1-01); it moves in, or is drawn smaller
          only when even that is not room enough. Its strings move with it. */
-      const fit = this.fit(pr, hang, sc, tieMid); hang[0] += fit.dx; hang[1] += fit.dy; sc *= fit.f; pr.dx = fit.dx; pr.box = fit.box; pr.placedN = this.renderN;
+      const fit = this.fit(pr, hang, sc, tieMid); hang[0] += fit.dx; hang[1] += fit.dy; sc *= fit.f; pr.fitF = fit.f; pr.dx = fit.dx; pr.box = fit.box; pr.placedN = this.renderN;
       const cv = rot([-tieMid[0] * sc, -tieMid[1] * sc], pr.a);
       pr.pos = [hang[0] + cv[0], hang[1] + cv[1]];
       const sq = this.reduced ? 0 : clamp(pr.sq || 0, -.12, .12), squash = Math.abs(sq) > .002 ? ` translate(0 ${R(pr.foot)}) scale(${R(1 + sq * .6)} ${R(1 - sq)}) translate(0 ${R(-pr.foot)})` : '';
@@ -183892,10 +183892,19 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
          turns on; the head's far corner 38 from where it hangs, its sides 24 from its middle and its top 31 above the foot
          it swells from (the head drawn is about 48 by 31, the bar 46 by 19); the eyes move inside the head, at its scale */
       v.push(ps.C.x, ps.C.y, ps.phi * 25 * s, Hd[0], Hd[1], ang * 38 * s, ps.sx * (1 - br * .4) * 24 * s, ps.sy * (1 + br) * 31 * s, ps.look[0] * s, ps.look[1] * s);
+      /* and every value the painter rounds (R, to 0.01) where one rounding step moves the picture a tenth of a pixel or
+         more, in the form it is written: the head's two scales (one step of a breath moves its top edge about 0.9 px:
+         compared continuously, a breath was drawn up to half a second late, A147), each prop's scale and squash, and the
+         opacities (a prop's, its strings', Pip's floor shadow in Friendly and Glass). Translations and turns are written
+         finer than the step. */
+      d.push(R(ps.sx * (1 - br * .4)), R(ps.sy * (1 + br)));
+      if (this.famName === 'friendly' || this.famName === 'glass') { const k = clamp(1 - Math.max(0, Lay.ground - (Hd[1] + 64 * s / 2.6)) / (Lay.h * .9), .25, 1); d.push(R(k * .7)); }
       this.props.forEach((pr) => {
         const L = Math.max(0, pr.len), size = 60 * Lay.propScale * (pr.spec.scale || 1);
         v.push(pr.ax + Math.sin(pr.a) * L, Math.cos(pr.a) * L, pr.a * (L + size), pr.scale * size, (pr.sq || 0) * (pr.foot || 0));
         o.push(pr.op);
+        const sq = clamp(pr.sq || 0, -.12, .12);
+        d.push(R(this.propTarget(pr).sc * (pr.scale / (pr.spec.scale || 1)) * (pr.fitF == null ? 1 : pr.fitF)), Math.abs(sq) > .002 ? R(1 + sq * .6) + ' ' + R(1 - sq) : '', R(pr.op));
       });
       // NieR's target brackets breathe (a pulse of 1.2) and their diamond turns (7 wide)
       if (this.famName === 'nier' && !this.reduced) { const pr = this.target && this.props.get(this.target); if (pr && pr.pos) h.push(Math.sin(this.t * 3) * 1.2, (this.t * 120 % 360) / 57.3 * 5); }
