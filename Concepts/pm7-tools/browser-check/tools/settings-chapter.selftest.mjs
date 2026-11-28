@@ -540,9 +540,11 @@ const modeSpread = (img, rect) => {
 	const code = prod.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
 	// the gate: one passive wheel listener writes the time, the scroll handler is the only caller of the mount
 	const wheels = [...code.matchAll(/addEventListener\(\s*['"`]wheel['"`]/g)];
-	assert.equal(wheels.length, 1, 'one wheel listener in the product file (the gate)');
+	assert.equal(wheels.length, 2, 'two wheel listeners in the product file: the gate and FO-250\'s long-wheel jump');
 	assert.match(code, /\nroot\.addEventListener\('wheel', \(\) => \{ o55fsWheelAt = performance\.now\(\); \}, \{ capture: true, passive: true \}\);\n/, 'the wheel listener is passive, captures on root and only notes the time');
-	assert.equal(/preventDefault/.test(code), false, 'nothing in the product file cancels an event\'s default');
+	// FO-250: the one cancelling listener is the long-wheel jump (below); nothing else in the file cancels a default
+	assert.equal((code.match(/preventDefault/g) || []).length, 1, 'only FO-250\'s long-wheel jump cancels an event\'s default');
+	assert.ok(code.indexOf('preventDefault') > code.indexOf("window.addEventListener('wheel', e => {"), 'the cancel is inside the FO-250 wheel listener');
 	assert.equal((code.match(/o55fsWheelAt\s*=(?!=)/g) || []).length, 2, 'o55fsWheelAt is set only where it is declared and in the wheel listener');
 	assert.match(code, /\nconst o55fsWheeling = \(\) => performance\.now\(\) - o55fsWheelAt <= O55FS_WHEEL_MS;\n/, 'the gate compares the time since the last wheel with O55FS_WHEEL_MS');
 	const ms = Number((code.match(/\nconst O55FS_WHEEL_MS = (\d+);\n/) || [])[1]);
@@ -560,6 +562,33 @@ const modeSpread = (img, rect) => {
 		assert.equal(/o55fsWheel|o55fsMountNear|mountContinuousWorkspace/.test(code.slice(m.index, j + 1)), false, 'no key listener touches the gate or mounts a page');
 	}
 	console.log(`PASS wheel gate: one passive wheel listener notes the time, o55fsMountNear runs only behind it (${ms} ms), no key listener is added`);
+}
+/* FO-250: on a composited scroller (macOS) the compositor drew a long wheel's destination from the last committed paint
+   before the frame that shows and paints it. A wheel of half a view or more on the settings document is scrolled by the
+   main thread in one step. Pinned: its guards (only a cancelable vertical pixel wheel that no earlier listener took, no
+   zoom or Shift, a document that can move and no scroller inside it that can still take the wheel), the threshold, the
+   instant jump, a window listener that bubbles after the horizontal-strip wheel, and no part in the r6 gate. */
+{
+	const fs = await import('node:fs');
+	const prod = fs.readFileSync(new URL('../../../onboarding/opus-5.5/src/settings/kit.d/46-first-screen.js', import.meta.url), 'utf8');
+	const code = prod.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+	const at = code.indexOf("window.addEventListener('wheel', e => {");
+	assert.ok(at > 0, 'the FO-250 wheel listener is on window');
+	let depth = 0, j = code.indexOf('{', at);
+	for (; j < code.length; j++) { if (code[j] === '{') depth++; else if (code[j] === '}' && --depth === 0) break; }
+	const body = code.slice(at, code.indexOf('\n', j) + 1);
+	assert.match(body, /\}, \{ passive: false \}\);\n$/, 'not passive and not capturing: it runs after the document\'s horizontal-strip wheel');
+	for (const g of ['!e.cancelable', 'e.defaultPrevented', 'e.ctrlKey', 'e.shiftKey', 'e.deltaMode !== 0', 'Math.abs(e.deltaX) > Math.abs(e.deltaY)', '!sc.contains(e.target)', 'Math.abs(e.deltaY) < sc.clientHeight * O55FS_JUMP', 'Math.abs(to - top) < 1', 'o55fsInnerTakes(e.target, sc, e.deltaY)'])
+		assert.ok(body.includes(g), `the jump's guard: ${g}`);
+	assert.ok(body.indexOf('o55fsInnerTakes(') < body.indexOf('e.preventDefault()'), 'every guard runs before the cancel');
+	assert.match(body, /e\.preventDefault\(\);\n  sc\.scrollTo\(\{ top: to, behavior: 'instant' \}\);/, 'cancel, then one instant main-thread scroll (the document\'s smooth scroll-behavior would hand it back to the compositor)');
+	assert.equal(/o55fsWheel|o55fsMountNear|mountContinuousWorkspace|o55fsShowNear|o55fsFill/.test(body), false, 'the jump leaves the gate, the mount, the fill and the show to the scroll event');
+	const jump = Number((code.match(/\nconst O55FS_JUMP = ([\d.]+);/) || [])[1]);
+	assert.ok(jump > 0 && jump <= 0.5, `O55FS_JUMP is half a view or less (a 456 px wheel blanked a quarter on the Mac; ${jump})`);
+	const inner = code.slice(code.indexOf('function o55fsInnerTakes('), code.indexOf("window.addEventListener('wheel', e => {"));
+	assert.match(inner, /overflowY/, 'an inner scroller is recognised by its overflow');
+	assert.match(inner, /n !== sc/, 'the walk stops at the document');
+	console.log(`PASS FO-250 long-wheel jump: one non-passive window listener, every guard before the cancel, an instant main-thread scroll at ${jump} of the view, outside the r6 gate`);
 }
 {
 	const live = (src, re) => {

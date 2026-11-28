@@ -1169,12 +1169,23 @@ export async function endLandRoute(t, surface) {
 	for (const row of endLandVerdict(presses, 2 * reps)) await t.check(`${surface}: ${row.name}`,row.ok,row.detail);
 }
 /* One fling route (FLING_ROUTES) on one surface, in every fling look (exported for the selftest's live pins). */
-export async function flingRoute(t, surface, route) {
+/* FO-250: on macOS the settings document is a composited scroller, so the compositor draws a long wheel's destination
+   from the last committed paint before the main thread's frame reaches it; on Windows and Linux at device scale 1 it
+   scrolls by repainting, and the compositor shows nothing new until that frame. FLING_COMPOSITE forces the Mac's mode
+   on any host (will-change: scroll-position on the document, nothing else), so the fling routes judge that path on the
+   GTX 1070 Ti and the VM too: the FO-245 page blanks 9 to 16 frames there; on the Mac the style changes nothing. */
+export const FLING_COMPOSITE = '#pm-settings-root #settings-document { will-change: scroll-position; }';
+export async function flingRoute(t, surface, route, opts = {}) {
 	if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
 	await t.viewport(1920, 1080); await muteSound(t.page);
 	await t.emulate({reducedMotion:t.args.motion === 'reduce' ? 'reduce' : 'no-preference'});
 	const f = await t.app.open({sandbox:surface === 'sandbox'});
 	await t.app.resetLayout().catch(() => {}); await f.locator('#tab-settings').click(); await t.settle();
+	if (opts.composite) {
+		await f.addStyleTag({content:FLING_COMPOSITE});
+		const wc = await f.evaluate(() => getComputedStyle(document.querySelector('#pm-settings-root #settings-document')).willChange);
+		await t.check(`${surface}: the settings document is asked to scroll on the compositor (will-change ${wc})`, /scroll-position/.test(wc), wc);
+	}
 	for (const look of flingLooks(t.args.flingLooks)) {
 		await setLookBySetting(t,f,look);
 		if (!(await guardPaintedLook(t,f,look,`${look} ${surface}`))) return;
@@ -1291,6 +1302,9 @@ for (const surface of ['normal', 'sandbox']) {
 	tests[`R93 #4 a fast wheel into lower Code fills visible lists before the frame (${surface})`] = (t) => flingRoute(t, surface, 'terminal');
 	/* FO-245 round 3 (A245 high finding 1): the deep routes onto the chapter's unmounted last page */
 	tests[`R93 #4 a single long wheel to the bottom of a fresh Code & Tools paints its last page (${surface})`] = (t) => flingRoute(t, surface, 'wheel-bottom');
+	/* FO-250: the same two routes with the document scrolling on the compositor, as it always does on macOS (FLING_COMPOSITE) */
+	tests[`R93 #4 a fast wheel into lower Code fills visible lists before the frame, composited scrolling (${surface})`] = (t) => flingRoute(t, surface, 'terminal', {composite:true});
+	tests[`R93 #4 a single long wheel to the bottom of a fresh Code & Tools paints its last page, composited scrolling (${surface})`] = (t) => flingRoute(t, surface, 'wheel-bottom', {composite:true});
 	/* FO-245 round 5 (option C): the End/Home key listener was reverted, so End smooth-scrolls through unmounted pages
 	   again, as on main. The two End fling routes ('end', 'end-text': FLING_ROUTES and flingRoute keep their code) are
 	   not registered until FO-248 lands a fix for those blanks; registered now they would be red, as they are on main. */
