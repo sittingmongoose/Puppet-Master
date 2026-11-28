@@ -1,15 +1,17 @@
 {
- "_about": "app-input: sections from the plain-pages audit (2026-09-27). Theme first, then size and readability, three chat groups, help, window and panels, startup, spelling; custom themes and fine-tuning under More options. Duplicate hand rows are dropped: font-size (Text size), motion (Reduce motion), contrast (Keyboard focus outline), restore-window and panel-restore (Remember window size and layout), help-level (How the app talks to me), working-activity-style (the inventory row of the same name). Out: first-run tips to Readiness & Doctor, debug re-check to Testing & Debug, tabs remembered to Editor & Terminal. In: the big-task checklist from Planning. Retired: Chat Layout (general.visual.chat-layout-mode; the chat stays in its column and moves only by its own Pop out, the planner's ruling on D3 and D32). Retired: Glass background (general.visual.glass-background-mode); the hand row and its transfer selection are removed, with compatibility input migrated through SP-333 to the Project Wallpaper value. Glass always uses Liquid Glass with a wallpaper. Retired: NieR Mode (general.visual.nier-mode); NieR is the fifth theme (Q22, 2026-10-30), an old save with it on loads as the NieR theme, and its Adjust rows show while the theme is NieR.",
+ "_about": "app-input: sections from the plain-pages audit (2026-09-27). Theme first, then size and readability, three chat groups, help, window and panels, startup, spelling; fine-tuning under More options. Duplicate hand rows are dropped: font-size (Text size), motion (Reduce motion), contrast (Keyboard focus outline), restore-window and panel-restore (Remember window size and layout), help-level (How the app talks to me), working-activity-style (the inventory row of the same name). Out: first-run tips to Readiness & Doctor, debug re-check to Testing & Debug, tabs remembered to Editor & Terminal. In: the big-task checklist from Planning. Retired: Chat Layout (general.visual.chat-layout-mode; the chat stays in its column and moves only by its own Pop out, the planner's ruling on D3 and D32). Retired: Glass background (general.visual.glass-background-mode); the hand row and its transfer selection are removed, with compatibility input migrated through SP-333 to the Project Wallpaper value. Glass always uses Liquid Glass with a wallpaper. Retired: NieR Mode (general.visual.nier-mode); NieR is the fifth theme (Q22, 2026-10-30), an old save with it on loads as the NieR theme, and its Adjust rows show while the theme is NieR. Retired: custom themes (general.visual.manage-custom-themes, Your own themes, and general.visual.custom-theme-base, Start custom themes from; DL-2607, Jared 2026-11-27: custom theme files are deferred and the theme folder, create, import and export actions removed, FO-254). They are listed in retire_ids while Plans/settings_inventory.json still holds them as active rows; once DL-2607 lands they are retired_input_ids there and these two entries retire nothing.",
  "retire_ids": [
   "general.visual.chat-layout-mode",
   "general.visual.theme-preview",
   "general.visual.glass-background-mode",
   "general.visual.nier-mode",
-  "general.visual.basic-color-scheme"
+  "general.visual.basic-color-scheme",
+  "general.visual.manage-custom-themes",
+  "general.visual.custom-theme-base"
  ],
  "pages": {
   "app-input": {
-   "more": "Custom themes, fine-tuning and rarely changed help options."
+   "more": "Fine-tuning and rarely changed help options."
   }
  },
  "sections": {
@@ -79,13 +81,6 @@
    "title": "Spelling",
    "help": "Spell checking for chat and notes, never for code.",
    "order": 90
-  },
-  "app-custom-themes": {
-   "to": "app-input",
-   "title": "Custom themes",
-   "help": "Make your own theme or bring one in.",
-   "order": 100,
-   "advanced": true
   },
   "app-visual-more": {
    "to": "app-input",
@@ -189,13 +184,6 @@
     "general.startup.window-state",
     "general.startup.crash-restore",
     "general.startup.unsaved-capture"
-   ]
-  },
-  {
-   "section": "app-custom-themes",
-   "ids": [
-    "general.visual.manage-custom-themes",
-    "general.visual.custom-theme-base"
    ]
   },
   {
