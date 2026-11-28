@@ -131364,6 +131364,8 @@ PM51.pickSource = setting => {
    section each and are drawn as before; so is the first page after load and every page mounted later.
    A scroll that lands on sections content-visibility still skips shows them before its frame is drawn (FO-245), so a
    fast wheel never shows the page's ground where rows are; the arrival's first frame still skips every far section.
+   A wheel of half a view or more is scrolled by the main thread, so a composited scroller (macOS) cannot draw its
+   destination before the frame that shows and paints it (FO-250).
    A wheel scroll that lands on a page of the chapter still unmounted mounts it before its frame (FO-245 r3, gated on a
    recent wheel in r6); every other scroll (End / Home, PageDown, arrows, the scroll bar, jump links, a script) mounts
    exactly as before, through the observer, so End lands at the end it measured. End / Home keep the browser's own smooth
@@ -131670,6 +131672,39 @@ let o55fsWheelAt = -Infinity;
 root.addEventListener('wheel', () => { o55fsWheelAt = performance.now(); }, { capture: true, passive: true });
 const o55fsWheeling = () => performance.now() - o55fsWheelAt <= O55FS_WHEEL_MS;
 root.addEventListener('scroll', e => { if (e.target.id === 'settings-document') { if (o55fsWheeling()) o55fsMountNear(e.target); o55fsFillNear(e.target); o55fsShowNear(e.target); } }, true);
+/* FO-250: the show and mount above run in the scroll event, before the main thread's frame, which only helps when that
+   frame is the first to draw the new position. Where the settings document is a composited scroller (macOS always,
+   since it has no LCD text to keep; Windows and Linux only where Chrome gives that up), the compositor applies a
+   wheel's delta itself and draws the new position from the last committed paint one or two frames before the main
+   thread's frame reaches it, so a long wheel showed the destination's ground there (Mac M3: 5 of 8 R93 #4 flings, 1 or
+   2 frames, in a trace the two draws come after the compositor's 4,894 px scroll delta and before the activation of
+   the frame that ran the scroll event; a GTX 1070 Ti, where the document scrolls by repainting, drew none until that
+   frame, and 9 to 16 when the document was forced to composite). Half a view is enough right after an arrival: the
+   paint ends at the first view (FO-196), and a 456 px wheel showed a blank quarter. So a wheel that would move the
+   document by half its view or more is scrolled by the main thread here, in one step, as the browser's own jump: a
+   scroll the main thread makes reaches the screen only with the frame that paints it. The document already sends
+   every wheel to the main thread first (the horizontal-strip wheel, passive: false), so this adds no wait; it runs
+   after that listener (on window, bubbling) and leaves alone what it handled, zoom, horizontal and line or page
+   wheels, wheels the browser no longer lets a page cancel (the rest of a trackpad gesture), a scroller inside the
+   document that can still take the wheel, and a document already at that end. */
+const O55FS_JUMP = 0.5;   /* of the document's view */
+function o55fsInnerTakes(target, sc, dy) {
+  for (let n = target instanceof Element ? target : target && target.parentElement; n && n !== sc; n = n.parentElement) {
+    if (n.scrollHeight <= n.clientHeight + 1) continue;
+    if (!/^(auto|scroll|overlay)$/.test(getComputedStyle(n).overflowY)) continue;
+    if (dy > 0 ? n.scrollTop + n.clientHeight < n.scrollHeight - 1 : n.scrollTop > 0) return true;
+  }
+  return false;
+}
+window.addEventListener('wheel', e => {
+  if (!e.cancelable || e.defaultPrevented || e.ctrlKey || e.shiftKey || e.deltaMode !== 0 || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+  const sc = root.querySelector('#settings-document');
+  if (!sc || !(e.target instanceof Node) || !sc.contains(e.target) || Math.abs(e.deltaY) < sc.clientHeight * O55FS_JUMP) return;
+  const top = sc.scrollTop, to = Math.max(0, Math.min(sc.scrollHeight - sc.clientHeight, top + e.deltaY));
+  if (Math.abs(to - top) < 1 || o55fsInnerTakes(e.target, sc, e.deltaY)) return;
+  e.preventDefault();
+  sc.scrollTo({ top: to, behavior: 'instant' });
+}, { passive: false });
 /* These global keys belong to Settings only while its panel can receive input. Onboarding leaves the active class
    in place beneath its inert app; modal dialogs can cover Settings without changing either (R97 P1). */
 function o55fsInteractive() {
