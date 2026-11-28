@@ -1181,11 +1181,8 @@ export async function flingRoute(t, surface, route, opts = {}) {
 	await t.emulate({reducedMotion:t.args.motion === 'reduce' ? 'reduce' : 'no-preference'});
 	const f = await t.app.open({sandbox:surface === 'sandbox'});
 	await t.app.resetLayout().catch(() => {}); await f.locator('#tab-settings').click(); await t.settle();
-	if (opts.composite) {
-		await f.addStyleTag({content:FLING_COMPOSITE});
-		const wc = await f.evaluate(() => getComputedStyle(document.querySelector('#pm-settings-root #settings-document')).willChange);
-		await t.check(`${surface}: the settings document is asked to scroll on the compositor (will-change ${wc})`, /scroll-position/.test(wc), wc);
-	}
+	if (opts.composite) await f.addStyleTag({content:FLING_COMPOSITE});
+	let composited = !opts.composite;
 	for (const look of flingLooks(t.args.flingLooks)) {
 		await setLookBySetting(t,f,look);
 		if (!(await guardPaintedLook(t,f,look,`${look} ${surface}`))) return;
@@ -1193,6 +1190,11 @@ export async function flingRoute(t, surface, route, opts = {}) {
 		   recorder and film; retryFling repeats it only while the capture is unresolved and clean (FLING_RETRY) */
 		const attempt=async(k)=>{
 			await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click(); await t.page.waitForTimeout(700);
+			if (!composited) {
+				const wc = await f.evaluate(() => { const d = document.querySelector('#pm-settings-root #settings-document'); return d ? getComputedStyle(d).willChange : 'no document'; });
+				composited = true;
+				await t.check(`${surface}: the settings document is asked to scroll on the compositor (will-change ${wc})`, /scroll-position/.test(wc), wc);
+			}
 			const box = await f.locator('#settings-document').boundingBox();
 			await f.evaluate((route) => {
 				const root=document.getElementById('pm-settings-root'),deep=route!=='terminal';
