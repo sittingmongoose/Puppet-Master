@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-11-26T11:29:35Z",
+  "generated_at_utc": "2026-11-28T03:23:03Z",
   "index_path": "Plans/_shards/orchestrator-subagent-integration/00-index.md",
-  "index_sha256": "698c0de319c3aef5a85f8a63bc783df1ff790eb6edb8843142998ef99e325a0b",
+  "index_sha256": "a79c06275e24f3182214a8b6c081e978726b7a998dcb2eb135dda9269bcfef19",
   "manifest_path": "Plans/_shards/orchestrator-subagent-integration/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/orchestrator-subagent-integration/001-preamble.md",
-      "sha256": "daed4ff7d7e4087fcb0c063a2feec584612ece16379369e7c93eeca6a4e496b5",
+      "sha256": "404c3796aed15d58a9196a70437acfb19c8f8ec2c9c784a259fec87a2d050e54",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/orchestrator-subagent-integration/002-canonical-owner-section-requirements.md",
-      "sha256": "af88c4d953e08989b109c3e0a86d5113c7b104bb80a7b4a167d3abbae682105d",
+      "sha256": "b82d6fa3dbb9b2b22eedd10ee47e80b2c3608da86d87a954cc98f52aede2909c",
       "shard_id": "002",
       "source_line_end": 14,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "Plan Document Status",
       "path": "Plans/_shards/orchestrator-subagent-integration/003-plan-document-status.md",
-      "sha256": "756a5a2458409dc5de1a0ca40610f1bae85fa4d452fbabb5f3af870aaf467fa0",
+      "sha256": "b4d7cf1236e3c9c89a6dbdeb5e45d6bb223d5999b083bb554f0be5b8e58b5b0b",
       "shard_id": "003",
       "source_line_end": 28,
       "source_line_start": 17,
@@ -35,7 +35,7 @@
     {
       "heading": "Executive Summary",
       "path": "Plans/_shards/orchestrator-subagent-integration/004-executive-summary.md",
-      "sha256": "ab9dcd63e3c68025fdea97dc33158f085ea96468408af3918d68c10c01e5009a",
+      "sha256": "2a08fd3ca40246c9df95a8830b48022e79c50180041862d533ebd91bf17c2af2",
       "shard_id": "004",
       "source_line_end": 79,
       "source_line_start": 30,
@@ -44,7 +44,7 @@
     {
       "heading": "Runtime scheduler, identity, and worktree reconciliation",
       "path": "Plans/_shards/orchestrator-subagent-integration/005-runtime-scheduler-identity-and-worktree-reconciliation.md",
-      "sha256": "625e0f0b11c68c69e16580638b1776f974f982a2a2d3954b79f570088d41316f",
+      "sha256": "5e6c8f8ff25ebed9e9049a6cb112d1a8527535e44cc787025f3aaa52380838bc",
       "shard_id": "005",
       "source_line_end": 126,
       "source_line_start": 81,
@@ -53,7 +53,7 @@
     {
       "heading": "Rewrite alignment (2026-02-21)",
       "path": "Plans/_shards/orchestrator-subagent-integration/006-rewrite-alignment-2026-02-21.md",
-      "sha256": "dadd8cee400f08eca06c532614f2b172da03fe967e5c849bbd59e84d7feab18c",
+      "sha256": "d0b3966692bbaf37ca1188a7e390ed184378c00cdd2b7016f9cd1864bec4daeb",
       "shard_id": "006",
       "source_line_end": 163,
       "source_line_start": 127,
@@ -62,7 +62,7 @@
     {
       "heading": "Relationship Between the Two Plans",
       "path": "Plans/_shards/orchestrator-subagent-integration/007-relationship-between-the-two-plans.md",
-      "sha256": "bd6f3b8401d1285a1798eb149afde2b37826c77d1d31ca7738c8b7df22f8d1c7",
+      "sha256": "655b8bbb935aa5494437a45dcab50c5e3bdf4af849dece27ea6aa7147c7df175",
       "shard_id": "007",
       "source_line_end": 181,
       "source_line_start": 165,
@@ -71,7 +71,7 @@
     {
       "heading": "Compatibility Tier-Level Subagent Strategy",
       "path": "Plans/_shards/orchestrator-subagent-integration/008-compatibility-tier-level-subagent-strategy.md",
-      "sha256": "ba02d7e0bd876b952ab871a03f85d2bd000f66cedc51600c9f4cc1ca9ca7058e",
+      "sha256": "5bd2869f26f21acacc0bbcd7d6200d794d3b0f5cfc606c9c6549195ba227863c",
       "shard_id": "008",
       "source_line_end": 204,
       "source_line_start": 182,
@@ -80,7 +80,7 @@
     {
       "heading": "Debug-capable investigation orchestration",
       "path": "Plans/_shards/orchestrator-subagent-integration/009-debug-capable-investigation-orchestration.md",
-      "sha256": "a4ee877dec06492dec72309db815f159785def21bb32e7f68dcce3345bf49e9d",
+      "sha256": "1d569c6586e02fd8d80f6a956af5585c2f3c31117d792f28821071ceec8de8cd",
       "shard_id": "009",
       "source_line_end": 216,
       "source_line_start": 205,
@@ -89,7 +89,7 @@
     {
       "heading": "Dynamic Subagent Selection Architecture",
       "path": "Plans/_shards/orchestrator-subagent-integration/010-dynamic-subagent-selection-architecture.md",
-      "sha256": "0c216bb9944b724c861350ecf64a4495b4d463fba59833956d4e8379b6560c89",
+      "sha256": "046eac6cfa0bb2a2d1af87463a7db6e8750fda0aee895f3557ab78153f56282e",
       "shard_id": "010",
       "source_line_end": 258,
       "source_line_start": 218,
@@ -98,7 +98,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260630-001-feature-intake",
       "path": "Plans/_shards/orchestrator-subagent-integration/011-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
-      "sha256": "b7773c825d8cd597c83ea3f8a939462e7102e0e668063a832e2414200f3ae332",
+      "sha256": "bacc80a1bc527fa48ad072836023ebb95da1b392636c1948263db498d183002b",
       "shard_id": "011",
       "source_line_end": 349,
       "source_line_start": 260,
@@ -107,7 +107,7 @@
     {
       "heading": "Integration with Orchestrator",
       "path": "Plans/_shards/orchestrator-subagent-integration/012-integration-with-orchestrator.md",
-      "sha256": "ffda98f8972f8473b7cd4eaf5f229203850ed02f8866699fcb3e69a9156342fa",
+      "sha256": "84c0d27ae40bd4bc5f5198479e9c7674abdc17e69f542b89a0c8bf902d061e2e",
       "shard_id": "012",
       "source_line_end": 652,
       "source_line_start": 350,
@@ -116,7 +116,7 @@
     {
       "heading": "Configuration",
       "path": "Plans/_shards/orchestrator-subagent-integration/013-configuration.md",
-      "sha256": "a501db0aa4de6c037a05d11247a89ea8bcadb1d4749dd9df7dc44f88d0aed652",
+      "sha256": "29a519c884a237b3bbdc4decfd97b68e6fd086e303266585d55e8f23fcdc577a",
       "shard_id": "013",
       "source_line_end": 758,
       "source_line_start": 654,
@@ -125,7 +125,7 @@
     {
       "heading": "Execution unit context and worktree allocation strategy",
       "path": "Plans/_shards/orchestrator-subagent-integration/014-execution-unit-context-and-worktree-allocation-strategy.md",
-      "sha256": "3d2ce23e6ec3498ba57a6f2b78efe8c5835f6e45116c58577d9b321f13a7ae8e",
+      "sha256": "9a1ed821e85c263299594af5a41dc899d93d7a96f3221a5a0951ea1e1723b412",
       "shard_id": "014",
       "source_line_end": 794,
       "source_line_start": 760,
@@ -134,7 +134,7 @@
     {
       "heading": "Benefits",
       "path": "Plans/_shards/orchestrator-subagent-integration/015-benefits.md",
-      "sha256": "73b6c8ceadf2a3a450df00b840755f5f1efe9adc3554f508626db082e63aa8c0",
+      "sha256": "bde3580e201763542df22c304b70f16346352a6c06989bf4e9c9b4721cac7ec5",
       "shard_id": "015",
       "source_line_end": 803,
       "source_line_start": 796,
@@ -143,7 +143,7 @@
     {
       "heading": "Implementation Phases",
       "path": "Plans/_shards/orchestrator-subagent-integration/016-implementation-phases.md",
-      "sha256": "8cc953d88e248cdcd54ffe9ac56e9b5b89d868844507242c3248a47073b97560",
+      "sha256": "ca648f5de4265e0dabce7ecdf0d316fda1b490920cf69550ad74fc2dcf5ec20a",
       "shard_id": "016",
       "source_line_end": 836,
       "source_line_start": 805,
@@ -152,7 +152,7 @@
     {
       "heading": "Provider Connectivity Smoke Tests & Subagent Invocation Testing",
       "path": "Plans/_shards/orchestrator-subagent-integration/017-provider-connectivity-smoke-tests-subagent-invocation-testing.md",
-      "sha256": "07d601c126acb5ea92ffb5c968237de69237020101d17f28379cc29cb4653f38",
+      "sha256": "0447a1c0e35597e0e3123198dd434ccd93f46a170d1b20b24ce50fab1f1048bc",
       "shard_id": "017",
       "source_line_end": 1047,
       "source_line_start": 838,
@@ -161,7 +161,7 @@
     {
       "heading": "Plan Mode Strategy & Defaults",
       "path": "Plans/_shards/orchestrator-subagent-integration/018-plan-mode-strategy-defaults.md",
-      "sha256": "7ddaf909aff4a21eab30affccd2035225eda78b1abd54fdfa780763a27639337",
+      "sha256": "d34cfbff22a16912aa6caabd2e0cb1ffeae65ed20112b6e9da0046301eb86f03",
       "shard_id": "018",
       "source_line_end": 1064,
       "source_line_start": 1049,
@@ -170,7 +170,7 @@
     {
       "heading": "GUI and Backend Scope (All In-Scope Now)",
       "path": "Plans/_shards/orchestrator-subagent-integration/019-gui-and-backend-scope-all-in-scope-now.md",
-      "sha256": "5924ce86f925de2a3bd369361512204a9738911cdc0a40c4931eb3c13bc389a4",
+      "sha256": "8cfadde1d44f9d6ee20e38452f30a6142f3e1e7d18dc30985d9b1f54968f4a58",
       "shard_id": "019",
       "source_line_end": 1129,
       "source_line_start": 1065,
@@ -179,7 +179,7 @@
     {
       "heading": "Gaps and Clarifications",
       "path": "Plans/_shards/orchestrator-subagent-integration/020-gaps-and-clarifications.md",
-      "sha256": "5bdbd085d319391505ba701a18122df630cd36434190059963e8dbc8bf859375",
+      "sha256": "ada2af7b1a5273bbddd2a794ce7546c5578494426bc89856d880d8d8f74963b2",
       "shard_id": "020",
       "source_line_end": 1240,
       "source_line_start": 1131,
@@ -188,7 +188,7 @@
     {
       "heading": "DRY Method Compliance",
       "path": "Plans/_shards/orchestrator-subagent-integration/021-dry-method-compliance.md",
-      "sha256": "05532faa712e54d68f797b78374b2e563d28873159c95da647da6879d9dd9dac",
+      "sha256": "f86a6cb873d1cb19a1e712c1a51d8c2e6e9614a6ba55f6bbf2a89b3e1aed8f57",
       "shard_id": "021",
       "source_line_end": 1313,
       "source_line_start": 1242,
@@ -197,7 +197,7 @@
     {
       "heading": "Potential Issues",
       "path": "Plans/_shards/orchestrator-subagent-integration/022-potential-issues.md",
-      "sha256": "7723afb853355c09d59618c31b56d2bc3f3bd8ee724a46209a419f9fa2c34cab",
+      "sha256": "ea14fead2dcb70ed280b9c20fd2ea8633b1aeb17bed347043b3563538f11ad6e",
       "shard_id": "022",
       "source_line_end": 1404,
       "source_line_start": 1315,
@@ -206,7 +206,7 @@
     {
       "heading": "Interviewer Enhancements and Config Wiring",
       "path": "Plans/_shards/orchestrator-subagent-integration/023-interviewer-enhancements-and-config-wiring.md",
-      "sha256": "52e1030ad4df0fe562c5c1dee9daef2b2189b2c1191a1b3ba3497a5bb3e6e134",
+      "sha256": "04f2892c944d4a6a9a507d453780d6c9d032dd2737a613ea99c97bd1ed36dc13",
       "shard_id": "023",
       "source_line_end": 1476,
       "source_line_start": 1406,
@@ -215,7 +215,7 @@
     {
       "heading": "Avoiding \"Built but Not Wired\"",
       "path": "Plans/_shards/orchestrator-subagent-integration/024-avoiding-built-but-not-wired.md",
-      "sha256": "d58092399d268a469a339c342050c5bcc88c1820833b0fa6b5cd0971cfa89cec",
+      "sha256": "19ba60070e382bd29768b3485e22cdb5ca3d9f62f13ef5ba30d92ff7df71541a",
       "shard_id": "024",
       "source_line_end": 1545,
       "source_line_start": 1478,
@@ -224,7 +224,7 @@
     {
       "heading": "Start and End Verification at Phase, Task, and Subtask",
       "path": "Plans/_shards/orchestrator-subagent-integration/025-start-and-end-verification-at-phase-task-and-subtask.md",
-      "sha256": "9ddc3f0bb52f240853f132f9f39b356ea0db99ad378313c99843bc51b69d3298",
+      "sha256": "d785d13016d4903d66db6f5110b02c73bd3ba8c5460795bb4c03ac5ee8b75248",
       "shard_id": "025",
       "source_line_end": 3546,
       "source_line_start": 1547,
@@ -233,7 +233,7 @@
     {
       "heading": "Considerations",
       "path": "Plans/_shards/orchestrator-subagent-integration/026-considerations.md",
-      "sha256": "a7d65a1b0903d68645b583653745ab1a1b9633bb517f57d98d5d18e60461b3a0",
+      "sha256": "bb13c9d044911f652bac48e837606ae744ba54f3dcc31a36aeac5324400426ab",
       "shard_id": "026",
       "source_line_end": 3555,
       "source_line_start": 3548,
@@ -242,7 +242,7 @@
     {
       "heading": "Platform capability next steps",
       "path": "Plans/_shards/orchestrator-subagent-integration/027-platform-capability-next-steps.md",
-      "sha256": "d8760b6392cf791485e5f917fb1c748f34171846992d173fcdd8643efe9eb223",
+      "sha256": "08ac169a99e483608e22f722b9b0a0dfcf867a1b7c1a3533bf5eb93c0863351c",
       "shard_id": "027",
       "source_line_end": 3573,
       "source_line_start": 3557,
@@ -251,7 +251,7 @@
     {
       "heading": "Considerations",
       "path": "Plans/_shards/orchestrator-subagent-integration/028-considerations.md",
-      "sha256": "9a6cf1b32759fd234c5a8ac3da33f8a05feb7546e71b8eb7a52029a1e9dd84b8",
+      "sha256": "74ca619b46bfdae16e74df96b38a8b1e334d9a4059312740118b39c72b6e61a8",
       "shard_id": "028",
       "source_line_end": 3582,
       "source_line_start": 3575,
@@ -260,7 +260,7 @@
     {
       "heading": "Platform capability next steps",
       "path": "Plans/_shards/orchestrator-subagent-integration/029-platform-capability-next-steps.md",
-      "sha256": "415a62d7090e939b4ab262165169c46702221d0ec8efdb5d00f57c34d52ec5e3",
+      "sha256": "1a0535d4176be0fd8bd7821f2a29a4903c2a5e05e9c5753515e74cb00d842c99",
       "shard_id": "029",
       "source_line_end": 3592,
       "source_line_start": 3584,
@@ -269,7 +269,7 @@
     {
       "heading": "Implementation Notes (Where Code Lives and What to Add)",
       "path": "Plans/_shards/orchestrator-subagent-integration/030-implementation-notes-where-code-lives-and-what-to-add.md",
-      "sha256": "cf88b29d9bcc1e10043a64514f76ee1502b422ac7cebf3ed4bc5ed3564b37a55",
+      "sha256": "0f4f87ac37acd934ffac09217ba569ad0ad517a9f83ea8945903e798799c8886",
       "shard_id": "030",
       "source_line_end": 3651,
       "source_line_start": 3594,
@@ -278,7 +278,7 @@
     {
       "heading": "Parallel Execution & Subagent Integration",
       "path": "Plans/_shards/orchestrator-subagent-integration/031-parallel-execution-subagent-integration.md",
-      "sha256": "a11f0cd0e2613b89246f034ac994b47affca806983fcb961bc6486bf1de3e464",
+      "sha256": "610a5e426ff985b664f5b120d4518220b2ac16f66c2e1776fc5778129d8564c7",
       "shard_id": "031",
       "source_line_end": 5731,
       "source_line_start": 3653,
@@ -287,7 +287,7 @@
     {
       "heading": "Platform-Specific Capabilities & Extensions",
       "path": "Plans/_shards/orchestrator-subagent-integration/032-platform-specific-capabilities-extensions.md",
-      "sha256": "2bcddc68ff62fa8db61e813c933c7c0604bc4ed38a6717095283a05cf1829f0c",
+      "sha256": "b3ca16cdff83b4c2c9b6652438dbf931d883921edb48a6f1254ea8d0ec455bfa",
       "shard_id": "032",
       "source_line_end": 5780,
       "source_line_start": 5734,
@@ -296,7 +296,7 @@
     {
       "heading": "Leveraging Platform Capabilities for Subagent Integration",
       "path": "Plans/_shards/orchestrator-subagent-integration/033-leveraging-platform-capabilities-for-subagent-integration.md",
-      "sha256": "5d2a078b2da195653d4ea197a49762c634aa7b1c8a7650824dddfb09e4e41fa2",
+      "sha256": "469805a37f4ce70f39b6e0027fc886cf0abb196aa7cd7cb9244305adac9cc687",
       "shard_id": "033",
       "source_line_end": 5797,
       "source_line_start": 5781,
@@ -305,7 +305,7 @@
     {
       "heading": "Updated Implementation Architecture",
       "path": "Plans/_shards/orchestrator-subagent-integration/034-updated-implementation-architecture.md",
-      "sha256": "9457ef054a7570c9b7a180f434d1a917d51184adb1b082f5599510149ff4c5b6",
+      "sha256": "78e3777ec37e611743bd13a89969da4838f968f84625f0604bf276f36426f8bd",
       "shard_id": "034",
       "source_line_end": 5857,
       "source_line_start": 5799,
@@ -314,7 +314,7 @@
     {
       "heading": "Benefits of Platform Capabilities",
       "path": "Plans/_shards/orchestrator-subagent-integration/035-benefits-of-platform-capabilities.md",
-      "sha256": "efd66abee5219304dc9c7609215992bad35008759470430bddeb2e0425ac5e46",
+      "sha256": "83ac9ea4e60e20440ace454aa1b7b6d7146cf7d39d154702ac39c0a18ace1c7b",
       "shard_id": "035",
       "source_line_end": 5866,
       "source_line_start": 5859,
@@ -323,7 +323,7 @@
     {
       "heading": "Implementation Considerations",
       "path": "Plans/_shards/orchestrator-subagent-integration/036-implementation-considerations.md",
-      "sha256": "614bbd9a81987ba59caf80cf05b51f0e1fdc5b4a3c8537fdbba74b86668272b2",
+      "sha256": "0b1d3d1a66bbcae3a3eb73ebe26c0bbf599baab4dd274d2c502d92b2a0c8072d",
       "shard_id": "036",
       "source_line_end": 5875,
       "source_line_start": 5868,
@@ -332,7 +332,7 @@
     {
       "heading": "Next Steps",
       "path": "Plans/_shards/orchestrator-subagent-integration/037-next-steps.md",
-      "sha256": "f45141f328b2fff127c1e90fd8e9419a67f39b390d4e7601303a448d56df4c2e",
+      "sha256": "3f91330ed081daba383fa1bf1bfbf786c247e6d7924b3af09ae445a6cbd8d331",
       "shard_id": "037",
       "source_line_end": 5883,
       "source_line_start": 5877,
@@ -341,7 +341,7 @@
     {
       "heading": "Autonomous QA Loop Pattern Integration",
       "path": "Plans/_shards/orchestrator-subagent-integration/038-autonomous-qa-loop-pattern-integration.md",
-      "sha256": "815657cb117b53caeb6279a1604f5b9d76e7122f105ee56e9074544f89586b74",
+      "sha256": "706247c0e3682dd54934c812d026405310908ff175add9e197daa82469991f34",
       "shard_id": "038",
       "source_line_end": 6276,
       "source_line_start": 5885,
@@ -350,7 +350,7 @@
     {
       "heading": "Change Summary",
       "path": "Plans/_shards/orchestrator-subagent-integration/039-change-summary.md",
-      "sha256": "7ff8b20ea092729151b4783af602c72049819c21dd9ad581fa90568871a1f193",
+      "sha256": "d2140c88320dfb776d6c50a8a806c1350db35ff91ef00849a5d3f55014b218a2",
       "shard_id": "039",
       "source_line_end": 6284,
       "source_line_start": 6278,
@@ -359,7 +359,7 @@
     {
       "heading": "Persona and Effective Runtime Resolution Addendum (2026-03-06)",
       "path": "Plans/_shards/orchestrator-subagent-integration/040-persona-and-effective-runtime-resolution-addendum-2026-03-06.md",
-      "sha256": "1a7f439446603d90e9559dc06f7750f0c6043420a65ac3f0db8d0621c2b33c37",
+      "sha256": "9de09b90c1a52774a3147481313beedbaf278a09634f481ec10d176d1fe35612",
       "shard_id": "040",
       "source_line_end": 6398,
       "source_line_start": 6285,
@@ -368,7 +368,7 @@
     {
       "heading": "Runtime Scheduler, Parallelism, and Remediation Addendum (2026-03-08)",
       "path": "Plans/_shards/orchestrator-subagent-integration/041-runtime-scheduler-parallelism-and-remediation-addendum-2026-03-0.md",
-      "sha256": "5fd641414a76cce25d7a4a97bfc714a2c557124336b1d265703c7334fd9c20a1",
+      "sha256": "1623fef22245b1a713bfcdedfb280c847d477b5fad8e51dfe4a5d1093aa3e6ca",
       "shard_id": "041",
       "source_line_end": 6555,
       "source_line_start": 6400,
@@ -377,7 +377,7 @@
     {
       "heading": "Runtime Scheduler Consumer / Subagent Canonical Alignment (2026-03-09)",
       "path": "Plans/_shards/orchestrator-subagent-integration/042-runtime-scheduler-consumer-subagent-canonical-alignment-2026-03-.md",
-      "sha256": "820f4f813083d0112e432efa9029d7d2369c66e60eff1dd911b488cf7e0564c0",
+      "sha256": "165dea7ca7392ebf9c74ae4ee2358805fbb6706c309cc8f3dce0eed354c0958a",
       "shard_id": "042",
       "source_line_end": 6595,
       "source_line_start": 6556,
@@ -386,7 +386,7 @@
     {
       "heading": "Orchestrator Runtime Consumer and Remediation Execution Canonical Alignment (2026-03-09)",
       "path": "Plans/_shards/orchestrator-subagent-integration/043-orchestrator-runtime-consumer-and-remediation-execution-canonica.md",
-      "sha256": "dcee5f3e324705411681c2d61f2d5ef6574a11f8233e1cd57f81f680b891040c",
+      "sha256": "a6563efc1b102e0f977b1a94a7b4c94364230f02220038fd499882843bd9d9b9",
       "shard_id": "043",
       "source_line_end": 6619,
       "source_line_start": 6596,
@@ -395,7 +395,7 @@
     {
       "heading": "Runtime Enum and Counter Alignment Addendum",
       "path": "Plans/_shards/orchestrator-subagent-integration/044-runtime-enum-and-counter-alignment-addendum.md",
-      "sha256": "c36f0c91a2dba75f623b8be110fe960310fbf634ab1b211b0313029d2a2f323f",
+      "sha256": "b129bbf00a240bb352963ed2bcb74a4fcda59a7d4d074f06b44417a816c15214",
       "shard_id": "044",
       "source_line_end": 6633,
       "source_line_start": 6621,
@@ -404,7 +404,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/orchestrator-subagent-integration/045-owner-consumer-map.md",
-      "sha256": "5c0bc1ab6688412f5ba0763fc98938c7bb08e8d5cb770bbf33c7904583c892ce",
+      "sha256": "26027c58da434fde2b5c775e6f32c3556d0c1f5938df378bb91f88a2b4cfd900",
       "shard_id": "045",
       "source_line_end": 6639,
       "source_line_start": 6635,
@@ -413,7 +413,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/orchestrator-subagent-integration/046-planunits.md",
-      "sha256": "1f184c37b12b029d0e2d0f087c98717973838d294bbdbe6502265833b276b0bc",
+      "sha256": "3b9753b1cbc39e7c8576abd90d41a5101e1fb1b9d8c80c0a6c0bbf288184dddb",
       "shard_id": "046",
       "source_line_end": 31405,
       "source_line_start": 6641,
@@ -422,7 +422,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/orchestrator-subagent-integration/047-migration-coverage.md",
-      "sha256": "d24f8b3491770bc42824bb4de6c10b3e967ef05aa3561f55b7692b9cbdcd8eb9",
+      "sha256": "2458ec4b6fb7983d4ce8efcb0298515635b541e93f9449149aa029228d61c58e",
       "shard_id": "047",
       "source_line_end": 31423,
       "source_line_start": 31407,
@@ -431,7 +431,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260614-001",
       "path": "Plans/_shards/orchestrator-subagent-integration/048-ledger-compile-addendum-pldg-20260614-001.md",
-      "sha256": "5cbaeee41560027cf0fd04075f3ff8bfa55040e026412ef29b232f1cf8c303b5",
+      "sha256": "71c27a00c8a087f7167e93dea180d0405feef9e8bd0e31feb33b9b976d316791",
       "shard_id": "048",
       "source_line_end": 31520,
       "source_line_start": 31426,
@@ -440,7 +440,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260614-002",
       "path": "Plans/_shards/orchestrator-subagent-integration/049-ledger-compile-addendum-pldg-20260614-002.md",
-      "sha256": "9380e48c1b3e88fa882bde811ee3229874ae69cb4bbc94c229694ffc57a1c7ae",
+      "sha256": "4309feac193b32757b9aee4911e095f9ba01ac6dbbbc9119a58fad160a6a5627",
       "shard_id": "049",
       "source_line_end": 31568,
       "source_line_start": 31522,
@@ -449,7 +449,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260616-002",
       "path": "Plans/_shards/orchestrator-subagent-integration/050-ledger-compile-addendum-pldg-20260616-002.md",
-      "sha256": "b2801567042ba8831772a8f4b0efbebf3cd6b89aceea815b6b1db4b3a7ad9e2b",
+      "sha256": "f651078e368f6324eb30199cce4d115538e550cccafc183abc963a3df6b3017f",
       "shard_id": "050",
       "source_line_end": 31674,
       "source_line_start": 31570,
@@ -458,7 +458,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260622-001-fff",
       "path": "Plans/_shards/orchestrator-subagent-integration/051-ledger-compile-addendum-pldg-20260622-001-fff.md",
-      "sha256": "9902fcf01e128f01f94f8574155221f782f403fef51ae9619b3897074c5219de",
+      "sha256": "6b2ea34f68de5e9b81aa51eea1244d1064584d68cbb6b5eb45426b1adfb794b5",
       "shard_id": "051",
       "source_line_end": 31724,
       "source_line_start": 31676,
@@ -467,7 +467,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260627-001-feature-intake",
       "path": "Plans/_shards/orchestrator-subagent-integration/052-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
-      "sha256": "4e7f96d8e61d82fcd866c7adc3144e446f07ec9cd546f107e87cfec780f070a5",
+      "sha256": "914b7d687ec80a967a0bdb8e64a01965cd0d2f54165ca1dc20a19f30b680989a",
       "shard_id": "052",
       "source_line_end": 31785,
       "source_line_start": 31726,
@@ -476,7 +476,7 @@
     {
       "heading": "FABLE Repair Addendum - storage coordination canon",
       "path": "Plans/_shards/orchestrator-subagent-integration/053-fable-repair-addendum-storage-coordination-canon.md",
-      "sha256": "15dbd74395079b29cfc14997236872973b585dc3b81e5c93e60e600a4bc35023",
+      "sha256": "7711f159e6ce91f05d3549a8d528bd9b56270ed3203a34b49b5a3f9bea9b25c2",
       "shard_id": "053",
       "source_line_end": 31860,
       "source_line_start": 31787,
@@ -485,7 +485,7 @@
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/orchestrator-subagent-integration/054-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "95337c9f5685e7c09a5552a9574dbf6f7cf168d27940a7e7ff4c987cf9b46c20",
+      "sha256": "58beeb5c2e7c2ab921d061e04ee1eccfb02ec274aef9ed121e042868cbeaf6f7",
       "shard_id": "054",
       "source_line_end": 32176,
       "source_line_start": 31862,
@@ -494,7 +494,7 @@
     {
       "heading": "FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)",
       "path": "Plans/_shards/orchestrator-subagent-integration/055-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md",
-      "sha256": "c5c669db69d68c16245c06893498512c045c2c16f53a49eab44bf41fc12d3d13",
+      "sha256": "8ffddd64bc9ed1f7b37bea9b2fe3cc89e90e0fe3e9e0484cd2d23f527d26be1f",
       "shard_id": "055",
       "source_line_end": 32186,
       "source_line_start": 32177,
@@ -503,7 +503,7 @@
     {
       "heading": "Platform Capability Manager - Known-37 owner materialization",
       "path": "Plans/_shards/orchestrator-subagent-integration/056-platform-capability-manager-known-37-owner-materialization.md",
-      "sha256": "a758c67f980939ac33eedb47633367037db96bc0bdb387b201e805ec93fa9fb9",
+      "sha256": "f5c6cdac7cc46cfc2e3bacaf128058b40f086fb50ebf6c6ccd3335e3e47a7362",
       "shard_id": "056",
       "source_line_end": 32197,
       "source_line_start": 32189,
@@ -512,7 +512,7 @@
     {
       "heading": "Durable orchestration and sustainable-capacity addendum (2026-08-13)",
       "path": "Plans/_shards/orchestrator-subagent-integration/057-durable-orchestration-and-sustainable-capacity-addendum-2026-08-.md",
-      "sha256": "47fee00b1acb598d90ae8e6a047eb5095a50131593464bd3afd4c03f6d7073e0",
+      "sha256": "a64b7cb156c7033e417bd03773c8b8402c9a74f3f6fbaa6814b915a83f814ab2",
       "shard_id": "057",
       "source_line_end": 32331,
       "source_line_start": 32199,
@@ -521,7 +521,7 @@
     {
       "heading": "Working Notebook Scopes Addendum (2026-09-05)",
       "path": "Plans/_shards/orchestrator-subagent-integration/058-working-notebook-scopes-addendum-2026-09-05.md",
-      "sha256": "cbd5a3133f7c3a45982ab85a0d0a6d279538bc050b037bfa2fb0e846511ccfaf",
+      "sha256": "eab7a458cb5090594b9552c6d2913f0ded36f38ee4c3694e71c603c9fa31bfa2",
       "shard_id": "058",
       "source_line_end": 32593,
       "source_line_start": 32333,
@@ -530,7 +530,7 @@
     {
       "heading": "Event Authority DO contracts \u2014 2026-11-04",
       "path": "Plans/_shards/orchestrator-subagent-integration/059-event-authority-do-contracts-2026-11-04.md",
-      "sha256": "0b85c2509c21baf2aecc46526227c1158ef9ec0090a4c8a4c61fe98f0c779968",
+      "sha256": "b77cac4ecf7fd3d532cfd1ac2f3ef4a12162e05cf43a398f386e4db04335e4cb",
       "shard_id": "059",
       "source_line_end": 35232,
       "source_line_start": 32595,
@@ -539,7 +539,7 @@
     {
       "heading": "Closure Re-audit Repair Addendum - 2026-11-25",
       "path": "Plans/_shards/orchestrator-subagent-integration/060-closure-re-audit-repair-addendum-2026-11-25.md",
-      "sha256": "2da2b2c78255b02d0be7cbb14c9a2df247ce7eedfca1f3e2ef13a7f292065ada",
+      "sha256": "b489adc13a8538490c55eb4fc2933fcd930e905560f6b790e0e49fd828af2aa8",
       "shard_id": "060",
       "source_line_end": 35272,
       "source_line_start": 35234,
@@ -549,6 +549,6 @@
   "source": {
     "line_count": 35272,
     "path": "Plans/orchestrator-subagent-integration.md",
-    "sha256": "97b1d391be028a118aa9ee837749dc861f7f51b6c37f2de93f71048ddf325371"
+    "sha256": "794de3d14bc5325d4bbef53a390e3d5dfa036674f1639fb90912f48ef832a31c"
   }
 }

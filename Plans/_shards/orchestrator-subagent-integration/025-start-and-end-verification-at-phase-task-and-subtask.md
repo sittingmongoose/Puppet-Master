@@ -4,7 +4,7 @@ Source: `Plans/orchestrator-subagent-integration.md`
 
 Source lines: L1547-L3546
 
-Source SHA256: `97b1d391be028a118aa9ee837749dc861f7f51b6c37f2de93f71048ddf325371`
+Source SHA256: `794de3d14bc5325d4bbef53a390e3d5dfa036674f1639fb90912f48ef832a31c`
 
 ---
 
@@ -577,7 +577,7 @@ async fn run_reviewer_subagent(
         &context.workspace,
     ).await?;
 
-    // Parse reviewer output as structured SubagentOutput
+    // Parse reviewer output as structured SubagentOutput (CliBridge stdout example; DirectApi/ServerBridge pass their transport-owned response content per OSI-004, OSI-093)
     let parsed_output = parse_reviewer_output(&review_output.stdout)?;
 
     // Extract findings from reviewer output
@@ -1004,7 +1004,7 @@ pub enum ValidationError {
 
 Extend `src/platforms/output_parser.rs` with new parser methods:
 
-Transport scope of the parser code below (OSI-004, OSI-093): live `CursorOutputParser` and `ClaudeOutputParser` use the CliBridge JSON and stream-json passes in Subagent Output Parser Fallback (Resolved). Their `serde_json::from_str(stdout)` examples illustrate single-document JSON only. A stream-json attempt uses the bridge's complete NDJSON events to obtain the final assistant content before handing it to structured field extraction. `GeminiOutputParser` is the live DirectApi parser over the response body (`candidates[0].content.parts[0].text`; its `--output-format json` comment and `stdout` parameter name are CLI-era wording). The `CodexOutputParser` (JSONL) and `CopilotOutputParser` (text and regex over `stdout`/`stderr`) blocks are CLI-era code examples kept as historical context only (OSI-158, OSI-161): Codex and Copilot are DirectApi, have no CLI output, and are parsed as JSON from the final assistant content like Gemini.
+Transport scope of the parser code below (OSI-004, OSI-093): live `CursorOutputParser` and `ClaudeOutputParser` use the CliBridge JSON and stream-json passes in Subagent Output Parser Fallback (Resolved). Their `serde_json::from_str(stdout)` examples illustrate single-document JSON only. A stream-json attempt uses the bridge's complete NDJSON events to obtain the final assistant content before handing it to structured field extraction. `GeminiOutputParser` is the live DirectApi parser over the response body (`candidates[0].content.parts[0].text`; its `--output-format json` comment and `stdout` parameter name are CLI-era wording). The `CodexOutputParser` (JSONL) and `CopilotOutputParser` (text and regex over `stdout`/`stderr`) blocks are CLI-era code examples kept as historical context only (OSI-158, OSI-161): Codex and Copilot are DirectApi, have no CLI output, and are parsed as JSON from the final assistant content like Gemini. The `stdout`/`stderr` parameter names in the `OutputParser` trait, `HandoffValidator` and `validate_subagent_output` Rust snippets below are CliBridge-era source lineage; live validation routes each provider's transport-owned handoff input (CliBridge CLI `stdout`/`stderr`, DirectApi direct-provider response final assistant content, or ServerBridge server event stream).
 
 ```rust
 // Add to ParsedOutput struct:
@@ -1091,7 +1091,7 @@ impl OutputParser for CursorOutputParser {
 
 **Validation workflow:**
 
-Validate the structured parse and, if it fails, try and validate generic extraction on the same output. Return the complete validated result or report the format failure to the execution loop. The validator example below is source lineage for this workflow. Its ordering of text extraction after retry exhaustion is retired.
+Validate the transport-owned handoff input (CliBridge CLI `stdout`/`stderr` for Cursor and Claude Code, DirectApi direct-provider response final assistant content for Codex, Copilot and Gemini, or ServerBridge server event stream for OpenCode under OSI-004 and OSI-093) through the structured parse and, if it fails, try and validate generic extraction on the same handoff input. Return the complete validated result or report the format failure to the execution loop. The validator example below is source lineage for this workflow. Its `stdout`/`stderr` parameter shape applies only to the CliBridge source example, and its ordering of text extraction after retry exhaustion is retired.
 
 ```rust
 // src/core/handoff_validation.rs
@@ -1173,7 +1173,7 @@ impl HandoffValidator {
 
 **Integration with orchestrator:**
 
-In `src/core/orchestrator.rs`, run the initial handoff with retry count zero and apply the same parser and validation to each resulting output. When validation and fallback fail, check the count before scheduling another invocation. If budget remains, dispatch the next same-Provider retry with validation feedback and the `SubagentOutput::example()` format instruction, counting it only when dispatched. Otherwise settle using the Handoff Retry Ceiling and Handoff failure boundary below. The loop example is source lineage. Its pre-dispatch increment and handling of the retry instruction are retired.
+In `src/core/orchestrator.rs`, run the initial handoff with retry count zero, route the runner's transport-owned handoff input into `HandoffValidator` (CliBridge CLI `stdout`/`stderr` for Cursor and Claude Code, DirectApi direct-provider response final assistant content for Codex, Copilot and Gemini, or ServerBridge server event stream for OpenCode under OSI-004 and OSI-093), and apply the same parser and validation to each resulting output. When validation and fallback fail, check the count before scheduling another invocation. If budget remains, dispatch the next same-Provider retry with validation feedback and the `SubagentOutput::example()` format instruction, counting it only when dispatched. Otherwise settle using the Handoff Retry Ceiling and Handoff failure boundary below. The loop example is source lineage. Its `stdout`/`stderr` call shape applies only to the CliBridge source example, and its pre-dispatch increment and handling of the retry instruction are retired.
 
 ```rust
 use crate::core::handoff_validation::HandoffValidator;
@@ -1461,7 +1461,7 @@ impl OutputParser for CopilotOutputParser {
 
 ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
-**Validation function:** The example shows parser delegation. Live `validate_subagent_output` runs the transport-scoped passes and generic fallback in Subagent Output Parser Fallback (Resolved), checks the required fields and returns any remaining failure to the execution loop.
+**Validation function:** The example shows parser delegation with a CliBridge-era `(output, stderr)` signature as source lineage. Live `validate_subagent_output` receives the provider's transport-owned handoff input (CliBridge CLI `stdout`/`stderr`, DirectApi direct-provider response final assistant content, or ServerBridge server event stream under OSI-004 and OSI-093), runs the transport-scoped passes and generic fallback in Subagent Output Parser Fallback (Resolved), checks the required fields and returns any remaining failure to the execution loop.
 
 ```rust
 // src/core/hooks/handoff_validator.rs
@@ -1480,7 +1480,7 @@ pub fn validate_subagent_output(
 }
 ```
 
-**Validation logic in AfterUnit hook** (legacy alias AfterTier, Execution-Unit Hook Naming)**:** AfterUnit hook calls `validate_subagent_output(output: &str, stderr: &str, platform: Platform) -> Result<SubagentOutput, ValidationError>`. If validation fails:
+**Validation logic in AfterUnit hook** (legacy alias AfterTier, Execution-Unit Hook Naming)**:** AfterUnit hook invokes `validate_subagent_output` on the provider's transport-owned handoff input and `platform` (the `(output: &str, stderr: &str, platform: Platform) -> Result<SubagentOutput, ValidationError>` signature above is CliBridge source lineage; DirectApi and ServerBridge pass their direct-provider final assistant content or server event stream with no CLI `stderr`, OSI-004, OSI-093). If validation fails:
 1. Log error with details (platform, error type, partial output snippet).
 2. Request the next retry while the Handoff Retry Ceiling budget remains, using "format your output as structured JSON" in the retry prompt.
 3. When output is still invalid after fallback and the handoff retry budget is exhausted, the node does not advance and `ExecutionUnitContext` is not updated from the output. The attempt settles with `failure_class = structured_output_invalid`, the raw output stays in `parser.error`, the extracted partial output is kept on the failed attempt for review only, and the node takes the `needs_review` recovery point with [Retry] [Skip] [View raw output] (Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions). The earlier step "proceed with partial output (fail-safe) but mark tier as "complete with warnings"" is superseded source lineage.
@@ -1999,7 +1999,7 @@ These lifecycle and quality features **complement** the existing start/end verif
 - **Lenient validation:** Accept partial output (e.g., missing `downstream_context` is OK, missing `task_report` is not). Only reject if critical fields missing.
 - **Parser testing:** Test with real platform outputs to tune validation strictness. Aim for < 1% false positive rate.
 - **User feedback:** If validation fails, log raw output for debugging. Allow users to report false positives.
-- **Parser updates:** Update parsers based on user feedback and platform CLI changes.
+- **Parser updates:** Update parsers based on user feedback, platform CLI changes (CliBridge), and provider API or model changes (DirectApi, OSI-004, OSI-093).
 
 ### Implementation Notes
 
