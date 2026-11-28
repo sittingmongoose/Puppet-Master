@@ -18,8 +18,14 @@
 // (browser-check.config.mjs LOOKS) at each gap instead; --set looks=glass-light,friendly-dark picks some.
 // The other presses a reveal hands on are covered at both rates by default: the window's look menu (its Glass row,
 // then its Light row) and Continue pressed inside Glass's reveal (the look stays Glass Dark and Where opens).
-// --set gaps=0,220, --set cpu=<rate> (the main rate), --set slow=<rate> (0 drops the slow cells) and --set paths=0 (no
-// look menu or Continue cells) narrow a run.
+// A press held through the reveal is covered at both rates too, for Light and for Continue (round 2): held 2.6 s and
+// released on the same control it applies; held, dragged off onto the screen's heading and released there it is cancelled,
+// as on any button (Light: the look stays Glass Dark; Continue: the screen stays Look). Each such cell also asserts that
+// the press began inside the reveal (the page's root took it) and that the release point is the heading.
+// A mode that is already the window's (Dark, in a fresh window's Basic Dark) is changed first to the other one, so that a
+// dropped press of it shows: Glass Dark starts from Basic Light.
+// --set gaps=0,220, --set cpu=<rate> (the main rate), --set slow=<rate> (0 drops the slow cells), --set paths=0 (no
+// look menu or Continue cells) and --set press=0 (no held or dragged-off cells) narrow a run.
 import { LOOKS } from '../browser-check.config.mjs';
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -38,6 +44,13 @@ export default async function (t) {
     cells.push({ via: 'menu', look: 'glass-light', gap: 0, rate: r });
     cells.push({ via: 'continue', look: 'glass-dark', gap: 0, rate: r });
   }
+  /* FO-243 round 2: a press held through the reveal, released on its own control (applies) or dragged off onto the
+     heading and released there (cancelled) */
+  if (!t.args.looks && t.args.press !== '0') for (const r of [rate, slow].filter((x) => x > 0)) for (const press of ['hold', 'off']) {
+    cells.push({ via: 'tiles', look: 'glass-light', gap: 0, rate: r, press });
+    cells.push({ via: 'continue', look: 'glass-dark', gap: 0, rate: r, press });
+  }
+  const HOLD_MS = 2600, HEAD = '#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-title';
   const R = '#pm-o55-onboarding';
   const VIA = {
     tiles: (fam, mode) => [`${R} ${LAYER} .o55-tile[data-o55-do="pickFamily"][data-arg="${fam}"]`, `${R} ${LAYER} [data-o55-do="pickMode"][data-arg="${mode}"]`],
@@ -46,9 +59,10 @@ export default async function (t) {
   };
   const NAME = { tiles: (fam, mode) => `${fam} then ${mode}`, menu: (fam, mode) => `look menu ${fam} then ${mode}`, continue: (fam) => `${fam} then Continue` };
 
-  for (const { via, look, gap, rate: r } of cells) {
+  const PRESS = { click: '', hold: ', held and released on it', off: ', held, dragged off and released on the heading' };
+  for (const { via, look, gap, rate: r, press = 'click' } of cells) {
     const [fam, mode] = look.split('-');
-    const [sel1, sel2] = VIA[via](fam, mode), name = NAME[via](fam, mode);
+    const [sel1, sel2] = VIA[via](fam, mode), name = NAME[via](fam, mode) + PRESS[press];
     await t.step(`${name}, ${gap} ms apart, CPU ${r}x`, async () => {
       const f = await t.app.open({ onboarding: true, query: 'o55=fresh&o55scenario=fresh', settleMs: 1500 });
       await f.waitForFunction(() => window.O55 && O55.S && O55.S.sess && O55.S.sess.screen === 'welcome', null, { timeout: 40000 });
@@ -56,6 +70,16 @@ export default async function (t) {
       await f.waitForFunction(() => O55.S.sess.screen === 'look' && !document.querySelector('#pm-o55-onboarding .o55-layer.o55-hold')
         && document.querySelectorAll('#pm-o55-onboarding .o55-pane > .o55-layer').length === 1, null, { timeout: 20000 });
       await sleep(600);
+      /* a mode the window already has would look applied even if its press were lost: change to the other one first */
+      let pre = '';
+      const had = await f.evaluate(() => O55.theme().selectedMode);
+      if (via !== 'continue' && press === 'click' && had === mode && (mode === 'light' || mode === 'dark')) {
+        const other = mode === 'dark' ? 'light' : 'dark';
+        await f.locator(`${R} ${LAYER} [data-o55-do="pickMode"][data-arg="${other}"]`).filter({ visible: true }).first().click({ timeout: 10000 });
+        await f.waitForFunction((m) => O55.theme().selectedMode === m && !O55.S.vt && !document.documentElement.hasAttribute('data-o55-vt'), other, { timeout: 30000 });
+        await sleep(600);
+        pre = `, ${other} first`;
+      }
       if (via === 'menu') {
         await f.locator(`${R} .o55-lookslot [data-o55-do="lookMenu"]`).filter({ visible: true }).first().click({ timeout: 10000 });
         await f.locator(sel1).filter({ visible: true }).first().waitFor({ timeout: 10000 });
@@ -94,7 +118,27 @@ export default async function (t) {
         while (!(m && m.hit) && Date.now() - t0 < 30000) { await sleep(100); m = await at(sel2); }
         cover = !(m && m.hit) ? `second control never clear (under ${m && m.at})` : first ? `second control under ${first} for ${Date.now() - t0} ms` : 'second control clear at once';
         m = m || p2;
-        await t.page.mouse.click(m.x + off.x, m.y + off.y);
+        if (press === 'click') await t.page.mouse.click(m.x + off.x, m.y + off.y);
+        else {
+          /* the page's own view of the press: did its root take it (a reveal playing), and how long was it held */
+          await f.evaluate(() => {
+            const w = window.__fo243 = { down: null, up: null };
+            addEventListener('pointerdown', (e) => { if (!w.down) w.down = { t: performance.now(), vt: !!O55.S.vt, root: e.target === document.documentElement }; }, { capture: true, once: true });
+            addEventListener('pointerup', (e) => { if (!w.up) w.up = { t: performance.now(), x: e.clientX, y: e.clientY }; }, { capture: true, once: true });
+          });
+          const x0 = m.x + off.x, y0 = m.y + off.y, d0 = Date.now();
+          await t.page.mouse.move(x0, y0);
+          await t.page.mouse.down();
+          if (press === 'hold') await t.page.mouse.move(x0 + 3, y0 + 2);
+          else {
+            const h = await f.evaluate((q) => { const n = document.querySelector(q); if (!n) return null; const b = n.getBoundingClientRect(); return { x: b.x + Math.min(b.width / 2, 60), y: b.y + b.height / 2 }; }, HEAD);
+            if (!h) throw new Error('no heading to release on');
+            await t.page.mouse.move(h.x + off.x, h.y + off.y, { steps: 3 });
+          }
+          const left = HOLD_MS - (Date.now() - d0);
+          if (left > 0) await sleep(left);
+          await t.page.mouse.up();
+        }
       } finally {
         for (const c of cdps) { await c.send('Emulation.setCPUThrottlingRate', { rate: 1 }).catch(() => {}); await c.detach().catch(() => {}); }
       }
@@ -110,11 +154,27 @@ export default async function (t) {
         s = n;
         if (held >= 1000) break;
       }
-      const got = `from ${start}: ${JSON.stringify(s.th)}, draft ${s.draft.join('/')}, screen ${s.screen}, settled ${held >= 1000}, ${cover}, CPU slowed ${slowed.toFixed(1)}x on ${cdps.length} target(s)`;
-      t.log(`${via} ${look} gap ${gap} rate ${r}: ${got}`);
-      const looked = held >= 1000 && s.th.chosen === fam && s.th.selectedMode === mode && s.draft[0] === fam && s.draft[1] === mode;
-      if (via === 'continue') await t.check(`${fam} kept and Continue went on (${gap} ms, CPU ${r}x)`, looked && s.screen === 'where', got);
-      else await t.check(`${via === 'menu' ? 'look menu ' : ''}${fam} ${mode} applied (${gap} ms, CPU ${r}x)`, looked, got);
+      /* a held press: it began in the reveal (the root took it), and the point it was released at is the heading itself
+         (no control), read on the settled page; a press 2.6 s held but released on its own control is in that control */
+      let pr = null, how = '';
+      if (press !== 'click') {
+        pr = await f.evaluate(([q2, qh]) => {
+          const w = window.__fo243 || {}, d = w.down, u = w.up;
+          const e = u ? document.elementFromPoint(u.x, u.y) : null, c = document.querySelector(q2), h = document.querySelector(qh);
+          return { inReveal: !!(d && d.vt && d.root), heldMs: d && u ? Math.round(u.t - d.t) : null,
+            onHeading: !!(e && h && h.contains(e) && !e.closest('button, a[href], input, [data-o55-do], [role="button"]')), onControl: !!(e && c && c.contains(e)),
+            at: e ? (e.className && e.className.baseVal === undefined ? String(e.className) : e.tagName).slice(0, 40) : null };
+        }, [sel2, HEAD]);
+        how = `, pressed in the reveal ${pr.inReveal}, held ${pr.heldMs} ms, released on ${pr.at} (heading ${pr.onHeading}, its control ${pr.onControl})`;
+      }
+      const got = `from ${start}${pre}: ${JSON.stringify(s.th)}, draft ${s.draft.join('/')}, screen ${s.screen}, settled ${held >= 1000}, ${cover}${how}, CPU slowed ${slowed.toFixed(1)}x on ${cdps.length} target(s)`;
+      t.log(`${via} ${look} gap ${gap} rate ${r} ${press}: ${got}`);
+      const is = (fm, md) => held >= 1000 && s.th.chosen === fm && s.th.selectedMode === md && s.draft[0] === fm && s.draft[1] === md;
+      const looked = is(fam, mode), real = !pr || (pr.inReveal && (press === 'off' ? pr.onHeading : pr.onControl));
+      if (press === 'off' && via === 'continue') await t.check(`Continue dragged off in ${fam}'s reveal is cancelled: Look stays (CPU ${r}x)`, real && is(fam, 'dark') && s.screen === 'look', got);
+      else if (press === 'off') await t.check(`${mode} dragged off in ${fam}'s reveal is cancelled: ${fam} dark stays (CPU ${r}x)`, real && is(fam, 'dark') && s.screen === 'look', got);
+      else if (via === 'continue') await t.check(`${fam} kept and Continue went on (${gap} ms${PRESS[press]}, CPU ${r}x)`, real && looked && s.screen === 'where', got);
+      else await t.check(`${via === 'menu' ? 'look menu ' : ''}${fam} ${mode} applied (${gap} ms${PRESS[press]}, CPU ${r}x)`, real && looked, got);
     });
   }
   /* pre-existing on main in T3's sandbox, not FO-243's: a screen the page's own timer settles focuses its heading

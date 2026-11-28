@@ -464,8 +464,9 @@
   /* FO-243: the click is judged from the press's release, not its start. On a slow machine the press's own work (the
      skipped reveal, the new look's restyle) held the release back for seconds, and a press 1.5 s old lost its click:
      Light picked just after Glass did nothing and the window stayed in Glass Dark. A press whose click never came is
-     still let go 1.5 s after its release. */
-  document.addEventListener('pointerup', () => { const k = S.vtPress; if (k && k.up == null) k.up = performance.now(); }, true);
+     still let go 1.5 s after its release. Where it was released is kept too: the click is handed on only when the
+     release is on the control that was pressed (below). */
+  document.addEventListener('pointerup', (e) => { const k = S.vtPress; if (k && k.up == null) { k.up = performance.now(); k.ux = e.clientX; k.uy = e.clientY; } }, true);
   /* Only a deliberate key ends it (R35). A key held down is not pressed again: a look picked by keyboard (Enter on its
      row) began its reveal with that key, and its auto-repeat (flagged or not) is not new input; a key counts again once
      it has come up. Nor is a key that says nothing to the page: an IME's composition (isComposing, 'Process', keyCode
@@ -491,8 +492,18 @@
     S.vtPress = null;
     if (performance.now() - (k.up != null ? k.up : k.t) > 1500 || e.target !== document.documentElement) return;
     const el = document.elementFromPoint(k.x, k.y);
-    if (el && el !== document.documentElement) { e.stopPropagation(); e.preventDefault(); el.click(); }
+    if (!el || el === document.documentElement) return;
+    /* FO-243: a press is cancelled, as on any button, when it is released somewhere else. Held on Continue (or on
+       Light) through the reveal, dragged off and released on the heading, it still clicked Continue: the browser's click
+       went to the page root, and the press point alone was hit. Both points are hit now, on the page as it is at the
+       click, and each is taken up to the control it lies in; the click is handed on only when they are the same one. */
+    const up = k.ux == null ? el : document.elementFromPoint(k.ux, k.uy);
+    if (pressControl(up) !== pressControl(el)) return;
+    e.stopPropagation(); e.preventDefault(); el.click();
   }, true);
+  const PRESSABLE = 'button, a[href], input, select, textarea, summary, label, [data-o55-do], [role="button"], [role="link"], '
+    + '[role="menuitem"], [role="menuitemradio"], [role="menuitemcheckbox"], [role="option"], [role="radio"], [role="checkbox"], [role="switch"], [role="tab"]';
+  const pressControl = (n) => (n && n.closest && n.closest(PRESSABLE)) || n;
 
   /* ---------------------------------------------------------------- rail */
   function renderRail() {
