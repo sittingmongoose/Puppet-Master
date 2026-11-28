@@ -4,7 +4,7 @@ Source: `Plans/agent-rules-context.md`
 
 Source lines: L95-L110
 
-Source SHA256: `df94c7947ba59736a20e715bc53730b10aad790414d462c5e8308396164b06e9`
+Source SHA256: `31e3f30ba930fb9b586555d32a554be37e37afc10f0b7f6a51d1deaf8db268b5`
 
 ---
 
@@ -13,7 +13,7 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, Contrac
 
 ### In-app instructions editor reconciliation
 
-The in-app project instructions editor writes the same runtime-consumed project rules and instruction files defined by this document. Jared’s 2026-11-12 answer at 8:12 AM EST was "Keep them there": Rules for every project and Rules for this project live in Settings > Personas & Crews > Defaults > Standing instructions. The first writes the existing application-rule source and the second the actual Project rule source; neither is a saved-note Memory control. The 2026-07-08 addendum's current binding below states each editor's save path: both use the Teach sheet (`cmd.chat.teach.capture` -> `TeachCaptureRequest`/`TeachCaptureResult`, `cmd.chat.teach.confirm` -> `TeachConfirmRequest`/`TeachConfirmResult`, `cmd.chat.teach.cancel` -> `TeachCancelRequest`/`TeachCancelResult` in `Plans/assistant_memory_contracts.schema.json`), with Rules for this project saving in Project scope (`scope: project`, non-empty `project_id`, `.puppet-master/project-rules.md`) and Rules for every project saving in genuine application scope (`scope: user`, `project_id: null`, `public_safe: true`, `application_scope` `WorkflowScopeV2` with `scope_kind: application` and `scope_partition: app`, `app.agent_rules.application_markdown`).
+The in-app project instructions editor writes the same runtime-consumed project rules and instruction files defined by this document. Jared’s 2026-11-12 answer at 8:12 AM EST was "Keep them there": Rules for every project and Rules for this project live in Settings > Personas & Crews > Defaults > Standing instructions. The first writes the existing application-rule source and the second the actual Project rule source; neither is a saved-note Memory control. The 2026-07-08 addendum's current binding below states each editor's save path: both use the Teach sheet (`cmd.chat.teach.capture` -> `TeachCaptureRequest`/`TeachCaptureResult`, `cmd.chat.teach.confirm` -> `TeachConfirmRequest`/`TeachConfirmResult`, `cmd.chat.teach.cancel` -> `TeachCancelRequest`/`TeachCancelResult` in `Plans/assistant_memory_contracts.schema.json`), with Rules for this project saving in Project scope (`scope: project`, non-empty `project_id`, `.puppet-master/project-rules.md`) and Rules for every project saving in genuine application scope (`scope: user`, `project_id: null`, `public_safe: true`, `application_scope` `WorkflowScopeV2` with `scope_kind: application` and `scope_partition: app`, `app.agent_rules.application_markdown`). Neither editor dispatches yet from Standing instructions: the outer `ChatOwnerCommandRequestV2` / `ChatOwnerCommandResultV2` envelope requires a non-empty chat `thread_id`, so both editors stay disabled until an admitted thread-less Settings envelope exists (the binding below names the gap).
 
 Rules:
 - the editor must show the canonical path and scope for the file being edited
