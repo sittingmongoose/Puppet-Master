@@ -4,7 +4,7 @@ Source: `Plans/Tools.md`
 
 Source lines: L12440-L12716
 
-Source SHA256: `49549c0771a51deaab00b327f6bff228f923ce79afbe2c6743de7be2f87f0cce`
+Source SHA256: `96b2459874ec77144b97a79e435df9ed8885cd01640a240766633c0973f9b088`
 
 ---
 
@@ -123,7 +123,7 @@ T-172's receipt is one immutable record per session namespace generation:
 
 For a direct tool call, dispatch requires all five entry booleans to be true and `startup_status` to be `ready` or `not_required`. For direct dispatch, any other entry denies the call with that entry's `denial_reason_code` before dispatch (T-172 criterion 2). Tool mentions, UI chips, and model-visible schemas read one receipt at one `namespace_generation` (T-172 criterion 3).
 
-For a nested EvalSession call, the host admits the request-selected tool and validates its L2 schema under §4.4. In Code Mode this requires membership in T-189's callable catalog and T-190's checks on each call. Nested calls are exempt from the generic direct-exposure checks for `injected`, `visible_to_model`, and `visible_to_ui`. T-186 still requires all its receipt flags for every computer tool call, including nested dispatch. The tool's own capability, policy, and readiness checks still apply.
+For a nested EvalSession call, the host admits the request-selected tool and validates its L2 schema under §4.4. In Code Mode this requires membership in T-189's callable catalog and T-190's checks on each call. Nested calls are exempt from the generic direct-exposure checks for `injected`, `visible_to_model`, and `visible_to_ui`. T-186 still requires all its receipt flags for every computer tool call, including nested dispatch. A computer tool enters T-189's callable catalog only while T-186's active-session receipt evidence holds, and that evidence is checked again at dispatch. The tool's own capability, policy, and readiness checks still apply.
 
 Example:
 
@@ -210,7 +210,7 @@ One immutable settlement is written per tool call attempt, including a call the 
 | Field | Type | Rule |
 |---|---|---|
 | `settlement_id` | string | Opaque and unique. |
-| `tool_call_id` | nonempty string, optional | Copy the gated call id when present. Use the trusted PM-issued call id for a hosted structured intent or an EvalSession nested call. Omit only for a provider-native call denied without an id. |
+| `tool_call_id` | nonempty string, optional | Copy the gated call id when present. Use the trusted PM-issued call id for a hosted structured intent or an EvalSession nested call. For a hosted structured intent, PM mints that id when the Run_Modes hosted action loop takes the intent in, before admission and dispatch. For a nested call it is the child id the host dispatcher mints under §4.4. Omit only for a provider-native call denied without an id. |
 | `parent_operation_id` | nonempty string, optional | Required for an EvalSession nested call. The enclosing operation's `logical_operation_id`, which for Code Mode is the outer script's operation id. Absent on the outer script and other direct calls. |
 | `gate_id` | nonempty string, optional | The call's `ProviderToolTurnAdmissionGate` record. Present for every call judged by that gate, including native calls denied without an id. Absent for every other call, including nested calls. |
 | `settlement_state` | closed enum | One of the nine values above. |
