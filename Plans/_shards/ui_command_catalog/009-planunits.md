@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L1301-L7137
+Source lines: L1301-L7150
 
-Source SHA256: `9c34de2ef93562e8eb995cd913772a076b1d81c9574dec216dd3b6a4e5262a3d`
+Source SHA256: `403026f8e00c7e1e3b36d5ac7cfbd34f533d2e562b7c723ba63beed33313b847`
 
 ---
 
@@ -1724,7 +1724,14 @@ plan_unit_id: UCC-031
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: cmd.github.disconnect uses empty args, deletes the GitHub token from credential storage, emits auth.github.disconnected, and affects Settings > GitHub/Auth and Dashboard auth status.
+canonical_text: >-
+  cmd.github.disconnect uses empty args, deletes the GitHub token from credential storage, emits auth.github.disconnected, and affects Settings > GitHub/Auth and Dashboard auth status.
+  Failure results, each with a declared failure code (2026-11-28 spec completeness repair; the spellings reuse
+  AuthProfileErrorCode in Plans/multi_account_contracts.schema.json): credential_unavailable when the OS credential
+  store is unavailable, locked or refuses the delete, which leaves the token and the connected state unchanged; and
+  the CV-333 dispatcher codes permission_denied, handler_unavailable and internal_error. auth.github.disconnected is
+  emitted only after the token delete succeeds, never with a failure result. What a disconnect with no stored GitHub
+  token returns is not yet decided.
 gui_related: false
 gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility, or owner-boundary rules without primary visual presentation.
 split_recommended: false
@@ -3202,6 +3209,12 @@ canonical_text: 'Chat thread lifecycle and discovery commands create, archive, d
   and search threads while preserving lineage and stable identity; cmd.chat.delete is a separately confirmed
   whole-thread action that immediately removes ordinary projections, requests physical content purge within
   24 hours unless held, and preserves a content-free tombstone plus non-content authority receipts.
+  A refused or blocked cmd.chat.delete returns ChatOwnerCommandResultV2 outcome rejected or blocked with its closed
+  failure_code (2026-11-28 spec completeness repair): thread_not_found when the thread is missing or already deleted,
+  confirmation_required when the separate thread-delete confirmation is absent, active_run_in_thread while a run is
+  active in the thread, or permission_denied, stale_projection, handler_unavailable or internal_error. A legal hold
+  is not a failure: the delete succeeds, ordinary projections are removed at once, and only the physical purge waits
+  for the hold.
 
 
   Current projects-refresh contract: No project is genuine application scope, with a named fixed Computer after

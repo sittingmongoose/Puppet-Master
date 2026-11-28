@@ -4,7 +4,7 @@ Source: `Plans/UI_Wiring_Rules.md`
 
 Source lines: L625-L709
 
-Source SHA256: `ce6744fcba9d14aa1c2f0d384b23c3db1cb65e097e8af357f5a33e33375c6b09`
+Source SHA256: `005541144c4be3eebd243e3fe7879a502e735f875d401897aca3715b8127a5ec`
 
 ---
 
@@ -70,7 +70,7 @@ acceptance_criteria:
 - Disabled terminal cap and Collapse states carry exact accessible reasons and zero dispatch. (Amended 2026-10-09, DL-180 - the terminal caps and Collapse Bottom Terminal are retired; every disabled Home control of UIW-040 carries its owner's reason and zero dispatch.)
 - The source-hashed control census reports unresolved_count=0 and every production row names an executable test, not declarative prose alone.
 validation_surfaces:
-- python3 scripts/pm-validate-wiring-matrix.py
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
 - Plans/Automated_Testing_System.md#ATS-075
 - Plans/Automated_Testing_System.md#ATS-076
 - python3 scripts/pm-plan-index.py validate

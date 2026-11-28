@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L11251-L12585
+Source lines: L11264-L12617
 
-Source SHA256: `9c34de2ef93562e8eb995cd913772a076b1d81c9574dec216dd3b6a4e5262a3d`
+Source SHA256: `403026f8e00c7e1e3b36d5ac7cfbd34f533d2e562b7c723ba63beed33313b847`
 
 ---
 
@@ -162,7 +162,10 @@ canonical_text: >-
   to the later Case L exact-restore contract), `cmd.orchestrator.copy_run_id`, `cmd.orchestrator.export_ledger`
   (OP-031), `cmd.orchestrator.set_seam_expansion`, and `cmd.orchestrator.set_evidence_filter`. Safe-point retry
   carries project/run/node/blocked/attempt, exact safe-point/repo/worktree, baseline_target safe_point,
-  optional permission snapshot, and the command-envelope idempotency identity; requires the named confirmation modal before dispatch;
+  optional permission snapshot, and the command-envelope idempotency identity (the canonical fields take their types
+  from the cmd.runtime.restore_safe_point_then_retry definition in Plans/Executor_Protocol.md#EP-236; the wrapper's
+  own optional permission_snapshot_id is {type: id, required: false, default: none}, as the UCC-230 vocabulary types
+  every *_id field and the EP-236 runtime definitions type the same field); requires the named confirmation modal before dispatch;
   preserves the four pre-modal disabled reasons safe_point_missing, state_changed, permission_denied, and
   operation_in_progress; and normalizes to cmd.runtime.restore_safe_point_then_retry. The compatibility alias
   cmd.orchestrator.restore_safe_point_then_retry has no second handler or authority. Ledger export serializes only the visible filtered
@@ -423,6 +426,13 @@ canonical_text: >-
   cmd.terminal.restart_session is owner-doc lineage for the same replace-with-new-runtime action and is not a
   second command.
   Amended 2026-10-09 (DL-181): cmd.terminal.reveal reveals the session's tab wherever it is, never the bottom panel; cmd.terminal.reattach_section retires with detached sections; cmd.terminal.restart_session is a retired spelling, not lineage for an alias (UCC-201, UCC-202).
+  Failure results (2026-11-28 spec completeness repair): reveal, terminate_session and kill_session return
+  TerminalActionResultV2 status refused, and the CV-333 UICommandResponse error carries the declared code, narrowed
+  from the closed set as the UCC-230 error_narrowing rule does: stale_projection when terminal_session_id no longer
+  names a session; blocked_state_required when terminate_session or kill_session targets a session that is not live
+  (session_live unmet: exited, failed or terminated); and invalid_args, permission_denied, handler_unavailable or
+  internal_error. A refused reveal spawns no shell. cmd.terminal.reattach_section is retired and has no handler or
+  failure result.
 gui_related: true
 gui_classification_reason: Registers user-visible terminal reveal, terminate, kill, and reattach commands.
 depends_on: [UCC-067, UCC-068, DL-181]
@@ -670,6 +680,15 @@ canonical_text: >-
   Provider -> models registry per ACD-437), and
   `cmd.chat.plan_thoroughness` (Light, Balanced, Comprehensive; default Balanced; distinct from effort High,
   Medium, Low per ACD-438; recorded as requested_plan_thoroughness and effective_plan_thoroughness).
+  All six return ChatOwnerCommandResultV2, and a rejected or blocked outcome carries its closed failure_code
+  (2026-11-28 spec completeness repair): cmd.chat.web.cancel returns web_operation_not_found for an unknown
+  web_operation_id and already_terminal for an operation no longer in flight; cmd.chat.web.request_again returns
+  web_operation_not_found, or web_operation_not_terminal while the operation is still in flight; cmd.chat.switch_thread
+  returns thread_not_found for a missing or deleted thread; cmd.chat.queue.remove returns queue_entry_not_found for
+  an entry that is no longer in the queue and already_dispatched for one already sent; cmd.chat.platform and
+  cmd.chat.plan_thoroughness return invalid_args for a value outside the platform registry or the three levels, and
+  blocked_state_required while platform_registry_loaded or plan_mode_selected is unmet. Any of the six may also return
+  permission_denied, stale_projection, handler_unavailable or internal_error.
 gui_related: true
 gui_classification_reason: Registers user-visible chat web-op, thread switch, queue, platform, and thoroughness commands.
 depends_on: [ACD-035, ACD-437, ACD-438, UCC-056, UCC-082]

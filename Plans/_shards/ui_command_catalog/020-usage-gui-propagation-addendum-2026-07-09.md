@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L10985-L11057
+Source lines: L10998-L11070
 
-Source SHA256: `9c34de2ef93562e8eb995cd913772a076b1d81c9574dec216dd3b6a4e5262a3d`
+Source SHA256: `403026f8e00c7e1e3b36d5ac7cfbd34f533d2e562b7c723ba63beed33313b847`
 
 ---
 
@@ -20,7 +20,7 @@ unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  Usage navigation commands normalize to typed object-first route identity. `cmd.nav.open_usage_subject`, `cmd.artifacts.show_in_usage`, and `cmd.artifacts.show_in_ledger` carry route_target plus usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, thread_id, source_class, source_confidence, source_authority, settlement_status, projection_freshness, and projection_health where available. The two pre-existing artifact wrapper rows retain their artifact route/open `OpenSubject` bridge and remain event-primary in this bounded recovery; they are not part of the PMConcept7 row enrichment. Event-primary `cmd.nav.open_usage_subject` callers use `usage_event` plus object_id from `usage_event_ref`; a PMConcept7 Ledger attempt row uses `usage_attempt` plus object_id from `attempt_id`, repeats attempt_id at top level, retains usage_event_ref as correlation, and carries no OpenSubject. The retired `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, and `cmd.chat.close_thread_usage` tokens are compatibility aliases only; production wiring must not register them as canonical UICommand rows, and legacy callers normalize before dispatch.
+  Usage navigation commands normalize to typed object-first route identity. `cmd.nav.open_usage_subject`, `cmd.artifacts.show_in_usage`, and `cmd.artifacts.show_in_ledger` carry route_target plus usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, thread_id, source_class, source_confidence, source_authority, settlement_status, projection_freshness, and projection_health where available. Field types for `cmd.nav.open_usage_subject` (2026-11-28 spec completeness repair; the UCC-230 common optional vocabulary and the typed definitions of the two artifact commands in Plans/Runtime_Artifacts_Panel.md#RAP-129): route_target is contract Primitive:RouteTarget and required; usage_event_ref, provider_attempt_ref, trace_ref and raw_payload_ref are ref; usage_record_id, attempt_id, node_id, tool_call_id, artifact_id, run_id and thread_id are id; "receipt refs" is the field receipt_refs, a list of ref; source_class is enum [provider_reported, provider_header, cli_reported, local_estimated, pricing_estimated, unknown]; source_confidence is enum [high, medium, low, unknown]; source_authority is a nullable string; settlement_status is enum [observed, streaming_partial, settled, adjusted, failed, unknown]; projection_freshness and projection_health are string; every field except route_target is optional with default none, and the selector rules below decide which identity a branch requires. The two pre-existing artifact wrapper rows retain their artifact route/open `OpenSubject` bridge and remain event-primary in this bounded recovery; they are not part of the PMConcept7 row enrichment. Event-primary `cmd.nav.open_usage_subject` callers use `usage_event` plus object_id from `usage_event_ref`; a PMConcept7 Ledger attempt row uses `usage_attempt` plus object_id from `attempt_id`, repeats attempt_id at top level, retains usage_event_ref as correlation, and carries no OpenSubject. The retired `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, and `cmd.chat.close_thread_usage` tokens are compatibility aliases only; production wiring must not register them as canonical UICommand rows, and legacy callers normalize before dispatch.
 gui_related: true
 gui_classification_reason: Usage route/open commands determine user-visible navigation from chat, artifacts, ledger, and command palette surfaces.
 depends_on: [UCC-060, UCC-086, ACD-434, F3-418, UF-087, RAP-043, CV-316]

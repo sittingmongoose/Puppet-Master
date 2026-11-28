@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L14146-L14209
+Source lines: L14178-L14241
 
-Source SHA256: `9c34de2ef93562e8eb995cd913772a076b1d81c9574dec216dd3b6a4e5262a3d`
+Source SHA256: `403026f8e00c7e1e3b36d5ac7cfbd34f533d2e562b7c723ba63beed33313b847`
 
 ---
 
@@ -59,7 +59,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)"
-- "Plans/CozyShelves_PM7_Control_Reconciliation.json (historical PM7 census; currentness deferred pending true re-census)"
+- "Removed pointer (2026-11-28 spec completeness repair): the historical 2026-07-28 PM7 integrated-panels census file (CozyShelves_PM7_Control_Reconciliation) was never committed to Plans/ or kept on the evidence share, so no artifact backs it; the census stays historical and a fresh census is still required."
 preserved_exact_tokens:
 - "cmd.chat.open"
 - "cmd.chat.open_thread"
