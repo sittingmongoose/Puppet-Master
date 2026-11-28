@@ -19431,9 +19431,9 @@ canonical_text: >-
   run, and exposes a detect_project_context(workspace: &Path) -> Result<ProjectContext> style API.
   No-project selection passes a typed app/optional-root detection context; only an actual permitted
   directory is scanned, and missing workspace is explicit absence, not home scanning. Cache key includes
-  Host/root/scope. The error side is ProjectContextError with one declared code: workspace_absent when no
-  workspace or optional root is given (the no-project caller treats it as no detected context, never as a
-  reason to scan another directory), workspace_not_permitted when the path is not an actual permitted
+  Host/root/scope. A missing workspace or optional root is not a failure and has no error code: the caller records
+  that explicit absence and does not call detect_project_context or scan another directory. The error side is
+  ProjectContextError with two declared codes: workspace_not_permitted when the path is not an actual permitted
   directory for this Host and scope (nothing is scanned), and workspace_unreadable when the permitted directory
   or a marker file cannot be read.
 gui_related: false

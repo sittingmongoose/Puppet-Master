@@ -3121,7 +3121,7 @@
         "future security adapter registry",
         "future verify dispatcher"
       ],
-      "line_count": 2801,
+      "line_count": 2806,
       "path": "Plans/Backup_Restore_System.md",
       "plan_unit_count": 36,
       "plan_unit_ids": [
@@ -3200,7 +3200,7 @@
         "unverified_or_mispriced_backup_verification",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "f6255d1806351977b0e44b5017a99b818320cb9084c0e66a62e04b09d24b9a72",
+      "sha256": "99f3154c8e743b6c4ae0c29b37fef24e86f5dd99ca800eb85605695bdecdaea8",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 36
@@ -10046,7 +10046,7 @@
         "unrecoverable_mutation",
         "unsafe_host_side_effect"
       ],
-      "sha256": "ff4ded3e7581088637c71fb4a7f87f22f7ae422f452998d008fcedb3943ecc6e",
+      "sha256": "d2a96fd86b994b1dad7fc25f7903d48482dc894e36baa335772b2ecd7ade4b94",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 213
@@ -16115,7 +16115,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "6d070f21ec6b95487939bca797dc34513f6ef6a1245f248bedc9d7c83700a426",
+      "sha256": "242c686bf7ef6bca36294f0b5a2b7d77c6d5dc5ea69df7fd59458732b68a507c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 470,
@@ -16577,7 +16577,7 @@
         "visualizer_sandbox_escape",
         "wholesale_browser_state_or_auth_export"
       ],
-      "sha256": "4788709122e381d340357959bebef8ad6e5cd931cd2714c5fb2133d36c4ee4f4",
+      "sha256": "3b13491872c87e8f5114b23146b81a8c1ca46f39b8eaf7cc821db05d59fc5d2c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 151
@@ -17212,7 +17212,7 @@
         "scripts/pm-prd-planning-runtime-validate.py",
         "tests/test_pm_audit_closure.py"
       ],
-      "line_count": 1845,
+      "line_count": 1846,
       "path": "Plans/Planning_Ledger_System.md",
       "plan_unit_count": 27,
       "plan_unit_ids": [
@@ -17273,7 +17273,7 @@
         "source_loss",
         "vague_compile_output"
       ],
-      "sha256": "f84026e51c1516bea2ae2bdc838c418ba9ff257776d46a83ce992424c117a04b",
+      "sha256": "ee7ce63899483cf89e3ab62218301d0f17ac82ae65ef53d323ac50a4cafe8d88",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 27
@@ -17641,7 +17641,7 @@
         "residual_bridge_overreach",
         "scope_authority_or_custody_drift"
       ],
-      "sha256": "6d47b887bad8b166e91caedc2bd28252f7958524abc508e7b7a73b9e925332d5",
+      "sha256": "f196222f87d74b08d7ac052475b8e407abe9ee38f6dc46c9f7926f2eb395406a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 79
@@ -25300,7 +25300,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-28T18:11:40Z",
+  "generated_at_utc": "2026-11-28T18:32:59Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

@@ -1048,8 +1048,9 @@ canonical_text: >-
   redb indexes are projections, and markdown/export files are derived views. The service exposes append_event,
   commit_turn, recover_turn, snapshot_state, import_package, and export_package request/response shapes with CAS,
   idempotency, source_ref, actor_ref, and validation receipt fields.
-  Field types of the request and response fields the acceptance criteria name: ledger_id is a string in the
-  bootstrap ledger id form (Plans/ledgers/v2/schemas/ledger_core.schema.json ledger_id); event_id, turn_id,
+  Field types of the request and response fields the acceptance criteria name: ledger_id is a non-empty string (only
+  bootstrap ledgers use the pldg- id form of Plans/ledgers/v2/schemas/ledger_core.schema.json ledger_id); event_id,
+  turn_id,
   last_committed_turn_id and recommended_replay_start_event_id are non-empty strings, the last two null when no turn
   has committed or nothing needs replay; idempotency_key is a non-empty string; event_type is a non-empty string;
   payload is a JSON object; source_ref is a nullable non-empty string; actor_ref is a non-empty string;

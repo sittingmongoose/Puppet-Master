@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Ledger_System.md`
 
-Source lines: L1034-L1249
+Source lines: L1034-L1250
 
-Source SHA256: `f84026e51c1516bea2ae2bdc838c418ba9ff257776d46a83ce992424c117a04b`
+Source SHA256: `ee7ce63899483cf89e3ab62218301d0f17ac82ae65ef53d323ac50a4cafe8d88`
 
 ---
 
@@ -25,8 +25,9 @@ canonical_text: >-
   redb indexes are projections, and markdown/export files are derived views. The service exposes append_event,
   commit_turn, recover_turn, snapshot_state, import_package, and export_package request/response shapes with CAS,
   idempotency, source_ref, actor_ref, and validation receipt fields.
-  Field types of the request and response fields the acceptance criteria name: ledger_id is a string in the
-  bootstrap ledger id form (Plans/ledgers/v2/schemas/ledger_core.schema.json ledger_id); event_id, turn_id,
+  Field types of the request and response fields the acceptance criteria name: ledger_id is a non-empty string (only
+  bootstrap ledgers use the pldg- id form of Plans/ledgers/v2/schemas/ledger_core.schema.json ledger_id); event_id,
+  turn_id,
   last_committed_turn_id and recommended_replay_start_event_id are non-empty strings, the last two null when no turn
   has committed or nothing needs replay; idempotency_key is a non-empty string; event_type is a non-empty string;
   payload is a JSON object; source_ref is a nullable non-empty string; actor_ref is a non-empty string;

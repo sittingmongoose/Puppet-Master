@@ -4,7 +4,7 @@ Source: `Plans/FileSafe.md`
 
 Source lines: L2952-L13456
 
-Source SHA256: `ff4ded3e7581088637c71fb4a7f87f22f7ae422f452998d008fcedb3943ecc6e`
+Source SHA256: `d2a96fd86b994b1dad7fc25f7903d48482dc894e36baa335772b2ecd7ade4b94`
 
 ---
 
@@ -6705,8 +6705,8 @@ canonical_text: >-
   The SQL injection enhancement adds check_sql_injection(prompt) to detect common SQL injection
   patterns such as UNION SELECT and DROP TABLE in prompts. It returns Result<(), GuardError>: Ok(()) when no pattern
   matches, and on a match GuardError::CommandDenied with denial_code sql_injection_pattern_match and command_preview
-  holding the first 100 characters of the matching prompt segment, the same shape the bash guard uses for
-  destructive_pattern_match; the denial is logged as filesafe.command_denied with pattern_matched naming the pattern.
+  holding the first 100 characters of the prompt; the denial is logged as filesafe.command_denied with that
+  denial_code and command_preview.
 gui_related: false
 gui_classification_reason: >-
   This unit captures backend SQL injection prompt checking enhancement.
