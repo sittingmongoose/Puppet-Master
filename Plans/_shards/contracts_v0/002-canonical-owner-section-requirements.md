@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L224-L303
 
-Source SHA256: `c6539563db316c3a2ef2bbcb91d987aecc6b26bdeb40b540f65e57c26fc613aa`
+Source SHA256: `b22d8d433a75345bdf03e7de9d41df84ff64c38d6e518e287bca8664a62b3788`
 
 ---
 
@@ -36,7 +36,7 @@ Allowed `ConcernRecord.status` values are `active`, `acknowledged`, `resolved`, 
 
 ### Concern action policy and authority model
 
-Concern actions are authorized by `approval_scope_key`, `actor_ref`, `permission_snapshot_id`, and `allowed_action_ids[]`. User-visible actions such as acknowledge, resolve, dismiss, reopen, or link evidence must produce a typed command response and cannot mutate a concern record by editing projections directly.
+Concern actions are authorized by `approval_scope_key`, `actor_ref`, `permission_snapshot_id`, and `allowed_action_ids[]`. User-visible actions such as acknowledge, resolve, dismiss, reopen, or link evidence must produce a typed command response and cannot mutate a concern record by editing projections directly. Decided 2026-11-28 (DL-2607, Jared, registry line 1467): acknowledge and dismiss are the two commands `cmd.concern.acknowledge` and `cmd.concern.dismiss`, each writing a concern history event; dismiss requires a non-empty reason, and both ask for confirmation first on a serious or blocking concern. Their catalog rows, wiring and the `concern.acknowledged` and `concern.dismissed` event families are admitted after S11 together with the held `Plans/event_family_registry.json` and `Plans/Orchestrator_Page.md` (OP-004, OP-005); until then no catalog row or wiring entry names them.
 
 ### Concern linkage to adjacent families
 

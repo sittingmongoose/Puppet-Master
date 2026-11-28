@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L63815
+Source lines: L28747-L63882
 
-Source SHA256: `2b633ed1e10f5400e6dd35e2427e58739f6a2af0582a79b36b37536d54246f6a`
+Source SHA256: `45570be6aae80cd28b9d8839c0f156a06d8ad884fcc20b5a4675a5515996fb33`
 
 ---
 
@@ -35077,3 +35077,70 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Models_System.md#MS-103, ContractName:Plans/Models_System.md#MS-128, ContractName:Plans/Models_System.md#MS-135
+
+### DL-2607 - C-1467: custom theme files deferred, and concern acknowledge and dismiss commands
+
+```yaml
+plan_unit_id: DL-2607
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  On 2026-11-27 at about 11:35 PM EST, Jared answered cards C-1467-THEMES and C-1467-CONCERN (relayed by pm7-build). This closes the two owner choices for line 1467 of Plans/.audits/_semantic_closure_registry.jsonl.
+
+  C-1467-THEMES, in Jared's words: "We arent going to support custom themes outside of the controls we have in settings. I was originally planning that but I am going to drop it for now." The four Settings buttons Open themes folder, Create new theme, Import theme and Export theme are removed, and custom theme files are DEFERRED as a supported feature, not kept as files edited by hand. Deferred with them are the custom theme file format and its starting theme, the startup scan and hot reload of the themes folder, custom entries and the [custom] badge in the theme selector, and custom theme fonts (F3-080, F3-081, F3-082, F3-084, F3-208, F3-263, F3-268 and FinalGUISpec section 6.6). The Settings rows general.visual.manage-custom-themes and general.visual.custom-theme-base move to retired_input_ids with compatibility reads that explain the retirement. cmd.theme.create, cmd.theme.import and cmd.theme.export stay rejected_with_reason with no replacement command or typed local action. The five built-in theme families, their ten variants and the one Light/Dark/Auto control are unchanged. A later decision may bring custom theme files back; until then nothing in this list is built.
+
+  C-1467-CONCERN, Jared's answer "A" ("this"): acknowledge and dismiss become two commands, cmd.concern.acknowledge and cmd.concern.dismiss, like the other seven concern commands, and each writes a concern history event. Dismiss needs a non-empty reason, and both ask for confirmation first on a serious or blocking concern. Their two event types belong in Plans/event_family_registry.json, which stream E holds, and Plans/Orchestrator_Page.md (OP-004, OP-005) is held as well, so the catalog rows, the production wiring, the concern.acknowledged and concern.dismissed event families and the exact confirmation policy are admitted after S11 together with those documents. Until then F3-125, FinalGUISpec and Contracts_V0 record the decision, and no catalog row or wiring entry names the two commands. The options of two commands without history events, or of dropping acknowledge and dismiss as separate actions, are not taken.
+gui_related: true
+gui_classification_reason: It removes four visible Settings buttons and the custom-theme selector entries, and decides two visible concern actions.
+split_recommended: false
+depends_on: [F3-080, F3-081, F3-082, F3-125, CV-063, UCC-108, DL-442, DL-443]
+unblocks: []
+acceptance_criteria:
+- "FinalGUISpec section 6.6 and F3-080, F3-081, F3-082, F3-084, F3-208, F3-263 and F3-268 mark custom theme files deferred by DL-2607, and F3-082 no longer offers the theme folder, create, import or export actions."
+- "settings_inventory.json has no active general.visual.manage-custom-themes or general.visual.custom-theme-base row; both are retired_input_ids with compatibility reads."
+- "cmd.theme.create, cmd.theme.import and cmd.theme.export stay rejected_with_reason and their reasons cite DL-2607."
+- "F3-125, the FinalGUISpec concern action paragraph and the Contracts_V0 concern action policy name cmd.concern.acknowledge and cmd.concern.dismiss and say they are admitted after S11; no catalog row or wiring entry names them before then."
+- No earlier Decision_Log entry is rewritten.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-settings-layering-check.py
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: owner_choice_drift
+reasoning_tier: medium
+context_scope: closure_reaudit_fix79_owner_answers
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+- Plans/Settings_System.md
+- Plans/settings_inventory.json
+- Plans/settings_system_contract_fixtures.json
+- Plans/Contracts_V0.md
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: owner_decision_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- "/mnt/Cursor/agent-reports/v1/writers/vm.pm-closure-lead/cards/vm.pm-closure-lead--C-1467-THEMES.json, SHA-256 ebfb19a19ef505c9e16572491c156e8ed4505b67388d7fac8116e0938a07260e"
+- "/mnt/Cursor/agent-reports/v1/writers/vm.pm-closure-lead/cards/vm.pm-closure-lead--C-1467-CONCERN.json, SHA-256 621a0649419c9962426ed282dfef102a300298712cb31b55be297920f5d046d8"
+- "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/fix79/OPEN13/S6/NOTES.md (Row 1467 OWNER-CHOICE), SHA-256 81de8d0e16d85738957a51a3f4bcc7ad25411e8cc95ffd874023e74cbd749557"
+preserved_exact_tokens:
+- DL-2607
+- C-1467-THEMES
+- C-1467-CONCERN
+- cmd.concern.acknowledge
+- cmd.concern.dismiss
+- general.visual.manage-custom-themes
+- general.visual.custom-theme-base
+negative_constraints:
+- Do not add cmd.concern.acknowledge or cmd.concern.dismiss to UI_Command_Catalog.md or the wiring before the held event and Orchestrator documents admit them.
+- Do not restore the four custom-theme buttons or custom theme files without a new decision.
+- Do not rewrite DL-2606 or any earlier entry.
+- Do not reseal governance artifacts or claim native execution proof from these Plan edits.
+owner_hints:
+- Plans/Decision_Log.md
+- Plans/FinalGUISpec.md
+- Plans/Settings_System.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-082, ContractName:Plans/FinalGUISpec.md#F3-125, ContractName:Plans/Contracts_V0.md#CV-063, ContractName:Plans/UI_Command_Catalog.md#UCC-108

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5455-L27081
+Source lines: L5457-L27097
 
-Source SHA256: `7c52aa35b4fb3b308c17b6cf275e1f2f81fab5151885cf7a52d3ae688fdbe180`
+Source SHA256: `4b40288629168b5a8d3f26c92c06c2e5684fe632f7943eeb95d1e10f3585da72`
 
 ---
 
@@ -4474,7 +4474,7 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Custom themes are TOML files under the Puppet Master themes directory, specify metadata plus
   token overrides, and inherit unspecified tokens from any built-in variant base named by the
-  base field (basic-*, retro-*, glass-*, or friendly-*, for example base = "basic-dark").
+  base field (basic-*, retro-*, glass-*, or friendly-*, for example base = "basic-dark"). Deferred 2026-11-28 (DL-2607, Jared, registry line 1467): custom theme files are not supported for now, so this behavior is kept as deferred lineage and is not built unless a later decision restores custom theme files; the five built-in families and the Light/Dark/Auto control are unchanged.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible custom theme configuration and theme authoring behavior.
@@ -4528,7 +4528,7 @@ canonical_text: >-
   files with warning/toast disclosure, and hot-reloads modified active themes; a font change in a
   hot-reloaded active theme applies live under the look's cover (F3-077).
   Amended 2026-10-17 (DL-230, Jared): the restart prompt is retired. Superseded lineage (kept findable): it
-  read "hot-reloads modified active themes while prompting for restart on font changes".
+  read "hot-reloads modified active themes while prompting for restart on font changes". Deferred 2026-11-28 (DL-2607, Jared, registry line 1467): custom theme files are not supported for now, so this behavior is kept as deferred lineage and is not built unless a later decision restores custom theme files; the five built-in families and the Light/Dark/Auto control are unchanged.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible theme loading, validation, toast, and live theme update behavior.
@@ -4586,7 +4586,10 @@ canonical_text: >-
   the existing atomic family/mode pair (DL-228); each family pick composes cmd.settings.transaction.preview then
   cmd.settings.transaction.apply for the atomic family/mode pair under SSYS-009. Auto follows OS appearance live
   for every family including NieR. Settings exposes the same five family choices plus one Light/Dark/Auto control (DL-301), resolving to ten
-  variants, and existing theme folder/create/import/export actions. Entering NieR uses its one Reboot moment only when the Reboot moment part
+  variants. Retired 2026-11-28 (DL-2607, Jared, registry line 1467): the former theme folder/create/import/export
+  actions ("Open themes folder", "Create new theme", "Import theme", "Export theme") are removed from Settings and
+  deferred with custom theme files, and the selector's custom entries and [custom] badge are deferred with them, so
+  every live family row lists only its built-in variants. Entering NieR uses its one Reboot moment only when the Reboot moment part
   is installed; otherwise it uses the standard look cover. Leaving NieR and switching Light/Dark within NieR use
   the standard look cover. Reduced Motion keeps the existing calm/instant settle policy. Explicit Play reboot
   moment remains a local rehearsal that changes no setting. Amended Q22, Jared 2026-10-30 (DL-257): the fifth
@@ -4605,6 +4608,7 @@ acceptance_criteria:
   - "All ten variants are reachable with pointer and keyboard; Auto follows OS appearance."
   - "A family pick previews/applies the atomic pair; Adjust uses the existing local editor action."
   - "Entering NieR uses its one Reboot moment only when the Reboot moment part is installed; otherwise it uses the standard look cover. Leaving NieR and switching Light/Dark within NieR use the standard look cover. Reduced Motion keeps the existing calm/instant settle policy. Explicit Play reboot moment remains a local rehearsal that changes no setting."
+  - "Settings shows no Open themes folder, Create new theme, Import theme or Export theme button, and no control dispatches a custom-theme create, import or export command (DL-2607)."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -4636,8 +4640,10 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not retain an independent NieR checkbox or hidden underlying family."
   - "Do not dispatch a new NieR command; family and mode use their existing owner commands."
+  - "Do not restore the four custom-theme buttons or custom theme files without a new decision superseding DL-2607."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Retired 2026-11-28 (DL-2607, Jared): the theme folder/create/import/export actions and the custom-theme selector entries are removed with custom theme files, deferred for now; the preserved button labels are lineage only."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -4726,7 +4732,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Custom themes may reference user font files; missing fonts fall back to the base theme with a warning
-  toast. Jared's 2026-10-13 preview removal retires the theme selector's hover-applied widget-card preview
+  toast (deferred with custom theme files by DL-2607, 2026-11-28; not built for now). Jared's 2026-10-13 preview removal retires the theme selector's hover-applied widget-card preview
   as well as the Settings preference (SSYS-010): theme rows retain their static identifying swatches and
   apply on activation through the Settings transaction. This does not remove F3-650's separately approved
   editor/terminal scheme previews.
@@ -7008,6 +7014,12 @@ canonical_text: >-
   Concern and trust-state escalation surfaces expose the durable concern record, distinct concern
   actions, degraded-trust routing, stable glossary terms, layered help, and canonical help-entry
   pages across chat, inspectors, commands, Orchestrator, Dashboard, thread badges, and notifications.
+  Decided 2026-11-28 (DL-2607, Jared, registry line 1467): acknowledge and dismiss are the two commands
+  cmd.concern.acknowledge and cmd.concern.dismiss, each writing a concern history event; dismiss requires
+  a non-empty reason, and both ask for confirmation first on a serious or blocking concern. Their catalog
+  rows, wiring and the concern.acknowledged and concern.dismissed event families are admitted after S11
+  together with the held Plans/event_family_registry.json and Plans/Orchestrator_Page.md (OP-004, OP-005);
+  until then no catalog row or wiring entry names them.
 gui_related: true
 gui_classification_reason: This unit defines visible concern, escalation, notification, and help surfaces.
 split_recommended: true
@@ -11503,7 +11515,7 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Rust panel, effects, and theme modules include panel registry, dock/undock layout, snap
   zones, pixel grid and paper texture generation, color palettes, design tokens, ThemeVariant
-  application, and custom theme TOML loading.
+  application, and custom theme TOML loading (deferred by DL-2607, 2026-11-28, with custom theme files).
 gui_related: true
 gui_classification_reason: >-
   This unit covers Rust-side panel registry, layout, effects, and theme modules that support
@@ -14576,7 +14588,8 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The `Custom theme validation` risk is mitigated as follows: Custom theme TOML loading
   validates colors, tokens, and syntax, skips invalid themes with warning toast on Settings
-  open, never crashes, and falls back to base values.
+  open, never crashes, and falls back to base values. Deferred with custom theme files (DL-2607,
+  2026-11-28): the risk applies only if a later decision restores them.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves one row of the user-visible Slint migration risks and mitigations table.
@@ -14843,7 +14856,8 @@ canonical_text: >-
   Former future considerations are MVP scope and route to their owner docs for
   browser/click-to-context, search, instant project switch, sound effects, hot reload,
   instructions editor, custom themes, language/LSP navigation, catalog, sync, SSH, run/debug,
-  and browser/terminal tabs.
+  and browser/terminal tabs. Custom theme files are since deferred (DL-2607, 2026-11-28); the five
+  built-in theme families stay MVP.
 gui_related: true
 gui_classification_reason: >-
   This unit maps user-visible promoted features to owner documents and surfaces.

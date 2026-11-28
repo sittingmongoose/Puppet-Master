@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L8642-L8847
 
-Source SHA256: `9c34de2ef93562e8eb995cd913772a076b1d81c9574dec216dd3b6a4e5262a3d`
+Source SHA256: `212330f7717d2191d3575fdd8ea7a8b8c42e56ebf3e5c88e9d43690464bdce89`
 
 ---
 
@@ -159,7 +159,7 @@ acceptance_criteria:
 - No PM7 look control dispatches a cmd.theme.* command (amended 2026-10-17, DL-228, from only the title bar's
   Light/Dark/Auto control); Light/Dark/Auto, family, NieR Mode and NieR editor changes use the Settings transaction
   pair, and the application's start and onboarding's look previews dispatch no cmd.theme.* and emit no settings.layer.changed
-  (F3-468, DL-153).
+  (F3-468, DL-153). Custom theme files are deferred and the four custom-theme Settings buttons removed (DL-2607), so the custom-theme create, import and export commands stay rejected with no replacement.
 - Validate application versus actual Project-target cases, original exact Project replay, stale scope/preview/permission/Stop/return
   refusal and the exact command/local/tool binding from UCC-214; no native/event/governance proof follows from
   static closure.
