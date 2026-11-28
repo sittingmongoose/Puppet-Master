@@ -390,8 +390,8 @@ window.addEventListener('keydown', e => {
 /* FO-251 (2026-11-28; a prototype for pm7-build's behaviour call, macOS only): there the settings document is a composited
    scroller, and Chrome runs a keyboard End / Home as a compositor animation that an instant scrollTo does not cancel.
    Mac M3 trace: the take-over above lands at 19,261 px 42 ms after End, and the compositor's animation keeps drawing its
-   own offsets (1,187 px at 45 ms, 3,324 px at 57 ms) until it ends 110-200 ms after the key: 1 to 7 blank frames per End
-   or Home. Nothing passive stopped it (FO251-REPORT: mounting the edge on the key, a fixed background, an overflow
+   own offsets (594 px at 45 ms, 1,662 at 57 ms, 12,750 at 78 ms) until it ends 175 ms after the key: 1 to 7 blank frames
+   per End or Home. Nothing passive stopped it (FO251-REPORT: mounting the edge on the key, a fixed background, an overflow
    toggle, a smooth no-op scroll, a 30-frame hold all left 4 to 15 blank frames in half the cells). So on macOS only, an
    End / Home, or Cmd+Down / Cmd+Up (the MacBook's own keys for them), that reaches window unhandled, in the bubble phase
    after every widget's own handler, is cancelled before the compositor is told, and lands in one step as the take-over
