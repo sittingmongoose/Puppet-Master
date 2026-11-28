@@ -5238,6 +5238,7 @@
     "CV-304",
     "P-056",
     "MI-040",
+    "DL-2606",
     "PNC-004",
     "PNC-005",
     "PNC-007",
@@ -54301,6 +54302,21 @@
       "edge_type": "depends_on",
       "from": "DL-2604",
       "to": "SMPFS-100"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2606",
+      "to": "MS-103"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2606",
+      "to": "MS-128"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2606",
+      "to": "MS-135"
     },
     {
       "edge_type": "depends_on",
@@ -165358,7 +165374,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-28T00:04:42Z",
+  "generated_at_utc": "2026-11-28T03:08:36Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -219030,6 +219046,23 @@
       "unit_type": "decision"
     },
     {
+      "context_scope": "closure_reaudit_fix79_owner_answers",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-2606",
+      "reasoning_tier": "medium",
+      "risk_class": "owner_choice_drift",
+      "source_location": {
+        "heading": "DL-2606 - C-FIX79D: the requested model after an auto-pick finds no match",
+        "heading_level": 3,
+        "heading_line": 63765,
+        "line": 63767,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
       "context_scope": "dl270_storage_review",
       "gui_related": false,
       "owner_doc": "Plans/Decision_Log.md",
@@ -263817,8 +263850,8 @@
       "source_location": {
         "heading": "MS-136 - Model Capability Usage Signal Display Contract",
         "heading_level": 3,
-        "heading_line": 10106,
-        "line": 10108,
+        "heading_line": 10107,
+        "line": 10109,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263834,8 +263867,8 @@
       "source_location": {
         "heading": "MS-137 - Requested Effective Route And Capability Evidence Layers",
         "heading_level": 3,
-        "heading_line": 10177,
-        "line": 10179,
+        "heading_line": 10178,
+        "line": 10180,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263851,8 +263884,8 @@
       "source_location": {
         "heading": "Continuity Capability Snapshot Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 10226,
-        "line": 10230,
+        "heading_line": 10227,
+        "line": 10231,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263868,8 +263901,8 @@
       "source_location": {
         "heading": "MS-139 - Original complete Models activation resolution custody",
         "heading_level": 3,
-        "heading_line": 10263,
-        "line": 10289,
+        "heading_line": 10264,
+        "line": 10290,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -263885,8 +263918,8 @@
       "source_location": {
         "heading": "MS-199 - Event Authority model.catalog_refreshed 1.0.0 — newly authored owner contract under DL-045.",
         "heading_level": 3,
-        "heading_line": 10347,
-        "line": 10349,
+        "heading_line": 10348,
+        "line": 10350,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -329179,10 +329212,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27908,
+    "depends_on_edge_count": 27911,
     "downstream_blocked_node_count": 0,
-    "edge_count": 31143,
-    "node_count": 9636,
+    "edge_count": 31146,
+    "node_count": 9637,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3235,
     "unresolved_reference_count": 0

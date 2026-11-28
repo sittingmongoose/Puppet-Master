@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27908,
+    "depends_on_edge_count": 27911,
     "downstream_blocked_node_count": 0,
-    "edge_count": 31143,
-    "node_count": 9636,
+    "edge_count": 31146,
+    "node_count": 9637,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3235,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-28T00:04:44Z",
+  "generated_at_utc": "2026-11-28T03:08:37Z",
   "gui_related_units": {
     "count": 3949,
     "units": [
@@ -27478,8 +27478,8 @@
         "source_location": {
           "heading": "MS-136 - Model Capability Usage Signal Display Contract",
           "heading_level": 3,
-          "heading_line": 10106,
-          "line": 10108,
+          "heading_line": 10107,
+          "line": 10109,
           "path": "Plans/Models_System.md"
         }
       },
@@ -43463,12 +43463,12 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 9636,
+  "plan_unit_count": 9637,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
       "high": 4948,
       "low": 10,
-      "medium": 38,
+      "medium": 39,
       "standard": 4640
     },
     "risk_class_counts": {
@@ -45803,7 +45803,7 @@
       "owner_authority_drift": 1,
       "owner_boundary": 12,
       "owner_boundary_drift": 7,
-      "owner_choice_drift": 3,
+      "owner_choice_drift": 4,
       "owner_consumer_boundary": 1,
       "owner_consumer_map_loss": 1,
       "owner_contract_bridge": 1,
@@ -47739,7 +47739,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 9356,
+      "accepted": 9357,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -47773,7 +47773,7 @@
       "contract": 203,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 916,
+      "decision": 917,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
