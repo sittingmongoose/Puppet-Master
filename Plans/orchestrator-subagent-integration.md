@@ -2113,7 +2113,7 @@ async fn run_reviewer_subagent(
         &context.workspace,
     ).await?;
 
-    // Parse reviewer output as structured SubagentOutput
+    // Parse reviewer output as structured SubagentOutput (CliBridge stdout example; DirectApi/ServerBridge pass their transport-owned response content per OSI-004, OSI-093)
     let parsed_output = parse_reviewer_output(&review_output.stdout)?;
 
     // Extract findings from reviewer output
@@ -2540,7 +2540,7 @@ pub enum ValidationError {
 
 Extend `src/platforms/output_parser.rs` with new parser methods:
 
-Transport scope of the parser code below (OSI-004, OSI-093): live `CursorOutputParser` and `ClaudeOutputParser` use the CliBridge JSON and stream-json passes in Subagent Output Parser Fallback (Resolved). Their `serde_json::from_str(stdout)` examples illustrate single-document JSON only. A stream-json attempt uses the bridge's complete NDJSON events to obtain the final assistant content before handing it to structured field extraction. `GeminiOutputParser` is the live DirectApi parser over the response body (`candidates[0].content.parts[0].text`; its `--output-format json` comment and `stdout` parameter name are CLI-era wording). The `CodexOutputParser` (JSONL) and `CopilotOutputParser` (text and regex over `stdout`/`stderr`) blocks are CLI-era code examples kept as historical context only (OSI-158, OSI-161): Codex and Copilot are DirectApi, have no CLI output, and are parsed as JSON from the final assistant content like Gemini.
+Transport scope of the parser code below (OSI-004, OSI-093): live `CursorOutputParser` and `ClaudeOutputParser` use the CliBridge JSON and stream-json passes in Subagent Output Parser Fallback (Resolved). Their `serde_json::from_str(stdout)` examples illustrate single-document JSON only. A stream-json attempt uses the bridge's complete NDJSON events to obtain the final assistant content before handing it to structured field extraction. `GeminiOutputParser` is the live DirectApi parser over the response body (`candidates[0].content.parts[0].text`; its `--output-format json` comment and `stdout` parameter name are CLI-era wording). The `CodexOutputParser` (JSONL) and `CopilotOutputParser` (text and regex over `stdout`/`stderr`) blocks are CLI-era code examples kept as historical context only (OSI-158, OSI-161): Codex and Copilot are DirectApi, have no CLI output, and are parsed as JSON from the final assistant content like Gemini. The `stdout`/`stderr` parameter names in the `OutputParser` trait, `HandoffValidator` and `validate_subagent_output` Rust snippets below are CliBridge-era source lineage; live validation routes each provider's transport-owned handoff input (CliBridge CLI `stdout`/`stderr`, DirectApi direct-provider response final assistant content, or ServerBridge server event stream).
 
 ```rust
 // Add to ParsedOutput struct:
@@ -2627,7 +2627,7 @@ impl OutputParser for CursorOutputParser {
 
 **Validation workflow:**
 
-Validate the structured parse and, if it fails, try and validate generic extraction on the same output. Return the complete validated result or report the format failure to the execution loop. The validator example below is source lineage for this workflow. Its ordering of text extraction after retry exhaustion is retired.
+Validate the transport-owned handoff input (CliBridge CLI `stdout`/`stderr` for Cursor and Claude Code, DirectApi direct-provider response final assistant content for Codex, Copilot and Gemini, or ServerBridge server event stream for OpenCode under OSI-004 and OSI-093) through the structured parse and, if it fails, try and validate generic extraction on the same handoff input. Return the complete validated result or report the format failure to the execution loop. The validator example below is source lineage for this workflow. Its `stdout`/`stderr` parameter shape applies only to the CliBridge source example, and its ordering of text extraction after retry exhaustion is retired.
 
 ```rust
 // src/core/handoff_validation.rs
@@ -2709,7 +2709,7 @@ impl HandoffValidator {
 
 **Integration with orchestrator:**
 
-In `src/core/orchestrator.rs`, run the initial handoff with retry count zero and apply the same parser and validation to each resulting output. When validation and fallback fail, check the count before scheduling another invocation. If budget remains, dispatch the next same-Provider retry with validation feedback and the `SubagentOutput::example()` format instruction, counting it only when dispatched. Otherwise settle using the Handoff Retry Ceiling and Handoff failure boundary below. The loop example is source lineage. Its pre-dispatch increment and handling of the retry instruction are retired.
+In `src/core/orchestrator.rs`, run the initial handoff with retry count zero, route the runner's transport-owned handoff input into `HandoffValidator` (CliBridge CLI `stdout`/`stderr` for Cursor and Claude Code, DirectApi direct-provider response final assistant content for Codex, Copilot and Gemini, or ServerBridge server event stream for OpenCode under OSI-004 and OSI-093), and apply the same parser and validation to each resulting output. When validation and fallback fail, check the count before scheduling another invocation. If budget remains, dispatch the next same-Provider retry with validation feedback and the `SubagentOutput::example()` format instruction, counting it only when dispatched. Otherwise settle using the Handoff Retry Ceiling and Handoff failure boundary below. The loop example is source lineage. Its `stdout`/`stderr` call shape applies only to the CliBridge source example, and its pre-dispatch increment and handling of the retry instruction are retired.
 
 ```rust
 use crate::core::handoff_validation::HandoffValidator;
@@ -2997,7 +2997,7 @@ impl OutputParser for CopilotOutputParser {
 
 ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
-**Validation function:** The example shows parser delegation. Live `validate_subagent_output` runs the transport-scoped passes and generic fallback in Subagent Output Parser Fallback (Resolved), checks the required fields and returns any remaining failure to the execution loop.
+**Validation function:** The example shows parser delegation with a CliBridge-era `(output, stderr)` signature as source lineage. Live `validate_subagent_output` receives the provider's transport-owned handoff input (CliBridge CLI `stdout`/`stderr`, DirectApi direct-provider response final assistant content, or ServerBridge server event stream under OSI-004 and OSI-093), runs the transport-scoped passes and generic fallback in Subagent Output Parser Fallback (Resolved), checks the required fields and returns any remaining failure to the execution loop.
 
 ```rust
 // src/core/hooks/handoff_validator.rs
@@ -3016,7 +3016,7 @@ pub fn validate_subagent_output(
 }
 ```
 
-**Validation logic in AfterUnit hook** (legacy alias AfterTier, Execution-Unit Hook Naming)**:** AfterUnit hook calls `validate_subagent_output(output: &str, stderr: &str, platform: Platform) -> Result<SubagentOutput, ValidationError>`. If validation fails:
+**Validation logic in AfterUnit hook** (legacy alias AfterTier, Execution-Unit Hook Naming)**:** AfterUnit hook invokes `validate_subagent_output` on the provider's transport-owned handoff input and `platform` (the `(output: &str, stderr: &str, platform: Platform) -> Result<SubagentOutput, ValidationError>` signature above is CliBridge source lineage; DirectApi and ServerBridge pass their direct-provider final assistant content or server event stream with no CLI `stderr`, OSI-004, OSI-093). If validation fails:
 1. Log error with details (platform, error type, partial output snippet).
 2. Request the next retry while the Handoff Retry Ceiling budget remains, using "format your output as structured JSON" in the retry prompt.
 3. When output is still invalid after fallback and the handoff retry budget is exhausted, the node does not advance and `ExecutionUnitContext` is not updated from the output. The attempt settles with `failure_class = structured_output_invalid`, the raw output stays in `parser.error`, the extracted partial output is kept on the failed attempt for review only, and the node takes the `needs_review` recovery point with [Retry] [Skip] [View raw output] (Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions). The earlier step "proceed with partial output (fail-safe) but mark tier as "complete with warnings"" is superseded source lineage.
@@ -3535,7 +3535,7 @@ These lifecycle and quality features **complement** the existing start/end verif
 - **Lenient validation:** Accept partial output (e.g., missing `downstream_context` is OK, missing `task_report` is not). Only reject if critical fields missing.
 - **Parser testing:** Test with real platform outputs to tune validation strictness. Aim for < 1% false positive rate.
 - **User feedback:** If validation fails, log raw output for debugging. Allow users to report false positives.
-- **Parser updates:** Update parsers based on user feedback and platform CLI changes.
+- **Parser updates:** Update parsers based on user feedback, platform CLI changes (CliBridge), and provider API or model changes (DirectApi, OSI-004, OSI-093).
 
 ### Implementation Notes
 
@@ -15370,7 +15370,7 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   src/platforms/output_parser.rs extends ParsedOutput with subagent_output and extends OutputParser with parse_subagent_output
-  plus extract_subagent_output_from_text for platform-specific structured handoff parsing.
+  plus extract_subagent_output_from_text for transport-scoped structured handoff parsing (OSI-004, OSI-093).
 gui_related: false
 gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
   presentation.
@@ -15415,7 +15415,7 @@ preserved_exact_tokens:
 - extract_subagent_output_from_text
 negative_constraints: []
 compatibility_only_notes:
-- The Rust parser extension snippet is plan evidence only, not an executable node output.
+- The Rust parser extension snippet and its stdout/stderr parameter names are CliBridge-era plan evidence only, not an executable node output or a DirectApi CLI-stream requirement.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -15562,9 +15562,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  HandoffValidator selects the parser through platform_specs, tries structured parsing and validation first, and validates
-  generic text extraction on the same attempt if needed. Output still invalid after fallback goes to the execution
-  loop for the retry or exhaustion decision under Handoff Retry Ceiling.
+  HandoffValidator validates the provider's transport-owned handoff input (CliBridge CLI stdout/stderr for Cursor and Claude Code, DirectApi direct-provider response final assistant content for Codex, Copilot and Gemini, or ServerBridge server event stream for OpenCode under OSI-004 and OSI-093),
+  selects the parser through platform_specs, tries structured parsing and validation first, and validates generic text extraction
+  on the same attempt if needed. Output still invalid after fallback goes to the execution loop for the retry or exhaustion decision under Handoff Retry Ceiling.
 gui_related: false
 gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
   presentation.
@@ -15616,7 +15616,7 @@ negative_constraints:
 - Never hardcode parser selection by platform.
 - Do not use match platform statements.
 compatibility_only_notes:
-- The Rust validator snippet is source lineage. Its placement of text extraction after retry exhaustion is retired.
+- The Rust validator snippet is source lineage. Its stdout/stderr parameter signature is scoped to CliBridge examples, and its placement of text extraction after retry exhaustion is retired.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -15696,14 +15696,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  The orchestrator subagent execution loop obtains the platform runner, executes the subagent, validates stdout/stderr
-  through HandoffValidator and returns validated SubagentOutput on success. On output still invalid after fallback,
-  it checks the Handoff Retry Ceiling before scheduling and counts only dispatched automatic retries. If budget
-  remains it retries with SubagentOutput::example format instructions. At exhaustion it keeps the extracted partial output
-  (extract_partial_output) on the failed attempt for review only, and returns an error: the attempt settles with
-  failure_class = structured_output_invalid and the node takes the needs_review recovery point (Handoff failure boundary
-  in Parser-Failure And Unrelated-Failure Recovery Actions). The earlier return of extracted partial output as the
-  loop's result is retired source lineage.
+  The orchestrator subagent execution loop obtains the platform runner, executes the subagent, routes the runner's
+  transport-owned handoff input into HandoffValidator (CliBridge CLI stdout/stderr for Cursor and Claude Code, DirectApi
+  direct-provider response final assistant content for Codex, Copilot and Gemini, or ServerBridge server event stream for
+  OpenCode under OSI-004 and OSI-093), and returns validated SubagentOutput on success. On output still invalid after
+  fallback, it checks the Handoff Retry Ceiling before scheduling, counts only dispatched automatic retries, and if budget
+  remains retries with SubagentOutput::example format instructions. At exhaustion it keeps the extracted partial output
+  (extract_partial_output) on the failed attempt for review only, and returns an error so the attempt settles with
+  failure_class = structured_output_invalid and the node takes the needs_review recovery point (Handoff failure boundary in Parser-Failure And Unrelated-Failure Recovery Actions); the earlier return of extracted partial output is retired source lineage, and the Rust snippet's stdout/stderr arguments are scoped to CliBridge source evidence rather than DirectApi or ServerBridge runs.
 gui_related: false
 gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
   presentation.
@@ -15755,7 +15755,7 @@ preserved_exact_tokens:
 - tracing::warn!
 negative_constraints: []
 compatibility_only_notes:
-- The Rust orchestrator integration snippet is source lineage. Its pre-dispatch retry increment and prompt handling are retired.
+- The Rust orchestrator integration snippet is source lineage. Its stdout/stderr arguments apply only to CliBridge examples, and its pre-dispatch retry increment and prompt handling are retired.
 - >-
   Adjacent orphaned parser-tail lines 2573-2585 are preserved as non-standalone example coverage and not as a separate product
   requirement.
@@ -16199,8 +16199,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  The hook-level validate_subagent_output function creates an output parser and delegates parse_subagent_output for output,
-  stderr, and platform, while create_parser(platform) remains aligned with platform_specs-driven selection.
+  The hook-level validate_subagent_output function creates a transport-scoped output parser via create_parser(platform) aligned with platform_specs-driven selection and delegates parse_subagent_output over the provider's transport-owned handoff input (CliBridge CLI output/stderr for Cursor and Claude Code, DirectApi direct-provider response final assistant content for Codex, Copilot and Gemini, or ServerBridge server event stream for OpenCode under OSI-004 and OSI-093),
+  running generic fallback and required-field validation. The snippet's (output, stderr) delegation shape applies only to CliBridge source evidence, not DirectApi or ServerBridge providers.
 gui_related: false
 gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.
 split_recommended: false
@@ -16250,7 +16250,7 @@ negative_constraints:
   create_parser(platform) must remain aligned to OSI-154 platform_specs-driven selection and must not become hardcoded parser
   selection.
 compatibility_only_notes:
-- The Rust hook validation snippet is plan evidence only, not an executable node output.
+- The Rust hook validation snippet and its (output, stderr) signature are CliBridge-era plan evidence only, not an executable node output or a DirectApi CLI-stream requirement.
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -18649,7 +18649,7 @@ owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Structured output validation tunes strictness to reduce false positives and false negatives, accepts partial output where
   downstream_context is missing, rejects missing task_report, targets less than 1 percent false positive rate, logs raw output
-  for debugging, and updates parsers based on user feedback and platform CLI changes.
+  for debugging, and updates parsers based on user feedback, platform CLI changes (CliBridge), and provider API or model changes (DirectApi, OSI-004, OSI-093).
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend orchestration, hook, lifecycle, validation, parser, remediation, continuity, or storage-boundary
