@@ -495,6 +495,219 @@
           "user_id": "user-1"
         }
       }
+    },
+    {
+      "name": "teach_capture_request_app_new",
+      "definition": "TeachCaptureRequest",
+      "value": {
+        "schema_id": "pm.assistant_memory.teach_capture_request.v1",
+        "request_id": "req-capture-app-01",
+        "command_id": "cmd.chat.teach.capture",
+        "scope_kind": "application",
+        "project_id": null,
+        "application_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server:home-01"
+        },
+        "thread_id": null,
+        "mode": "new",
+        "origin_surface": "teach_document",
+        "proposed_text": "Always use Context7 MCP.",
+        "target_rule_source": "app.agent_rules.application_markdown"
+      }
+    },
+    {
+      "name": "teach_capture_request_project_edit",
+      "definition": "TeachCaptureRequest",
+      "value": {
+        "schema_id": "pm.assistant_memory.teach_capture_request.v1",
+        "request_id": "req-capture-proj-01",
+        "command_id": "cmd.chat.teach.capture",
+        "scope_kind": "project",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "mode": "correct",
+        "origin_surface": "teach_document",
+        "proposed_text": "Always run cargo test before committing.",
+        "target_rule_source": ".puppet-master/project-rules.md",
+        "expected_revision": 4
+      }
+    },
+    {
+      "name": "teach_capture_result_opened",
+      "definition": "TeachCaptureResult",
+      "value": {
+        "schema_id": "pm.assistant_memory.teach_capture_result.v1",
+        "request_id": "req-capture-proj-01",
+        "command_id": "cmd.chat.teach.capture",
+        "persisted": false,
+        "status": "opened",
+        "capture_id": "capture-proj-01",
+        "receipt_ref": "receipt-capture-01",
+        "error_reason": null,
+        "draft_text": "Always run cargo test before committing.",
+        "base_revision": 4
+      }
+    },
+    {
+      "name": "teach_capture_result_refused",
+      "definition": "TeachCaptureResult",
+      "value": {
+        "schema_id": "pm.assistant_memory.teach_capture_result.v1",
+        "request_id": "req-capture-proj-02",
+        "command_id": "cmd.chat.teach.capture",
+        "persisted": false,
+        "status": "refused",
+        "capture_id": null,
+        "receipt_ref": null,
+        "error_reason": "stale_revision",
+        "draft_text": null,
+        "base_revision": null
+      }
+    },
+    {
+      "name": "teach_confirm_request_application_rules",
+      "definition": "TeachConfirmRequest",
+      "value": {
+        "schema_id": "pm.assistant_memory.teach_confirm_request.v1",
+        "request_id": "req-confirm-app-01",
+        "command_id": "cmd.chat.teach.confirm",
+        "project_id": null,
+        "thread_id": "thread:app-01",
+        "capture_id": "capture-app-01",
+        "scope": "user",
+        "public_safe": true,
+        "locked": false,
+        "conflict_resolution": "keep_both",
+        "application_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server:home-01"
+        },
+        "expected_revision": 2,
+        "target_rule_source": "app.agent_rules.application_markdown"
+      }
+    },
+    {
+      "name": "teach_confirm_request_application_settings_no_thread",
+      "definition": "TeachConfirmRequest",
+      "value": {
+        "schema_id": "pm.assistant_memory.teach_confirm_request.v1",
+        "request_id": "req-confirm-app-02",
+        "command_id": "cmd.chat.teach.confirm",
+        "project_id": null,
+        "thread_id": null,
+        "capture_id": "capture-app-02",
+        "scope": "user",
+        "public_safe": true,
+        "locked": false,
+        "conflict_resolution": "keep_both",
+        "application_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server:home-01"
+        },
+        "expected_revision": 2,
+        "target_rule_source": "app.agent_rules.application_markdown"
+      }
+    },
+    {
+      "name": "teach_confirm_request_project_rules",
+      "definition": "TeachConfirmRequest",
+      "value": {
+        "schema_id": "pm.assistant_memory.teach_confirm_request.v1",
+        "request_id": "req-confirm-proj-02",
+        "command_id": "cmd.chat.teach.confirm",
+        "project_id": "project:01",
+        "thread_id": null,
+        "capture_id": "capture-proj-01",
+        "scope": "project",
+        "public_safe": false,
+        "locked": false,
+        "conflict_resolution": "keep_both",
+        "expected_revision": 4,
+        "target_rule_source": ".puppet-master/project-rules.md"
+      }
+    },
+    {
+      "name": "teach_cancel_request_application",
+      "definition": "TeachCancelRequest",
+      "value": {
+        "schema_id": "pm.assistant_memory.teach_cancel_request.v1",
+        "request_id": "req-cancel-app-01",
+        "command_id": "cmd.chat.teach.cancel",
+        "scope_kind": "application",
+        "project_id": null,
+        "application_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server:home-01"
+        },
+        "thread_id": null,
+        "capture_id": "capture-app-01"
+      }
+    },
+    {
+      "name": "teach_cancel_request_project",
+      "definition": "TeachCancelRequest",
+      "value": {
+        "schema_id": "pm.assistant_memory.teach_cancel_request.v1",
+        "request_id": "req-cancel-proj-01",
+        "command_id": "cmd.chat.teach.cancel",
+        "scope_kind": "project",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "capture_id": "capture-proj-01"
+      }
+    },
+    {
+      "name": "teach_cancel_result_cancelled",
+      "definition": "TeachCancelResult",
+      "value": {
+        "schema_id": "pm.assistant_memory.teach_cancel_result.v1",
+        "request_id": "req-cancel-app-01",
+        "command_id": "cmd.chat.teach.cancel",
+        "persisted": false,
+        "status": "cancelled",
+        "capture_id": "capture-app-01",
+        "receipt_ref": "receipt-cancel-01",
+        "error_reason": null
+      }
+    },
+    {
+      "name": "teach_cancel_result_refused",
+      "definition": "TeachCancelResult",
+      "value": {
+        "schema_id": "pm.assistant_memory.teach_cancel_result.v1",
+        "request_id": "req-cancel-app-02",
+        "command_id": "cmd.chat.teach.cancel",
+        "persisted": false,
+        "status": "refused",
+        "capture_id": "capture-app-01",
+        "receipt_ref": null,
+        "error_reason": "capture_not_found"
+      }
     }
   ],
   "invalid": [
@@ -996,6 +1209,166 @@
         "revision": 3,
         "receipt_ref": null,
         "error_reason": null
+      }
+    },
+    {
+      "name": "teach_capture_app_without_application_scope",
+      "definition": "TeachCaptureRequest",
+      "base_valid": "teach_capture_request_app_new",
+      "rejects_for": "application scope requires WorkflowScopeV2",
+      "reason": "Application-scope capture with project_id=null must supply genuine application_scope identity.",
+      "remove": [
+        "application_scope"
+      ]
+    },
+    {
+      "name": "teach_capture_project_null_project_id",
+      "definition": "TeachCaptureRequest",
+      "base_valid": "teach_capture_request_project_edit",
+      "rejects_for": "project scope requires non-empty project_id",
+      "reason": "Project-scope capture cannot carry project_id=null.",
+      "patch": {
+        "project_id": null
+      }
+    },
+    {
+      "name": "teach_capture_chat_surface_null_thread",
+      "definition": "TeachCaptureRequest",
+      "base_valid": "teach_capture_request_project_edit",
+      "rejects_for": "chat origin surfaces require thread_id",
+      "reason": "Chat-originated Teach capture must supply a real non-empty thread_id.",
+      "patch": {
+        "origin_surface": "wand",
+        "thread_id": null
+      }
+    },
+    {
+      "name": "teach_capture_correct_without_target",
+      "definition": "TeachCaptureRequest",
+      "base_valid": "teach_capture_request_project_edit",
+      "rejects_for": "correct mode requires target",
+      "reason": "Editing an existing rule (mode=correct) must name target_memory_id or target_rule_source.",
+      "remove": [
+        "target_rule_source"
+      ]
+    },
+    {
+      "name": "teach_capture_result_persisted_true",
+      "definition": "TeachCaptureResult",
+      "base_valid": "teach_capture_result_opened",
+      "rejects_for": "capture never persists",
+      "reason": "cmd.chat.teach.capture must never persist before confirm (persisted const false).",
+      "patch": {
+        "persisted": true
+      }
+    },
+    {
+      "name": "teach_confirm_app_null_project_without_application_scope",
+      "definition": "TeachConfirmRequest",
+      "base_valid": "teach_confirm_request_application_rules",
+      "rejects_for": "null project_id requires application_scope",
+      "reason": "Application-scope confirm with project_id=null must supply genuine WorkflowScopeV2 application_scope.",
+      "remove": [
+        "application_scope"
+      ]
+    },
+    {
+      "name": "teach_confirm_project_null_project_id",
+      "definition": "TeachConfirmRequest",
+      "base_valid": "teach_confirm_request_project_rules",
+      "rejects_for": "project confirm requires non-empty project_id",
+      "reason": "Rules for this project confirm cannot carry project_id=null.",
+      "patch": {
+        "project_id": null
+      }
+    },
+    {
+      "name": "teach_confirm_app_target_borrows_project_id",
+      "definition": "TeachConfirmRequest",
+      "base_valid": "teach_confirm_request_application_rules",
+      "rejects_for": "application target forbids project_id",
+      "reason": "Rules for every project (app.agent_rules.application_markdown) must never borrow a Project id.",
+      "patch": {
+        "project_id": "project:01"
+      }
+    },
+    {
+      "name": "teach_confirm_project_target_with_application_scope",
+      "definition": "TeachConfirmRequest",
+      "base_valid": "teach_confirm_request_project_rules",
+      "rejects_for": "project target forbids application_scope",
+      "reason": "Project rule confirm must not carry application_scope.",
+      "patch": {
+        "application_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server:home-01"
+        }
+      }
+    },
+    {
+      "name": "teach_confirm_app_not_public_safe",
+      "definition": "TeachConfirmRequest",
+      "base_valid": "teach_confirm_request_application_rules",
+      "rejects_for": "application user scope requires public_safe",
+      "reason": "Rules for every project (scope=user) require public_safe=true.",
+      "patch": {
+        "public_safe": false
+      }
+    },
+    {
+      "name": "teach_confirm_thread_scope_null_thread_id",
+      "definition": "TeachConfirmRequest",
+      "base_valid": "teach_confirm_request_locked",
+      "rejects_for": "thread scope requires non-empty thread_id",
+      "reason": "Legacy thread-scoped Teach confirm requires a non-empty thread_id.",
+      "patch": {
+        "scope": "thread",
+        "thread_id": null
+      }
+    },
+    {
+      "name": "teach_cancel_app_with_project_id",
+      "definition": "TeachCancelRequest",
+      "base_valid": "teach_cancel_request_application",
+      "rejects_for": "application cancel forbids project_id",
+      "reason": "Application-scope cancel must keep project_id=null.",
+      "patch": {
+        "project_id": "project:01"
+      }
+    },
+    {
+      "name": "teach_cancel_project_with_application_scope",
+      "definition": "TeachCancelRequest",
+      "base_valid": "teach_cancel_request_project",
+      "rejects_for": "project cancel forbids application_scope",
+      "reason": "Project-scope cancel must not carry application_scope.",
+      "patch": {
+        "application_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server:home-01"
+        }
+      }
+    },
+    {
+      "name": "teach_cancel_result_persisted_true",
+      "definition": "TeachCancelResult",
+      "base_valid": "teach_cancel_result_cancelled",
+      "rejects_for": "cancel never persists",
+      "reason": "cmd.chat.teach.cancel discards draft without writing (persisted const false).",
+      "patch": {
+        "persisted": true
       }
     }
   ],
@@ -2992,7 +3365,7 @@
         "durable_save": true,
         "no_op": false
       },
-      "expected": "Saved to memory · View"
+      "expected": "Saved to memory \u00b7 View"
     },
     {
       "case_id": "save_ack_False_False",
