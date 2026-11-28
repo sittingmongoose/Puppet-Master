@@ -10,7 +10,7 @@ import { resolve, dirname, join } from 'node:path';
 const here = dirname(fileURLToPath(import.meta.url));
 const m = await import(process.argv[2] ? pathToFileURL(resolve(process.argv[2])).href : '../checks/perf-onb-step.check.mjs');
 const rigPath = process.argv[3] ? resolve(process.argv[3]) : join(here, '../../../onboarding/opus-5.5/src/js/58-rig.js');
-for (const k of ['WATCH', 'restStepVerdict', 'slowLookVerdict', 'motionVerdict']) assert.equal(typeof m[k], 'function', `the check exports ${k}`);
+for (const k of ['WATCH', 'POSEWATCH', 'restStepVerdict', 'slowLookVerdict', 'motionVerdict', 'poseVerdict']) assert.equal(typeof m[k], 'function', `the check exports ${k}`);
 const { restStepVerdict: rest, motionVerdict: motion } = m;
 
 // at rest, 3 s at 120 Hz: main before the gate drew every frame; the gate draws a few to about 30 a second
@@ -38,6 +38,30 @@ assert.equal(rest({ full: 357, part: 0, frames: 357, secs: 3, fps: 20 }).ok, fal
 // no reading: could not judge, never a pass
 assert.equal(rest(null).ok, false); assert.match(rest({ err: 'no stage' }).why, /could not judge/);
 assert.equal(rest({ full: 0, part: 0, frames: 3, secs: .05, fps: 0 }).ok, false);
+
+// the painted head against a full draw (A147): the 0.1 px step's own staleness passes; a breath held 0.85 px late for
+// 13 frames (392dc3c7, Basic Dark Welcome on the VM) fails; one or two frames over the limit pass; no reading never passes
+{
+	const pose = m.poseVerdict, gaps = (n, over, run) => Array.from({ length: n }, (_, i) => (i >= 100 && i < 100 + run ? over : .09));
+	const reading = (g) => ({ frames: g.length, gaps: g, maxPx: Math.max(...g), worst: { t: 1, written: 'a', ref: 'b' } });
+	assert.equal(pose(reading(gaps(360, .1, 0))).ok, true, 'the step itself');
+	assert.equal(pose(reading(gaps(360, .85, 13))).ok, false, 'a breath drawn late');
+	assert.match(pose(reading(gaps(360, .85, 13))).why, /longest run 13 frames/);
+	assert.equal(pose(reading(gaps(360, .4, 2))).ok, true, 'two frames over the limit');
+	assert.equal(pose(reading(gaps(360, .4, 3))).ok, false, 'three frames over the limit');
+	assert.equal(pose({ err: 'no stage' }).ok, false); assert.equal(pose({ frames: 5, gaps: [0, 0, 0, 0, 0], maxPx: 0 }).ok, false, 'too few frames: could not judge');
+	assert.equal(pose({ skip: "Retro's own stepped draw (20/s)" }).skip, true);
+}
+// the reference is the painter's own formula and rounding, never the gate's key (a check that compares poseKey with drawn
+// inherits the gate's blind spot: A147 finding 2)
+{
+	const chk = readFileSync(process.argv[2] ? resolve(process.argv[2]) : join(here, '../checks/perf-onb-step.check.mjs'), 'utf8');
+	const pw = chk.slice(chk.indexOf('export const POSEWATCH'), chk.indexOf('export function poseVerdict'));
+	assert.ok(pw.length > 200, 'POSEWATCH found');
+	assert.doesNotMatch(pw, /poseKey|drawn|drawDue/, 'the pose reference does not read the gate');
+	assert.match(pw, /scale\(\$\{R\(sx\)\} \$\{R\(sy\)\}\)/, 'the reference writes the head scales rounded, as render() does');
+	assert.match(pw, /st\.gHead\.getAttribute\('transform'\)/, 'the written transform is read from the page');
+}
 
 // a motion window draws every frame (at most two frames without a full draw)
 assert.equal(motion({ full: 48, part: 0, frames: 48, fps: 0 }).ok, true);
@@ -87,6 +111,8 @@ assert.match(loop, /if \(!fps && !this\.reduced && !this\.dirty\)/, "Retro's ste
 const due = src.slice(src.indexOf('    drawDue() {'), src.indexOf('    render(part) {'));
 for (const [re, what] of [[/this\.typeT \|\| this\.tipW/, 'speech and a note being written'], [/this\.faceOut \|\| this\.faceT0 != null/, 'a face changing'], [/t > ps\.nextBlink/, 'a blink due'], [/p\.kind !== 'z'/, 'a particle that is not a z'], [/PIP_DRAW_STEP_PX \/ \(this\.map\.k \* dpr\)/, 'the step in device pixels']])
 	assert.match(due, re, `drawDue draws every frame for ${what}`);
+assert.match(src.slice(src.indexOf('    poseKey() {'), src.indexOf('    zMoved(')), /d\.push\(R\(ps\.sx \* \(1 - br \* \.4\)\), R\(ps\.sy \* \(1 \+ br\)\)\);/, 'the draw key holds the head scales as the painter writes them (A147)');
+assert.match(src, /    render\(part\) \{[\s\S]*scale\(\$\{R\(sx\)\} \$\{R\(sy\)\}\)/, 'render() still writes the head scales rounded (the key matches what is painted)');
 assert.match(src, /const PIP_DRAW_SWING_PXS = 30, PIP_DRAW_FAST_PXS = 12, PIP_DRAW_FAST_HOLD = \.5;/, 'a swing is drawn whole: from 30 px a second until under 12 for half a second');
 assert.match(due, /if \(pxs >= PIP_DRAW_SWING_PXS\) this\.swingOn = true;/, 'a swing starts the every-frame draw');
 assert.match(due, /if \(this\.swingOn\) return 'full';/, 'drawDue draws every frame through a swing');

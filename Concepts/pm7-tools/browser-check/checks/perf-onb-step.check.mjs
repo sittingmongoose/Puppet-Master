@@ -17,6 +17,17 @@
 //            gate from a draw in every frame, so each cell is logged and the look is judged once on its cells' mean
 //            share: at most --set slowShare (default 0.85) of the frames. Retro at most its own rate (Retro Dark 20,
 //            Retro Light 10) plus a fifth and one. Red on main before the gate (a draw in every frame).
+//   pose     in the same cells (idle life still held off), for --set poseMs (default 6000, two breaths) the head as the page
+//            painted it against the head a full draw would paint at that tick (A147: the gate once compared continuous
+//            head scales while the painter writes them to 0.01, and Basic Dark's breath showed half a second late,
+//            0.85 device px off for 29 frames). After every stepped frame of the stage's own loop the written
+//            transform of its head (gHead) is read, and the reference is rebuilt from the physics state with render()'s
+//            own formula and rounding (headAt, NieR's bob, the floor and visible-crop clamps, the breath, R to 0.01),
+//            never from the gate's poseKey; the head's box (pipBB) is put through both, and the largest corner gap in
+//            device pixels is that frame's staleness. A cell fails when the head is more than --set poseMax (default
+//            0.25: the 0.1 px step plus the corner sum of its parts, A147 measured 0.19 after the repair) device px
+//            stale for more than --set poseRun (default 2) frames in a row. Retro (its own stepped draw) and a still
+//            stage are logged, not judged.
 // Then per look, on the last awake screen of --set screens, windows where the stage must draw every frame (each at most
 // --set miss (default 2) frames without a full draw, outside Retro, which draws at its own rate and is only logged):
 //   swing    Pip set swinging as its idle swing does (ps.thv += 0.5), 400 ms;
@@ -28,7 +39,7 @@
 // counters when it has them).
 // --set looks= (default all ten; `dark` the five Dark looks) --set screens= (default welcome,where,ready)
 // --set settle= (default 20000) --set viewSettle= (default 6000) --set ms= --set restMax= --set restShare= --set miss=
-// --set motion=0 leaves out the every-frame windows. One surface per run (--set sandbox=1 for the sandbox).
+// --set poseMs= (0 leaves the pose rows out) --set poseMax= --set poseRun= --set motion=0 leaves out the every-frame windows. One surface per run (--set sandbox=1 for the sandbox).
 import { muteSound } from '../helpers/quiet-page.mjs';
 import { POSE, restVerdict } from './perf-onb-rest.check.mjs';
 
@@ -68,6 +79,63 @@ export const WATCH = ([kind, ms]) => new Promise((res) => {
 	};
 	requestAnimationFrame(tick);
 });
+
+// In the page: the head as painted against the head a full draw would paint, after every stepped frame of the stage's
+// loop, for ms. Exported for tools/onb-step.selftest.mjs.
+export const POSEWATCH = (ms) => new Promise((res) => {
+	const host = document.querySelector('#pm-o55-onboarding .o55-stage'), st = host && host.__pipStage;
+	if (!st || !st.ps || !st.gHead || typeof st.loop !== 'function') { res({ err: 'no stage with a head (#pm-o55-onboarding .o55-stage __pipStage, gHead)' }); return; }
+	if ((typeof st.frameRate === 'function' && st.frameRate()) || st.reduced) { res({ skip: st.reduced ? 'a still stage (Reduced Motion)' : `Retro's own stepped draw (${st.frameRate()}/s)` }); return; }
+	const PH = window.O55 && O55.pipStage && O55.pipStage.h, R = PH && PH.R;
+	if (typeof R !== 'function') { res({ err: 'no O55.pipStage.h.R (the painter\'s rounding)' }); return; }
+	const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+	const mat = (str) => { g.setAttribute('transform', str || ''); const c = g.transform.baseVal.consolidate(); return c ? c.matrix : new DOMMatrix(); };
+	// render()'s head transform for the stage's state now (58-rig.js render: H, ang, the breath, the clamps)
+	const reference = () => {
+		const ps = st.ps, Lay = st.L, F = st.fam || {};
+		let H = st.headAt(ps.C.x, ps.C.y, ps.th, ps.dy), ang = ps.th * .9 + ps.tilt;
+		if (F.bob && !st.reduced) { H = [H[0], H[1] + Math.sin(st.t * 1.35) * F.bob * Lay.s / 2.6]; ang += Math.sin(st.t * .9) * .025; }
+		const headH = 28 * Lay.s; if (H[1] + headH > Lay.ground - 2) H = [H[0], Lay.ground - 2 - headH];
+		const reach = typeof st.pipReach === 'function' ? st.pipReach(ang) : null; if (reach && st.vis && H[1] + reach[3] > st.vis.y1) H = [H[0], st.vis.y1 - reach[3]];
+		const br = st.reduced || !(PH.part && PH.part('idle-life')) ? 0 : (F.breathe || 0) * Math.sin(st.t * (st.sleepZ ? 1.5 : 2.2));
+		const sx = ps.sx * (1 - br * .4), sy = ps.sy * (1 + br), s = Lay.s;
+		return `translate(${R(H[0])} ${R(H[1])}) rotate(${R(ang * 57.3)}) scale(${s}) translate(-32 -31.5) translate(32 59.5) scale(${R(sx)} ${R(sy)}) translate(-32 -59.5)`;
+	};
+	const bb = st.pipBB && st.pipBB.h ? st.pipBB.h : [8, 29, 48, 31];
+	const corners = [[bb[0], bb[1]], [bb[0] + bb[2], bb[1]], [bb[0], bb[1] + bb[3]], [bb[0] + bb[2], bb[1] + bb[3]]];
+	const W = { frames: 0, gaps: [], maxPx: 0, k: st.map ? st.map.k : null, dpr: window.devicePixelRatio || 1, worst: null };
+	const own = Object.prototype.hasOwnProperty.call(st, 'loop'), orig = st.loop;
+	let lastT = st.t, t0 = performance.now(), done = false;
+	const finish = () => { if (done) return; done = true; if (own) st.loop = orig; else delete st.loop; W.secs = (performance.now() - t0) / 1000; res(W); };
+	st.loop = function () {
+		const out = orig.apply(this, arguments);
+		if (!done && st.t !== lastT) {
+			lastT = st.t;
+			const written = st.gHead.getAttribute('transform'), ref = reference(), a = mat(written), b = mat(ref);
+			let gap = 0;
+			for (const [x, y] of corners) { const p = new DOMPoint(x, y), u = p.matrixTransform(a), v = p.matrixTransform(b); gap = Math.max(gap, Math.hypot(u.x - v.x, u.y - v.y)); }
+			const px = gap * (st.map ? st.map.k : 1) * W.dpr;
+			W.frames++; W.gaps.push(Math.round(px * 1000) / 1000);
+			if (px > W.maxPx) { W.maxPx = px; W.worst = { t: Math.round(st.t * 1000) / 1000, written, ref }; }
+		}
+		if (performance.now() - t0 >= ms) finish();
+		return out;
+	};
+	setTimeout(finish, ms + 2000);
+});
+
+// a pose reading against the rule (at most poseMax device px stale for at most poseRun frames in a row): { ok, why }
+export function poseVerdict(r, o = {}) {
+	const max = o.poseMax ?? .25, run = o.poseRun ?? 2;
+	if (!r || r.err) return { ok: false, why: `no reading (${r && r.err || 'none'}): could not judge` };
+	if (r.skip) return { ok: true, skip: true, why: `${r.skip}: logged, not judged` };
+	if (!(r.frames > 30)) return { ok: false, why: `${r ? r.frames : 0} stepped frames read: could not judge` };
+	let longest = 0, cur = 0, over = 0;
+	for (const g of r.gaps) { if (g > max) { cur++; over++; longest = Math.max(longest, cur); } else cur = 0; }
+	const sorted = r.gaps.slice().sort((a, b) => a - b), p99 = sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * .99))];
+	const ok = longest <= run;
+	return { ok, longest, why: `the painted head at most ${r.maxPx.toFixed(2)} device px from a full draw (p99 ${p99.toFixed(2)}); ${over} of ${r.frames} frames over ${max} px, the longest run ${longest} frames (want at most ${run})${ok ? '' : `: a pose drawn late (worst at t ${r.worst && r.worst.t}: written ${r.worst && r.worst.written} | full draw ${r.worst && r.worst.ref})`}` };
+}
 
 // a rest reading against the rule: { ok, why }
 export function restStepVerdict(r, o = {}) {
@@ -115,7 +183,8 @@ export default async function (t) {
 	const lookArg = String(t.args.looks || 'all');
 	const looks = lookArg === 'all' ? ALL : lookArg === 'dark' ? ALL.filter((l) => l.endsWith('-dark')) : lookArg.split(',').filter(Boolean);
 	const screens = String(t.args.screens || 'welcome,where,ready').split(',').filter(Boolean);
-	const ms = Number(t.args.ms || 3000), o = { restMax: Number(t.args.restMax ?? 60), restShare: Number(t.args.restShare ?? .5), slowShare: Number(t.args.slowShare ?? .85), miss: Number(t.args.miss ?? 2) };
+	const poseMs = Number(t.args.poseMs || 6000);
+	const ms = Number(t.args.ms || 3000), o = { poseMax: Number(t.args.poseMax ?? .25), poseRun: Number(t.args.poseRun ?? 2), restMax: Number(t.args.restMax ?? 60), restShare: Number(t.args.restShare ?? .5), slowShare: Number(t.args.slowShare ?? .85), miss: Number(t.args.miss ?? 2) };
 	const W = 1920, H = 1080;
 	await t.viewport(W, H);
 	await muteSound(t.page);
@@ -154,7 +223,13 @@ export default async function (t) {
 			t.log(`${cell}: before the window: ${pre.why}`);
 			if (!pre.ok) { await t.check(`${cell}: Pip ${want} and at rest before the window`, false, `${pre.why}: could not judge`); continue; }
 			const r = await f.evaluate(WATCH, ['rest', ms]);
+			const pr = poseMs > 0 ? await f.evaluate(POSEWATCH, poseMs) : null;
 			await holdLife(false);
+			if (pr) {
+				const pv = poseVerdict(pr, o);
+				t.log(`${cell}: pose: ${pv.why}`);
+				if (!pv.skip) await t.check(`${cell}: the painted head is never more than ${o.poseMax} px from a full draw for more than ${o.poseRun} frames`, pv.ok, pv.why);
+			}
 			t.log(`${cell}: at rest: ${line(r)}`);
 			const v = restStepVerdict(r, o);
 			if (v.slow) { slow.push(v.share); t.log(`${cell}: ${v.why}`); }
