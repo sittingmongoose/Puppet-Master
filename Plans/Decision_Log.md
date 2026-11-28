@@ -63826,17 +63826,21 @@ canonical_text: |-
 
   C-1467-THEMES, in Jared's words: "We arent going to support custom themes outside of the controls we have in settings. I was originally planning that but I am going to drop it for now." On 2026-11-28 Jared added (relayed by pm7-build): "The custom theme stuff needs to be removed from pmconcept7 and the plans." Custom themes are therefore REMOVED from the product, not deferred: the four Settings buttons Open themes folder, Create new theme, Import theme and Export theme, custom theme files and their file format and starting theme, the themes folder, the startup scan, validation and hot reload of theme TOML files, the custom theme validation risk, the custom loader, custom entries and the [custom] badge in the theme selector, and custom fonts for themes are not part of the product, and the plans keep no specification for them. FinalGUISpec section 6.6 no longer describes them; F3-080, F3-081 and F3-263, which existed only for custom themes, are retired; F3-082, F3-084, F3-208 and F3-268 say custom themes were removed. The Settings rows general.visual.manage-custom-themes and general.visual.custom-theme-base move to retired_input_ids with compatibility reads that explain the retirement. cmd.theme.create, cmd.theme.import and cmd.theme.export stay rejected_with_reason with no replacement command or typed local action. The five built-in theme families, their ten variants and the one Light/Dark/Auto control are unchanged. Bringing custom themes back would need a new decision and a new specification.
 
+  Scope, in Jared's words on 2026-11-28 at 1:13 PM EST: "For the custom themes. I want to maintain the current customizations we have in settings, like spacing, font size, changing font, etc. there are a bunch in there already I would like to keep and support." So the removal is exactly two things: user-made theme files (the themes folder, the TOML theme format, create, import, export and open-folder, hot reload of theme files and fonts shipped inside a theme file) and themes installed from the Catalog, because a third-party theme package is a custom theme too. Theme is therefore no longer a Catalog item type: Section 15 section 3.13 and SMPFS-055 drop themes from the Catalog lifecycle, SMPFS-318 and SMPFS-319 drop theme from the install item types, SMPFS-322 to SMPFS-325 drop the theme listed use current_or_saved_theme and the active theme edit rule, and the six catalog payload schemas, the DS15 context and source schemas, Plans/ds15_deck2_contracts.json and Plans/ds15_deck2_fixtures.json admit no theme item, with a fixture that refuses one. This supersedes the "Catalog-installed custom theme" row of DL-435 and its note that valid edits to the active theme apply immediately; DL-435 itself is not rewritten. Every built-in Settings appearance control is kept and stays supported: the five built-in looks (Basic, Friendly, Glass, Retro and NieR) with Light/Dark/Auto as their one separate scheme control (DL-301), accent, wallpaper, Size of everything, text size, Spacing, app font, border width and corner roundness, line spacing, extra padding, scrollbar width, high contrast, reduce motion and animation speed, the keyboard focus outline, the NieR, Pip, Glass and Retro options, the terminal and editor font, spacing, caret and colour settings, and terminal color schemes with their import.
+
   C-1467-CONCERN, Jared's answer "A" ("this"): acknowledge and dismiss become two commands, cmd.concern.acknowledge and cmd.concern.dismiss, like the other seven concern commands, and each writes a concern history event. Dismiss needs a non-empty reason, and both ask for confirmation first on a serious or blocking concern. Their two event types belong in Plans/event_family_registry.json, which stream E holds, and Plans/Orchestrator_Page.md (OP-004, OP-005) is held as well, so the catalog rows, the production wiring, the concern.acknowledged and concern.dismissed event families and the exact confirmation policy are admitted after S11 together with those documents. Until then F3-125, FinalGUISpec and Contracts_V0 record the decision, and no catalog row or wiring entry names the two commands. The options of two commands without history events, or of dropping acknowledge and dismiss as separate actions, are not taken.
 gui_related: true
 gui_classification_reason: It removes four visible Settings buttons and the custom-theme selector entries, and decides two visible concern actions.
 split_recommended: false
-depends_on: [F3-080, F3-081, F3-082, F3-125, CV-063, UCC-108, DL-442, DL-443]
+depends_on: [F3-080, F3-081, F3-082, F3-125, CV-063, UCC-108, DL-442, DL-443, DL-301, DL-435]
 unblocks: []
 acceptance_criteria:
 - "FinalGUISpec section 6.6 no longer specifies custom theme files, the themes folder, scan or hot reload of theme files, theme fonts, theme file validation or the custom loader; F3-080, F3-081 and F3-263 are retired; F3-082, F3-084, F3-208 and F3-268 say custom themes were removed by DL-2607, and F3-082 offers no theme folder, create, import or export action and no [custom] badge."
 - "settings_inventory.json has no active general.visual.manage-custom-themes or general.visual.custom-theme-base row; both are retired_input_ids with compatibility reads."
 - "cmd.theme.create, cmd.theme.import and cmd.theme.export stay rejected_with_reason and their reasons cite DL-2607."
 - "F3-125, the FinalGUISpec concern action paragraph and the Contracts_V0 concern action policy name cmd.concern.acknowledge and cmd.concern.dismiss and say they are admitted after S11; no catalog row or wiring entry names them before then."
+- "No Catalog item type, schema enum, listed use or fixture admits a theme: Section 15 section 3.13, SMPFS-055, SMPFS-318, SMPFS-319 and SMPFS-322 to SMPFS-325 say themes were removed by DL-2607, and a catalog payload with item_type theme is refused."
+- "Every Settings appearance row (general.visual, code.terminal and code.editing look rows) keeps its inventory row and owner text; the theme selector lists five family rows with Light/Dark/Auto as the one separate scheme control (DL-301)."
 - No earlier Decision_Log entry is rewritten.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
@@ -63852,6 +63856,9 @@ implementation_surfaces:
 - Plans/settings_system_contract_fixtures.json
 - Plans/Contracts_V0.md
 - Plans/UI_Command_Catalog.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/ds15_deck2_contracts.json
+- Plans/ds15_deck2_fixtures.json
 node_compile_hint:
   mode: owner_decision_contract
   create_worknodes: false
@@ -63861,6 +63868,7 @@ source_lineage:
 - "/mnt/Cursor/agent-reports/v1/writers/vm.pm-closure-lead/cards/vm.pm-closure-lead--C-1467-CONCERN.json, SHA-256 621a0649419c9962426ed282dfef102a300298712cb31b55be297920f5d046d8"
 - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/fix79/OPEN13/S6/NOTES.md (Row 1467 OWNER-CHOICE), SHA-256 81de8d0e16d85738957a51a3f4bcc7ad25411e8cc95ffd874023e74cbd749557"
 - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/fix79/OPEN13/REMOVE-THEMES-BRIEF.md (Jared's 2026-11-28 removal instruction, relayed by pm7-build), SHA-256 f18edada9dcfb78954922001c7cf8ef7c968d6ee474ea5f2c69fc9778a183c66"
+- "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/fix79/OPEN13/THEMES-FIX2-BRIEF.md (Jared's 2026-11-28 1:13 PM scope instruction), SHA-256 e7a10a14ca19a11024d8f285330a6c38b42e2be2b48a3fbb860fa0cd9b31466b"
 preserved_exact_tokens:
 - DL-2607
 - C-1467-THEMES
@@ -63871,7 +63879,8 @@ preserved_exact_tokens:
 - general.visual.custom-theme-base
 negative_constraints:
 - Do not add cmd.concern.acknowledge or cmd.concern.dismiss to UI_Command_Catalog.md or the wiring before the held event and Orchestrator documents admit them.
-- Do not restore custom themes, the four custom-theme buttons or custom theme files without a new decision.
+- Do not restore custom themes, the four custom-theme buttons, custom theme files or a Catalog theme item type without a new decision.
+- Do not remove or weaken any built-in Settings appearance control under this decision.
 - Do not rewrite DL-2606 or any earlier entry.
 - Do not reseal governance artifacts or claim native execution proof from these Plan edits.
 owner_hints:

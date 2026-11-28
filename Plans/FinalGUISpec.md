@@ -166,7 +166,7 @@ Orchestrator worker identity rows from `Orchestrator_Page` / `Orchestrator_Page.
 
 Amended 2026-10-09 (DL-180, DL-184): the Bottom Panel is no longer a fixed shell zone. Home's primary content is one universal panel system, an n-ary split tree of panels that each hold any tab kind, Terminal, Problems, Output, Ports and Debug Console included, with a full-width bottom row in the default layout that is an ordinary panel row (F3-630, F3-635); the chat is a fixed column on the right that moves only by Pop out (F3-637); and no box with a coloured side, no emoji and no pills appear anywhere (F3-648). The sentences below that said otherwise are amended in place.
 
-This document is the authoritative GUI specification for the Puppet Master desktop application, replacing the retired Rust/Iced-lineage GUI with a Slint 1.17.1 implementation on Rust stable 1.96.1. The design follows an IDE-shell layout (Activity Bar + Primary Content + Side Panel, with a chat column on the right; Home's primary content is one universal panel system) with ten built-in themes across five families (Basic, Friendly, Glass, Retro, NieR; bundled/pre-claim fallback Basic Dark; new Projects follow Your usual settings) backed by deterministic built-in palette variants plus user-created custom themes, detachable side panels, and rearrangeable dashboards that open as tabs. Theme resolves through SSYS-002/059's applicable Everywhere/Device/Project values; Basic Dark applies only when none exists. Existing saved layouts survive. A settings copy brings only source-owned values by default, with effective values copied only through Keep them fixed (SSYS-062); copied own values and layouts remain detached from the source.
+This document is the authoritative GUI specification for the Puppet Master desktop application, replacing the retired Rust/Iced-lineage GUI with a Slint 1.17.1 implementation on Rust stable 1.96.1. The design follows an IDE-shell layout (Activity Bar + Primary Content + Side Panel, with a chat column on the right; Home's primary content is one universal panel system) with ten built-in themes across five families (Basic, Friendly, Glass, Retro, NieR; bundled/pre-claim fallback Basic Dark; new Projects follow Your usual settings) backed by deterministic built-in palette variants and the Settings appearance controls (Light/Dark/Auto, accent, wallpaper, scale, font size and app font, interface density, border, line height and padding, high contrast, animations, focus indicator and the per-family options; user-created and Catalog-installed themes were removed by DL-2607), detachable side panels, and rearrangeable dashboards that open as tabs. Theme resolves through SSYS-002/059's applicable Everywhere/Device/Project values; Basic Dark applies only when none exists. Existing saved layouts survive. A settings copy brings only source-owned values by default, with effective values copied only through Keep them fixed (SSYS-062); copied own values and layouts remain detached from the source.
 
 The current GUI uses a two-row header with 16 flat navigation buttons above a single full-width content area. This wastes screen real estate and forces constant page-switching. The new layout follows a three-column IDE shell inspired by VS Code / JetBrains, dressed in the existing retro-futuristic aesthetic.
 
@@ -177,7 +177,7 @@ Key changes from the retired Rust/Iced-lineage GUI:
 - **New views:** Usage page, File Manager panel, editor surface, Chat panel, Agent Activity pane, Artifacts, Source Control, Actions & Pipelines, Docker Manager, and Run & Debug side-panel surfaces
 - **Runtime tools:** Terminal, Problems, Output, Ports, and Debug Console (the classical **Debugger** / **DAP Debugger** surface) are tab kinds that open in any panel, landing beside the terminals, and the default Home layout keeps them in a full-width bottom row (F3-630, F3-634); normal browsing and HTML preview remain Browser tabs or detached-window browser surfaces
 - Coarse surface vocabulary treats primary-content pages `/views`, side-panel destinations, panel tab kinds, and Orchestrator tabs as shell categories, not interchangeable route identities.
-- **Themes:** Five theme families (ten built-in themes) with full extensibility and deterministic built-in variants
+- **Themes:** Five theme families (ten built-in themes) with deterministic built-in variants and the Settings appearance controls; custom and Catalog-installed themes were removed by DL-2607
 - **Real-time:** Event-driven updates via Rust channels and `invoke_from_event_loop`, not polling
 - **Panels:** the home centre is one universal panel system whose panels hold any tab kind (F3-630); the chat is a fixed column that moves only by Pop out (F3-637); side panels such as File Manager are detachable; shell state remains identity-safe when re-docked
 - **Project bar:** Instant project switching from title bar with full state preservation and reload
@@ -2163,7 +2163,7 @@ Puppet Master ships exactly the ten built-in variants below; it has no user-crea
 **Theme selector UI:**
 - The title-bar trigger is a morphing icon button: sun = manual Light mode, moon = manual Dark mode, continuous sun-to-moon morph = Auto mode (follows OS appearance)
 - The menu shows a Light/Dark/Auto segmented control above five theme-family rows (Basic, Friendly, Glass, Retro, NieR)
-- Each family row shows: family name and color swatch preview (4 circles: background, surface, accent-blue, accent-lime), and lists only that family's built-in variants; there is no built-in/custom badge and no custom entry (DL-2607)
+- Each family row shows: family name and color swatch preview (4 circles: background, surface, accent-blue, accent-lime) and lists no Light or Dark variant beside the family; the single Light/Dark/Auto control above the rows chooses the variant for every family (DL-301), and there is no built-in/custom badge and no custom entry (DL-2607)
 - In Auto mode the selected family resolves to its dark or light variant by following the operating system appearance (`prefers-color-scheme`) and updates live when the OS setting changes
 - The fifth family row is NieR (Q22); Adjust NieR opens the existing editor. Family selection uses the same Settings pair, with no checkbox, saved-underlying-family note or independent override. Entering NieR uses its one Reboot moment only when the Reboot moment part is installed; otherwise it uses the standard look cover. Leaving NieR and switching Light/Dark within NieR use the standard look cover. Reduced Motion keeps the existing calm/instant settle policy. Explicit Play reboot moment remains a local rehearsal that changes no setting.
 - "Manage themes" link at bottom opens Settings > General > Themes section
@@ -9971,9 +9971,9 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The title-bar theme selector is a morphing sun/moon trigger (sun for manual Light, moon for manual Dark and
   continuous morph for Auto), opening a Light/Dark/Auto segmented control above five family rows in order Basic,
-  Friendly, Glass, Retro and NieR. Each row shows its swatch preview and lists only its built-in variants.
-  NieR is an ordinary family row with its
-  Light/Dark variants, and Adjust NieR opens ui.settings.nier_editor.open. The old NieR Mode menuitemcheckbox is
+  Friendly, Glass, Retro and NieR. Each row shows its family name and swatch preview and lists no Light or Dark
+  variant; the single Light/Dark/Auto control chooses the variant for every family (DL-301). NieR is an ordinary
+  family row, and Adjust NieR opens ui.settings.nier_editor.open. The old NieR Mode menuitemcheckbox is
   removed. The segmented control uses cmd.settings.transaction.preview then cmd.settings.transaction.apply for
   the existing atomic family/mode pair (DL-228); each family pick composes cmd.settings.transaction.preview then
   cmd.settings.transaction.apply for the atomic family/mode pair under SSYS-009. Auto follows OS appearance live
