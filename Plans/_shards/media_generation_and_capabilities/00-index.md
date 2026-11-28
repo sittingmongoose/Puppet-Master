@@ -1,30 +1,30 @@
 # Shard Index: Plans/Media_Generation_and_Capabilities.md
 
-Generated: 2026-11-26T08:42:23Z
+Generated: 2026-11-28T03:17:30Z
 
-Source SHA256: `59866e6dec8c7d4ecf7e2ec6a8bef3b056fd55803ee6c8d5ba7e4e1ea4413904`
+Source SHA256: `804dce76322aa2a2aba6ff145e301027a9b8ff0ab05de8da2dd7db2972110368`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L18 `371ac91d6f4774197551e1957c16510ac9130fc99db1b35c463806ef861c961f`
-- [002 - 0. Scope and SSOT status](002-0.-scope-and-ssot-status.md) L20-L51 `37ed2489461e1c285f83518bad3b54613a2dbb4b5e1cbd075a435fe63a2071ae`
-- [003 - 1. Capability system](003-1.-capability-system.md) L52-L81 `9059f312167876538628c2b605f26af626bd05bb69be24f1f6353ccb3b02e888`
-- [004 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](004-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L83-L376 `73b017104dc9ec6617de2de0d7d3e7a8539548bff5c5dd946df6f4ad13d22bd4`
-- [005 - 2. Media generation contract](005-2.-media-generation-contract.md) L377-L655 `87838542fede92c873d519647ae3dcd1c9afce2fe583dbeff99ec2ee4d2e3e34`
-- [006 - 3. Natural-language slot extraction grammar](006-3.-natural-language-slot-extraction-grammar.md) L656-L863 `541edb80d4f89c6a6653109dba3f579830229ff7458824e2205e790a0408910f`
-- [007 - 4. UI/UX behavior: capability picker dropdown](007-4.-ui-ux-behavior-capability-picker-dropdown.md) L864-L931 `e2d58fa4e3b4e5e1d303ab6291c362fa00b025d569860dbff748a5df419a7f1e`
-- [008 - 5. UI copy strings](008-5.-ui-copy-strings.md) L932-L989 `abba653fc3da81ae014f1dcc19f6b77937d97490e25c7ff041f5ad27be249de6`
-- [009 - 6. Acceptance criteria](009-6.-acceptance-criteria.md) L990-L1092 `a24a35b65e5ec0fc676856a1ebab8d26124884e9c37ea8e77774fc1e83d3b21d`
-- [010 - Appendix A. Slot extraction rules (regex-ish, deterministic)](010-appendix-a.-slot-extraction-rules-regex-ish-deterministic.md) L1093-L1150 `764ecbe494bf0bcecbbc6edae151727b804d05e43a1c2ed1a6981f7b4a6cae23`
-- [011 - References](011-references.md) L1152-L1166 `934593a5c2f52bf9d1a886ec3dfc99ca497da1be533981db04eb7c2d1c5c2802`
-- [012 - Owner / Consumer Map](012-owner-consumer-map.md) L1168-L1172 `4485053f09188b01929fa1dbd590e23a3eefbfb6190a88442b1b822f16302e70`
-- [013 - PlanUnits](013-planunits.md) L1174-L6261 `8372b4f63a23dbd6b9db4865f953d7132b72f1b04987d59d2d482d93a0f0ad27`
-- [014 - Migration Coverage](014-migration-coverage.md) L6262-L6272 `663a8c9492650a90a3ca0bdd924296319cd8ef06105cea262130203e401031fe`
-- [015 - Ledger Compile Addendum - pldg-20260614-002](015-ledger-compile-addendum-pldg-20260614-002.md) L6274-L6315 `c82d1f769915ac41313f24d00d5ee7bf992d132537a075ba7b314be6f26a32b0`
-- [016 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](016-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L6318-L6367 `4dfee07385e2afb28bd58b1bea77bf2cccd727acfd0c9a9ede1c939b3fe93bc3`
-- [017 - Ledger Compile Addendum - pldg-20260626-001-feature-name](017-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L6370-L6492 `3f7f64bb6146c98485f7a9f2e82479f532da21edc8d88c0cf0513b4b64003270`
-- [018 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](018-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L6494-L6666 `bdcbd59688fd072891f7c0aa4cd1b4329f3bc5bf4672f0633990c364c55db625`
-- [019 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](019-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L6668-L6866 `27ee7a656ad01ddaae2d19cfc58eb0e547889154acc9eb661f118655541c5e53`
-- [020 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](020-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L6867-L6874 `33c2b127fd0c834557097f7fdf0b173c0ac8f5cc8e5b8b3cf84d9f6fa74c9409`
+- [001 - Preamble](001-preamble.md) L1-L18 `7d7edda8ec351083c8fe386fb4827cf3f6bafde56376797e23cbbaba7f6eb935`
+- [002 - 0. Scope and SSOT status](002-0.-scope-and-ssot-status.md) L20-L51 `9b6cf89e3836f981dc4da91c6483a9130287de3521ff657ea3ffbb3b3513b076`
+- [003 - 1. Capability system](003-1.-capability-system.md) L52-L81 `5dd33e5f6c5d6ffaf214d86f7bc8316aa99dbf393960493d72c0a67c1583969e`
+- [004 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](004-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L83-L376 `9a48b44a24e6fd133f8623683a40288a904da595a47906152660109ace588fca`
+- [005 - 2. Media generation contract](005-2.-media-generation-contract.md) L377-L655 `7af7425d846933ced76381847030f2e1a9bf60d9d685d6793f860e72d15be1ea`
+- [006 - 3. Natural-language slot extraction grammar](006-3.-natural-language-slot-extraction-grammar.md) L656-L863 `3d0c861ec1e1899b4183083b68cfd76f7a03dde280dcf1d4778c56f49e3b0630`
+- [007 - 4. UI/UX behavior: capability picker dropdown](007-4.-ui-ux-behavior-capability-picker-dropdown.md) L864-L931 `01322e87a4dff3bed08ea2d8e7a770b61d4e627a3ba608fdffe67ee616602bd3`
+- [008 - 5. UI copy strings](008-5.-ui-copy-strings.md) L932-L989 `08c4152e3921c2308ef3845a0401b291310793cbe0d906f700cf3d761d2944b5`
+- [009 - 6. Acceptance criteria](009-6.-acceptance-criteria.md) L990-L1092 `52407540d62e29a7df7434631c2aa7367e3a821504582a0467e7f796fa498604`
+- [010 - Appendix A. Slot extraction rules (regex-ish, deterministic)](010-appendix-a.-slot-extraction-rules-regex-ish-deterministic.md) L1093-L1150 `8741ed3d8be65d4cad0080cfa71d910f1434894dc07968243a853b9a58206aee`
+- [011 - References](011-references.md) L1152-L1166 `cb7fb0f4bdf19a9ad38ab0e8ce11b190d97fb4fc95d73a23f4365efa8d624a4b`
+- [012 - Owner / Consumer Map](012-owner-consumer-map.md) L1168-L1172 `d111be6a921149439b3daef2f39b6d1a6b3e2c2f75ca39b7e437f6d6d95adc11`
+- [013 - PlanUnits](013-planunits.md) L1174-L6261 `0e1d4953582ef208b51179bad648f9f310848ab90a8d15c0681e2efe56e03d4d`
+- [014 - Migration Coverage](014-migration-coverage.md) L6262-L6272 `1d02ddba22a884c36007052724cc62121116a50f0b9899e4af81910222966b48`
+- [015 - Ledger Compile Addendum - pldg-20260614-002](015-ledger-compile-addendum-pldg-20260614-002.md) L6274-L6315 `7ce3bcfef1ef4802b5d2d27ca46794d4f37f4a5b7561279b4aadd48feeba2152`
+- [016 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](016-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L6318-L6367 `70eeab8fd2205f1d91c181341088578b33bff6f17839f281bc3fe0eb116ff655`
+- [017 - Ledger Compile Addendum - pldg-20260626-001-feature-name](017-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L6370-L6492 `77f6fd512c7886855edcf2ceac69bce5740d6c90056ae36e16adbbd3bc35ef02`
+- [018 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](018-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L6494-L6666 `ad29414ee00c86fc352619405b164de1f2fe3f0c38c9c190e3df20a5baa53417`
+- [019 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](019-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L6668-L6866 `6123a2f1d22e5288b1da7798d7f9ab40f00ef10df929679ac1e00c8cab287a1f`
+- [020 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](020-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L6867-L6874 `6c70e65644db73888a7ca94764e1c1578922170fd2f7b2b74fa3feae0b33374c`

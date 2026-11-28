@@ -4,7 +4,7 @@ Source: `Plans/Tools.md`
 
 Source lines: L13613-L14089
 
-Source SHA256: `49549c0771a51deaab00b327f6bff228f923ce79afbe2c6743de7be2f87f0cce`
+Source SHA256: `96b2459874ec77144b97a79e435df9ed8885cd01640a240766633c0973f9b088`
 
 ---
 
@@ -249,7 +249,7 @@ depends_on: [T-169, T-176, T-188]
 unblocks: [T-191]
 acceptance_criteria:
   - Under Host Tool Execution a request on which the script tool is offered carries it and does not also carry one provider tool schema per registry tool the script can call; a request on which it is not offered keeps the ordinary tool-call path.
-  - A model whose Models_System tool_use is false can use Code Mode through an owned in-band dialect on an in-band route, and a tool result the model wrote itself never reaches replayable history.
+  - A model whose Models_System tool_use is false can use Code Mode through an owned in-band dialect on an in-band route, and a tool result the model wrote itself never reaches replayable history. Each recognized in-band call keeps the one call ID Puppet Master minted for it before the T-169 gate, in the gate record, its ToolTurnSettlement and any ToolRecoveryEnvelope.
   - On a direct API route whose model's tool_use capability is unknown or stale, with the row On and with it Off, no request uses the provider's tool-call API; Puppet Master tools travel in the owned in-band dialect where Tools has one for the model family, and otherwise the request carries none, is reasoning-only where CLI_Bridged_Providers admits that shape, with that execution-shape reason as its own, and is otherwise stopped before its offer is decided and counts nothing; Models_System's capability notice is unchanged throughout.
   - On a direct API in-band route, the result of an accepted in-band call, from a script or from an ordinary tool, is returned in the next request, if one is admitted and sent with the same model family, carriage and owned dialect, as a Puppet Master-authored result in the owned dialect carrying the Puppet Master-minted call ID, holding whatever content Prompt_Pipeline's tool-result rules admit for the model; where those rules keep the content from the model, what the model is shown for that call is what those rules say, and the settled call and result stay in history under their owners. When no later request is sent, the result and the stop keep their existing owners' handling; when the next request differs in model family, carriage or dialect, the settled call and result pair goes through Prompt_Pipeline's replay and compatibility rules instead.
   - On a server bridge every request is sent with a projection that gives it exactly its own offer and bounded selection. Two requests on one profile with the same ordinary selection may share the bridge's existing ordinary projection; a run with the row On and one with it Off never see a tool outside their own offer and selection, and a run whose offer changes between requests is never sent a stale projection. Where the bridge still cannot present the script tool to a request in that way after any fresh provider session its owner permits, for example because the profile's shared projection holds a tool outside that request's own selection, that request is not offered the script tool through that projection, while another request for which the same shared projection is exactly its own offer and selection may still be sent with it; for an otherwise eligible request of a run with the row On, one with a positive report of an approved JavaScript EvalSession and policy admission, the omission reason is not materialized, and the request uses the ordinary projection where the bridge can present its bounded ordinary selection. Where the bridge cannot present that either, the request, of either run, takes the fallback shape, delegated or reasoning-only, that CLI_Bridged_Providers admits, or is stopped before its offer is decided. A request that takes the fallback shape has that execution-shape reason as its own, and what it contributes to its run's record is T-188's to decide; a request stopped before its offer is decided contributes no request and no reason. A run with the row Off records setting in every one of these cases, and T-188 derives every run's record.
@@ -329,7 +329,7 @@ canonical_text: >-
   contracts hand the turn to a person or to another agent, stay directly callable on a request on which the script tool is offered; they are not in the
   script's callable catalog, and calling them directly does not make the run mixed. The essential catalog search of
   T-176 is selected for every request on which the script tool is offered and in which it is policy_available, and is in the script's callable
-  catalog; on such a request that is how T-176's directly available catalog search is reached.
+  catalog; on such a request that is how T-176's directly available catalog search is reached. The host-issued child ID of section 4.4 is each nested call's tool_call_id in ToolTurnSettlement and original_tool_call_id in any ToolRecoveryEnvelope, both of which carry the outer script's logical_operation_id as parent_operation_id, and the enclosing script keeps its own call ID under T-189.
 gui_related: false
 gui_classification_reason: Backend authority, limit and evidence rules for nested tool calls; not GUI implementation work.
 depends_on: [T-176, T-177, T-178, T-188]

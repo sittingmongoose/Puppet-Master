@@ -4,7 +4,7 @@ Source: `Plans/Media_Generation_and_Capabilities.md`
 
 Source lines: L1174-L6261
 
-Source SHA256: `59866e6dec8c7d4ecf7e2ec6a8bef3b056fd55803ee6c8d5ba7e4e1ea4413904`
+Source SHA256: `804dce76322aa2a2aba6ff145e301027a9b8ff0ab05de8da2dd7db2972110368`
 
 ---
 
@@ -1685,7 +1685,7 @@ preserved_exact_tokens:
 negative_constraints:
 - Cursor image generation MUST NOT be inferred from image-input proof, API-key proof, or unrelated provider credentials.
 compatibility_only_notes:
-- Older `engine.backend = "cursor_native"` wording is source-lineage vocabulary only; active failures identify the resolved provider/media route.
+- Older `engine.backend = "cursor_native"` wording is source-lineage vocabulary only; active failures identify the resolved provider/media route. A failure before any effective route is selected carries a null `engine` instead (§2.5).
 stale_retired_dispositions:
 - '"This feature requires Gemini access" and `engine.backend = "cursor_native"` are stale examples from the prior Gemini/Cursor split and are not active user-facing copy.'
 owner_boundary_notes:
