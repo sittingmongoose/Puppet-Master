@@ -270,10 +270,23 @@
   }
   /* Look reveal: a circular (Retro: stepped) reveal of the new world from the chosen tile. Browser View Transitions
      when available; otherwise the scene cross-fade already covers the change. Input never waits for it. */
+  /* FO-243: the look a pick asked for whose reveal has not yet written it. A reveal writes the theme in its update, which
+     the browser runs only after it has taken the old picture, a frame or more after the click (seconds on a slow GPU or a
+     loaded machine), so until then the painted look is still the old one. A Light picked inside that time read the old
+     family off the page and applied Basic Light instead of Glass Light. The pickers read the look through lookAsked():
+     the pick still on its way when there is one, and the painted look otherwise, exactly as before. */
+  let lookPending = null;
+  function lookAsked() {
+    if (lookPending) return { family: lookPending.family, mode: lookPending.mode };
+    const th = O55.theme();
+    return { family: th.chosen, mode: th.selectedMode };
+  }
   function applyLook(family, mode, originEl) {
     /* (a look picked here is the person's choice: closed unfinished, the window saves it, FO-216) */
     S.lookPicked = true;
+    const mine = { family, mode };
     const apply = () => {
+      if (lookPending === mine) lookPending = null;
       try { window.PM_THEME.setFamily(family, { persist: false }); window.PM_THEME.setMode(mode, { persist: false }); }
       catch (_) { document.documentElement.setAttribute('data-theme', (typeof window.PM_THEME_PAINT_FAMILY === 'function' ? window.PM_THEME_PAINT_FAMILY(family) : family) + '-' + mode); }
       // Auto and an explicit mode can paint the same colours; the controls still changed.
@@ -285,7 +298,11 @@
     /* the look asked for already (PM_THEME's family: during NieR's moment the paint still shows the old look): nothing
        to reveal, and no Settings note, because nothing is saved here */
     const now = O55.theme(), asked = askedFamily(now);
-    if (asked === family && now.selectedMode === mode) return;
+    /* (against the pick still on its way when there is one: the page shows the look before it) */
+    const cur = lookPending || { family: asked, mode: now.selectedMode };
+    if (cur.family === family && cur.mode === mode) return;
+    /* a later pick replaces one still on its way (this one's reveal, below, sets it again) */
+    lookPending = null;
     /* repainting the page for a look is expected heavy work: it never counts toward low-resource mode */
     O55.motion.quiet(2500);
     /* the keys down are only the one that made this pick, if a key did (R36-1): a key whose key-up never reached the page
@@ -348,6 +365,7 @@
         return Promise.race([F.ready, new Promise((res) => setTimeout(res, 300))]);
       });
     };
+    lookPending = mine;
     try { vt = S.vt = document.startViewTransition(update); S.vtEnd = endWait; }
     catch (_) { release(); S.vt = null; ['data-o55-vt', 'data-o55-vt-b', 'data-o55-vt-still'].forEach((a) => document.documentElement.removeAttribute(a)); apply(); return; }
     vt.ready.then(() => {
@@ -405,6 +423,7 @@
     /* what waited is still the look's repaint: it never counts toward low-resource mode either (it ran past the click's
        quiet and switched the VM to the instant path after two changes) */
     vt.finished.finally(() => {
+      if (lookPending === mine) lookPending = null;
       O55.motion.quiet(2500);
       /* (variant B: the app takes the new look now, in the frame of the transition's own end restyle: endWait(), above) */
       endWait();
@@ -442,6 +461,12 @@
     skipLook();
     S.vtPress = { x: e.clientX, y: e.clientY, t: performance.now() };
   }, true);
+  /* FO-243: the click is judged from the press's release, not its start. On a slow machine the press's own work (the
+     skipped reveal, the new look's restyle) held the release back for seconds, and a press 1.5 s old lost its click:
+     Light picked just after Glass did nothing and the window stayed in Glass Dark. A press whose click never came is
+     still let go 1.5 s after its release. Where it was released is kept too: the click is handed on only when the
+     release is on the control that was pressed (below). */
+  document.addEventListener('pointerup', (e) => { const k = S.vtPress; if (k && k.up == null) { k.up = performance.now(); k.ux = e.clientX; k.uy = e.clientY; } }, true);
   /* Only a deliberate key ends it (R35). A key held down is not pressed again: a look picked by keyboard (Enter on its
      row) began its reveal with that key, and its auto-repeat (flagged or not) is not new input; a key counts again once
      it has come up. Nor is a key that says nothing to the page: an IME's composition (isComposing, 'Process', keyCode
@@ -465,10 +490,26 @@
   document.addEventListener('click', (e) => {
     const k = S.vtPress; if (!k) return;
     S.vtPress = null;
-    if (performance.now() - k.t > 1500 || e.target !== document.documentElement) return;
+    if (performance.now() - (k.up != null ? k.up : k.t) > 1500 || e.target !== document.documentElement) return;
     const el = document.elementFromPoint(k.x, k.y);
-    if (el && el !== document.documentElement) { e.stopPropagation(); e.preventDefault(); el.click(); }
+    if (!el || el === document.documentElement) return;
+    /* FO-243: a press is cancelled, as on any button, when it is released somewhere else. Held on Continue (or on
+       Light) through the reveal, dragged off and released on the heading, it still clicked Continue: the browser's click
+       went to the page root, and the press point alone was hit. Both points are hit now, on the page as it is at the
+       click, and each is taken up to the control it lies in; the click is handed on only when they are the same one. */
+    const up = k.ux == null ? el : document.elementFromPoint(k.ux, k.uy);
+    const c = pressControl(el);
+    if (pressControl(up) !== c) return;
+    /* FO-243: the click goes to the control the press resolved to, not the raw hit. Over a mode button's icon the hit
+       is its svg or path, which has no click(): the call threw after the browser's click was already cancelled, and
+       Light pressed on its icon during the Glass reveal was lost. An element with no click() is sent a click event. */
+    e.stopPropagation(); e.preventDefault();
+    if (typeof c.click === 'function') c.click();
+    else c.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, composed: true, clientX: k.x, clientY: k.y }));
   }, true);
+  const PRESSABLE = 'button, a[href], input, select, textarea, summary, label, [data-o55-do], [role="button"], [role="link"], '
+    + '[role="menuitem"], [role="menuitemradio"], [role="menuitemcheckbox"], [role="option"], [role="radio"], [role="checkbox"], [role="switch"], [role="tab"]';
+  const pressControl = (n) => (n && n.closest && n.closest(PRESSABLE)) || n;
 
   /* ---------------------------------------------------------------- rail */
   function renderRail() {
@@ -1442,8 +1483,8 @@
     if (action === 'talk') { if (O55.talk.toggle('onboarding')) O55.sound.play('select'); return; }
     /* the look menu is a small sheet: it opens and closes with the sheet sounds, as in the tour's bar */
     if (action === 'lookMenu') { S.lookOpen = !S.lookOpen; O55.sound.play(S.lookOpen ? 'sheet' : 'unsheet'); renderLook(); return; }
-    if (action === 'lookFamily') { applyLook(arg, O55.theme().selectedMode, t); return; }
-    if (action === 'lookMode') { applyLook(O55.theme().chosen, arg, t); return; }
+    if (action === 'lookFamily') { applyLook(arg, lookAsked().mode, t); return; }
+    if (action === 'lookMode') { applyLook(lookAsked().family, arg, t); return; }
     if (action === 'lookNier' || action === 'lookNierAdjust') { if (O55.lookMenu && O55.lookMenu.nier) O55.lookMenu.nier(action, t); return; }
     if (action === 'go') return go(arg);
     const def = SCREENS.defs[S.sess.screen];
@@ -1943,5 +1984,5 @@
     return true;
   }
 
-  Object.assign(O55.ui, { S, build, open, close, go, back, onBranch, refresh, transition, charm, applyLook, renderRail, renderScene, footHtml, shake, skin, tip, closeTip, act, fill, prewarm, parkStale });
+  Object.assign(O55.ui, { S, build, open, close, go, back, onBranch, refresh, transition, charm, applyLook, lookAsked, renderRail, renderScene, footHtml, shake, skin, tip, closeTip, act, fill, prewarm, parkStale });
 })();
