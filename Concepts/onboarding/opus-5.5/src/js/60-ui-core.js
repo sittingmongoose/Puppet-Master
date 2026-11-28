@@ -498,8 +498,14 @@
        went to the page root, and the press point alone was hit. Both points are hit now, on the page as it is at the
        click, and each is taken up to the control it lies in; the click is handed on only when they are the same one. */
     const up = k.ux == null ? el : document.elementFromPoint(k.ux, k.uy);
-    if (pressControl(up) !== pressControl(el)) return;
-    e.stopPropagation(); e.preventDefault(); el.click();
+    const c = pressControl(el);
+    if (pressControl(up) !== c) return;
+    /* FO-243: the click goes to the control the press resolved to, not the raw hit. Over a mode button's icon the hit
+       is its svg or path, which has no click(): the call threw after the browser's click was already cancelled, and
+       Light pressed on its icon during the Glass reveal was lost. An element with no click() is sent a click event. */
+    e.stopPropagation(); e.preventDefault();
+    if (typeof c.click === 'function') c.click();
+    else c.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, composed: true, clientX: k.x, clientY: k.y }));
   }, true);
   const PRESSABLE = 'button, a[href], input, select, textarea, summary, label, [data-o55-do], [role="button"], [role="link"], '
     + '[role="menuitem"], [role="menuitemradio"], [role="menuitemcheckbox"], [role="option"], [role="radio"], [role="checkbox"], [role="switch"], [role="tab"]';

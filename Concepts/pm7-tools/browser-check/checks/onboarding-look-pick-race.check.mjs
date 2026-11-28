@@ -24,8 +24,12 @@
 // the press began inside the reveal (the page's root took it) and that the release point is the heading.
 // A mode that is already the window's (Dark, in a fresh window's Basic Dark) is changed first to the other one, so that a
 // dropped press of it shows: Glass Dark starts from Basic Light.
+// A press on a mode button's icon (its svg) inside Glass's reveal applies too (round 3): Light and Dark pressed and
+// released on the icon, and Light pressed on its icon and released on its label, at the main rate, and Light's icon at
+// the slow rate. The page's root took the press there and handed it on to the svg, which has no click(), so the press
+// was lost (Glass Dark). Each icon cell asserts the press began inside the reveal and was released on its own control.
 // --set gaps=0,220, --set cpu=<rate> (the main rate), --set slow=<rate> (0 drops the slow cells), --set paths=0 (no
-// look menu or Continue cells) and --set press=0 (no held or dragged-off cells) narrow a run.
+// look menu or Continue cells), --set press=0 (no held or dragged-off cells) and --set icon=0 (no icon cells) narrow a run.
 import { LOOKS } from '../browser-check.config.mjs';
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -50,6 +54,14 @@ export default async function (t) {
     cells.push({ via: 'tiles', look: 'glass-light', gap: 0, rate: r, press });
     cells.push({ via: 'continue', look: 'glass-dark', gap: 0, rate: r, press });
   }
+  /* FO-243 round 3: the mode pressed on its icon, not its label */
+  if (!t.args.looks && t.args.icon !== '0') {
+    cells.push({ via: 'tiles', look: 'glass-light', gap: 0, rate, press: 'icon' });
+    cells.push({ via: 'tiles', look: 'glass-dark', gap: 0, rate, press: 'icon' });
+    cells.push({ via: 'tiles', look: 'glass-light', gap: 0, rate, press: 'iconlabel' });
+    if (slow > 0) cells.push({ via: 'tiles', look: 'glass-light', gap: 0, rate: slow, press: 'icon' });
+  }
+  const ICON = { icon: true, iconlabel: true };
   const HOLD_MS = 2600, HEAD = '#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-title';
   const R = '#pm-o55-onboarding';
   const VIA = {
@@ -59,7 +71,8 @@ export default async function (t) {
   };
   const NAME = { tiles: (fam, mode) => `${fam} then ${mode}`, menu: (fam, mode) => `look menu ${fam} then ${mode}`, continue: (fam) => `${fam} then Continue` };
 
-  const PRESS = { click: '', hold: ', held and released on it', off: ', held, dragged off and released on the heading' };
+  const PRESS = { click: '', hold: ', held and released on it', off: ', held, dragged off and released on the heading',
+    icon: ', pressed and released on its icon', iconlabel: ', pressed on its icon and released on its label' };
   for (const { via, look, gap, rate: r, press = 'click' } of cells) {
     const [fam, mode] = look.split('-');
     const [sel1, sel2] = VIA[via](fam, mode), name = NAME[via](fam, mode) + PRESS[press];
@@ -73,7 +86,7 @@ export default async function (t) {
       /* a mode the window already has would look applied even if its press were lost: change to the other one first */
       let pre = '';
       const had = await f.evaluate(() => O55.theme().selectedMode);
-      if (via !== 'continue' && press === 'click' && had === mode && (mode === 'light' || mode === 'dark')) {
+      if (via !== 'continue' && (press === 'click' || ICON[press]) && had === mode && (mode === 'light' || mode === 'dark')) {
         const other = mode === 'dark' ? 'light' : 'dark';
         await f.locator(`${R} ${LAYER} [data-o55-do="pickMode"][data-arg="${other}"]`).filter({ visible: true }).first().click({ timeout: 10000 });
         await f.waitForFunction((m) => O55.theme().selectedMode === m && !O55.S.vt && !document.documentElement.hasAttribute('data-o55-vt'), other, { timeout: 30000 });
@@ -96,10 +109,18 @@ export default async function (t) {
         const r = b.getBoundingClientRect(), x = r.x + r.width / 2, y = r.y + r.height / 2, e = document.elementFromPoint(x, y);
         /* (while a reveal plays the browser gives every hit to the page root, and the page hands the press on to what is
            under it: that is the press under test, not a cover) */
-        return { x, y, hit: !!(e && (b.contains(e) || e === document.documentElement)), at: e ? (e.className && e.className.baseVal === undefined ? String(e.className) : e.tagName).slice(0, 40) : null };
+        return { x, y, hit: !!(e && (b.contains(e) || e === document.documentElement)), vt: !!O55.S.vt, at: e ? (e.className && e.className.baseVal === undefined ? String(e.className) : e.tagName).slice(0, 40) : null };
       }, sel);
       const p1 = await at(sel1), p2 = await at(sel2);
       if (!p1 || !p2) throw new Error(`no control for ${!p1 ? sel1 : sel2}`);
+      /* an icon press: where the icon (an svg, the hit a real mouse on the glyph gets) sits in its button, read before
+         the family is picked, so the press follows the button's clear centre with no read between them */
+      let icon = null;
+      if (ICON[press]) {
+        const ic = await at(`${sel2} svg`);
+        if (!ic) throw new Error(`no icon in ${sel2}`);
+        icon = { dx: ic.x - p2.x, dy: ic.y - p2.y };
+      }
       const start = await f.evaluate(() => O55.theme().slug);
       // the page's main thread, and the sandbox's frame when it is a target of its own
       const cdps = [await t.page.context().newCDPSession(t.page)];
@@ -108,24 +129,35 @@ export default async function (t) {
       const before = await spin();
       for (const c of cdps) await c.send('Emulation.setCPUThrottlingRate', { rate: r });
       let slowed = 0, cover = '';
+      /* the page's own view of the press: did its root take it (a reveal playing), where, and how long was it held. An
+         icon cell watches from before the family's click and keeps the last press, so nothing is read between the
+         button coming clear and its press; the other cells watch the one press after it. */
+      const watch = (last) => f.evaluate((l) => {
+        const w = window.__fo243 = { down: null, up: null };
+        addEventListener('pointerdown', (e) => { if (l || !w.down) w.down = { t: performance.now(), x: e.clientX, y: e.clientY, vt: !!O55.S.vt, root: e.target === document.documentElement }; }, { capture: true, once: !l });
+        addEventListener('pointerup', (e) => { if (l || !w.up) w.up = { t: performance.now(), x: e.clientX, y: e.clientY }; }, { capture: true, once: !l });
+      }, last);
+      if (icon) await watch(true);
       try {
         slowed = (await spin()) / Math.max(before, 0.1);
         await t.page.mouse.click(p1.x + off.x, p1.y + off.y);
         if (gap) await sleep(gap);
         const t0 = Date.now();
+        /* an icon cell presses inside the reveal itself: once it plays (the press is handed on), not before it starts */
+        const ready = (q) => q && q.hit && (!icon || q.vt);
         let m = await at(sel2);
         const first = m && !m.hit ? m.at : null;
-        while (!(m && m.hit) && Date.now() - t0 < 30000) { await sleep(100); m = await at(sel2); }
+        while (!ready(m) && Date.now() - t0 < 30000) { await sleep(icon ? 20 : 100); m = await at(sel2); }
         cover = !(m && m.hit) ? `second control never clear (under ${m && m.at})` : first ? `second control under ${first} for ${Date.now() - t0} ms` : 'second control clear at once';
         m = m || p2;
         if (press === 'click') await t.page.mouse.click(m.x + off.x, m.y + off.y);
-        else {
-          /* the page's own view of the press: did its root take it (a reveal playing), and how long was it held */
-          await f.evaluate(() => {
-            const w = window.__fo243 = { down: null, up: null };
-            addEventListener('pointerdown', (e) => { if (!w.down) w.down = { t: performance.now(), vt: !!O55.S.vt, root: e.target === document.documentElement }; }, { capture: true, once: true });
-            addEventListener('pointerup', (e) => { if (!w.up) w.up = { t: performance.now(), x: e.clientX, y: e.clientY }; }, { capture: true, once: true });
-          });
+        else if (icon) {
+          await t.page.mouse.move(m.x + icon.dx + off.x, m.y + icon.dy + off.y);
+          await t.page.mouse.down();
+          if (press === 'iconlabel') await t.page.mouse.move(m.x + off.x, m.y + off.y, { steps: 2 });
+          await t.page.mouse.up();
+        } else {
+          await watch(false);
           const x0 = m.x + off.x, y0 = m.y + off.y, d0 = Date.now();
           await t.page.mouse.move(x0, y0);
           await t.page.mouse.down();
@@ -155,22 +187,25 @@ export default async function (t) {
         if (held >= 1000) break;
       }
       /* a held press: it began in the reveal (the root took it), and the point it was released at is the heading itself
-         (no control), read on the settled page; a press 2.6 s held but released on its own control is in that control */
+         (no control), read on the settled page; a press 2.6 s held but released on its own control is in that control.
+         An icon press began on the icon itself (the svg or its path, read on the settled page). */
       let pr = null, how = '';
       if (press !== 'click') {
         pr = await f.evaluate(([q2, qh]) => {
           const w = window.__fo243 || {}, d = w.down, u = w.up;
           const e = u ? document.elementFromPoint(u.x, u.y) : null, c = document.querySelector(q2), h = document.querySelector(qh);
+          const de = d ? document.elementFromPoint(d.x, d.y) : null;
           return { inReveal: !!(d && d.vt && d.root), heldMs: d && u ? Math.round(u.t - d.t) : null,
+            onIcon: !!(de && c && c.contains(de) && de.closest('svg')), downAt: de ? de.tagName.slice(0, 40) : null,
             onHeading: !!(e && h && h.contains(e) && !e.closest('button, a[href], input, [data-o55-do], [role="button"]')), onControl: !!(e && c && c.contains(e)),
             at: e ? (e.className && e.className.baseVal === undefined ? String(e.className) : e.tagName).slice(0, 40) : null };
         }, [sel2, HEAD]);
-        how = `, pressed in the reveal ${pr.inReveal}, held ${pr.heldMs} ms, released on ${pr.at} (heading ${pr.onHeading}, its control ${pr.onControl})`;
+        how = `, pressed in the reveal ${pr.inReveal} on ${pr.downAt} (its icon ${pr.onIcon}), held ${pr.heldMs} ms, released on ${pr.at} (heading ${pr.onHeading}, its control ${pr.onControl})`;
       }
       const got = `from ${start}${pre}: ${JSON.stringify(s.th)}, draft ${s.draft.join('/')}, screen ${s.screen}, settled ${held >= 1000}, ${cover}${how}, CPU slowed ${slowed.toFixed(1)}x on ${cdps.length} target(s)`;
       t.log(`${via} ${look} gap ${gap} rate ${r} ${press}: ${got}`);
       const is = (fm, md) => held >= 1000 && s.th.chosen === fm && s.th.selectedMode === md && s.draft[0] === fm && s.draft[1] === md;
-      const looked = is(fam, mode), real = !pr || (pr.inReveal && (press === 'off' ? pr.onHeading : pr.onControl));
+      const looked = is(fam, mode), real = !pr || (pr.inReveal && (press === 'off' ? pr.onHeading : pr.onControl) && (!ICON[press] || pr.onIcon));
       if (press === 'off' && via === 'continue') await t.check(`Continue dragged off in ${fam}'s reveal is cancelled: Look stays (CPU ${r}x)`, real && is(fam, 'dark') && s.screen === 'look', got);
       else if (press === 'off') await t.check(`${mode} dragged off in ${fam}'s reveal is cancelled: ${fam} dark stays (CPU ${r}x)`, real && is(fam, 'dark') && s.screen === 'look', got);
       else if (via === 'continue') await t.check(`${fam} kept and Continue went on (${gap} ms${PRESS[press]}, CPU ${r}x)`, real && looked && s.screen === 'where', got);
