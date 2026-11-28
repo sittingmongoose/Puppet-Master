@@ -17,9 +17,10 @@
    A scroll that lands on sections content-visibility still skips shows them before its frame is drawn (FO-245), so a
    fast wheel never shows the page's ground where rows are; the arrival's first frame still skips every far section.
    A wheel scroll that lands on a page of the chapter still unmounted mounts it before its frame (FO-245 r3, gated on a
-   recent wheel in r6); every other scroll (End / Home, PageDown, arrows, the scroll bar, jump links, a script) mounts
-   exactly as before, through the observer, so End lands at the end it measured. End / Home keep the browser's own smooth
-   scroll; the blank frames it still shows while pages are unmounted are tracked in FO-248. */
+   recent wheel in r6), and so does a PageDown, PageUp, Space or arrow key's scroll, one view ahead (FO-248P); the scroll
+   bar, jump links and scripts mount exactly as before, through the observer. While pages are unmounted, the browser's own
+   End / Home scroll of the document is completed in one step, at the end it was heading for (FO-248P, no key
+   intercepted); once every page is mounted End / Home keep the browser's smooth scroll. */
 
 const O55FS_ATTR = 'data-o55-fill';
 const o55fs = {
@@ -224,11 +225,14 @@ root.addEventListener('toggle', e => {
   const d = e.target;
   if (d && d.open && d.matches && d.matches('details')) PM51.fillDisclosure(d);
 }, true);
+/* While the chapter still has unmounted pages, End / Home are completed in one step from the document's own scroll
+   (FO-248P, below) and land on a page mounted in full, so the arrival page's pending rows are not built here: on the GTX
+   1070 Ti that fill made the key's frame 190 ms longer and held the source view that much longer. */
 const O55FS_KEYS = new Set(['End', 'Home']);
 root.addEventListener('keydown', e => {
   if (!o55fs.pending.size) return;
   const sc = root.querySelector('#settings-document');
-  if (O55FS_KEYS.has(e.key) && sc && (e.target === sc || sc.contains(e.target)) && !(e.target.matches && e.target.matches('input, textarea, select, [contenteditable=""], [contenteditable="true"]'))) o55fsFillAll();
+  if (O55FS_KEYS.has(e.key) && sc && (e.target === sc || sc.contains(e.target)) && !(e.target.matches && e.target.matches('input, textarea, select, [contenteditable=""], [contenteditable="true"]')) && !sc.querySelector('[data-continuous-workspace-body][data-workspace-mounted="false"]')) o55fsFillAll();
 }, true);
 root.addEventListener('pointerdown', e => {
   const sc = root.querySelector('#settings-document');
@@ -289,8 +293,8 @@ function o55fsShowNear(sc) {
    107). So a passive wheel listener (it never cancels or delays the wheel; no key listener is involved) notes the time of
    the last wheel event, and the scroll event mounts only while that wheel's smooth scroll can still be running
    (O55FS_WHEEL_MS; Chrome 158: a real wheel tick scrolls for 165-190 ms and its last scroll event comes at most 275 ms
-   after the last tick; a single long wheel needs its mount 11-31 ms after the wheel). Every other scroll mounts as on
-   main: the observer, after the frame. */
+   after the last tick; a single long wheel needs its mount 11-31 ms after the wheel). FO-248P adds the step keys'
+   window (below); every other scroll mounts as on main: the observer, after the frame. */
 const o55fsFresh = new Set();
 const o55fsMount = mountContinuousWorkspace;
 mountContinuousWorkspace = function (id) {
@@ -303,9 +307,11 @@ mountContinuousWorkspace = function (id) {
   }
   return body;
 };
-function o55fsMountNear(sc) {
+/* the placeholders in the view, and with `ahead` (1 down, -1 up) those within one more view that way, in page order */
+function o55fsMountNear(sc, ahead = 0) {
   if (!sc.querySelector('[data-continuous-workspace-body][data-workspace-mounted="false"]')) return 0;
-  const view = sc.getBoundingClientRect();
+  const r = sc.getBoundingClientRect(), h = ahead ? sc.clientHeight : 0;
+  const view = { top: r.top - (ahead < 0 ? h : 0), bottom: r.bottom + (ahead > 0 ? h : 0) };
   let n = 0;
   for (let guard = 0; guard < 64; guard++) {
     const cold = [...sc.querySelectorAll('[data-continuous-workspace-body][data-workspace-mounted="false"]')]
@@ -321,7 +327,100 @@ const O55FS_WHEEL_MS = 400;
 let o55fsWheelAt = -Infinity;
 root.addEventListener('wheel', () => { o55fsWheelAt = performance.now(); }, { capture: true, passive: true });
 const o55fsWheeling = () => performance.now() - o55fsWheelAt <= O55FS_WHEEL_MS;
-root.addEventListener('scroll', e => { if (e.target.id === 'settings-document') { if (o55fsWheeling()) o55fsMountNear(e.target); o55fsFillNear(e.target); o55fsShowNear(e.target); } }, true);
+/* FO-248P (2026-11-28): End / Home (and Ctrl+End / Ctrl+Home) over a chapter with unmounted pages land in one step, as
+   pm7-build accepted for FO-245 (decision A, 2026-11-27): the pages at that edge are mounted and the document lands there
+   at once, instead of Chrome's 250-800 ms smooth scroll across empty placeholders (main and FO-245 r6: 13-26 blank frames
+   per End). Chrome 158 animates keyboard End whatever scroll-behavior says (forced auto: 4-7 scroll events over 480-850
+   ms, as with smooth), so CSS cannot do this. No key is intercepted:
+   - a passive key listener on window (bubble phase, after every widget's own handler; passive, so it cannot cancel the
+     key) only notes an End or Home that no handler took (defaultPrevented) and that no text field holds;
+   - the browser then decides what the key scrolls, exactly as on main: a tab list, a list box, the AI & Providers roster,
+     the wallpaper picker or a text field keep the key, and the document does not move;
+   - only when the browser itself starts scrolling #settings-document toward that edge is that scroll completed in one
+     step, before that frame is drawn: in the scroll event, or in the frame's rAF (after the frame's scroll animations
+     have ticked), whichever comes first. After a long frame Chrome's End animation can reach its end in one tick, and that
+     frame would draw the placeholders there before the next scroll event (GTX 1070 Ti: 7 blank frames, 0 to 20,155 px);
+   - the note is dropped by another key, a wheel, a pointer press, a scroll of any other scroller, or O55FS_EDGE_MS
+     without the document moving, so nothing but that key's own scroll of the document is taken. */
+const O55FS_EDGE_MS = 600;
+const O55FS_EDGE_TEXT = 'input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="color"]):not([type="file"]):not([type="image"]):not([type="range"]), textarea, select, [contenteditable]:not([contenteditable="false"]), [role="textbox"], [role="searchbox"]';
+let o55fsEdge = null;       /* { at, end, top }: the last End / Home left to the browser */
+let o55fsEdgeHeld = null;   /* { end, n }: a landing kept for n more frames */
+/* Held PageDown (R143 medium): each page edge showed its placeholder for a frame or more before the observer mounted
+   it (main 3-17 frames per hold). While a PageDown, PageUp, Space or arrow key's scroll can still be running (the wheel
+   gate's window), the scroll event mounts the placeholders in the view and within one more view in the key's direction
+   before the frame. These keys move the document by a step from where it is, so growth below the view cannot shorten
+   them, and End / Home end the window, so nothing is mounted under an End animation (R145). */
+const O55FS_STEP_KEYS = { PageDown: 1, PageUp: -1, ' ': 1, Spacebar: 1, ArrowDown: 1, ArrowUp: -1 };
+let o55fsStepAt = -Infinity, o55fsStepDir = 0;
+const o55fsStepping = () => performance.now() - o55fsStepAt <= O55FS_WHEEL_MS;
+const o55fsCold = sc => !!(sc && sc.querySelector('[data-continuous-workspace-body][data-workspace-mounted="false"]'));
+window.addEventListener('keydown', e => {
+  o55fsEdge = null; o55fsEdgeHeld = null; o55fsStepAt = -Infinity;
+  /* cheapest tests first: any other key (typing) returns before a style read */
+  const step = Object.prototype.hasOwnProperty.call(O55FS_STEP_KEYS, e.key) && !e.ctrlKey;
+  const edge = (e.key === 'End' || e.key === 'Home') && !e.shiftKey;
+  if ((!step && !edge) || e.defaultPrevented || e.altKey || e.metaKey) return;
+  const t = e.target;
+  if (t && t.nodeType === 1 && (t.isContentEditable || t.closest(O55FS_EDGE_TEXT))) return;
+  const sc = root.querySelector('#settings-document');
+  if (!o55fsCold(sc) || !o55fsInteractive()) return;
+  if (step) { o55fsStepAt = performance.now(); o55fsStepDir = e.key === ' ' && e.shiftKey ? -1 : O55FS_STEP_KEYS[e.key]; return; }
+  const k = o55fsEdge = { at: performance.now(), end: e.key === 'End', top: sc.scrollTop };
+  const watch = () => { if (o55fsEdge !== k) return; const s = root.querySelector('#settings-document'); if (s) o55fsEdgeScroll(s); if (o55fsEdge === k) requestAnimationFrame(watch); };
+  requestAnimationFrame(watch);
+}, { passive: true });
+root.addEventListener('wheel', () => { o55fsEdge = null; o55fsEdgeHeld = null; o55fsStepAt = -Infinity; }, { capture: true, passive: true });
+root.addEventListener('pointerdown', () => { o55fsEdge = null; o55fsEdgeHeld = null; o55fsStepAt = -Infinity; }, { capture: true, passive: true });
+/* the pages at the edge, down to two screens of them (FO-245 r4's o55fsMountEnd) */
+function o55fsMountEdge(sc, end) {
+  const bodies = [...sc.querySelectorAll('[data-continuous-workspace-body]')];
+  if (end) bodies.reverse();
+  let h = 0;
+  const need = 2 * (sc.clientHeight || window.innerHeight || 900);
+  for (const b of bodies) {
+    if (h >= need) break;
+    const body = b.dataset.workspaceMounted === 'false' ? mountContinuousWorkspace(b.dataset.continuousWorkspaceBody) : b;
+    const block = (body || b).closest('[data-workspace-block]') || body || b;
+    h += block.offsetHeight || 0;
+  }
+}
+function o55fsEdgeLand(sc, end) {
+  o55fsMountEdge(sc, end);
+  sc.scrollTo({ top: end ? sc.scrollHeight : 0, behavior: 'instant' });
+  /* the landing's lists and freshly mounted sections are shown before this frame is drawn (from rAF too) */
+  o55fsFillNear(sc); o55fsShowNear(sc);
+}
+/* the browser's own scroll of the document toward the noted edge, completed in one step */
+function o55fsEdgeScroll(sc) {
+  const k = o55fsEdge;
+  if (!k) return false;
+  if (performance.now() - k.at > O55FS_EDGE_MS) { o55fsEdge = null; return false; }
+  const moved = sc.scrollTop - k.top;
+  if (k.end ? moved <= 0 : moved >= 0) return false;
+  o55fsEdge = null;
+  o55fsEdgeLand(sc, k.end);
+  /* An arrival's own restore puts the page back where it lands for two more frames (pm4's afterRender writes scrollTop
+     now, in the next frame and in the one after), so an End pressed right after a chapter's click ended at the top
+     (3 of 8 GTX cells). The landing is kept for three frames: a write that moves the page off the edge in them is
+     undone before that frame is drawn. Another key, a wheel or a pointer press ends the hold. */
+  const held = o55fsEdgeHeld = { end: k.end, n: 3 };
+  const keep = () => {
+    if (o55fsEdgeHeld !== held) return;
+    const s = root.querySelector('#settings-document');
+    if (s && Math.abs(s.scrollTop - (held.end ? s.scrollHeight - s.clientHeight : 0)) > 2) o55fsEdgeLand(s, held.end);
+    if (--held.n > 0) requestAnimationFrame(keep); else o55fsEdgeHeld = null;
+  };
+  requestAnimationFrame(keep);
+  return true;
+}
+root.addEventListener('scroll', e => {
+  if (e.target.id !== 'settings-document') { o55fsEdge = null; return; }
+  o55fsEdgeScroll(e.target);
+  if (o55fsWheeling()) o55fsMountNear(e.target);
+  else if (o55fsStepping()) o55fsMountNear(e.target, o55fsStepDir);
+  o55fsFillNear(e.target); o55fsShowNear(e.target);
+}, true);
 /* These global keys belong to Settings only while its panel can receive input. Onboarding leaves the active class
    in place beneath its inert app; modal dialogs can cover Settings without changing either (R97 P1). */
 function o55fsInteractive() {
