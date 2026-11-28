@@ -78,6 +78,22 @@
     nier: { w: 2.6, damp: 3.4, sway: 2.4, swayW: .42, k: 55, c: 15, pk: 60, pc: 16, pw: 2.8, pdamp: 3.2, kick: .1, bob: 3.2, breathe: 0, noHop: true, cps: 55 }
   };
 
+  /* How far a drawn part of the stage must move before the stage draws again at rest, in device pixels (Jared,
+     2026-11-27, decision 1 of the pm7-perf hand-over of 15 Nov, "Onboarding option 1": Pip's idle drift may be drawn in
+     0.1-pixel steps). At rest Pip drifts about 0.011 px a frame, and every frame was a full draw; now the stage is drawn
+     once its drift adds up to a tenth of a pixel, so an edge pixel changes by at most a tenth of its colour per step
+     (a few to about 30 draws a second at rest). The physics still steps every frame, so the motion and where it goes are
+     unchanged. Anything that moves a tenth of a pixel or more in a frame (a swing, a hop, a prop on its way, the eyes
+     turning) still draws every frame, and so does any input, speech, a face changing or a blink: drawDue(). */
+  const PIP_DRAW_STEP_PX = PIP.drawStepPx = 0.1;
+  /* an opacity changes every pixel of what it fades, not one edge pixel: it is held to a tenth of that, 1 % a step */
+  const PIP_DRAW_STEP_OP = 0.01;
+  /* a swing is drawn whole: once any part moves 30 px a second (a swing, a hop, a wiggle: an idle swing starts near 100)
+     the stage draws in every frame until everything has moved under 12 px a second (a tenth of a pixel a frame at 120 Hz)
+     for half a second, so a swing's slow end is not stepped. Pip's drift at rest peaks near 12 (Friendly's sway and
+     pendulum, the fastest) and never starts one. */
+  const PIP_DRAW_SWING_PXS = 30, PIP_DRAW_FAST_PXS = 12, PIP_DRAW_FAST_HOLD = .5;
+
   // where the pointer is, for Pip's eyes (shared by every stage); the pointer's last spot is kept when it leaves
   const pointer = PIP.pointer = { x: -1, y: -1, t: 0 };
   document.addEventListener('pointermove', (e) => { pointer.x = e.clientX; pointer.y = e.clientY; pointer.t = now(); }, { passive: true });
@@ -526,7 +542,7 @@
       /* the whole prop stays inside the pane it is painted in, as it swings too: a sign with a long name hung at pairB
          crossed the pane's right edge at the divider and lost its end (SOL-AST1-01); it moves in, or is drawn smaller
          only when even that is not room enough. Its strings move with it. */
-      const fit = this.fit(pr, hang, sc, tieMid); hang[0] += fit.dx; hang[1] += fit.dy; sc *= fit.f; pr.dx = fit.dx; pr.box = fit.box; pr.placedN = this.renderN;
+      const fit = this.fit(pr, hang, sc, tieMid); hang[0] += fit.dx; hang[1] += fit.dy; sc *= fit.f; pr.fitF = fit.f; pr.dx = fit.dx; pr.box = fit.box; pr.placedN = this.renderN;
       const cv = rot([-tieMid[0] * sc, -tieMid[1] * sc], pr.a);
       pr.pos = [hang[0] + cv[0], hang[1] + cv[1]];
       const sq = this.reduced ? 0 : clamp(pr.sq || 0, -.12, .12), squash = Math.abs(sq) > .002 ? ` translate(0 ${R(pr.foot)}) scale(${R(1 + sq * .6)} ${R(1 - sq)}) translate(0 ${R(-pr.foot)})` : '';
@@ -1018,10 +1034,10 @@
       const el = this.tipBox;
       /* (the bubble's class is written only when the hush is on: classList.remove writes the class attribute even when the
          token is not there, so with no note open the bubble's class was written in every frame; pm7-perf lane W) */
-      if (!el || !el.classList.contains('on') || this.layoutName !== 'portrait') { this.ps.liftT = 0; if (this.bubble.classList.contains('pst-hush')) this.bubble.classList.remove('pst-hush'); return; }
+      if (!el || !el.classList.contains('on') || this.layoutName !== 'portrait') { this.tipGap = 0; this.ps.liftT = 0; if (this.bubble.classList.contains('pst-hush')) this.bubble.classList.remove('pst-hush'); return; }
       // it holds still while the pointer is on it, so its close button is easy to hit (once it has its place: a new note
       // that opens under a resting pointer was left at the stage's corner, past its edge in Friendly's tilt; tip_fit)
-      if (this.tipXY && el.matches(':hover')) return;
+      if (this.tipXY && el.matches(':hover')) { this.tipGap = 0; return; }
       const p = this.toScreen(this.headXf([32, 63], H, ang, 1, 1)), w = el.offsetWidth || 180, h = el.offsetHeight || 40, bx = this.box ? this.box.width : 400, by = this.box ? this.box.height : 560;
       // under Pip, kept to the left of the stage where the props do not hang, above a tube's command line, and
       // always whole on the stage. A long note on a small stage: the hand lifts Pip to make room for it
@@ -1042,6 +1058,8 @@
       this.tipXY[1] = clamp(this.tipXY[1], top, Math.max(top, by - h - foot)); this.tipXY[0] = clamp(this.tipXY[0], 8, Math.max(8, bx - w - 8));
       el.style.transform = `translate(${R(this.tipXY[0])}px, ${R(this.tipXY[1])}px)`;
       el.style.setProperty('--tx', R(clamp(p[0] - this.tipXY[0], 14, w - 14)) + 'px');
+      /* (how far it still has to ease, in CSS pixels: while that is a tenth of a pixel or more the stage draws every frame) */
+      this.tipGap = Math.hypot(goal[0] - this.tipXY[0], goal[1] - this.tipXY[1]);
     }
     /* --------------------------------------------------------- geometry */
     /* in the stage's own, untransformed size: the window's opening scales it, and a box measured then kept the larger
@@ -1158,10 +1176,105 @@
       /* (on a steady cadence: each draw is due one step after the last was due, so a frame that comes a little late
          does not push every later draw back; Retro Light then draws ten times a second, Retro Dark twenty) */
       if (fps && !this.reduced) { const step = 1 / fps; if (this.t - this.frameT < step - 0.006) return; this.frameT = this.t - this.frameT > 2 * step ? this.t : this.frameT + step; }
+      /* every other look draws once what it shows has moved a tenth of a pixel (PIP_DRAW_STEP_PX, Jared's decision);
+         a frame where only Pip's sleeping z's or NieR's target brackets moved draws only them (render(true)). A still
+         stage keeps its own rule. */
+      if (!fps && !this.reduced && !this.dirty) {
+        const g = this.gate || (this.gate = { full: 0, part: 0, skip: 0 }), due = this.drawDue();
+        if (!due) { g.skip++; return; }
+        if (due === 'part') { g.part++; this.render(true); return; }
+        g.full++;
+      }
       /* (a change is drawn only once a frame is: cleared before Retro's stepped gate, a still stage that skipped one never
          drew it, and a sign kept 1024's place at 860 after a resize) */
       this.dirty = false;
       this.render();
+    }
+    /* What the stage would draw now, as lengths in stage units (each turn or scale as the distance its farthest point
+       moves: its lever), opacities, and the discrete things a draw shows (a face, a blink, a label's words, what Pip
+       looks at). NieR's target brackets (h) and Pip's sleeping z's (zMoved) are kept apart: they can be drawn alone.
+       drawDue compares it with what the last draw showed. */
+    poseKey() {
+      const ps = this.ps, Lay = this.L, s = Lay.s, F = this.fam, v = [], o = [], d = [], h = [];
+      if (!ps) return null;
+      let Hd = this.headAt(ps.C.x, ps.C.y, ps.th, ps.dy), ang = ps.th * .9 + ps.tilt;
+      if (F.bob && !this.reduced) { Hd = [Hd[0], Hd[1] + Math.sin(this.t * 1.35) * F.bob * s / 2.6]; ang += Math.sin(this.t * .9) * .025; }
+      if (Hd[1] + 28 * s > Lay.ground - 2) Hd = [Hd[0], Lay.ground - 2 - 28 * s];
+      const br = this.reduced || !PIP.h.part('idle-life') ? 0 : (F.breathe || 0) * Math.sin(this.t * (this.sleepZ ? 1.5 : 2.2));
+      /* each turn and scale by its lever, in the kit's units at Pip's scale: the bar's far corner is 25 from the middle it
+         turns on; the head's far corner 38 from where it hangs, its sides 24 from its middle and its top 31 above the foot
+         it swells from (the head drawn is about 48 by 31, the bar 46 by 19); the eyes move inside the head, at its scale */
+      v.push(ps.C.x, ps.C.y, ps.phi * 25 * s, Hd[0], Hd[1], ang * 38 * s, ps.sx * (1 - br * .4) * 24 * s, ps.sy * (1 + br) * 31 * s, ps.look[0] * s, ps.look[1] * s);
+      /* and every value the painter rounds (R, to 0.01) where one rounding step moves the picture a tenth of a pixel or
+         more, in the form it is written: the head's two scales (one step of a breath moves its top edge about 0.9 px:
+         compared continuously, a breath was drawn up to half a second late, A147), each prop's scale and squash, and the
+         opacities (a prop's, its strings', Pip's floor shadow in Friendly and Glass). Translations and turns are written
+         finer than the step. */
+      d.push(R(ps.sx * (1 - br * .4)), R(ps.sy * (1 + br)));
+      if (this.famName === 'friendly' || this.famName === 'glass') { const k = clamp(1 - Math.max(0, Lay.ground - (Hd[1] + 64 * s / 2.6)) / (Lay.h * .9), .25, 1); d.push(R(k * .7)); }
+      this.props.forEach((pr) => {
+        const L = Math.max(0, pr.len), size = 60 * Lay.propScale * (pr.spec.scale || 1);
+        v.push(pr.ax + Math.sin(pr.a) * L, Math.cos(pr.a) * L, pr.a * (L + size), pr.scale * size, (pr.sq || 0) * (pr.foot || 0));
+        o.push(pr.op);
+        const sq = clamp(pr.sq || 0, -.12, .12);
+        d.push(R(this.propTarget(pr).sc * (pr.scale / (pr.spec.scale || 1)) * (pr.fitF == null ? 1 : pr.fitF)), Math.abs(sq) > .002 ? R(1 + sq * .6) + ' ' + R(1 - sq) : '', R(pr.op));
+      });
+      // NieR's target brackets breathe (a pulse of 1.2) and their diamond turns (7 wide)
+      if (this.famName === 'nier' && !this.reduced) { const pr = this.target && this.props.get(this.target); if (pr && pr.pos) h.push(Math.sin(this.t * 3) * 1.2, (this.t * 120 % 360) / 57.3 * 5); }
+      // Basic's protractor reads the swing to a tenth of a degree and the ruler the head's place to a unit
+      if (this.famName === 'basic') d.push((ps.th * 57.3).toFixed(1), Math.round(this.headXf([32, 45], Hd, ang, 1, 1)[0]));
+      const b = ps.blinkAt != null ? this.t - ps.blinkAt : 9;
+      d.push(b < .16 ? R(Math.max(.1, Math.abs(1 - b / .08))) : 1, this.sleepZ ? 'sleep' : this.moodOverride && this.t <= this.moodUntil ? this.moodOverride : '',
+        this.idleLook ? this.idleLook.join() : '', this.tipLook > this.t, this.t - (this.busyT || -9) < 2.5, pointer.t, this.props.size, this.target || '');
+      return { v, o, h, d: d.join('|') };
+    }
+    /* a sleeping z (or any particle) moved a tenth of a pixel since it was drawn, or its opacity as the painter writes it
+       (R, to 0.01) is not the one written (p.dr, renderFx). The opacity is compared rounded: compared continuously, a z
+       that had crossed a rounding step waited three refreshes one step too opaque (A150). Its place and turn are written
+       finer than the step. */
+    zMoved(p, step) {
+      const q = p.dr; if (!q) return true;
+      return Math.abs(p.x - q[0]) >= step || Math.abs(p.y - q[1]) >= step || Math.abs(p.r - q[2]) / 6 * 12 >= step || R(Math.max(0, 1 - (p.life / p.max) ** 2)) !== q[3];
+    }
+    /* '' when nothing the stage shows has moved a tenth of a pixel since it was last drawn; 'part' when only the sleeping
+       z's (or a new one is due) or NieR's target brackets have; 'full' otherwise, and always while anything is under way
+       that a draw starts, ends or must follow */
+    drawDue() {
+      const ps = this.ps, f = this.famName, t = this.t;
+      if (!ps || !this.drawn || !this.map) return 'full';
+      /* speech and a note being written, a face changing, a blink due, a feeling ending, a prop coming, going, landing or
+         letting go of its strings, a particle that is not a z, NieR's brackets flying in or locking and its glitch, a note
+         still easing after Pip: every frame */
+      if (this.typeT || this.tipW || this.faceOut || this.faceT0 != null) return 'full';
+      if (this.blinkEl && PIP.h.part('blinks') && t > ps.nextBlink) return 'full';
+      if (this.moodOverride && t > this.moodUntil) return 'full';
+      for (const pr of this.props.values()) if (pr.state === 'out' || !pr.settled || (pr.spec.ground && (!pr.landed || t - pr.landT < .6)) || pr.enterTgt) return 'full';
+      for (const p of this.fx) if (p.kind !== 'z') return 'full';
+      if (f === 'nier' && ((this.sliceT != null && t - this.sliceT < .5) || t - (this.tgtT || -9) < .45 || (this.lockT != null && t - this.lockT < 1.3))) return 'full';
+      const dpr = window.devicePixelRatio || 1;
+      if (this.tipGap && this.tipGap * dpr >= PIP_DRAW_STEP_PX) return 'full';
+      const k = this.poseKey(), w = this.drawn;
+      if (!k) return 'full';
+      /* how fast it moves (since the last frame, drawn or not): a swing under way, and its slow end, draws every frame */
+      const pk = this.prevKey, pt = this.prevT; this.prevKey = k; this.prevT = t;
+      if (pk && pk.v.length === k.v.length && t > pt) {
+        let mv = 0; for (let i = 0; i < k.v.length; i++) mv = Math.max(mv, Math.abs(k.v[i] - pk.v[i]));
+        const pxs = mv / (t - pt) * this.map.k * dpr;
+        if (pxs >= PIP_DRAW_SWING_PXS) this.swingOn = true;
+        if (this.swingOn && pxs >= PIP_DRAW_FAST_PXS) this.fastT = t;
+      }
+      if (this.swingOn && t - (this.fastT == null ? -9 : this.fastT) >= PIP_DRAW_FAST_HOLD) this.swingOn = false;
+      if (this.swingOn) return 'full';
+      if (k.d !== w.d || k.v.length !== w.v.length || k.o.length !== w.o.length) return 'full';
+      const step = PIP_DRAW_STEP_PX / (this.map.k * dpr);
+      for (let i = 0; i < k.v.length; i++) if (Math.abs(k.v[i] - w.v[i]) >= step) return 'full';
+      for (let i = 0; i < k.o.length; i++) if (Math.abs(k.o[i] - w.o[i]) >= PIP_DRAW_STEP_OP) return 'full';
+      this.dueKey = k;
+      if (this.sleepZ && f !== 'nier' && t - (this.lastZ || 0) > .9) return 'part';
+      if (k.h.length !== w.h.length) return 'full';
+      for (let i = 0; i < k.h.length; i++) if (Math.abs(k.h[i] - w.h[i]) >= step) return 'part';
+      for (const p of this.fx) if (this.zMoved(p, step)) return 'part';
+      return '';
     }
     // how often the stage is drawn: every frame, but Retro in steps (Retro Light, paper, at half Retro Dark's rate,
     // a flipbook of printouts)
@@ -1261,7 +1374,14 @@
         const k = Math.max(0, 1 - dt * (p.drag || 0)); p.vx *= k; if (p.drag > 1) p.vy *= k;
       }
     }
-    render() {
+    render(part) {
+      /* (only the particles, and NieR's target brackets from Pip's last drawn pose: drawDue found nothing else moved) */
+      if (part) {
+        this.renderFx(this.headCentre());
+        if (this.famName === 'nier' && this.gHud) this.renderBrackets();
+        if (this.drawn && this.dueKey) this.drawn.h = this.dueKey.h;
+        return;
+      }
       const ps = this.ps, Lay = this.L, f = this.famName;
       // mood: a transient feeling wins over the scene's own
       if (this.moodOverride && this.t > this.moodUntil) this.moodOverride = null;
@@ -1338,23 +1458,7 @@
       /* (a prop added while the stage was held comes in under NieR's box now, as addProp would have had it: enterUnder) */
       this.props.forEach((pr) => { if (pr.enterTgt) { const tg = pr.enterTgt; pr.enterTgt = null; this.enterUnder(pr, tg); } });
       this.props.forEach((pr) => this.placeProp(pr));
-      // particles
-      this.fx.forEach((p) => {
-        const k = p.life / p.max;
-        if (p.kind === 'ripple') { const e = ease(k), m = p.small ? .45 : 1; attr(p.e, 'rx', R(6 + e * 90 * m)); attr(p.e, 'ry', R(1.5 + e * 12 * m)); attr(p.e, 'stroke-opacity', R((1 - k) * .7)); return; }
-        const op = p.kind === 'conf' ? (k > .85 ? (1 - k) / .15 : 1) : p.kind === 'check' ? (k < .75 ? 1 : (1 - k) / .25) : p.kind === 'ring' ? (1 - k) * .9 : 1 - k * k;
-        const sc = p.kind === 'ring' ? Math.min(1 + ease(k) * 2.2, p.room || Infinity) : p.kind === 'check' ? (k < .1 ? k / .1 * 1.18 : k < .18 ? 1.18 - (k - .1) / .08 * .18 : 1) : 1;
-        attr(p.e, 'transform', `translate(${R(p.x)} ${R(p.y)}) rotate(${R(p.r * 57.3 / 6)}) scale(${R(sc)})`);
-        attr(p.e, 'opacity', R(Math.max(0, op)));
-      });
-      // sleeping z's
-      if (this.sleepZ && !this.reduced && this.t - (this.lastZ || 0) > .9 && f !== 'nier') {
-        this.lastZ = this.t;
-        const e = el('g', { class: 'pst-p', opacity: '0' }, this.gFx);
-        const font = this.tube === 'phosphor' ? 'VT323, monospace' : this.tube ? "'IBM Plex Mono', monospace" : 'system-ui,sans-serif';
-        e.innerHTML = `<text font-family="${font}" font-weight="800" font-size="${this.tube ? 22 : 16}" fill="${this.w.text}">z</text>`;
-        this.fx.push({ e, kind: 'z', x: hc[0] + 40, y: hc[1] - 30, vx: 14, vy: -26, r: 0, vr: .4, life: 0, max: 2, g: 0 });
-      }
+      this.renderFx(hc);
       // soft shadows on the floor: Pip's and each prop's, smaller and fainter the higher they hang
       /* (one ellipse each, kept and moved, in the order they were written: Pip's first, then each prop's; one more or one
          fewer as props come and go. Written anew with innerHTML every frame they were new elements to style, lay out and
@@ -1417,6 +1521,30 @@
       // big swings can be heard
       if (!this.reduced && this.t - (this.swT || 0) > .07) { this.swT = this.t; this.loopSnd('swing', clamp((Math.abs(ps.thv) - .25) / 1.6, 0, 1)); }
       this.loopSnd('snore', this.sleepZ ? 1 : 0);
+      /* what this draw shows, for drawDue: the next draw is due once any of it has moved a tenth of a pixel */
+      this.drawn = this.poseKey();
+    }
+    /* the particles (confetti, rings, checks, ripples, Pip's sleeping z's) and a new z while Pip sleeps: a frame where
+       only the z's have moved draws only this (render(true), drawDue) */
+    renderFx(hc) {
+      const f = this.famName;
+      this.fx.forEach((p) => {
+        const k = p.life / p.max;
+        if (p.kind === 'ripple') { const e = ease(k), m = p.small ? .45 : 1; attr(p.e, 'rx', R(6 + e * 90 * m)); attr(p.e, 'ry', R(1.5 + e * 12 * m)); attr(p.e, 'stroke-opacity', R((1 - k) * .7)); return; }
+        const op = p.kind === 'conf' ? (k > .85 ? (1 - k) / .15 : 1) : p.kind === 'check' ? (k < .75 ? 1 : (1 - k) / .25) : p.kind === 'ring' ? (1 - k) * .9 : 1 - k * k;
+        const sc = p.kind === 'ring' ? Math.min(1 + ease(k) * 2.2, p.room || Infinity) : p.kind === 'check' ? (k < .1 ? k / .1 * 1.18 : k < .18 ? 1.18 - (k - .1) / .08 * .18 : 1) : 1;
+        attr(p.e, 'transform', `translate(${R(p.x)} ${R(p.y)}) rotate(${R(p.r * 57.3 / 6)}) scale(${R(sc)})`);
+        attr(p.e, 'opacity', R(Math.max(0, op)));
+        p.dr = [p.x, p.y, p.r, R(Math.max(0, op))];
+      });
+      // sleeping z's
+      if (this.sleepZ && !this.reduced && this.t - (this.lastZ || 0) > .9 && f !== 'nier') {
+        this.lastZ = this.t;
+        const e = el('g', { class: 'pst-p', opacity: '0' }, this.gFx);
+        const font = this.tube === 'phosphor' ? 'VT323, monospace' : this.tube ? "'IBM Plex Mono', monospace" : 'system-ui,sans-serif';
+        e.innerHTML = `<text font-family="${font}" font-weight="800" font-size="${this.tube ? 22 : 16}" fill="${this.w.text}">z</text>`;
+        this.fx.push({ e, kind: 'z', x: hc[0] + 40, y: hc[1] - 30, vx: 14, vy: -26, r: 0, vr: .4, life: 0, max: 2, g: 0 });
+      }
     }
     placeBubble(H, ang) {
       const tall = this.layoutName === 'portrait';
