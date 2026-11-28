@@ -340,7 +340,7 @@ export function hoverVerdict(rows) {
    first displayed destination frame is the first frame after the wheel that is blank or unfilled, or differs from the
    last frame before it in at least half as many pixels as the settled frame does. Shares of the frame's own pixels, no
    times: the same on every host. */
-export const FLING_FILM = { bands: 4, inset: 24, edge: 24, floor: 0.01, keep: 0.3, width: 960, height: 540 };
+export const FLING_FILM = { bands: 4, inset: 24, edge: 24, floor: 0.01, keep: 0.3, held: 0.002, width: 960, height: 540 };
 export async function filmFling(client) {
 	const frames = [];
 	const on = (ev) => {
@@ -375,11 +375,14 @@ export function flingFilm(frames, { box, view, wheel }) {
 	const rows = frames.map((f, k) => ({ i: k, dt: +(f.wall - wheel).toFixed(1), bands: filmBands(imgs[k], rect) }));
 	const settled = rows.at(-1).bands, judged = settled.map((v) => v >= FLING_FILM.floor);
 	const before = rows.filter((r) => r.dt < 0).at(-1), after = rows.filter((r) => r.dt >= 0);
-	for (const r of rows) r.bad = r.bands.some((v, k) => judged[k] && v < settled[k] * FLING_FILM.keep);
 	/* moved: the frame differs from the last frame before the wheel in at least half as many pixels as the settled frame
 	   does (a hover or a caret changes a few rows, the scroll changes the view) */
 	const src = before ? imgs[before.i] : null, last = imgs.at(-1);
 	const diff = (img) => { let n = 0, d = 0; for (let y = rect.y0; y < rect.y1; y += 2) for (let x = rect.x0; x < rect.x1; x += 2) { const p = (y * img.width + x) * 4; n++; if (Math.max(Math.abs(img.data[p] - src.data[p]), Math.abs(img.data[p + 1] - src.data[p + 1]), Math.abs(img.data[p + 2] - src.data[p + 2])) > 24) d++; } return n ? d / n : 0; };
+	/* FO-248P: a frame after the input that is still the source view (under FLING_FILM.held of its pixels changed) is the
+	   view held while the page works, not a blank: Home from the end of a page holds the end view, whose foot is empty,
+	   and that view reads as unfilled against the settled top view. A blank never matches a source view with rows. */
+	for (const r of rows) r.bad = r.bands.some((v, k) => judged[k] && v < settled[k] * FLING_FILM.keep) && !(src && r.dt >= 0 && diff(imgs[r.i]) < FLING_FILM.held);
 	const moved = src ? diff(last) : 0;
 	const dest = src && moved > 0 ? after.find((r) => r.bad || diff(imgs[r.i]) >= moved / 2) || null : null;
 	/* Capture fidelity (as chat-resize-raster, F12E-SB-AB-RASTER-NOISE): the test keeps a compositor-only 2 px marker
@@ -412,9 +415,17 @@ export const FLING_ROUTES = {
 		travel: 'End crossed at least one viewport and brought the last page into view', empty: 'no visible list or unmounted page is empty at the scroll frame' },
 	/* FO-245 round 4 (R143 high): End after a click on the document's plain text. Focus is then on the page's body, so
 	   only Chrome's last-clicked scroller ties the key to the document; the route needs that focus at the key.
-	   FO-245 round 5: 'end' and 'end-text' are kept for FO-248 but not registered as tests (see the test list). */
+	   FO-245 round 5: 'end' and 'end-text' were kept for FO-248 but not registered as tests; FO-248P registers both again
+	   (see the test list). */
 	'end-text': { input: 'End', focus: 'body', target: 'the last page (Containers)', pending: 'End after a click on the document\'s plain text was delivered with focus on the page body and the last page (Containers) unmounted',
-		travel: 'End crossed at least one viewport and brought the last page into view', empty: 'no visible list or unmounted page is empty at the scroll frame' }
+		travel: 'End crossed at least one viewport and brought the last page into view', empty: 'no visible list or unmounted page is empty at the scroll frame' },
+	/* FO-248P: Home back up a fresh Code & Tools. A trusted End first (it leaves the pages between unmounted: the fix mounts
+	   only the end pages, main's smooth End only those its observer reached), then, once the document has held still, a
+	   trusted click on plain text of that view (focus on the body) and a trusted Home. The target is the chapter's first
+	   page; the precondition is unmounted pages between the view and it when Home is delivered. Upward: the travel is
+	   measured up from the key's position. */
+	home: { input: 'Home', up: true, focus: 'body', target: 'the first page', pending: 'Home after End and a text click was delivered with focus on the page body and unmounted pages between the view and the first page',
+		travel: 'Home crossed at least one viewport and brought the first page into view', empty: 'no visible list or unmounted page is empty at the scroll frame' }
 };
 export function flingVerdict(r, film, route = 'terminal') {
 	const R = FLING_ROUTES[route] || FLING_ROUTES.terminal, input = R.input === 'wheel' ? 'wheel' : `${R.input} key`;
@@ -423,7 +434,7 @@ export function flingVerdict(r, film, route = 'terminal') {
 	return [
 		{ name: R.pending, ok: !!r.wheel && r.wheelPending > 0 && r.wheelTargetPending === true && (!R.focus || r.wheelFocus === R.focus),
 			detail: r.wheel ? `at ${input} delivery ${r.wheelPending} ${route === 'terminal' ? 'lists' : 'pages'} pending, ${R.target} pending ${r.wheelTargetPending}${R.focus ? `, focus on ${r.wheelFocus || 'unknown'}` : ''} (at commit ${r.pending}, ${r.targetPending})` : `no ${input} event was seen after the commit` },
-		{ name: R.travel, ok: !!r.sampled && r.moved >= r.height && r.targetInView === true,
+		{ name: R.travel, ok: !!r.sampled && (R.up ? -r.moved : r.moved) >= r.height && r.targetInView === true,
 			detail: r.sampled ? `moved ${r.moved} px of a ${r.height} px view; ${R.target} in view ${!!r.targetInView}` : `no scroll-frame sample with ${R.target} in view (${r.framesBefore || 0} scroll frames past one viewport without it)` },
 		{ name: R.empty, ok: !!r.sampled && Array.isArray(r.empty) && r.empty.length === 0, detail: (r.empty || []).join(',') || 'no scroll-frame sample' },
 		{ name: `the first displayed destination frame, and every frame after the ${input}, shows the destination rows (screencast pixels)`,
@@ -1168,6 +1179,86 @@ export async function endLandRoute(t, surface) {
 	}
 	for (const row of endLandVerdict(presses, 2 * reps)) await t.check(`${surface}: ${row.name}`,row.ok,row.detail);
 }
+/* FO-248P (R143 medium, exported for tools/settings-chapter.selftest.mjs): a held PageDown down a fresh Code & Tools. Each
+   page edge the hold crosses showed its unmounted placeholder for a frame or more before main's observer mounted it (GTX
+   1070 Ti films, 4 holds each: main 10, 7, 0 and 0 placeholder frames, FO-245 r6 35, 7, 6 and 0). PGDN: a hold is PGDN.keys
+   trusted PageDowns PGDN.gap ms apart after a trusted click on plain text of the first view (focus on the body), filmed
+   with the fling recorder's screencast and marker from before the first key until the document has held still for a
+   second. Mid-scroll frames all show different rows, so a frame is not compared with the settled one: a placeholder
+   frame is one where at least PGDN.empty of the four bands read under FLING_FILM.floor of edge detail (an unmounted page
+   or an unfilled list covering half the view; rows, headings and section cards read 40-180 per mille, an empty band 0-9).
+   The capture is resolved when no gap between frames from the first key to the settled view exceeds three medians. */
+export const PGDN = { keys: 15, gap: 50, empty: 2, holds: 2, minCold: 3, minViews: 5 };
+export function pgdnFilm(frames, { box, view, key }) {
+	if (!frames || !frames.length || !box || !view || !(key > 0)) return { frames: frames ? frames.length : 0 };
+	const imgs = frames.map((f) => decodePng(f.png)), sx = imgs[0].width / view.width, sy = imgs[0].height / view.height, i = FLING_FILM.inset;
+	const rect = { x0: Math.max(0, Math.round((box.x + i) * sx)), y0: Math.max(0, Math.round((box.y + i) * sy)), x1: Math.min(imgs[0].width, Math.round((box.x + box.width - i) * sx)), y1: Math.min(imgs[0].height, Math.round((box.y + box.height - i) * sy)) };
+	const after = frames.map((f, k) => ({ i: k, dt: +(f.wall - key).toFixed(1) })).filter((r) => r.dt >= 0);
+	for (const r of after) { r.bands = filmBands(imgs[r.i], rect); r.bad = r.bands.filter((v) => v < FLING_FILM.floor).length >= PGDN.empty; }
+	const gaps = after.slice(1).map((r, k) => +(r.dt - after[k].dt).toFixed(1)), sorted = gaps.slice().sort((x, y) => x - y);
+	const median = sorted.length ? sorted[sorted.length >> 1] : null, maxGap = gaps.length ? Math.max(...gaps) : null;
+	return { frames: frames.length, after: after.length, median, maxGap, resolved: median > 0 && maxGap != null && maxGap <= 3 * median, bad: after.filter((r) => r.bad).map(({ i, dt, bands }) => ({ i, dt, bands })) };
+}
+export function pgdnAttempt(r, px) {
+	const route = !!r && r.keys >= PGDN.keys && r.focus === 'body' && r.coldAtKey >= PGDN.minCold && r.mounted >= 1 && r.views >= PGDN.minViews && r.settled === true;
+	const bad = px && Array.isArray(px.bad) ? px.bad.length : 0, resolved = !!px && px.resolved === true;
+	return { route, bad, resolved, retry: route && bad === 0 && !resolved };
+}
+export function pgdnVerdict(list) {
+	const holds = Array.isArray(list) ? list : [];
+	const line = (h) => `hold ${h.n}: ${h.r ? `${h.r.keys} PageDown, focus ${h.r.focus}, ${h.r.coldAtKey} cold at the first key, ${h.r.mounted} mounted, ${h.r.views} views, settled ${h.r.settled}` : 'no reading'}; ${h.attempts.map((a, k) => `attempt ${k + 1}: ${a.px ? `${a.px.frames} frames, largest gap ${a.px.maxGap} ms / median ${a.px.median} ms, ${a.bad} placeholder frame(s)${a.bad ? ' [' + a.px.bad.slice(0, 4).map((b) => `${b.dt} ms ${b.bands.join('/')}`).join('; ') + ']' : ''}` : 'no film'}${a.resolved ? '' : ', not resolved'}`).join('; ')}`;
+	const judge = holds.length > 0 && holds.every((h) => h.attempts.length && h.attempts.every((a) => a.route));
+	const clean = judge && holds.every((h) => h.attempts.every((a) => a.bad === 0) && h.attempts.at(-1).resolved);
+	return [
+		{ name: `every hold was ${PGDN.keys} trusted PageDowns from body focus over a fresh Code & Tools with ${PGDN.minCold}+ unmounted pages ahead, mounted a page and settled`, ok: judge, detail: holds.length ? holds.filter((h) => !h.attempts.every((a) => a.route)).slice(0, 3).map(line).join(' | ') || `${holds.length} holds` : 'no hold ran' },
+		{ name: 'a held PageDown never shows a page placeholder: no frame from the first key to the settled view has half its bands empty (screencast pixels)', ok: clean, detail: holds.map(line).join(' | ') || 'no hold ran' }
+	];
+}
+export async function pgdnRoute(t, surface) {
+	if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+	await t.viewport(1920, 1080); await muteSound(t.page);
+	await t.emulate({reducedMotion:t.args.motion === 'reduce' ? 'reduce' : 'no-preference'});
+	const f = await t.app.open({sandbox:surface === 'sandbox'});
+	await t.app.resetLayout().catch(() => {}); await f.locator('#tab-settings').click(); await t.settle();
+	const holds = [], per = Number(t.args.pgdnHolds || PGDN.holds);
+	for (const look of flingLooks(t.args.flingLooks)) {
+		await setLookBySetting(t,f,look);
+		if (!(await guardPaintedLook(t,f,look,`${look} ${surface}`))) return;
+		for (let n = 1; n <= per; n++) {
+			const hold = { n: `${look} ${n}`, attempts: [], r: null };
+			for (let k = 1; k <= FLING_RETRY.attempts; k++) {
+				await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click(); await t.page.waitForTimeout(700);
+				const box = await f.locator('#settings-document').boundingBox();
+				const client = await t.page.context().newCDPSession(t.page); let film, frames = [], r = null;
+				try {
+					await t.page.evaluate(()=>{const d=document.createElement('div');d.id='psc-vsync-marker';d.setAttribute('aria-hidden','true');Object.assign(d.style,{position:'fixed',right:'0',top:'0',width:'2px',height:'2px',background:'currentColor',willChange:'opacity',pointerEvents:'none',zIndex:'2147483647'});document.documentElement.appendChild(d);d.animate([{opacity:.5},{opacity:1}],{duration:1000,iterations:Infinity,direction:'alternate'});});
+					await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
+					await f.waitForFunction(()=>document.querySelector('#pm-settings-root .domain-link.active')?.dataset.domain==='code',null,{timeout:5000}).catch(()=>{});
+					const off=surface==='sandbox'?await f.frameElement().then((h)=>h.boundingBox()).catch(()=>null):null;
+					const at=await f.evaluate(()=>{const d=document.querySelector('#pm-settings-root #settings-document'),v=d.getBoundingClientRect();const own='button, a, input, select, textarea, label, summary, [tabindex], [contenteditable], [data-action], .is-clickable, [role="button"], [role="link"], [role="tab"], [role="option"], [role="menuitem"], [role="switch"], [role="checkbox"]';const p=[...d.querySelectorAll('p')].find(x=>{const r=x.getBoundingClientRect(),o=x.closest(own);return r.height>8&&r.width>40&&r.top>=v.top+40&&r.bottom<v.bottom-40&&!(o&&d.contains(o))&&x.textContent.trim().length>8&&getComputedStyle(x).visibility==='visible';});if(!p)return null;const r=p.getBoundingClientRect();return {x:r.left+Math.min(20,r.width/3),y:r.top+r.height/2};});
+					if(at){await t.page.mouse.click((off?off.x:0)+at.x,(off?off.y:0)+at.y);await t.page.waitForTimeout(200);}
+					await f.evaluate(()=>{const sc=document.querySelector('#pm-settings-root #settings-document');const R=window.__pscPgdn={keys:0,top0:sc.scrollTop};
+						R.key=e=>{if(e.key!=='PageDown'||!e.isTrusted)return;if(!R.keys){R.at=performance.timeOrigin+performance.now();R.focus=document.activeElement===document.body?'body':(document.activeElement?.tagName||'none').toLowerCase();R.coldAtKey=sc.querySelectorAll('[data-continuous-workspace-body][data-workspace-mounted="false"]').length;}R.keys++;};
+						window.addEventListener('keydown',R.key,{capture:true,passive:true});});
+					film = await filmFling(client);
+					await t.page.waitForFunction(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>r(true)))));
+					for (let q = 0; q < PGDN.keys; q++) { await t.page.keyboard.press('PageDown'); await t.page.waitForTimeout(PGDN.gap); }
+					const settled = await f.waitForFunction(()=>new Promise(res=>{const sc=document.querySelector('#pm-settings-root #settings-document');let top=sc.scrollTop,t0=performance.now();const step=()=>{if(sc.scrollTop!==top){top=sc.scrollTop;t0=performance.now();}if(performance.now()-t0>=1000)return res(true);requestAnimationFrame(step);};requestAnimationFrame(step);}),null,{timeout:15000}).then(()=>true).catch(()=>false);
+					frames = await film.stop();
+					r = await f.evaluate((settled)=>{const sc=document.querySelector('#pm-settings-root #settings-document'),R=window.__pscPgdn;window.removeEventListener('keydown',R.key,{capture:true,passive:true});
+						return {keys:R.keys,at:R.at,focus:R.focus,coldAtKey:R.coldAtKey,mounted:R.coldAtKey-sc.querySelectorAll('[data-continuous-workspace-body][data-workspace-mounted="false"]').length,views:+((sc.scrollTop-R.top0)/sc.clientHeight).toFixed(1),top:Math.round(sc.scrollTop),settled};},settled);
+				} finally { await t.page.evaluate(()=>document.getElementById('psc-vsync-marker')?.remove()).catch(()=>{}); if (film && !frames.length) await film.stop().catch(()=>{}); await client.detach().catch(()=>{}); }
+				const px = pgdnFilm(frames, { box, view: t.page.viewportSize(), key: r && r.at });
+				const a = { px, ...pgdnAttempt(r, px) };
+				hold.attempts.push(a); hold.r = r;
+				t.log(`${look} ${surface} PageDown hold ${n} attempt ${k}: ${JSON.stringify(r)}; ${px.frames} frames, largest gap ${px.maxGap} ms / median ${px.median} ms, ${a.bad} placeholder frame(s)${a.bad ? ': ' + px.bad.slice(0, 6).map((b) => `${b.dt} ms ${b.bands.join('/')}`).join('; ') : ''}${a.retry ? ' -> retry' : ''}`);
+				if (!a.retry) break;
+			}
+			holds.push(hold);
+		}
+	}
+	for (const row of pgdnVerdict(holds)) await t.check(`${surface}: ${row.name}`,row.ok,row.detail);
+}
 /* One fling route (FLING_ROUTES) on one surface, in every fling look (exported for the selftest's live pins). */
 export async function flingRoute(t, surface, route) {
 	if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
@@ -1184,13 +1275,15 @@ export async function flingRoute(t, surface, route) {
 			await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click(); await t.page.waitForTimeout(700);
 			const box = await f.locator('#settings-document').boundingBox();
 			await f.evaluate((route) => {
-				const root=document.getElementById('pm-settings-root'),deep=route!=='terminal';
+				const root=document.getElementById('pm-settings-root'),deep=route!=='terminal',home=route==='home';
 				const R=window.__pscFling={route,committed:false,sampled:false,pending:0,empty:[]};
 				/* the route's target: Terminal look, or the chapter's last page (Containers) for the deep routes */
 				const lastBody=()=>{const b=root.querySelectorAll('#settings-document [data-continuous-workspace-body]');return b[b.length-1]||null;};
-				const target=()=>deep?lastBody()?.closest('[data-workspace-block]'):root.querySelector('#section-editor-terminal-look');
+				const firstBody=()=>root.querySelector('#settings-document [data-continuous-workspace-body]');
+				const target=()=>home?firstBody()?.closest('[data-workspace-block]'):deep?lastBody()?.closest('[data-workspace-block]'):root.querySelector('#section-editor-terminal-look');
 				const pendingNow=()=>deep?root.querySelectorAll('#settings-document [data-continuous-workspace-body][data-workspace-mounted="false"]').length:root.querySelectorAll('[data-o55-fill="pending"]').length;
-				const targetPendingNow=()=>deep?lastBody()?.dataset.workspaceMounted==='false':!!root.querySelector('#section-editor-terminal-look')?.querySelector('[data-o55-fill="pending"]');
+				/* Home: its target, the first page, is mounted; what it must cross is the pages between, still unmounted */
+				const targetPendingNow=()=>home?pendingNow()>0:deep?lastBody()?.dataset.workspaceMounted==='false':!!root.querySelector('#section-editor-terminal-look')?.querySelector('[data-o55-fill="pending"]');
 				const mo=new MutationObserver(() => {
 					if(root.querySelector('.domain-link.active')?.dataset.domain!=='code')return;
 					mo.disconnect(); const sc=root.querySelector('#settings-document'),sec=target();
@@ -1229,14 +1322,16 @@ export async function flingRoute(t, surface, route) {
 				   between them, and an idle fill that finishes in that gap leaves nothing for the input to test. Passive, so
 				   the scroll keeps its own path. The End route's key is its input (trusted, End only). */
 				const wheel=e=>{
-					if(e.type==='keydown'&&(e.key!=='End'||!e.isTrusted))return;
+					if(e.type==='keydown'&&(e.key!==(home?'Home':'End')||!e.isTrusted))return;
 					if(!R.committed||R.wheel)return;
+					/* Home starts where End left the page: the travel is measured from there */
+					if(home)R.start=root.querySelector('#settings-document')?.scrollTop??R.start;
 					R.wheel=performance.now();R.wheelEpoch=performance.timeOrigin+R.wheel;R.wheelPending=pendingNow();
 					R.wheelTargetPending=targetPendingNow();
 					R.wheelTop=root.querySelector('#settings-document')?.scrollTop??null;
 					const ae=document.activeElement;R.wheelFocus=ae===document.body?'body':ae?ae.tagName.toLowerCase()+(ae.id?'#'+ae.id:''):'none';
 				};
-				const kind=route==='end'||route==='end-text'?'keydown':'wheel';
+				const kind=route==='end'||route==='end-text'||route==='home'?'keydown':'wheel';
 				mo.observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
 				window.addEventListener('scroll',scroll,true);
 				window.addEventListener(kind,wheel,{capture:true,passive:true});
@@ -1265,6 +1360,21 @@ export async function flingRoute(t, surface, route) {
 					if(at){await f.locator('[data-psc-text-click]').click({position:at});await f.evaluate(()=>document.querySelector('[data-psc-text-click]')?.removeAttribute('data-psc-text-click'));}
 					else t.log(`${look} ${surface} end-text attempt ${k}: no plain text in the document's first view to click`);
 					await t.page.keyboard.press('End');
+				}else if(route==='home'){
+					/* FO-248P: a trusted click on plain text of the first view (focus on the body: the chapter's own link, which
+					   has the focus after its click, would keep End away from the document) and a trusted End; then, once the
+					   document has held still for a second, a trusted click on plain text of that view at its position on the
+					   screen (a locator click there can wait on actionability for good), then a trusted Home */
+					const off=surface==='sandbox'?await f.frameElement().then((h)=>h.boundingBox()).catch(()=>null):null;
+					const text=()=>f.evaluate(()=>{const d=document.querySelector('#pm-settings-root #settings-document'),v=d.getBoundingClientRect();const own='button, a, input, select, textarea, label, summary, [tabindex], [contenteditable], [data-action], .is-clickable, [role="button"], [role="link"], [role="tab"], [role="option"], [role="menuitem"], [role="switch"], [role="checkbox"]';const p=[...d.querySelectorAll('p')].find(x=>{const r=x.getBoundingClientRect(),o=x.closest(own);return r.height>8&&r.width>40&&r.top>=v.top+40&&r.bottom<v.bottom-40&&!(o&&d.contains(o))&&x.textContent.trim().length>8&&getComputedStyle(x).visibility==='visible';});if(!p)return null;const r=p.getBoundingClientRect();return {x:r.left+Math.min(20,r.width/3),y:r.top+r.height/2};});
+					const first=await text();
+					if(first){await t.page.mouse.click((off?off.x:0)+first.x,(off?off.y:0)+first.y);await t.page.waitForTimeout(200);}
+					await t.page.keyboard.press('End');
+					await f.waitForFunction(()=>new Promise(res=>{const sc=document.querySelector('#pm-settings-root #settings-document');let top=sc.scrollTop,t0=performance.now();const step=()=>{if(sc.scrollTop!==top){top=sc.scrollTop;t0=performance.now();}if(performance.now()-t0>=1000)return res(true);requestAnimationFrame(step);};requestAnimationFrame(step);}),null,{timeout:15000}).catch(()=>{});
+					const at=await f.evaluate(()=>{const d=document.querySelector('#pm-settings-root #settings-document'),v=d.getBoundingClientRect();const own='button, a, input, select, textarea, label, summary, [tabindex], [contenteditable], [data-action], .is-clickable, [role="button"], [role="link"], [role="tab"], [role="option"], [role="menuitem"], [role="switch"], [role="checkbox"]';const p=[...d.querySelectorAll('p')].find(x=>{const r=x.getBoundingClientRect(),o=x.closest(own);return r.height>8&&r.width>40&&r.top>=v.top+40&&r.bottom<v.bottom-40&&!(o&&d.contains(o))&&x.textContent.trim().length>8&&getComputedStyle(x).visibility==='visible';});if(!p)return null;const r=p.getBoundingClientRect();return {x:r.left+Math.min(20,r.width/3),y:r.top+r.height/2};});
+					if(at){await t.page.mouse.click((off?off.x:0)+at.x,(off?off.y:0)+at.y);await t.page.waitForTimeout(300);}
+					else t.log(`${look} ${surface} home attempt ${k}: no plain text in the end view to click`);
+					await t.page.keyboard.press('Home');
 				}else{
 					const delta=await f.evaluate(()=>window.__pscFling.delta);
 					await t.page.mouse.move(box.x+box.width*.65,box.y+box.height*.55);
@@ -1291,9 +1401,16 @@ for (const surface of ['normal', 'sandbox']) {
 	tests[`R93 #4 a fast wheel into lower Code fills visible lists before the frame (${surface})`] = (t) => flingRoute(t, surface, 'terminal');
 	/* FO-245 round 3 (A245 high finding 1): the deep routes onto the chapter's unmounted last page */
 	tests[`R93 #4 a single long wheel to the bottom of a fresh Code & Tools paints its last page (${surface})`] = (t) => flingRoute(t, surface, 'wheel-bottom');
-	/* FO-245 round 5 (option C): the End/Home key listener was reverted, so End smooth-scrolls through unmounted pages
-	   again, as on main. The two End fling routes ('end', 'end-text': FLING_ROUTES and flingRoute keep their code) are
-	   not registered until FO-248 lands a fix for those blanks; registered now they would be red, as they are on main. */
+	/* FO-245 round 5 (option C) reverted the End/Home key listener, so End smooth-scrolled through unmounted pages again,
+	   as on main, and the two End fling routes waited for FO-248. FO-248P (2026-11-28): the document's own End scroll is
+	   completed in one step at its first tick (46-first-screen.js, no key intercepted), so both are registered again. Red on
+	   main 131f9e02 and on FO-245 r6 a9d3fd43 (13-26 blank frames per cell), green on FO-248P. */
+	tests[`R93 #4 End from a fresh Code & Tools paints its last page (${surface})`] = (t) => flingRoute(t, surface, 'end');
+	tests[`R93 #4 End after a text click from a fresh Code & Tools paints its last page (${surface})`] = (t) => flingRoute(t, surface, 'end-text');
+	/* FO-248P: Home back up across the pages End left unmounted (FLING_ROUTES.home) */
+	tests[`R93 #4 Home after End from a fresh Code & Tools paints its first page (${surface})`] = (t) => flingRoute(t, surface, 'home');
+	/* FO-248P (R143 medium): a held PageDown mounts the pages it reaches before their frame (pgdnRoute) */
+	tests[`R93 #4 a held PageDown down a fresh Code & Tools never shows a page placeholder (${surface})`] = (t) => pgdnRoute(t, surface);
 	/* FO-245 round 4 (R143 medium 2) and round 5 (R144): guards that main's widget End/Home behaviour is back. Main is
 	   the reference; the roster and picker guards are red on r4 (0f771f44a3), the tab guard on r3 (2df46917b3), whose
 	   listeners overrode the widget; all three are green on main. */
