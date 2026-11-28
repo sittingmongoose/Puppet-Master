@@ -2,9 +2,9 @@
 
 Source: `Plans/agent-rules-context.md`
 
-Source lines: L2347-L2357
+Source lines: L2361-L2371
 
-Source SHA256: `64d60448dac0a023b529346f47bff671430f35b8ba26fe20f72985f21483a43e`
+Source SHA256: `df94c7947ba59736a20e715bc53730b10aad790414d462c5e8308396164b06e9`
 
 ---
 

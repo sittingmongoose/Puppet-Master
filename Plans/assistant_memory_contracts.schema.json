@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/assistant_memory/1.0.0/assistant_memory_contracts.schema.json",
   "title": "Assistant memory static contract schemas",
-  "description": "Assistant memory contract shapes for AMS-052/053 and DL-138. Memory export is read-only and artifact-owner routed; Teach confirm, lock, and revoke are explicit user commands. Reply context records inclusion and independent saved rule-check outcomes. Static schema and fixture consistency only; no runtime, storage, provider, security, visual or performance claim. Teach capture/cancel/route contracts remain separate follow-up work.",
+  "description": "Assistant memory contract shapes for AMS-052/053 and DL-138. Memory export is read-only and artifact-owner routed; Teach capture, confirm, cancel, lock, and revoke are explicit user commands (with capture, confirm, and cancel supporting both Project scope and genuine application scope). Reply context records inclusion and independent saved rule-check outcomes. Static schema and fixture consistency only; no runtime, storage, provider, security, visual or performance claim. Teach route contracts remain separate follow-up work.",
   "oneOf": [
     {
       "$ref": "#/$defs/MemoryExportRequest"
@@ -45,6 +45,18 @@
     },
     {
       "$ref": "#/$defs/MemoryNoteMutationResultV1"
+    },
+    {
+      "$ref": "#/$defs/TeachCaptureRequest"
+    },
+    {
+      "$ref": "#/$defs/TeachCaptureResult"
+    },
+    {
+      "$ref": "#/$defs/TeachCancelRequest"
+    },
+    {
+      "$ref": "#/$defs/TeachCancelResult"
     }
   ],
   "$defs": {
@@ -940,7 +952,7 @@
       ]
     },
     "TeachConfirmRequest": {
-      "description": "User confirms a Teach capture, choosing scope, privacy, lock state and conflict disposition (ACD-477/481, DL-138).",
+      "description": "User confirms a Teach capture, choosing scope, privacy, lock state and conflict disposition (ACD-477/481, DL-138). Supports Project-scoped rules (scope=project, non-empty project_id, .puppet-master/project-rules.md) and genuine application-scoped Rules for every project (scope=user, project_id=null, public_safe=true, required application_scope WorkflowScopeV2 with scope_kind=application and scope_partition=app, app.agent_rules.application_markdown).",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -966,10 +978,24 @@
           "const": "cmd.chat.teach.confirm"
         },
         "project_id": {
-          "$ref": "#/$defs/non_empty_string"
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "thread_id": {
-          "$ref": "#/$defs/non_empty_string"
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "capture_id": {
           "$ref": "#/$defs/non_empty_string"
@@ -1000,6 +1026,19 @@
         },
         "supersedes_memory_id": {
           "$ref": "#/$defs/non_empty_string"
+        },
+        "application_scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "target_rule_source": {
+          "enum": [
+            "app.agent_rules.application_markdown",
+            ".puppet-master/project-rules.md"
+          ]
         }
       },
       "allOf": [
@@ -1042,6 +1081,152 @@
           "else": {
             "properties": {
               "supersedes_memory_id": false
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              }
+            },
+            "required": [
+              "scope"
+            ]
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "application_scope": false
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "scope": {
+                "const": "thread"
+              }
+            },
+            "required": [
+              "scope"
+            ]
+          },
+          "then": {
+            "properties": {
+              "thread_id": {
+                "$ref": "#/$defs/non_empty_string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "project_id": {
+                "const": null
+              }
+            },
+            "required": [
+              "project_id"
+            ]
+          },
+          "then": {
+            "required": [
+              "application_scope"
+            ],
+            "properties": {
+              "scope": {
+                "const": "user"
+              },
+              "application_scope": {
+                "properties": {
+                  "scope_kind": {
+                    "const": "application"
+                  }
+                },
+                "required": [
+                  "scope_kind"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "application_scope"
+            ]
+          },
+          "then": {
+            "properties": {
+              "scope": {
+                "const": "user"
+              },
+              "project_id": {
+                "const": null
+              },
+              "application_scope": {
+                "properties": {
+                  "scope_kind": {
+                    "const": "application"
+                  }
+                },
+                "required": [
+                  "scope_kind"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_rule_source": {
+                "const": "app.agent_rules.application_markdown"
+              }
+            },
+            "required": [
+              "target_rule_source"
+            ]
+          },
+          "then": {
+            "required": [
+              "application_scope"
+            ],
+            "properties": {
+              "scope": {
+                "const": "user"
+              },
+              "project_id": {
+                "const": null
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_rule_source": {
+                "const": ".puppet-master/project-rules.md"
+              }
+            },
+            "required": [
+              "target_rule_source"
+            ]
+          },
+          "then": {
+            "properties": {
+              "scope": {
+                "const": "project"
+              },
+              "project_id": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "application_scope": false
             }
           }
         }
@@ -2189,6 +2374,555 @@
                 "const": true
               }
             }
+          },
+          "then": {
+            "properties": {
+              "receipt_ref": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "error_reason": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "receipt_ref": {
+                "type": "null"
+              },
+              "error_reason": {
+                "$ref": "#/$defs/non_empty_string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "TeachCaptureRequest": {
+      "description": "Opens the Teach sheet in new or correct mode without persisting anything (UCC-172, ACD-477, DL-127/138, Commands_System central record). Supports both Project scope (non-empty project_id) and genuine application scope (project_id=null plus WorkflowScopeV2 with scope_kind=application).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "request_id",
+        "command_id",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "mode",
+        "origin_surface"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.assistant_memory.teach_capture_request.v1"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "command_id": {
+          "const": "cmd.chat.teach.capture"
+        },
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "application_scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "thread_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mode": {
+          "enum": [
+            "new",
+            "correct"
+          ]
+        },
+        "origin_surface": {
+          "enum": [
+            "slash",
+            "natural_language",
+            "message_menu",
+            "wand",
+            "teach_document"
+          ]
+        },
+        "proposed_text": {
+          "type": "string"
+        },
+        "source_message_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "target_memory_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "target_rule_source": {
+          "enum": [
+            "app.agent_rules.application_markdown",
+            ".puppet-master/project-rules.md"
+          ]
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "project"
+              }
+            },
+            "required": [
+              "scope_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "application_scope": false
+            }
+          },
+          "else": {
+            "required": [
+              "application_scope"
+            ],
+            "properties": {
+              "project_id": {
+                "const": null
+              },
+              "application_scope": {
+                "properties": {
+                  "scope_kind": {
+                    "const": "application"
+                  }
+                },
+                "required": [
+                  "scope_kind"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "origin_surface": {
+                "enum": [
+                  "slash",
+                  "natural_language",
+                  "message_menu",
+                  "wand"
+                ]
+              }
+            },
+            "required": [
+              "origin_surface"
+            ]
+          },
+          "then": {
+            "properties": {
+              "thread_id": {
+                "$ref": "#/$defs/non_empty_string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "correct"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "anyOf": [
+              {
+                "required": [
+                  "target_memory_id"
+                ]
+              },
+              {
+                "required": [
+                  "target_rule_source"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_rule_source": {
+                "const": "app.agent_rules.application_markdown"
+              }
+            },
+            "required": [
+              "target_rule_source"
+            ]
+          },
+          "then": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              },
+              "project_id": {
+                "const": null
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_rule_source": {
+                "const": ".puppet-master/project-rules.md"
+              }
+            },
+            "required": [
+              "target_rule_source"
+            ]
+          },
+          "then": {
+            "properties": {
+              "scope_kind": {
+                "const": "project"
+              },
+              "project_id": {
+                "$ref": "#/$defs/non_empty_string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "TeachCaptureResult": {
+      "description": "Typed result of cmd.chat.teach.capture. Capture opens the Teach sheet with draft text and a capture_id or refuses; persisted is always false because nothing writes before confirm.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "request_id",
+        "command_id",
+        "persisted",
+        "status",
+        "capture_id",
+        "receipt_ref",
+        "error_reason"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.assistant_memory.teach_capture_result.v1"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "command_id": {
+          "const": "cmd.chat.teach.capture"
+        },
+        "persisted": {
+          "const": false
+        },
+        "status": {
+          "enum": [
+            "opened",
+            "refused"
+          ]
+        },
+        "capture_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "draft_text": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "base_revision": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "opened"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "capture_id": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "receipt_ref": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "error_reason": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "capture_id": {
+                "type": "null"
+              },
+              "receipt_ref": {
+                "type": "null"
+              },
+              "error_reason": {
+                "$ref": "#/$defs/non_empty_string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "TeachCancelRequest": {
+      "description": "Discards a pending Teach capture draft without persisting anything (UCC-172, ACD-477, Commands_System central record). Supports both Project scope and genuine application scope.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "request_id",
+        "command_id",
+        "scope_kind",
+        "project_id",
+        "thread_id",
+        "capture_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.assistant_memory.teach_cancel_request.v1"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "command_id": {
+          "const": "cmd.chat.teach.cancel"
+        },
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "application_scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "thread_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "capture_id": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "project"
+              }
+            },
+            "required": [
+              "scope_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "application_scope": false
+            }
+          },
+          "else": {
+            "required": [
+              "application_scope"
+            ],
+            "properties": {
+              "project_id": {
+                "const": null
+              },
+              "application_scope": {
+                "properties": {
+                  "scope_kind": {
+                    "const": "application"
+                  }
+                },
+                "required": [
+                  "scope_kind"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "TeachCancelResult": {
+      "description": "Typed result of cmd.chat.teach.cancel. Persisted is always false because cancelling a Teach sheet discards the draft without writing rules or memory.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "request_id",
+        "command_id",
+        "persisted",
+        "status",
+        "capture_id",
+        "receipt_ref",
+        "error_reason"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.assistant_memory.teach_cancel_result.v1"
+        },
+        "request_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "command_id": {
+          "const": "cmd.chat.teach.cancel"
+        },
+        "persisted": {
+          "const": false
+        },
+        "status": {
+          "enum": [
+            "cancelled",
+            "refused"
+          ]
+        },
+        "capture_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "receipt_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "cancelled"
+              }
+            },
+            "required": [
+              "status"
+            ]
           },
           "then": {
             "properties": {
