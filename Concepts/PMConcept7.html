@@ -131686,12 +131686,18 @@ root.addEventListener('scroll', e => { if (e.target.id === 'settings-document') 
    every wheel to the main thread first (the horizontal-strip wheel, passive: false), so this adds no wait; it runs
    after that listener (on window, bubbling) and leaves alone what it handled, zoom, horizontal and line or page
    wheels, wheels the browser no longer lets a page cancel (the rest of a trackpad gesture), a scroller inside the
-   document that can still take the wheel, and a document already at that end. */
+   document that can still take the wheel or contains its overscroll, and a document already at that end. It acts only
+   on one wheel event of that size: a fast spin of a real wheel reaches the page as a small cancelable first tick and
+   larger steps it cannot cancel, which still go to the compositor (R149 H1, open). */
 const O55FS_JUMP = 0.5;   /* of the document's view */
+/* R149 M1: a scroller inside the document with overscroll containment (the AI & Providers and Memory rosters) keeps a
+   wheel at its end too: the browser never hands it on to the document, so neither does this. */
 function o55fsInnerTakes(target, sc, dy) {
   for (let n = target instanceof Element ? target : target && target.parentElement; n && n !== sc; n = n.parentElement) {
     if (n.scrollHeight <= n.clientHeight + 1) continue;
-    if (!/^(auto|scroll|overlay)$/.test(getComputedStyle(n).overflowY)) continue;
+    const cs = getComputedStyle(n);
+    if (!/^(auto|scroll|overlay)$/.test(cs.overflowY)) continue;
+    if ((cs.overscrollBehaviorY || cs.overscrollBehavior || 'auto').split(' ')[0] !== 'auto') return true;
     if (dy > 0 ? n.scrollTop + n.clientHeight < n.scrollHeight - 1 : n.scrollTop > 0) return true;
   }
   return false;
