@@ -276,8 +276,12 @@ class LandingFixture(unittest.TestCase):
               patch.object(land, "cleanup_after_check"), redirect_stdout(output)):
             self.assertEqual(land.check_topic(self.shared, self.branch, "nas1"), 0)
         self.probe.assert_called_once_with("nas1")
-        self.assertNotIn("lock", output.getvalue())
-        self.assertNotIn("busy", output.getvalue())
+        # Exactly the lines a check printed before host locks, with the temporary folder normalised (its name
+        # may contain any word, "lock" and "busy" included).
+        self.assertEqual(output.getvalue().replace(str(self.root), "<root>").splitlines(), [
+            "Receipt: <root>/evidence/scratch/landing-remote/fixture-run/record.json",
+            "Landing checker exit 1 (findings to read). Shard check exit 0. "
+            "Report: <root>/evidence/scratch/landing-remote/fixture-run/landing-check.json"])
         self.assertEqual(land.read_json(self.folder / land.LANDER_FILE)["lander_machine"], socket.gethostname())
 
     def test_check_waits_for_a_busy_host_before_it_pins_and_then_runs(self):
