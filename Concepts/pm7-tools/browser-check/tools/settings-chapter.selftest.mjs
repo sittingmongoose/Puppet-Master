@@ -218,29 +218,38 @@ const modeSpread = (img, rect) => {
 	{
 		const pg = (seq) => pgdnFilm(film(seq), { box, view, key: wheel });
 		const PH = frame(3, { holes: [2, 3] }), ONE = frame(3, { holes: [3] });
-		const rows = [...at(-50, 3, SRC), ...Array.from({ length: 30 }, (_, k) => [k * 16.7, k % 2 ? SRC : DST])];
+		const rows = [...at(-50, 3, SRC), ...Array.from({ length: 70 }, (_, k) => [k * 16.7, k % 2 ? SRC : DST])];
 		assert.deepEqual([pg(rows).bad.length, pg(rows).resolved], [0, true], 'a hold that always shows rows: no placeholder frame, resolved');
 		const edge = rows.map(([dt, png], k) => [dt, k === 12 || k === 13 ? PH : png]);
 		assert.equal(pg(edge).bad.length, 2, 'two frames with the lower half empty (a page placeholder at the edge) are placeholder frames');
 		assert.equal(pg(rows.map(([dt, png], k) => [dt, k === 12 ? BLANK : png])).bad.length, 1, 'a fully blank frame is one');
 		assert.equal(pg(rows.map(([dt, png], k) => [dt, k === 12 ? ONE : png])).bad.length, 0, 'one empty band (a gap between sections) is not');
-		assert.equal(pg(rows.filter((_, k) => k < 10 || k > 16)).resolved, false, 'a capture gap over three medians during the hold is not resolved');
+		const gappy = pg(rows.filter((_, k) => k < 10 || k > 16));
+		assert.deepEqual([gappy.resolved, gappy.maxGap > 3 * gappy.median], [true, true], 'a capture gap during the hold (a mount frame) is logged, not judged: the hold is judged on its captured frames');
+		assert.equal(PGDN.minFrames, 60, 'a hold needs 60 frames after its first key');
+		assert.equal(pg(rows.slice(0, 3 + PGDN.minFrames - 1)).resolved, false, 'under PGDN.minFrames frames after the first key is not judged');
 		assert.equal(pg([...at(-50, 3, SRC)]).after, 0, 'no frame after the first key');
 		assert.equal(PGDN.empty, 2, 'half the bands');
-		const R = { keys: PGDN.keys, focus: 'body', coldAtKey: 7, mounted: 5, views: 12.8, settled: true };
-		const hold = (seqs, r = R) => ({ n: 'x', r, attempts: seqs.map((seq) => ({ px: pg(seq), ...pgdnAttempt(r, pg(seq)) })) });
-		assert.deepEqual(pgdnVerdict([hold([rows]), hold([rows])]).map((x) => x.ok), [true, true], 'two clean resolved holds pass');
-		assert.deepEqual(pgdnVerdict([hold([rows]), hold([edge])]).map((x) => x.ok), [true, false], 'a placeholder frame in any hold fails');
-		const lost = rows.filter((_, k) => k < 10 || k > 16);
-		assert.equal(pgdnAttempt(R, pg(lost)).retry, true, 'an unresolved clean hold is driven again');
+		const R = { keys: PGDN.keys, focus: 'body', coldAtKey: 7, mounted: 5, views: 12.8, settled: true, coldFrames: 0, coldAt: [] };
+		const hold = (seqs, r = R) => ({ n: 'x', r, attempts: seqs.map((seq) => ({ px: pg(seq), r, ...pgdnAttempt(r, pg(seq)) })) });
+		assert.deepEqual(pgdnVerdict([hold([rows]), hold([rows])]).map((x) => x.ok), [true, true, true], 'two clean holds with no unmounted page drawn pass');
+		assert.deepEqual(pgdnVerdict([hold([rows]), hold([edge])]).map((x) => x.ok), [true, true, false], 'a placeholder frame on screen in any hold fails the pixel row');
+		const drawn = { ...R, coldFrames: 2, coldAt: [[812, 40], [829, 22]] };
+		assert.deepEqual(pgdnVerdict([hold([rows]), hold([rows], drawn)]).map((x) => x.ok), [true, false, true], 'an unmounted page in view at an animation frame fails the DOM row');
+		assert.match(pgdnVerdict([hold([rows], drawn)])[1].detail, /2 animation frame\(s\) with an unmounted page in view \[812 ms 40 %; 829 ms 22 %\]/);
+		const lost = rows.slice(0, 3 + 20);
+		assert.equal(pgdnAttempt(R, pg(lost)).retry, true, 'a clean hold with too few frames is driven again');
+		assert.equal(pgdnAttempt(drawn, pg(lost)).retry, false, 'a hold that drew an unmounted page decides at once');
 		assert.equal(pgdnAttempt(R, pg(edge)).retry, false, 'a hold with a placeholder frame decides at once');
-		assert.deepEqual(pgdnVerdict([hold([lost, rows])]).map((x) => x.ok), [true, true], 'an unresolved attempt followed by a resolved clean one passes');
-		assert.deepEqual(pgdnVerdict([hold([lost, lost, lost, lost, lost])]).map((x) => x.ok), [true, false], 'five unresolved attempts are not a pass');
-		assert.deepEqual(pgdnVerdict([hold([lost, edge])]).map((x) => x.ok), [true, false], 'a placeholder frame in a later attempt fails');
-		for (const [o, why] of [[{ keys: 3 }, 'too few trusted PageDowns'], [{ focus: 'button' }, 'focus not on the body'], [{ coldAtKey: 2 }, 'too few unmounted pages ahead'], [{ mounted: 0 }, 'no page mounted during the hold'], [{ views: 2 }, 'too little travel'], [{ settled: false }, 'never settled']])
-			assert.deepEqual(pgdnVerdict([hold([rows], { ...R, ...o })]).map((x) => x.ok), [false, false], `not judgeable: ${why}`);
-		assert.deepEqual(pgdnVerdict([]).map((x) => x.ok), [false, false], 'no hold fails');
-		assert.deepEqual(pgdnVerdict(null).map((x) => x.ok), [false, false], 'no reading fails');
+		assert.deepEqual(pgdnVerdict([hold([lost, rows])]).map((x) => x.ok), [true, true, true], 'a too-short attempt followed by a judged clean one passes');
+		assert.deepEqual(pgdnVerdict([hold([lost, lost, lost, lost, lost])]).map((x) => x.ok), [true, true, false], 'five attempts with too few frames are not a pass');
+		assert.deepEqual(pgdnVerdict([hold([lost, edge])]).map((x) => x.ok), [true, true, false], 'a placeholder frame in a later attempt fails');
+		for (const [o, why] of [[{ keys: 3 }, 'too few trusted PageDowns'], [{ focus: 'button' }, 'focus not on the body'], [{ coldAtKey: 2 }, 'too few unmounted pages ahead'], [{ mounted: 0 }, 'no page mounted during the hold'], [{ views: 2 }, 'too little travel'], [{ settled: false }, 'never settled'], [{ coldFrames: undefined }, 'no DOM reading']])
+			assert.deepEqual(pgdnVerdict([hold([rows], { ...R, ...o })]).map((x) => x.ok), [false, false, false], `not judgeable: ${why}`);
+		assert.deepEqual(pgdnVerdict([hold([edge])], { pixels: false }).map((x) => x.ok), [true, true], 'the sandbox surface: the judgeability and DOM rows only (its screencast bands are logged)');
+		assert.deepEqual(pgdnVerdict([hold([rows], drawn)], { pixels: false }).map((x) => x.ok), [true, false], 'the sandbox surface still fails an unmounted page in view');
+		assert.deepEqual(pgdnVerdict([]).map((x) => x.ok), [false, false, false], 'no hold fails');
+		assert.deepEqual(pgdnVerdict(null).map((x) => x.ok), [false, false, false], 'no reading fails');
 		// live: both surfaces run pgdnRoute; it holds trusted PageDowns after a text click, films with the marker and sinks every row
 		for (const surface of ['normal', 'sandbox']) {
 			const name = `R93 #4 a held PageDown down a fresh Code & Tools never shows a page placeholder (${surface})`;
@@ -250,9 +259,9 @@ const modeSpread = (img, rect) => {
 		const psrc = String(pgdnRoute);
 		for (const [re, msg] of [[/for \(const look of flingLooks\(t\.args\.flingLooks\)\) \{/, 'every fling look'], [/\.domain-link\[data-domain="general"\]'\)\.first\(\)\.click\(\);[^\n]*\n[^\n]*\n[^\n]*\n[^\n]*\n[^\n]*psc-vsync-marker[^\n]*\n\t*await f\.locator\('#pm-settings-root \.domain-link\[data-domain="code"\]'\)\.first\(\)\.click\(\);/, 'each attempt enters Code & Tools fresh from General with the marker running'],
 			[/if\(at\)\{await t\.page\.mouse\.click\(\(off\?off\.x:0\)\+at\.x,\(off\?off\.y:0\)\+at\.y\);/, 'a trusted click on plain text'], [/R\.key=e=>\{if\(e\.key!=='PageDown'\|\|!e\.isTrusted\)return;/, 'only trusted PageDowns are counted'],
-			[/film = await filmFling\(client\);/, 'the screencast'], [/for \(let q = 0; q < PGDN\.keys; q\+\+\) \{ await t\.page\.keyboard\.press\('PageDown'\); await t\.page\.waitForTimeout\(PGDN\.gap\); \}/, 'the hold'],
+			[/film = await filmFling\(client\);/, 'the screencast'], [/const p=Math\.round\(100\*c\/v\.height\);if\(p>=10\)R\.cold\.push\(/, 'the DOM reading of unmounted pages in view at each animation frame'], [/for \(let q = 0; q < PGDN\.keys; q\+\+\) \{ await t\.page\.keyboard\.press\('PageDown'\); await t\.page\.waitForTimeout\(PGDN\.gap\); \}/, 'the hold'],
 			[/const px = pgdnFilm\(frames, \{ box, view: t\.page\.viewportSize\(\), key: r && r\.at \}\);/, 'the frames read on the key\'s clock'], [/if \(!a\.retry\) break;/, 'the retry'],
-			[/for \(const row of pgdnVerdict\(holds\)\) await t\.check\(`\$\{surface\}: \$\{row\.name\}`,row\.ok,row\.detail\);/, 'the live sink records each row']])
+			[/const pixels = surface === 'normal';/, 'the pixel row on the normal surface'], [/for \(const row of pgdnVerdict\(holds, \{ pixels \}\)\) await t\.check\(`\$\{surface\}: \$\{row\.name\}`,row\.ok,row\.detail\);/, 'the live sink records each row']])
 			assert.ok(live(psrc, re), `the held PageDown route: ${msg}`);
 		assert.ok(PGDN.keys >= 10 && PGDN.gap <= 80 && PGDN.holds >= 2 && PGDN.minCold >= 3, 'a held key (10+ presses at most 80 ms apart), 2+ holds per look, 3+ unmounted pages ahead');
 	}
@@ -589,8 +598,8 @@ const modeSpread = (img, rect) => {
 	// End and Home are named in two places only: main's fill set and the FO-248P note
 	assert.equal((code.match(/['"`]End['"`]/g) || []).length, 3, 'End is named in main\'s fill set and twice in the note (the key test and the edge)');
 	assert.equal((code.match(/['"`]Home['"`]/g) || []).length, 2, 'Home is named in main\'s fill set and in the note');
-	// main's capture listener still only fills; FO-248P skips that fill while pages are unmounted (the key's frame was 190 ms longer)
-	assert.match(code, /const O55FS_KEYS = new Set\(\['End', 'Home'\]\);\nroot\.addEventListener\('keydown', e => \{\n  if \(!o55fs\.pending\.size\) return;\n  const sc = root\.querySelector\('#settings-document'\);\n  if \(O55FS_KEYS\.has\(e\.key\) && sc && \(e\.target === sc \|\| sc\.contains\(e\.target\)\) && !\(e\.target\.matches && e\.target\.matches\('input, textarea, select, \[contenteditable=""\], \[contenteditable="true"\]'\)\) && !sc\.querySelector\('\[data-continuous-workspace-body\]\[data-workspace-mounted="false"\]'\)\) o55fsFillAll\(\);\n\}, true\);/, 'main\'s End/Home listener only fills the pending rows, and not while pages are unmounted');
+	// main's capture listener only fills, unchanged (FO-248P: skipping it while pages were unmounted left General's Home 104 px short)
+	assert.match(code, /const O55FS_KEYS = new Set\(\['End', 'Home'\]\);\nroot\.addEventListener\('keydown', e => \{\n  if \(!o55fs\.pending\.size\) return;\n  const sc = root\.querySelector\('#settings-document'\);\n  if \(O55FS_KEYS\.has\(e\.key\) && sc && \(e\.target === sc \|\| sc\.contains\(e\.target\)\) && !\(e\.target\.matches && e\.target\.matches\('input, textarea, select, \[contenteditable=""\], \[contenteditable="true"\]'\)\)\) o55fsFillAll\(\);\n\}, true\);/, 'main\'s End/Home listener only fills the pending rows, unchanged');
 	assert.equal((code.match(/O55FS_KEYS/g) || []).length, 2, 'the fill set is used by that listener only');
 	for (const gone of ['o55fsMountEnd', 'o55fsEdgeKeyOwner', 'O55FS_OWN_KEYS', 'o55fsDownInDoc'])
 		assert.equal(code.includes(gone), false, `${gone} (rounds 3-4's End/Home jump) is gone`);
@@ -605,10 +614,14 @@ const modeSpread = (img, rect) => {
 	assert.match(tailOf, /^, \{ passive: true \}\);/, 'the note is passive and in the bubble phase (no capture)');
 	assert.match(note, /const edge = \(e\.key === 'End' \|\| e\.key === 'Home'\) && !e\.shiftKey;\n  if \(\(!step && !edge\) \|\| e\.defaultPrevented \|\| e\.altKey \|\| e\.metaKey\) return;/, 'End / Home (Ctrl too, never Shift: a selection) or a step key, and never a key a widget took (defaultPrevented); any other key returns first');
 	assert.match(note, /if \(t && t\.nodeType === 1 && \(t\.isContentEditable \|\| t\.closest\(O55FS_EDGE_TEXT\)\)\) return;/, 'never from a text field');
-	assert.match(note, /if \(!o55fsCold\(sc\) \|\| !o55fsInteractive\(\)\) return;/, 'only while the chapter has unmounted pages and Settings takes input');
+	assert.match(note, /const cold = o55fsCold\(sc\);\n  if \(!sc \|\| \(step \? !cold : !\(cold \|\| o55fsUnlaid\(sc\)\)\) \|\| !o55fsInteractive\(\)\) return;/, 'End / Home only while the chapter has unmounted pages or sections never laid out, a step key only while pages are unmounted, and only while Settings takes input');
 	assert.ok(note.indexOf('if ((!step && !edge)') < note.indexOf('O55FS_EDGE_TEXT') && note.indexOf('O55FS_EDGE_TEXT') < note.indexOf('o55fsInteractive()'), 'the key test, then the text field, then the style read');
+	// never laid out: a section content-visibility skipped since it was drawn and has not laid out once (nor shown, FO-245)
+	assert.match(code, /if \(e\.skipped\) \{ o55fsSkipped\.add\(s\); if \(!o55fsLaid\.has\(s\)\) o55fsUnseen\.add\(s\); \}\n  else \{ o55fsSkipped\.delete\(s\); o55fsLaid\.add\(s\); o55fsUnseen\.delete\(s\); \}/, 'a section joins the never-laid-out set when skipped before any layout, and leaves it at its first layout');
+	assert.match(code, /s\.style\.contentVisibility = 'visible'; o55fsSkipped\.delete\(s\); o55fsLaid\.add\(s\); o55fsUnseen\.delete\(s\); shown\.push\(s\);/, 'a skipped section shown before its frame (FO-245) is laid out');
+	assert.match(code, /const o55fsUnlaid = sc => \{\n  for \(const s of o55fsUnseen\) \{\n    if \(!s\.isConnected\) \{ o55fsUnseen\.delete\(s\); continue; \}\n    if \(sc\.contains\(s\) && !s\.closest\('details:not\(\[open\]\)'\)\) return true;/, 'only a connected section of the document outside a closed disclosure counts');
 	assert.match(note, /const k = o55fsEdge = \{ at: performance\.now\(\), end: e\.key === 'End', top: sc\.scrollTop \};/, 'the note keeps the time, the edge and the position at the key');
-	assert.match(note, /const watch = \(\) => \{ if \(o55fsEdge !== k\) return; const s = root\.querySelector\('#settings-document'\); if \(s\) o55fsEdgeScroll\(s\); if \(o55fsEdge === k\) requestAnimationFrame\(watch\); \};/, 'the note is read in each frame\'s rAF while it lives');
+	assert.match(note, /const watch = \(\) => \{ if \(o55fsEdge !== k\) return; const s = root\.querySelector\('#settings-document'\); if \(s\) o55fsEdgeScroll\(s\); if \(o55fsEdge === k\) requestAnimationFrame\(watch\); \};\n  requestAnimationFrame\(watch\);\n\}$/, 'the note is read in each frame\'s rAF while it lives, from the key\'s next frame');
 	for (const tx of ['input:not([type="checkbox"])', 'textarea', 'select', '[contenteditable]:not([contenteditable="false"])', '[role="textbox"]', '[role="searchbox"]'])
 		assert.ok(code.includes(`const O55FS_EDGE_TEXT = '`) && code.slice(code.indexOf('const O55FS_EDGE_TEXT')).split('\n')[0].includes(tx), `a text field is not the document's: ${tx}`);
 	// the take-over: only the document's own move toward the noted edge, within O55FS_EDGE_MS
@@ -620,6 +633,7 @@ const modeSpread = (img, rect) => {
 	assert.ok(edgeMs >= 200 && edgeMs <= 1000, `O55FS_EDGE_MS covers a slow first frame and no more than a second (${edgeMs})`);
 	assert.match(fn('o55fsEdgeLand'), /o55fsMountEdge\(sc, end\);\n  sc\.scrollTo\(\{ top: end \? sc\.scrollHeight : 0, behavior: 'instant' \}\);\s*o55fsFillNear\(sc\); o55fsShowNear\(sc\);/, 'the landing mounts the edge pages, lands at that edge and shows its rows before the frame');
 	assert.match(take, /const held = o55fsEdgeHeld = \{ end: k\.end, n: 3 \};/, 'the landing is kept for three frames (the arrival\'s own restore)');
+	assert.match(take, /if \(--held\.n > 0\) requestAnimationFrame\(keep\); else o55fsEdgeHeld = null;\n  \};\n  requestAnimationFrame\(keep\);\n  return true;\n\}$/, 'the hold starts in the landing\'s next frame and runs its three frames');
 	assert.match(take, /if \(s && Math\.abs\(s\.scrollTop - \(held\.end \? s\.scrollHeight - s\.clientHeight : 0\)\) > 2\) o55fsEdgeLand\(s, held\.end\);/, 'a write that moves the landed page off its edge is undone');
 	assert.equal((code.match(/o55fsEdgeLand\(/g) || []).length, 3, 'o55fsEdgeLand: defined, the take-over and the hold');
 	assert.equal((code.match(/o55fsEdgeScroll\(/g) || []).length, 3, 'o55fsEdgeScroll: defined, the scroll handler and the rAF read');
