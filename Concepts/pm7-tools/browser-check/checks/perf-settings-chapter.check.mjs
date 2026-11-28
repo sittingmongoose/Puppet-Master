@@ -454,7 +454,8 @@ export async function captureCpuDetail(host, readSlots = readBrowserSlots) {
 	try {
 		const { rows } = await readSlots(host);
 		const state = rows?.find(({ machine }) => machine.name === host || machine.fleet === host)?.state;
-		const sample = [state?.fleet_queue?.cpu, state?.cpu].find((cpu) => Number.isFinite(cpu?.busy_pct));
+		if (!state || state.snapshot) return '';
+		const sample = [state.fleet_queue?.cpu, state.cpu].find((cpu) => Number.isFinite(cpu?.busy_pct));
 		if (!sample) return '';
 		const sampledFor = sample.covered_s ?? sample.sample_s;
 		return `browser host ${host} CPU ${sample.busy_pct}% busy${Number.isFinite(sampledFor) ? ` over ${sampledFor} s` : ''} (sampled after retries)`;

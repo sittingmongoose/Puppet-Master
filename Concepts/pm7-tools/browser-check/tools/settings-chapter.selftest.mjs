@@ -318,6 +318,8 @@ const modeSpread = (img, rect) => {
 		assert.equal(await captureCpuDetail('gtx1070ti', async () => ({ rows: [{ machine, state: { cpu: { busy_pct: 0, sample_s: 3 } } }] })),
 			'browser host gtx1070ti CPU 0% busy over 3 s (sampled after retries)');
 		assert.equal(await captureCpuDetail('vm', async () => ({ rows: [{ machine, state: { cpu: { busy_pct: 99 } } }] })), '', 'another host cannot supply a sample');
+		assert.equal(await captureCpuDetail('gtx1070ti', async () => ({ rows: [{ machine, state: { snapshot: true, cpu: { busy_pct: 98 } } }] })),
+			'', 'a cached slot snapshot cannot supply a new measurement');
 		assert.equal(await captureCpuDetail('mac', async () => { throw new Error('slots unavailable'); }), '', 'a missing sample leaves the gap verdict intact');
 	}
 	for (const [seqs, driven, why] of [[[blank, good, good], [1], 'a resolved bad first attempt'], [[lost, blank, good], [1, 2], 'a resolved bad second attempt'], [[lostBlank, good, good], [1], 'an unresolved attempt with bad frames'], [[lost, lostBlank, good], [1, 2], 'a later unresolved attempt with bad frames'], [[late, good, good], [1], 'a later blank after a good first destination']]) {
