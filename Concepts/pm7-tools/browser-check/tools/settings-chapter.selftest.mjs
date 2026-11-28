@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
 import { runInNewContext } from 'node:vm';
 import { readdirSync, readFileSync } from 'node:fs';
-import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT, press, selectAllModifier, flingScrollGate, filmFling, flingFilm, FLING_FILM, FLING_RETRY, flingAttempt, retryFling, flingRetryVerdict, captureCpuDetail, FLING_ROUTES, FLING_LOOKS, flingLooks, flingRoute, runFlingLook, filmBands, tabEndVerdict, tabEndRoute, TAB_END_TRAVEL, rosterEndVerdict, rosterEndRoute, wpkHomeVerdict, wpkHomeRoute, GUARD_TRAVEL, ROSTER_MIN_ROOM, WPK_MIN_TOP, endLandVerdict, endLandRoute, endLandKey, END_GAP, END_REPS, END_MIN_TRAVEL, END_SETTLE, END_CAP, PGDN, pgdnFilm, pgdnAttempt, pgdnVerdict, pgdnRoute, armFling, tests } from '../checks/perf-settings-chapter.check.mjs';
+import { firstScreenVerdict, restoreJudgeable, flingVerdict, hoverVerdict, arrivalVerdict, FILL_WAIT, press, selectAllModifier, flingScrollGate, filmFling, flingFilm, FLING_FILM, FLING_RETRY, flingAttempt, retryFling, flingRetryVerdict, captureCpuDetail, FLING_ROUTES, FLING_LOOKS, flingLooks, flingRoute, runFlingLook, filmBands, tabEndVerdict, tabEndRoute, TAB_END_TRAVEL, rosterEndVerdict, rosterEndRoute, wpkHomeVerdict, wpkHomeRoute, GUARD_TRAVEL, ROSTER_MIN_ROOM, WPK_MIN_TOP, endLandVerdict, endLandRoute, endLandKey, END_GAP, END_REPS, END_MIN_TRAVEL, END_SETTLE, END_CAP, PGDN, pgdnFilm, pgdnAttempt, pgdnVerdict, pgdnRoute, armFling, filteredRosterVerdict, filteredRosterRoute, focusedEndVerdict, focusedEndRoute, A152_FOCUSED, reverseVerdict, reverseAfterEndRoute, A152_REVERSE, lifetimeVerdict, chapterLifetimeRoute, A152_LIFETIME, tests } from '../checks/perf-settings-chapter.check.mjs';
 import { encodePng, decodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
 const uncomment = (src) => src.replace(/"(?:\\[\s\S]|[^"\\])*"|'(?:\\[\s\S]|[^'\\])*'|`(?:\\[\s\S]|[^`\\])*`|\/\*[\s\S]*?\*\/|\/\/[^\n]*/g,
 	(token) => token.startsWith('/') ? token.replace(/[^\n]/g, ' ') : token);
@@ -778,7 +778,8 @@ const modeSpread = (img, rect) => {
 	const block = (at) => { let i = code.indexOf('{', at), depth = 0, j = i; for (; j < code.length; j++) { if (code[j] === '{') depth++; else if (code[j] === '}' && --depth === 0) break; } return code.slice(at, j + 1); };
 	const fn = (name) => { const at = code.indexOf(`function ${name}(`); assert.ok(at >= 0, `${name} is defined`); return block(at); };
 	// End and Home are named in two places only: main's fill set and the FO-248P note
-	assert.equal((code.match(/['"`]End['"`]/g) || []).length, 3, 'End is named in main\'s fill set and twice in the note (the key test and the edge)');
+	// INTEG4 fix 1 (A152 M2): a third time in the note, for the focused inner scroller's direction
+	assert.equal((code.match(/['"`]End['"`]/g) || []).length, 4, 'End is named in main\'s fill set and three times in the note (the key test, the owner test and the edge)');
 	assert.equal((code.match(/['"`]Home['"`]/g) || []).length, 2, 'Home is named in main\'s fill set and in the note');
 	// main's capture listener only fills, unchanged (FO-248P: skipping it while pages were unmounted left General's Home 104 px short)
 	assert.match(code, /const O55FS_KEYS = new Set\(\['End', 'Home'\]\);\nroot\.addEventListener\('keydown', e => \{\n  if \(!o55fs\.pending\.size\) return;\n  const sc = root\.querySelector\('#settings-document'\);\n  if \(O55FS_KEYS\.has\(e\.key\) && sc && \(e\.target === sc \|\| sc\.contains\(e\.target\)\) && !\(e\.target\.matches && e\.target\.matches\('input, textarea, select, \[contenteditable=""\], \[contenteditable="true"\]'\)\)\) o55fsFillAll\(\);\n\}, true\);/, 'main\'s End/Home listener only fills the pending rows, unchanged');
@@ -796,6 +797,12 @@ const modeSpread = (img, rect) => {
 	assert.match(tailOf, /^, \{ passive: true \}\);/, 'the note is passive and in the bubble phase (no capture)');
 	assert.match(note, /const edge = \(e\.key === 'End' \|\| e\.key === 'Home'\) && !e\.shiftKey;\n  if \(\(!step && !edge\) \|\| e\.defaultPrevented \|\| e\.altKey \|\| e\.metaKey\) return;/, 'End / Home (Ctrl too, never Shift: a selection) or a step key, and never a key a widget took (defaultPrevented); any other key returns first');
 	assert.match(note, /if \(t && t\.nodeType === 1 && \(t\.isContentEditable \|\| t\.closest\(O55FS_EDGE_TEXT\)\)\) return;/, 'never from a text field');
+	// INTEG4 fix 1 (A152 M2): a key whose focus is in a scroller of the document that takes it (a focused provider row of
+	// the roster) gets no note, so a pending wheel's move of the document is never landed as that key's
+	assert.match(note, /O55FS_STEP_KEYS\[e\.key\]; return; \}\n\s*if \(t instanceof Element && sc\.contains\(t\) && o55fsInnerTakes\(t, sc, e\.key === 'End' \? 1 : -1\)\) return;\n\s*const k = o55fsEdge = /, 'the focused inner scroller owns End / Home: tested after the step keys, before the note is made');
+	// INTEG4 fix 1 (A152 M4): every render lets go of disconnected sections in the never-laid-out set, as in the skipped set
+	assert.match(code, /for \(const s of o55fsSkipped\) if \(!s\.isConnected\) o55fsSkipped\.delete\(s\);\s*for \(const s of o55fsUnseen\) if \(!s\.isConnected\) o55fsUnseen\.delete\(s\);\n  return r;\n\};/, 'renderApp prunes o55fsUnseen of a replaced chapter\'s sections (A152 M4: 47 retired chapter roots held)');
+	assert.equal((code.match(/new (?:Set|Map)\(/g) || []).length, 5, 'five strong collections: main\'s End/Home key set, and four that can hold sections (pending, skipped, unseen, fresh), each pruned or reset; a new one is reviewed here');
 	assert.match(note, /const cold = o55fsCold\(sc\);\n  if \(!sc \|\| \(step \? !cold : !\(cold \|\| o55fsUnlaid\(sc\)\)\) \|\| !o55fsInteractive\(\)\) return;/, 'End / Home only while the chapter has unmounted pages or sections never laid out, a step key only while pages are unmounted, and only while Settings takes input');
 	assert.ok(note.indexOf('if ((!step && !edge)') < note.indexOf('O55FS_EDGE_TEXT') && note.indexOf('O55FS_EDGE_TEXT') < note.indexOf('o55fsInteractive()'), 'the key test, then the text field, then the style read');
 	// never laid out: a section content-visibility skipped since it was drawn and has not laid out once (nor shown, FO-245)
@@ -813,7 +820,19 @@ const modeSpread = (img, rect) => {
 	assert.match(take, /o55fsEdge = null;\s*o55fsEdgeLand\(sc, k\.end\);/, 'it is taken once');
 	const edgeMs = Number((code.match(/\nconst O55FS_EDGE_MS = (\d+);\n/) || [])[1]);
 	assert.ok(edgeMs >= 200 && edgeMs <= 1000, `O55FS_EDGE_MS covers a slow first frame and no more than a second (${edgeMs})`);
-	assert.match(fn('o55fsEdgeLand'), /o55fsMountEdge\(sc, end\);\n  sc\.scrollTo\(\{ top: end \? sc\.scrollHeight : 0, behavior: 'instant' \}\);\s*o55fsFillNear\(sc\); o55fsShowNear\(sc\);/, 'the landing mounts the edge pages, lands at that edge and shows its rows before the frame');
+	// INTEG4 fix 1 (A152 M3): the landing's last pixel is a programmatic smooth scroll, which replaces Chrome's own keyboard
+	// End/Home animation (that animation dragged a wheel up made as the bottom appeared back to the bottom); newer input
+	// ends it where the page is, and four frames without input put the page exactly at the edge
+	const land = fn('o55fsEdgeLand');
+	assert.match(land, /o55fsMountEdge\(sc, end\);\s*const edge = end \? sc\.scrollHeight - sc\.clientHeight : 0;\n  sc\.scrollTo\(\{ top: end \? edge - 1 : 1, behavior: 'instant' \}\);\n  sc\.scrollTo\(\{ top: edge, behavior: 'smooth' \}\);\n/, 'the landing mounts the edge pages, lands one pixel short at once, and takes the last pixel as the page\'s own smooth scroll');
+	assert.match(land, /const step = o55fsLandStep = \{ sc, end, n: 0 \};\n  const settle = \(\) => \{\n    if \(o55fsLandStep !== step\) return;\n    if \(\+\+step\.n < 4\) \{ requestAnimationFrame\(settle\); return; \}\n    o55fsLandStep = null;\n    sc\.scrollTo\(\{ top: end \? sc\.scrollHeight - sc\.clientHeight : 0, behavior: 'instant' \}\);\n  \};\n  requestAnimationFrame\(settle\);\s*o55fsFillNear\(sc\); o55fsShowNear\(sc\);/, 'four frames later, with no newer input, the page is exactly at the edge; the rows are shown before the frame');
+	const landInput = code.slice(code.indexOf('const o55fsLandInput = e => {'), code.indexOf('\n};\n', code.indexOf('const o55fsLandInput = e => {')) + 3);
+	assert.match(landInput, /if \(!e\.isTrusted \|\| \(!st && !held\)\) return;\n  o55fsLandStep = null;/, 'only trusted input, and only while a landing settles or is held');
+	assert.match(landInput, /const edge = \(held \? held\.end : st\.end\) \? sc\.scrollHeight - sc\.clientHeight : 0;\n  sc\.scrollTo\(\{ top: held && Math\.abs\(sc\.scrollTop - edge\) > 2 \? edge : sc\.scrollTop, behavior: 'instant' \}\);/, 'the input ends the smooth pixel where the page is, and during the hold starts from the landed edge (the arrival restore had moved it)');
+	assert.equal(/preventDefault/.test(landInput), false, 'it never cancels the input');
+	for (const ev of ['wheel', 'pointerdown', 'touchstart'])
+		assert.ok(code.includes(`window.addEventListener('${ev}', o55fsLandInput, { capture: true, passive: true });`), `newer input wins: ${ev} (capture, passive: it never cancels)`);
+	assert.match(note, /^window\.addEventListener\('keydown', e => \{\n  o55fsEdge = null; o55fsEdgeHeld = null; o55fsStepAt = -Infinity; o55fsLandStep = null;/, 'any key drops a landing\'s settle to the edge (it never scrolls from the key)');
 	assert.match(take, /const held = o55fsEdgeHeld = \{ end: k\.end, n: 3 \};/, 'the landing is kept for three frames (the arrival\'s own restore)');
 	assert.match(take, /if \(--held\.n > 0\) requestAnimationFrame\(keep\); else o55fsEdgeHeld = null;\n  \};\n  requestAnimationFrame\(keep\);\n  return true;\n\}$/, 'the hold starts in the landing\'s next frame and runs its three frames');
 	assert.match(take, /if \(s && Math\.abs\(s\.scrollTop - \(held\.end \? s\.scrollHeight - s\.clientHeight : 0\)\) > 2\) o55fsEdgeLand\(s, held\.end\);/, 'a write that moves the landed page off its edge is undone');
@@ -840,7 +859,8 @@ const modeSpread = (img, rect) => {
 	const code = prod.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
 	// the gate: one passive wheel listener writes the time, the scroll handler is the only caller of the mount
 	const wheels = [...code.matchAll(/addEventListener\(\s*['"`]wheel['"`]/g)];
-	assert.equal(wheels.length, 3, 'three wheel listeners in the product file: the gate, FO-248P\'s note reset (both passive, capturing on root) and FO-250\'s long-wheel jump (window, not passive)');
+	assert.equal(wheels.length, 4, 'four wheel listeners in the product file: the gate, FO-248P\'s note reset (both passive, capturing on root), FO-250\'s long-wheel jump (window, not passive) and A152 M3\'s newer-input listener');
+	assert.equal((code.match(/addEventListener\(\s*['"`]wheel['"`], o55fsLandInput, \{ capture: true, passive: true \}\)/g) || []).length, 1, 'and A152 M3\'s passive newer-input listener, which never cancels');
 	assert.equal(wheels.filter((m) => code.slice(m.index - 5, m.index) === 'root.').length, 2, 'two of them are on root (the gate and the note reset)');
 	assert.match(code, /\nroot\.addEventListener\('wheel', \(\) => \{ o55fsWheelAt = performance\.now\(\); \}, \{ capture: true, passive: true \}\);\n/, 'the wheel listener is passive, captures on root and only notes the time');
 	// FO-250: the one cancelling listener is the long-wheel jump (below); nothing else in the file cancels a default
@@ -937,6 +957,12 @@ const modeSpread = (img, rect) => {
 	{ const r = inner({ overscrollBehaviorY: 'auto' }, 0); assert.equal(r.e.defaultPrevented, false, 'an inner scroller that can still move takes the wheel'); }
 	{ const r = inner({ overscrollBehaviorY: 'auto' }, 500); assert.equal(r.e.defaultPrevented, true, 'an uncontained inner scroller at its end hands the wheel on: the document jumps'); }
 	{ const r = inner({ overflowY: 'visible', overscrollBehaviorY: 'contain' }, 0); assert.equal(r.e.defaultPrevented, true, 'a box that does not scroll is not a scroller'); }
+	// INTEG4 fix 1 (A152 M1): containment before range. A roster filtered to one row or none has no range left; main keeps
+	// the document still over it, so the contained box keeps the wheel; an uncontained box with no range is not a scroller
+	{ const flat = (style) => { const { sc, wheel } = make(); const box = new Element({ parentElement: sc, scrollHeight: 92, clientHeight: 92, scrollTop: 0, style: { overflowY: 'auto', ...style } }); return { sc, e: wheel(new Element({ parentElement: box }), 900) }; };
+		const kept = flat({ overscrollBehaviorY: 'contain' }); assert.equal(kept.e.defaultPrevented, false, 'a contained roster with no range (filtered to one row) keeps the wheel (A152 M1)'); assert.equal(kept.sc.jumps.length, 0, 'the document stays still');
+		const empty = flat({ overscrollBehaviorY: 'contain' }); assert.equal(empty.e.defaultPrevented, false, 'and filtered to none');
+		const open = flat({ overscrollBehaviorY: 'auto' }); assert.equal(open.e.defaultPrevented, true, 'an uncontained box with no range hands the wheel on: the document jumps'); }
 	console.log('PASS FO-250 long-wheel jump run on stand-ins: notches left alone, one instant jump over rows, contained or movable inner scrollers keep the wheel');
 }
 {
@@ -1045,4 +1071,61 @@ const modeSpread = (img, rect) => {
 	assert.equal(selectAllModifier(''), 'Control', 'an unread platform keeps the Control default');
 	assert.equal(selectAllModifier(undefined), 'Control');
 	console.log('PASS Select All modifier: Mac browser platform takes Meta even from a Linux driver, Linux/Windows take Control, an unread platform keeps Control');
+}
+
+/* INTEG4 fix 1 (A152 M1-M4): the four rows from A152's real input sequences, red on 90286cf58f (page a61bcce0). Their
+   verdicts are judged on readings shaped as the live routes record them; the routes are live tests on both surfaces. */
+{
+	// M1: filtered roster
+	const fr = (o) => ({ filter: 'Claude', wantRows: 1, before: 400, after: 400, view: 912, room: 9000, range: 0, css: 'contain', rows: 1, wheel: { trusted: true, inside: true, cancelable: true, dy: 912 }, ...o });
+	assert.deepEqual(filteredRosterVerdict(fr({})).map((x) => x.ok), [true, true], 'a still document under a one-row contained roster passes');
+	assert.deepEqual(filteredRosterVerdict(fr({ after: 1312 })).map((x) => x.ok), [true, false], 'A152 M1: the document moved 912 px under the filtered roster fails');
+	assert.equal(filteredRosterVerdict(fr({ wantRows: 0, rows: 0 }))[0].ok, true, 'the empty filter is judged the same way');
+	for (const [o, why] of [[{ range: 200 }, 'a roster with range left is not this case'], [{ css: 'auto' }, 'an uncontained list is not this case'], [{ rows: 2 }, 'the filter must leave the wanted rows'], [{ room: 100 }, 'the document needs a view of room'], [{ wheel: { trusted: true, inside: false, dy: 912 } }, 'the wheel must go over the roster'], [{ wheel: null }, 'no wheel seen']])
+		assert.equal(filteredRosterVerdict(fr(o))[1].ok, false, `not judgeable: ${why}`);
+	// M2: focused roster, pending wheel, End
+	const fe = (o) => ({ delay: 0, parent: 0, room: 9000, child: 0, range: 487, cold: 7, wheel: { at: 100, inDoc: true, inList: false }, key: { at: 120, focusInList: true }, docEnd: 120, listEnd: 487, ...o });
+	assert.deepEqual(focusedEndVerdict(A152_FOCUSED.delays.map((delay) => fe({ delay }))).map((x) => x.ok), [true, true], 'the document moves the notch and the roster takes End: pass');
+	assert.equal(focusedEndVerdict([fe({}), fe({ docEnd: 5235, listEnd: 487 })])[1].ok, false, 'A152 M2: the document landed 5,235 px down fails');
+	assert.equal(focusedEndVerdict([fe({ listEnd: 0 })])[1].ok, false, 'End that never reached the roster fails');
+	assert.equal(focusedEndVerdict([fe({ key: { at: 120, focusInList: false } })])[0].ok, false, 'focus must be in the roster at the key');
+	assert.equal(focusedEndVerdict([fe({ wheel: { at: 100, inDoc: true, inList: true } })])[0].ok, false, 'the wheel must be over the document outside the roster');
+	assert.equal(focusedEndVerdict([fe({ cold: 0 })])[0].ok, false, 'unmounted pages are needed at the key');
+	assert.deepEqual(focusedEndVerdict([]).map((x) => x.ok), [false, false], 'no trial cannot pass');
+	assert.ok(A152_FOCUSED.delays.length >= 6 && A152_FOCUSED.delays.filter((d) => d === 0).length >= 3, 'six trials, the immediate ones repeated (A152: End 15-29 ms after the wheel event)');
+	// M3: wheel up as End reaches the bottom
+	const rv = (o) => ({ kind: 'large', delay: 0, dist: 730, arrived: true, view: 912, key: { focus: 'BODY', cold: 7, top: 0 }, wheel: { top: 19178, room: 1, dy: -730, doc: true, focus: 'BODY' }, finalTop: 18448, finalRoom: 731, ...o });
+	assert.deepEqual(reverseVerdict([rv({}), rv({ kind: 'notch', dist: 120, wheel: { top: 19178, room: 1, dy: -120, doc: true }, finalTop: 19058, finalRoom: 121 })]).map((x) => x.ok), [true, true], 'a large wheel and a notch that hold pass');
+	assert.equal(reverseVerdict([rv({ finalTop: 19179, finalRoom: 0 })])[1].ok, false, 'A152 M3: snapped back to the bottom fails');
+	assert.equal(reverseVerdict([rv({ kind: 'notch', dist: 120, wheel: { top: 19178, room: 1, dy: -120, doc: true }, finalTop: 19179, finalRoom: 0 })])[1].ok, false, 'a notch that snapped back fails');
+	assert.equal(reverseVerdict([rv({ arrived: false })])[0].ok, false, 'End must have reached the bottom before the wheel');
+	assert.equal(reverseVerdict([rv({ wheel: { top: 2000, room: 17000, dy: -730, doc: true } })])[0].ok, false, 'the wheel must come at the bottom');
+	assert.equal(reverseVerdict([rv({ key: { focus: 'BUTTON', cold: 7 } })])[0].ok, false, 'End from body focus (the text click)');
+	assert.equal(reverseVerdict([rv({ key: { focus: 'BODY', cold: 0 } })])[0].ok, false, 'over unmounted pages');
+	assert.ok(A152_REVERSE.trials.some(([k]) => k === 'notch') && A152_REVERSE.trials.some(([k]) => k === 'large') && A152_REVERSE.notch === 120, 'both a 120 px notch and a view-scale wheel');
+	// M4: chapter lifetime
+	const lt = (o) => ({ gc: true, visits: A152_LIFETIME.visits, current: 1, detached: 0, oldRoots: 0, oldElements: 0, ...o });
+	assert.deepEqual(lifetimeVerdict(lt({})).map((x) => x.ok), [true, true], 'no retained old chapter roots passes');
+	assert.equal(lifetimeVerdict(lt({ oldRoots: 23, detached: 23, oldElements: 46000 }))[1].ok, false, 'A152 M4: 23 retained roots in 24 visits fails');
+	assert.equal(lifetimeVerdict(lt({ oldRoots: A152_LIFETIME.maxRoots + 1 }))[1].ok, false, 'one over the bound fails');
+	assert.equal(lifetimeVerdict(lt({ gc: false }))[0].ok, false, 'no forced collection is not judgeable');
+	assert.equal(lifetimeVerdict(lt({ visits: 3 }))[0].ok, false, 'every visit is needed');
+	assert.ok(A152_LIFETIME.maxRoots <= 2 && A152_LIFETIME.visits >= 24, 'a small bound over at least 24 visits');
+	// live on both surfaces, each through its route
+	for (const surface of ['normal', 'sandbox'])
+		for (const [name, route] of [[`R93 #4 a long wheel over a roster filtered to one row or none leaves the document still (${surface})`, 'filteredRosterRoute'], [`R93 #4 End on a focused roster row during a document wheel scrolls the roster, not the document (${surface})`, 'focusedEndRoute'], [`R93 #4 a wheel up as End reaches the bottom holds (${surface})`, 'reverseAfterEndRoute'], [`R93 #4 chapter switches release the replaced chapter documents (${surface})`, 'chapterLifetimeRoute']]) {
+			assert.equal(typeof tests[name], 'function', `A152: ${route} is a live test on the ${surface} surface`);
+			assert.ok(live(String(tests[name]), new RegExp(`${route}\\(t, surface\\)`)), `the ${surface} test runs ${route}`);
+		}
+	// the routes record what their verdicts read
+	assert.ok(live(String(filteredRosterRoute), /for \(const row of filteredRosterVerdict\(r\)\) await t\.check\(/), 'the filtered roster route judges with its verdict');
+	assert.ok(live(String(filteredRosterRoute), /for \(const want of \[1, 0\]\)/), 'one row, then none');
+	assert.ok(live(String(focusedEndRoute), /await t\.page\.mouse\.wheel\(0, A152_FOCUSED\.notch\);\n\t*if \(delay\) await t\.page\.waitForTimeout\(delay\);\n\t*await t\.page\.keyboard\.press\('End'\);/), 'the focused route: a trusted wheel, then End after its delay');
+	assert.ok(live(String(focusedEndRoute), /for \(const row of focusedEndVerdict\(runs\)\) await t\.check\(/), 'the focused route judges with its verdict');
+	assert.ok(live(String(reverseAfterEndRoute), /await t\.page\.keyboard\.press\('End'\);\n\t*const arrived = await f\.waitForFunction\(/), 'the reverse route waits for the bottom after End');
+	assert.ok(live(String(reverseAfterEndRoute), /await t\.page\.mouse\.wheel\(0, -dist\);/), 'then a trusted wheel up');
+	assert.ok(live(String(reverseAfterEndRoute), /for \(const row of reverseVerdict\(runs\)\) await t\.check\(/), 'the reverse route judges with its verdict');
+	assert.ok(live(String(chapterLifetimeRoute), /HeapProfiler\.collectGarbage/) && live(String(chapterLifetimeRoute), /new WeakRef\(b\)/), 'the lifetime route holds each body weakly and collects before counting');
+	assert.ok(live(String(chapterLifetimeRoute), /for \(const row of lifetimeVerdict\(r\)\) await t\.check\(/), 'the lifetime route judges with its verdict');
+	console.log('PASS A152 rows: a filtered roster keeps the wheel, a focused roster keeps End during a document wheel, a wheel up as End lands holds, replaced chapters are released; live on both surfaces');
 }

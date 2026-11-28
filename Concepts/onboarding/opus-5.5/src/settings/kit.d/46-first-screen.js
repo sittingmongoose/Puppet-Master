@@ -182,6 +182,9 @@ renderApp = function () {
   if (o55fs.scroller && o55fs.scroller !== root.querySelector('#settings-document')) o55fsReset();
   if (o55fs.pending.size && !o55fs.observer && !o55fs.idleTimer && !o55fs.idleJob) o55fsArm();
   for (const s of o55fsSkipped) if (!s.isConnected) o55fsSkipped.delete(s);   /* a redraw's removed sections (FO-245) */
+  /* INTEG4 fix 1 (A152 M4): the never-laid-out set lets go of a replaced chapter's sections here too; it held every
+     retired chapter document (47 roots, +86 MiB after 48 chapter switches) */
+  for (const s of o55fsUnseen) if (!s.isConnected) o55fsUnseen.delete(s);
   return r;
 };
 
@@ -350,6 +353,24 @@ const o55fsWheeling = () => performance.now() - o55fsWheelAt <= O55FS_WHEEL_MS;
    - the note is dropped by another key, a wheel, a pointer press, a scroll of any other scroller, or O55FS_EDGE_MS
      without the document moving, so nothing but that key's own scroll of the document is taken. */
 const O55FS_EDGE_MS = 600;
+/* A152 M3: newer input wins over a landing's last smooth pixel (o55fsEdgeLand): a wheel, pointer press or touch ends it
+   where the page is now, and any key (the note below) drops its settle to the edge. Such input during the landing's
+   hold starts from the landed edge: the arrival's restore (PLACE.correct) writes the page back to the top a few ms after
+   the landing, and a wheel handled before the hold's next re-land otherwise started there (T3 sandbox, RTX 3090: 3 of 6
+   immediate notches left the page at the top, where main ends the End less the wheel). */
+let o55fsLandStep = null;   /* { sc, end, n }: a landing's smooth last pixel still running */
+const o55fsLandInput = e => {
+  const st = o55fsLandStep, held = o55fsEdgeHeld;
+  if (!e.isTrusted || (!st && !held)) return;
+  o55fsLandStep = null;
+  const sc = root.querySelector('#settings-document');
+  if (!sc) return;
+  const edge = (held ? held.end : st.end) ? sc.scrollHeight - sc.clientHeight : 0;
+  sc.scrollTo({ top: held && Math.abs(sc.scrollTop - edge) > 2 ? edge : sc.scrollTop, behavior: 'instant' });
+};
+window.addEventListener('wheel', o55fsLandInput, { capture: true, passive: true });
+window.addEventListener('pointerdown', o55fsLandInput, { capture: true, passive: true });
+window.addEventListener('touchstart', o55fsLandInput, { capture: true, passive: true });
 const O55FS_EDGE_TEXT = 'input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="color"]):not([type="file"]):not([type="image"]):not([type="range"]), textarea, select, [contenteditable]:not([contenteditable="false"]), [role="textbox"], [role="searchbox"]';
 let o55fsEdge = null;       /* { at, end, top }: the last End / Home left to the browser */
 let o55fsEdgeHeld = null;   /* { end, n }: a landing kept for n more frames */
@@ -371,7 +392,7 @@ const o55fsUnlaid = sc => {
   return false;
 };
 window.addEventListener('keydown', e => {
-  o55fsEdge = null; o55fsEdgeHeld = null; o55fsStepAt = -Infinity;
+  o55fsEdge = null; o55fsEdgeHeld = null; o55fsStepAt = -Infinity; o55fsLandStep = null;
   /* cheapest tests first: any other key (typing) returns before a style read */
   const step = Object.prototype.hasOwnProperty.call(O55FS_STEP_KEYS, e.key) && !e.ctrlKey;
   const edge = (e.key === 'End' || e.key === 'Home') && !e.shiftKey;
@@ -383,6 +404,9 @@ window.addEventListener('keydown', e => {
   const cold = o55fsCold(sc);
   if (!sc || (step ? !cold : !(cold || o55fsUnlaid(sc))) || !o55fsInteractive()) return;
   if (step) { o55fsStepAt = performance.now(); o55fsStepDir = e.key === ' ' && e.shiftKey ? -1 : O55FS_STEP_KEYS[e.key]; return; }
+  /* INTEG4 fix 1 (A152 M2): a key whose focus is inside a scroller of the document that takes it (a provider row in
+     the roster) is that scroller's: no note, so a pending wheel's movement of the document is never landed as the key's */
+  if (t instanceof Element && sc.contains(t) && o55fsInnerTakes(t, sc, e.key === 'End' ? 1 : -1)) return;
   const k = o55fsEdge = { at: performance.now(), end: e.key === 'End', top: sc.scrollTop };
   const watch = () => { if (o55fsEdge !== k) return; const s = root.querySelector('#settings-document'); if (s) o55fsEdgeScroll(s); if (o55fsEdge === k) requestAnimationFrame(watch); };
   requestAnimationFrame(watch);
@@ -404,7 +428,22 @@ function o55fsMountEdge(sc, end) {
 }
 function o55fsEdgeLand(sc, end) {
   o55fsMountEdge(sc, end);
-  sc.scrollTo({ top: end ? sc.scrollHeight : 0, behavior: 'instant' });
+  /* INTEG4 fix 1 (A152 M3): the landing is the page's own scroll, and its last pixel a smooth one. Chrome's keyboard
+     End/Home animation keeps running after an instant landing and dragged a wheel up made as the bottom appeared back
+     to the bottom (RTX 3090: 6 of 6 view-scale wheels and 6 of 6 120 px notches lost). A programmatic smooth scroll
+     replaces it (the same reversals: 6 of 6 and 6 of 6 kept). That 1 px step is ended where the reader put the page by
+     their next wheel, pointer press or touch (o55fsLandInput), or put exactly at the edge after four frames. */
+  const edge = end ? sc.scrollHeight - sc.clientHeight : 0;
+  sc.scrollTo({ top: end ? edge - 1 : 1, behavior: 'instant' });
+  sc.scrollTo({ top: edge, behavior: 'smooth' });
+  const step = o55fsLandStep = { sc, end, n: 0 };
+  const settle = () => {
+    if (o55fsLandStep !== step) return;
+    if (++step.n < 4) { requestAnimationFrame(settle); return; }
+    o55fsLandStep = null;
+    sc.scrollTo({ top: end ? sc.scrollHeight - sc.clientHeight : 0, behavior: 'instant' });
+  };
+  requestAnimationFrame(settle);
   /* the landing's lists and freshly mounted sections are shown before this frame is drawn (from rAF too) */
   o55fsFillNear(sc); o55fsShowNear(sc);
 }
@@ -460,10 +499,12 @@ const O55FS_JUMP = 0.5;   /* of the document's view */
    wheel at its end too: the browser never hands it on to the document, so neither does this. */
 function o55fsInnerTakes(target, sc, dy) {
   for (let n = target instanceof Element ? target : target && target.parentElement; n && n !== sc; n = n.parentElement) {
-    if (n.scrollHeight <= n.clientHeight + 1) continue;
     const cs = getComputedStyle(n);
     if (!/^(auto|scroll|overlay)$/.test(cs.overflowY)) continue;
+    /* INTEG4 fix 1 (A152 M1): containment before range: a contained scroller keeps the wheel even when it has nothing
+       to scroll (a roster filtered to one row or none); main leaves the document still there */
     if ((cs.overscrollBehaviorY || cs.overscrollBehavior || 'auto').split(' ')[0] !== 'auto') return true;
+    if (n.scrollHeight <= n.clientHeight + 1) continue;
     if (dy > 0 ? n.scrollTop + n.clientHeight < n.scrollHeight - 1 : n.scrollTop > 0) return true;
   }
   return false;

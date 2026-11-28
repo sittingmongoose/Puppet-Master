@@ -1528,6 +1528,190 @@ export async function rosterWheelRoute(t, surface) {
 		await t.check(`${surface} ${chapter}: a view-long wheel over a roster at its end leaves the document still (main's behaviour)`, Math.abs(after.doc - before.doc) < 1, detail);
 	}
 }
+/* INTEG4 fix 1 (A152, exported for tools/settings-chapter.selftest.mjs): four rows from A152's real input sequences. */
+async function a152Settings(t, surface) {
+	await t.viewport(1920, 1080); await muteSound(t.page);
+	const f = await t.app.open({sandbox:surface === 'sandbox'});
+	await t.app.resetLayout().catch(() => {}); await f.locator('#tab-settings').click(); await t.settle();
+	return f;
+}
+async function a152Chapter(t, f, name, wait = 850) {
+	await f.locator(`#pm-settings-root .domain-link[data-domain="${name}"]`).first().click();
+	await f.waitForFunction((n) => document.querySelector('#pm-settings-root .domain-link.active')?.dataset.domain === n, name);
+	await t.page.waitForTimeout(wait);
+}
+/* A152 M1: AI & Providers' roster filtered to one provider, and to none. The list contains its overscroll and has no
+   range left; main keeps the document still under a view-long wheel over it (A152: integration moved it 912 px). */
+export function filteredRosterVerdict(r) {
+	const ran = !!r && r.css !== 'auto' && r.room >= r.view && r.range <= 1 && r.rows === r.wantRows && !!r.wheel && r.wheel.trusted && r.wheel.inside && r.wheel.dy >= r.view;
+	return [
+		{ name: `a view-long trusted wheel went over the roster filtered to ${r && r.wantRows} row(s) (contained, no range, a view of room in the document)`, ok: ran, detail: JSON.stringify(r) },
+		{ name: `the document stays still under it (main's behaviour; A152 M1)`, ok: ran && Math.abs(r.after - r.before) < 1, detail: r ? `document ${r.before} -> ${r.after} px` : 'no reading' }
+	];
+}
+export async function filteredRosterRoute(t, surface) {
+	if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+	const f = await a152Settings(t, surface);
+	for (const want of [1, 0]) {
+		await a152Chapter(t, f, 'general'); await a152Chapter(t, f, 'ai');
+		const field = f.getByPlaceholder('Filter services').first();
+		const list = field.locator('xpath=ancestor::*[contains(concat(" ", normalize-space(@class), " "), " resource-roster ")][1]').locator('.roster-list').first();
+		await field.click();
+		const text = want ? await list.evaluate((el) => {
+			const rows = [...el.querySelectorAll('.resource-row')];
+			return rows.map((r) => r.querySelector('.resource-row-name')?.textContent.trim()).filter(Boolean)
+				.find((n) => rows.filter((r) => (r.textContent + ' ' + (r.dataset.filterText || '')).toLowerCase().includes(n.toLowerCase())).length === 1) || null;
+		}) : 'zzqx no such provider';
+		if (!text) { await t.check(`${surface}: a provider name that filters the roster to one row`, false, 'none'); continue; }
+		await t.page.keyboard.type(text); await t.page.waitForTimeout(600);
+		await list.evaluate((el) => el.scrollIntoView({block:'center', behavior:'instant'})); await t.page.waitForTimeout(500);
+		const box = want ? await list.locator('.resource-row:visible').first().boundingBox() : await list.boundingBox();
+		if (!box || box.height < 4) { await t.check(`${surface}: the roster filtered to ${want} row(s) has a hit area`, false, JSON.stringify(box)); continue; }
+		await t.page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+		const before = await list.evaluate((el) => {
+			const sc = document.querySelector('#pm-settings-root #settings-document');
+			window.__pscRosterHit = null;
+			window.addEventListener('wheel', (e) => { const r = window.__pscRosterHit = { trusted: e.isTrusted, inside: el.contains(e.target), cancelable: e.cancelable, dy: e.deltaY }; }, { capture:true, passive:true, once:true });
+			return { before: sc.scrollTop, view: sc.clientHeight, room: sc.scrollHeight - sc.clientHeight - sc.scrollTop, range: el.scrollHeight - el.clientHeight, css: getComputedStyle(el).overscrollBehaviorY, rows: [...el.querySelectorAll('.resource-row')].filter((x) => x.offsetHeight > 0).length };
+		});
+		await t.page.mouse.wheel(0, before.view); await t.page.waitForTimeout(950);
+		const after = await f.evaluate(() => ({ after: document.querySelector('#pm-settings-root #settings-document').scrollTop, wheel: window.__pscRosterHit }));
+		const r = { filter: text, wantRows: want, ...before, ...after };
+		t.log(`${surface} filtered roster (${want}): ${JSON.stringify(r)}`);
+		for (const row of filteredRosterVerdict(r)) await t.check(`${surface}: ${row.name}`, row.ok, row.detail);
+		await field.fill('');
+	}
+}
+/* A152 M2: a provider row of AI & Providers keeps focus, the pointer is over the document outside the roster, a 120 px
+   wheel, then End within 0-32 ms. Main: the document moves the wheel's 120 px and End scrolls the roster (A152:
+   integration landed the document 5,235 px down). */
+export const A152_FOCUSED = { delays: [0, 0, 0, 4, 12, 32], notch: 120 };
+export function focusedEndVerdict(list) {
+	const runs = Array.isArray(list) ? list : [];
+	const ran = (r) => !!r && r.wheel && r.wheel.inDoc && !r.wheel.inList && r.key && r.key.focusInList && r.key.at >= r.wheel.at && r.key.at - r.wheel.at < 1000 && r.cold > 0 && r.range - r.child > 50 && r.room > 600;
+	const kept = (r) => ran(r) && r.docEnd - r.parent >= -2 && r.docEnd - r.parent <= A152_FOCUSED.notch + 5 && r.range - r.listEnd <= 16;
+	const line = (r) => r ? `${r.delay} ms: document ${r.parent} -> ${r.docEnd} px, roster ${r.child} -> ${r.listEnd} of ${r.range}` : 'no reading';
+	return [
+		{ name: `every trial was a trusted wheel over the document outside the roster, then End on a focused roster row with unmounted pages and room in both`, ok: runs.length > 0 && runs.every(ran), detail: runs.filter((r) => !ran(r)).map(line).join('; ') || `${runs.length} trials` },
+		{ name: `the document moved only the wheel's distance and End scrolled the roster to its end (main's behaviour; A152 M2)`, ok: runs.length > 0 && runs.every(kept), detail: runs.map(line).join('; ') || 'no trial' }
+	];
+}
+export async function focusedEndRoute(t, surface) {
+	if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+	const f = await a152Settings(t, surface), runs = [];
+	for (const delay of A152_FOCUSED.delays) {
+		await a152Chapter(t, f, 'general', 700); await a152Chapter(t, f, 'ai', 700);
+		const row = f.locator('#settings-document .roster-list button.resource-row:visible').first();
+		await row.click({position:{x:12, y:8}}); await t.page.waitForTimeout(450);
+		const rb = await f.locator('#settings-document .roster-list').first().boundingBox(), db = await f.locator('#settings-document').boundingBox();
+		await t.page.mouse.move(Math.min(db.x + db.width - 25, rb.x + rb.width + 80), Math.min(db.y + db.height - 70, Math.max(db.y + 75, rb.y + 75)));
+		await f.evaluate(() => {
+			const d = document.querySelector('#pm-settings-root #settings-document'), l = d.querySelector('.roster-list');
+			const R = window.__pscFocused = { parent: d.scrollTop, room: d.scrollHeight - d.clientHeight - d.scrollTop, child: l.scrollTop, range: l.scrollHeight - l.clientHeight, cold: d.querySelectorAll('[data-workspace-mounted="false"]').length, wheel: null, key: null };
+			const watch = (e) => { if (!e.isTrusted || (e.type === 'keydown' && e.key !== 'End')) return; const x = { at: e.timeStamp, inDoc: d.contains(e.target), inList: l.contains(e.target), focusInList: l.contains(document.activeElement) }; if (e.type === 'wheel') R.wheel = R.wheel || x; else R.key = R.key || x; };
+			const opt = { capture:true, passive:true };
+			window.addEventListener('wheel', watch, opt); window.addEventListener('keydown', watch, opt);
+			R.close = () => { window.removeEventListener('wheel', watch, opt); window.removeEventListener('keydown', watch, opt); const { close, ...o } = R; return { ...o, docEnd: d.scrollTop, listEnd: l.scrollTop }; };
+		});
+		await t.page.mouse.wheel(0, A152_FOCUSED.notch);
+		if (delay) await t.page.waitForTimeout(delay);
+		await t.page.keyboard.press('End');
+		await t.page.waitForTimeout(1400);
+		const r = { delay, ...(await f.evaluate(() => window.__pscFocused.close())) };
+		t.log(`${surface} focused roster End: ${JSON.stringify(r)}`);
+		runs.push(r);
+	}
+	for (const row of focusedEndVerdict(runs)) await t.check(`${surface}: ${row.name}`, row.ok, row.detail);
+}
+/* A152 M3: End from a fresh Code & Tools after a click on plain text, then a trusted wheel up as soon as the bottom
+   first appears: a view-scale wheel (0.8 of the view) and one 120 px notch. Main keeps every reversal (the document
+   ends that far above the bottom); A152: integration snapped back to the bottom in 7 of 10 trials. */
+export const A152_REVERSE = { trials: [['large', 0], ['large', 0], ['large', 16], ['notch', 0], ['notch', 0], ['notch', 16]], notch: 120, large: 0.8 };
+export function reverseVerdict(list) {
+	const runs = Array.isArray(list) ? list : [];
+	const ran = (r) => !!r && r.key && r.key.focus === 'BODY' && r.key.cold > 0 && r.arrived && r.wheel && r.wheel.doc && r.wheel.dy < 0 && r.wheel.top > 4 * r.view && r.wheel.room < 160;
+	const kept = (r) => ran(r) && r.finalRoom > r.dist * 0.55 && r.wheel.top - r.finalTop > r.dist * 0.45;
+	const line = (r) => r ? `${r.kind} ${r.delay} ms: wheel ${r.dist} px at ${r.wheel ? r.wheel.top : '?'} (room ${r.wheel ? r.wheel.room : '?'}), final ${r.finalTop} (room ${r.finalRoom})` : 'no reading';
+	return [
+		{ name: 'every trial was a trusted End from body focus over unmounted pages, then a trusted wheel up over the document as the bottom first appeared', ok: runs.length > 0 && runs.every(ran), detail: runs.filter((r) => !ran(r)).map(line).join('; ') || `${runs.length} trials` },
+		{ name: 'the wheel up after End holds: the document ends its distance above the bottom, no snap back (main\'s behaviour; A152 M3)', ok: runs.length > 0 && runs.every(kept), detail: runs.map(line).join('; ') || 'no trial' }
+	];
+}
+export async function reverseAfterEndRoute(t, surface) {
+	if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+	const f = await a152Settings(t, surface), runs = [];
+	for (const [kind, delay] of A152_REVERSE.trials) {
+		await a152Chapter(t, f, 'general', 700); await a152Chapter(t, f, 'code', 300);
+		const at = await f.evaluate(() => {
+			const d = document.querySelector('#pm-settings-root #settings-document'), v = d.getBoundingClientRect();
+			for (const p of d.querySelectorAll('p')) {
+				const r = p.getBoundingClientRect(), a = p.closest('button,a,input,[data-action],[tabindex]');
+				if (r.width < 40 || r.height < 8 || r.top < v.top + 35 || r.bottom > v.bottom - 35 || (a && d.contains(a))) continue;
+				const x = r.left + 15, y = r.top + r.height / 2; if (p.contains(document.elementFromPoint(x, y))) return { x, y };
+			}
+			return null;
+		});
+		const off = surface === 'sandbox' ? await f.frameElement().then((h) => h.boundingBox()).catch(() => null) : null;
+		if (!at) { runs.push(null); continue; }
+		await t.page.mouse.click((off ? off.x : 0) + at.x, (off ? off.y : 0) + at.y);
+		const rect = await f.locator('#settings-document').boundingBox();
+		await t.page.mouse.move(rect.x + rect.width * .65, rect.y + rect.height * .55);
+		await f.evaluate(() => {
+			const d = document.querySelector('#pm-settings-root #settings-document');
+			const R = window.__pscReverse = { key: null, wheel: null }, opt = { passive:true, capture:true };
+			const rec = (e) => { if (!e.isTrusted || (e.key && e.key !== 'End')) return; const x = { top: d.scrollTop, room: d.scrollHeight - d.clientHeight - d.scrollTop, cold: d.querySelectorAll('[data-workspace-mounted="false"]').length, dy: e.deltaY, doc: d.contains(e.target), focus: document.activeElement.tagName }; if (e.type === 'keydown') R.key = R.key || x; else R.wheel = R.wheel || x; };
+			window.addEventListener('keydown', rec, opt); window.addEventListener('wheel', rec, opt);
+			R.close = () => { window.removeEventListener('keydown', rec, opt); window.removeEventListener('wheel', rec, opt); const { close, ...o } = R; return { ...o, view: d.clientHeight, finalTop: d.scrollTop, finalRoom: d.scrollHeight - d.clientHeight - d.scrollTop }; };
+		});
+		await t.page.waitForTimeout(180);
+		await t.page.keyboard.press('End');
+		const arrived = await f.waitForFunction(() => { const sc = document.querySelector('#pm-settings-root #settings-document'); return sc.scrollTop > 4 * sc.clientHeight && sc.scrollHeight - sc.clientHeight - sc.scrollTop < 150; }, null, { timeout: 2200 }).then(() => true, () => false);
+		if (delay) await t.page.waitForTimeout(delay);
+		const dist = kind === 'notch' ? A152_REVERSE.notch : Math.round(rect.height * A152_REVERSE.large);
+		await t.page.mouse.wheel(0, -dist);
+		await t.page.waitForTimeout(1250);
+		const r = { kind, delay, dist, arrived, ...(await f.evaluate(() => window.__pscReverse.close())) };
+		t.log(`${surface} reverse after End: ${JSON.stringify(r)}`);
+		runs.push(r);
+	}
+	for (const row of reverseVerdict(runs)) await t.check(`${surface}: ${row.name}`, row.ok, row.detail);
+}
+/* A152 M4: alternating General and Code & Tools from the rail must let each replaced chapter document go. Each visit's
+   page body is held by a WeakRef; after two collections, a body still alive but disconnected is a retained old root.
+   Main retains none; A152: integration kept 47 roots (95,058 elements, +86 MiB) after 48 visits. */
+export const A152_LIFETIME = { visits: 24, maxRoots: 2 };
+export function lifetimeVerdict(r) {
+	const ran = !!r && r.visits === A152_LIFETIME.visits && r.current >= 1 && r.gc === true;
+	return [
+		{ name: `${A152_LIFETIME.visits} chapter visits from the rail, each body held weakly, two collections after`, ok: ran, detail: JSON.stringify(r) },
+		{ name: `replaced chapter documents are released: at most ${A152_LIFETIME.maxRoots} disconnected old chapter roots survive collection (main 0; A152 M4)`, ok: ran && r.oldRoots <= A152_LIFETIME.maxRoots, detail: r ? `${r.oldRoots} old roots, ${r.oldElements} elements, ${r.detached} detached bodies alive` : 'no reading' }
+	];
+}
+export async function chapterLifetimeRoute(t, surface) {
+	if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+	const f = await a152Settings(t, surface);
+	await a152Chapter(t, f, 'general');
+	/* the frame's own session when it runs out of process (the sandbox), so the collection reaches its heap */
+	const c = await t.page.context().newCDPSession(f === t.page.mainFrame() ? t.page : f).catch(() => t.page.context().newCDPSession(t.page));
+	let r = null;
+	try {
+		await f.evaluate(() => { window.__pscVisited = []; });
+		for (let i = 1; i <= A152_LIFETIME.visits; i++) {
+			await a152Chapter(t, f, i % 2 ? 'code' : 'general');
+			await f.evaluate(() => { const b = document.querySelector('#pm-settings-root #workspace-stage [data-continuous-workspace-body]'); if (b) window.__pscVisited.push(new WeakRef(b)); });
+		}
+		await t.page.waitForTimeout(1500);
+		const gc = await c.send('HeapProfiler.collectGarbage').then(() => c.send('HeapProfiler.collectGarbage')).then(() => true, () => false);
+		r = { gc, ...(await f.evaluate(() => {
+			let current = 0, detached = 0; const roots = new Set();
+			for (const w of window.__pscVisited) { const el = w.deref(); if (el && el.isConnected) current++; else if (el) { detached++; roots.add(el.getRootNode()); } }
+			let elements = 0; for (const x of roots) elements += x.querySelectorAll ? x.querySelectorAll('*').length : 0;
+			return { visits: window.__pscVisited.length, current, detached, oldRoots: roots.size, oldElements: elements };
+		})) };
+	} finally { await c.detach().catch(() => {}); }
+	t.log(`${surface} chapter lifetime: ${JSON.stringify(r)}`);
+	for (const row of lifetimeVerdict(r)) await t.check(`${surface}: ${row.name}`, row.ok, row.detail);
+}
 for (const surface of ['normal', 'sandbox']) {
 	tests[`R93 #4 a fast wheel into lower Code fills visible lists before the frame (${surface})`] = (t) => flingRoute(t, surface, 'terminal');
 	/* FO-245 round 3 (A245 high finding 1): the deep routes onto the chapter's unmounted last page */
@@ -1537,6 +1721,11 @@ for (const surface of ['normal', 'sandbox']) {
 	tests[`R93 #4 a single long wheel to the bottom of a fresh Code & Tools paints its last page, composited scrolling (${surface})`] = (t) => flingRoute(t, surface, 'wheel-bottom', {composite:true});
 	/* FO-250 round 2 (R149 M1): the long-wheel jump leaves a contained roster's wheel to the browser */
 	tests[`R93 #4 a long wheel over a roster at its end leaves the document still (${surface})`] = (t) => rosterWheelRoute(t, surface);
+	/* INTEG4 fix 1 (A152 M1-M4): the four real input sequences A152 found; red on 90286cf58f (page a61bcce0) */
+	tests[`R93 #4 a long wheel over a roster filtered to one row or none leaves the document still (${surface})`] = (t) => filteredRosterRoute(t, surface);
+	tests[`R93 #4 End on a focused roster row during a document wheel scrolls the roster, not the document (${surface})`] = (t) => focusedEndRoute(t, surface);
+	tests[`R93 #4 a wheel up as End reaches the bottom holds (${surface})`] = (t) => reverseAfterEndRoute(t, surface);
+	tests[`R93 #4 chapter switches release the replaced chapter documents (${surface})`] = (t) => chapterLifetimeRoute(t, surface);
 	/* FO-245 round 5 (option C) reverted the End/Home key listener, so End smooth-scrolled through unmounted pages again,
 	   as on main, and the two End fling routes waited for FO-248. FO-248P (2026-11-28): the document's own End scroll is
 	   completed in one step at its first tick (46-first-screen.js, no key intercepted), so both are registered again. Red on
