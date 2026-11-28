@@ -1,6 +1,7 @@
 // checks/perf-onb-step.check.mjs (ONB-STEP: Pip's resting drift drawn in 0.1 px steps, Jared 2026-11-27) on readings
 // shaped as its WATCH returns them, its WATCH against a stub stage, and the product's gate pinned in its source.
-//   node tools/onb-step.selftest.mjs [perf-onb-step.check.mjs] [58-rig.js]
+//   node tools/onb-step.selftest.mjs [perf-onb-step.check.mjs] [58-rig.js] [perf-onb-loop.check.mjs]
+// It also pins FO-252's row (checks/perf-onb-loop.check.mjs, one stage loop a frame) and the fix in 58-rig.js.
 // Reverting the gate (the stage drawing in every frame at rest) fails the rest verdict; a gate that also skipped frames
 // while Pip swings, talks, blinks or follows the pointer fails the motion verdict; a source without the gate fails the pin.
 import assert from 'node:assert/strict';
@@ -141,4 +142,51 @@ assert.match(src, /    render\(part\) \{[\s\S]*scale\(\$\{R\(sx\)\} \$\{R\(sy\)\
 assert.match(src, /const PIP_DRAW_SWING_PXS = 30, PIP_DRAW_FAST_PXS = 12, PIP_DRAW_FAST_HOLD = \.5;/, 'a swing is drawn whole: from 30 px a second until under 12 for half a second');
 assert.match(due, /if \(pxs >= PIP_DRAW_SWING_PXS\) this\.swingOn = true;/, 'a swing starts the every-frame draw');
 assert.match(due, /if \(this\.swingOn\) return 'full';/, 'drawDue draws every frame through a swing');
+// FO-252 (R150 L3): one stage loop a frame. perf-onb-loop.check.mjs's verdict on readings shaped as its LOOPWATCH returns
+// them, its LOOPWATCH against a stub stage with one chain and with two, and the fix pinned in the product's source.
+{
+	const lp = await import(process.argv[4] ? pathToFileURL(resolve(process.argv[4])).href : '../checks/perf-onb-loop.check.mjs');
+	for (const k of ['LOOPWATCH', 'loopVerdict']) assert.equal(typeof lp[k], 'function', `perf-onb-loop exports ${k}`);
+	const v = lp.loopVerdict;
+	// 90286cf58f on the VM after a look switch on Welcome: 2 a frame (3 and 4 after more switches); the fix: 1
+	assert.equal(v({ calls: 362, frames: 181, dup: 181, maxPer: 2, still: false }).ok, false, 'two chains fail');
+	assert.match(v({ calls: 362, frames: 181, dup: 181, maxPer: 2, still: false }).why, /second requestAnimationFrame chain/);
+	assert.equal(v({ calls: 724, frames: 181, dup: 181, maxPer: 4, still: false }).ok, false, 'four chains fail');
+	assert.equal(v({ calls: 181, frames: 181, dup: 0, maxPer: 1, still: false }).ok, true, 'one chain passes');
+	assert.equal(v({ calls: 180, frames: 181, dup: 0, maxPer: 1, still: false }).ok, true, 'the first frame after the wrap missed passes');
+	// one doubled frame is a second chain however few: the rule is per frame, not a mean
+	assert.equal(v({ calls: 182, frames: 181, dup: 1, maxPer: 2, still: false }).ok, false, 'one frame with two calls fails');
+	assert.equal(v({ calls: 200, frames: 181, dup: 0, maxPer: 1, still: false }).ok, false, 'more calls than frames fails');
+	// a still stage that parked: no calls is one chain; a moving stage that did not loop could not show a second chain
+	assert.equal(v({ calls: 0, frames: 181, dup: 0, maxPer: 0, still: true }).ok, true, 'a parked still stage passes');
+	assert.equal(v({ calls: 40, frames: 181, dup: 0, maxPer: 1, still: false }).ok, false, 'a moving stage looping in under half the frames: could not judge');
+	assert.match(v({ calls: 40, frames: 181, dup: 0, maxPer: 1, still: false }).why, /could not judge/);
+	assert.equal(v(null).ok, false); assert.equal(v({ err: 'no stage' }).ok, false); assert.equal(v({ calls: 3, frames: 3, dup: 0, maxPer: 1 }).ok, false, 'too few frames');
+	// LOOPWATCH against a stub stage: the page's frames run their callbacks with one frame time each, the stage's loop
+	// asks for the next frame with requestAnimationFrame(this.loop) as Stage.loop does; with chains=2 two chains run
+	for (const chains of [1, 2]) {
+		let queue = [];
+		globalThis.requestAnimationFrame = (fn) => { queue.push(fn); return queue.length; };
+		const st = { root: { hasAttribute: () => false }, raf: 1, still: () => false, live: () => true };
+		st.loop = function () { this.raf = requestAnimationFrame(this.loop); }.bind(st);
+		const bound = st.loop;
+		globalThis.document = { querySelector: () => ({ __pipStage: st }) };
+		for (let c = 0; c < chains; c++) requestAnimationFrame(st.loop);
+		const p = lp.LOOPWATCH(100);
+		let ts = 1000;
+		for (let i = 0; i < 40 && queue.length; i++) { const q = queue; queue = []; q.forEach((fn) => fn(ts)); ts += 1000 / 60; }
+		const r = await p;
+		assert.equal(st.loop, bound, "the stage's own loop is restored");
+		assert.ok(r.frames >= 5, `frames read (${r.frames})`);
+		if (chains === 1) { assert.equal(r.dup, 0); assert.equal(r.maxPer, 1); assert.ok(r.calls >= r.frames - 1 && r.calls <= r.frames, `one a frame (${r.calls} over ${r.frames})`); }
+		else { assert.equal(r.maxPer, 2, 'two chains: two calls in a frame'); assert.ok(r.dup >= r.frames - 1, `every frame doubled (${r.dup} of ${r.frames})`); }
+		delete globalThis.requestAnimationFrame; delete globalThis.document;
+	}
+	// the fix in the source: a kick inside the loop only marks the stage dirty, the 0.9 s look is taken inside it, and the
+	// loop's own request replaces any other before it asks for the next frame
+	const kick = src.slice(src.indexOf('    kick() {'), src.indexOf('    park() {'));
+	assert.match(kick, /if \(this\.raf \|\| this\.dead \|\| this\.inLoop\) return;/, 'kick starts no chain from inside the loop (FO-252)');
+	assert.match(loop, /if \(this\.remeasureAt && tn > this\.remeasureAt\) \{ this\.remeasureAt = 0; this\.inLoop = true; try \{ this\.measure\(\); \} finally \{ this\.inLoop = false; \} \}/, "the build's 0.9 s look is taken with the loop marked (FO-252)");
+	assert.match(loop, /if \(this\.raf\) cancelAnimationFrame\(this\.raf\);\n\s*this\.raf = requestAnimationFrame\(this\.loop\);/, "the loop's own request replaces any other (FO-252)");
+}
 console.log('onb-step selftest: ok');

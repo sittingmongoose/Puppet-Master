@@ -1164,8 +1164,13 @@
       /* paused while the window is shut or held, the page hidden, a drag under way (body.pm-resizing) or the stage
          gone; a still stage (Reduced Motion, a low-resource computer) is drawn only when something changed */
       if (!this.live()) { this.park(); return; }
-      if (this.remeasureAt && tn > this.remeasureAt) { this.remeasureAt = 0; this.measure(); }
+      /* (the second look at the window's opening, 0.9 s after a build: measure() kicks, and with this frame's raf already
+         cleared that kick started a second chain beside this one, two loops a frame until the next park, FO-252. Inside
+         the loop a kick only marks the stage dirty: this frame goes on and asks for the next one itself) */
+      if (this.remeasureAt && tn > this.remeasureAt) { this.remeasureAt = 0; this.inLoop = true; try { this.measure(); } finally { this.inLoop = false; } }
       if (this.still() && !this.dirty && this.t > this.moodUntil + .3 && !this.fx.length && !this.faceOut && this.faceT0 == null) return;
+      /* (one chain at all times: should anything still have asked for a frame meanwhile, this frame's request replaces it) */
+      if (this.raf) cancelAnimationFrame(this.raf);
       this.raf = requestAnimationFrame(this.loop);
       this.t += dt;
       if (this.famName === 'nier' && this.syncNierBox()) { this.keepOff = this.nierBox || null; this.syncNierStack(); }
@@ -1828,7 +1833,7 @@
     still() { return this.reduced || !!O55.motion.lowResource; }
     kick() {
       this.dirty = true;
-      if (this.raf || this.dead) return;
+      if (this.raf || this.dead || this.inLoop) return;
       if (!this.live()) { this.park(); return; }
       if (this.root.hasAttribute('data-paused')) this.root.removeAttribute('data-paused');
       this.last = now(); this.raf = requestAnimationFrame(this.loop);
