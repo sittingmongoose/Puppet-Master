@@ -31,7 +31,9 @@
 //   glyphs   on Welcome (Pip asleep, its z's rising; not NieR, which has none), in the same window: after every stepped frame
 //            of the stage's loop, each live z's opacity as the page wrote it against the opacity a full draw would write
 //            at that tick (render()'s own fade, 1 - (life/max)^2, rounded by the page's R). A cell fails when a z is off
-//            for more than --set zRun (default 2) frames in a row (A150: compared continuously, a z crossing a rounding
+//            for more than --set zRun (default 2) frames in a row, or in more than --set zPer (default 2) readings a z over
+//            the window (a new z is off in the frame it appears, before its first draw; c5292b0416 at 120 Hz had runs of
+//            two or three and 440-540 readings off for 9 z's) (A150: compared continuously, a z crossing a rounding
 //            step stayed one step too opaque for three refreshes in Basic Dark and Light). Read at --set zSize (default
 //            320x640, the viewport set for the window and put back after), where the stage is drawn smaller and a z moves
 //            under a tenth of a pixel a frame at 120 Hz (A150's route was 390x844 on a faster display); --set zSize=0
@@ -47,7 +49,7 @@
 // counters when it has them).
 // --set looks= (default all ten; `dark` the five Dark looks) --set screens= (default welcome,where,ready)
 // --set settle= (default 20000) --set viewSettle= (default 6000) --set ms= --set restMax= --set restShare= --set miss=
-// --set poseMs= (0 leaves the pose and glyph rows out) --set zRun= --set poseMax= --set poseRun= --set motion=0 leaves out the every-frame windows. One surface per run (--set sandbox=1 for the sandbox).
+// --set poseMs= (0 leaves the pose and glyph rows out) --set zRun= --set zPer= --set poseMax= --set poseRun= --set motion=0 leaves out the every-frame windows. One surface per run (--set sandbox=1 for the sandbox).
 import { muteSound } from '../helpers/quiet-page.mjs';
 import { POSE, restVerdict } from './perf-onb-rest.check.mjs';
 
@@ -167,14 +169,15 @@ export const ZWATCH = (ms) => new Promise((res) => {
 	setTimeout(finish, ms + 2000);
 });
 
-// a glyph reading against the rule (a z's written opacity off a full draw's for at most zRun frames in a row): { ok, why }
+// a glyph reading against the rule (a z's written opacity off a full draw's for at most zRun frames in a row, and in at
+// most zPer readings a z over the window: a new z is off in the frame it appears, before its first draw): { ok, why }
 export function zVerdict(r, o = {}) {
 	const run = o.zRun ?? 2;
 	if (!r || r.err) return { ok: false, why: `no reading (${r && r.err || 'none'}): could not judge` };
 	if (r.skip) return { ok: true, skip: true, why: `${r.skip}: logged, not judged` };
 	if (!(r.frames > 30) || !(r.glyphs > 0)) return { ok: false, why: `${r.frames || 0} stepped frames, ${r.glyphs || 0} z's read: could not judge` };
-	const ok = r.longest <= run;
-	return { ok, why: `${r.size ? r.size + ': ' : ''}${r.glyphs} z's over ${r.frames} frames (${r.glyphFrames} readings): ${r.stale} readings off a full draw's opacity, the longest run ${r.longest} frames (want at most ${run})${ok ? '' : `: a z drawn late (worst at t ${r.worst.t}: written ${r.worst.written}, full draw ${r.worst.want})`}` };
+	const per = o.zPer ?? 2, allowed = per * r.glyphs, ok = r.longest <= run && r.stale <= allowed;
+	return { ok, why: `${r.size ? r.size + ': ' : ''}${r.glyphs} z's over ${r.frames} frames (${r.glyphFrames} readings): ${r.stale} readings off a full draw's opacity (want at most ${per} a z, ${allowed}: a new z is off in the frame it appears), the longest run ${r.longest} frames (want at most ${run})${ok ? '' : `: a z drawn late (worst at t ${r.worst && r.worst.t}: written ${r.worst && r.worst.written}, full draw ${r.worst && r.worst.want})`}` };
 }
 
 // a pose reading against the rule (at most poseMax device px stale for at most poseRun frames in a row): { ok, why }
@@ -236,7 +239,7 @@ export default async function (t) {
 	const lookArg = String(t.args.looks || 'all');
 	const looks = lookArg === 'all' ? ALL : lookArg === 'dark' ? ALL.filter((l) => l.endsWith('-dark')) : lookArg.split(',').filter(Boolean);
 	const screens = String(t.args.screens || 'welcome,where,ready').split(',').filter(Boolean);
-	const poseMs = Number(t.args.poseMs || 6000), zRun = Number(t.args.zRun ?? 2);
+	const poseMs = Number(t.args.poseMs || 6000), zRun = Number(t.args.zRun ?? 2), zPer = Number(t.args.zPer ?? 2);
 	const ms = Number(t.args.ms || 3000), o = { poseMax: Number(t.args.poseMax ?? .25), poseRun: Number(t.args.poseRun ?? 2), restMax: Number(t.args.restMax ?? 60), restShare: Number(t.args.restShare ?? .5), slowShare: Number(t.args.slowShare ?? .85), miss: Number(t.args.miss ?? 2) };
 	const W = 1920, H = 1080;
 	await t.viewport(W, H);
@@ -295,9 +298,9 @@ export default async function (t) {
 				if (!pv.skip) await t.check(`${cell}: the painted head is never more than ${o.poseMax} px from a full draw for more than ${o.poseRun} frames`, pv.ok, pv.why);
 			}
 			if (zr) {
-				const zv = zVerdict(zr, { zRun });
+				const zv = zVerdict(zr, { zRun, zPer });
 				t.log(`${cell}: glyphs: ${zv.why}`);
-				if (!zv.skip) await t.check(`${cell}: each sleeping z's opacity is a full draw's within ${zRun} frames`, zv.ok, zv.why);
+				if (!zv.skip) await t.check(`${cell}: each sleeping z's opacity is a full draw's within ${zRun} frames, and off in at most ${zPer} readings a z`, zv.ok, zv.why);
 			}
 			t.log(`${cell}: at rest: ${line(r)}`);
 			const v = restStepVerdict(r, o);

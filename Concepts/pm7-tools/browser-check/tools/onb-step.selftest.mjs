@@ -58,6 +58,8 @@ assert.equal(rest({ full: 0, part: 0, frames: 3, secs: .05, fps: 0 }).ok, false)
 	const z = m.zVerdict, rd = (longest, stale = 7) => ({ frames: 1250, glyphs: 9, glyphFrames: 2780, stale, longest, worst: { t: 1, written: .26, want: .25 } });
 	assert.equal(z(rd(1)).ok, true, 'off only in the frame a z appears');
 	assert.equal(z(rd(2, 12)).ok, true, 'two frames');
+	assert.equal(z(rd(2, 535)).ok, false, "c5292b0416 at 120 Hz: runs of two, but 535 readings off for 9 z's");
+	assert.match(z(rd(2, 535)).why, /535 readings off .*want at most 2 a z, 18/);
 	assert.equal(z(rd(3, 507)).ok, false, 'three frames one step too opaque');
 	assert.match(z(rd(3, 507)).why, /a z drawn late .*written 0\.26, full draw 0\.25/);
 	assert.equal(z({ err: 'no stage' }).ok, false); assert.equal(z({ frames: 400, glyphs: 0 }).ok, false, 'no z read: could not judge');
