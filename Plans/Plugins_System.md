@@ -2159,7 +2159,7 @@ plan_unit_id: PLUG-030
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plugins_System.md
-canonical_text: "Plugins may register custom tools through PluginContext.register_tool with ToolDefinition name, description, input_schema JSON Schema, and execute handler returning ToolResult."
+canonical_text: "Plugins may register custom tools through PluginContext.register_tool with ToolDefinition name, description, input_schema JSON Schema, and execute handler returning ToolResult. register_tool refuses, registering nothing, with tool_name_invalid when name fails tool-name validation and with schema_invalid (the Tools owner's code) when input_schema is not valid JSON Schema. A name that collides with a built-in tool is not a refusal: it registers under the namespaced alias of section 6.2 (TOOL-COLLISION)."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
 split_recommended: false
@@ -4203,8 +4203,8 @@ gui_classification_reason: Plugin install, permissions, and extension points are
 depends_on: [PLUG-001, PLUG-009, PLUG-017, PLUG-026, PLUG-040, PLUG-063, PS-131]
 unblocks: []
 acceptance_criteria:
-  - PM-native pm-plugin.json permissions[] entries include permission_id, scope, purpose, default_state, requested_actions[], and approval_scope_key?.
-  - PM-native pm-plugin.json capabilities[] entries include capability_id, provider_surface, hook_refs[], data_access, network_access, fs_access, and command_access.
+  - PM-native pm-plugin.json permissions[] entries include permission_id, scope, purpose, default_state, requested_actions[], and approval_scope_key?, typed by Plans/plugin_package_contracts.schema.json#/$defs/PermissionRequest.
+  - PM-native pm-plugin.json capabilities[] entries include capability_id, provider_surface, hook_refs[], data_access, network_access, fs_access, and command_access, typed by Plans/plugin_package_contracts.schema.json#/$defs/CapabilityRequest.
   - Sandbox profiles are none, ui_extension_only, tool_proxy, filesystem_limited, network_limited, or trusted_local; any trusted_local request requires explicit signed provenance and user consent.
   - Signature verification records signature_algorithm, key_id, trust_root_ref, manifest_sha256, package_sha256, verification_status, and failure_reason_code.
   - Hook aliases map pre_tool_invoke to tool.execute.before, post_tool_invoke to tool.execute.after, pre_attempt_start to attempt.start.before, pre_node_dispatch to node.dispatch.before, and post_attempt_complete to attempt.complete.after.

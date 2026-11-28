@@ -12520,6 +12520,14 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Config-wiring validation uses a single entry point such as validate_config_wiring_for_tier(tier_type, config_snapshot, context) -> Result<(), WiringError>, called at tier entry for main and interview orchestrators, with fail-fast behavior for missing required execution-affecting fields, warn/toast behavior for classic built-but-not-wired gaps, and unit/integration tests.
+  WiringError carries tier_type and a non-empty list of entries, each with the config field, its canonical validation-table
+  row and one declared code. The fail-fast codes, any one of which returns Err and keeps the tier from starting, are
+  required_field_missing (a required execution-affecting field, such as the tier config for that tier, is absent from the
+  execution config), required_field_unwired (the field exists but its backend consumer does not read it),
+  required_field_unavailable (the field's value or source cannot be resolved for this tier) and required_field_inconsistent
+  (the field contradicts another wired field or the canonical table). A built-but-not-wired optional field (present in GUI or
+  file config, absent from the execution config) is the warning code built_not_wired: it is logged and may be toasted, and
+  when only warnings are found the call returns Ok(()).
 gui_related: true
 gui_classification_reason: This unit includes user-facing warning/toast behavior for config wiring failures.
 split_recommended: false
@@ -19423,7 +19431,11 @@ canonical_text: >-
   run, and exposes a detect_project_context(workspace: &Path) -> Result<ProjectContext> style API.
   No-project selection passes a typed app/optional-root detection context; only an actual permitted
   directory is scanned, and missing workspace is explicit absence, not home scanning. Cache key includes
-  Host/root/scope.
+  Host/root/scope. The error side is ProjectContextError with one declared code: workspace_absent when no
+  workspace or optional root is given (the no-project caller treats it as no detected context, never as a
+  reason to scan another directory), workspace_not_permitted when the path is not an actual permitted
+  directory for this Host and scope (nothing is scanned), and workspace_unreadable when the permitted directory
+  or a marker file cannot be read.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend detection and caching behavior rather than GUI presentation.
@@ -22178,7 +22190,13 @@ owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   update_agent_status completes mutation of the active agent projection by appending status, operation, and file-activity
   events with CAS on agent revision/last-applied event id, then projecting files_being_edited, current_operation, and
-  last_update; it returns an error when the agent_id is absent from the authoritative projection.
+  last_update; it returns an error when the agent_id is absent from the authoritative projection. Its failure results
+  are Storage's coordination append refusals (Plans/storage-plan.md#SP-320, transition and revision check): an
+  agent_id with no event in the authoritative projection returns coordination_conflict with conflict_kind
+  not_registered; a stale expected agent revision returns coordination_conflict with conflict_kind stale_revision; an
+  update after the agent's terminal event returns coordination_conflict with conflict_kind already_terminal; a lineage
+  that differs from the registration returns coordination_conflict with conflict_kind lineage_mismatch. Each appends
+  nothing, and when more than one applies SP-320's order decides which is returned.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend coordination state mutation rather than GUI presentation.

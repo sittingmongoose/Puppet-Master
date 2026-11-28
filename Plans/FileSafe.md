@@ -2085,6 +2085,7 @@ Detect SQL injection attempts in prompts:
 pub fn check_sql_injection(prompt: &str) -> Result<(), GuardError> {
     // Check for common SQL injection patterns
     // UNION SELECT, DROP TABLE, etc.
+    // On a match: Err(GuardError::CommandDenied { command_preview, denial_code: "sql_injection_pattern_match" })
 }
 ```
 
@@ -9643,7 +9644,10 @@ status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
   The SQL injection enhancement adds check_sql_injection(prompt) to detect common SQL injection
-  patterns such as UNION SELECT and DROP TABLE in prompts.
+  patterns such as UNION SELECT and DROP TABLE in prompts. It returns Result<(), GuardError>: Ok(()) when no pattern
+  matches, and on a match GuardError::CommandDenied with denial_code sql_injection_pattern_match and command_preview
+  holding the first 100 characters of the matching prompt segment, the same shape the bash guard uses for
+  destructive_pattern_match; the denial is logged as filesafe.command_denied with pattern_matched naming the pattern.
 gui_related: false
 gui_classification_reason: >-
   This unit captures backend SQL injection prompt checking enhancement.

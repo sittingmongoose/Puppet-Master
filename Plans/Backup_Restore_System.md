@@ -1941,7 +1941,17 @@ canonical_text: Backup offers a separately authorized workflow to obtain missing
   authorization, with explicit source, target, missing dependency scope, network cost and potentially large download
   disclosure. Completion is an effectful operation separate from browse, verification, restore and activation. The
   resulting native closure must be recaptured and verified before a new complete-coverage claim; existing incomplete
-  snapshots and receipts retain their historical truth.
+  snapshots and receipts retain their historical truth. Its failure results use the Backup command error codes
+  (backup_restore_command_error) and none of them claims complete coverage or replaces the last complete backup;
+  cancelled when the person or owner cancels the attempt; permission_denied when current credential authorization
+  for the source, target or remote is absent; stale_currentness when the source, target, remote binding or missing
+  dependency scope changed since preflight and authorization; operation_conflict when a concurrent capture, restore,
+  completion or repository change races the attempt; and owner_unavailable when the Source Control transport owner,
+  the authorized remote or the credential is unavailable. An indeterminate transport outcome is the Source Control
+  owner's outcome_unknown, recorded as not complete and reconciled through that owner before any retry or
+  verification. Data still missing
+  after a successful download is not a failure result; the closure stays explicitly incomplete. The completion
+  workflow has no Backup command id yet; binding it to a command is outside this failure-code repair.
 gui_related: false
 gui_classification_reason: Defines safety, persistence, or verification behavior rather than visual presentation.
 depends_on:
@@ -2540,6 +2550,17 @@ canonical_text: >-
   newest backup at Structure verified or higher would lose, its time and its last event. A newer backup that has
   not verified is shown beside it, never instead of it. Where each surface shows it belongs to that surface's
   owner. A test proves the captured point is consistent across every store.
+  The backup-status record's fields take the types of Plans/backup_restore_system_contracts.schema.json $defs.
+  last_complete_backup_ref is a nullable_stable_id, null before the first complete backup, and
+  last_complete_verification_level is an integrity_verification_level, null exactly when that ref is null. last_verified_backup_ref is a
+  nullable_stable_id naming the newest backup at Structure verified or higher, null when none exists;
+  last_verified_level is an integrity_verification_level limited to structure_passed, sampled_data_passed or
+  full_data_read_passed; last_verified_captured_at_utc is a timestamp of its capture point; and
+  last_verified_last_event_seq is a non-negative integer, the seglog sequence its capture barrier recorded, so a
+  restore from it loses everything written after that time and sequence. newer_unverified_backup_ref is a
+  nullable_stable_id naming a newer backup whose level is not_run or failed, shown beside the verified one, and
+  newer_unverified_level is its integrity_verification_level. Archive-pause status and restore lineage (BRS-033)
+  are fields with provenance gap; gap_note: BRS-033 names them but gives them no shape, so they are left untyped here.
   BRS-033 adds archive-pause status and restore lineage without making Projects a second status calculator. Keep last complete and last verified visible beside a newer failed/unverified attempt. New Project default inclusion and app canonical record coverage do not change the brief capture barrier or grant a long writer lock.
 gui_related: true
 gui_classification_reason: "Shows the last verified backup and what a restore would lose."

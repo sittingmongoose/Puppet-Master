@@ -2,9 +2,9 @@
 
 Source: `Plans/PRD_Builder.md`
 
-Source lines: L1431-L1495
+Source lines: L1431-L1504
 
-Source SHA256: `15424a6217552bf9161fe6b8d8dd2c27c65dcad8c58d87a20091ee290a0e2813`
+Source SHA256: `f2604391d3bd175f746faacefefe4807b97b8a1d5f12d529dd047734bdef32ba`
 
 ---
 
@@ -27,6 +27,15 @@ canonical_text: >-
   confidence_scores[], detected_at_ms, resolution_state, selected_value?, resolver_actor?, resolved_at_ms?, and
   audit_receipt_ref?. Readiness scoring uses weighted completeness, evidence, conflict, dependency, and resource axes,
   while resource defaults provide explicit time, token, cost, provider, and review placeholders instead of silent nulls.
+  ConflictRecord field types, in this document's field-block types: conflict_id id; prd_id id; field_path string;
+  source_refs[] list of ref; confidence_scores[] list of number; detected_at_ms integer (milliseconds since the Unix
+  epoch); resolver_actor? nullable ref; resolved_at_ms? nullable integer (milliseconds since the Unix epoch);
+  audit_receipt_ref? nullable ref. Four are gap markers. competing_values[] is a list whose item type is provenance gap
+  (gap_note: the type of the value at field_path is not stated, and the DL-333 command resolves by selected_claim_refs,
+  not by value). selected_value? is nullable with provenance gap (gap_note: same type as a competing value, which is
+  unstated). resolution_state is an enum with provenance gap (gap_note: only blocked_requires_user_decision is named,
+  in the tie-break criterion; the other states are not). How confidence_scores[] lines up with competing_values[] and its
+  bounds are provenance gap (gap_note: neither the pairing nor a range is stated).
 gui_related: true
 gui_classification_reason: PRD conflict review, scoring, and approval are user-visible Planning Wizard handoff surfaces.
 depends_on: [PRDB-005, PRDB-007, PRDB-008, PLS-015]

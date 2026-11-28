@@ -7200,7 +7200,7 @@ depends_on:
 unblocks:
 - F3-529
 acceptance_criteria:
-- All thirteen provider profiles and four local-VCS profiles exist separately with every named dimension reporting explicit
+- All eleven provider profiles of the exact set (thirteen until DL-273 retired the two Cursor Origin profiles) and four local-VCS profiles exist separately with every named dimension reporting explicit
   state/probe/reason rather than generic compatibility.
 - Same-name/different-instance, custom base path/SSH port, private CA, redirect, metadata, and changed-host-key fixtures
   fail or prompt at the exact trust gate without leaking authorization.

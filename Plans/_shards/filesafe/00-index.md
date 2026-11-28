@@ -1,56 +1,56 @@
 # Shard Index: Plans/FileSafe.md
 
-Generated: 2026-11-26T06:05:41Z
+Generated: 2026-11-28T18:09:21Z
 
-Source SHA256: `cbe99c4cf8900fcc2dbe2827d70696e73d04ae91515257644b4fff9311e010c0`
+Source SHA256: `ff4ded3e7581088637c71fb4a7f87f22f7ae422f452998d008fcedb3943ecc6e`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L9 `7e918ba97072f602d4e1ccf58118d3fbb1d34406f04ef33af18fd1e0b03bd8dd`
-- [002 - DRY Method Compliance](002-dry-method-compliance.md) L11-L21 `34215cf9516c45677ef6b7b863f75a242f6eeeb3a58b4fac90d37c6b23ca4899`
-- [003 - Rewrite alignment (2026-02-21)](003-rewrite-alignment-2026-02-21.md) L23-L68 `74ce6ead514ff6feb82eb3e59da05ef7c1339b1b0a2bd099570b85aa48da6a6b`
-- [004 - Executive Summary](004-executive-summary.md) L70-L119 `a8faa80de19c563b839c5dc66d799dbf73fbd09c2da7d9e96107b55e899f64d7`
-- [005 - Table of Contents](005-table-of-contents.md) L121-L132 `2058e74a59b2c0ecfec615f4565c11d70a9728b28b71a71dd127a223096d498c`
-- [006 - 1. Architecture Overview](006-1.-architecture-overview.md) L134-L183 `b3be3f3d43a107d01b85b43a5ba47cb1a5bdbb9be67130e147afade9f5a24082`
-- [007 - 2. Implementation Details](007-2.-implementation-details.md) L185-L725 `3ab0fc1045777f749093b77755a93bfa7ee25c2be7515fa048115781e15c5f78`
-- [008 - 3. Integration with Platform Runner](008-3.-integration-with-platform-runner.md) L727-L935 `efc95b4a4014cdc59f5153dbe3ed30957bbb72a283e18fd72364b1f1616a7822`
-- [009 - 4. Pattern File](009-4.-pattern-file.md) L937-L1041 `e627375c60ebe71b34ceaba0c5d8432847e1fa0d439dc6de96c08020a1bab467`
-- [010 - 5. Configuration Options](010-5.-configuration-options.md) L1043-L1102 `33a72530fee94fd4d7fbc6aea055405133be9bca3e14a18af65ed8dd392c005a`
-- [011 - 6. Event Logging](011-6.-event-logging.md) L1104-L1162 `51442e47cb502b7c32a9f28cbf1df07c7af30e25e8f0630570acaf9e48175903`
-- [012 - 7. Error Messages](012-7.-error-messages.md) L1163-L1186 `b774084f30ef98a125c1dcd147eb18d2167237bae57a0fddc2c62bb083389b8d`
-- [013 - 8. Testing](013-8.-testing.md) L1188-L1291 `f70ef98b08d510a76a6a254899de1f63967edf4acfe1156ed6ed211a52cffa7d`
-- [014 - 9. Implementation Checklist](014-9.-implementation-checklist.md) L1293-L1365 `faec057c301ee3489a13c9224c60e7f7086f58ab4dec9df253ba1e22657b2890`
-- [015 - 10. Relationship to Other Plans](015-10.-relationship-to-other-plans.md) L1366-L1393 `4cefe84efca122842807988993650d07e9c64569bd9a173d16af4d8a712ff387`
-- [016 - 10a. FileSafe and Assistant YOLO mode](016-10a.-filesafe-and-assistant-yolo-mode.md) L1395-L1403 `3af8c34d3baf2e49076478ec949fb7c400e01c10bb3ff8c4b9602183caf467a5`
-- [017 - 11. Additional FileSafe Features](017-11.-additional-filesafe-features.md) L1405-L1983 `ae868dbab1e3f08ad42ea1ae856529dd364fd91f655e038e603cec9e9ad76b8b`
-- [018 - 12. Gaps and Potential Issues](018-12.-gaps-and-potential-issues.md) L1985-L2062 `bf689704ef936d596e084b593ce8c0e853afe9da12fd33757bce7cf44aac5851`
-- [019 - 13. Enhancements](019-13.-enhancements.md) L2064-L2125 `242632c509352fddc3d6869a2ec2c20ee8d2829f16613aac7dec695bdf7830f0`
-- [020 - 14. Historical note on moved context-compilation canon](020-14.-historical-note-on-moved-context-compilation-canon.md) L2127-L2143 `221077a6bba0506843ff63de59cb31fb325a0974eb7db67f96a86e6158aa42e0`
-- [021 - 15. System Integration Analysis](021-15.-system-integration-analysis.md) L2145-L2765 `1c7dc20c811cbe9a4a14fffaa283a8e3686f13612e0bfdf75c5f710aecddbf09`
-- [022 - 16. References](022-16.-references.md) L2766-L2783 `33621ba83a52542d26099ed52169d08d4a1986779b5466c1817ff635f11408ac`
-- [023 - 17. Implementation Order and Dependencies](023-17.-implementation-order-and-dependencies.md) L2785-L2829 `eda4910b9249a499f087f8f414e33ae24c1e6ef1f957593903cb8ec5c7c757e6`
-- [024 - Runtime Blocked-State Integration Addendum (2026-03-08)](024-runtime-blocked-state-integration-addendum-2026-03-08.md) L2831-L2886 `0c7663be0216d60b7bdd51d5f7ca3c77eaabc3f201bfeeaf1b63739c896a89eb`
-- [025 - FileSafe Blocked Outcome Alignment Addendum (2026-03-09)](025-filesafe-blocked-outcome-alignment-addendum-2026-03-09.md) L2887-L2897 `5c08cb15d65995fe5a3fa5d23f9bec570159f32f93ece597ae8db192485a2a88`
-- [026 - FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)](026-filesafe-runtime-blocked-and-restore-override-consolidation-adde.md) L2898-L2943 `15f164478365855607176cb6cb6c16259342ece4c91e1d2036eb950e2c79c3e4`
-- [027 - Owner / Consumer Map](027-owner-consumer-map.md) L2945-L2949 `9911cdf0b42f7912afd00e115ebb08ae885419dd0428c7593e70af75aa9548a0`
-- [028 - PlanUnits](028-planunits.md) L2951-L13452 `ea7b396fc2e08c6918c3b0029c91ca1d724c21634bb3d08b4256c963f04ddc65`
-- [029 - Migration Coverage](029-migration-coverage.md) L13454-L13464 `d83ea74a03597f1c77e339e12025a26bee348d76d0a0c25941a33f4dc9ab09cc`
-- [030 - Ledger Compile Addendum - pldg-20260614-002](030-ledger-compile-addendum-pldg-20260614-002.md) L13466-L13540 `72fa16ddb1c1eb2c3e25b9bc8de21ef136550df870be01864aa68217164205b6`
-- [031 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](031-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L13542-L13590 `4a12163af10d7b1b42a32674548e898917d00be3fc8fe516792696f8a613c326`
-- [032 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](032-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L13593-L13706 `3ba27343be78a66f3baaad93edeb43d92ba8881c4de5b947380cda51da2c8b51`
-- [033 - Ledger Compile Addendum - pldg-20260622-001-fff](033-ledger-compile-addendum-pldg-20260622-001-fff.md) L13708-L13751 `a639a336b780d86c5c729f63a7ada883263cf0435fa3f358b34b104400fa048a`
-- [034 - Ledger Compile Addendum - pldg-20260626-001-feature-name](034-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L13754-L13864 `b33e073a8c7d1d99ffa9c99ef60b0d6b551e374f079c5c60e056b5bb3f311dfe`
-- [035 - Ledger Compile Addendum - pldg-20260629-001-feature-name](035-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L13866-L13926 `6a0e5c26dd77041f0aeb6456b884af477bc24d236ea70ebb41c6da2bccc5f597`
-- [036 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](036-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L13928-L14015 `43fa714cd292d4a3dbe7321c8e10351c3c872978c3878d4054050438e6ce6771`
-- [037 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](037-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L14017-L14424 `a2a8bfca2a3c658f3a5db0eae0902435f67959b1242b76760c83ea728712337c`
-- [038 - Case L Exact-Restore Repair Addendum - 2026-07-17](038-case-l-exact-restore-repair-addendum-2026-07-17.md) L14426-L14709 `085422f04a8d9af7d1c8bbb6b65dd67019545254e9565304da7e4fd284824cb9`
-- [039 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](039-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L14711-L14775 `6147e5d2d0bf2b8ee155c6b30b3a82f3a41fc289954093b00ea713a92fe05b0f`
-- [040 - FABLE Remaining Action Plan Repair Notes (2026-07-08)](040-fable-remaining-action-plan-repair-notes-2026-07-08.md) L14776-L14782 `d04d0623c80188acb130ee1a656058a9f9b056cac764b6081f938b08ab1857b5`
-- [041 - Known-37 corruption evidence and recovery-unavailable owner completion](041-known-37-corruption-evidence-and-recovery-unavailable-owner-comp.md) L14785-L14795 `ea2c25baac1b29f531e0f5ccba68a7c77902f0f6552d1e1c46ba2e38bacf9491`
-- [042 - Cozy Shelves Panel Reconciliation Addendum - 2026-07-27](042-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md) L14797-L14981 `3c891d4f8b1ffc35a0ca393b971349c7f091d3e1b8e26aeb47257d1b3458ac1e`
-- [043 - Shared runtime immutable-dispatch binding (2026-08-13)](043-shared-runtime-immutable-dispatch-binding-2026-08-13.md) L14983-L15066 `03113a11be69e9f2ccb109901f24a6cefebe4b5a2f5f550bc474ece17ac97e65`
-- [044 - Working Notebook Capture Redaction Addendum (2026-09-05)](044-working-notebook-capture-redaction-addendum-2026-09-05.md) L15068-L15103 `a828d3b45048f782e6495e6598be534137ffdfb27c18539dd4747c77d1478c85`
-- [045 - Jujutsu D5 Owner Requirements (2026-09-11)](045-jujutsu-d5-owner-requirements-2026-09-11.md) L15105-L15242 `a42ed07ad579da69f0a0fff30b8777b035f12e352eb02a4138018f2dcdba00d3`
-- [046 - Restore-point created consumer boundary](046-restore-point-created-consumer-boundary.md) L15245-L15385 `61dadcbe8c153fa5ed000e8e3c0ec9efe71ceb3dde597e992b55a04aeb05499c`
+- [001 - Preamble](001-preamble.md) L1-L9 `f687b52c1d212e320e290812445fcd70075989a1a5a266c9082c9554a79d5989`
+- [002 - DRY Method Compliance](002-dry-method-compliance.md) L11-L21 `e48866282eeb4fd58e71c2f97f16c53e97089957bd2d5a262565c7fc997e49bb`
+- [003 - Rewrite alignment (2026-02-21)](003-rewrite-alignment-2026-02-21.md) L23-L68 `ab73fce8cba2f50cdd539f64d9d1e966fca00dae5be48a1465bd4a732c8ab50c`
+- [004 - Executive Summary](004-executive-summary.md) L70-L119 `bebeaa35773987e7441d9679d70aa40f4de70442ddc4d94cbd325e08f21385bb`
+- [005 - Table of Contents](005-table-of-contents.md) L121-L132 `ef43c6c08835870ae7e363b286e39c1ae10411eacc607c81036935e461a57fb4`
+- [006 - 1. Architecture Overview](006-1.-architecture-overview.md) L134-L183 `0bb3b196e8d0566a2d2d88e3e651337906105de55d70fc50516c6d072758b61c`
+- [007 - 2. Implementation Details](007-2.-implementation-details.md) L185-L725 `c6de8da4492ee50e5bbb9d42446f90797b8422dc0bdb75e29a139cc70594ddff`
+- [008 - 3. Integration with Platform Runner](008-3.-integration-with-platform-runner.md) L727-L935 `5771fe4aa45b06df3321d057aeb50e4eac051b0c2e3c9c26530f0b7fc6f222f2`
+- [009 - 4. Pattern File](009-4.-pattern-file.md) L937-L1041 `0dc09f130e874966e910fb50acd9e4838466d100b31bf443c92e43f3d7b7263e`
+- [010 - 5. Configuration Options](010-5.-configuration-options.md) L1043-L1102 `f3efacc7c7c08fd737d9a0a3dd6c95fedd57ea2c5359e29266828d450ec7ea1c`
+- [011 - 6. Event Logging](011-6.-event-logging.md) L1104-L1162 `161731dac7d6b74ae621e521031904496624cfa54cbe56882d073230246e377b`
+- [012 - 7. Error Messages](012-7.-error-messages.md) L1163-L1186 `68c76dc32a2fa338129ac6ccbb6f3a5934995aef21555fa567c21294a37a0685`
+- [013 - 8. Testing](013-8.-testing.md) L1188-L1291 `865d5027dbd13abc2260110a42b7f5055797902733d7f6352e65d51f6476087d`
+- [014 - 9. Implementation Checklist](014-9.-implementation-checklist.md) L1293-L1365 `5fa84a357519b89e0b02ef02a26cab260989a81703014d566d6b803d39cd893b`
+- [015 - 10. Relationship to Other Plans](015-10.-relationship-to-other-plans.md) L1366-L1393 `2f9df2b03381f75ce15ec74faa0c0d9284eea4e2178754c95ec9a792bd1fea7c`
+- [016 - 10a. FileSafe and Assistant YOLO mode](016-10a.-filesafe-and-assistant-yolo-mode.md) L1395-L1403 `2c901b3df4c37fa12d855c2def1510d0385ceb68cae5e94c68c522a8a629e140`
+- [017 - 11. Additional FileSafe Features](017-11.-additional-filesafe-features.md) L1405-L1983 `ffdb72de12b1f47568fcfeb80f032fcc55e3e48c22ccde35af3994e98f7b6280`
+- [018 - 12. Gaps and Potential Issues](018-12.-gaps-and-potential-issues.md) L1985-L2062 `39953f2801b1af7484ad9d68393e9d67a99397024034d288a07274109fed2082`
+- [019 - 13. Enhancements](019-13.-enhancements.md) L2064-L2126 `58522aa8232340b641d0ad5b75844b26e9db1f8ffd17ba6b278cc806e49bba0e`
+- [020 - 14. Historical note on moved context-compilation canon](020-14.-historical-note-on-moved-context-compilation-canon.md) L2128-L2144 `73da958469683b66d7c7968518537bb0ca467068c2539b390d0b974cd4e54ed7`
+- [021 - 15. System Integration Analysis](021-15.-system-integration-analysis.md) L2146-L2766 `d58a83fa8faa3330deebeda7d4646d2e16ff7dc0d69f55b5c19dd0de110954d1`
+- [022 - 16. References](022-16.-references.md) L2767-L2784 `6c23d2b5c7bd06c4daa2cda66662fedc5d41035825cf8ffc042c67b9172114ad`
+- [023 - 17. Implementation Order and Dependencies](023-17.-implementation-order-and-dependencies.md) L2786-L2830 `def9b2dfb51832305a8b6595eae9b576a2646ddbcbf36d3af335ca155d38d014`
+- [024 - Runtime Blocked-State Integration Addendum (2026-03-08)](024-runtime-blocked-state-integration-addendum-2026-03-08.md) L2832-L2887 `02a7b92bc9939031654df3288bf51a5013b6661eb0f8136dd5f0a72c9704b7f0`
+- [025 - FileSafe Blocked Outcome Alignment Addendum (2026-03-09)](025-filesafe-blocked-outcome-alignment-addendum-2026-03-09.md) L2888-L2898 `8d32fa3474306834c406ac761bbb0f407602e28e9fd0e36d1b8f03ae769110d1`
+- [026 - FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)](026-filesafe-runtime-blocked-and-restore-override-consolidation-adde.md) L2899-L2944 `78c352f6c101a7b250b8095946227b7d9583b601dd4c4740f51f243a5924307b`
+- [027 - Owner / Consumer Map](027-owner-consumer-map.md) L2946-L2950 `436d3150b9907553d9cd5ad2bea201b4d5e9dc7c6201e5ce6e168dd4be783899`
+- [028 - PlanUnits](028-planunits.md) L2952-L13456 `704e97897a55e2cd920eb975d19ed3a47b7c9eec55e963ff0e8483b18700e034`
+- [029 - Migration Coverage](029-migration-coverage.md) L13458-L13468 `218baed183ff59bb1f1ce160d3997c44c06af6d38f428c75b8cfb6f5b0efbc2f`
+- [030 - Ledger Compile Addendum - pldg-20260614-002](030-ledger-compile-addendum-pldg-20260614-002.md) L13470-L13544 `98012dcafea60ab3a35f1e7f997a9dbb986223141b132258de71bf764b0c747e`
+- [031 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](031-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L13546-L13594 `eb780353215d5e42fd32b6cef8695bdaf2b3e282610b7f30ee7f3d8c9f631e5a`
+- [032 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](032-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L13597-L13710 `d0a3bc604e6290e184b7018050d42126daf5d118c1c1a54e658c87ae368287b7`
+- [033 - Ledger Compile Addendum - pldg-20260622-001-fff](033-ledger-compile-addendum-pldg-20260622-001-fff.md) L13712-L13755 `f63475931b96e2b72e7eeb366c31bf01c36d2a7ffd78b65719957fc548850a7a`
+- [034 - Ledger Compile Addendum - pldg-20260626-001-feature-name](034-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L13758-L13868 `4ee32e8a4d08b516b1331ca61f4eca25c76ad81bdfdb2d23a3f855f718917bf8`
+- [035 - Ledger Compile Addendum - pldg-20260629-001-feature-name](035-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L13870-L13930 `f69e5eded060caeb7cbfd58a92fd43ab0e1185777fc2509b1f84eb6f2e25ed97`
+- [036 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](036-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L13932-L14019 `6c5b0823bd2b5396e0dbd1e798c350bf8563276a6afa856dd9ad52148a8ba884`
+- [037 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](037-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L14021-L14428 `cd1cc8765a6efa167fd44e950568c016c3bca67c0c7afcdf140c04667794b9fa`
+- [038 - Case L Exact-Restore Repair Addendum - 2026-07-17](038-case-l-exact-restore-repair-addendum-2026-07-17.md) L14430-L14713 `3ae1c0cc5c0c994b6395408d69ced6d756e89fbd8a8cb0d7055ad739bc9a905d`
+- [039 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](039-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L14715-L14779 `2196116089b28d6c98eb279b627946ecd9c03a9fec06d2f16e72438da1668145`
+- [040 - FABLE Remaining Action Plan Repair Notes (2026-07-08)](040-fable-remaining-action-plan-repair-notes-2026-07-08.md) L14780-L14786 `2e013e3c87bde250bd679d0ccc64941e6cf5b856e5abf2e505bbc4e0b53766fc`
+- [041 - Known-37 corruption evidence and recovery-unavailable owner completion](041-known-37-corruption-evidence-and-recovery-unavailable-owner-comp.md) L14789-L14799 `388f66287809fa58268f37e66c2e334179f7a7fdeec88517dbbbacd809dbc79b`
+- [042 - Cozy Shelves Panel Reconciliation Addendum - 2026-07-27](042-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md) L14801-L14985 `a82c2df4bb73d735dfb244817ce34b64446fbb323b9760224c757bb66f990629`
+- [043 - Shared runtime immutable-dispatch binding (2026-08-13)](043-shared-runtime-immutable-dispatch-binding-2026-08-13.md) L14987-L15070 `a890f8ab6f56153587992a2ce2701a897cebbfdd4ce14b1f2fe911648f57694a`
+- [044 - Working Notebook Capture Redaction Addendum (2026-09-05)](044-working-notebook-capture-redaction-addendum-2026-09-05.md) L15072-L15107 `e614a887d20a0c25ab7d2e304db21eb63e4383d1c1ec1d9ad2e4eee058283ef9`
+- [045 - Jujutsu D5 Owner Requirements (2026-09-11)](045-jujutsu-d5-owner-requirements-2026-09-11.md) L15109-L15246 `a1a951c69be257f93be297e66c06170e65175fec1430dfac7d99396033e209ba`
+- [046 - Restore-point created consumer boundary](046-restore-point-created-consumer-boundary.md) L15249-L15389 `09c73fde071ed38e3a59c0d44d93ebb732651810926da598c2a1fc0685ffccbc`

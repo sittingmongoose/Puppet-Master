@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L14172-L14534
+Source lines: L14172-L14535
 
-Source SHA256: `c2af0dedf955033c5a325da1a7a2ed72f8d3edef977438160db83ff564d21514`
+Source SHA256: `c410594518918ec9cf51d83ec7baf4a6bfe99c3b1ffd1a495403e838e0e26635`
 
 ---
 
@@ -342,10 +342,11 @@ depends_on:
 - CV-317
 unblocks: []
 acceptance_criteria:
-- The exact family uses its own newly authored prepared contract without event admission.
-- All enumerated joins, lifecycle predicates, custody and withdrawal guards are required; no runtime proof is inferred.
-- Criterion 12 is met by the phase-2 executable synthetic oracles and gated guard-tool proof named in
-  ATS-1221; native execution stays NOT_RUN and membership ABSENT.
+- No contract, alias/exclusion application, event admission or new saved-history type is authored for
+  testing.receipt.recorded; the W3C contract schema, oracle plan and storage rows hold no row for it.
+- Owner classification stays OPEN until current Testing/Storage authority answers the exact question in the canonical
+  text; the readiness row's event_type key is not taken as proof of any of the three outcomes.
+- Existing TestRunReceipt persistence, commands and projections are unchanged, and no runtime proof is inferred.
 validation_surfaces:
 - Plans/w3c_test_capture_event_contracts.schema.json
 - Plans/w3c_test_capture_event_oracle_plan.json

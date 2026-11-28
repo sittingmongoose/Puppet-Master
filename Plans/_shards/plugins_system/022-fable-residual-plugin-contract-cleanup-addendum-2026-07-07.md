@@ -4,7 +4,7 @@ Source: `Plans/Plugins_System.md`
 
 Source lines: L4185-L4251
 
-Source SHA256: `ddd8af20bd919318e67b7488a4391bb6a9655cc3233643dfbdad278d29cc8132`
+Source SHA256: `6d47b887bad8b166e91caedc2bd28252f7958524abc508e7b7a73b9e925332d5`
 
 ---
 
@@ -29,8 +29,8 @@ gui_classification_reason: Plugin install, permissions, and extension points are
 depends_on: [PLUG-001, PLUG-009, PLUG-017, PLUG-026, PLUG-040, PLUG-063, PS-131]
 unblocks: []
 acceptance_criteria:
-  - PM-native pm-plugin.json permissions[] entries include permission_id, scope, purpose, default_state, requested_actions[], and approval_scope_key?.
-  - PM-native pm-plugin.json capabilities[] entries include capability_id, provider_surface, hook_refs[], data_access, network_access, fs_access, and command_access.
+  - PM-native pm-plugin.json permissions[] entries include permission_id, scope, purpose, default_state, requested_actions[], and approval_scope_key?, typed by Plans/plugin_package_contracts.schema.json#/$defs/PermissionRequest.
+  - PM-native pm-plugin.json capabilities[] entries include capability_id, provider_surface, hook_refs[], data_access, network_access, fs_access, and command_access, typed by Plans/plugin_package_contracts.schema.json#/$defs/CapabilityRequest.
   - Sandbox profiles are none, ui_extension_only, tool_proxy, filesystem_limited, network_limited, or trusted_local; any trusted_local request requires explicit signed provenance and user consent.
   - Signature verification records signature_algorithm, key_id, trust_root_ref, manifest_sha256, package_sha256, verification_status, and failure_reason_code.
   - Hook aliases map pre_tool_invoke to tool.execute.before, post_tool_invoke to tool.execute.after, pre_attempt_start to attempt.start.before, pre_node_dispatch to node.dispatch.before, and post_attempt_complete to attempt.complete.after.

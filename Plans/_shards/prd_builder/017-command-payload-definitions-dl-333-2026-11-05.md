@@ -2,9 +2,9 @@
 
 Source: `Plans/PRD_Builder.md`
 
-Source lines: L1615-L2094
+Source lines: L1624-L2103
 
-Source SHA256: `15424a6217552bf9161fe6b8d8dd2c27c65dcad8c58d87a20091ee290a0e2813`
+Source SHA256: `f2604391d3bd175f746faacefefe4807b97b8a1d5f12d529dd047734bdef32ba`
 
 ---
 

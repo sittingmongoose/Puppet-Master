@@ -3339,7 +3339,9 @@ canonical_text: >-
   CollaborationMessageResult with lead_admission_closed and a null collaboration_message_id, without
   delivering the addressed request. A later pass queues behind core work when no slot is free. Each
   pass works three or four SS-037 angles, aims for three to five leads and delivers at most five,
-  stopping earlier with fewer or none when the method's stop signals come first. Every delivered
+  stopping earlier with fewer or none when the method's stop signals come first. A pass with six or
+  more leads fails WondererPass's five-lead limit, is refused with invalid_request and is not
+  delivered. Every delivered
   pass is a WondererPass with outcome leads or no_new_leads, one progressive-disclosure artifact
   (WONV-008) and one Wonderer transcript message. Every lead is a WondererLead with an angle, a
   one-sentence tether to the seed and at least one source; untethered drift and unsourced leads are
@@ -3358,7 +3360,8 @@ canonical_text: >-
   delivery; Debate starts after first-pass delivery or its recorded failed, timed-out or unavailable
   outcome. Explored leads are researched in Evidence or on later delivery. BrainStorm synthesis and
   a Crew's final synthesis are unavailable with a stated reason while a pass is in flight, any lead
-  is undecided or lead research is in flight. Starting either closes further-pass and Check it
+  is undecided or lead research is in flight; a synthesis request dispatched while any of the three
+  holds is refused with run_state_invalid, commits nothing and leaves lead admission open. Starting either closes further-pass and Check it
   admission with lead_admission_closed and binds synthesis and publication to the starting lead and
   research revision. Their result lists every lead with its disposition and reason. A Crew receives
   the first pass before splitting, explored leads become read-only exploration assignments, and

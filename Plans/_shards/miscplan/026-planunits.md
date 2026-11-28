@@ -2,9 +2,9 @@
 
 Source: `Plans/MiscPlan.md`
 
-Source lines: L1381-L6359
+Source lines: L1381-L6365
 
-Source SHA256: `5a1f16c378542a770e66a87875b19486d78da6ded77f1e798b0f4c0b9078ba87`
+Source SHA256: `b20824d71571f231f61f7ca68b35ac1e63d0a82d9cccb905c8c1876656ac6f17`
 
 ---
 
@@ -639,7 +639,13 @@ plan_unit_id: M-012
 unit_type: requirement
 status: accepted
 owner_doc: Plans/MiscPlan.md
-canonical_text: run_git_clean_with_excludes is the only git-clean helper, reads cleanup_exclude_patterns from the cleanup module, emits one -e per exclude pattern, uses shared git binary resolution, and is called only by prepare_working_directory or manual Clean workspace.
+canonical_text: >-
+  run_git_clean_with_excludes is the only git-clean helper, reads cleanup_exclude_patterns from the cleanup module, emits one -e per exclude pattern, uses shared git binary resolution, and is called only by prepare_working_directory or manual Clean workspace.
+  Its Result<()> fails with one of two declared codes and removes nothing it did not already remove: git_executable_unavailable
+  when shared git binary resolution returns no executable (the same None case on which GitManager fails its operation), and
+  git_clean_failed when the git clean process cannot start or exits non-zero, carrying the exit status and a redacted stderr
+  excerpt. clean_untracked false returns Ok(()) without running git. How a caller treats either failure stays with that caller
+  (prepare_working_directory's best-effort rule).
 gui_related: false
 gui_classification_reason: The unit covers backend cleanup, retention, security, storage, or execution-contract behavior rather than direct GUI presentation.
 split_recommended: true

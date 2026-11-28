@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Ledger_System.md`
 
-Source lines: L1034-L1229
+Source lines: L1034-L1249
 
-Source SHA256: `79bb8150dae732fc3f557fa5cfb7fc5af401ab0b2b519654e142d0d2f7639fde`
+Source SHA256: `f84026e51c1516bea2ae2bdc838c418ba9ff257776d46a83ce992424c117a04b`
 
 ---
 
@@ -25,6 +25,26 @@ canonical_text: >-
   redb indexes are projections, and markdown/export files are derived views. The service exposes append_event,
   commit_turn, recover_turn, snapshot_state, import_package, and export_package request/response shapes with CAS,
   idempotency, source_ref, actor_ref, and validation receipt fields.
+  Field types of the request and response fields the acceptance criteria name: ledger_id is a string in the
+  bootstrap ledger id form (Plans/ledgers/v2/schemas/ledger_core.schema.json ledger_id); event_id, turn_id,
+  last_committed_turn_id and recommended_replay_start_event_id are non-empty strings, the last two null when no turn
+  has committed or nothing needs replay; idempotency_key is a non-empty string; event_type is a non-empty string;
+  payload is a JSON object; source_ref is a nullable non-empty string; actor_ref is a non-empty string;
+  parent_event_ids[], accepted_atom_ids[], rejected_atom_ids[] and unapplied_event_ids[] are arrays of unique
+  non-empty strings; expected_projection_version, expected_current_version, committed_projection_version and
+  projection_version are non-negative integers, expected_projection_version nullable when omitted;
+  validation_receipt_ref is a non-empty string. Three shapes are gap markers: event_type values (provenance gap;
+  gap_note: no closed list of ledger event types exists), the per-event_type payload schema (provenance gap;
+  gap_note: no payload schema per event type exists), and the item shapes of open_item_updates[] and
+  conflict_records[] (provenance gap; gap_note: no record shape is defined for either).
+  Failure results, each a refusal that writes nothing: append_event returns stale_revision when
+  expected_projection_version is set and differs from the current projection version, and idempotency_conflict when
+  the idempotency_key was used with a different request digest (the same key and digest returns the original
+  event); commit_turn returns stale_revision when expected_current_version differs from the current version, and
+  idempotency_conflict as for append_event; a commit that fails after partial writes leaves the thread
+  ledger_sync_blocked as PLS-015 requires. import_package returns import_path_traversal, import_absolute_path,
+  import_symlink_escape, import_package_too_large, import_expanded_too_large, or import_ledger_collision (an id or
+  name collision with no recorded replace or keep-both policy).
 gui_related: false
 gui_classification_reason: Ledger service storage and API boundaries are planning infrastructure contracts, not GUI presentation.
 depends_on: [PLS-002, PLS-015]
