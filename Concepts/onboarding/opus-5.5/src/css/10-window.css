@@ -31,6 +31,10 @@ html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :is(.o55-spin, .
    the window is open; the scrim lies over the page's own ground. (It was only for a computer that could not composite
    the app beneath at full rate until Jared's call on 2026-11-28.) */
 html[data-o55-open][data-o55-solid] body > [data-o55-held] { visibility: hidden !important; }
+/* the 5.6 Pro chat's hosts start from visibility: visible (pm7-port/css/01-reset.css resets the inherited text
+   properties on every .pm56-host), so its body-level effects layer (#pm56Fx, a full-screen box in the chat's canvas
+   colour) showed through the hidden app: they are hidden with it (FO-253) */
+html[data-o55-open][data-o55-solid] body > [data-o55-held] .pm56-host { visibility: hidden !important; }
 .o55-scrim { position: absolute; inset: 0; background: color-mix(in srgb, var(--background) 74%, transparent); }
 /* The click paints this dim before the window is built (the open used to stay undimmed through that work).
    The flash is one empty element, so the click frame can paint it; the real scrim replaces it on the next
