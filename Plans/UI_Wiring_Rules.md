@@ -684,7 +684,7 @@ acceptance_criteria:
 - Disabled terminal cap and Collapse states carry exact accessible reasons and zero dispatch. (Amended 2026-10-09, DL-180 - the terminal caps and Collapse Bottom Terminal are retired; every disabled Home control of UIW-040 carries its owner's reason and zero dispatch.)
 - The source-hashed control census reports unresolved_count=0 and every production row names an executable test, not declarative prose alone.
 validation_surfaces:
-- python3 scripts/pm-validate-wiring-matrix.py
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
 - Plans/Automated_Testing_System.md#ATS-075
 - Plans/Automated_Testing_System.md#ATS-076
 - python3 scripts/pm-plan-index.py validate

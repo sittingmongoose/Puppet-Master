@@ -16374,6 +16374,7 @@
         "thread_id",
         "operation_id",
         "outcome",
+        "failure_code",
         "owner_result_schema_ref",
         "owner_result_ref",
         "owner_result_sha256",
@@ -16541,6 +16542,35 @@
             "cancelled"
           ]
         },
+        "failure_code": {
+          "anyOf": [
+            {
+              "enum": [
+                "invalid_args",
+                "permission_denied",
+                "blocked_state_required",
+                "stale_projection",
+                "handler_unavailable",
+                "internal_error",
+                "thread_not_found",
+                "confirmation_required",
+                "active_run_in_thread",
+                "queue_entry_not_found",
+                "already_dispatched",
+                "web_operation_not_found",
+                "already_terminal",
+                "web_operation_not_terminal",
+                "worktree_already_bound",
+                "branch_exists",
+                "base_ref_missing",
+                "worktree_create_failed"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "owner_result_schema_ref": {
           "type": "string",
           "minLength": 1,
@@ -16586,7 +16616,57 @@
           "minLength": 1,
           "maxLength": 256
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "rejected",
+                  "blocked"
+                ]
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "failure_code": {
+                "enum": [
+                  "invalid_args",
+                  "permission_denied",
+                  "blocked_state_required",
+                  "stale_projection",
+                  "handler_unavailable",
+                  "internal_error",
+                  "thread_not_found",
+                  "confirmation_required",
+                  "active_run_in_thread",
+                  "queue_entry_not_found",
+                  "already_dispatched",
+                  "web_operation_not_found",
+                  "already_terminal",
+                  "web_operation_not_terminal",
+                  "worktree_already_bound",
+                  "branch_exists",
+                  "base_ref_missing",
+                  "worktree_create_failed"
+                ]
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "failure_code": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
     },
     "PermissionSnapshotRecordStorageApplicationV1": {
       "type": "object",

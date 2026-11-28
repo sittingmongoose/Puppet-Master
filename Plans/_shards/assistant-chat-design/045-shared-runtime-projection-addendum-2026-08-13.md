@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3752-L23148
+Source lines: L3752-L23161
 
-Source SHA256: `20c96bdb26c9ac5f88361328754920e6154f7f8cce5011645b7f670a9fa2e7c3`
+Source SHA256: `d1e223940532c46a95560fcdb33453ff83f1d46607025003fcd20cb1aca0e1cb`
 
 ---
 
@@ -15665,7 +15665,13 @@ plan_unit_id: ACD-327
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Reverse lookup `worktree_binding_reverse:{worktree_id}` enforces one worktree per thread and one thread per worktree, with explicit error and deep link when already bound.
+canonical_text: >-
+  Reverse lookup `worktree_binding_reverse:{worktree_id}` enforces one worktree per thread and one thread per worktree, with explicit error and deep link when already bound.
+  The explicit error is failure_code worktree_already_bound (2026-11-28 spec completeness repair): a binding that would
+  give a worktree a second thread, or a thread a second worktree, is refused, writes no binding and emits no
+  `chat.thread_worktree_bound`; through cmd.chat.worktree.create it is returned as ChatOwnerCommandResultV2 outcome
+  rejected with that failure_code, and the owning `thread_id` for the deep link travels in the result's reason when
+  available.
 gui_related: false
 gui_classification_reason: Reverse lookup and one-to-one enforcement are storage/runtime behavior.
 depends_on: [ACD-326]
@@ -15897,6 +15903,13 @@ canonical_text: >-
   writes `worktree_record`, writes thread binding, emits
   `chat.thread_worktree_bound`, and uses the generated
   `.puppet-master/worktrees/thread-{short_id}` path with numeric suffixes.
+  A failed create returns ChatOwnerCommandResultV2 outcome rejected with its closed failure_code (2026-11-28 spec
+  completeness repair): branch_exists when the branch name still collides after the W.15 numeric-suffix attempts;
+  base_ref_missing when base_ref names no existing branch or ref; worktree_already_bound when the one-to-one rule of
+  ACD-327 refuses the binding; worktree_create_failed when `WorktreeManager::create_worktree` reports any other git
+  error; and invalid_args for a branch name that is not a valid git branch name, or permission_denied,
+  stale_projection, handler_unavailable or internal_error. A failed create writes no thread binding and emits no
+  `chat.thread_worktree_bound`; the dialog keeps the inline error (ACD-333).
 gui_related: false
 gui_classification_reason: Worktree creation backend transaction is storage/runtime behavior.
 depends_on: [ACD-331]

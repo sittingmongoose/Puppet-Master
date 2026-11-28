@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L16778-L16929
+Source lines: L16810-L16965
 
-Source SHA256: `9c34de2ef93562e8eb995cd913772a076b1d81c9574dec216dd3b6a4e5262a3d`
+Source SHA256: `403026f8e00c7e1e3b36d5ac7cfbd34f533d2e562b7c723ba63beed33313b847`
 
 ---
 
@@ -86,7 +86,11 @@ status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: 'cmd.chat.queue.send_now steers one queued, not-yet-dispatched message into the running turn
   without stopping the answer and emits chat.message.submitted for that message with delivery_mode steer; it
-  never advances the rest of the queue. cmd.chat.send gains delivery_mode (queue or steer), resolved from general.interaction.queue-behavior
+  never advances the rest of the queue. When the message is no longer queued, send_now returns ChatOwnerCommandResultV2
+  outcome rejected with failure_code queue_entry_not_found (the entry was removed) or already_dispatched (it was already
+  sent), emits no chat.message.submitted and leaves the queue unchanged; the other failure codes are
+  permission_denied, stale_projection, handler_unavailable and internal_error (2026-11-28 spec completeness repair).
+  cmd.chat.send gains delivery_mode (queue or steer), resolved from general.interaction.queue-behavior
   (default Queue, DL-108) unless the composer''s switch overrides it; a queued send becomes an outbox entry
   that later dispatches through the same handler. The other chat controls of ACD-469 through ACD-475 reuse
   existing identities and add none: Stop is cmd.chat.stop; Edit on a queued entry is cmd.chat.queue.remove

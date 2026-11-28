@@ -3014,7 +3014,14 @@ plan_unit_id: UCC-031
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: cmd.github.disconnect uses empty args, deletes the GitHub token from credential storage, emits auth.github.disconnected, and affects Settings > GitHub/Auth and Dashboard auth status.
+canonical_text: >-
+  cmd.github.disconnect uses empty args, deletes the GitHub token from credential storage, emits auth.github.disconnected, and affects Settings > GitHub/Auth and Dashboard auth status.
+  Failure results, each with a declared failure code (2026-11-28 spec completeness repair; the spellings reuse
+  AuthProfileErrorCode in Plans/multi_account_contracts.schema.json): credential_unavailable when the OS credential
+  store is unavailable, locked or refuses the delete, which leaves the token and the connected state unchanged; and
+  the CV-333 dispatcher codes permission_denied, handler_unavailable and internal_error. auth.github.disconnected is
+  emitted only after the token delete succeeds, never with a failure result. What a disconnect with no stored GitHub
+  token returns is not yet decided.
 gui_related: false
 gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility, or owner-boundary rules without primary visual presentation.
 split_recommended: false
@@ -4492,6 +4499,12 @@ canonical_text: 'Chat thread lifecycle and discovery commands create, archive, d
   and search threads while preserving lineage and stable identity; cmd.chat.delete is a separately confirmed
   whole-thread action that immediately removes ordinary projections, requests physical content purge within
   24 hours unless held, and preserves a content-free tombstone plus non-content authority receipts.
+  A refused or blocked cmd.chat.delete returns ChatOwnerCommandResultV2 outcome rejected or blocked with its closed
+  failure_code (2026-11-28 spec completeness repair): thread_not_found when the thread is missing or already deleted,
+  confirmation_required when the separate thread-delete confirmation is absent, active_run_in_thread while a run is
+  active in the thread, or permission_denied, stale_projection, handler_unavailable or internal_error. A legal hold
+  is not a failure: the delete succeeds, ordinary projections are removed at once, and only the physical purge waits
+  for the hold.
 
 
   Current projects-refresh contract: No project is genuine application scope, with a named fixed Computer after
@@ -10994,7 +11007,7 @@ unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  Usage navigation commands normalize to typed object-first route identity. `cmd.nav.open_usage_subject`, `cmd.artifacts.show_in_usage`, and `cmd.artifacts.show_in_ledger` carry route_target plus usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, thread_id, source_class, source_confidence, source_authority, settlement_status, projection_freshness, and projection_health where available. The two pre-existing artifact wrapper rows retain their artifact route/open `OpenSubject` bridge and remain event-primary in this bounded recovery; they are not part of the PMConcept7 row enrichment. Event-primary `cmd.nav.open_usage_subject` callers use `usage_event` plus object_id from `usage_event_ref`; a PMConcept7 Ledger attempt row uses `usage_attempt` plus object_id from `attempt_id`, repeats attempt_id at top level, retains usage_event_ref as correlation, and carries no OpenSubject. The retired `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, and `cmd.chat.close_thread_usage` tokens are compatibility aliases only; production wiring must not register them as canonical UICommand rows, and legacy callers normalize before dispatch.
+  Usage navigation commands normalize to typed object-first route identity. `cmd.nav.open_usage_subject`, `cmd.artifacts.show_in_usage`, and `cmd.artifacts.show_in_ledger` carry route_target plus usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, thread_id, source_class, source_confidence, source_authority, settlement_status, projection_freshness, and projection_health where available. Field types for `cmd.nav.open_usage_subject` (2026-11-28 spec completeness repair; the UCC-230 common optional vocabulary and the typed definitions of the two artifact commands in Plans/Runtime_Artifacts_Panel.md#RAP-129): route_target is contract Primitive:RouteTarget and required; usage_event_ref, provider_attempt_ref, trace_ref and raw_payload_ref are ref; usage_record_id, attempt_id, node_id, tool_call_id, artifact_id, run_id and thread_id are id; "receipt refs" is the field receipt_refs, a list of ref; source_class is enum [provider_reported, provider_header, cli_reported, local_estimated, pricing_estimated, unknown]; source_confidence is enum [high, medium, low, unknown]; source_authority is a nullable string; settlement_status is enum [observed, streaming_partial, settled, adjusted, failed, unknown]; projection_freshness and projection_health are string; every field except route_target is optional with default none, and the selector rules below decide which identity a branch requires. The two pre-existing artifact wrapper rows retain their artifact route/open `OpenSubject` bridge and remain event-primary in this bounded recovery; they are not part of the PMConcept7 row enrichment. Event-primary `cmd.nav.open_usage_subject` callers use `usage_event` plus object_id from `usage_event_ref`; a PMConcept7 Ledger attempt row uses `usage_attempt` plus object_id from `attempt_id`, repeats attempt_id at top level, retains usage_event_ref as correlation, and carries no OpenSubject. The retired `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, and `cmd.chat.close_thread_usage` tokens are compatibility aliases only; production wiring must not register them as canonical UICommand rows, and legacy callers normalize before dispatch.
 gui_related: true
 gui_classification_reason: Usage route/open commands determine user-visible navigation from chat, artifacts, ledger, and command palette surfaces.
 depends_on: [UCC-060, UCC-086, ACD-434, F3-418, UF-087, RAP-043, CV-316]
@@ -11402,7 +11415,10 @@ canonical_text: >-
   to the later Case L exact-restore contract), `cmd.orchestrator.copy_run_id`, `cmd.orchestrator.export_ledger`
   (OP-031), `cmd.orchestrator.set_seam_expansion`, and `cmd.orchestrator.set_evidence_filter`. Safe-point retry
   carries project/run/node/blocked/attempt, exact safe-point/repo/worktree, baseline_target safe_point,
-  optional permission snapshot, and the command-envelope idempotency identity; requires the named confirmation modal before dispatch;
+  optional permission snapshot, and the command-envelope idempotency identity (the canonical fields take their types
+  from the cmd.runtime.restore_safe_point_then_retry definition in Plans/Executor_Protocol.md#EP-236; the wrapper's
+  own optional permission_snapshot_id is {type: id, required: false, default: none}, as the UCC-230 vocabulary types
+  every *_id field and the EP-236 runtime definitions type the same field); requires the named confirmation modal before dispatch;
   preserves the four pre-modal disabled reasons safe_point_missing, state_changed, permission_denied, and
   operation_in_progress; and normalizes to cmd.runtime.restore_safe_point_then_retry. The compatibility alias
   cmd.orchestrator.restore_safe_point_then_retry has no second handler or authority. Ledger export serializes only the visible filtered
@@ -11663,6 +11679,13 @@ canonical_text: >-
   cmd.terminal.restart_session is owner-doc lineage for the same replace-with-new-runtime action and is not a
   second command.
   Amended 2026-10-09 (DL-181): cmd.terminal.reveal reveals the session's tab wherever it is, never the bottom panel; cmd.terminal.reattach_section retires with detached sections; cmd.terminal.restart_session is a retired spelling, not lineage for an alias (UCC-201, UCC-202).
+  Failure results (2026-11-28 spec completeness repair): reveal, terminate_session and kill_session return
+  TerminalActionResultV2 status refused, and the CV-333 UICommandResponse error carries the declared code, narrowed
+  from the closed set as the UCC-230 error_narrowing rule does: stale_projection when terminal_session_id no longer
+  names a session; blocked_state_required when terminate_session or kill_session targets a session that is not live
+  (session_live unmet: exited, failed or terminated); and invalid_args, permission_denied, handler_unavailable or
+  internal_error. A refused reveal spawns no shell. cmd.terminal.reattach_section is retired and has no handler or
+  failure result.
 gui_related: true
 gui_classification_reason: Registers user-visible terminal reveal, terminate, kill, and reattach commands.
 depends_on: [UCC-067, UCC-068, DL-181]
@@ -11910,6 +11933,15 @@ canonical_text: >-
   Provider -> models registry per ACD-437), and
   `cmd.chat.plan_thoroughness` (Light, Balanced, Comprehensive; default Balanced; distinct from effort High,
   Medium, Low per ACD-438; recorded as requested_plan_thoroughness and effective_plan_thoroughness).
+  All six return ChatOwnerCommandResultV2, and a rejected or blocked outcome carries its closed failure_code
+  (2026-11-28 spec completeness repair): cmd.chat.web.cancel returns web_operation_not_found for an unknown
+  web_operation_id and already_terminal for an operation no longer in flight; cmd.chat.web.request_again returns
+  web_operation_not_found, or web_operation_not_terminal while the operation is still in flight; cmd.chat.switch_thread
+  returns thread_not_found for a missing or deleted thread; cmd.chat.queue.remove returns queue_entry_not_found for
+  an entry that is no longer in the queue and already_dispatched for one already sent; cmd.chat.platform and
+  cmd.chat.plan_thoroughness return invalid_args for a value outside the platform registry or the three levels, and
+  blocked_state_required while platform_registry_loaded or plan_mode_selected is unmet. Any of the six may also return
+  permission_denied, stale_projection, handler_unavailable or internal_error.
 gui_related: true
 gui_classification_reason: Registers user-visible chat web-op, thread switch, queue, platform, and thoroughness commands.
 depends_on: [ACD-035, ACD-437, ACD-438, UCC-056, UCC-082]
@@ -14194,7 +14226,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)"
-- "Plans/CozyShelves_PM7_Control_Reconciliation.json (historical PM7 census; currentness deferred pending true re-census)"
+- "Removed pointer (2026-11-28 spec completeness repair): the historical 2026-07-28 PM7 integrated-panels census file (CozyShelves_PM7_Control_Reconciliation) was never committed to Plans/ or kept on the evidence share, so no artifact backs it; the census stays historical and a fresh census is still required."
 preserved_exact_tokens:
 - "cmd.chat.open"
 - "cmd.chat.open_thread"
@@ -14339,7 +14371,7 @@ acceptance_criteria:
 - cmd.panel.undock is dispatched from the Pop Out row on editor panels, Chat, and Dashboard, each routing into the in-canvas float layer.
 - Every applied/no_change/failed result follows CV-323 and the exact canonical event family.
 validation_surfaces:
-- python3 scripts/pm-validate-wiring-matrix.py
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
 - node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
 - python3 scripts/pm-plan-index.py validate
 risk_class: home_command_overload_or_orphan
@@ -16853,7 +16885,11 @@ status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: 'cmd.chat.queue.send_now steers one queued, not-yet-dispatched message into the running turn
   without stopping the answer and emits chat.message.submitted for that message with delivery_mode steer; it
-  never advances the rest of the queue. cmd.chat.send gains delivery_mode (queue or steer), resolved from general.interaction.queue-behavior
+  never advances the rest of the queue. When the message is no longer queued, send_now returns ChatOwnerCommandResultV2
+  outcome rejected with failure_code queue_entry_not_found (the entry was removed) or already_dispatched (it was already
+  sent), emits no chat.message.submitted and leaves the queue unchanged; the other failure codes are
+  permission_denied, stale_projection, handler_unavailable and internal_error (2026-11-28 spec completeness repair).
+  cmd.chat.send gains delivery_mode (queue or steer), resolved from general.interaction.queue-behavior
   (default Queue, DL-108) unless the composer''s switch overrides it; a queued send becomes an outbox entry
   that later dispatches through the same handler. The other chat controls of ACD-469 through ACD-475 reuse
   existing identities and add none: Stop is cmd.chat.stop; Edit on a queued entry is cmd.chat.queue.remove

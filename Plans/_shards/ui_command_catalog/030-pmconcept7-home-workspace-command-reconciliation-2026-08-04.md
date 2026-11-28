@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L14237-L14364
+Source lines: L14269-L14396
 
-Source SHA256: `9c34de2ef93562e8eb995cd913772a076b1d81c9574dec216dd3b6a4e5262a3d`
+Source SHA256: `403026f8e00c7e1e3b36d5ac7cfbd34f533d2e562b7c723ba63beed33313b847`
 
 ---
 
@@ -113,7 +113,7 @@ acceptance_criteria:
 - cmd.panel.undock is dispatched from the Pop Out row on editor panels, Chat, and Dashboard, each routing into the in-canvas float layer.
 - Every applied/no_change/failed result follows CV-323 and the exact canonical event family.
 validation_surfaces:
-- python3 scripts/pm-validate-wiring-matrix.py
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
 - node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
 - python3 scripts/pm-plan-index.py validate
 risk_class: home_command_overload_or_orphan
