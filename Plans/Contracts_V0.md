@@ -8169,7 +8169,7 @@ Each family definition is a closed object (`additionalProperties: false`). The s
 7. **Closed domains.** `status`, `terminal_status`, `claim_kind`, `claim_confidence`, `crash_reason` and `abort_reason` take exactly the values OSI-438 lists. `status` never takes a terminal value.
 8. **EventRecord joins.** A coordination EventRecord has `scope_kind` `project` and the payload's `project_id` and `run_id`. Its `thread_id` and `node_id` equal the payload's, or are null when the payload omits them; `attempt_id` is null. Its `event_type` names the family and its `payload_schema_id` is the family's schema ID. Its `idempotency_key` equals the payload's. `payload_ref` is null, `redaction_profile` is `no_secrets` and `replay_policy` is `dedupe_by_idempotency_key`. `event_id` and `idempotency_key` follow SP-320's recipe. `occurred_at_utc` equals the payload's family timestamp: `started_at_utc`, `observed_at_utc`, `finished_at_utc`, `detected_at_utc` or `aborted_at_utc`. The payload's `observed_at_utc` is the time the producer observed the change. The envelope's `observed_at_utc` stays Storage's writer-observed time. `actor_ref` names the component that initiated the event through `AgentCoordinator`: the Orchestrator or scheduler path for registration, updates and unregistration, the scheduler or crash detector for a crash, and the resolving component for an abort.
 9. **Precedence.** These rows and the closed schema govern over the Orchestrator sketch structs: `RegisterAgent`, `AgentStatusUpdate`, `AgentOperationUpdate`, `AgentFileOwnershipUpdate`, `AgentTerminalUpdate`, `FileActivityClaim` and the projection JSON example. Those sketches are source lineage, and OSI-438 maps their fields.
-10. **The debug mirror row.** `debug_mirror_exported` is prepared from its row, with `schema_version`, so that Storage's record family covers every key shape. It stays not admitted, and gets no identity recipe or producer binding here.
+10. **The debug mirror row.** `debug_mirror_exported` is prepared from its row, with `schema_version`, so that Storage's record family covers every key shape. It stays not admitted, and gets no identity recipe or producer binding here. The family is retired (Plans/Decision_Log.md#DL-270, Plans/storage-plan.md#SP-339): no mirror file is exported and nothing emits it, so it has no producer, command, route, storage port or reader binding to name; `pm export` writes JSON on request and emits no event.
 
 ##### CV-353 - Closed Coordination Payload Schema Binding
 
@@ -8182,7 +8182,9 @@ canonical_text: >-
   Newly authored owner contract under DL-045. The closed payload form of the seven coordination agent families is
   Plans/coordination_event_payloads.schema.json, with a shared lineage_envelope and non_secret_ref and one closed
   definition per family, each with its own schema ID pm.coordination_event.<family>.schema.v1;
-  debug_mirror_exported is prepared there and not admitted. Every coordination payload carries a required
+  debug_mirror_exported is prepared there and not admitted; it is retired (Plans/Decision_Log.md#DL-270,
+  Plans/storage-plan.md#SP-339), nothing emits it, and so it has no producer, command, route, storage-port or
+  reader binding. Every coordination payload carries a required
   schema_version, 1.0.0 here, as the run.started payload does. project_id, run_id, agent_id, platform,
   idempotency_key and agent_revision are required, and optional fields are omitted rather than null. Revision
   fields, text and number bounds, typed non-secret references, the OSI-438 closed domains and the EventRecord
@@ -25372,7 +25374,7 @@ unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: |-
-  Contracts_V0 defines FileSafe fail-closed security EventRecord payloads for filesafe.guard_init_failed, filesafe.command_denied, filesafe.path_denied, filesafe.destructive_override_requested, filesafe.destructive_override_granted, filesafe.destructive_override_denied, and filesafe.policy_degraded. The payloads preserve guard type, denial/diagnostic codes, normalized command/path identity, permission and FileSafe scope refs, project/run/worktree scope, authenticated operator override request/grant/denial fields, expiry, receipt refs, event refs, and redaction posture. policy_degraded is limited to non-authoritative/advisory degradation or embedded fallback use where fail-closed enforcement remains intact. Application FileSafe uses F2-213’s authenticated scope-bound owner operation/override receipts with real Host/absolute root/thread/run evidence; CV-366 defines no filesafe.* application EventRecord successor. These unregistered app security events remain missing_event_registration/non-emitting until separate Event Authority admission and full owner adoption, and unavailable durable receipt custody fails closed. ChatToolApproval separately uses PS-145/CV-366’s approval.chat_tool_requested and approval.chat_tool_resolved payloads registered by DL-300, retaining requires_owner_adoption for app producers. Preserve exact historical Project security payloads and all fail-closed rules; chat-tool approvals do not reuse Orchestrator node/blocked_sequence payloads with null fields.
+  Contracts_V0 defines FileSafe fail-closed security EventRecord payloads for filesafe.guard_init_failed, filesafe.command_denied, filesafe.path_denied, filesafe.destructive_override_requested, filesafe.destructive_override_granted, filesafe.destructive_override_denied, and filesafe.policy_degraded. The payloads preserve guard type, denial/diagnostic codes, normalized command/path identity, permission and FileSafe scope refs, project/run/worktree scope, authenticated operator override request/grant/denial fields, expiry, receipt refs, event refs, and redaction posture. The minimum fields per event are the table in Plans/Contracts_V0.md#filesafe-fail-closed-security-event-payloads; each field's type is its prepared closed 2.0.0 payload schema, which retains those Project minima without nullable widening: Plans/event_payloads/filesafe_guard_init_failed_v2.schema.json (CV-554), Plans/event_payloads/filesafe_command_denied_v2.schema.json (CV-550), Plans/event_payloads/filesafe_path_denied_v2.schema.json (CV-555), Plans/event_payloads/filesafe_destructive_override_requested_v2.schema.json (CV-553), Plans/event_payloads/filesafe_destructive_override_granted_v2.schema.json (CV-552), Plans/event_payloads/filesafe_destructive_override_denied_v2.schema.json (CV-551) and Plans/event_payloads/filesafe_policy_degraded_v2.schema.json (CV-556). Naming them types the fields; it admits no family. policy_degraded is limited to non-authoritative/advisory degradation or embedded fallback use where fail-closed enforcement remains intact. Application FileSafe uses F2-213’s authenticated scope-bound owner operation/override receipts with real Host/absolute root/thread/run evidence; CV-366 defines no filesafe.* application EventRecord successor. These unregistered app security events remain missing_event_registration/non-emitting until separate Event Authority admission and full owner adoption, and unavailable durable receipt custody fails closed. ChatToolApproval separately uses PS-145/CV-366’s approval.chat_tool_requested and approval.chat_tool_resolved payloads registered by DL-300, retaining requires_owner_adoption for app producers. Preserve exact historical Project security payloads and all fail-closed rules; chat-tool approvals do not reuse Orchestrator node/blocked_sequence payloads with null fields.
 gui_related: false
 gui_classification_reason: This unit defines security event payload contracts, not visual presentation.
 depends_on: [CV-309, CV-081, F2-199]
@@ -25510,7 +25512,7 @@ unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: |-
-  Contracts_V0 closes the residual FABLE feature-contract gaps for owner-section bodies, remote/tunnel WebSocket authentication, runtime-surface readiness probing, and session-prompt admission inbox events. Remote or tunneled WebSocket setup uses a proof-of-possession bearer session token bound to runtime_id, project_id, session_id, origin, csrf_nonce, and permission_snapshot_id; the server rejects missing, expired, mismatched, replayed, or origin-invalid handshakes before initialize and emits redacted auth receipts. Runtime readiness is a typed probe with request fields, result states, reasons, and roundtrip evidence refs. Session-prompt admission is a typed inbox event family with idempotency derived from session_id, prompt_id, target_thread_id, and normalized prompt hash. An admitted app WebSocket session binds the explicit scope, owning Server, runtime/session/Client/origin/CSRF and permission refs through a versioned successor. Conversion reissues target-authorized credentials/routes; source tokens never carry across as destination authority. Historical Project auth bindings stay exact.
+  Contracts_V0 closes the residual FABLE feature-contract gaps for owner-section bodies, remote/tunnel WebSocket authentication, runtime-surface readiness probing, and session-prompt admission inbox events. Remote or tunneled WebSocket setup uses a proof-of-possession bearer session token bound to runtime_id, project_id, session_id, origin, csrf_nonce, and permission_snapshot_id; the server rejects missing, expired, mismatched, replayed, or origin-invalid handshakes before initialize and emits redacted auth receipts. Runtime readiness is a typed probe with request fields, result states, reasons, and roundtrip evidence refs. The handshake request, probe request and probe result fields are typed in the CV-314 field tables directly after this unit; a degraded or failed readiness result's reason_code is exactly unavailable, disabled_by_policy, auth_required, restart_required, namespace_mismatch or timed_out. Session-prompt admission is a typed inbox event family with idempotency derived from session_id, prompt_id, target_thread_id, and normalized prompt hash. An admitted app WebSocket session binds the explicit scope, owning Server, runtime/session/Client/origin/CSRF and permission refs through a versioned successor. Conversion reissues target-authorized credentials/routes; source tokens never carry across as destination authority. Historical Project auth bindings stay exact.
 gui_related: true
 gui_classification_reason: WebSocket/session readiness errors and session-prompt admission are visible to runtime/chat surfaces, while the fields themselves are backend contracts.
 depends_on: [CV-306, CV-307, CV-308, CV-313]
@@ -25562,6 +25564,41 @@ owner_hints:
   - Plans/Permissions_System.md
   - Plans/assistant-chat-design.md
 ```
+
+CV-314 field types. Basis is `canon` where canon states the type, and `drafted` where the type is chosen from the field's name and its neighbours and stays open for the Contracts owner to narrow.
+
+`WebSocketHandshakeRequest` (every field required):
+
+| Field | Type | Basis |
+| --- | --- | --- |
+| `runtime_id`, `project_id`, `session_id`, `permission_snapshot_id` | string id, 1 to 256 characters | drafted: identity fields, typed like the CV-306 `WSAuthSession` and other runtime ids |
+| `origin` | string, the request's Origin value | drafted: the field is checked for `origin_mismatch` |
+| `csrf_nonce` | string | drafted: checked for `csrf_mismatch`; never stored raw (CV-306 keeps only `csrf_token_hash`) |
+| `token_binding` | string carrying the proof-of-possession binding, never the bearer token itself | drafted: the token is a proof-of-possession bearer session token |
+| `requested_capabilities` | array of unique nonempty strings | drafted: refused as `insufficient_scope`; canon lists no capability values |
+| `protocol_version` | string | drafted: refused as `protocol_version_unsupported`; canon states no version format |
+| `client_nonce` | string | drafted: used for `replay_detected` |
+
+`RuntimeSurfaceReadinessProbeRequest` (every field required):
+
+| Field | Type | Basis |
+| --- | --- | --- |
+| `probe_id`, `runtime_id`, `session_id`, `surface_id` | string id, 1 to 256 characters | drafted: identity fields; `surface_id` is the CV-307 surface |
+| `requested_checks` | nonempty array of unique nonempty strings | drafted: CV-307 says a surface proves started, injected, model-visible, UI-visible and roundtrip-ready, but canon does not close the list of check names |
+| `timeout_ms` | positive integer, milliseconds | drafted: from the `_ms` suffix |
+| `trace_level` | string | drafted: canon states no values for this probe (the `trace_level` list in Plans/CLI_Bridged_Providers.md belongs to another contract and is not adopted) |
+
+`RuntimeSurfaceReadinessResult`:
+
+| Field | Type | Required | Basis |
+| --- | --- | --- | --- |
+| `state` | enum `not_ready`, `model_visible`, `ui_visible`, `roundtrip_ready`, `degraded`, `failed` | yes | canon: CV-314 acceptance criteria |
+| `reason_code` | enum `unavailable`, `disabled_by_policy`, `auth_required`, `restart_required`, `namespace_mismatch`, `timed_out` | yes for `degraded` and `failed`, otherwise optional | drafted: the first five are the non-ready words of the CV-307 readiness status, reused exactly; `timed_out` is a probe that passes its `timeout_ms` |
+| `checked_at` | RFC 3339 UTC timestamp | yes | drafted: the time of the check |
+| `evidence_refs` | array of refs | yes | canon: the result carries roundtrip evidence refs |
+| `retry_after_ms` | non-negative integer, milliseconds | when applicable | canon: CV-314 acceptance criteria |
+
+CV-307 gives the same probe a different status list (`ready`, `degraded`, `unavailable`, `disabled_by_policy`, `auth_required`, `restart_required`, `namespace_mismatch`). How that list relates to `state` above is an open question for this owner; the drafted `reason_code` values follow the reading in which CV-314's `state` is how far the probe got and CV-307's non-ready words are its reasons.
 
 ## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
 
@@ -25873,6 +25910,47 @@ Family payloads and state machines:
 | `graph_patch` | `graph_patch_id`, `graph_generation_id`, `patch_kind`, `requested_change_ref`, `affected_node_refs[]`, `decision_ref`, `state_transition_report_ref?`, `concern_refs[]?` | `requested`, `validated`, `applied`, `rejected`, `rolled_back`, `superseded` | `requested -> validated -> applied|rejected`; `applied -> rolled_back|superseded` only with a decision and transition report. |
 | `projection_trust` | `projection_id`, `projection_freshness`, `projection_health`, `generation_match`, `canonical_revalidation_required`, `last_revalidated_at_utc?`, `fallback_route_ref?` | `current`, `refreshing`, `stale`, `degraded`, `unavailable` | `current -> refreshing|stale|degraded|unavailable`; non-current states return to `current` only after canonical revalidation evidence. |
 
+State machine closure for the four families (initial and terminal states, and the triggers the owner text states):
+
+| Family | Initial state | Terminal states | Triggers stated | Triggers not stated (recorded gaps) |
+| --- | --- | --- | --- | --- |
+| `corroboration` | `requested` | `superseded` is final; `confirmed`, `denied`, `downgraded` and `escalated` are terminal outcomes whose only exit is `superseded` | any terminal outcome -> `superseded`: a lineage-changing supersession record that sets `superseded_by_record_id` | `requested -> collecting`; `collecting -> confirmed|denied|downgraded|escalated` |
+| `promotion` | `draft` | `rejected`, `revoked`, `superseded` | `approved -> revoked|superseded`: a compensating record | `draft -> eligible`; `eligible -> approved|rejected|paused_hitl`; `paused_hitl -> approved|rejected` |
+| `graph_patch` | `requested` | `rejected`, `rolled_back`, `superseded` | `applied -> rolled_back|superseded`: a `decision_ref` and a `state_transition_report_ref` | `requested -> validated`; `validated -> applied|rejected` |
+| `projection_trust` | `current` | none: the record lasts as long as its projection | a non-current state -> `current`: canonical revalidation evidence | `current -> refreshing|stale|degraded|unavailable` |
+
+A transition the table names without its trigger is a recorded gap (provenance gap; the owner text names the transition but not what causes it) that reaches Plans/Plan_To_Node_Compilation.md#PNC-038; no transition outside these tables is admitted. Two outcomes are stated nowhere and remain open questions for this owner: what happens to a record in a non-terminal state (`corroboration` `requested` or `collecting`, `promotion` `draft`, `eligible` or `paused_hitl`, `graph_patch` `requested` or `validated`) when the work it belongs to is cancelled or abandoned, and whether `projection_trust` may move between two non-current states without first returning to `current`.
+
+Family payload field types. Basis is `canon` where the table above or another owner states the type, `drafted` where the type is chosen from the field's name and its neighbours (the shared envelope types ids and refs as strings and ref lists as arrays of strings), and a gap where nothing can be inferred.
+
+| Family | Field | Type | Basis |
+| --- | --- | --- | --- |
+| `corroboration` | `corroboration_id` | string id | drafted |
+| `corroboration` | `claim_ref`, `policy_ref` | string ref | drafted |
+| `corroboration` | `required_reviewer_count` | positive integer | drafted |
+| `corroboration` | `supporting_reviewer_refs[]`, `dissenting_reviewer_refs[]` | array of unique string refs | drafted |
+| `corroboration` | `verdict` | string | drafted: canon names no values; the closed list is still open |
+| `corroboration` | `confidence` | not stated | provenance gap; gap_note: canon gives no scale, range or value list for confidence, so its type is left to this owner |
+| `corroboration` | `concern_refs[]?` | optional array of string refs | drafted |
+| `promotion` | `promotion_id` | string id | drafted |
+| `promotion` | `promotion_class` | string | drafted: canon names no values; the closed list is still open |
+| `promotion` | `source_scope_ref`, `target_scope_ref`, `gate_verdict_ref` | string ref | drafted |
+| `promotion` | `required_evidence_refs[]` | array of string refs | drafted |
+| `promotion` | `hitl_required` | boolean | drafted: whether a person must act, beside the `paused_hitl` state |
+| `promotion` | `promotion_receipt_ref?` | optional string ref | drafted |
+| `graph_patch` | `graph_patch_id`, `graph_generation_id` | string id | drafted |
+| `graph_patch` | `patch_kind` | string | drafted: canon names no values; the closed list is still open |
+| `graph_patch` | `requested_change_ref`, `decision_ref` | string ref | drafted |
+| `graph_patch` | `affected_node_refs[]` | array of string refs | drafted |
+| `graph_patch` | `state_transition_report_ref?` | optional string ref | drafted |
+| `graph_patch` | `concern_refs[]?` | optional array of string refs | drafted |
+| `projection_trust` | `projection_id` | string id | drafted |
+| `projection_trust` | `projection_freshness` | enum `current`, `refreshing`, `stale` | canon: Plans/Glossary.md#G-012 |
+| `projection_trust` | `projection_health` | enum `healthy`, `degraded`, `unavailable` | canon: Plans/Glossary.md#G-012 |
+| `projection_trust` | `generation_match`, `canonical_revalidation_required` | boolean | drafted |
+| `projection_trust` | `last_revalidated_at_utc?` | optional RFC 3339 UTC timestamp | drafted: like the envelope's `created_at_utc` |
+| `projection_trust` | `fallback_route_ref?` | optional string ref | drafted |
+
 Trust-state aliases resolve to `projection_trust` and must not mint a separate state family. Graph-patch, promotion, and corroboration records may nominate or update concerns, but they do not replace concern lifecycle states.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md
@@ -25887,8 +25965,11 @@ owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   Governance runtime records define schemas and state machines for corroboration, promotion, graph_patch, and projection_trust.
   Each record uses a shared governance_runtime_record envelope, family-specific payload fields, closed status values, and
-  explicit transitions. Trust-state aliases resolve to projection_trust, and these records remain contract/storage
-  specifications rather than runtime certification or WorkNode generation.
+  explicit transitions. The states, transitions, initial and terminal states and stated triggers are the tables of
+  Plans/Contracts_V0.md#governance-runtime-records-and-projection-trust, where a transition without a stated trigger
+  is a recorded gap, and the family payload field types table in the same section types every payload field. Trust-state aliases
+  resolve to projection_trust, and these records remain contract/storage specifications rather than runtime
+  certification or WorkNode generation.
 gui_related: false
 gui_classification_reason: Defines backend governance/runtime records and state machines consumed by GUI/runtime views.
 depends_on: [CV-309, CV-314]
@@ -26375,7 +26456,14 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   Three closed fallback-divergence requests carry exact command identity,
-  command-specific confirmation, and eight owner-revalidated CAS components;
+  command-specific confirmation, and eight owner-revalidated CAS components:
+  expected_storage_instance_id (UUID), expected_logical_root_fingerprint
+  (lowercase 64-hex), expected_root_generation (non-negative integer),
+  expected_fallback_branch_id (UUID), expected_fallback_base_ref (non-secret
+  stable ref), and expected_logical_head_sha256, expected_fallback_head_sha256
+  and expected_bootstrap_binding_sha256 (lowercase 64-hex SHA-256), with every
+  other request, result and receipt field as typed in
+  Plans/Contracts_V0.md#storage-fallback-divergence-command-envelopes;
   their closed results distinguish keep-logical binding selection, inactive
   fork candidate, and exact-byte encrypted dual-root custody; and one owner
   receipt supplies durable audit without an EventRecord family.
@@ -26598,7 +26686,7 @@ node_compile_hint: {mode: static_registry_contract_only, create_worknodes: false
 source_lineage:
   - Plans/Crosswalk.md#c-051---touch-closure-authority-and-consumer-routing
   - Plans/DRY_Rules.md#dr-041---touch-closure-exact-key-and-no-peer-dry-rule
-  - Plans/Commands_System.md#cs-074---remaining-packet-command-production-intent-and-sole-future-handler-closure
+  - Plans/Commands_System.md#cs-074---remaining-touch-primary-command-closure
 preserved_exact_tokens: [touch_closure.json, server_command_gap_adjudication.json, expected_event_types, production-intent, future-handler, static]
 negative_constraints:
   - "Do not treat either registry as a payload, runtime, command, handler, persistence, evidence, or Event Authority owner."
@@ -26827,7 +26915,15 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: A research_decision_review wrapper binds complete packet and stable item/revision identity to the
   existing questionnaire and host-verified user submission. Fixed decision responses map to separate persistent
-  dispositions; clarification submits only an interaction and leaves the item pending.
+  dispositions; clarification submits only an interaction and leaves the item pending. Each refusal returns the
+  shared UICommandResponse error (Plans/ui_command_response.schema.json#/$defs/UICommandError) with no disposition,
+  clarification dispatch or advance. The codes are permission_denied for a response not from the trusted host user (agent or tool
+  impersonation, or a client-asserted respondent); invalid_args, with offending_field set, for a question ID outside
+  the current round, anything but exactly one allowed choice, missing or unused conditional text, an Other or extra
+  answer, a wrapper that disagrees with its referenced QuestionAnswer values, or a reused response_id with a different
+  payload; stale_projection for a packet or item revision that is no longer current, or an item that is no longer the
+  current pending item, including the losing one of two concurrent terminal responses; and blocked_state_required
+  when the complete packet artifact or its chat delivery is not yet in place.
 gui_related: false
 gui_classification_reason: Typed identity, validation, submission authority and disposition semantics are nonvisual
   contracts.
@@ -35919,7 +36015,7 @@ canonical_text: 'Newly authored owner contract under DL-045 for usage.event@1.0.
   Before issuance it may finalize from a provable original outcome and append only the frozen original; a missing
   or uncertain owner result remains unavailable/fenced.
 
-  For usage.event alone, Storage section 5.2 parent_run_id is preserved when an actual source has parent-run lineage.
+  For usage.event alone, the parent_run_id of Storage SP-148 (Plans/storage-plan.md#SP-148, emit usage.event with thread_id and parent lineage) is preserved when an actual source has parent-run lineage.
   It equals the original captured parent run and complements parent_usage_record_id; neither is inferred from UI
   focus or inherited context. The nullable original before/runtime-context slots prove inapplicability when the
   event omits it. The child-run fixture has its own actual Run, Attempt, provider response and UsageRecord identities

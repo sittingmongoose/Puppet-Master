@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L17497-L17561
+Source lines: L17497-L17576
 
-Source SHA256: `0babc62806b508105ce22b31c95c5d9ba3dcea2f7a184848038ced7cd8e4e888`
+Source SHA256: `26be045fbcda9f9e366bcd4ec34e607c4213b9aba56a5aacb0c34042a6992c18`
 
 ---
 
@@ -20,7 +20,7 @@ unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  Storage owns the durable projection joins that let GUI surfaces recover UsageRecord identity and route/open state without recomputing accounting. Usage projection records and runtime-artifact projector families carry usage_record_id, usage_event_ref, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, thread_id, projection_freshness, projection_health, checkpoint cursor, and rebuild provenance. Compatibility aliases such as usage_id, input_tokens, output_tokens, cache_read_tokens, cache_creation_input_tokens, cost_usd, usage_source_kind, UnifiedUsageRecord, estimated_cost_microdollars, and final_cost_microdollars are migration/display inputs only and normalize to UF-085 fields before persistence, aggregation, or GUI projection. `usage_event_ref` remains a usage/storage join and normalizes through route_target.object_kind = usage_event for route/open; it does not become a separate route selector.
+  Storage owns the durable projection joins that let GUI surfaces recover UsageRecord identity and route/open state without recomputing accounting. Usage projection records and runtime-artifact projector families carry usage_record_id, usage_event_ref, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, thread_id, projection_freshness, projection_health, checkpoint cursor, and rebuild provenance, typed in the SP-234 field table directly after this unit (checkpoint cursor and rebuild provenance are recorded gaps there). Compatibility aliases such as usage_id, input_tokens, output_tokens, cache_read_tokens, cache_creation_input_tokens, cost_usd, usage_source_kind, UnifiedUsageRecord, estimated_cost_microdollars, and final_cost_microdollars are migration/display inputs only and normalize to UF-085 fields before persistence, aggregation, or GUI projection. `usage_event_ref` remains a usage/storage join and normalizes through route_target.object_kind = usage_event for route/open; it does not become a separate route selector.
 gui_related: false
 gui_classification_reason: Storage projection fields support GUI consumers but are backend persistence contracts.
 depends_on: [SP-230, SP-231, UF-087, CV-316, RAP-044]
@@ -73,3 +73,18 @@ owner_hints:
   - Plans/usage-feature.md
   - Plans/Contracts_V0.md
 ```
+
+SP-234 usage projection field types. Each field is persisted when available, as the unit says; a type reuses the existing schema that already types the same field.
+
+| Field | Type | Provenance |
+| --- | --- | --- |
+| `usage_record_id`, `attempt_id`, `node_id`, `tool_call_id`, `run_id`, `thread_id` | string, 1 to 256 characters | canon: `Plans/dt_event_contracts.schema.json#/$defs/usage_event` |
+| `usage_event_ref` | string, 1 to 256 characters, equal to the `usage.event` EventRecord `event_id` (CV-614) | canon: `Plans/dt_event_contracts.schema.json#/$defs/usage_event` |
+| `provider_attempt_ref`, `raw_payload_ref` | string, 1 to 256 characters, or null; `raw_payload_ref` is null only when original evidence proves there is no provider payload (CV-614) | canon: `Plans/dt_event_contracts.schema.json#/$defs/usage_event` |
+| `trace_ref` | nonempty string | canon: `Plans/runtime_artifact_tool_llm_trace.schema.json` (`type_payload.trace_ref`) |
+| `artifact_id` | nonempty string | canon: `Plans/runtime_artifact_cost_usage.schema.json` |
+| receipt refs, as `receipt_refs` | array of nonempty strings | canon: `Plans/runtime_artifact_cost_usage.schema.json` |
+| `projection_freshness` | enum `current`, `refreshing`, `stale` | canon: `Plans/Glossary.md#G-012` |
+| `projection_health` | enum `healthy`, `degraded`, `unavailable` | canon: `Plans/Glossary.md#G-012` |
+| checkpoint cursor | not stated | provenance gap; gap_note: no usage projection checkpoint family is registered in `Plans/storage_value_registry.json`, and the unit does not say whether the cursor is the SP-278 durable read token or a seglog position, so its type stays open for the storage owner |
+| rebuild provenance | not stated | provenance gap; gap_note: canon names rebuild provenance for these records but no fields or type, so it stays open for the storage owner |

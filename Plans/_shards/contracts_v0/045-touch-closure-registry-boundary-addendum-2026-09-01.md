@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L26550-L26608
+Source lines: L26638-L26696
 
-Source SHA256: `8739726276ab1980f995281db4a4467a42e4308a5bad7c4af725b78053d81c85`
+Source SHA256: `db4fb67e04f99e422d8746b5734456e0ef82b4f225a06789579a0de4841790a4`
 
 ---
 
@@ -59,7 +59,7 @@ node_compile_hint: {mode: static_registry_contract_only, create_worknodes: false
 source_lineage:
   - Plans/Crosswalk.md#c-051---touch-closure-authority-and-consumer-routing
   - Plans/DRY_Rules.md#dr-041---touch-closure-exact-key-and-no-peer-dry-rule
-  - Plans/Commands_System.md#cs-074---remaining-packet-command-production-intent-and-sole-future-handler-closure
+  - Plans/Commands_System.md#cs-074---remaining-touch-primary-command-closure
 preserved_exact_tokens: [touch_closure.json, server_command_gap_adjudication.json, expected_event_types, production-intent, future-handler, static]
 negative_constraints:
   - "Do not treat either registry as a payload, runtime, command, handler, persistence, evidence, or Event Authority owner."

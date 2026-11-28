@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L33515-L39580
+Source lines: L33611-L39676
 
-Source SHA256: `8739726276ab1980f995281db4a4467a42e4308a5bad7c4af725b78053d81c85`
+Source SHA256: `db4fb67e04f99e422d8746b5734456e0ef82b4f225a06789579a0de4841790a4`
 
 ---
 
@@ -2415,7 +2415,7 @@ canonical_text: 'Newly authored owner contract under DL-045 for usage.event@1.0.
   Before issuance it may finalize from a provable original outcome and append only the frozen original; a missing
   or uncertain owner result remains unavailable/fenced.
 
-  For usage.event alone, Storage section 5.2 parent_run_id is preserved when an actual source has parent-run lineage.
+  For usage.event alone, the parent_run_id of Storage SP-148 (Plans/storage-plan.md#SP-148, emit usage.event with thread_id and parent lineage) is preserved when an actual source has parent-run lineage.
   It equals the original captured parent run and complements parent_usage_record_id; neither is inferred from UI
   focus or inherited context. The nullable original before/runtime-context slots prove inapplicability when the
   event omits it. The child-run fixture has its own actual Run, Attempt, provider response and UsageRecord identities

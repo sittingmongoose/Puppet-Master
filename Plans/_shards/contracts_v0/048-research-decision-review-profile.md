@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L26729-L26897
+Source lines: L26817-L26993
 
-Source SHA256: `8739726276ab1980f995281db4a4467a42e4308a5bad7c4af725b78053d81c85`
+Source SHA256: `db4fb67e04f99e422d8746b5734456e0ef82b4f225a06789579a0de4841790a4`
 
 ---
 
@@ -109,7 +109,15 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: A research_decision_review wrapper binds complete packet and stable item/revision identity to the
   existing questionnaire and host-verified user submission. Fixed decision responses map to separate persistent
-  dispositions; clarification submits only an interaction and leaves the item pending.
+  dispositions; clarification submits only an interaction and leaves the item pending. Each refusal returns the
+  shared UICommandResponse error (Plans/ui_command_response.schema.json#/$defs/UICommandError) with no disposition,
+  clarification dispatch or advance. The codes are permission_denied for a response not from the trusted host user (agent or tool
+  impersonation, or a client-asserted respondent); invalid_args, with offending_field set, for a question ID outside
+  the current round, anything but exactly one allowed choice, missing or unused conditional text, an Other or extra
+  answer, a wrapper that disagrees with its referenced QuestionAnswer values, or a reused response_id with a different
+  payload; stale_projection for a packet or item revision that is no longer current, or an item that is no longer the
+  current pending item, including the losing one of two concurrent terminal responses; and blocked_state_required
+  when the complete packet artifact or its chat delivery is not yet in place.
 gui_related: false
 gui_classification_reason: Typed identity, validation, submission authority and disposition semantics are nonvisual
   contracts.

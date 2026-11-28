@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L25566-L25933
+Source lines: L25603-L26014
 
-Source SHA256: `8739726276ab1980f995281db4a4467a42e4308a5bad7c4af725b78053d81c85`
+Source SHA256: `db4fb67e04f99e422d8746b5734456e0ef82b4f225a06789579a0de4841790a4`
 
 ---
 
@@ -318,6 +318,47 @@ Family payloads and state machines:
 | `graph_patch` | `graph_patch_id`, `graph_generation_id`, `patch_kind`, `requested_change_ref`, `affected_node_refs[]`, `decision_ref`, `state_transition_report_ref?`, `concern_refs[]?` | `requested`, `validated`, `applied`, `rejected`, `rolled_back`, `superseded` | `requested -> validated -> applied|rejected`; `applied -> rolled_back|superseded` only with a decision and transition report. |
 | `projection_trust` | `projection_id`, `projection_freshness`, `projection_health`, `generation_match`, `canonical_revalidation_required`, `last_revalidated_at_utc?`, `fallback_route_ref?` | `current`, `refreshing`, `stale`, `degraded`, `unavailable` | `current -> refreshing|stale|degraded|unavailable`; non-current states return to `current` only after canonical revalidation evidence. |
 
+State machine closure for the four families (initial and terminal states, and the triggers the owner text states):
+
+| Family | Initial state | Terminal states | Triggers stated | Triggers not stated (recorded gaps) |
+| --- | --- | --- | --- | --- |
+| `corroboration` | `requested` | `superseded` is final; `confirmed`, `denied`, `downgraded` and `escalated` are terminal outcomes whose only exit is `superseded` | any terminal outcome -> `superseded`: a lineage-changing supersession record that sets `superseded_by_record_id` | `requested -> collecting`; `collecting -> confirmed|denied|downgraded|escalated` |
+| `promotion` | `draft` | `rejected`, `revoked`, `superseded` | `approved -> revoked|superseded`: a compensating record | `draft -> eligible`; `eligible -> approved|rejected|paused_hitl`; `paused_hitl -> approved|rejected` |
+| `graph_patch` | `requested` | `rejected`, `rolled_back`, `superseded` | `applied -> rolled_back|superseded`: a `decision_ref` and a `state_transition_report_ref` | `requested -> validated`; `validated -> applied|rejected` |
+| `projection_trust` | `current` | none: the record lasts as long as its projection | a non-current state -> `current`: canonical revalidation evidence | `current -> refreshing|stale|degraded|unavailable` |
+
+A transition the table names without its trigger is a recorded gap (provenance gap; the owner text names the transition but not what causes it) that reaches Plans/Plan_To_Node_Compilation.md#PNC-038; no transition outside these tables is admitted. Two outcomes are stated nowhere and remain open questions for this owner: what happens to a record in a non-terminal state (`corroboration` `requested` or `collecting`, `promotion` `draft`, `eligible` or `paused_hitl`, `graph_patch` `requested` or `validated`) when the work it belongs to is cancelled or abandoned, and whether `projection_trust` may move between two non-current states without first returning to `current`.
+
+Family payload field types. Basis is `canon` where the table above or another owner states the type, `drafted` where the type is chosen from the field's name and its neighbours (the shared envelope types ids and refs as strings and ref lists as arrays of strings), and a gap where nothing can be inferred.
+
+| Family | Field | Type | Basis |
+| --- | --- | --- | --- |
+| `corroboration` | `corroboration_id` | string id | drafted |
+| `corroboration` | `claim_ref`, `policy_ref` | string ref | drafted |
+| `corroboration` | `required_reviewer_count` | positive integer | drafted |
+| `corroboration` | `supporting_reviewer_refs[]`, `dissenting_reviewer_refs[]` | array of unique string refs | drafted |
+| `corroboration` | `verdict` | string | drafted: canon names no values; the closed list is still open |
+| `corroboration` | `confidence` | not stated | provenance gap; gap_note: canon gives no scale, range or value list for confidence, so its type is left to this owner |
+| `corroboration` | `concern_refs[]?` | optional array of string refs | drafted |
+| `promotion` | `promotion_id` | string id | drafted |
+| `promotion` | `promotion_class` | string | drafted: canon names no values; the closed list is still open |
+| `promotion` | `source_scope_ref`, `target_scope_ref`, `gate_verdict_ref` | string ref | drafted |
+| `promotion` | `required_evidence_refs[]` | array of string refs | drafted |
+| `promotion` | `hitl_required` | boolean | drafted: whether a person must act, beside the `paused_hitl` state |
+| `promotion` | `promotion_receipt_ref?` | optional string ref | drafted |
+| `graph_patch` | `graph_patch_id`, `graph_generation_id` | string id | drafted |
+| `graph_patch` | `patch_kind` | string | drafted: canon names no values; the closed list is still open |
+| `graph_patch` | `requested_change_ref`, `decision_ref` | string ref | drafted |
+| `graph_patch` | `affected_node_refs[]` | array of string refs | drafted |
+| `graph_patch` | `state_transition_report_ref?` | optional string ref | drafted |
+| `graph_patch` | `concern_refs[]?` | optional array of string refs | drafted |
+| `projection_trust` | `projection_id` | string id | drafted |
+| `projection_trust` | `projection_freshness` | enum `current`, `refreshing`, `stale` | canon: Plans/Glossary.md#G-012 |
+| `projection_trust` | `projection_health` | enum `healthy`, `degraded`, `unavailable` | canon: Plans/Glossary.md#G-012 |
+| `projection_trust` | `generation_match`, `canonical_revalidation_required` | boolean | drafted |
+| `projection_trust` | `last_revalidated_at_utc?` | optional RFC 3339 UTC timestamp | drafted: like the envelope's `created_at_utc` |
+| `projection_trust` | `fallback_route_ref?` | optional string ref | drafted |
+
 Trust-state aliases resolve to `projection_trust` and must not mint a separate state family. Graph-patch, promotion, and corroboration records may nominate or update concerns, but they do not replace concern lifecycle states.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md
@@ -332,8 +373,11 @@ owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   Governance runtime records define schemas and state machines for corroboration, promotion, graph_patch, and projection_trust.
   Each record uses a shared governance_runtime_record envelope, family-specific payload fields, closed status values, and
-  explicit transitions. Trust-state aliases resolve to projection_trust, and these records remain contract/storage
-  specifications rather than runtime certification or WorkNode generation.
+  explicit transitions. The states, transitions, initial and terminal states and stated triggers are the tables of
+  Plans/Contracts_V0.md#governance-runtime-records-and-projection-trust, where a transition without a stated trigger
+  is a recorded gap, and the family payload field types table in the same section types every payload field. Trust-state aliases
+  resolve to projection_trust, and these records remain contract/storage specifications rather than runtime
+  certification or WorkNode generation.
 gui_related: false
 gui_classification_reason: Defines backend governance/runtime records and state machines consumed by GUI/runtime views.
 depends_on: [CV-309, CV-314]
