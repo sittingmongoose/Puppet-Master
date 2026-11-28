@@ -353,6 +353,16 @@
   {
    "check": "audit-governance",
    "count": 1,
+   "error": "execution_unit_context_spec_lock_hash_stale",
+   "fingerprints": [
+    "97dc0c0c78df"
+   ],
+   "path": "Plans/Spec_Lock.json",
+   "subcheck": "implementation_readiness"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
    "error": "non_executable_closure_spec_lock_hash_stale",
    "fingerprints": [
     "5015550b0f6a"
@@ -757,6 +767,16 @@
     "271f85538f3e"
    ],
    "path": "scripts/pm-implementation-readiness.py",
+   "subcheck": "spec_lock"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "scripts/pm-plan-index.py",
    "subcheck": "spec_lock"
   },
   {
@@ -1292,6 +1312,16 @@
    "fingerprints": [
     "271f85538f3e"
    ],
+   "path": "scripts/pm-plan-index.py",
+   "subcheck": "verify_spec_lock"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
    "path": "scripts/pm-plans-verify.py",
    "subcheck": "verify_spec_lock"
   },
@@ -1308,7 +1338,7 @@
  ],
  "checks": {
   "audit-governance": {
-   "failure_total": 7216,
+   "failure_total": 7218,
    "status": "fail",
    "subchecks": {
     "audit_closure": {
@@ -1322,8 +1352,8 @@
      "sampled": 100
     },
     "implementation_readiness": {
-     "reported": 92,
-     "sampled": 92
+     "reported": 93,
+     "sampled": 93
     },
     "plan_graph": {
      "exported": 3457,
@@ -1331,8 +1361,8 @@
      "sampled": 100
     },
     "spec_lock": {
-     "reported": 27,
-     "sampled": 27
+     "reported": 28,
+     "sampled": 28
     }
    }
   },
@@ -1347,7 +1377,7 @@
    }
   },
   "run-gates": {
-   "failure_total": 7216,
+   "failure_total": 7218,
    "status": "fail",
    "subchecks": {
     "validate_audit_closure": {
@@ -1361,8 +1391,8 @@
      "sampled": 50
     },
     "validate_implementation_readiness": {
-     "exported": 92,
-     "reported": 92,
+     "exported": 93,
+     "reported": 93,
      "sampled": 50
     },
     "validate_plan_graph": {
@@ -1371,13 +1401,13 @@
      "sampled": 50
     },
     "verify_spec_lock": {
-     "reported": 27,
-     "sampled": 27
+     "reported": 28,
+     "sampled": 28
     }
    }
   }
  },
- "commit": "be30534aa0692954c9a1aee03cf88927044ec1aa",
+ "commit": "070289358c37f03600ce2b03f2022f5731f3bd85",
  "export_buckets": [
   {
    "check": "audit-governance",
@@ -12343,6 +12373,16 @@
   {
    "check": "run-gates",
    "count": 1,
+   "error": "execution_unit_context_spec_lock_hash_stale",
+   "fingerprints": [
+    "97dc0c0c78df"
+   ],
+   "path": "Plans/Spec_Lock.json",
+   "subcheck": "validate_implementation_readiness"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
    "error": "non_executable_closure_spec_lock_hash_stale",
    "fingerprints": [
     "5015550b0f6a"
@@ -15887,8 +15927,8 @@
   },
   "schema_id": "pm.landing_check.readiness_audit_inputs.v1"
  },
- "recorded_at_utc": "2026-11-27T23:39:56Z",
- "run_dir": "Plans/.plan_migration/pds-20261127-002-current-planunit-snapshot",
+ "recorded_at_utc": "2026-11-28T01:36:51Z",
+ "run_dir": "Plans/.plan_migration/pds-20261128-001-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
  "untracked_inputs": [
   "tests/agent_packet_restrictions"
