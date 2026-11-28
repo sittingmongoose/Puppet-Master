@@ -472,7 +472,9 @@ const modeSpread = (img, rect) => {
 			} })
 		};
 		await runFlingLook({ page, log() {}, check: async (name, ok, detail) => rows.push({ name, ok, detail }) }, f, 'basic-dark', 'normal', route);
-		assert.deepEqual(cdps, seqs.map(() => ({ marker: true, settling: true })), 'capture stops only after the awaited one-second still window');
+		assert.equal(cdps.length, seqs.length, 'each fling stops its capture');
+		assert.equal(cdps.every((capture) => capture.marker), true, 'the capture marker runs until the capture stops');
+		assert.equal(cdps.every((capture) => capture.settling), true, 'capture stops only after the awaited one-second still window');
 		return { names, wheelDeltas, receipts, rows };
 	};
 	const driven = await exercise('terminal', [lost, single]);
